@@ -1,0 +1,38 @@
+[plan]
+name = "freetype"
+version = "2.13.3"
+release = 1
+description = "Font rendering library"
+license = "FTL OR GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://freetype.org"
+
+[sources]
+uris = ["https://download.savannah.gnu.org/releases/freetype/freetype-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg
+sed -r "s:.*(#.*SUBPIXEL_RENDERING) .*:\1:" \
+-i include/freetype/config/ftoption.h
+./configure --prefix=/usr     \
+--enable-freetype-config \
+--disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} make install
+'''

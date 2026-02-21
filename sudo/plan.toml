@@ -1,0 +1,41 @@
+[plan]
+name = "sudo"
+version = "1.9.16p2"
+release = 1
+description = "Give certain users the ability to run some commands as root"
+license = "ISC"
+arch = "x86_64"
+url = "https://www.sudo.ws"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://www.sudo.ws/dist/sudo-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+--libexecdir=/usr/lib \
+--with-all-insults \
+--with-env-editor \
+--docdir=/usr/share/doc/sudo-${PKG_VERSION} \
+--with-passprompt="[sudo] password for %p: "
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+mkdir -p ${PKG_DIR}/etc/sudoers.d
+'''

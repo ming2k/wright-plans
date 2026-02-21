@@ -1,0 +1,44 @@
+[plan]
+name = "make"
+version = "4.4.1"
+release = 1
+description = "A program for controlling the generation of executables and other non-source files"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/make/"
+
+[dependencies]
+build = ["gcc"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/make/make-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+chown -R tester .
+su tester -c "PATH=$PATH make check"
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

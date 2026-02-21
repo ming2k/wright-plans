@@ -1,0 +1,33 @@
+[plan]
+name = "libyaml"
+version = "0.2.5"
+release = 1
+description = "YAML 1.1 parser and emitter"
+license = "MIT"
+arch = "x86_64"
+url = "https://pyyaml.org/wiki/LibYAML"
+
+[sources]
+uris = ["https://github.com/yaml/libyaml/releases/download/${PKG_VERSION}/yaml-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} make install
+'''

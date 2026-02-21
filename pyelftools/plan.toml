@@ -1,0 +1,29 @@
+[plan]
+name = "pyelftools"
+version = "0.31"
+release = 1
+description = "Python library for analyzing ELF files and DWARF debugging information"
+license = "Unlicense"
+arch = "x86_64"
+url = "https://github.com/eliben/pyelftools"
+
+[dependencies]
+build = ["python"]
+runtime = ["python"]
+[sources]
+uris = ["https://github.com/eliben/pyelftools/archive/v${PKG_VERSION}/pyelftools-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${SRC_DIR}/pyelftools-${PKG_VERSION}
+python3 setup.py build
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${SRC_DIR}/pyelftools-${PKG_VERSION}
+python3 setup.py install --root=${PKG_DIR} --optimize=1
+'''

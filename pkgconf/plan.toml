@@ -1,0 +1,47 @@
+[plan]
+name = "pkgconf"
+version = "2.3.0"
+release = 1
+description = "Package compiler and linker metadata toolkit"
+license = "ISC"
+arch = "x86_64"
+url = "https://gitea.trerat.com/pkgconf/pkgconf"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://distfiles.dereferenced.org/pkgconf/pkgconf-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr              \
+--disable-static           \
+--docdir=/usr/share/doc/pkgconf-2.3.0
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+ln -sv pkgconf   ${PKG_DIR}/usr/bin/pkg-config
+ln -sv pkgconf.1 ${PKG_DIR}/usr/share/man/man1/pkg-config.1
+'''

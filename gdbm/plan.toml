@@ -1,0 +1,37 @@
+[plan]
+name = "gdbm"
+version = "1.26"
+release = 1
+description = "GNU Database Manager"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/gdbm/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/gdbm/gdbm-1.26.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr    \
+--disable-static \
+--enable-libgdbm-compat
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

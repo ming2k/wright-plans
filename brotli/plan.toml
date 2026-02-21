@@ -1,0 +1,28 @@
+[plan]
+name = "brotli"
+version = "1.2.0"
+release = 1
+description = "Generic-purpose lossless compression algorithm"
+license = "MIT"
+arch = "x86_64"
+
+[dependencies]
+build = ["cmake", "gcc", "make"]
+[sources]
+uris = ["https://github.com/google/brotli/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+cmake -B build \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_INSTALL_LIBDIR=lib
+"""
+
+[lifecycle.compile]
+script = "cmake --build ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build"

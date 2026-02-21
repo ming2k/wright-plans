@@ -1,0 +1,73 @@
+[plan]
+name = "gtk4"
+version = "4.20.3"
+release = 1
+description = "GTK4 — the GIMP Toolkit (Pure Wayland)"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://www.gtk.org"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "gobject-introspection", "sassc", "vulkan-headers", "wayland-protocols", "shaderc"]
+runtime = ["adwaita-icon-theme", "shared-mime-info", "iso-codes"]
+link = ["glib", "pango", "cairo", "gdk-pixbuf", "libpng", "libjpeg-turbo", "libtiff", "graphene", "libepoxy", "libxkbcommon", "wayland", "vulkan-loader"]
+
+[sources]
+uris = ["https://download.gnome.org/sources/gtk/4.20/gtk-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dwayland-backend=true \
+    -Dx11-backend=false \
+    -Dintrospection=enabled \
+    -Dvulkan=enabled \
+    -Dmedia-gstreamer=disabled \
+    -Dprint-cups=disabled \
+    -Dbuild-tests=false \
+    -Ddocumentation=false
+"""
+
+[lifecycle.compile]
+script = "meson compile -C ${BUILD_DIR}/build"
+
+[lifecycle.package]
+script = '''
+meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
+
+pc_file="${PKG_DIR}/usr/lib/pkgconfig/gtk4.pc"
+if [ -f "${pc_file}" ]; then
+    if ! grep -q 'libjpeg' "${pc_file}"; then
+        sed -i "s/^Requires: /Requires: libjpeg, libpng, /" "${pc_file}"
+    fi
+fi
+
+# Remove GTK demo applications (gtk4-node-editor, gtk4-print-editor)
+rm -f \
+    "${PKG_DIR}/usr/bin/gtk4-node-editor" \
+    "${PKG_DIR}/usr/bin/gtk4-print-editor" \
+    "${PKG_DIR}/usr/share/applications/org.gtk.gtk4.NodeEditor.desktop" \
+    "${PKG_DIR}/usr/share/applications/org.gtk.PrintEditor4.desktop" \
+    "${PKG_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor.svg" \
+    "${PKG_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor.Devel.svg" \
+    "${PKG_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.PrintEditor4.svg" \
+    "${PKG_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.PrintEditor4.Devel.svg" \
+    "${PKG_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.gtk4.NodeEditor-symbolic.svg" \
+    "${PKG_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg"
+'''
+
+[install_scripts]
+post_install = '''
+glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
+gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
+gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
+'''
+post_upgrade = '''
+glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
+gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
+gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
+'''

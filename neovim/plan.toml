@@ -1,0 +1,56 @@
+[plan]
+name = "neovim"
+version = "0.11.6"
+release = 1
+description = "Hyperextensible Vim-based text editor"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://neovim.io"
+maintainer = "Neovim contributors <neovim@neovim.io>"
+
+[dependencies]
+build = ["cmake", "curl", "gcc", "gettext", "make", "unzip"]
+link = ["glibc"]
+optional = [
+  { name = "python", description = "Python provider support" },
+  { name = "xclip", description = "Clipboard support via xclip" },
+]
+[sources]
+uris = ["https://github.com/neovim/neovim/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[options]
+strip = true
+ccache = true
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr deps
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${PKG_DIR} install
+"""
+
+[install_scripts]
+post_install = """
+update-desktop-database -q 2>/dev/null || true
+"""
+post_upgrade = """
+update-desktop-database -q 2>/dev/null || true
+"""
+
+[backup]
+files = []

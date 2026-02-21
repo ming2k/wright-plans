@@ -1,0 +1,39 @@
+[plan]
+name = "libglvnd"
+version = "1.7.0"
+release = 1
+description = "The GL Vendor-Neutral Dispatch library"
+license = "MIT"
+arch = "x86_64"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "python"]
+[sources]
+uris = ["https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+# 纯 Wayland 环境配置：
+# -Dglx=disabled: 禁用 GLX (依赖 X11)
+# -Dx11=disabled: 禁用 X11 支持
+meson setup build \
+--prefix=/usr \
+--libdir=lib \
+-Dglx=disabled \
+-Dx11=disabled \
+-Dheaders=true
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}/build
+ninja -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+"""

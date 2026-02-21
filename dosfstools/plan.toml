@@ -1,0 +1,30 @@
+[plan]
+name = "dosfstools"
+version = "4.2"
+release = 1
+description = "FAT filesystem utilities: mkfs.fat, fsck.fat, fatlabel"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://github.com/dosfstools/dosfstools"
+
+[dependencies]
+build = ["pkgconf"]
+
+[sources]
+uris = ["https://github.com/dosfstools/dosfstools/releases/download/v${PKG_VERSION}/dosfstools-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --enable-compat-symlinks
+"""
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.package]
+script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

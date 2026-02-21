@@ -1,0 +1,47 @@
+[plan]
+name = "duktape"
+version = "2.7.0"
+release = 1
+description = "Embeddable Javascript engine"
+license = "MIT"
+arch = "x86_64"
+url = "https://duktape.org"
+
+[sources]
+uris = ["https://duktape.org/duktape-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+echo "makefile project"
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+sed -i 's/-Wall -Wextra/-Wall -Wextra -fPIC/' Makefile.sharedlibrary
+make -f Makefile.sharedlibrary -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+mkdir -p ${PKG_DIR}/usr/lib ${PKG_DIR}/usr/include ${PKG_DIR}/usr/lib/pkgconfig
+cp -a libduktape.so* ${PKG_DIR}/usr/lib/
+cp src/duktape.h src/duk_config.h ${PKG_DIR}/usr/include/
+cat > ${PKG_DIR}/usr/lib/pkgconfig/duktape.pc << PCEOF
+prefix=/usr
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/lib
+includedir=\${prefix}/include
+
+Name: Duktape
+Description: Embeddable Javascript engine
+Version: ${PKG_VERSION}
+Libs: -L\${libdir} -lduktape -lm
+Cflags: -I\${includedir}
+PCEOF
+'''

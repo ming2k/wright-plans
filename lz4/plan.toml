@@ -1,0 +1,36 @@
+[plan]
+name = "lz4"
+version = "1.10.0"
+release = 1
+description = "Extremely fast lossless compression algorithm"
+license = "BSD-2-Clause AND GPL-2.0-only"
+arch = "x86_64"
+url = "https://lz4.github.io/lz4/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://github.com/lz4/lz4/releases/download/v${PKG_VERSION}/lz4-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make BUILD_STATIC=no PREFIX=/usr -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make -j1 check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PKG_DIR} install
+'''

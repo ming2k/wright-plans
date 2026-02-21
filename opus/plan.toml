@@ -1,0 +1,36 @@
+[plan]
+name = "opus"
+version = "1.6.1"
+release = 1
+description = "Versatile audio codec"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/xiph/opus"
+
+[dependencies]
+build = ["gcc", "make"]
+
+[sources]
+uris = ["https://downloads.xiph.org/releases/opus/opus-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

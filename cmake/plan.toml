@@ -1,0 +1,50 @@
+[plan]
+name = "cmake"
+version = "4.2.3"
+release = 1
+description = "A modern toolset used for generating Makefiles and other build systems"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://cmake.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://cmake.org/files/v4.2/cmake-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
+./bootstrap --prefix=/usr \
+--no-system-jsoncpp \
+--no-system-cppdap \
+--no-system-librhash \
+--mandir=/share/man \
+--docdir=/share/doc/cmake-${PKG_VERSION} \
+--parallel=$(nproc)
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+bin/ctest -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

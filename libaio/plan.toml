@@ -1,0 +1,18 @@
+[plan]
+name = "libaio"
+version = "0.3.113"
+release = 1
+description = "Linux kernel AIO (Asynchronous I/O) interface library"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+url = "https://pagure.io/libaio"
+
+[sources]
+uris = ["https://pagure.io/libaio/archive/libaio-${PKG_VERSION}/libaio-libaio-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR} prefix=/usr"
+
+[lifecycle.package]
+script = "make -C ${BUILD_DIR} prefix=/usr DESTDIR=${PKG_DIR} install"

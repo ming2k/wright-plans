@@ -1,0 +1,37 @@
+[plan]
+name = "libwebp"
+version = "1.5.0"
+release = 1
+description = "Library for the WebP graphics format"
+license = "BSD-3-Clause"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["libpng"]
+[sources]
+uris = ["https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${PKG_VERSION}.tar.gz"]
+sha256 = [
+    "7d6fab70cf844bf6769077bd5d7a74893f8ffd4dfb42861745750c63c2a5c92c",
+]
+
+[lifecycle.configure]
+# --enable-libwebpmux: 启用 Muxer (对 WebKitGTK 必须)
+# --enable-libwebpdemux: 启用 Demuxer (对 WebKitGTK 必须)
+# --enable-swap-16bit-csp: 启用 16-bit色彩空间转换优化
+script = """
+cd ${BUILD_DIR}
+./configure \
+--prefix=/usr \
+--disable-static \
+--enable-libwebpmux \
+--enable-libwebpdemux \
+--enable-libwebpextras \
+--enable-swap-16bit-csp
+"""
+
+[lifecycle.compile]
+script = "cd ${BUILD_DIR} && make -j$(nproc)"
+
+[lifecycle.package]
+script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"

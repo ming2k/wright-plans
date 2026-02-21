@@ -1,0 +1,46 @@
+[plan]
+name = "mpv"
+version = "0.41.0"
+release = 1
+description = "A free, open source, and cross-platform media player"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://mpv.io"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = ["alsa-lib", "ffmpeg", "lcms2", "libass", "libdrm", "libplacebo", "libva", "mesa", "pipewire", "vulkan-loader", "wayland", "libxkbcommon"]
+
+[sources]
+uris = ["https://github.com/mpv-player/mpv/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+--prefix=/usr \
+--buildtype=release \
+-D libmpv=true \
+-D cdda=disabled \
+-D drm=enabled \
+-D libarchive=disabled \
+-D dvdnav=disabled \
+-D javascript=disabled \
+-D lua=disabled \
+-D uchardet=disabled \
+-D tests=false \
+-D alsa=enabled \
+-D pipewire=enabled \
+-D vulkan=enabled \
+-D wayland=enabled \
+-D gl=enabled
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+dockyard = "none"
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

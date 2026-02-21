@@ -1,0 +1,47 @@
+[plan]
+name = "sed"
+version = "4.9"
+release = 1
+description = "Stream editor"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/sed/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/sed/sed-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+make html
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+chown -R tester .
+su tester -c "PATH=$PATH make check"
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+install -d -m755           ${PKG_DIR}/usr/share/doc/sed-4.9
+install -m644 doc/sed.html ${PKG_DIR}/usr/share/doc/sed-4.9
+'''

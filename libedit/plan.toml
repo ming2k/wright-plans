@@ -1,0 +1,38 @@
+[plan]
+name = "libedit"
+version = "20251016-3.1"
+release = 1
+description = "BSD-style command line editing library"
+license = "BSD-3-Clause"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["ncurses"]
+[sources]
+uris = ["https://thrysoee.dk/editline/libedit-${PKG_VERSION}.tar.gz"]
+# 官方发布的 SHA256 校验和
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+
+# 兼容性处理：创建 readline 软链接别名
+# 许多程序（包括一些旧的 configure 脚本）只认 readline，不认 libedit
+ln -sf libedit.so ${PKG_DIR}/usr/lib/libreadline.so
+ln -sf readline.h ${PKG_DIR}/usr/include/editline/readline.h
+"""

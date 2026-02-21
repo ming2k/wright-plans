@@ -1,0 +1,35 @@
+[plan]
+name = "noto-fonts"
+version = "2025.01.01"
+release = 1
+description = "Google Noto Sans font"
+license = "OFL-1.1"
+arch = "any"
+url = "https://github.com/notofonts/notofonts.github.io"
+
+[sources]
+uris = ["https://github.com/notofonts/latin-greek-cyrillic/releases/download/NotoSans-v2.014/NotoSans-v2.014.zip"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+echo "no configure needed"
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+echo "no build needed"
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+mkdir -p ${PKG_DIR}/usr/share/fonts/noto
+find ${BUILD_DIR} -name '*.ttf' -exec cp {} ${PKG_DIR}/usr/share/fonts/noto/ \;
+'''
+
+[install_scripts]
+post_install = "fc-cache -s 2>/dev/null || true"
+post_upgrade = "fc-cache -s 2>/dev/null || true"

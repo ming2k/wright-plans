@@ -1,0 +1,42 @@
+[plan]
+name = "harfbuzz"
+version = "12.3.2"
+release = 1
+description = "OpenType text shaping engine"
+license = "MIT"
+arch = "x86_64"
+
+[dependencies]
+build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
+link = ["cairo", "freetype", "glib", "icu"]
+
+[sources]
+uris = ["https://github.com/harfbuzz/harfbuzz/releases/download/12.3.2/harfbuzz-12.3.2.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build \
+    --prefix=/usr          \
+    --buildtype=release    \
+    --wrap-mode=nofallback \
+    -D cairo=enabled       \
+    -D icu=enabled         \
+    -D glib=enabled        \
+    -D gobject=enabled     \
+    -D tests=disabled      \
+    -D docs=disabled
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/build
+ninja -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+'''

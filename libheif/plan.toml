@@ -1,0 +1,29 @@
+[plan]
+name = "libheif"
+version = "1.21.2"
+release = 2
+description = "HEIF and AVIF file format decoder and encoder"
+license = "LGPL-3.0-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["cmake", "ninja", "gcc", "pkgconf"]
+link = ["libde265", "dav1d", "aom", "libjpeg-turbo", "libpng"]
+
+[sources]
+uris = ["https://github.com/strukturag/libheif/releases/download/v${PKG_VERSION}/libheif-${PKG_VERSION}.tar.gz"]
+sha256 = [
+    "75f530b7154bc93e7ecf846edfc0416bf5f490612de8c45983c36385aa742b42",
+]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_LIBDE265=ON -DENABLE_DAV1D=ON -DENABLE_AOM=ON -DWITH_EXAMPLES=OFF -DWITH_GDK_PIXBUF=OFF
+"""
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

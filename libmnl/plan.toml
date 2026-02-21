@@ -1,0 +1,37 @@
+[plan]
+name = "libmnl"
+version = "1.0.5"
+release = 1
+description = "Minimalistic Netlink userspace library"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://netfilter.org/projects/libmnl/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["glibc"]
+[sources]
+uris = ["https://netfilter.org/projects/libmnl/files/libmnl-${PKG_VERSION}.tar.bz2"]
+sha256 = ["SKIP"]
+
+[options]
+strip = true
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+--disable-static
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""

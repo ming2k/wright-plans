@@ -1,0 +1,45 @@
+[plan]
+name = "bc"
+version = "7.0.3"
+release = 1
+description = "Arbitrary precision numeric processing language and calculator"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/gavinhoward/bc"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["readline"]
+[sources]
+uris = ["https://github.com/gavinhoward/bc/releases/download/${PKG_VERSION}/bc-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+CC='gcc -std=c99' ./configure --prefix=/usr -G -O3 -r
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make test
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+rm -f ${PKG_DIR}/usr/share/info/dir
+'''

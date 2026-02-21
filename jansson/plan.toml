@@ -1,0 +1,44 @@
+[plan]
+name = "jansson"
+version = "2.15.0"
+release = 1
+description = "C library for encoding, decoding and manipulating JSON data"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/akheron/jansson"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["glibc"]
+[sources]
+uris = ["https://github.com/akheron/jansson/releases/download/v${PKG_VERSION}/jansson-${PKG_VERSION}.tar.bz2"]
+sha256 = ["SKIP"]
+
+[options]
+strip = true
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+--disable-static
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.check]
+optional = true
+script = """
+cd ${BUILD_DIR}
+make check
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""

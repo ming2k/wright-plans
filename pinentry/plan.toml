@@ -1,0 +1,52 @@
+[plan]
+name = "pinentry"
+version = "1.3.2"
+release = 1
+description = "Collection of simple PIN or passphrase entry dialogs"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://gnupg.org/software/pinentry/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["libassuan", "libgpg-error", "ncurses"]
+
+[sources]
+uris = ["https://gnupg.org/ftp/gcrypt/pinentry/pinentry-${PKG_VERSION}.tar.bz2"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --disable-static \
+  --enable-pinentry-curses \
+  --enable-pinentry-tty \
+  --disable-pinentry-emacs \
+  --disable-pinentry-gnome3 \
+  --disable-pinentry-gtk2 \
+  --disable-pinentry-qt \
+  --disable-pinentry-qt5 \
+  --disable-pinentry-qt6
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} make install
+
+# Ensure a generic pinentry binary exists for gpg-agent defaults.
+if [ ! -e ${PKG_DIR}/usr/bin/pinentry ] && [ -e ${PKG_DIR}/usr/bin/pinentry-curses ]; then
+  ln -sf pinentry-curses ${PKG_DIR}/usr/bin/pinentry
+fi
+'''

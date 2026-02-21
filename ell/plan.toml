@@ -1,0 +1,37 @@
+[plan]
+name = "ell"
+version = "0.81"
+release = 1
+description = "Embedded Linux Library"
+license = "LGPL-2.1-only"
+arch = "x86_64"
+url = "https://01.org/ell"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://mirrors.edge.kernel.org/pub/linux/libs/ell/ell-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+--enable-shared \
+--disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

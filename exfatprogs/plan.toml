@@ -1,0 +1,30 @@
+[plan]
+name = "exfatprogs"
+version = "1.2.5"
+release = 1
+description = "exFAT filesystem utilities: mkfs.exfat, fsck.exfat"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/exfatprogs/exfatprogs"
+
+[dependencies]
+build = ["pkgconf"]
+
+[sources]
+uris = ["https://github.com/exfatprogs/exfatprogs/releases/download/${PKG_VERSION}/exfatprogs-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --disable-static
+"""
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.package]
+script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

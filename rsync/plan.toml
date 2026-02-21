@@ -1,0 +1,43 @@
+[plan]
+name = "rsync"
+version = "3.4.1"
+release = 1
+description = "A fast and versatile file copying tool for remote and local files"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://rsync.samba.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["openssl", "zlib", "zstd", "lz4"]
+optional = [
+  { name = "openssh", description = "ssh transport" },
+]
+
+[sources]
+uris = ["https://www.samba.org/ftp/rsync/src/rsync-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr    \
+--disable-xxhash             \
+--without-included-popt      \
+--without-included-zlib
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

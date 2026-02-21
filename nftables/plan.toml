@@ -1,0 +1,90 @@
+[plan]
+name = "nftables"
+version = "1.1.6"
+release = 1
+description = "Netfilter nftables userspace tools"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://netfilter.org/projects/nftables/"
+maintainer = "Netfilter Core Team <coreteam@netfilter.org>"
+
+[dependencies]
+build = ["bison", "flex", "gcc", "libmnl", "libnftnl", "make", "pkgconf"]
+runtime = ["libmnl >= 1.0.4", "libnftnl >= 1.2.0"]
+link = ["gmp", "jansson", "ncurses", "readline"]
+optional = [
+  { name = "python", description = "Python bindings (libnftables)" },
+]
+[sources]
+uris = ["https://netfilter.org/projects/nftables/files/nftables-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[options]
+strip = true
+ccache = true
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr      \
+--sysconfdir=/etc  \
+--with-json        \
+--with-cli=readline \
+--disable-debug    \
+--disable-man-doc  \
+--with-mini-gmp=no
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.check]
+optional = true
+script = """
+cd ${BUILD_DIR}
+make check
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+
+install -d ${PKG_DIR}/etc/nftables
+install -Dm644 files/examples/*.nft ${PKG_DIR}/etc/nftables/ 2>/dev/null || true
+
+install -d ${PKG_DIR}/etc
+cat > ${PKG_DIR}/etc/nftables.conf << 'CONF'
+#!/usr/bin/nft -f
+
+flush ruleset
+
+table inet filter {
+chain input {
+type filter hook input priority filter; policy drop;
+iif lo accept
+ct state established,related accept
+ct state invalid drop
+tcp dport 22 accept
+}
+chain forward {
+type filter hook forward priority filter; policy drop;
+}
+chain output {
+type filter hook output priority filter; policy accept;
+}
+}
+CONF
+chmod 755 ${PKG_DIR}/etc/nftables.conf
+"""
+
+[install_scripts]
+post_install = "ldconfig 2>/dev/null || true"
+post_upgrade = "ldconfig 2>/dev/null || true"
+pre_remove = "nft flush ruleset 2>/dev/null || true"
+
+[backup]
+files = ["/etc/nftables.conf"]

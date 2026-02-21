@@ -1,0 +1,46 @@
+[plan]
+name = "ostree"
+version = "2025.7"
+release = 2
+description = "Operating system and container binary deployment and upgrades"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+url = "https://ostreedev.github.io/ostree/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf", "gettext"]
+runtime = ["systemd"]
+link = ["glib", "libarchive", "curl", "gpgme"]
+
+[sources]
+uris = ["https://github.com/ostreedev/ostree/releases/download/v${PKG_VERSION}/libostree-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr       \
+    --disable-static            \
+    --with-curl                 \
+    --without-soup              \
+    --without-soup3             \
+    --disable-man               \
+    --disable-gtk-doc           \
+    --with-gpgme                \
+    --disable-otmpfile
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} make install
+'''

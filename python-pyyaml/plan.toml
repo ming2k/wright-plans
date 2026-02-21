@@ -1,0 +1,21 @@
+[plan]
+name = "python-pyyaml"
+version = "6.0.2"
+release = 1
+description = "YAML parser and emitter for Python"
+license = "MIT"
+arch = "x86_64"
+url = "https://pyyaml.org/"
+
+[dependencies]
+build = ["python"]
+[sources]
+uris = ["https://files.pythonhosted.org/packages/source/p/pyyaml/pyyaml-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+pip3 install --break-system-packages --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

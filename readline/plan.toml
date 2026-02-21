@@ -1,0 +1,64 @@
+[plan]
+name = "readline"
+version = "8.3"
+release = 1
+description = "GNU readline library for command-line editing and history"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://tiswww.case.edu/php/chet/readline/rltop.html"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["ncurses"]
+[sources]
+uris = [
+"https://ftp.gnu.org/gnu/readline/readline-${PKG_VERSION}.tar.gz",
+"https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-001",
+"https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-002",
+"https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-003",
+]
+sha256 = ["SKIP", "SKIP", "SKIP", "SKIP"]
+
+[options]
+strip = true
+ccache = true
+
+[lifecycle.prepare]
+script = """
+cd ${BUILD_DIR}
+patch -Np0 < ${FILES_DIR}/readline83-001
+patch -Np0 < ${FILES_DIR}/readline83-002
+patch -Np0 < ${FILES_DIR}/readline83-003
+sed -i '/MV.*old/d' Makefile.in
+sed -i '/{OLDSUFF}/c:' support/shlib-install
+"""
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr    \
+--disable-static \
+--with-curses    \
+--docdir=/usr/share/doc/readline-${PKG_VERSION}
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make SHLIB_LIBS="-lncursesw"
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+make SHLIB_LIBS="-lncursesw" DESTDIR=${PKG_DIR} install
+install -d ${PKG_DIR}/usr/share/doc/readline-${PKG_VERSION}
+install -v -m644 doc/*.{ps,pdf,html,dvi} ${PKG_DIR}/usr/share/doc/readline-${PKG_VERSION}/ 2>/dev/null || true
+"""
+
+[install_scripts]
+post_install = "ldconfig 2>/dev/null || true"
+post_upgrade = "ldconfig 2>/dev/null || true"
+
+[backup]
+files = ["/etc/inputrc"]

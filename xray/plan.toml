@@ -1,0 +1,58 @@
+[plan]
+name = "xray"
+version = "26.2.6"
+release = 1
+description = "Platform for building proxies to bypass network restrictions"
+license = "MPL-2.0"
+arch = "x86_64"
+url = "https://github.com/XTLS/Xray-core"
+
+[dependencies]
+build = ["go"]
+runtime = ["iproute2", "nftables"]
+[sources]
+uris = ["https://github.com/XTLS/Xray-core/archive/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+export CGO_ENABLED=0
+export GOFLAGS="-trimpath"
+go build -ldflags "-X github.com/xtls/xray-core.codename=xray \
+-X github.com/xtls/xray-core.version=${PKG_VERSION} \
+-buildid=" \
+-o xray ./main
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+install -Dm755 xray ${PKG_DIR}/usr/bin/xray
+install -dm755 ${PKG_DIR}/etc/xray
+install -Dm644 ${FILES_DIR}/tproxy.json.example ${PKG_DIR}/etc/xray/tproxy.json.example
+install -Dm644 ${FILES_DIR}/xray-tproxy.nft ${PKG_DIR}/etc/xray/xray-tproxy.nft
+install -Dm644 ${FILES_DIR}/99-xray-tproxy.conf ${PKG_DIR}/usr/lib/sysctl.d/99-xray-tproxy.conf
+install -Dm644 ${FILES_DIR}/xray.service ${PKG_DIR}/usr/lib/systemd/system/xray.service
+install -Dm644 ${FILES_DIR}/xray-tproxy.service ${PKG_DIR}/usr/lib/systemd/system/xray-tproxy.service
+"""
+
+[backup]
+files = ["/etc/xray/config.json", "/etc/xray/xray-tproxy.nft"]
+
+[install_scripts]
+post_install = """
+systemctl daemon-reload 2>/dev/null || true
+echo ":: Create /etc/xray/config.json before starting xray"
+echo ":: See /etc/xray/tproxy.json.example for tproxy setup"
+echo ":: Enable with: systemctl enable --now xray xray-tproxy"
+"""
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+pre_remove = """
+systemctl stop xray-tproxy 2>/dev/null || true
+systemctl stop xray 2>/dev/null || true
+systemctl disable xray-tproxy 2>/dev/null || true
+systemctl disable xray 2>/dev/null || true
+"""

@@ -1,0 +1,25 @@
+[plan]
+name = "dav1d"
+version = "1.5.3"
+release = 1
+description = "Fastest AV1 decoder on all platforms"
+license = "BSD-2-Clause"
+arch = "x86_64"
+
+[dependencies]
+build = ["meson", "ninja", "nasm", "gcc"]
+
+[sources]
+uris = ["https://code.videolan.org/videolan/dav1d/-/archive/${PKG_VERSION}/dav1d-${PKG_VERSION}.tar.gz"]
+sha256 = [
+    "cbe212b02faf8c6eed5b6d55ef8a6e363aaab83f15112e960701a9c3df813686",
+]
+
+[lifecycle.configure]
+script = "cd ${BUILD_DIR} && meson setup build --prefix=/usr --buildtype=release"
+
+[lifecycle.compile]
+script = "meson compile -C ${BUILD_DIR}/build"
+
+[lifecycle.package]
+script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"

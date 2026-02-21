@@ -1,0 +1,36 @@
+[plan]
+name = "xml-parser"
+version = "2.47"
+release = 1
+description = "Perl interface to the Expat XML parser"
+license = "Artistic-1.0-Perl OR GPL-1.0-or-later"
+arch = "x86_64"
+url = "https://github.com/toddr/XML-Parser"
+
+[dependencies]
+build = ["make", "perl"]
+link = ["expat"]
+[sources]
+uris = ["https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.47.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+perl Makefile.PL
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

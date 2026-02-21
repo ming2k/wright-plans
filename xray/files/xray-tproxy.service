@@ -1,0 +1,24 @@
+[Unit]
+Description=Xray TProxy routing rules
+After=network-online.target xray.service
+Requires=xray.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c '\
+  ip rule add fwmark 1 table 100 2>/dev/null; \
+  ip route add local 0.0.0.0/0 dev lo table 100 2>/dev/null; \
+  ip -6 rule add fwmark 1 table 100 2>/dev/null; \
+  ip -6 route add local ::/0 dev lo table 100 2>/dev/null; \
+  nft -f /etc/xray/xray-tproxy.nft'
+ExecStop=/bin/sh -c '\
+  nft delete table ip xray_v4 2>/dev/null; \
+  nft delete table ip6 xray_v6 2>/dev/null; \
+  ip rule del fwmark 1 table 100 2>/dev/null; \
+  ip route del local 0.0.0.0/0 dev lo table 100 2>/dev/null; \
+  ip -6 rule del fwmark 1 table 100 2>/dev/null; \
+  ip -6 route del local ::/0 dev lo table 100 2>/dev/null'
+
+[Install]
+WantedBy=multi-user.target

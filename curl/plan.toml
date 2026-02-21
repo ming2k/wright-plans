@@ -1,0 +1,42 @@
+[plan]
+name = "curl"
+version = "8.18.0"
+release = 1
+description = "Command line tool and library for transferring data with URLs"
+license = "curl"
+arch = "x86_64"
+url = "https://curl.se/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["libidn2", "libpsl", "nghttp2", "openssl"]
+[sources]
+uris = ["https://curl.se/download/curl-${PKG_VERSION}.tar.xz"]
+sha256 = [
+    "40df79166e74aa20149365e11ee4c798a46ad57c34e4f68fd13100e2c9a91946",
+]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr                    \
+--disable-static                 \
+--with-openssl                   \
+--enable-threaded-resolver       \
+--with-ca-path=/etc/ssl/certs
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

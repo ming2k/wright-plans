@@ -1,0 +1,44 @@
+[plan]
+name = "m4"
+version = "1.4.20"
+release = 1
+description = "GNU macro processor used as a build tool for other programs"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/m4/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/m4/m4-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+rm -f ${PKG_DIR}/usr/share/info/dir
+'''

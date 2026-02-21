@@ -1,0 +1,46 @@
+[plan]
+name = "acl"
+version = "2.3.2"
+release = 1
+description = "Utilities to administer Access Control Lists"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://savannah.nongnu.org/projects/acl"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["attr"]
+[sources]
+uris = ["https://download.savannah.gnu.org/releases/acl/acl-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr    \
+--disable-static \
+--docdir=/usr/share/doc/acl-2.3.2
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

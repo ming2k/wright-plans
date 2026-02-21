@@ -1,0 +1,35 @@
+[plan]
+name = "json-glib"
+version = "1.10.8"
+release = 2
+description = "JSON parser/generator for GLib"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://wiki.gnome.org/Projects/JsonGlib"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
+link = ["glib"]
+
+[sources]
+uris = ["https://download.gnome.org/sources/json-glib/1.10/json-glib-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+    --prefix=/usr             \
+    --buildtype=release       \
+    -Dtests=false             \
+    -Dintrospection=enabled   \
+    -Dman=false
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+dockyard = "none"
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

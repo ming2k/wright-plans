@@ -1,0 +1,81 @@
+[plan]
+name = "util-linux"
+version = "2.41.3"
+release = 1
+description = "Miscellaneous system utilities for Linux"
+license = "GPL-2.0"
+arch = "x86_64"
+url = "https://www.kernel.org/pub/linux/utils/util-linux/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["glibc", "ncurses", "zlib", "libcap", "linux-pam"]
+
+[sources]
+uris = ["https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+            --libdir=/usr/lib \
+            --localstatedir=/var \
+            --disable-chfn-chsh \
+            --disable-login \
+            --disable-nologin \
+            --disable-su \
+            --disable-setpriv \
+            --disable-runuser \
+            --disable-pylibmount \
+            --disable-static \
+            --without-python \
+            --with-systemd \
+            --with-pam
+"""
+
+[lifecycle.compile]
+script = "cd ${BUILD_DIR} && make -j$(nproc)"
+
+[lifecycle.package]
+script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"
+
+[split.libuuid]
+description = "Universally Unique Identifier library"
+[split.libuuid.dependencies]
+link = ["glibc"]
+[split.libuuid.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/lib
+mv -v ${MAIN_PKG_DIR}/usr/lib/libuuid.so* ${PKG_DIR}/usr/lib/
+"""
+
+[split.libblkid]
+description = "Block device identification library"
+[split.libblkid.dependencies]
+link = ["glibc", "libuuid"]
+[split.libblkid.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/lib
+mv -v ${MAIN_PKG_DIR}/usr/lib/libblkid.so* ${PKG_DIR}/usr/lib/
+"""
+
+[split.libmount]
+description = "Device mounting library"
+[split.libmount.dependencies]
+link = ["glibc", "libblkid"]
+[split.libmount.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/lib
+mv -v ${MAIN_PKG_DIR}/usr/lib/libmount.so* ${PKG_DIR}/usr/lib/
+"""
+
+[split.libsmartcols]
+description = "Table or tree formatting library"
+[split.libsmartcols.dependencies]
+link = ["glibc"]
+[split.libsmartcols.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/lib
+mv -v ${MAIN_PKG_DIR}/usr/lib/libsmartcols.so* ${PKG_DIR}/usr/lib/
+"""

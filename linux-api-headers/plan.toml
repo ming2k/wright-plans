@@ -1,0 +1,31 @@
+[plan]
+name = "linux-api-headers"
+version = "6.19.2"
+release = 1
+description = "Sanitized Linux kernel headers for userspace"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://www.kernel.org"
+
+[dependencies]
+build = ["make"]
+
+[sources]
+uris = ["https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = "echo preparing linux-api-headers"
+
+[lifecycle.compile]
+script = "echo no compile stage for linux-api-headers"
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make mrproper
+make headers
+find usr/include -name '.*' -delete
+rm -f usr/include/Makefile
+cp -a usr/include ${PKG_DIR}/usr/
+'''

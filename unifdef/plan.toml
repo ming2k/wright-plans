@@ -1,0 +1,34 @@
+[plan]
+name = "unifdef"
+version = "2.12"
+release = 1
+description = "Tool for selectively removing ifdef from C/C++ sources"
+license = "BSD-2-Clause"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+script = """
+cd ${BUILD_DIR}
+# 修复 GCC 15 (C23) 编译错误：
+# 将变量名 'constexpr' 重命名为 'const_expr'，避免与 C23 关键字冲突
+sed -i 's/constexpr/const_expr/g' unifdef.c
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+# prefix 定义安装路径
+make prefix=${PKG_DIR}/usr install
+"""

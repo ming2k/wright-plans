@@ -1,0 +1,24 @@
+[plan]
+name = "iana-etc"
+version = "20250807"
+release = 1
+description = "Data for network services and protocols (/etc/services and /etc/protocols)"
+license = "MIT"
+arch = "x86_64"
+url = "https://www.iana.org/protocols"
+
+[sources]
+uris = ["https://github.com/Mic92/iana-etc/releases/download/${PKG_VERSION}/iana-etc-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+# Run wright build --update iana-etc to fill in the real checksum
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+install -Dm644 services  ${PKG_DIR}/etc/services
+install -Dm644 protocols ${PKG_DIR}/etc/protocols
+"""
+
+[backup]
+files = ["/etc/services", "/etc/protocols"]

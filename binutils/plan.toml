@@ -1,0 +1,59 @@
+[plan]
+name = "binutils"
+version = "2.46"
+release = 1
+description = "A set of programs to assemble and manipulate binary and object files"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/binutils/"
+options = ["!strip"]
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = [
+"https://sourceware.org/pub/binutils/releases/binutils-${PKG_VERSION}.tar.xz",
+]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+mkdir -v build
+cd       build
+../configure --prefix=/usr       \
+--sysconfdir=/etc   \
+--enable-gold       \
+--enable-ld=default \
+--enable-plugins    \
+--enable-shared     \
+--disable-werror    \
+--enable-64-bit-bfd \
+--enable-new-dtags  \
+--with-system-zlib  \
+--enable-default-hash-style=gnu
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/build
+make tooldir=/usr
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}/build
+make DESTDIR=${PKG_DIR} tooldir=/usr install
+
+# Remove static libraries
+rm -fv ${PKG_DIR}/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a
+'''
+
+[install_scripts]
+post_install = """
+# Clean old binutils residuals
+rm -f /usr/lib/libbfd-2.43.1.so
+rm -f /usr/lib/libsframe.so.1.0.0
+ldconfig
+"""
+post_upgrade = "ldconfig"

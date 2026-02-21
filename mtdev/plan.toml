@@ -1,0 +1,35 @@
+[plan]
+name = "mtdev"
+version = "1.1.7"
+release = 1
+description = "Multitouch protocol translation library"
+license = "MIT"
+arch = "x86_64"
+url = "https://bitmath.org/code/mtdev/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://bitmath.org/code/mtdev/mtdev-${PKG_VERSION}.tar.bz2"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

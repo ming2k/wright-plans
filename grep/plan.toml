@@ -1,0 +1,42 @@
+[plan]
+name = "grep"
+version = "3.12"
+release = 1
+description = "Programs for searching through the contents of files"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/grep/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/grep/grep-3.12.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+sed -i "s/echo/#echo/" src/egrep.sh
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

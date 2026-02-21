@@ -1,0 +1,115 @@
+[plan]
+name = "systemd"
+version = "259.1"
+release = 4
+description = "System and Service Manager (rebuilt with PAM support)"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/systemd/systemd"
+
+[dependencies]
+build = ["gcc", "gperf", "jinja2", "meson", "ninja", "pkgconf", "python"]
+runtime = ["libsystemd", "libudev"]
+link = ["glibc", "linux-pam"]
+
+[sources]
+uris = ["https://github.com/systemd/systemd/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[options]
+strip = true
+
+[lifecycle.prepare]
+script = """
+cd ${BUILD_DIR}
+sed -i -e 's/GROUP="render"/GROUP="video"/' \
+-e 's/GROUP="sgx", //' \
+rules.d/50-udev-default.rules.in
+"""
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+mkdir -p build
+cd build
+meson setup ..                                    \
+--prefix=/usr                                   \
+--buildtype=release                             \
+-D default-dnssec=no                            \
+-D firstboot=false                              \
+-D install-tests=false                          \
+-D ldconfig=false                               \
+-D man=disabled                                 \
+-D sysusers=true                               \
+-D rpmmacrosdir=no                              \
+-D homed=disabled                               \
+-D mode=release                                 \
+-D pam=enabled                                  \
+-D pamconfdir=/usr/lib/pam.d                    \
+-D dev-kvm-mode=0660                            \
+-D nobody-group=nogroup                         \
+-D sysupdate=disabled                           \
+-D ukify=disabled                               \
+-D sbat-distro=theseus                          \
+-D sbat-distro-summary="Ship of Theseus"        \
+-D sbat-distro-pkgname=systemd                  \
+-D sbat-distro-version=${PKG_VERSION}           \
+-D sbat-distro-url=https://github.com/anthropic \
+-D docdir=/usr/share/doc/systemd-${PKG_VERSION}
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}/build
+ninja
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+
+cat > ${PKG_DIR}/usr/lib/pam.d/systemd-user << 'PAMEOF'
+# Begin /usr/lib/pam.d/systemd-user
+account  required    pam_access.so
+account  include     system-account
+session  required    pam_env.so
+session  required    pam_limits.so
+session  required    pam_unix.so
+session  required    pam_loginuid.so
+session  optional    pam_keyinit.so force revoke
+session  optional    pam_systemd.so
+auth     required    pam_deny.so
+password required    pam_deny.so
+# End /usr/lib/pam.d/systemd-user
+PAMEOF
+"""
+
+[install_scripts]
+post_install = """
+systemd-machine-id-setup 2>/dev/null || true
+systemctl daemon-reexec 2>/dev/null || true
+"""
+post_upgrade = """
+systemctl daemon-reexec 2>/dev/null || true
+"""
+
+[split.libudev]
+description = "Library for enumerating and introspecting local devices"
+[split.libudev.dependencies]
+link = ["glibc"]
+[split.libudev.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/lib
+mv -v ${MAIN_PKG_DIR}/usr/lib/libudev.so* ${PKG_DIR}/usr/lib/
+"""
+
+[split.libsystemd]
+description = "systemd client library"
+[split.libsystemd.dependencies]
+link = ["glibc", "libcap", "lz4", "zstd", "libgcrypt"]
+[split.libsystemd.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/lib
+mv -v ${MAIN_PKG_DIR}/usr/lib/libsystemd.so* ${PKG_DIR}/usr/lib/
+"""

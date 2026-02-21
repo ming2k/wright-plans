@@ -1,0 +1,91 @@
+[plan]
+name = "woff2"
+version = "1.0.2"
+release = 1
+description = "Web Open Font Format 2 reference implementation"
+license = "MIT"
+arch = "x86_64"
+
+[dependencies]
+build = ["cmake", "gcc", "make"]
+runtime = ["brotli"]
+[sources]
+uris = ["https://github.com/google/woff2/archive/v1.0.2.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+script = """
+cd ${BUILD_DIR}
+
+# 修复 1: 提升 CMake 最低版本要求以兼容 CMake 4.x
+sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/cmake_minimum_required(VERSION 3.5)/' CMakeLists.txt
+
+# 修复 2: 添加缺失的头文件 <cstdint> 以修复 GCC 13+ 上的 'uint8_t does not name a type' 错误
+sed -i '/#include <string>/a #include <cstdint>' include/woff2/output.h
+"""
+
+[lifecycle.configure]
+script = """
+mkdir -p ${BUILD_DIR}/build
+cd ${BUILD_DIR}/build
+cmake .. \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_INSTALL_LIBDIR=lib \
+-DBUILD_SHARED_LIBS=ON
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}/build
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}/build
+make DESTDIR=${PKG_DIR} install
+
+# 手动生成 WebKitGTK 所需的 pkg-config 文件
+mkdir -p ${PKG_DIR}/usr/lib/pkgconfig
+
+cat > ${PKG_DIR}/usr/lib/pkgconfig/libwoff2common.pc << 'PC'
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libwoff2common
+Description: WOFF2 common library
+Version: 1.0.2
+Libs: -L${libdir} -lwoff2common
+Cflags: -I${includedir}
+PC
+
+cat > ${PKG_DIR}/usr/lib/pkgconfig/libwoff2dec.pc << 'PC'
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libwoff2dec
+Description: WOFF2 decoder library
+Version: 1.0.2
+Requires: libwoff2common
+Libs: -L${libdir} -lwoff2dec
+Cflags: -I${includedir}
+PC
+
+cat > ${PKG_DIR}/usr/lib/pkgconfig/libwoff2enc.pc << 'PC'
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libwoff2enc
+Description: WOFF2 encoder library
+Version: 1.0.2
+Requires: libwoff2common
+Libs: -L${libdir} -lwoff2enc
+Cflags: -I${includedir}
+PC
+"""

@@ -1,0 +1,45 @@
+[plan]
+name = "iwd"
+version = "3.11"
+release = 1
+description = "Intel iNet Wireless Daemon - lightweight wireless daemon"
+license = "LGPL-2.1-only"
+arch = "x86_64"
+url = "https://iwd.wiki.kernel.org/"
+
+[dependencies]
+build = ["dbus", "ell", "gcc", "make"]
+runtime = ["dbus", "ell"]
+link = ["readline"]
+[sources]
+uris = ["https://www.kernel.org/pub/linux/network/wireless/iwd-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr            \
+--sysconfdir=/etc        \
+--localstatedir=/var     \
+--libexecdir=/usr/lib    \
+--enable-external-ell    \
+--enable-systemd-service \
+--enable-client          \
+--enable-monitor         \
+--disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

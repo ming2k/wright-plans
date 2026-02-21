@@ -1,0 +1,48 @@
+[plan]
+name = "mpc"
+version = "1.3.1"
+release = 1
+description = "C library for the arithmetic of complex numbers with arbitrarily high precision"
+license = "LGPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.multiprecision.org/mpc/"
+
+[dependencies]
+build = ["make"]
+link = ["gmp", "mpfr"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/mpc/mpc-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr    \
+--disable-static \
+--docdir=/usr/share/doc/mpc-1.3.1
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+make html
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PKG_DIR} install-html
+'''

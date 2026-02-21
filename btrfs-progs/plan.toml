@@ -1,0 +1,32 @@
+[plan]
+name = "btrfs-progs"
+version = "6.13"
+release = 1
+description = "Btrfs filesystem userspace utilities"
+license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://btrfs.readthedocs.io"
+
+[dependencies]
+build = ["pkgconf"]
+link = ["util-linux", "zlib", "lzo", "zstd", "e2fsprogs"]
+
+[sources]
+uris = ["https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --disable-static \
+    --disable-documentation
+"""
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.package]
+script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

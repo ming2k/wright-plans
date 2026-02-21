@@ -1,0 +1,60 @@
+[plan]
+name = "expect"
+version = "5.45.4"
+release = 1
+description = "Tools for automating interactive applications via scripted dialogues"
+license = "Public Domain"
+arch = "x86_64"
+url = "https://core.tcl.tk/expect/"
+
+[dependencies]
+build = ["gcc", "make", "tcl"]
+runtime = ["tcl"]
+[sources]
+uris = [
+"https://downloads.sourceforge.net/project/expect/Expect/${PKG_VERSION}/expect${PKG_VERSION}.tar.gz",
+"https://www.linuxfromscratch.org/patches/lfs/12.4/expect-${PKG_VERSION}-gcc15-1.patch",
+]
+sha256 = ["SKIP", "SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+patch -Np1 < ${FILES_DIR}/expect-${PKG_VERSION}-gcc15-1.patch
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr           \
+--with-tcl=/usr/lib     \
+--enable-shared         \
+--disable-rpath         \
+--mandir=/usr/share/man \
+--with-tclinclude=/usr/include
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make test
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+ln -svf expect${PKG_VERSION}/libexpect${PKG_VERSION}.so ${PKG_DIR}/usr/lib
+'''

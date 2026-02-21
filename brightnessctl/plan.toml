@@ -1,0 +1,33 @@
+[plan]
+name = "brightnessctl"
+version = "0.5.1"
+release = 1
+description = "A program to read and control device brightness"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/Hummer12007/brightnessctl"
+
+[dependencies]
+build = ["gcc", "make"]
+runtime = ["systemd"]
+[sources]
+uris = ["https://github.com/Hummer12007/brightnessctl/archive/${PKG_VERSION}/brightnessctl-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make ENABLE_SYSTEMD=1
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make install \
+DESTDIR=${PKG_DIR} \
+PREFIX=/usr \
+ENABLE_SYSTEMD=1 \
+INSTALL_UDEV_RULES=0
+"""

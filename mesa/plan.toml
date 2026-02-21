@@ -1,0 +1,66 @@
+[plan]
+name = "mesa"
+version = "26.0.0"
+release = 1
+description = "Open-source OpenGL and Vulkan drivers"
+license = "MIT"
+arch = "x86_64"
+url = "https://mesa3d.org"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = ["libdrm >= 2.4.125"]
+[sources]
+uris = ["https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[options]
+strip = true
+ccache = true
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+# 为了保险，先清理旧的构建目录（如果之前构建失败残留了缓存）
+rm -rf build
+mkdir -p build && cd build
+
+meson setup .. \
+--prefix=/usr \
+--buildtype=release \
+--strip \
+-D platforms=wayland \
+-D gallium-drivers=iris,crocus,llvmpipe \
+-D vulkan-drivers=intel,intel_hasvk,swrast \
+-D egl=enabled \
+-D gbm=enabled \
+-D gles1=disabled \
+-D gles2=enabled \
+-D glx=disabled \
+-D llvm=enabled \
+-D shared-llvm=enabled \
+-D gallium-va=disabled \
+-D vulkan-layers=device-select,overlay \
+-D video-codecs=all \
+-D valgrind=disabled \
+-D libunwind=enabled
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}/build
+ninja -j$(nproc)
+"""
+
+[lifecycle.check]
+optional = true
+script = """
+cd ${BUILD_DIR}/build
+meson test --no-rebuild || true
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+"""

@@ -1,0 +1,46 @@
+[plan]
+name = "gst-plugins-bad"
+version = "1.28.0"
+release = 1
+description = "GStreamer Bad Plugins"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["gst-plugins-base", "gstreamer", "libwpe", "meson", "ninja", "pkgconf"]
+runtime = ["gst-plugins-base", "gstreamer", "libwpe"]
+link = ["openssl"]
+[sources]
+uris = ["https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.28.0.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
+
+# 最终配置：
+# -Dsctp=disabled: 修复 GCC 15 编译错误
+# -Dintrospection=disabled: 修复缺少依赖 GIR 的错误
+# -Dgpl=enabled: 启用必要的 GPL 插件
+meson setup build \
+--prefix=/usr \
+--libdir=lib \
+-Dtests=disabled \
+-Ddoc=disabled \
+-Dgpl=enabled \
+-Dsctp=disabled \
+-Dintrospection=disabled
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}/build
+ninja -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+"""

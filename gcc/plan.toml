@@ -1,0 +1,332 @@
+[plan]
+name = "gcc"
+version = "15.2.0"
+release = 1
+description = "The GNU Compiler Collection - C and C++ frontends"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://gcc.gnu.org/"
+
+[dependencies]
+build = ["binutils", "make", "perl", "texinfo"]
+runtime = ["binutils"]
+link = ["gcc-libs", "gmp", "mpc", "mpfr", "zlib"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/gcc/gcc-${PKG_VERSION}/gcc-${PKG_VERSION}.tar.xz"]
+sha256 = [
+    "438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e",
+]
+
+[options]
+strip = true
+ccache = true
+
+[lifecycle.prepare]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+
+# On x86_64, use /usr/lib instead of /usr/lib64
+case $(uname -m) in
+x86_64)
+sed -e '/m64=/s/lib64/lib/' \
+-i.orig gcc/config/i386/t-linux64
+;;
+esac
+
+mkdir -v build
+"""
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}/build
+
+SED=sed                               \
+../configure --prefix=/usr            \
+LD=ld                    \
+--enable-languages=c,c++ \
+--enable-default-pie     \
+--enable-default-ssp     \
+--enable-host-pie        \
+--disable-multilib       \
+--disable-bootstrap      \
+--disable-fixincludes    \
+--enable-shared          \
+--enable-threads=posix   \
+--enable-__cxa_atexit    \
+--enable-clocale=gnu     \
+--enable-gnu-indirect-function \
+--enable-linker-build-id \
+--enable-lto             \
+--enable-plugin          \
+--enable-install-libiberty \
+--with-system-zlib       \
+--with-linker-hash-style=gnu
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}/build
+make -j$(nproc)
+"""
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = """
+cd ${BUILD_DIR}/build
+echo 'int main(){}' > /tmp/gcc-test.c
+./gcc/xgcc -B./gcc /tmp/gcc-test.c -o /tmp/gcc-test
+readelf -l /tmp/gcc-test | grep -q '/lib.*/ld-linux'
+rm -f /tmp/gcc-test.c /tmp/gcc-test
+echo "Sanity check passed."
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}/build
+make DESTDIR=${PKG_DIR} install
+
+TRIPLET=$(gcc -dumpmachine 2>/dev/null || echo x86_64-pc-linux-gnu)
+GCC_VER="15.2.0"
+
+# --- Fix ownership of headers ---
+if [ -d "${PKG_DIR}/usr/lib/gcc/${TRIPLET}/${GCC_VER}/include" ]; then
+chown -R root:root "${PKG_DIR}/usr/lib/gcc/${TRIPLET}/${GCC_VER}/include"
+fi
+if [ -d "${PKG_DIR}/usr/lib/gcc/${TRIPLET}/${GCC_VER}/include-fixed" ]; then
+chown -R root:root "${PKG_DIR}/usr/lib/gcc/${TRIPLET}/${GCC_VER}/include-fixed"
+fi
+
+# --- Compatibility symlinks ---
+ln -sfv /usr/bin/cpp "${PKG_DIR}/usr/lib/cpp"
+install -d "${PKG_DIR}/usr/share/man/man1"
+ln -sv gcc.1 "${PKG_DIR}/usr/share/man/man1/cc.1"
+
+install -d "${PKG_DIR}/usr/lib/bfd-plugins"
+ln -sfv "../../libexec/gcc/${TRIPLET}/${GCC_VER}/liblto_plugin.so" \
+"${PKG_DIR}/usr/lib/bfd-plugins/"
+
+# --- Move GDB auto-load python scripts ---
+install -d "${PKG_DIR}/usr/share/gdb/auto-load/usr/lib"
+mv -v "${PKG_DIR}"/usr/lib/*gdb.py \
+"${PKG_DIR}/usr/share/gdb/auto-load/usr/lib/" 2>/dev/null || true
+
+# ============================================================
+# Remove files belonging to split packages
+# ============================================================
+
+# --- libgcc ---
+rm -fv "${PKG_DIR}"/usr/lib/libgcc_s.so*
+
+# --- libstdc++ ---
+rm -fv "${PKG_DIR}"/usr/lib/libstdc++.so*
+rm -fv "${PKG_DIR}"/usr/lib/libstdc++fs.so*
+rm -fv "${PKG_DIR}"/usr/lib/libstdc++exp.so*
+rm -rfv "${PKG_DIR}"/usr/share/gcc-${GCC_VER}/python/libstdcxx
+rm -fv "${PKG_DIR}"/usr/share/gdb/auto-load/usr/lib/libstdc++*
+
+# --- libgomp ---
+rm -fv "${PKG_DIR}"/usr/lib/libgomp.so*
+rm -fv "${PKG_DIR}"/usr/lib/libgomp.spec
+rm -fv "${PKG_DIR}"/usr/share/info/libgomp.info*
+
+# --- libatomic ---
+rm -fv "${PKG_DIR}"/usr/lib/libatomic.so*
+
+# --- libitm ---
+rm -fv "${PKG_DIR}"/usr/lib/libitm.so*
+rm -fv "${PKG_DIR}"/usr/lib/libitm.spec
+rm -fv "${PKG_DIR}"/usr/share/info/libitm.info*
+
+# --- libquadmath ---
+rm -fv "${PKG_DIR}"/usr/lib/libquadmath.so*
+rm -fv "${PKG_DIR}"/usr/share/info/libquadmath.info*
+
+# --- sanitizers ---
+rm -fv "${PKG_DIR}"/usr/lib/libasan.so*
+rm -fv "${PKG_DIR}"/usr/lib/liblsan.so*
+rm -fv "${PKG_DIR}"/usr/lib/libtsan.so*
+rm -fv "${PKG_DIR}"/usr/lib/libubsan.so*
+rm -fv "${PKG_DIR}"/usr/lib/libhwasan.so*
+
+# Keep static libs (.a) and linker scripts in gcc package
+"""
+
+[install_scripts]
+post_install = """
+if command -v install-info >/dev/null 2>&1; then
+for f in /usr/share/info/gcc.info /usr/share/info/cpp.info \
+/usr/share/info/cppinternals.info /usr/share/info/gccint.info; do
+
+[ -f "$f" ] && install-info "$f" /usr/share/info/dir 2>/dev/null || true
+done
+fi
+"""
+
+# ============================================================
+# Split: libgcc
+# ============================================================
+
+[split.libgcc]
+description = "GCC runtime library (libgcc_s.so)"
+
+[split.libgcc.dependencies]
+link = ["glibc"]
+[split.libgcc.lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}/build
+TRIPLET=$(gcc -dumpmachine 2>/dev/null || echo x86_64-pc-linux-gnu)
+
+install -d "${PKG_DIR}/usr/lib"
+cp -av "${BUILD_DIR}/build/${TRIPLET}/libgcc/libgcc_s.so.1" "${PKG_DIR}/usr/lib/"
+ln -sfv libgcc_s.so.1 "${PKG_DIR}/usr/lib/libgcc_s.so"
+chmod 755 "${PKG_DIR}/usr/lib/libgcc_s.so.1"
+"""
+
+# ============================================================
+# Split: libstdc++
+# ============================================================
+
+[split."libstdc++"]
+description = "GNU C++ standard library"
+
+[split."libstdc++".dependencies]
+runtime = ["libgcc"]
+link = ["glibc"]
+[split."libstdc++".lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}/build
+TRIPLET=$(gcc -dumpmachine 2>/dev/null || echo x86_64-pc-linux-gnu)
+GCC_VER="15.2.0"
+
+install -d "${PKG_DIR}/usr/lib"
+
+cp -av "${BUILD_DIR}/build/${TRIPLET}/libstdc++-v3/src/.libs/libstdc++.so."* "${PKG_DIR}/usr/lib/"
+ln -sfv libstdc++.so.6 "${PKG_DIR}/usr/lib/libstdc++.so"
+
+# libstdc++fs if present
+if [ -f "${BUILD_DIR}/build/${TRIPLET}/libstdc++-v3/src/filesystem/.libs/libstdc++fs.so" ]; then
+cp -av "${BUILD_DIR}/build/${TRIPLET}/libstdc++-v3/src/filesystem/.libs/libstdc++fs.so."* \
+"${PKG_DIR}/usr/lib/" 2>/dev/null || true
+fi
+
+# GDB pretty-printer support
+install -d "${PKG_DIR}/usr/share/gdb/auto-load/usr/lib"
+install -d "${PKG_DIR}/usr/share/gcc-${GCC_VER}/python"
+cp -rv "${BUILD_DIR}"/libstdc++-v3/python/libstdcxx \
+"${PKG_DIR}/usr/share/gcc-${GCC_VER}/python/" 2>/dev/null || true
+
+chmod 755 "${PKG_DIR}"/usr/lib/libstdc++.so.*
+"""
+
+[split."libstdc++".install_scripts]
+post_install = "ldconfig 2>/dev/null || true"
+
+# ============================================================
+# Split: libgomp
+# ============================================================
+
+[split.libgomp]
+description = "GNU OpenMP runtime library"
+
+[split.libgomp.dependencies]
+link = ["glibc"]
+[split.libgomp.lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}/build
+TRIPLET=$(gcc -dumpmachine 2>/dev/null || echo x86_64-pc-linux-gnu)
+
+install -d "${PKG_DIR}/usr/lib"
+install -d "${PKG_DIR}/usr/share/info"
+
+cp -av "${BUILD_DIR}/build/${TRIPLET}/libgomp/.libs/libgomp.so."* "${PKG_DIR}/usr/lib/"
+ln -sfv libgomp.so.1 "${PKG_DIR}/usr/lib/libgomp.so"
+
+cp -v "${BUILD_DIR}/build/${TRIPLET}/libgomp/libgomp.info" \
+"${PKG_DIR}/usr/share/info/" 2>/dev/null || true
+
+chmod 755 "${PKG_DIR}"/usr/lib/libgomp.so.*
+"""
+
+# ============================================================
+# Split: libatomic
+# ============================================================
+
+[split.libatomic]
+description = "GCC atomic operations fallback library"
+
+[split.libatomic.dependencies]
+link = ["glibc"]
+[split.libatomic.lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}/build
+TRIPLET=$(gcc -dumpmachine 2>/dev/null || echo x86_64-pc-linux-gnu)
+
+install -d "${PKG_DIR}/usr/lib"
+cp -av "${BUILD_DIR}/build/${TRIPLET}/libatomic/.libs/libatomic.so."* "${PKG_DIR}/usr/lib/"
+ln -sfv libatomic.so.1 "${PKG_DIR}/usr/lib/libatomic.so"
+chmod 755 "${PKG_DIR}"/usr/lib/libatomic.so.*
+"""
+
+# ============================================================
+# Split: libsanitizer
+# ============================================================
+
+[split.libsanitizer]
+description = "GCC sanitizer runtime libraries (ASan, LSan, TSan, UBSan)"
+
+[split.libsanitizer.dependencies]
+runtime = ["libgcc", "libstdc++"]
+link = ["glibc"]
+[split.libsanitizer.lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/build
+TRIPLET=$(gcc -dumpmachine 2>/dev/null || echo x86_64-pc-linux-gnu)
+
+install -d "${PKG_DIR}/usr/lib"
+
+for lib in asan lsan tsan ubsan hwasan; do
+if [ -d "${BUILD_DIR}/build/${TRIPLET}/lib${lib}" ]; then
+cp -av "${BUILD_DIR}/build/${TRIPLET}/lib${lib}/.libs/lib${lib}.so."* \
+"${PKG_DIR}/usr/lib/" 2>/dev/null || true
+fi
+done
+
+for f in "${PKG_DIR}"/usr/lib/lib*.so.*.*.*; do
+
+[ -f "$f" ] || continue
+base=$(basename "$f")
+soname=$(objdump -p "$f" 2>/dev/null | sed -n 's/.*SONAME.*\(lib.*\)/\1/p')
+if [ -n "$soname" ]; then
+ln -sfv "$base" "${PKG_DIR}/usr/lib/${soname}" 2>/dev/null || true
+fi
+done
+
+chmod 755 "${PKG_DIR}"/usr/lib/lib*san*.so.* 2>/dev/null || true
+'''
+
+# ============================================================
+# Split: gcc-libs (meta-package)
+# ============================================================
+
+[split.gcc-libs]
+description = "GCC runtime libraries (meta-package)"
+
+[split.gcc-libs.dependencies]
+runtime = ["libatomic", "libgcc", "libgomp", "libstdc++"]
+[split.gcc-libs.lifecycle.package]
+dockyard = "none"
+script = """
+install -d "${PKG_DIR}/usr/share/doc/gcc-libs"
+echo "gcc-libs: meta-package pulling in libgcc, libstdc++, libgomp, libatomic" \
+> "${PKG_DIR}/usr/share/doc/gcc-libs/README"
+"""

@@ -1,0 +1,41 @@
+[plan]
+name = "glslang"
+version = "15.1.0"
+release = 1
+description = "Khronos reference GLSL/ESSL compiler and SPIR-V generator"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/KhronosGroup/glslang"
+
+[dependencies]
+build = ["cmake", "make", "spirv-headers", "spirv-tools"]
+runtime = ["spirv-tools"]
+[sources]
+uris = ["https://github.com/KhronosGroup/glslang/archive/${PKG_VERSION}/glslang-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+mkdir build && cd build
+cmake ..                                \
+-DCMAKE_INSTALL_PREFIX=/usr       \
+-DCMAKE_BUILD_TYPE=Release        \
+-DALLOW_EXTERNAL_SPIRV_TOOLS=ON   \
+-DBUILD_SHARED_LIBS=ON
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/build
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/build
+make DESTDIR=${PKG_DIR} install
+'''

@@ -1,0 +1,33 @@
+[plan]
+name = "alsa-lib"
+version = "1.2.13"
+release = 1
+description = "ALSA library"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://www.alsa-project.org"
+
+[sources]
+uris = ["https://www.alsa-project.org/files/pub/lib/alsa-lib-${PKG_VERSION}.tar.bz2"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} make install
+'''

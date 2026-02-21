@@ -1,0 +1,37 @@
+[plan]
+name = "gobject-introspection"
+version = "1.86.0"
+release = 1
+description = "Introspection system for GObject-based libraries"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+url = "https://gi.readthedocs.io/"
+
+[dependencies]
+build = ["meson", "ninja", "python"]
+runtime = ["python"]
+link = ["glib"]
+[sources]
+uris = ["https://download.gnome.org/sources/gobject-introspection/1.86/gobject-introspection-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+meson setup build        \
+--prefix=/usr            \
+--buildtype=release
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+meson compile -C ${BUILD_DIR}/build
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
+'''

@@ -1,0 +1,36 @@
+[plan]
+name = "desktop-file-utils"
+version = "0.27"
+release = 1
+description = "Utilities for manipulating .desktop files"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://www.freedesktop.org/wiki/Software/desktop-file-utils/"
+
+[dependencies]
+link = ["glib"]
+[sources]
+uris = ["https://www.freedesktop.org/software/desktop-file-utils/releases/desktop-file-utils-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+meson setup build --prefix=/usr --buildtype=release
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+meson compile -C build
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+meson install -C build --destdir ${PKG_DIR}
+"""
+
+[install_scripts]
+post_install = "update-desktop-database -q /usr/share/applications 2>/dev/null || true"
+post_upgrade = "update-desktop-database -q /usr/share/applications 2>/dev/null || true"

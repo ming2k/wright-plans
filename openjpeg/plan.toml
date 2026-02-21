@@ -1,0 +1,34 @@
+[plan]
+name = "openjpeg"
+version = "2.5.3"
+release = 1
+description = "Open-source JPEG 2000 codec"
+license = "BSD-2-Clause"
+arch = "x86_64"
+
+[dependencies]
+build = ["cmake", "gcc", "make"]
+[sources]
+uris = ["https://github.com/uclouvain/openjpeg/archive/v${PKG_VERSION}/openjpeg-v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+# -DBUILD_STATIC_LIBS=OFF: 不构建静态库
+# -DBUILD_DOC=OFF: 不构建文档
+# -DCMAKE_INSTALL_LIBDIR=lib: 确保库文件在 /usr/lib
+script = """
+cd ${BUILD_DIR}
+cmake -B build \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_INSTALL_LIBDIR=lib \
+-DBUILD_STATIC_LIBS=OFF \
+-DBUILD_DOC=OFF \
+-DBUILD_TESTING=OFF
+"""
+
+[lifecycle.compile]
+script = "cmake --build ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build"

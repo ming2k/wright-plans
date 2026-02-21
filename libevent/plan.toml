@@ -1,0 +1,37 @@
+[plan]
+name = "libevent"
+version = "2.1.12-stable"
+release = 1
+description = "An event notification library for developing asynchronous applications"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://libevent.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["openssl"]
+
+[sources]
+uris = ["https://github.com/libevent/libevent/releases/download/release-${PKG_VERSION}/libevent-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

@@ -1,0 +1,31 @@
+[plan]
+name = "hicolor-icon-theme"
+version = "0.18"
+release = 1
+description = "Freedesktop fallback icon theme"
+license = "GPL-2.0-or-later"
+arch = "any"
+url = "https://icon-theme.freedesktop.org/"
+
+[dependencies]
+build = ["make"]
+
+[sources]
+uris = ["https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = "echo preparing hicolor-icon-theme"
+
+[lifecycle.compile]
+script = "echo no compile stage for hicolor-icon-theme"
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''
+
+[install_scripts]
+post_install = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
+post_upgrade = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"

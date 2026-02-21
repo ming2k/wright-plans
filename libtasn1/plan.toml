@@ -1,0 +1,35 @@
+[plan]
+name = "libtasn1"
+version = "4.21.0"
+release = 1
+description = "ASN.1 library used by GnuTLS"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/libtasn1/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/libtasn1/libtasn1-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

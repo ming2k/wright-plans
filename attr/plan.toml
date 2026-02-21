@@ -1,0 +1,46 @@
+[plan]
+name = "attr"
+version = "2.5.2"
+release = 1
+description = "Utilities to administer the extended attributes of filesystem objects"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://savannah.nongnu.org/projects/attr"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://download.savannah.gnu.org/releases/attr/attr-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr     \
+--disable-static  \
+--sysconfdir=/etc \
+--docdir=/usr/share/doc/attr-2.5.2
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

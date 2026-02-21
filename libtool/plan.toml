@@ -1,0 +1,33 @@
+[plan]
+name = "libtool"
+version = "2.6.0"
+release = 1
+description = "GNU generic library support script"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/libtool/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/libtool/libtool-2.6.0.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+rm -fv ${PKG_DIR}/usr/lib/libltdl.a
+'''

@@ -1,0 +1,42 @@
+[plan]
+name = "libvpx"
+version = "1.16.0"
+release = 1
+description = "WebM VP8/VP9 codec SDK"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/webmproject/libvpx"
+
+[dependencies]
+build = ["gcc", "make", "nasm"]
+
+[sources]
+uris = ["https://github.com/webmproject/libvpx/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+            --enable-shared \
+            --disable-static \
+            --enable-vp8 \
+            --enable-vp9 \
+            --enable-runtime-cpu-detect \
+            --enable-postproc
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

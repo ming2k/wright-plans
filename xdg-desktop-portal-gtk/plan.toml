@@ -1,0 +1,37 @@
+[plan]
+name = "xdg-desktop-portal-gtk"
+version = "1.15.3"
+release = 2
+description = "GTK backend for xdg-desktop-portal"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/flatpak/xdg-desktop-portal-gtk"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+runtime = ["dbus", "xdg-desktop-portal"]
+link = ["gtk3"]
+[sources]
+uris = ["https://github.com/flatpak/xdg-desktop-portal-gtk/releases/download/${PKG_VERSION}/xdg-desktop-portal-gtk-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dwallpaper=disabled
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+ninja -C build
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+"""

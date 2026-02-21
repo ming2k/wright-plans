@@ -1,0 +1,21 @@
+[plan]
+name = "python-mako"
+version = "1.3.10"
+release = 1
+description = "Fast templating language for Python"
+license = "MIT"
+arch = "x86_64"
+url = "https://www.makotemplates.org/"
+
+[dependencies]
+build = ["python"]
+[sources]
+uris = ["https://files.pythonhosted.org/packages/source/m/mako/mako-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+pip3 install --break-system-packages --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

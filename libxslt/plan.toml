@@ -1,0 +1,35 @@
+[plan]
+name = "libxslt"
+version = "1.1.45"
+release = 1
+description = "XSLT C library for transforming XML"
+license = "MIT"
+arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/libxslt"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["libxml2"]
+[sources]
+uris = ["https://download.gnome.org/sources/libxslt/1.1/libxslt-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr                 \
+--disable-static              \
+--docdir=/usr/share/doc/libxslt-${PKG_VERSION}
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

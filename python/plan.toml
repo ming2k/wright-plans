@@ -1,0 +1,56 @@
+[plan]
+name = "python"
+version = "3.14.3"
+release = 1
+description = "The Python programming language (Long-term Stable Baseline)"
+license = "PSF-2.0"
+arch = "x86_64"
+url = "https://www.python.org/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["expat", "libffi", "ncurses", "openssl", "readline", "zlib", "bzip2", "xz", "sqlite", "gdbm", "libxcrypt"]
+
+[sources]
+uris = ["https://www.python.org/ftp/python/${PKG_VERSION}/Python-${PKG_VERSION}.tar.xz"]
+sha256 = [
+    "a97d5549e9ad81fe17159ed02c68774ad5d266c72f8d9a0b5a9c371fe85d902b",
+]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr        \
+            --enable-shared      \
+            --with-system-expat  \
+            --with-system-ffi    \
+            --enable-optimizations \
+            --with-lto           \
+            --with-computed-gotos \
+            --without-static-libpython
+'''
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR} -j$(nproc)"
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+rm -rf ${PKG_DIR}/usr/lib/python3.14/test
+rm -rf ${PKG_DIR}/usr/lib/python3.14/*/test
+mkdir -p ${PKG_DIR}/usr/lib/python3.14
+cat > ${PKG_DIR}/usr/lib/python3.14/EXTERNALLY-MANAGED << EOF
+[externally-managed]
+Error=Please use 'wright install python-<package>' to install system-level Python packages.
+EOF
+'''
+
+[split.libpython]
+description = "Python shared library runtime"
+[split.libpython.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/lib
+mv -v ${MAIN_PKG_DIR}/usr/lib/libpython3.14.so* ${PKG_DIR}/usr/lib/
+mv -v ${MAIN_PKG_DIR}/usr/lib/libpython3.so ${PKG_DIR}/usr/lib/
+"""

@@ -1,0 +1,36 @@
+[plan]
+name = "libsass"
+version = "3.6.6"
+release = 1
+description = "C implementation of a Sass compiler"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/sass/libsass"
+
+[dependencies]
+build = ["autoconf", "automake", "gcc", "libtool", "make"]
+[sources]
+uris = ["https://github.com/sass/libsass/archive/${PKG_VERSION}/libsass-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+autoreconf -fi
+./configure --prefix=/usr --disable-static
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""

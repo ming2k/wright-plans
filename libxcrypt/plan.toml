@@ -1,0 +1,47 @@
+[plan]
+name = "libxcrypt"
+version = "4.4.38"
+release = 1
+description = "Modern library for one-way hashing of passwords"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/besser82/libxcrypt/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://github.com/besser82/libxcrypt/releases/download/v${PKG_VERSION}/libxcrypt-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr                \
+--enable-hashes=strong,glibc \
+--enable-obsolete-api=no     \
+--disable-static             \
+--disable-failure-tokens
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

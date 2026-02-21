@@ -1,0 +1,74 @@
+[plan]
+name = "mpd"
+version = "0.24.8"
+release = 1
+description = "Flexible, powerful, server-side application for playing music"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://www.musicpd.org/"
+
+[dependencies]
+build = ["gcc", "meson", "ninja", "pkgconf"]
+link = ["alsa-lib", "pipewire", "ffmpeg", "sqlite", "curl", "dbus", "libsndfile", "fmt"]
+
+[sources]
+uris = ["https://github.com/MusicPlayerDaemon/MPD/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+meson setup build       \
+  --prefix=/usr         \
+  --buildtype=plain     \
+  -Db_ndebug=true       \
+  -Ddocumentation=disabled \
+  -Dtest=false          \
+  -Dadplug=disabled     \
+  -Daudiofile=disabled  \
+  -Dio_uring=disabled   \
+  -Dshine=disabled      \
+  -Dsndio=disabled      \
+  -Dtremor=disabled     \
+  -Davahi=disabled      \
+  -Dchromaprint=disabled \
+  -Dfluidsynth=disabled \
+  -Djack=disabled       \
+  -Dlame=disabled       \
+  -Dlirc=disabled       \
+  -Dmikmod=disabled     \
+  -Dnfs=disabled        \
+  -Dopenal=disabled     \
+  -Dopenmpt=disabled    \
+  -Dpulse=disabled      \
+  -Dsidplay=disabled    \
+  -Dshout=disabled      \
+  -Dsmbclient=disabled  \
+  -Dtwolame=disabled    \
+  -Dudisks=disabled     \
+  -Dupnp=disabled       \
+  -Dwildmidi=disabled   \
+  -Dyajl=disabled
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+ninja -C build -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+
+install -vDm644 doc/mpdconf.example \
+  ${PKG_DIR}/usr/share/doc/mpd/mpdconf.example
+'''
+
+[install_scripts]
+post_install = "systemctl daemon-reload 2>/dev/null || true"
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

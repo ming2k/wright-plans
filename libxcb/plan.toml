@@ -1,0 +1,40 @@
+[plan]
+name = "libxcb"
+version = "1.17.0"
+release = 1
+description = "X11 client-side library (X protocol C-language Binding)"
+license = "MIT"
+arch = "x86_64"
+url = "https://xcb.freedesktop.org"
+
+[dependencies]
+build = ["gcc", "make", "python", "xcb-proto"]
+runtime = ["xcb-proto"]
+[sources]
+uris = ["https://xorg.freedesktop.org/archive/individual/lib/libxcb-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+--sysconfdir=/etc \
+--localstatedir=/var \
+--disable-static \
+--without-doxygen
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""

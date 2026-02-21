@@ -1,0 +1,33 @@
+[plan]
+name = "vulkan-loader"
+version = "1.4.343"
+release = 2
+description = "Vulkan Loader (Wayland Only)"
+license = "Apache-2.0"
+arch = "x86_64"
+
+[dependencies]
+build = ["cmake", "ninja", "vulkan-headers", "python"]
+link = ["glibc", "wayland"]
+
+[sources]
+uris = ["https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+      -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DVULKAN_HEADERS_INSTALL_DIR=/usr \
+      -DBUILD_WSI_XCB_SUPPORT=OFF \
+      -DBUILD_WSI_XLIB_SUPPORT=OFF \
+      -DBUILD_WSI_WAYLAND_SUPPORT=ON
+"""
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

@@ -1,0 +1,30 @@
+[plan]
+name = "hwy"
+version = "1.2.0"
+release = 1
+description = "Performance-portable, length-agnostic SIMD with runtime dispatch"
+license = "Apache-2.0"
+arch = "x86_64"
+
+[dependencies]
+build = ["cmake", "gcc", "ninja"]
+[sources]
+# 修正: 字段名必须是 uris
+uris = ["https://github.com/google/highway/archive/refs/tags/${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DBUILD_SHARED_LIBS=ON \
+-DHWY_ENABLE_EXAMPLES=OFF \
+-DHWY_ENABLE_TESTS=OFF
+"""
+
+[lifecycle.compile]
+script = "cmake --build ${BUILD_DIR}/build"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build"

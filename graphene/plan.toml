@@ -1,0 +1,41 @@
+[plan]
+name = "graphene"
+version = "1.10.8"
+release = 2
+description = "Thin layer of types for graphic libraries"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/ebassi/graphene"
+
+[dependencies]
+build = ["gobject-introspection", "meson", "ninja"]
+link = ["glib"]
+[sources]
+uris = ["https://download.gnome.org/sources/graphene/1.10/graphene-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr \
+--buildtype=release \
+-Dintrospection=enabled \
+-Dinstalled_tests=false \
+-Dtests=false
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+ninja -C build
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+"""

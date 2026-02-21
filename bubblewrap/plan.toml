@@ -1,0 +1,40 @@
+[plan]
+name = "bubblewrap"
+version = "0.11.0"
+release = 1
+description = "Unprivileged sandboxing tool"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/containers/bubblewrap"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = ["libcap", "libseccomp"]
+
+[sources]
+uris = ["https://github.com/containers/bubblewrap/releases/download/v${PKG_VERSION}/bubblewrap-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+meson setup build      \
+--prefix=/usr          \
+--buildtype=release    \
+-D tests=false
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+ninja -C build -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+'''

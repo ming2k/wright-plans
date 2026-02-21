@@ -1,0 +1,34 @@
+[plan]
+name = "python-pyparsing"
+version = "3.3.2"
+release = 2
+description = "Python parsing module"
+license = "MIT"
+arch = "any"
+url = "https://github.com/pyparsing/pyparsing"
+
+[dependencies]
+build = ["python", "setuptools", "wheel"]
+
+[sources]
+uris = ["https://files.pythonhosted.org/packages/source/p/pyparsing/pyparsing-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+echo "python package"
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+echo "no build needed"
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PKG_DIR} .
+'''

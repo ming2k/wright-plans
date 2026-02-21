@@ -1,0 +1,40 @@
+[plan]
+name = "gpgme"
+version = "2.0.1"
+release = 2
+description = "GnuPG Made Easy"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://gnupg.org/software/gpgme/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["libassuan", "libgpg-error", "gnupg"]
+
+[sources]
+uris = ["https://gnupg.org/ftp/gcrypt/gpgme/gpgme-${PKG_VERSION}.tar.bz2"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --disable-static \
+    --disable-gpg-test
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} make install
+'''

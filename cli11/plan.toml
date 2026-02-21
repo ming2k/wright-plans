@@ -1,0 +1,39 @@
+[plan]
+name = "cli11"
+version = "2.4.2"
+release = 1
+description = "Command line parser for C++11 and beyond"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/CLIUtils/CLI11"
+
+[dependencies]
+build = ["cmake", "ninja"]
+[sources]
+uris = ["https://github.com/CLIUtils/CLI11/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_BUILD_TYPE=Release \
+-DCLI11_BUILD_TESTS=OFF \
+-DCLI11_BUILD_EXAMPLES=OFF
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+ninja -C build
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+"""

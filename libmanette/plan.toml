@@ -1,0 +1,41 @@
+[plan]
+name = "libmanette"
+version = "0.2.7"
+release = 1
+description = "Simple GObject game controller library"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["gobject-introspection", "libevdev", "libgudev", "meson", "ninja", "pkgconf"]
+runtime = ["libevdev", "libgudev"]
+link = ["glib"]
+[sources]
+uris = ["https://download.gnome.org/sources/libmanette/0.2/libmanette-0.2.7.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+# 修复：
+# 1. 将 -Dexamples=false 改为 -Ddemos=false (这是 libmanette 正确的选项名)
+# 2. 确保 introspection 和 vapi 选项格式正确
+meson setup build \
+--prefix=/usr \
+--libdir=lib \
+-Dintrospection=true \
+-Dvapi=false \
+-Ddemos=false
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}/build
+ninja -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+"""

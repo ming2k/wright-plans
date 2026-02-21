@@ -1,0 +1,74 @@
+[plan]
+name = "x265"
+version = "4.1"
+release = 1
+description = "H.265/HEVC encoder library"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://bitbucket.org/multicoreware/x265_git"
+
+[dependencies]
+build = ["gcc", "make", "cmake", "nasm"]
+
+[sources]
+uris = ["https://bitbucket.org/multicoreware/x265_git/downloads/x265_${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+# Fix cmake_minimum_required and policies removed in CMake 4.0
+# (equivalent to upstream cherry-picks b354c009, 51ae8e92, 78e5ac35)
+sed -i 's/cmake_minimum_required(VERSION 2\.[^)]*)/cmake_minimum_required(VERSION 3.5)/' source/CMakeLists.txt
+sed -i 's/cmake_policy(SET CMP0025 OLD)/cmake_policy(SET CMP0025 NEW)/' source/CMakeLists.txt
+sed -i 's/cmake_policy(SET CMP0054 OLD)/cmake_policy(SET CMP0054 NEW)/' source/CMakeLists.txt
+# Fix build with GCC 15: missing <cstdint> include
+sed -i '/#include <limits>/a #include <cstdint>' source/dynamicHDR10/json11/json11.cpp
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+local_opts="-S source -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_HDR10_PLUS=TRUE -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Wno-dev"
+
+cmake -B build-10 $local_opts \
+      -DENABLE_CLI=FALSE \
+      -DENABLE_SHARED=FALSE \
+      -DEXPORT_C_API=FALSE \
+      -DHIGH_BIT_DEPTH=TRUE
+
+cmake -B build-12 $local_opts \
+      -DENABLE_CLI=FALSE \
+      -DENABLE_SHARED=FALSE \
+      -DEXPORT_C_API=FALSE \
+      -DHIGH_BIT_DEPTH=TRUE \
+      -DMAIN12=TRUE
+
+cmake -B build $local_opts \
+      -DENABLE_SHARED=TRUE \
+      -DENABLE_CLI=OFF \
+      -DEXTRA_LIB='x265_main10.a;x265_main12.a' \
+      -DEXTRA_LINK_FLAGS='-L .' \
+      -DLINKED_10BIT=TRUE \
+      -DLINKED_12BIT=TRUE
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+cmake --build build-10 -- -j$(nproc)
+cmake --build build-12 -- -j$(nproc)
+ln -sr build-10/libx265.a build/libx265_main10.a
+ln -sr build-12/libx265.a build/libx265_main12.a
+cmake --build build -- -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} cmake --install build
+'''

@@ -1,0 +1,45 @@
+[plan]
+name = "gnome-desktop"
+version = "44.5"
+release = 1
+description = "Library with common API for various GNOME modules"
+license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/gnome-desktop"
+
+[dependencies]
+build = ["gobject-introspection", "meson", "ninja"]
+runtime = ["gsettings-desktop-schemas", "iso-codes"]
+link = ["glib", "gtk4", "libseccomp", "libxkbcommon"]
+[sources]
+uris = ["https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr \
+--buildtype=release \
+-Dintrospection=true \
+-Dgtk_doc=false \
+-Ddesktop_docs=false \
+-Ddebug_tools=false \
+-Dlegacy_library=false
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+ninja -C build
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+"""
+
+[install_scripts]
+post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
+post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"

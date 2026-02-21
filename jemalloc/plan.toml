@@ -1,0 +1,35 @@
+[plan]
+name = "jemalloc"
+version = "5.3.0"
+release = 1
+description = "General purpose malloc implementation"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/jemalloc/jemalloc"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://github.com/jemalloc/jemalloc/releases/download/${PKG_VERSION}/jemalloc-${PKG_VERSION}.tar.bz2"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""

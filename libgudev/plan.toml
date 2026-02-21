@@ -1,0 +1,41 @@
+[plan]
+name = "libgudev"
+version = "238"
+release = 1
+description = "GObject bindings for libudev"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["gobject-introspection", "meson", "ninja", "pkgconf", "systemd"]
+runtime = ["systemd"]
+link = ["glib"]
+[sources]
+uris = ["https://download.gnome.org/sources/libgudev/238/libgudev-238.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+# 修复：必须先进入源码目录
+cd ${BUILD_DIR}
+
+# 修正 meson 调用方式：指定构建目录为 'build'
+meson setup build \
+--prefix=/usr \
+--libdir=lib \
+-Dtests=disabled \
+-Dintrospection=enabled \
+-Dvapi=disabled
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}/build
+ninja -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+"""

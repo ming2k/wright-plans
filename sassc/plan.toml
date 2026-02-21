@@ -1,0 +1,37 @@
+[plan]
+name = "sassc"
+version = "3.6.2"
+release = 1
+description = "Command line driver for libsass"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/sass/sassc"
+
+[dependencies]
+build = ["autoconf", "automake", "gcc", "libtool", "make"]
+runtime = ["libsass"]
+[sources]
+uris = ["https://github.com/sass/sassc/archive/${PKG_VERSION}/sassc-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+autoreconf -fi
+./configure --prefix=/usr
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""

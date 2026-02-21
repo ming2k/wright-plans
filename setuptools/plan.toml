@@ -1,0 +1,21 @@
+[plan]
+name = "setuptools"
+version = "80.9.0"
+release = 1
+description = "Python package development process library"
+license = "MIT"
+arch = "x86_64"
+url = "https://setuptools.pypa.io/"
+
+[dependencies]
+build = ["python", "wheel"]
+[sources]
+uris = ["https://pypi.org/packages/source/s/setuptools/setuptools-80.9.0.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --root=${PKG_DIR} --no-build-isolation .
+'''

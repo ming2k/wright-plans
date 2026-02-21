@@ -1,0 +1,36 @@
+[plan]
+name = "psmisc"
+version = "23.7"
+release = 1
+description = "Programs for displaying information about running processes"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://gitlab.com/psmisc/psmisc"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["ncurses"]
+[sources]
+uris = ["https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-23.7.tar.xz/download"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

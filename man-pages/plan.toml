@@ -1,0 +1,26 @@
+[plan]
+name = "man-pages"
+version = "6.15"
+release = 1
+description = "Linux man pages - over 2,400 manual pages documenting the Linux kernel and C library interfaces"
+license = "GPL-2.0-or-later AND MIT"
+arch = "x86_64"
+url = "https://www.kernel.org/doc/man-pages/"
+
+[sources]
+uris = ["https://www.kernel.org/pub/linux/docs/man-pages/man-pages-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+rm -v man3/crypt*
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make -R GIT=false prefix=/usr DESTDIR=${PKG_DIR} install
+"""

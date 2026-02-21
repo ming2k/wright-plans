@@ -1,0 +1,46 @@
+[plan]
+name = "polkit"
+version = "126"
+release = 2
+description = "Application-level toolkit for defining and handling authorization"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/polkit-org/polkit"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+runtime = ["dbus", "systemd"]
+link = ["glib", "duktape", "linux-pam"]
+
+[sources]
+uris = ["https://github.com/polkit-org/polkit/archive/refs/tags/${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+    --prefix=/usr               \
+    --buildtype=release         \
+    -D authfw=pam               \
+    -D session_tracking=logind  \
+    -D man=false                \
+    -D tests=false              \
+    -D introspection=false      \
+    -D gtk_doc=false            \
+    -D os_type=lfs              \
+    -D examples=false
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+
+[install_scripts]
+post_install = '''
+groupadd -fg 27 polkitd 2>/dev/null || true
+useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
+    -c "PolicyKit Daemon Owner" polkitd 2>/dev/null || true
+'''
+post_upgrade = ""

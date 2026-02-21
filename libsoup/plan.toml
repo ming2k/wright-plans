@@ -1,0 +1,37 @@
+[plan]
+name = "libsoup"
+version = "3.6.6"
+release = 1
+description = "HTTP client/server library for GNOME"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
+runtime = ["brotli", "glib-networking"]
+link = ["glib", "libpsl", "libxml2", "nghttp2", "sqlite"]
+[sources]
+uris = ["https://download.gnome.org/sources/libsoup/3.6/libsoup-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+# -Dvapi=disabled: 你的环境中没有 vala 编译器
+# -Dsysprof=disabled: 不需要系统性能剖析支持
+# -Dtests=false: 跳过测试以加快构建
+# -Ddocs=disabled: 不构建文档
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr \
+--buildtype=release \
+-Dvapi=disabled \
+-Dsysprof=disabled \
+-Dtests=false \
+-Ddocs=disabled
+"""
+
+[lifecycle.compile]
+script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build"

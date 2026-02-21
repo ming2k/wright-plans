@@ -1,0 +1,33 @@
+[plan]
+name = "libksba"
+version = "1.6.7"
+release = 1
+description = "X.509 and CMS library for GnuPG"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://gnupg.org/software/libksba/"
+
+[sources]
+uris = ["https://gnupg.org/ftp/gcrypt/libksba/libksba-${PKG_VERSION}.tar.bz2"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} make install
+'''

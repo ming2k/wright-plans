@@ -1,0 +1,34 @@
+[plan]
+name = "cargo-c"
+version = "0.10.20"
+release = 1
+description = "Helper to build and install C-ABI compatible dynamic and static libraries from Rust"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/lu-zero/cargo-c"
+
+[dependencies]
+build = ["rust", "pkgconf"]
+link = ["openssl"]
+
+[sources]
+uris = ["https://github.com/lu-zero/cargo-c/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+script = """
+cd ${BUILD_DIR}
+LIBGIT2_NO_PKG_CONFIG=1 cargo build --release --locked
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+install -Dm755 target/release/cargo-cbuild   ${PKG_DIR}/usr/bin/cargo-cbuild
+install -Dm755 target/release/cargo-cinstall ${PKG_DIR}/usr/bin/cargo-cinstall
+install -Dm755 target/release/cargo-capi     ${PKG_DIR}/usr/bin/cargo-capi
+install -Dm755 target/release/cargo-ctest    ${PKG_DIR}/usr/bin/cargo-ctest
+"""

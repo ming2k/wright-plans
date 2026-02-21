@@ -1,0 +1,53 @@
+[plan]
+name = "libfyaml"
+version = "0.9"
+release = 3
+description = "Fully feature complete YAML parser and emitter"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/pantoniou/libfyaml"
+
+[dependencies]
+build = ["cmake", "ninja"]
+
+[sources]
+uris = ["https://github.com/pantoniou/libfyaml/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+cmake -S . -B build \
+    -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_SHARED_LIBS=ON \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DENABLE_ASAN=OFF
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cmake --build ${BUILD_DIR}/build -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build
+install -d ${PKG_DIR}/usr/lib/pkgconfig
+cat > ${PKG_DIR}/usr/lib/pkgconfig/libfyaml.pc << 'PCEOF'
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libfyaml
+Description: Fully feature complete YAML parser and emitter library
+Version: ${PKG_VERSION}
+Libs: -L${libdir} -lfyaml
+Cflags: -I${includedir}
+PCEOF
+'''

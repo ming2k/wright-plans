@@ -1,0 +1,29 @@
+[plan]
+name = "wayland"
+version = "1.24.0"
+release = 1
+description = "Core Wayland window system code and protocol"
+license = "MIT"
+arch = "x86_64"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = ["expat", "libffi", "libxml2"]
+[sources]
+uris = ["https://gitlab.freedesktop.org/wayland/wayland/-/releases/${PKG_VERSION}/downloads/wayland-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"] # 记得运行 update
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr \
+-Ddocumentation=false \
+-Dtests=false
+"""
+
+[lifecycle.compile]
+script = "cd ${BUILD_DIR} && meson compile -C build"
+
+[lifecycle.package]
+script = "cd ${BUILD_DIR} && meson install -C build --destdir ${PKG_DIR}"

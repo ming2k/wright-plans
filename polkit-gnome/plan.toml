@@ -1,0 +1,39 @@
+[plan]
+name = "polkit-gnome"
+version = "0.105"
+release = 2
+description = "Legacy polkit authentication agent for GNOME"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+url = "https://gitlab.gnome.org/Archive/polkit-gnome"
+
+[dependencies]
+build = ["gcc", "intltool", "make", "pkgconf"]
+runtime = ["polkit"]
+link = ["glib", "gtk3"]
+[sources]
+uris = [
+    "https://download.gnome.org/sources/polkit-gnome/0.105/polkit-gnome-${PKG_VERSION}.tar.xz",
+    "polkit-gnome-authentication-agent-1.desktop",
+]
+sha256 = ["SKIP", "SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr --libexecdir=/usr/lib/polkit-gnome
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+install -Dm644 ${FILES_DIR}/polkit-gnome-authentication-agent-1.desktop \
+    ${PKG_DIR}/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
+"""

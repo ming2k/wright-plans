@@ -1,0 +1,35 @@
+[plan]
+name = "spirv-headers"
+version = "1.4.341.0"
+release = 1
+description = "Machine-readable parts of the SPIR-V specification"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/KhronosGroup/SPIRV-Headers"
+
+[dependencies]
+build = ["cmake", "gcc", "make"]
+[sources]
+# 修正：标签前缀更为 vulkan-sdk-
+uris = ["https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+cmake -B build \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_BUILD_TYPE=Release
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+cmake --build build -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} cmake --install build
+"""

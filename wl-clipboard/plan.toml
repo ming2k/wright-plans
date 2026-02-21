@@ -1,0 +1,40 @@
+[plan]
+name = "wl-clipboard"
+version = "2.2.1"
+release = 1
+description = "Command-line copy/paste utilities for Wayland"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://github.com/bugaevc/wl-clipboard"
+
+[dependencies]
+build = ["meson", "ninja"]
+link = ["wayland", "wayland-protocols"]
+[sources]
+uris = ["https://github.com/bugaevc/wl-clipboard/archive/v${PKG_VERSION}/wl-clipboard-${PKG_VERSION}.tar.gz"]
+sha256 = [
+    "6eb8081207fb5581d1d82c4bcd9587205a31a3d47bea3ebeb7f41aa1143783eb",
+]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr \
+--buildtype=release
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+ninja -C build
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+"""

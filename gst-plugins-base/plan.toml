@@ -1,0 +1,41 @@
+[plan]
+name = "gst-plugins-base"
+version = "1.28.0"
+release = 1
+description = "GStreamer Base Plugins"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["gstreamer", "libglvnd", "libgudev", "meson", "ninja", "pkgconf"]
+runtime = ["gstreamer", "libglvnd", "libgudev"]
+link = ["glib", "wayland"]
+[sources]
+uris = ["https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.28.0.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+# 确保能找到 gstreamer-1.0.pc
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
+
+meson setup build \
+--prefix=/usr \
+-Dtests=disabled \
+-Ddoc=disabled \
+-Dintrospection=disabled \
+-Dgl=enabled
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}/build
+ninja -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+"""

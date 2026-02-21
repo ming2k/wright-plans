@@ -1,0 +1,36 @@
+[plan]
+name = "gnutls"
+version = "3.8.12"
+release = 1
+description = "A secure communications library implementing SSL/TLS and DTLS"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://www.gnutls.org/"
+
+[dependencies]
+build = ["gcc", "libtasn1", "make", "nettle", "p11-kit", "pkgconf"]
+runtime = ["libtasn1", "nettle", "p11-kit"]
+link = ["libunistring"]
+[sources]
+uris = ["https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr          \
+--disable-static       \
+--with-default-trust-store-pkcs11="pkcs11:"
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

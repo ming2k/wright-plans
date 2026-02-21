@@ -1,0 +1,48 @@
+[plan]
+name = "lua"
+version = "5.4.7"
+release = 2
+description = "Powerful lightweight programming language"
+license = "MIT"
+arch = "x86_64"
+url = "https://www.lua.org"
+
+[sources]
+uris = ["https://www.lua.org/ftp/lua-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+sed -i 's/^CFLAGS=.*/CFLAGS= -O2 -Wall -Wextra -DLUA_COMPAT_5_3 -fPIC $(SYSCFLAGS) $(MYCFLAGS)/' src/Makefile
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc) linux-readline
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make INSTALL_TOP=${PKG_DIR}/usr install
+
+mkdir -p ${PKG_DIR}/usr/lib/pkgconfig
+cat > ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc << PCEOF
+prefix=/usr
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/lib
+includedir=\${prefix}/include
+
+Name: Lua
+Description: Lua language engine
+Version: ${PKG_VERSION}
+Libs: -L\${libdir} -llua -lm -ldl
+Cflags: -I\${includedir}
+PCEOF
+cp ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PKG_DIR}/usr/lib/pkgconfig/lua-5.4.pc
+'''

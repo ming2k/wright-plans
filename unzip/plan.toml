@@ -1,0 +1,35 @@
+[plan]
+name = "unzip"
+version = "6.0"
+release = 1
+description = "Extraction utility for ZIP archives"
+license = "Info-ZIP"
+arch = "x86_64"
+url = "https://infozip.sourceforge.net/UnZip.html"
+
+[dependencies]
+build = ["gcc", "make"]
+
+[sources]
+uris = ["https://downloads.sourceforge.net/infozip/unzip60.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = "echo using upstream makefiles"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -f unix/Makefile generic -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 unzip ${PKG_DIR}/usr/bin/unzip
+install -Dm755 funzip ${PKG_DIR}/usr/bin/funzip
+install -Dm755 unzipsfx ${PKG_DIR}/usr/bin/unzipsfx
+install -Dm755 unix/zipinfo ${PKG_DIR}/usr/bin/zipinfo
+install -Dm644 unzip.1 ${PKG_DIR}/usr/share/man/man1/unzip.1
+install -Dm644 zipinfo.1 ${PKG_DIR}/usr/share/man/man1/zipinfo.1
+'''

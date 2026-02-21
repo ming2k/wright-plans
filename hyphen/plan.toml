@@ -1,0 +1,34 @@
+[plan]
+name = "hyphen"
+version = "2.8.8"
+release = 1
+description = "A hyphenation library"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "http://hunspell.sourceforge.net/"
+
+[dependencies]
+build = ["gawk", "gcc", "make", "patch"]
+link = ["glibc"]
+[sources]
+# Using Debian mirror for stability
+uris = ["http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${PKG_VERSION}.orig.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""

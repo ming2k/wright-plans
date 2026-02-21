@@ -1,0 +1,25 @@
+[plan]
+name = "zlib"
+version = "1.3.2"
+release = 1
+description = "Essential compression library (Newly Released Stable)"
+license = "Zlib"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make"]
+
+[sources]
+uris = ["https://zlib.net/zlib-${PKG_VERSION}.tar.gz"]
+sha256 = [
+    "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16",
+]
+
+[lifecycle.configure]
+script = "cd ${BUILD_DIR} && ./configure --prefix=/usr --shared"
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR} -j$(nproc)"
+
+[lifecycle.package]
+script = "make -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install"

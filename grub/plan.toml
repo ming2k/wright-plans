@@ -1,0 +1,49 @@
+[plan]
+name = "grub"
+version = "2.12"
+release = 1
+description = "GRand Unified Bootloader"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/grub/"
+
+[dependencies]
+build = ["bison", "flex", "gcc", "make"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+echo depends bli part_gpt > grub-core/extra_deps.lst
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+unset {C,CPP,CXX,LD}FLAGS
+./configure --prefix=/usr          \
+--sysconfdir=/etc      \
+--disable-efiemu       \
+--disable-werror
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+unset {C,CPP,CXX,LD}FLAGS
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+mkdir -p ${PKG_DIR}/usr/share/bash-completion/completions
+mv -v ${PKG_DIR}/etc/bash_completion.d/grub ${PKG_DIR}/usr/share/bash-completion/completions/
+'''

@@ -1,0 +1,33 @@
+[plan]
+name = "shared-mime-info"
+version = "2.4"
+release = 1
+description = "Shared MIME info database"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://gitlab.freedesktop.org/xdg/shared-mime-info"
+
+[sources]
+uris = ["https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/${PKG_VERSION}/shared-mime-info-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+    --prefix=/usr          \
+    --buildtype=release    \
+    -D update-mimedb=false
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+dockyard = "none"
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+
+[install_scripts]
+post_install = "update-mime-database /usr/share/mime 2>/dev/null || true"
+post_upgrade = "update-mime-database /usr/share/mime 2>/dev/null || true"

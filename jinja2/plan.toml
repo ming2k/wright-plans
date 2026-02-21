@@ -1,0 +1,29 @@
+[plan]
+name = "jinja2"
+version = "3.1.6"
+release = 1
+description = "A simple pythonic template language"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://palletsprojects.com/p/jinja/"
+
+[dependencies]
+build = ["python"]
+runtime = ["markupsafe", "python"]
+[sources]
+uris = ["https://files.pythonhosted.org/packages/source/j/jinja2/jinja2-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+pip3 wheel -w dist --no-cache-dir --no-build-isolation --no-deps $PWD
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --find-links dist --root=${PKG_DIR} Jinja2
+'''

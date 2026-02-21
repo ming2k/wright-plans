@@ -1,0 +1,88 @@
+[plan]
+name = "asciidoctor"
+version = "2.0.26"
+release = 1
+description = "An implementation of AsciiDoc in Ruby"
+license = "MIT"
+arch = "any"
+url = "https://asciidoctor.org"
+
+[dependencies]
+runtime = ["ruby"]
+build = ["ruby"]
+
+[sources]
+uris = ["https://github.com/asciidoctor/asciidoctor/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+
+# Allow newer dependency versions
+sed --in-place --regexp-extended \
+  --expression 's|~>|>=|g' \
+  asciidoctor.gemspec
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+
+_gemdir=$(gem env gemdir)
+
+gem build --verbose asciidoctor.gemspec
+
+gem install \
+  --local \
+  --verbose \
+  --ignore-dependencies \
+  --no-user-install \
+  --install-dir "tmp_install${_gemdir}" \
+  --bindir "tmp_install/usr/bin" \
+  "asciidoctor-${PKG_VERSION}.gem"
+
+# Remove unreproducible files
+rm --force --recursive --verbose \
+  "tmp_install${_gemdir}/cache/" \
+  "tmp_install${_gemdir}/gems/asciidoctor-${PKG_VERSION}/vendor/" \
+  "tmp_install${_gemdir}/doc/asciidoctor-${PKG_VERSION}/ri/ext/"
+
+find "tmp_install${_gemdir}/gems/" \
+  -type f \
+  \( \
+    -iname "*.o" -o \
+    -iname "*.c" -o \
+    -iname "*.so" -o \
+    -iname "*.time" -o \
+    -iname "gem.build_complete" -o \
+    -iname "Makefile" \
+  \) \
+  -delete
+
+find "tmp_install${_gemdir}/extensions/" \
+  -type f \
+  \( \
+    -iname "mkmf.log" -o \
+    -iname "gem_make.out" \
+  \) \
+  -delete
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+
+_gemdir=$(gem env gemdir)
+
+install --verbose -D --mode=0644 \
+  "tmp_install${_gemdir}/gems/asciidoctor-${PKG_VERSION}/man/asciidoctor.1" \
+  "${PKG_DIR}/usr/share/man/man1/asciidoctor.1"
+
+cp --archive --verbose tmp_install/* "${PKG_DIR}"
+
+install --verbose -D --mode=0644 LICENSE* \
+  --target-directory "${PKG_DIR}/usr/share/licenses/asciidoctor"
+install --verbose -D --mode=0644 *.adoc \
+  --target-directory "${PKG_DIR}/usr/share/doc/asciidoctor"
+'''

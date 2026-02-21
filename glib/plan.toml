@@ -1,0 +1,47 @@
+[plan]
+name = "glib"
+version = "2.86.4"
+release = 2
+description = "Low-level core library for GNOME"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://wiki.gnome.org/Projects/GLib"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "python", "gettext"]
+link = ["libffi", "pcre2", "zlib", "util-linux"]
+
+[sources]
+uris = ["https://download.gnome.org/sources/glib/2.86/glib-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build          \
+    --prefix=/usr          \
+    --buildtype=release    \
+    -Dman-pages=disabled   \
+    -Dtests=false          \
+    -Dselinux=disabled
+'''
+
+[lifecycle.compile]
+script = '''
+meson compile -C ${BUILD_DIR}/build
+'''
+
+[lifecycle.package]
+script = '''
+meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
+'''
+
+[install_scripts]
+post_install = '''
+glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
+gio-querymodules /usr/lib/gio/modules 2>/dev/null || true
+'''
+post_upgrade = '''
+glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
+gio-querymodules /usr/lib/gio/modules 2>/dev/null || true
+'''

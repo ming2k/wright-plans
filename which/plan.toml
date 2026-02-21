@@ -1,0 +1,35 @@
+[plan]
+name = "which"
+version = "2.23"
+release = 1
+description = "Utility to show the full path of commands"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://carlowood.github.io/which/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://carlowood.github.io/which/which-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

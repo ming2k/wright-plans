@@ -1,0 +1,39 @@
+[plan]
+name = "libplacebo"
+version = "7.360.0"
+release = 1
+description = "Reusable library for GPU-accelerated image/video processing"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/haasn/libplacebo"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "python-glad2"]
+link = ["glslang", "lcms2", "shaderc", "spirv-cross", "vulkan-loader", "vulkan-headers"]
+
+[sources]
+uris = ["https://code.videolan.org/videolan/libplacebo/-/archive/v${PKG_VERSION}/libplacebo-v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+--prefix=/usr \
+--buildtype=release \
+-D demos=false \
+-D tests=false \
+-D glslang=enabled \
+-D shaderc=enabled \
+-D vulkan=enabled \
+-D lcms=enabled \
+-D opengl=disabled
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+dockyard = "none"
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

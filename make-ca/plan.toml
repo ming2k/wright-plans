@@ -1,0 +1,23 @@
+[plan]
+name = "make-ca"
+version = "1.16.1"
+release = 1
+description = "Utility to deliver and manage a CA certificate store"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://github.com/lfs-book/make-ca"
+
+[dependencies]
+runtime = ["p11-kit"]
+link = ["openssl"]
+[sources]
+uris = ["https://github.com/lfs-book/make-ca/archive/v${PKG_VERSION}/make-ca-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+install -vdm755 ${PKG_DIR}/etc/ssl/local
+'''

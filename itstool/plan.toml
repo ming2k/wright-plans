@@ -1,0 +1,34 @@
+[plan]
+name = "itstool"
+version = "2.0.7"
+release = 1
+description = "ITS-based XML translation tool"
+license = "GPL-3.0-or-later"
+arch = "any"
+url = "https://itstool.org"
+
+[sources]
+uris = ["https://github.com/itstool/itstool/archive/refs/tags/${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+autoreconf -fi
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} make install
+'''

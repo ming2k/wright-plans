@@ -1,0 +1,40 @@
+[plan]
+name = "gsettings-desktop-schemas"
+version = "49.1"
+release = 1
+description = "GSettings schemas for GNOME desktop components"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas"
+
+[dependencies]
+build = ["gobject-introspection", "meson", "ninja"]
+link = ["glib"]
+[sources]
+uris = ["https://download.gnome.org/sources/gsettings-desktop-schemas/49/gsettings-desktop-schemas-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr \
+--buildtype=release \
+-Dintrospection=true
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+ninja -C build
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+"""
+
+[install_scripts]
+post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
+post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"

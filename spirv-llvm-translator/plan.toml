@@ -1,0 +1,45 @@
+[plan]
+name = "spirv-llvm-translator"
+version = "21.1.4"  # ⚠️ 必须与你的 LLVM 主版本号一致 (llvm-config --version)
+release = 1
+description = "Bi-directional translation between SPIR-V and LLVM IR"
+license = "UoI-NCSA"
+arch = "x86_64"
+url = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator"
+
+[dependencies]
+build = ["cmake", "gcc", "llvm", "make", "spirv-headers", "spirv-tools"]
+runtime = ["llvm"]
+[sources]
+# 官方 Tag 通常是 v<LLVM_MAJOR>.x.x
+uris = ["https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"] # 建议实际构建时更新为具体 hash
+
+[options]
+strip = true
+ccache = true
+
+[lifecycle.configure]
+# 注意：LLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR 指向已安装的 spirv-headers 路径
+script = """
+cd ${BUILD_DIR}
+cmake -B build \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_INSTALL_LIBDIR=lib \
+-DBUILD_SHARED_LIBS=ON \
+-DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR=/usr \
+-DLLVM_SPIRV_INCLUDE_TESTS=OFF
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+cmake --build build -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} cmake --install build
+"""

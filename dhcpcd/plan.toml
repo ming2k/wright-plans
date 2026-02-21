@@ -1,0 +1,40 @@
+[plan]
+name = "dhcpcd"
+version = "10.3.0"
+release = 1
+description = "DHCP/DHCPv6 client with IPv4LL support"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/NetworkConfiguration/dhcpcd"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://github.com/NetworkConfiguration/dhcpcd/releases/download/v${PKG_VERSION}/dhcpcd-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr       \
+--sysconfdir=/etc   \
+--libexecdir=/usr/lib/dhcpcd \
+--dbdir=/var/lib/dhcpcd      \
+--runstatedir=/run           \
+--disable-privsep
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

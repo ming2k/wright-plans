@@ -1,0 +1,27 @@
+[plan]
+name = "bash-completion"
+version = "2.17.0"
+release = 1
+description = "Programmable completion for Bash"
+license = "GPL-2.0-or-later"
+arch = "any"
+url = "https://github.com/scop/bash-completion"
+
+[dependencies]
+build = ["make"]
+
+[sources]
+uris = ["https://github.com/scop/bash-completion/releases/download/${PKG_VERSION}/bash-completion-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr --sysconfdir=/etc
+"""
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.package]
+script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

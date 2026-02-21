@@ -1,0 +1,57 @@
+[plan]
+name = "sing-box"
+version = "1.12.21"
+release = 1
+description = "The universal proxy platform"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://sing-box.sagernet.org/"
+
+[dependencies]
+build = ["go"]
+[sources]
+uris = ["https://github.com/SagerNet/sing-box/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+export PATH=/usr/lib/go/bin:$PATH
+export GOPATH=/tmp/go-cache
+export GOCACHE=/tmp/go-cache/build
+export CGO_ENABLED=0
+go build -o sing-box \
+-trimpath \
+-tags "with_quic,with_dhcp,with_wireguard,with_utls,with_clash_api,with_gvisor" \
+-ldflags "-s -w -X github.com/sagernet/sing-box/constant.Version=${PKG_VERSION}" \
+./cmd/sing-box
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 sing-box ${PKG_DIR}/usr/bin/sing-box
+install -dm755 ${PKG_DIR}/etc/sing-box
+echo '{}' > ${PKG_DIR}/etc/sing-box/config.json
+install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/systemd/system/sing-box.service << 'UNIT'
+
+[Unit]
+Description=sing-box service
+After=network.target nss-lookup.target
+
+[Service]
+ExecStart=/usr/bin/sing-box run -c /etc/sing-box/config.json
+Restart=on-failure
+RestartSec=10s
+LimitNOFILE=infinity
+
+[Install]
+WantedBy=multi-user.target
+UNIT
+'''
+
+[install_scripts]
+post_install = "systemctl daemon-reload 2>/dev/null || true"
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

@@ -1,0 +1,23 @@
+[plan]
+name = "meson"
+version = "1.8.3"
+release = 1
+description = "Open source build system meant to be fast and user friendly"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://mesonbuild.com/"
+
+[dependencies]
+build = ["ninja", "python"]
+[sources]
+uris = ["https://github.com/mesonbuild/meson/releases/download/1.8.3/meson-1.8.3.tar.gz"]
+sha256 = [
+    "f118aa910fc0a137cc2dd0122232dbf82153d9a12fb5b0f5bb64896f6a157abf",
+]
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --root=${PKG_DIR} --no-build-isolation .
+'''

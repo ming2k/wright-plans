@@ -1,0 +1,38 @@
+[plan]
+name = "libepoxy"
+version = "1.5.10"
+release = 2
+description = "Library for handling OpenGL function pointer management"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/anholt/libepoxy"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+runtime = ["mesa"]
+link = ["mesa", "libglvnd"]
+[sources]
+uris = ["https://download.gnome.org/sources/libepoxy/1.5/libepoxy-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr       \
+--buildtype=release \
+-D x11=false
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+meson compile -C ${BUILD_DIR}/build
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
+'''

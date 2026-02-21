@@ -1,0 +1,43 @@
+[plan]
+name = "intltool"
+version = "0.51.0"
+release = 1
+description = "Internationalization utilities for extracting translatable strings"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://freedesktop.org/wiki/Software/intltool"
+
+[dependencies]
+build = ["make", "perl", "xml-parser"]
+[sources]
+uris = ["https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+sed -i 's:\\\${:\\\$\\{:' intltool-update.in
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+install -v -Dm644 doc/I18N-HOWTO ${PKG_DIR}/usr/share/doc/intltool-0.51.0/I18N-HOWTO
+'''

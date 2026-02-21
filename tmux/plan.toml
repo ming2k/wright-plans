@@ -1,0 +1,39 @@
+[plan]
+name = "tmux"
+version = "3.6a"
+release = 1
+description = "A terminal multiplexer"
+license = "ISC"
+arch = "x86_64"
+url = "https://github.com/tmux/tmux/wiki"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["libevent", "ncurses", "systemd"]
+
+[sources]
+uris = ["https://github.com/tmux/tmux/releases/download/${PKG_VERSION}/tmux-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+            --enable-sixel   \
+            --enable-systemd
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

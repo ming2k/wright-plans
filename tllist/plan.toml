@@ -1,0 +1,28 @@
+[plan]
+name = "tllist"
+version = "1.1.0"
+release = 1
+description = "Typed linked list C header library"
+license = "MIT"
+arch = "x86_64"
+url = "https://codeberg.org/dnkl/tllist"
+
+[sources]
+uris = ["https://codeberg.org/dnkl/tllist/archive/1.1.0.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+--prefix=/usr          \
+--buildtype=release
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+dockyard = "none"
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

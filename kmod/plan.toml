@@ -1,0 +1,42 @@
+[plan]
+name = "kmod"
+version = "34.2"
+release = 1
+description = "Libraries and utilities for loading kernel modules"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git"
+
+[dependencies]
+build = ["gcc", "meson", "ninja", "xz"]
+link = ["openssl", "zlib", "zstd"]
+[sources]
+uris = ["https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-34.2.tar.xz"]
+sha256 = [
+    "5a5d5073070cc7e0c7a7a3c6ec2a0e1780850c8b47b3e3892226b93ffcb9cb54",
+]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+mkdir -p build
+cd build
+meson setup --prefix=/usr ..    \
+--buildtype=release \
+-D manpages=false
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/build
+ninja
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+for target in depmod insmod modinfo modprobe rmmod lsmod; do
+ln -sfv kmod ${PKG_DIR}/usr/bin/$target
+done
+'''

@@ -1,0 +1,30 @@
+[plan]
+name = "mise"
+version = "2026.2.11"
+release = 1
+description = "Dev tools, env vars, task runner"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/jdx/mise"
+
+[dependencies]
+build = ["curl", "rust"]
+link = ["openssl"]
+[sources]
+uris = ["https://github.com/jdx/mise/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+script = """
+cd ${BUILD_DIR}
+cargo build --release --locked
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+install -Dm755 target/release/mise ${PKG_DIR}/usr/bin/mise
+"""

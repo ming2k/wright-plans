@@ -1,0 +1,35 @@
+[plan]
+name = "inter-font"
+version = "4.1"
+release = 2
+description = "Inter - typeface designed for computer screens"
+license = "OFL-1.1"
+arch = "any"
+url = "https://rsms.me/inter/"
+
+[dependencies]
+build = ["unzip"]
+
+[sources]
+uris = ["https://github.com/rsms/inter/releases/download/v${PKG_VERSION}/Inter-${PKG_VERSION}.zip"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = "echo preparing inter-font"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+rm -rf inter-extracted
+unzip -q ${FILES_DIR}/Inter-${PKG_VERSION}.zip -d inter-extracted
+'''
+
+[lifecycle.package]
+script = '''
+mkdir -p ${PKG_DIR}/usr/share/fonts/inter
+find ${BUILD_DIR}/inter-extracted -name '*.ttf' -exec cp {} ${PKG_DIR}/usr/share/fonts/inter/ \;
+'''
+
+[install_scripts]
+post_install = "fc-cache -s 2>/dev/null || true"
+post_upgrade = "fc-cache -s 2>/dev/null || true"

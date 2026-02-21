@@ -1,0 +1,31 @@
+[plan]
+name = "inih"
+version = "r58"
+release = 1
+description = "Simple INI file parser library in C"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/benhoyt/inih"
+
+[dependencies]
+build = ["meson", "ninja"]
+
+[sources]
+uris = ["https://github.com/benhoyt/inih/archive/refs/tags/${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -Ddefault_library=shared \
+    -Ddistro_install=true
+"""
+
+[lifecycle.compile]
+script = "meson compile -C ${BUILD_DIR}/build"
+
+[lifecycle.package]
+script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"

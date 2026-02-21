@@ -1,0 +1,29 @@
+[plan]
+name = "libpng"
+version = "1.6.55"
+release = 1
+description = "PNG reference library (Latest Stable)"
+license = "Libpng"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["zlib"]
+
+[sources]
+uris = ["https://github.com/pnggroup/libpng/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = [
+    "71a2c5b1218f60c4c6d2f1954c7eb20132156cae90bdb90b566c24db002782a6",
+]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+"""
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR} -j$(nproc)"
+
+[lifecycle.package]
+script = "make -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install"

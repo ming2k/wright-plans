@@ -1,0 +1,51 @@
+[plan]
+name = "coreutils"
+version = "9.7"
+release = 1
+description = "Basic utility programs needed by every operating system"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/coreutils/"
+
+[dependencies]
+build = ["autoconf", "automake", "gcc", "gettext", "make", "perl"]
+link = ["acl", "attr", "libcap"]
+[sources]
+uris = [
+"https://ftp.gnu.org/gnu/coreutils/coreutils-9.7.tar.xz",
+"https://www.linuxfromscratch.org/patches/lfs/12.4/coreutils-9.7-upstream_fix-1.patch",
+"https://www.linuxfromscratch.org/patches/lfs/12.4/coreutils-9.7-i18n-1.patch",
+]
+sha256 = ["SKIP", "SKIP", "SKIP"]
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+patch -Np1 < ${FILES_DIR}/coreutils-9.7-upstream_fix-1.patch
+patch -Np1 < ${FILES_DIR}/coreutils-9.7-i18n-1.patch
+'''
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+autoreconf -fv
+automake -af
+FORCE_UNSAFE_CONFIGURE=1 ./configure \
+--prefix=/usr            \
+--enable-no-install-program=kill,uptime
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+mkdir -p ${PKG_DIR}/usr/share/man/man8
+mv -v ${PKG_DIR}/usr/share/man/man1/chroot.1 ${PKG_DIR}/usr/share/man/man8/chroot.8
+sed -i 's/"1"/"8"/' ${PKG_DIR}/usr/share/man/man8/chroot.8
+'''

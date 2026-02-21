@@ -1,0 +1,43 @@
+[plan]
+name = "libportal"
+version = "0.7.1"
+release = 2
+description = "GIO-style async APIs for Flatpak Portals"
+license = "LGPL-3.0-or-later"
+arch = "x86_64"
+url = "https://github.com/flatpak/libportal"
+
+[dependencies]
+build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
+link = ["glib", "gtk4", "gtk3"]
+[sources]
+uris = ["https://github.com/flatpak/libportal/releases/download/${PKG_VERSION}/libportal-${PKG_VERSION}.tar.xz"]
+sha256 = [
+    "297b90b263fad22190a26b8c7e8ea938fe6b18fb936265e588927179920d3805",
+]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr \
+--buildtype=release \
+-Dbackend-gtk3=enabled \
+-Dbackend-gtk4=enabled \
+-Dintrospection=true \
+-Dvapi=false \
+-Ddocs=false \
+-Dtests=false
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+meson compile -C build
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+meson install -C build --destdir ${PKG_DIR}
+"""

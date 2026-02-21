@@ -1,0 +1,84 @@
+[plan]
+name = "dbus"
+version = "1.16.2"
+release = 3
+description = "D-Bus message bus system"
+license = "AFL-2.1 OR GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://www.freedesktop.org/wiki/Software/dbus/"
+
+[dependencies]
+build = ["gcc", "meson", "ninja", "pkgconf"]
+runtime = ["systemd"]
+link = ["expat", "libsystemd"]
+
+[sources]
+uris = [
+"https://dbus.freedesktop.org/releases/dbus/dbus-${PKG_VERSION}.tar.xz",
+]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+mkdir -p build
+cd build
+meson setup --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --buildtype=release \
+    --wrap-mode=nofallback \
+    -Dapparmor=disabled \
+    -Dkqueue=disabled \
+    -Dlaunchd=disabled \
+    -Drelocation=disabled \
+    -Dselinux=disabled \
+    -Dsystemd=enabled \
+    -Dx11_autolaunch=disabled \
+    -Druntime_dir=/run \
+    -Dmodular_tests=disabled \
+    ..
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/build
+ninja
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
+
+# Symlink so D-Bus and systemd share machine-id
+ln -sfv /etc/machine-id ${PKG_DIR}/var/lib/dbus
+'''
+
+[install_scripts]
+post_install = '''
+groupadd -fg 22 dbus 2>/dev/null || true
+useradd -r -u 22 -g dbus -d /var/empty -s /usr/bin/nologin \
+    -c "dbus unprivileged user" dbus 2>/dev/null || true
+
+if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
+    chown root:dbus /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
+    chmod 4750 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
+fi
+'''
+post_upgrade = '''
+if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
+    chown root:dbus /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
+    chmod 4750 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
+fi
+'''
+
+[split.libdbus]
+description = "D-Bus low-level shared library"
+[split.libdbus.dependencies]
+link = ["glibc"]
+[split.libdbus.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/lib
+mv -v ${MAIN_PKG_DIR}/usr/lib/libdbus-1.so* ${PKG_DIR}/usr/lib/
+"""

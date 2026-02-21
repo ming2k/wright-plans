@@ -1,0 +1,39 @@
+[plan]
+name = "fd"
+version = "10.3.0"
+release = 1
+description = "Simple, fast and user-friendly alternative to find"
+license = "Apache-2.0 OR MIT"
+arch = "x86_64"
+url = "https://github.com/sharkdp/fd"
+
+[dependencies]
+build = ["rust"]
+link = ["gcc", "glibc"]
+
+[sources]
+uris = ["https://github.com/sharkdp/fd/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+cargo build --release --locked
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 target/release/fd ${PKG_DIR}/usr/bin/fd
+
+if [ -f doc/fd.1 ]; then
+  install -Dm644 doc/fd.1 ${PKG_DIR}/usr/share/man/man1/fd.1
+fi
+if [ -d completions ]; then
+  install -Dm644 completions/fd.bash ${PKG_DIR}/usr/share/bash-completion/completions/fd || true
+  install -Dm644 completions/_fd ${PKG_DIR}/usr/share/zsh/site-functions/_fd || true
+  install -Dm644 completions/fd.fish ${PKG_DIR}/usr/share/fish/vendor_completions.d/fd.fish || true
+fi
+'''

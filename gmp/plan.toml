@@ -1,0 +1,62 @@
+[plan]
+name = "gmp"
+version = "6.3.0"
+release = 2
+description = "GNU Multiple Precision Arithmetic Library"
+license = "LGPL-3.0-or-later"
+arch = "x86_64"
+url = "https://gmplib.org/"
+
+[dependencies]
+build = ["gcc", "m4", "make"]
+
+[mvp.dependencies]
+build = []
+
+[sources]
+uris = ["https://ftp.gnu.org/gnu/gmp/gmp-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+sed -i '/long long t1;/,+1s/()/(...)/' configure
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+unset CFLAGS CXXFLAGS
+cd ${BUILD_DIR}
+./configure --prefix=/usr    \
+--enable-cxx     \
+--disable-static \
+--docdir=/usr/share/doc/gmp-6.3.0
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+unset CFLAGS CXXFLAGS
+cd ${BUILD_DIR}
+make -j$(nproc)
+make html
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check 2>&1 | tee gmp-check-log
+awk '/# PASS:/{total+=$3} END{print total}' gmp-check-log
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PKG_DIR} install-html
+'''

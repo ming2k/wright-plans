@@ -1,0 +1,52 @@
+[plan]
+name = "texinfo"
+version = "7.2"
+release = 1
+description = "Programs for reading, writing, and converting info pages"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/texinfo/"
+
+[dependencies]
+build = ["gcc", "make", "perl"]
+runtime = ["perl"]
+[sources]
+uris = ["https://ftp.gnu.org/gnu/texinfo/texinfo-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+sed 's/! $output_file eq/$output_file ne/' -i tp/Texinfo/Convert/*.pm
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PKG_DIR} TEXMF=/usr/share/texmf install-tex
+'''

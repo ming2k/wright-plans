@@ -1,0 +1,32 @@
+# Downloaded source archives
+*.tar.gz
+*.tar.xz
+*.tar.bz2
+*.tar.zst
+*.tar.lz
+*.tar.lzma
+*.tgz
+*.zip
+*.7z
+
+# Built packages
+*.wright.tar.zst
+
+# wbuild working directories
+src/
+pkg/
+build/
+
+# Editor artifacts
+*~
+*.swp
+*.swo
+.*.swp
+\#*\#
+.#*
+*.orig
+*.bak
+
+# OS junk
+.DS_Store
+Thumbs.db

@@ -1,0 +1,47 @@
+[plan]
+name = "qt6-base"
+version = "6.10.2"
+release = 1
+description = "Qt 6 base module (Wayland Only)"
+license = "LGPL-3.0-only"
+arch = "x86_64"
+url = "https://www.qt.io"
+
+[dependencies]
+build = ["cmake", "gcc", "ninja", "perl", "pkgconf", "python"]
+runtime = ["dbus", "double-conversion", "mesa"]
+link = ["fontconfig", "freetype", "glib", "harfbuzz", "libdrm", "libpng", "libxkbcommon", "openssl", "pcre2", "vulkan-headers", "zlib"]
+
+[options]
+jobs = 4
+
+[sources]
+uris = ["https://download.qt.io/official_releases/qt/6.10/${PKG_VERSION}/submodules/qtbase-everywhere-src-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_CXX_FLAGS="-Wno-error" \
+    -DINSTALL_BINDIR=lib/qt6/bin \
+    -DINSTALL_PUBLICBINDIR=usr/bin \
+    -DINSTALL_LIBEXECDIR=lib/qt6 \
+    -DINSTALL_INCLUDEDIR=include/qt6 \
+    -DFEATURE_xcb=OFF \
+    -DFEATURE_xcb_xlib=OFF \
+    -DQT_FEATURE_xkbcommon_x11=OFF \
+    -DQT_FEATURE_openssl_linked=ON \
+    -DQT_FEATURE_system_zlib=ON \
+    -DQT_FEATURE_system_freetype=ON \
+    -DQT_FEATURE_vulkan=ON \
+    -DQT_FEATURE_sql=OFF
+'''
+
+[lifecycle.compile]
+script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

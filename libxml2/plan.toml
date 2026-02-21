@@ -1,0 +1,38 @@
+[plan]
+name = "libxml2"
+version = "2.15.1"
+release = 1
+description = "XML C parser and toolkit"
+license = "MIT"
+arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/libxml2"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://download.gnome.org/sources/libxml2/2.15/libxml2-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr           \
+--sysconfdir=/etc       \
+--disable-static        \
+--with-history          \
+--with-icu              \
+PYTHON=/usr/bin/python3 \
+--docdir=/usr/share/doc/libxml2-${PKG_VERSION}
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

@@ -1,0 +1,38 @@
+[plan]
+name = "ruby"
+version = "4.0.1"
+release = 1
+description = "An interpreted object-oriented programming language"
+license = "BSD-2-Clause"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["gmp", "libffi", "libyaml", "openssl", "readline", "zlib"]
+[sources]
+uris = ["https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.1.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+# --enable-shared: 构建 libruby.so
+# --disable-install-doc: 跳过文档安装以节省时间和空间
+./configure \
+--prefix=/usr \
+--enable-shared \
+--disable-install-doc \
+--with-openssl-dir=/usr
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""

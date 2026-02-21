@@ -1,0 +1,37 @@
+[plan]
+name = "libass"
+version = "0.17.4"
+release = 1
+description = "Portable subtitle renderer for ASS/SSA subtitle format"
+license = "ISC"
+arch = "x86_64"
+url = "https://github.com/libass/libass"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["freetype", "fribidi", "harfbuzz", "fontconfig"]
+
+[sources]
+uris = ["https://github.com/libass/libass/releases/download/${PKG_VERSION}/libass-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

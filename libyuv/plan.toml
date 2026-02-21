@@ -1,0 +1,46 @@
+[plan]
+name = "libyuv"
+version = "1893"
+release = 3
+description = "YUV scaling and conversion library (Git Source)"
+license = "BSD-3-Clause"
+arch = "x86_64"
+
+[dependencies]
+build = ["cmake", "ninja", "gcc", "git"]
+
+[sources]
+uris = ["git+https://chromium.googlesource.com/libyuv/libyuv.git#branch=stable"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=ON \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build"
+
+[lifecycle.package]
+script = '''
+DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install
+
+mkdir -p ${PKG_DIR}/usr/lib/pkgconfig
+cat > ${PKG_DIR}/usr/lib/pkgconfig/libyuv.pc << PCEOF
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libyuv
+Description: YUV scaling and conversion library
+Version: 1893
+Libs: -L${libdir} -lyuv
+Cflags: -I${includedir}
+PCEOF
+'''

@@ -1,0 +1,29 @@
+[plan]
+name = "vulkan-headers"
+version = "1.4.344"
+release = 1
+description = "Vulkan header files and API registry"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/KhronosGroup/Vulkan-Headers"
+
+[sources]
+uris = ["https://github.com/KhronosGroup/Vulkan-Headers/archive/v${PKG_VERSION}/Vulkan-Headers-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cmake -B build -S ${BUILD_DIR} \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_BUILD_TYPE=Release \
+-GNinja \
+-DCMAKE_CXX_SCAN_FOR_MODULES=OFF \
+-DCMAKE_POLICY_VERSION_MINIMUM=3.5
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+DESTDIR=${PKG_DIR} cmake --install build
+"""

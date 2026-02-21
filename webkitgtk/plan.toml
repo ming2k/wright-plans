@@ -1,0 +1,61 @@
+[plan]
+name = "webkitgtk"
+version = "2.50.5"
+release = 1
+description = "Web content rendering engine for GTK (MVP Build)"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://webkitgtk.org"
+
+[dependencies]
+
+[sources]
+uris = ["https://webkitgtk.org/releases/webkitgtk-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[options]
+# timeout = 14400
+jobs = 10
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+-DCMAKE_BUILD_TYPE=Release \
+-DCMAKE_INSTALL_PREFIX=/usr \
+-DCMAKE_SKIP_RPATH=ON \
+-DPORT=GTK \
+-DCMAKE_CXX_FLAGS="-Wno-error=deprecated-literal-operator" \
+-DENABLE_BUBBLEWRAP_SANDBOX=ON \
+-DENABLE_WAYLAND_TARGET=ON \
+-DENABLE_X11_TARGET=ON \
+-DENABLE_INTROSPECTION=ON \
+-DENABLE_MINIBROWSER=OFF \
+-DENABLE_DOCUMENTATION=OFF \
+-DENABLE_GAMEPAD=OFF \
+-DENABLE_GEOLOCATION=OFF \
+-DENABLE_SPELLCHECK=OFF \
+-DENABLE_SPEECH_SYNTHESIS=OFF \
+-DUSE_LIBHYPHEN=OFF \
+-DUSE_LIBSECRET=ON \
+-DUSE_SOUP2=OFF \
+-DUSE_AVIF=ON \
+-DUSE_JPEGXL=ON \
+-DUSE_WOFF2=ON \
+-DUSE_WPE_RENDERER=ON \
+-DUSE_LIBBACKTRACE=OFF \
+-DUSE_SYSTEM_SYSPROF_CAPTURE=OFF
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+cmake --build build
+"""
+
+[lifecycle.package]
+script = """
+# 这里加回了 cd ${BUILD_DIR}
+cd ${BUILD_DIR}
+DESTDIR="${PKG_DIR}" cmake --install build
+"""

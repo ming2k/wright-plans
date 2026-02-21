@@ -1,0 +1,38 @@
+[plan]
+name = "nghttp2"
+version = "1.66.0"
+release = 1
+description = "HTTP/2 C Library and tools"
+license = "MIT"
+arch = "x86_64"
+url = "https://nghttp2.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://github.com/nghttp2/nghttp2/releases/download/v${PKG_VERSION}/nghttp2-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr     \
+--disable-static  \
+--enable-lib-only \
+--docdir=/usr/share/doc/nghttp2-${PKG_VERSION}
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

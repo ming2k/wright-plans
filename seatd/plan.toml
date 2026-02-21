@@ -1,0 +1,39 @@
+[plan]
+name = "seatd"
+version = "0.9.1"
+release = 1
+description = "Minimal seat management daemon"
+license = "MIT"
+arch = "x86_64"
+url = "https://sr.ht/~kennylevinsen/seatd/"
+
+[dependencies]
+build = ["meson", "ninja"]
+[sources]
+uris = ["https://git.sr.ht/~kennylevinsen/seatd/archive/${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+--prefix=/usr          \
+--buildtype=release    \
+-D libseat-logind=systemd \
+-D libseat-builtin=enabled
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+dockyard = "none"
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+
+[install_scripts]
+post_install = '''
+systemd-sysusers /usr/lib/sysusers.d/seatd.conf 2>/dev/null || true
+systemctl daemon-reload 2>/dev/null || true
+'''
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

@@ -1,0 +1,28 @@
+[plan]
+name = "libtiff"
+version = "4.7.1"
+release = 1
+description = "TIFF image format library"
+license = "libtiff"
+arch = "x86_64"
+url = "https://libtiff.gitlab.io/libtiff/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["zlib", "libjpeg-turbo"]
+
+[sources]
+uris = ["https://download.osgeo.org/libtiff/tiff-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+"""
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR} -j$(nproc)"
+
+[lifecycle.package]
+script = "make -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install"

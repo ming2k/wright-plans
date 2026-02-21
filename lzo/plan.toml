@@ -1,0 +1,25 @@
+[plan]
+name = "lzo"
+version = "2.10"
+release = 1
+description = "Portable lossless data compression library"
+license = "GPL-2.0"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://www.oberhumer.com/opensource/lzo/download/lzo-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr --enable-shared --disable-static --docdir=/usr/share/doc/lzo-${PKG_VERSION}
+"""
+
+[lifecycle.compile]
+script = "cd ${BUILD_DIR} && make -j$(nproc)"
+
+[lifecycle.package]
+script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"

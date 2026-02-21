@@ -1,0 +1,35 @@
+[plan]
+name = "jetbrains-mono"
+version = "2.304"
+release = 2
+description = "JetBrains Mono - typeface for developers"
+license = "OFL-1.1"
+arch = "any"
+url = "https://www.jetbrains.com/lp/mono/"
+
+[dependencies]
+build = ["unzip"]
+
+[sources]
+uris = ["https://github.com/JetBrains/JetBrainsMono/releases/download/v${PKG_VERSION}/JetBrainsMono-${PKG_VERSION}.zip"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = "echo preparing jetbrains-mono"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+rm -rf jbmono
+unzip -q ${FILES_DIR}/JetBrainsMono-${PKG_VERSION}.zip -d jbmono
+'''
+
+[lifecycle.package]
+script = '''
+mkdir -p ${PKG_DIR}/usr/share/fonts/jetbrains-mono
+find ${BUILD_DIR}/jbmono -name '*.ttf' -not -name '*NL*' -exec cp {} ${PKG_DIR}/usr/share/fonts/jetbrains-mono/ \;
+'''
+
+[install_scripts]
+post_install = "fc-cache -s 2>/dev/null || true"
+post_upgrade = "fc-cache -s 2>/dev/null || true"

@@ -1,0 +1,42 @@
+[plan]
+name = "spirv-cross"
+version = "1.4.341.0"
+release = 1
+description = "Tool and library for parsing and converting SPIR-V to other shader languages"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/KhronosGroup/SPIRV-Cross"
+
+[dependencies]
+build = ["gcc", "make", "cmake"]
+
+[sources]
+uris = ["https://github.com/KhronosGroup/SPIRV-Cross/archive/refs/tags/vulkan-sdk-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+mkdir -p ${BUILD_DIR}/build && cd ${BUILD_DIR}/build
+cmake -DCMAKE_INSTALL_PREFIX=/usr \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+      -DSPIRV_CROSS_SHARED=ON \
+      -DSPIRV_CROSS_STATIC=OFF \
+      -DSPIRV_CROSS_CLI=OFF \
+      ..
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/build
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/build
+make DESTDIR=${PKG_DIR} install
+'''

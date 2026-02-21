@@ -1,0 +1,35 @@
+[plan]
+name = "hwdata"
+version = "0.393"
+release = 1
+description = "Hardware identification and configuration data"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/vcrhonek/hwdata"
+
+[dependencies]
+build = ["make"]
+[sources]
+uris = ["https://github.com/vcrhonek/hwdata/archive/v${PKG_VERSION}/hwdata-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --datarootdir=/usr/share
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

@@ -1,0 +1,51 @@
+[plan]
+name = "flex"
+version = "2.6.4"
+release = 1
+description = "Utility for generating programs that recognize patterns in text"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/westes/flex"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://github.com/westes/flex/releases/download/v${PKG_VERSION}/flex-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+--docdir=/usr/share/doc/flex-${PKG_VERSION} \
+--disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+
+# Create lex compatibility symlinks
+ln -sv flex   ${PKG_DIR}/usr/bin/lex
+ln -sv flex.1 ${PKG_DIR}/usr/share/man/man1/lex.1
+
+rm -f ${PKG_DIR}/usr/share/info/dir
+'''

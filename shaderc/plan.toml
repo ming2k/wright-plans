@@ -1,0 +1,61 @@
+[plan]
+name = "shaderc"
+version = "2026.1"
+release = 1
+description = "Google shaderc (glslc) compiler and SPIR-V tools"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/google/shaderc"
+
+[dependencies]
+build = ["asciidoctor", "cmake", "ninja", "python", "spirv-headers", "spirv-tools", "glslang"]
+link = ["spirv-tools", "glslang"]
+provides = ["libshaderc_shared.so"]
+
+[sources]
+uris = ["https://github.com/google/shaderc/archive/v${PKG_VERSION}/shaderc-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+
+# De-vendor libs and disable git versioning like Arch's PKGBUILD
+sed '/examples/d;/third_party/d' -i CMakeLists.txt
+sed '/build-version/d' -i glslc/CMakeLists.txt
+
+spirv_tools_ver=$(pkg-config --modversion spirv-tools 2>/dev/null || pkg-config --modversion SPIRV-Tools 2>/dev/null || echo unknown)
+glslang_ver=$(pkg-config --modversion glslang 2>/dev/null || echo unknown)
+
+cat <<- BUILDVER_EOF > glslc/src/build-version.inc
+"${PKG_VERSION}\\n"
+"${spirv_tools_ver}\\n"
+"${glslang_ver}\\n"
+BUILDVER_EOF
+'''
+
+[lifecycle.configure]
+script = '''
+cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_CXX_FLAGS="${CXXFLAGS} -ffat-lto-objects" \
+  -DSHADERC_SKIP_TESTS=ON \
+  -DPYTHON_EXECUTABLE=python \
+  -Dglslang_SOURCE_DIR=/usr/include/glslang
+'''
+
+[lifecycle.compile]
+script = '''
+cmake --build ${BUILD_DIR}/build
+
+cd ${BUILD_DIR}/glslc
+asciidoctor -b manpage README.asciidoc -o glslc.1
+'''
+
+[lifecycle.package]
+script = '''
+DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build
+install -Dm 644 ${BUILD_DIR}/glslc/glslc.1 ${PKG_DIR}/usr/share/man/man1/glslc.1
+rm -f ${PKG_DIR}/usr/lib/pkgconfig/shaderc_static.pc
+'''

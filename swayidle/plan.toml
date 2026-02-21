@@ -1,0 +1,44 @@
+[plan]
+name = "swayidle"
+version = "1.9.0"
+release = 1
+description = "Idle management daemon for Wayland"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/swaywm/swayidle"
+
+[dependencies]
+build = ["meson", "ninja"]
+runtime = ["systemd"]
+link = ["wayland", "wayland-protocols"]
+[sources]
+uris = ["https://github.com/swaywm/swayidle/releases/download/v${PKG_VERSION}/swayidle-${PKG_VERSION}.tar.gz"]
+sha256 = [
+    "6c1b769038b60250c88e47380cbb021cfa57a65f872bf4d6c340b5e3057096ac",
+]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr \
+--buildtype=release \
+-Dlogind=enabled \
+-Dlogind-provider=systemd \
+-Dman-pages=disabled
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+ninja -C build
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+"""

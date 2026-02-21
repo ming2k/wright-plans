@@ -1,0 +1,37 @@
+[plan]
+name = "awww"
+version = "0.11.2"
+release = 1
+description = "An Answer to your Wayland Wallpaper Woes"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://codeberg.org/LGFae/awww"
+
+[dependencies]
+build = ["rust"]
+link = ["lz4", "wayland", "wayland-protocols"]
+[sources]
+uris = ["https://codeberg.org/LGFae/awww/archive/v${PKG_VERSION}.tar.gz"]
+sha256 = [
+    "0bd1d3a7461b1bc0b99f49aa64ce01d3e84412c5afd6534a1221c4aa3341ccd6",
+]
+
+[lifecycle.compile]
+dockyard = "none"
+env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+script = """
+cd ${BUILD_DIR}
+cargo build --release --locked
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+install -Dm755 target/release/swww ${PKG_DIR}/usr/bin/swww
+install -Dm755 target/release/swww-daemon ${PKG_DIR}/usr/bin/swww-daemon
+
+install -Dm644 completions/swww.bash ${PKG_DIR}/usr/share/bash-completion/completions/swww
+install -Dm644 completions/swww.fish ${PKG_DIR}/usr/share/fish/vendor_completions.d/swww.fish
+install -Dm644 completions/_swww ${PKG_DIR}/usr/share/zsh/site-functions/_swww
+"""

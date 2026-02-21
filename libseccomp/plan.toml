@@ -1,0 +1,35 @@
+[plan]
+name = "libseccomp"
+version = "2.6.0"
+release = 1
+description = "Enhanced seccomp library"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/seccomp/libseccomp"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://github.com/seccomp/libseccomp/releases/download/v${PKG_VERSION}/libseccomp-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""

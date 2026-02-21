@@ -1,0 +1,166 @@
+[plan]
+name = "shadow"
+version = "4.19.3"
+release = 1
+description = "Shadow password utilities (rebuilt with PAM support)"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/shadow-maint/shadow"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["glibc", "linux-pam"]
+[sources]
+uris = ["https://github.com/shadow-maint/shadow/releases/download/${PKG_VERSION}/shadow-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[options]
+strip = true
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+sed -i 's/groups$(EXEEXT) //' src/Makefile.in
+find man -name Makefile.in -exec sed -i 's/groups\.1 / /'   {} \;
+find man -name Makefile.in -exec sed -i 's/getspnam\.3 / /' {} \;
+find man -name Makefile.in -exec sed -i 's/passwd\.5 / /'   {} \;
+
+sed -e 's:#ENCRYPT_METHOD DES:ENCRYPT_METHOD YESCRYPT:' \
+-e 's:/var/spool/mail:/var/mail:'                    \
+-e '/PATH=/{s@/sbin:@@;s@/bin:@@}'                   \
+-i etc/login.defs
+
+touch ${BUILD_DIR}/passwd_dummy
+'''
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --sysconfdir=/etc   \
+--disable-static    \
+--with-{b,yes}crypt \
+--without-libbsd    \
+--with-group-name-max-length=32
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make exec_prefix=/usr DESTDIR=${PKG_DIR} install
+make -C man DESTDIR=${PKG_DIR} install-man
+
+install -vdm755 ${PKG_DIR}/etc/pam.d
+
+cat > ${PKG_DIR}/etc/pam.d/login << 'PAMEOF'
+# Begin /etc/pam.d/login
+auth      optional    pam_faildelay.so  delay=3000000
+auth      requisite   pam_nologin.so
+auth      include     system-auth
+account   required    pam_access.so
+account   include     system-account
+session   required    pam_env.so
+session   required    pam_limits.so
+session   include     system-session
+session   optional    pam_lastlog.so
+session   optional    pam_motd.so
+password  include     system-password
+# End /etc/pam.d/login
+PAMEOF
+
+cat > ${PKG_DIR}/etc/pam.d/passwd << 'PAMEOF'
+# Begin /etc/pam.d/passwd
+password  include     system-password
+# End /etc/pam.d/passwd
+PAMEOF
+
+cat > ${PKG_DIR}/etc/pam.d/su << 'PAMEOF'
+# Begin /etc/pam.d/su
+auth      sufficient  pam_rootok.so
+auth      include     system-auth
+auth      required    pam_wheel.so use_uid
+account   include     system-account
+session   required    pam_env.so
+session   include     system-session
+password  include     system-password
+# End /etc/pam.d/su
+PAMEOF
+
+cat > ${PKG_DIR}/etc/pam.d/chpasswd << 'PAMEOF'
+# Begin /etc/pam.d/chpasswd
+auth      sufficient  pam_rootok.so
+password  include     system-password
+# End /etc/pam.d/chpasswd
+PAMEOF
+
+cat > ${PKG_DIR}/etc/pam.d/newusers << 'PAMEOF'
+# Begin /etc/pam.d/newusers
+auth      sufficient  pam_rootok.so
+password  include     system-password
+# End /etc/pam.d/newusers
+PAMEOF
+
+for PROGRAM in chage chfn chgpasswd chsh groupadd groupdel \
+groupmems groupmod useradd userdel usermod; do
+cat > ${PKG_DIR}/etc/pam.d/${PROGRAM} << PAMEOF
+# Begin /etc/pam.d/${PROGRAM}
+auth      sufficient  pam_rootok.so
+account   include     system-account
+password  include     system-password
+session   include     system-session
+# End /etc/pam.d/${PROGRAM}
+PAMEOF
+done
+'''
+
+[install_scripts]
+post_install = '''
+# Ensure canonical shadow setup exists even on custom/minimal systems.
+if ! getent group shadow >/dev/null 2>&1; then
+  groupadd --system shadow >/dev/null 2>&1 || true
+fi
+
+chown root:root /usr/bin/passwd 2>/dev/null || true
+chmod 4755 /usr/bin/passwd 2>/dev/null || true
+
+chown root:root /etc/passwd 2>/dev/null || true
+chmod 0644 /etc/passwd 2>/dev/null || true
+
+chown root:shadow /etc/shadow /etc/gshadow 2>/dev/null || true
+chmod 0640 /etc/shadow /etc/gshadow 2>/dev/null || true
+
+pwconv  2>/dev/null || true
+grpconv 2>/dev/null || true
+'''
+
+post_upgrade = '''
+if ! getent group shadow >/dev/null 2>&1; then
+  groupadd --system shadow >/dev/null 2>&1 || true
+fi
+
+chown root:root /usr/bin/passwd 2>/dev/null || true
+chmod 4755 /usr/bin/passwd 2>/dev/null || true
+
+chown root:root /etc/passwd 2>/dev/null || true
+chmod 0644 /etc/passwd 2>/dev/null || true
+
+chown root:shadow /etc/shadow /etc/gshadow 2>/dev/null || true
+chmod 0640 /etc/shadow /etc/gshadow 2>/dev/null || true
+
+pwconv  2>/dev/null || true
+grpconv 2>/dev/null || true
+'''
+
+[backup]
+files = [
+"/etc/login.defs",
+"/etc/default/useradd",
+"/etc/pam.d/login",
+"/etc/pam.d/passwd",
+"/etc/pam.d/su",
+]

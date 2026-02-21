@@ -1,0 +1,36 @@
+[plan]
+name = "libsecret"
+version = "0.21.6"
+release = 1
+description = "Library for storing and retrieving passwords and other secrets"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["gettext", "gobject-introspection", "meson", "ninja", "pkgconf"]
+link = ["glib", "libgcrypt"]
+[sources]
+uris = ["https://download.gnome.org/sources/libsecret/0.21/libsecret-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+# -Dcrypto=libgcrypt: 修正后的正确选项值
+# -Dvapi=false: 禁用 Vala
+# -Dgtk_doc=false: 禁用文档
+# -Dmanpage=false: 禁用手册页
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+--prefix=/usr \
+--buildtype=release \
+-Dvapi=false \
+-Dgtk_doc=false \
+-Dmanpage=false \
+-Dcrypto=libgcrypt
+"""
+
+[lifecycle.compile]
+script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build"

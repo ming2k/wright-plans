@@ -1,0 +1,37 @@
+[plan]
+name = "nettle"
+version = "3.10.2"
+release = 1
+description = "Low-level cryptographic library"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://www.lysator.liu.se/~nisse/nettle/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["gmp"]
+[sources]
+uris = ["https://ftpmirror.gnu.org/nettle/nettle-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+chmod -v 755 ${PKG_DIR}/usr/lib/lib{hogweed,nettle}.so
+'''

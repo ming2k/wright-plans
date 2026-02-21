@@ -1,0 +1,44 @@
+[plan]
+name = "fish"
+version = "4.5.0"
+release = 1
+description = "Smart and user-friendly command line shell"
+license = "GPL-2.0-only AND BSD-3-Clause AND ISC AND MIT AND PSF-2.0"
+arch = "x86_64"
+url = "https://fishshell.com/"
+
+[dependencies]
+build = ["cmake", "make", "pkgconf", "rust", "git", "jq", "gettext"]
+link = ["pcre2"]
+
+[sources]
+uris = ["https://github.com/fish-shell/fish-shell/releases/download/${PKG_VERSION}/fish-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+cmake -B build \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_SYSCONFDIR=/etc \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DFISH_USE_SYSTEM_PCRE2=ON \
+    -DWITH_MESSAGE_LOCALIZATION=ON \
+    -DWITH_DOCS=OFF \
+    -W no-dev
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -C build -j$(nproc) VERBOSE=1
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} cmake --install build
+'''

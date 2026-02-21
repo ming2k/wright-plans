@@ -1,0 +1,67 @@
+[plan]
+name = "bzip2"
+version = "1.0.8"
+release = 1
+description = "Programs for compressing and decompressing files using the Burrows-Wheeler algorithm"
+license = "bzip2-1.0.6"
+arch = "x86_64"
+url = "https://www.sourceware.org/bzip2/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = [
+"https://www.sourceware.org/pub/bzip2/bzip2-${PKG_VERSION}.tar.gz",
+"patches/bzip2-1.0.8-install_docs-1.patch",
+]
+sha256 = ["SKIP", "SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+
+# Apply documentation install patch
+patch -Np1 -i ${FILES_DIR}/bzip2-1.0.8-install_docs-1.patch
+
+# Ensure symbolic links are relative
+sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
+
+# Fix man pages location
+sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+
+# First build the shared library
+make -f Makefile-libbz2_so
+make clean
+
+# Then build the rest
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+
+# Install programs and static lib
+make PREFIX=${PKG_DIR}/usr install
+
+# Install shared library
+cp -av libbz2.so.* ${PKG_DIR}/usr/lib/
+ln -sv libbz2.so.${PKG_VERSION} ${PKG_DIR}/usr/lib/libbz2.so
+
+# Install shared bzip2 binary and create symlinks
+cp -v bzip2-shared ${PKG_DIR}/usr/bin/bzip2
+for i in ${PKG_DIR}/usr/bin/{bzcat,bunzip2}; do
+ln -sfv bzip2 $i
+done
+
+# Remove useless static library
+rm -fv ${PKG_DIR}/usr/lib/libbz2.a
+'''

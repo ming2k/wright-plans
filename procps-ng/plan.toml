@@ -1,0 +1,55 @@
+[plan]
+name = "procps-ng"
+version = "4.0.5"
+release = 1
+description = "Programs for monitoring processes"
+license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://sourceforge.net/projects/procps-ng/"
+
+[dependencies]
+build = ["gcc", "make", "systemd"]
+link = ["ncurses"]
+[sources]
+uris = [
+"https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${PKG_VERSION}.tar.xz",
+]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr                                  \
+--docdir=/usr/share/doc/procps-ng-${PKG_VERSION} \
+--disable-static                               \
+--disable-kill                                 \
+--enable-watch8bit                             \
+--with-systemd
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make
+'''
+
+[lifecycle.check]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+chown -R tester .
+su tester -c "PATH=$PATH make check"
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''
+
+[install_scripts]
+post_install = ""
+post_upgrade = ""

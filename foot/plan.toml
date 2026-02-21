@@ -1,0 +1,39 @@
+[plan]
+name = "foot"
+version = "1.25.0"
+release = 1
+description = "A fast, lightweight and minimalistic Wayland terminal emulator"
+license = "MIT"
+arch = "x86_64"
+url = "https://codeberg.org/dnkl/foot"
+
+[dependencies]
+build = ["fcft", "gcc", "meson", "ninja", "pixman", "tllist"]
+runtime = ["fcft", "pixman"]
+link = ["fontconfig", "freetype", "harfbuzz", "libxkbcommon", "ncurses", "wayland", "wayland-protocols"]
+[sources]
+uris = ["https://codeberg.org/dnkl/foot/releases/download/${PKG_VERSION}/foot-${PKG_VERSION}.tar.gz"]
+sha256 = [
+    "6572595658c81dde9dd1697a475fceaa2e46fbe8989bed989822643578a2ebe2",
+]
+
+[lifecycle.configure]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+meson setup build --prefix=/usr --buildtype=release -Dime=false -Dthemes=true
+"""
+
+[lifecycle.compile]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+ninja -C build
+"""
+
+[lifecycle.package]
+dockyard = "none"
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+"""

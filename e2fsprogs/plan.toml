@@ -1,0 +1,41 @@
+[plan]
+name = "e2fsprogs"
+version = "1.47.2"
+release = 1
+description = "Ext2/3/4 filesystem utilities"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://e2fsprogs.sourceforge.net"
+
+[sources]
+uris = ["https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${PKG_VERSION}/e2fsprogs-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+mkdir -p build && cd build
+../configure --prefix=/usr       \
+--sysconfdir=/etc   \
+--enable-elf-shlibs \
+--disable-libblkid  \
+--disable-libuuid   \
+--disable-uuidd     \
+--disable-fsck
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/build
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} make install
+DESTDIR=${PKG_DIR} make install-libs
+'''

@@ -1,0 +1,41 @@
+[plan]
+name = "fmt"
+version = "12.1.0"
+release = 1
+description = "Fast and safe alternative to C stdio and C++ iostreams"
+license = "MIT"
+arch = "x86_64"
+url = "https://fmt.dev/"
+
+[dependencies]
+build = ["gcc", "cmake", "ninja"]
+
+[sources]
+uris = ["https://github.com/fmtlib/fmt/archive/refs/tags/${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=None \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DBUILD_SHARED_LIBS=ON \
+  -DFMT_DOC=OFF \
+  -DFMT_TEST=OFF
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+ninja -C build -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+'''

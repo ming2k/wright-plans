@@ -1,0 +1,37 @@
+[plan]
+name = "zstd"
+version = "1.5.7"
+release = 1
+description = "Zstandard - real-time compression algorithm providing high compression ratios"
+license = "BSD-3-Clause AND GPL-2.0-only"
+arch = "x86_64"
+url = "https://facebook.github.io/zstd/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = ["https://github.com/facebook/zstd/releases/download/v${PKG_VERSION}/zstd-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make prefix=/usr -j$(nproc)
+'''
+
+[lifecycle.check]
+dockyard = "none"
+optional = true
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make prefix=/usr DESTDIR=${PKG_DIR} install
+rm -v ${PKG_DIR}/usr/lib/libzstd.a
+'''

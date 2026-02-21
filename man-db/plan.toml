@@ -1,0 +1,57 @@
+[plan]
+name = "man-db"
+version = "2.13.1"
+release = 1
+description = "Programs for finding and viewing man pages"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://man-db.nongnu.org/"
+
+[dependencies]
+build = ["gcc", "gdbm", "groff", "libpipeline", "make"]
+runtime = ["gdbm", "groff", "libpipeline"]
+provides = ["man"]
+[sources]
+uris = [
+"https://download.savannah.gnu.org/releases/man-db/man-db-${PKG_VERSION}.tar.xz",
+]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr                           \
+--docdir=/usr/share/doc/man-db-${PKG_VERSION} \
+--sysconfdir=/etc                       \
+--disable-setuid                        \
+--enable-cache-owner=bin                \
+--with-browser=/usr/bin/lynx            \
+--with-vgrind=/usr/bin/vgrind           \
+--with-grap=/usr/bin/grap
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make
+'''
+
+[lifecycle.check]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''
+
+[install_scripts]
+post_install = ""
+post_upgrade = ""

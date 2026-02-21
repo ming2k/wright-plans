@@ -1,0 +1,32 @@
+[plan]
+name = "pango"
+version = "1.57.0"
+release = 1
+description = "Text layout and rendering library"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+url = "https://pango.gnome.org"
+
+[sources]
+uris = ["https://download.gnome.org/sources/pango/1.57/pango-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "gobject-introspection", "python"]
+link = ["glib", "cairo", "harfbuzz", "fontconfig", "fribidi", "freetype"]
+
+[lifecycle.configure]
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+--prefix=/usr               \
+--buildtype=release         \
+--wrap-mode=nofallback      \
+-D xft=disabled             \
+-D introspection=enabled
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

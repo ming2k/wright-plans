@@ -1,0 +1,41 @@
+[plan]
+name = "wireplumber"
+version = "0.5.13"
+release = 1
+description = "Session/policy manager for PipeWire"
+license = "MIT"
+arch = "x86_64"
+url = "https://pipewire.pages.freedesktop.org/wireplumber/"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = ["glib", "lua", "pipewire", "systemd"]
+
+[sources]
+uris = ["https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${PKG_VERSION}/wireplumber-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+--prefix=/usr                \
+--buildtype=release          \
+-D doc=disabled              \
+-D tests=false               \
+-D system-lua=true           \
+-D elogind=disabled          \
+-D systemd=enabled
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.package]
+dockyard = "none"
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+
+[install_scripts]
+post_install = "systemctl daemon-reload 2>/dev/null || true"
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

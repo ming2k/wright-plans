@@ -1,0 +1,39 @@
+[plan]
+name = "xdg-dbus-proxy"
+version = "0.1.6"
+release = 1
+description = "D-Bus proxy for Flatpak sandboxed apps"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/flatpak/xdg-dbus-proxy"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+runtime = ["dbus"]
+link = ["glib"]
+
+[sources]
+uris = ["https://github.com/flatpak/xdg-dbus-proxy/releases/download/${PKG_VERSION}/xdg-dbus-proxy-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build      \
+--prefix=/usr          \
+--buildtype=release    \
+-D tests=false         \
+-D man=disabled
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+ninja -C build -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+'''

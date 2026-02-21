@@ -1,0 +1,49 @@
+[plan]
+name = "kbd"
+version = "2.8.0"
+release = 1
+description = "Key-table files, console fonts, and keyboard utilities"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://kbd-project.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+[sources]
+uris = [
+"https://www.kernel.org/pub/linux/utils/kbd/kbd-2.8.0.tar.xz",
+"https://www.linuxfromscratch.org/patches/lfs/12.4/kbd-2.8.0-backspace-1.patch",
+]
+sha256 = ["SKIP", "SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+patch -Np1 < ${FILES_DIR}/kbd-2.8.0-backspace-1.patch
+sed -i '/RESIZECONS_PROGS=/s/yes/no/' configure
+sed -i 's/resizecons.8 //' docs/man/man8/Makefile.in
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-vlock
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+mkdir -p ${PKG_DIR}/usr/share/doc/kbd-2.8.0
+cp -R -v docs/doc/* ${PKG_DIR}/usr/share/doc/kbd-2.8.0
+'''

@@ -1,0 +1,76 @@
+#!/usr/sbin/nft -f
+
+define RESERVED_IP = {
+  100.64.0.0/10,
+  127.0.0.0/8,
+  169.254.0.0/16,
+  192.0.0.0/24,
+  224.0.0.0/4,
+  240.0.0.0/4,
+  255.255.255.255/32
+}
+
+define PRIVATE_IP = {
+  10.0.0.0/8,
+  172.16.0.0/12,
+  192.168.0.0/16
+}
+
+define RESERVED_IP6 = {
+  ::1/128,
+  fc00::/7,
+  fe80::/10,
+  ff00::/8
+}
+
+define XRAY_MARK = 1
+define BYPASS_MARK = 255
+define XRAY_TPROXY_PORT = 12345
+
+table ip xray_v4 {
+  chain prerouting {
+    type filter hook prerouting priority mangle; policy accept;
+    ip daddr $RESERVED_IP return
+    ip daddr $PRIVATE_IP tcp dport != 53 return
+    ip daddr $PRIVATE_IP udp dport != 53 return
+    meta mark $BYPASS_MARK return
+    meta l4proto icmp return
+    meta l4proto tcp tproxy to 127.0.0.1:$XRAY_TPROXY_PORT meta mark set $XRAY_MARK counter
+    meta l4proto udp tproxy to 127.0.0.1:$XRAY_TPROXY_PORT meta mark set $XRAY_MARK counter
+  }
+
+  chain output {
+    type route hook output priority mangle; policy accept;
+    ip daddr $RESERVED_IP return
+    ip daddr $PRIVATE_IP tcp dport != 53 return
+    ip daddr $PRIVATE_IP udp dport != 53 return
+    meta mark $BYPASS_MARK return
+    meta l4proto icmp return
+    meta l4proto tcp meta mark set $XRAY_MARK counter
+    meta l4proto udp meta mark set $XRAY_MARK counter
+  }
+}
+
+table ip6 xray_v6 {
+  chain prerouting {
+    type filter hook prerouting priority mangle; policy accept;
+    ip6 daddr $RESERVED_IP6 return
+    ip6 daddr fc00::/7 tcp dport != 53 return
+    ip6 daddr fc00::/7 udp dport != 53 return
+    meta mark $BYPASS_MARK return
+    icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, echo-request, echo-reply, nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } return
+    meta l4proto tcp tproxy to [::1]:$XRAY_TPROXY_PORT meta mark set $XRAY_MARK counter
+    meta l4proto udp tproxy to [::1]:$XRAY_TPROXY_PORT meta mark set $XRAY_MARK counter
+  }
+
+  chain output {
+    type route hook output priority mangle; policy accept;
+    ip6 daddr $RESERVED_IP6 return
+    ip6 daddr fc00::/7 tcp dport != 53 return
+    ip6 daddr fc00::/7 udp dport != 53 return
+    meta mark $BYPASS_MARK return
+    icmpv6 type { destination-unreachable, packet-too-big, time-exceeded, parameter-problem, echo-request, echo-reply, nd-router-solicit, nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert } return
+    meta l4proto tcp meta mark set $XRAY_MARK counter
+    meta l4proto udp meta mark set $XRAY_MARK counter
+  }
+}
