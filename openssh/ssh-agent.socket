@@ -1,0 +1,10 @@
+[Unit]
+Description=OpenSSH Authentication Agent Socket
+
+[Socket]
+ListenStream=%t/ssh-agent.socket
+SocketMode=0600
+DirectoryMode=0700
+
+[Install]
+WantedBy=sockets.target

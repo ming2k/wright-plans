@@ -48,7 +48,6 @@ sed -e "s|$SRCDIR/unix/pkgs/itcl4.3.2|/usr/lib/itcl4.3.2|" \
 
 [lifecycle.check]
 dockyard = "none"
-optional = true
 script = '''
 cd ${BUILD_DIR}/unix
 make test

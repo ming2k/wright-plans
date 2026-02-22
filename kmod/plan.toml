@@ -1,42 +1,44 @@
 [plan]
 name = "kmod"
 version = "34.2"
-release = 1
-description = "Libraries and utilities for loading kernel modules"
-license = "LGPL-2.1-or-later"
+release = 3
+description = "Linux kernel module management tools and library"
+license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git"
 
 [dependencies]
-build = ["gcc", "meson", "ninja", "xz"]
-link = ["openssl", "zlib", "zstd"]
+build = ["gcc", "meson", "ninja"]
+link = ["openssl", "xz", "zlib", "zstd"]
+
 [sources]
-uris = ["https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-34.2.tar.xz"]
-sha256 = [
-    "5a5d5073070cc7e0c7a7a3c6ec2a0e1780850c8b47b3e3892226b93ffcb9cb54",
-]
+uris = ["git+https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git#tag=v${PKG_VERSION}"]
+sha256 = ["SKIP"]
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-mkdir -p build
-cd build
-meson setup --prefix=/usr ..    \
---buildtype=release \
--D manpages=false
+meson setup build          \
+  --prefix=/usr            \
+  --sbindir=/usr/bin       \
+  --buildtype=release      \
+  -D manpages=false        \
+  -D openssl=enabled       \
+  -D xz=enabled            \
+  -D zlib=enabled          \
+  -D zstd=enabled
 '''
 
 [lifecycle.compile]
-script = '''
-cd ${BUILD_DIR}/build
-ninja
-'''
+script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.package]
 script = '''
-cd ${BUILD_DIR}/build
-DESTDIR=${PKG_DIR} ninja install
-for target in depmod insmod modinfo modprobe rmmod lsmod; do
-ln -sfv kmod ${PKG_DIR}/usr/bin/$target
-done
+DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
+
+# Create standard module configuration directories
+install -dm755 ${PKG_DIR}/etc/depmod.d
+install -dm755 ${PKG_DIR}/etc/modprobe.d
+install -dm755 ${PKG_DIR}/usr/lib/depmod.d
+install -dm755 ${PKG_DIR}/usr/lib/modprobe.d
 '''

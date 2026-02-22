@@ -1,7 +1,7 @@
 [plan]
 name = "make-ca"
 version = "1.16.1"
-release = 1
+release = 3
 description = "Utility to deliver and manage a CA certificate store"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -18,6 +18,14 @@ sha256 = ["SKIP"]
 dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PKG_DIR} sbindir=/usr/bin install
+
+# Upstream still installs make-ca to /usr/sbin on some builds; Wright enforces /usr/bin.
+if [ -d ${PKG_DIR}/usr/sbin ]; then
+  install -vdm755 ${PKG_DIR}/usr/bin
+  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
+  rm -rf ${PKG_DIR}/usr/sbin
+fi
+
 install -vdm755 ${PKG_DIR}/etc/ssl/local
 '''

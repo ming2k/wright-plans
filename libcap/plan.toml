@@ -1,7 +1,7 @@
 [plan]
 name = "libcap"
 version = "2.76"
-release = 1
+release = 3
 description = "POSIX 1003.1e capabilities userspace interface"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -24,12 +24,11 @@ sed -i '/install -m.*STA/d' libcap/Makefile
 dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-make prefix=/usr lib=lib
+make prefix=/usr lib=lib SBINDIR=/usr/bin -j$(nproc)
 '''
 
 [lifecycle.check]
 dockyard = "none"
-optional = true
 script = '''
 cd ${BUILD_DIR}
 make test
@@ -39,5 +38,5 @@ make test
 dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-make prefix=/usr lib=lib DESTDIR=${PKG_DIR} install
+make prefix=/usr lib=lib SBINDIR=/usr/bin DESTDIR=${PKG_DIR} install
 '''

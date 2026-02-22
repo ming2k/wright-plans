@@ -1,7 +1,7 @@
 [plan]
 name = "libfuse3"
 version = "3.18.1"
-release = 4
+release = 6
 description = "Filesystem in Userspace"
 license = "GPL-2.0-only AND LGPL-2.1-only"
 arch = "x86_64"
@@ -15,11 +15,12 @@ sha256 = ["SKIP"]
 dockyard = "none"
 script = '''
 meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
---prefix=/usr          \
---buildtype=release    \
--D tests=false         \
--D examples=false      \
--D useroot=false
+  --prefix=/usr          \
+  --sbindir=/usr/bin     \
+  --buildtype=release    \
+  -D tests=false         \
+  -D examples=false      \
+  -D useroot=false
 '''
 
 [lifecycle.compile]
@@ -30,5 +31,13 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 dockyard = "none"
 script = '''
 DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install
+
+# Remove legacy init scripts and static device nodes (handled by udev)
+rm -rf ${PKG_DIR}/etc/init.d ${PKG_DIR}/dev 2>/dev/null || true
+
+# Allow non-root users to mount FUSE filesystems via fusermount3
 chmod u+s ${PKG_DIR}/usr/bin/fusermount3
 '''
+
+[backup]
+files = ["/etc/fuse.conf"]

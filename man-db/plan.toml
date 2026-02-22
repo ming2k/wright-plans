@@ -1,7 +1,7 @@
 [plan]
 name = "man-db"
 version = "2.13.1"
-release = 1
+release = 3
 description = "Programs for finding and viewing man pages"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
@@ -22,6 +22,7 @@ dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr                           \
+--sbindir=/usr/bin                          \
 --docdir=/usr/share/doc/man-db-${PKG_VERSION} \
 --sysconfdir=/etc                       \
 --disable-setuid                        \
@@ -35,7 +36,7 @@ cd ${BUILD_DIR}
 dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-make
+make -j$(nproc)
 '''
 
 [lifecycle.check]

@@ -1,50 +1,48 @@
 [plan]
 name = "rtkit"
 version = "0.14"
-release = 1
+release = 5
 description = "Realtime Policy and Watchdog Daemon"
 license = "GPL-3.0-or-later AND MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/pipewire/rtkit"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf"]
+build = ["gcc", "meson", "ninja", "pkgconf", "vim"]
 link = ["dbus", "libcap", "polkit", "systemd"]
 
 [sources]
-uris = ["https://gitlab.freedesktop.org/pipewire/rtkit/-/archive/v${PKG_VERSION}/rtkit-v${PKG_VERSION}.tar.gz"]
+uris = ["git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${PKG_VERSION}"]
 sha256 = ["SKIP"]
-
-[lifecycle.prepare]
-dockyard = "none"
-script = '''
-cd ${BUILD_DIR}
-python3 -c "
-data = open('org.freedesktop.RealtimeKit1.xml', 'rb').read()
-lines = []
-for i in range(0, len(data), 12):
-    chunk = data[i:i+12]
-    lines.append('  ' + ', '.join(f'0x{b:02x}' for b in chunk))
-open('xml-introspection.h', 'w').write(',\n'.join(lines) + '\n')
-"
-'''
 
 [lifecycle.configure]
 dockyard = "none"
 script = '''
 meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
---prefix=/usr \
---buildtype=release \
--D installed_tests=false
+  --prefix=/usr \
+  --sbindir=/usr/bin \
+  --buildtype=release \
+  -D installed_tests=false
 '''
 
 [lifecycle.compile]
 dockyard = "none"
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.package]
 dockyard = "none"
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = '''
+DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
+
+install -Dm644 ${BUILD_DIR}/LICENSE -t ${PKG_DIR}/usr/share/licenses/rtkit/
+sed -n '4,25p' ${BUILD_DIR}/rtkit.c |
+  install -Dm644 /dev/stdin ${PKG_DIR}/usr/share/licenses/rtkit/LICENSE.MIT
+
+if [ -d ${PKG_DIR}/usr/sbin ]; then
+  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
+  rm -rf ${PKG_DIR}/usr/sbin
+fi
+'''
 
 [install_scripts]
 post_install = '''

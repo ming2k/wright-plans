@@ -1,7 +1,7 @@
 [plan]
 name = "gcc"
 version = "15.2.0"
-release = 1
+release = 2
 description = "The GNU Compiler Collection - C and C++ frontends"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -33,6 +33,9 @@ sed -e '/m64=/s/lib64/lib/' \
 -i.orig gcc/config/i386/t-linux64
 ;;
 esac
+
+# GCC 15.2 libgomp const-correctness fix for newer libc headers
+sed -i '330s/char [*]/const char */' libgomp/affinity-fmt.c
 
 mkdir -v build
 """
@@ -74,7 +77,6 @@ make -j$(nproc)
 
 [lifecycle.check]
 dockyard = "none"
-optional = true
 script = """
 cd ${BUILD_DIR}/build
 echo 'int main(){}' > /tmp/gcc-test.c

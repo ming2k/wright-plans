@@ -1,0 +1,3 @@
+# /usr/lib/tmpfiles.d/openssh.conf
+# Privilege separation chroot directory
+d /usr/share/empty.sshd 0755 root root -

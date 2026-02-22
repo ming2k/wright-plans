@@ -60,10 +60,20 @@ else
 vt = 1
 
 [default_session]
-command = "agreety --cmd /bin/sh"
+command = "agreety --cmd 'systemctl --user start --wait niri.service'"
 user = "greeter"
 CFGEOF
 fi
+
+install -Dm644 /dev/stdin ${PKG_DIR}/etc/pam.d/greetd << 'PAMEOF'
+# /etc/pam.d/greetd
+auth      include     system-auth
+account   include     system-account
+session   required    pam_env.so
+session   required    pam_limits.so
+session   include     system-session
+password  include     system-password
+PAMEOF
 
 install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/sysusers.d/greetd.conf << 'SYSUSERS'
 u greeter - "Greeter user" /var/lib/greetd
@@ -82,4 +92,4 @@ systemctl daemon-reload 2>/dev/null || true
 '''
 
 [backup]
-files = ["/etc/greetd/config.toml"]
+files = ["/etc/greetd/config.toml", "/etc/pam.d/greetd"]

@@ -1,18 +1,21 @@
 [plan]
 name = "procps-ng"
-version = "4.0.5"
-release = 1
-description = "Programs for monitoring processes"
+version = "4.0.6"
+release = 4
+description = "Utilities for monitoring your system and its processes"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
-url = "https://sourceforge.net/projects/procps-ng/"
+url = "https://gitlab.com/procps-ng/procps"
 
 [dependencies]
-build = ["gcc", "make", "systemd"]
-link = ["ncurses"]
+build = ["gcc", "gettext", "make"]
+link = ["ncurses", "systemd"]
+provides = ["procps", "libproc2.so"]
+replaces = ["procps"]
+
 [sources]
 uris = [
-"https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${PKG_VERSION}.tar.xz",
+  "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${PKG_VERSION}.tar.xz",
 ]
 sha256 = ["SKIP"]
 
@@ -20,27 +23,31 @@ sha256 = ["SKIP"]
 dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr                                  \
---docdir=/usr/share/doc/procps-ng-${PKG_VERSION} \
---disable-static                               \
---disable-kill                                 \
---enable-watch8bit                             \
---with-systemd
+./configure \
+  --prefix=/usr \
+  --sbindir=/usr/bin \
+  --bindir=/usr/bin \
+  --libdir=/usr/lib \
+  --sysconfdir=/etc \
+  --disable-static \
+  --disable-kill \
+  --disable-modern-top \
+  --enable-watch8bit \
+  --with-systemd
 '''
 
 [lifecycle.compile]
 dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-make
+make -j$(nproc)
 '''
 
 [lifecycle.check]
 dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-chown -R tester .
-su tester -c "PATH=$PATH make check"
+make check
 '''
 
 [lifecycle.package]
@@ -48,8 +55,9 @@ dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-'''
 
-[install_scripts]
-post_install = ""
-post_upgrade = ""
+if [ -d ${PKG_DIR}/usr/sbin ]; then
+  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
+  rm -rf ${PKG_DIR}/usr/sbin
+fi
+'''

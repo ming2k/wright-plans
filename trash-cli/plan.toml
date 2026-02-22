@@ -1,0 +1,23 @@
+[plan]
+name = "trash-cli"
+version = "0.24.5.26"
+release = 1
+description = "Command line trashcan (recycle bin) interface"
+license = "GPL-2.0-only"
+arch = "any"
+url = "https://github.com/andreafrancia/trash-cli"
+
+[dependencies]
+runtime = ["python", "python-psutil", "python-six"]
+build = ["python"]
+
+[sources]
+uris = ["https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PKG_DIR} .
+'''

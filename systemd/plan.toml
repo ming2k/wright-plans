@@ -1,7 +1,7 @@
 [plan]
 name = "systemd"
 version = "259.1"
-release = 4
+release = 6
 description = "System and Service Manager (rebuilt with PAM support)"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -35,6 +35,8 @@ cd build
 meson setup ..                                    \
 --prefix=/usr                                   \
 --buildtype=release                             \
+-D sbindir=/usr/bin                             \
+-D version-tag="${PKG_VERSION}-theseus"         \
 -D default-dnssec=no                            \
 -D firstboot=false                              \
 -D install-tests=false                          \
@@ -61,13 +63,27 @@ meson setup ..                                    \
 [lifecycle.compile]
 script = """
 cd ${BUILD_DIR}/build
-ninja
+ninja -j$(nproc)
 """
 
 [lifecycle.package]
 script = """
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} ninja install
+
+# Relocate any sbin files — systemd installs sysvinit compat shims to /usr/sbin
+# regardless of -D sbindir. Move them, then replace with proper symlinks to systemctl.
+if [ -d ${PKG_DIR}/usr/sbin ]; then
+  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
+  rm -rf ${PKG_DIR}/usr/sbin
+fi
+
+# Sysvinit compat: halt/poweroff/reboot/shutdown → systemctl (Arch approach)
+for cmd in halt poweroff reboot shutdown; do
+  ln -sf systemctl ${PKG_DIR}/usr/bin/${cmd}
+done
+# init → systemd
+ln -sf ../lib/systemd/systemd ${PKG_DIR}/usr/bin/init 2>/dev/null || true
 
 cat > ${PKG_DIR}/usr/lib/pam.d/systemd-user << 'PAMEOF'
 # Begin /usr/lib/pam.d/systemd-user

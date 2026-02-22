@@ -33,7 +33,6 @@ makeinfo --plaintext       -o doc/dejagnu.txt  ../doc/dejagnu.texi
 
 [lifecycle.check]
 dockyard = "none"
-optional = true
 script = '''
 cd ${BUILD_DIR}/build
 make check

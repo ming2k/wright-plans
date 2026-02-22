@@ -1,7 +1,7 @@
 [plan]
 name = "openssh"
 version = "10.2p1"
-release = 1
+release = 7
 description = "Free implementation of the SSH protocol suite"
 license = "BSD-2-Clause"
 arch = "x86_64"
@@ -10,23 +10,40 @@ url = "https://www.openssh.com/portable.html"
 [dependencies]
 build = ["gcc", "make", "pkgconf"]
 runtime = ["shadow"]
-link = ["glibc", "linux-pam", "openssl", "zlib", "libxcrypt"]
+link = ["glibc", "libedit", "linux-pam", "openssl", "zlib", "libxcrypt"]
 
 [sources]
-uris = ["https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+uris = [
+  "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${PKG_VERSION}.tar.gz",
+  "sshd.service",
+  "sshdgenkeys.service",
+  "sshd.socket",
+  "sshd@.service",
+  "ssh-agent.service",
+  "ssh-agent.socket",
+  "sshd.pam",
+  "openssh.tmpfiles",
+]
+sha256 = ["SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP"]
 
 [lifecycle.configure]
 dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
+# --with-privsep-user=nobody: no dedicated sshd user needed
+# --with-security-key-builtin omitted: requires libfido2 (not yet packaged)
+# --with-xauth omitted: pure Wayland system, no X11
 ./configure \
   --prefix=/usr \
   --sysconfdir=/etc/ssh \
   --libexecdir=/usr/lib/ssh \
-  --with-privsep-path=/var/lib/sshd \
-  --with-privsep-user=sshd \
+  --sbindir=/usr/bin \
+  --with-privsep-path=/usr/share/empty.sshd \
+  --with-privsep-user=nobody \
   --with-pam \
+  --with-libedit \
+  --with-ssl-engine \
+  --disable-lastlog \
   --with-default-path=/usr/bin
 '''
 
@@ -43,31 +60,28 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
 
-install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/systemd/system/sshd.service << 'UNITEOF'
-[Unit]
-Description=OpenSSH server daemon
-Documentation=man:sshd(8) man:sshd_config(5)
-After=network.target
+# ── Systemd system units ──────────────────────────────────────────────────────
+install -Dm644 ${FILES_DIR}/sshd.service         ${PKG_DIR}/usr/lib/systemd/system/sshd.service
+install -Dm644 ${FILES_DIR}/sshdgenkeys.service  ${PKG_DIR}/usr/lib/systemd/system/sshdgenkeys.service
+install -Dm644 ${FILES_DIR}/sshd.socket          ${PKG_DIR}/usr/lib/systemd/system/sshd.socket
+install -Dm644 ${FILES_DIR}/sshd@.service        ${PKG_DIR}/usr/lib/systemd/system/sshd@.service
 
-[Service]
-Type=notify
-ExecStart=/usr/sbin/sshd -D $OPTIONS
-ExecReload=/usr/sbin/sshd -t
-ExecReload=/bin/kill -HUP $MAINPID
-KillMode=process
-Restart=on-failure
-RestartSec=2s
+# ── Systemd user units (ssh-agent) ────────────────────────────────────────────
+install -Dm644 ${FILES_DIR}/ssh-agent.service    ${PKG_DIR}/usr/lib/systemd/user/ssh-agent.service
+install -Dm644 ${FILES_DIR}/ssh-agent.socket     ${PKG_DIR}/usr/lib/systemd/user/ssh-agent.socket
 
-[Install]
-WantedBy=multi-user.target
-UNITEOF
+# ── tmpfiles (privilege separation chroot) ────────────────────────────────────
+install -Dm644 ${FILES_DIR}/openssh.tmpfiles     ${PKG_DIR}/usr/lib/tmpfiles.d/openssh.conf
 
-install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/sysusers.d/openssh.conf << 'SYSUSERS'
-u sshd - "OpenSSH privilege separation user" /var/lib/sshd
-SYSUSERS
+# ── Factory defaults (pristine upstream configs for reference) ────────────────
+install -Dm644 ${PKG_DIR}/etc/ssh/ssh_config     ${PKG_DIR}/usr/share/factory/etc/ssh/ssh_config
+install -Dm644 ${PKG_DIR}/etc/ssh/sshd_config    ${PKG_DIR}/usr/share/factory/etc/ssh/sshd_config
 
-install -dm700 ${PKG_DIR}/var/lib/sshd
+# ── PAM configuration ─────────────────────────────────────────────────────────
+install -Dm644 ${FILES_DIR}/sshd.pam             ${PKG_DIR}/etc/pam.d/sshd
 
+# ── Permissions ───────────────────────────────────────────────────────────────
+# ssh-keysign needs setuid for host-based authentication
 if [ -e ${PKG_DIR}/usr/lib/ssh/ssh-keysign ]; then
   chmod 4755 ${PKG_DIR}/usr/lib/ssh/ssh-keysign
 fi
@@ -75,14 +89,12 @@ fi
 
 [install_scripts]
 post_install = '''
-systemd-sysusers /usr/lib/sysusers.d/openssh.conf 2>/dev/null || true
-install -d -m 700 /var/lib/sshd
+systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 ssh-keygen -A 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 '''
 post_upgrade = '''
-systemd-sysusers /usr/lib/sysusers.d/openssh.conf 2>/dev/null || true
-install -d -m 700 /var/lib/sshd
+systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 '''
 
@@ -90,4 +102,5 @@ systemctl daemon-reload 2>/dev/null || true
 files = [
 "/etc/ssh/ssh_config",
 "/etc/ssh/sshd_config",
+"/etc/pam.d/sshd",
 ]

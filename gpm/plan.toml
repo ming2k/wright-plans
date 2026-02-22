@@ -1,0 +1,70 @@
+[plan]
+name = "gpm"
+version = "1.20.7"
+release = 1
+description = "Mouse server for the console and xterm"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://github.com/telmich/gpm"
+
+[dependencies]
+build = ["gcc", "autoconf", "automake", "libtool", "make", "pkgconf"]
+runtime = ["procps-ng"]
+provides = ["libgpm.so"]
+
+[sources]
+uris = [
+  "git+https://github.com/telmich/gpm.git#commit=e82d1a653ca94aa4ed12441424da6ce780b1e530",
+  "gpm.service",
+  "gpm.path",
+]
+sha256 = ["SKIP", "SKIP", "SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./autogen.sh
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+CFLAGS="${CFLAGS} -std=gnu17" ac_cv_path_emacs=no \
+./configure \
+  --prefix=/usr \
+  --sysconfdir=/etc \
+  --sbindir=/usr/bin
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = "make -j1 -C ${BUILD_DIR}"
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+make -j1 -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install
+
+install -Dm644 ${FILES_DIR}/gpm.service ${PKG_DIR}/usr/lib/systemd/system/gpm.service
+install -Dm644 ${FILES_DIR}/gpm.path    ${PKG_DIR}/usr/lib/systemd/system/gpm.path
+
+# Fix library permissions and create unversioned soname symlink
+chmod 0755 ${PKG_DIR}/usr/lib/libgpm.so.2.*
+(cd ${PKG_DIR}/usr/lib && ln -sf $(ls libgpm.so.2.*) libgpm.so)
+
+if [ -d ${PKG_DIR}/usr/sbin ]; then
+  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
+  rm -rf ${PKG_DIR}/usr/sbin
+fi
+'''
+
+[install_scripts]
+post_install = '''
+systemctl daemon-reload
+'''
+post_upgrade = '''
+systemctl daemon-reload
+systemctl try-restart gpm.service
+'''

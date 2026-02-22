@@ -1,85 +1,65 @@
 [plan]
 name = "nftables"
 version = "1.1.6"
-release = 1
-description = "Netfilter nftables userspace tools"
-license = "GPL-2.0-or-later"
+release = 4
+description = "Netfilter tables userspace tools"
+license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://netfilter.org/projects/nftables/"
-maintainer = "Netfilter Core Team <coreteam@netfilter.org>"
 
 [dependencies]
-build = ["bison", "flex", "gcc", "libmnl", "libnftnl", "make", "pkgconf"]
-runtime = ["libmnl >= 1.0.4", "libnftnl >= 1.2.0"]
-link = ["gmp", "jansson", "ncurses", "readline"]
-optional = [
-  { name = "python", description = "Python bindings (libnftables)" },
-]
+build = ["autoconf", "automake", "bison", "flex", "gcc", "libmnl", "libnftnl", "make", "pkgconf"]
+link = ["gmp", "jansson", "libmnl", "libnftnl", "ncurses", "readline"]
+
 [sources]
-uris = ["https://netfilter.org/projects/nftables/files/nftables-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+uris = [
+  "git+https://git.netfilter.org/nftables.git#tag=v${PKG_VERSION}",
+  "nftables.service",
+  "nftables.conf",
+]
+sha256 = ["SKIP", "SKIP", "SKIP"]
 
 [options]
 strip = true
 ccache = true
 
-[lifecycle.configure]
-script = """
+[lifecycle.prepare]
+script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr      \
---sysconfdir=/etc  \
---with-json        \
---with-cli=readline \
---disable-debug    \
---disable-man-doc  \
---with-mini-gmp=no
-"""
+autoreconf -fiv
+'''
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr       \
+  --sbindir=/usr/bin  \
+  --sysconfdir=/etc   \
+  --with-json         \
+  --with-cli=readline \
+  --disable-debug     \
+  --disable-man-doc   \
+  --disable-python    \
+  --with-mini-gmp=no
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
-
-[lifecycle.check]
-optional = true
-script = """
-cd ${BUILD_DIR}
-make check
-"""
+'''
 
 [lifecycle.package]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
 
-install -d ${PKG_DIR}/etc/nftables
-install -Dm644 files/examples/*.nft ${PKG_DIR}/etc/nftables/ 2>/dev/null || true
+# Basic safe firewall config (user-editable, backed up by wright)
+install -Dm644 ${FILES_DIR}/nftables.conf ${PKG_DIR}/etc/nftables.conf
 
-install -d ${PKG_DIR}/etc
-cat > ${PKG_DIR}/etc/nftables.conf << 'CONF'
-#!/usr/bin/nft -f
-
-flush ruleset
-
-table inet filter {
-chain input {
-type filter hook input priority filter; policy drop;
-iif lo accept
-ct state established,related accept
-ct state invalid drop
-tcp dport 22 accept
-}
-chain forward {
-type filter hook forward priority filter; policy drop;
-}
-chain output {
-type filter hook output priority filter; policy accept;
-}
-}
-CONF
-chmod 755 ${PKG_DIR}/etc/nftables.conf
-"""
+# systemd service
+install -Dm644 ${FILES_DIR}/nftables.service ${PKG_DIR}/usr/lib/systemd/system/nftables.service
+'''
 
 [install_scripts]
 post_install = "ldconfig 2>/dev/null || true"

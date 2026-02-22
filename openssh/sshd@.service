@@ -1,0 +1,8 @@
+[Unit]
+Description=OpenSSH Per-Connection Daemon (%I)
+After=sshdgenkeys.service
+Wants=sshdgenkeys.service
+
+[Service]
+ExecStart=-/usr/bin/sshd -i
+StandardInput=socket

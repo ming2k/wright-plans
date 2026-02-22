@@ -31,7 +31,6 @@ make -j$(nproc)
 """
 
 [lifecycle.check]
-optional = true
 script = """
 cd ${BUILD_DIR}
 make check

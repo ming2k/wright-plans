@@ -1,0 +1,12 @@
+[Unit]
+Description=OpenSSH Authentication Agent
+Documentation=man:ssh-agent(1)
+Requires=ssh-agent.socket
+
+[Service]
+ExecStart=/usr/bin/ssh-agent -D -a %t/ssh-agent.socket
+PassEnvironment=SSH_AGENT_PID
+
+[Install]
+WantedBy=default.target
+Also=ssh-agent.socket

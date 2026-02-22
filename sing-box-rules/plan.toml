@@ -1,6 +1,6 @@
 [plan]
 name = "sing-box-rules"
-version = "20260220"
+version = "20260221"
 release = 1
 description = "GeoIP and GeoSite rule-set files for sing-box"
 license = "GPL-3.0-only"
@@ -9,10 +9,11 @@ url = "https://github.com/SagerNet/sing-geoip"
 
 [sources]
 uris = [
-    "https://github.com/SagerNet/sing-geoip/releases/download/${PKG_VERSION}/geoip-cn.srs",
-    "https://github.com/SagerNet/sing-geosite/releases/download/${PKG_VERSION}/geosite-cn.srs",
+    "https://github.com/SagerNet/sing-geoip/raw/rule-set/geoip-cn.srs",
+    "https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-cn.srs",
+    "https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-google.srs",
 ]
-sha256 = ["SKIP", "SKIP"]
+sha256 = ["SKIP", "SKIP", "SKIP"]
 
 [options]
 strip = false
@@ -21,4 +22,5 @@ strip = false
 script = """
 install -Dm644 "${FILES_DIR}/geoip-cn.srs" "${PKG_DIR}/usr/share/sing-box/rules/geoip-cn.srs"
 install -Dm644 "${FILES_DIR}/geosite-cn.srs" "${PKG_DIR}/usr/share/sing-box/rules/geosite-cn.srs"
+install -Dm644 "${FILES_DIR}/geosite-google.srs" "${PKG_DIR}/usr/share/sing-box/rules/geosite-google.srs"
 """

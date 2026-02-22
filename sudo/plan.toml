@@ -1,7 +1,7 @@
 [plan]
 name = "sudo"
-version = "1.9.16p2"
-release = 1
+version = "1.9.17p2"
+release = 4
 description = "Give certain users the ability to run some commands as root"
 license = "ISC"
 arch = "x86_64"
@@ -9,6 +9,7 @@ url = "https://www.sudo.ws"
 
 [dependencies]
 build = ["gcc", "make"]
+link = ["glibc", "linux-pam"]
 [sources]
 uris = ["https://www.sudo.ws/dist/sudo-${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
@@ -19,8 +20,15 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr \
 --libexecdir=/usr/lib \
---with-all-insults \
+--sbindir=/usr/bin \
+--with-rundir=/run/sudo \
+--with-vardir=/var/db/sudo \
+--with-logfac=auth \
+--with-pam \
 --with-env-editor \
+--with-all-insults \
+--with-secure-path-value=/usr/local/sbin:/usr/local/bin:/usr/bin \
+--enable-tmpfiles.d \
 --docdir=/usr/share/doc/sudo-${PKG_VERSION} \
 --with-passprompt="[sudo] password for %p: "
 '''
@@ -38,4 +46,24 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
 mkdir -p ${PKG_DIR}/etc/sudoers.d
+install -vdm755 ${PKG_DIR}/etc/pam.d
+
+cat > ${PKG_DIR}/etc/pam.d/sudo << 'PAMEOF'
+# Begin /etc/pam.d/sudo
+auth      include     system-auth
+account   include     system-account
+session   include     system-session
+# End /etc/pam.d/sudo
+PAMEOF
+
+cat > ${PKG_DIR}/etc/pam.d/sudo-i << 'PAMEOF'
+# Begin /etc/pam.d/sudo-i
+auth      include     sudo
+account   include     sudo
+session   include     sudo
+# End /etc/pam.d/sudo-i
+PAMEOF
 '''
+
+[backup]
+files = ["/etc/sudoers", "/etc/pam.d/sudo", "/etc/pam.d/sudo-i"]

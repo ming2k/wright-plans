@@ -1,0 +1,66 @@
+[plan]
+name = "vim"
+version = "9.2.0043"
+release = 2
+description = "Vi Improved, a highly configurable text editor"
+license = "custom:vim"
+arch = "x86_64"
+url = "https://www.vim.org"
+
+[dependencies]
+build = ["gcc", "autoconf", "make", "pkgconf"]
+link = ["acl", "gpm", "ncurses", "zlib"]
+provides = ["xxd"]
+
+[sources]
+uris = ["git+https://github.com/vim/vim.git#tag=v${PKG_VERSION}"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+# Allow VIMRCLOC to override the compiled-in vimrc paths at install time
+sed -E 's|^.*(#define SYS_.*VIMRC_FILE.*").*$|\1|g' -i ${BUILD_DIR}/src/feature.h
+sed -E 's|^.*(#define VIMRC_FILE.*").*$|\1|g' -i ${BUILD_DIR}/src/feature.h
+(cd ${BUILD_DIR}/src && autoconf)
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --localstatedir=/var/lib/vim \
+  --with-features=huge \
+  --with-x=no \
+  --disable-gui \
+  --enable-gpm \
+  --enable-multibyte \
+  --enable-cscope \
+  --enable-acl \
+  --enable-python3interp=dynamic \
+  --enable-luainterp=dynamic \
+  --enable-perlinterp=dynamic \
+  --enable-rubyinterp=dynamic \
+  --enable-tclinterp=dynamic \
+  --disable-canberra
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.package]
+dockyard = "none"
+script = '''
+make -j1 -C ${BUILD_DIR} VIMRCLOC=/etc DESTDIR=${PKG_DIR} install
+
+# Remove files traditionally provided by (n)vi
+rm -f ${PKG_DIR}/usr/bin/{ex,view}
+find ${PKG_DIR}/usr/share/man -name 'ex.1' -o -name 'view.1' -o -name 'evim.1' \
+  -delete
+
+install -Dm644 ${BUILD_DIR}/runtime/doc/uganda.txt \
+  ${PKG_DIR}/usr/share/licenses/vim/license.txt
+'''

@@ -1,38 +1,63 @@
 [plan]
 name = "inetutils"
-version = "2.6"
-release = 1
-description = "Programs for basic networking"
+version = "2.7"
+release = 7
+description = "A collection of common network programs"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/inetutils/"
 
 [dependencies]
-build = ["gcc", "make"]
-link = ["ncurses"]
-[sources]
-uris = ["https://ftp.gnu.org/gnu/inetutils/inetutils-2.6.tar.xz"]
-sha256 = ["SKIP"]
+build = ["gcc", "gettext", "make"]
+link = ["ncurses", "linux-pam", "readline", "libcap"]
 
-[lifecycle.prepare]
-script = '''
-cd ${BUILD_DIR}
-sed -i 's/def HAVE_TERMCAP_TGETENT/ 1/' telnet/telnet.c
-'''
+[sources]
+uris = [
+  "https://ftp.gnu.org/gnu/inetutils/inetutils-${PKG_VERSION}.tar.gz",
+]
+sha256 = ["SKIP"]
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr        \
---bindir=/usr/bin    \
---localstatedir=/var \
---disable-logger     \
---disable-whois      \
---disable-rcp        \
---disable-rexec      \
---disable-rlogin     \
---disable-rsh        \
---disable-servers
+./configure \
+  --prefix=/usr \
+  --libexec=/usr/bin \
+  --sbindir=/usr/bin \
+  --localstatedir=/var \
+  --sysconfdir=/etc \
+  --without-wrap \
+  --with-pam \
+  --enable-ftp \
+  --enable-ftpd \
+  --enable-telnet \
+  --enable-telnetd \
+  --enable-talk \
+  --enable-talkd \
+  --enable-rlogin \
+  --enable-rlogind \
+  --enable-rsh \
+  --enable-rshd \
+  --enable-rcp \
+  --enable-hostname \
+  --enable-dnsdomainname \
+  --disable-rexec \
+  --disable-rexecd \
+  --disable-tftp \
+  --disable-tftpd \
+  --disable-ping \
+  --disable-ping6 \
+  --disable-logger \
+  --disable-syslogd \
+  --disable-inetd \
+  --disable-whois \
+  --disable-uucpd \
+  --disable-ifconfig \
+  --disable-traceroute
+
+# Fix tgetent resolution from ncurses (must run after configure generates config.h)
+sed -i '/HAVE_CURSES_TGETENT/c #define HAVE_CURSES_TGETENT 1' config.h
+sed -i '/# include <curses.h>/a # include <term.h>' telnet/telnet.c telnetd/utility.c
 '''
 
 [lifecycle.compile]
@@ -45,4 +70,13 @@ make -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
+
+# Remove setuid bits from r-commands (they use PAM, not setuid, for auth)
+chmod -s ${PKG_DIR}/usr/bin/rcp ${PKG_DIR}/usr/bin/rlogin ${PKG_DIR}/usr/bin/rsh
+
+# Relocate anything that escaped to /usr/sbin
+if [ -d ${PKG_DIR}/usr/sbin ]; then
+  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
+  rm -rf ${PKG_DIR}/usr/sbin
+fi
 '''

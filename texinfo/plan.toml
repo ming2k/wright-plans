@@ -37,7 +37,6 @@ make -j$(nproc)
 
 [lifecycle.check]
 dockyard = "none"
-optional = true
 script = '''
 cd ${BUILD_DIR}
 make check

@@ -1,15 +1,15 @@
 [plan]
 name = "util-linux"
 version = "2.41.3"
-release = 1
+release = 5
 description = "Miscellaneous system utilities for Linux"
-license = "GPL-2.0"
+license = "GPL-2.0-only AND GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.1-or-later AND BSD-2-Clause AND BSD-3-Clause AND LicenseRef-PublicDomain"
 arch = "x86_64"
-url = "https://www.kernel.org/pub/linux/utils/util-linux/"
+url = "https://github.com/util-linux/util-linux"
 
 [dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["glibc", "ncurses", "zlib", "libcap", "linux-pam"]
+build = ["gcc", "meson", "ninja", "pkgconf", "python"]
+link = ["glibc", "ncurses", "zlib", "libcap", "linux-pam", "readline"]
 
 [sources]
 uris = ["https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${PKG_VERSION}.tar.xz"]
@@ -18,27 +18,46 @@ sha256 = ["SKIP"]
 [lifecycle.configure]
 script = """
 cd ${BUILD_DIR}
-./configure --prefix=/usr \
-            --libdir=/usr/lib \
-            --localstatedir=/var \
-            --disable-chfn-chsh \
-            --disable-login \
-            --disable-nologin \
-            --disable-su \
-            --disable-setpriv \
-            --disable-runuser \
-            --disable-pylibmount \
-            --disable-static \
-            --without-python \
-            --with-systemd \
-            --with-pam
+
+# Tool ownership policy:
+#   login, su, chfn, chsh, newgrp, nologin, vipw/vigr — owned by shadow
+#     (better PAM + NSS + /etc/shadow integration)
+#   mesg, write — unique to util-linux (terminal messaging)
+#   line — obsolete, not built
+meson setup build                               \
+  --prefix=/usr                                 \
+  --buildtype=release                           \
+  -D sbindir=/usr/bin                           \
+  -D fs-search-path=/usr/bin:/usr/local/bin     \
+  -D libuser=disabled                           \
+  -D libutempter=disabled                       \
+  -D ncurses=disabled                           \
+  -D ncursesw=enabled                           \
+  -D econf=disabled                             \
+  -D build-chfn-chsh=disabled                   \
+  -D build-line=disabled                        \
+  -D build-login=disabled                       \
+  -D build-mesg=enabled                         \
+  -D build-newgrp=disabled                      \
+  -D build-nologin=disabled                     \
+  -D build-su=disabled                          \
+  -D build-vipw=disabled                        \
+  -D build-write=enabled
 """
 
 [lifecycle.compile]
-script = "cd ${BUILD_DIR} && make -j$(nproc)"
+script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.package]
-script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"
+script = """
+DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
+
+# Remove static libraries
+rm -f ${PKG_DIR}/usr/lib/lib*.a*
+
+# Drop Python bindings (not needed)
+rm -rf ${PKG_DIR}/usr/lib/python*
+"""
 
 [split.libuuid]
 description = "Universally Unique Identifier library"

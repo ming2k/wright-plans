@@ -1,7 +1,7 @@
 [plan]
 name = "e2fsprogs"
-version = "1.47.2"
-release = 1
+version = "1.47.3"
+release = 3
 description = "Ext2/3/4 filesystem utilities"
 license = "GPL-2.0-only"
 arch = "x86_64"
@@ -16,12 +16,15 @@ dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 mkdir -p build && cd build
-../configure --prefix=/usr       \
---sysconfdir=/etc   \
---enable-elf-shlibs \
---disable-libblkid  \
---disable-libuuid   \
---disable-uuidd     \
+../configure --prefix=/usr          \
+--with-root-prefix=''   \
+--libdir=/usr/lib       \
+--libexecdir=/usr/lib   \
+--sbindir=/usr/bin      \
+--enable-elf-shlibs     \
+--disable-libblkid      \
+--disable-libuuid       \
+--disable-uuidd         \
 --disable-fsck
 '''
 
@@ -38,4 +41,7 @@ script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} make install
 DESTDIR=${PKG_DIR} make install-libs
+
+# Remove static libraries
+rm -f ${PKG_DIR}/usr/lib/lib{com_err,e2p,ext2fs,ss}.a
 '''

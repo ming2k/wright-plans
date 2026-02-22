@@ -1,0 +1,7 @@
+# /etc/pam.d/sshd
+auth      include   system-auth
+account   required  pam_nologin.so
+account   include   system-account
+session   required  pam_loginuid.so
+session   include   system-session
+password  include   system-password
