@@ -29,6 +29,7 @@ cmake -B build \
 '''
 
 [lifecycle.compile]
+dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
 make -C build -j$(nproc) VERBOSE=1

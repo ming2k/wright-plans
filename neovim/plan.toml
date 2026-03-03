@@ -24,6 +24,7 @@ strip = true
 ccache = true
 
 [lifecycle.configure]
+dockyard = "relaxed"
 script = """
 cd ${BUILD_DIR}
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr deps

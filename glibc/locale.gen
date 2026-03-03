@@ -1,0 +1,26 @@
+# /etc/locale.gen — locale reference
+#
+# Locales are generated using localedef(1) directly.
+#
+# To generate a locale:
+#
+#   localedef -i <locale> -f <charset> <locale>.<charset>
+#
+# Examples:
+#
+#   localedef -i en_US -f UTF-8 en_US.UTF-8
+#   localedef -i zh_CN -f UTF-8 zh_CN.UTF-8
+#   localedef -i ja_JP -f UTF-8 ja_JP.UTF-8
+#
+# Available locales are listed in /usr/share/i18n/SUPPORTED.
+# Available charsets are listed in /usr/share/i18n/charmaps/.
+#
+# To set the system locale, edit /etc/locale.conf:
+#
+#   LANG=en_US.UTF-8
+#
+# Or use localectl(1):
+#
+#   localectl set-locale LANG=en_US.UTF-8
+#
+# C.UTF-8 is always available without generation.

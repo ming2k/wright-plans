@@ -1,0 +1,18 @@
+# /etc/profile: system-wide environment and startup programs
+
+# Set PATH
+export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin
+
+# Load locale settings from locale.conf
+if [ -r /etc/locale.conf ]; then
+    . /etc/locale.conf
+    export LANG LANGUAGE LC_ALL LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME
+fi
+
+# Source profile.d snippets
+if [ -d /etc/profile.d ]; then
+    for f in /etc/profile.d/*.sh; do
+        [ -r "$f" ] && . "$f"
+    done
+    unset f
+fi

@@ -1,18 +1,18 @@
 [plan]
 name = "zsh"
 version = "5.9"
-release = 1
+release = 2
 description = "A powerful shell with advanced scripting capabilities"
 license = "MIT"
 arch = "x86_64"
 url = "https://www.zsh.org/"
 
 [dependencies]
-build = ["gcc", "make", "ncurses", "pcre2"]
-link = ["glibc", "ncurses", "pcre2"]
+build = ["gcc", "make", "ncurses", "libcap", "gdbm"]
+link = ["glibc", "ncurses", "libcap", "gdbm"]
 
 [sources]
-uris = ["https://downloads.sourceforge.net/project/zsh/zsh/${PKG_VERSION}/zsh-${PKG_VERSION}.tar.xz"]
+uris = ["https://www.zsh.org/pub/zsh-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
@@ -25,10 +25,14 @@ CFLAGS="${CFLAGS} -DHAVE_BOOLCODES" \
   --sysconfdir=/etc/zsh \
   --enable-etcdir=/etc/zsh \
   --enable-multibyte \
+  --enable-maildir-support \
+  --enable-function-subdirs \
+  --enable-gdbm \
   --enable-pcre \
   --enable-cap \
   --enable-zsh-secure-free \
-  --with-tcsetpgrp
+  --with-tcsetpgrp \
+  --with-term-lib='ncursesw ncurses'
 '''
 
 [lifecycle.compile]
@@ -41,14 +45,6 @@ make -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-
-# Register zsh as a valid login shell
-install -d ${PKG_DIR}/etc
-grep -q /usr/bin/zsh ${PKG_DIR}/etc/shells 2>/dev/null || {
-  install -Dm644 /dev/stdin ${PKG_DIR}/usr/share/zsh/shells.entry << 'EOF'
-/usr/bin/zsh
-EOF
-}
 '''
 
 [install_scripts]
@@ -56,4 +52,12 @@ post_install = '''
 if ! grep -q /usr/bin/zsh /etc/shells 2>/dev/null; then
   echo /usr/bin/zsh >> /etc/shells
 fi
+'''
+post_upgrade = '''
+if ! grep -q /usr/bin/zsh /etc/shells 2>/dev/null; then
+  echo /usr/bin/zsh >> /etc/shells
+fi
+'''
+pre_remove = '''
+sed -i '\|/usr/bin/zsh|d' /etc/shells 2>/dev/null || true
 '''

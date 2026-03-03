@@ -12,8 +12,11 @@ runtime = ["linux-api-headers >= 4.10", "tzdata >= 2025c"]
 build = ["bison", "gawk", "gcc", "make", "python", "sed"]
 
 [sources]
-uris = ["https://ftp.gnu.org/gnu/glibc/glibc-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+uris = [
+    "https://ftp.gnu.org/gnu/glibc/glibc-${PKG_VERSION}.tar.xz",
+    "locale.gen",
+]
+sha256 = ["SKIP", "SKIP"]
 
 [lifecycle.configure]
 script = """
@@ -80,6 +83,11 @@ rm -f ${PKG_DIR}/usr/share/man/man8/{tzselect,zdump,zic}.8
 # Fix hardcoded /usr prefix in ldd so it resolves via /lib symlink
 sed '/RTLDLIST=/s@/usr@@g' -i ${PKG_DIR}/usr/bin/ldd
 
+install -Dm644 ${FILES_DIR}/locale.gen ${PKG_DIR}/etc/locale.gen
+
+# stub /etc/locale.conf so it exists as a backup-managed file
+install -Dm644 /dev/null ${PKG_DIR}/etc/locale.conf
+
 # nsswitch.conf
 cat > ${PKG_DIR}/etc/nsswitch.conf << "NSEOF"
 # Begin /etc/nsswitch.conf
@@ -118,7 +126,7 @@ localedef -i C -f UTF-8 C.UTF-8
 """
 
 [backup]
-files = ["/etc/nsswitch.conf", "/etc/ld.so.conf", "/etc/localtime"]
+files = ["/etc/nsswitch.conf", "/etc/ld.so.conf", "/etc/locale.gen", "/etc/locale.conf"]
 
 [install_scripts]
 post_install = "ldconfig"

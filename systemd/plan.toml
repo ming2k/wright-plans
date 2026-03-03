@@ -104,10 +104,7 @@ PAMEOF
 
 [install_scripts]
 post_install = """
-# Ensure machine-id is an empty file so systemd triggers first-boot
-# (which runs preset-all, enabling getty@tty1 and other default services).
-# systemd will populate machine-id automatically on first boot.
-truncate -s 0 /etc/machine-id 2>/dev/null || : > /etc/machine-id
+systemctl preset getty@tty1.service 2>/dev/null || true
 systemctl daemon-reexec 2>/dev/null || true
 """
 post_upgrade = """

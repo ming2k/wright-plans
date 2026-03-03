@@ -1,0 +1,54 @@
+[plan]
+name = "filesystem"
+version = "1.0"
+release = 1
+description = "Base FHS directory skeleton and essential system files"
+license = "MIT"
+arch = "x86_64"
+
+[sources]
+uris = [
+    "os-release",
+    "shells",
+    "profile",
+]
+sha256 = ["SKIP", "SKIP", "SKIP"]
+
+[options]
+skip_fhs_check = true
+
+[backup]
+files = ["/etc/shells", "/etc/profile"]
+
+[lifecycle.package]
+script = '''
+# --- FHS directory skeleton ---
+install -d -m 0755 ${PKG_DIR}/{boot,etc}
+install -d -m 0755 ${PKG_DIR}/{usr,usr/bin,usr/lib,usr/share}
+install -d -m 0755 ${PKG_DIR}/usr/share/man/man{1,2,3,4,5,6,7,8}
+install -d -m 0755 ${PKG_DIR}/{var,var/cache,var/lib,var/log}
+install -d -m 0750 ${PKG_DIR}/root
+install -d -m 1777 ${PKG_DIR}/tmp
+install -d -m 1777 ${PKG_DIR}/var/tmp
+
+# usr-merge: top-level symlinks into /usr
+ln -s usr/bin ${PKG_DIR}/bin
+ln -s usr/bin ${PKG_DIR}/sbin
+ln -s usr/lib ${PKG_DIR}/lib
+ln -s usr/lib ${PKG_DIR}/lib64
+
+# usr-merge: within /usr
+ln -s bin ${PKG_DIR}/usr/sbin
+ln -s lib ${PKG_DIR}/usr/lib64
+
+# /run lives on tmpfs at boot; var entries are compat symlinks
+ln -s /run          ${PKG_DIR}/var/run
+ln -s /run/lock     ${PKG_DIR}/var/lock
+ln -s ../proc/self/mounts ${PKG_DIR}/etc/mtab
+
+# --- /etc files ---
+install -m 0644 ${FILES_DIR}/os-release ${PKG_DIR}/etc/os-release
+install -m 0644 ${FILES_DIR}/shells     ${PKG_DIR}/etc/shells
+install -m 0644 ${FILES_DIR}/profile    ${PKG_DIR}/etc/profile
+install -d -m 0755 ${PKG_DIR}/etc/profile.d
+'''
