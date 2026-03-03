@@ -12,19 +12,16 @@ uris = ["https://github.com/thesofproject/sof-bin/releases/download/v${PKG_VERSI
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 echo "firmware package"
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 echo "no build needed"
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 mkdir -p ${PKG_DIR}/usr/lib/firmware/intel

@@ -1,6 +1,6 @@
 [plan]
 name = "binutils"
-version = "2.46"
+version = "2.46.0"
 release = 1
 description = "A set of programs to assemble and manipulate binary and object files"
 license = "GPL-3.0-or-later"
@@ -12,7 +12,7 @@ options = ["!strip"]
 build = ["gcc", "make"]
 [sources]
 uris = [
-"https://sourceware.org/pub/binutils/releases/binutils-${PKG_VERSION}.tar.xz",
+"https://ftp.gnu.org/gnu/binutils/binutils-${PKG_VERSION}.tar.gz",
 ]
 sha256 = ["SKIP"]
 
@@ -30,7 +30,8 @@ cd       build
 --disable-werror    \
 --enable-64-bit-bfd \
 --enable-new-dtags  \
---with-system-zlib  \
+--without-zlib      \
+--without-zstd      \
 --enable-default-hash-style=gnu
 '''
 
@@ -52,7 +53,7 @@ rm -fv ${PKG_DIR}/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a
 [install_scripts]
 post_install = """
 # Clean old binutils residuals
-rm -f /usr/lib/libbfd-2.43.1.so
+rm -f /usr/lib/libbfd-2.45.so /usr/lib/libbfd-2.44.so /usr/lib/libbfd-2.43.1.so
 rm -f /usr/lib/libsframe.so.1.0.0
 ldconfig
 """

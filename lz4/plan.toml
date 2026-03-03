@@ -14,21 +14,18 @@ uris = ["https://github.com/lz4/lz4/releases/download/v${PKG_VERSION}/lz4-${PKG_
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make BUILD_STATIC=no PREFIX=/usr -j$(nproc)
 '''
 
 [lifecycle.check]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j1 check
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PKG_DIR} install

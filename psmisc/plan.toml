@@ -11,25 +11,22 @@ url = "https://gitlab.com/psmisc/psmisc"
 build = ["gcc", "make"]
 link = ["ncurses"]
 [sources]
-uris = ["https://sourceforge.net/projects/psmisc/files/psmisc/psmisc-23.7.tar.xz/download"]
+uris = ["https://downloads.sourceforge.net/project/psmisc/psmisc/psmisc-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

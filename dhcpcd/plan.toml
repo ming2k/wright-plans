@@ -14,10 +14,10 @@ uris = ["https://github.com/NetworkConfiguration/dhcpcd/releases/download/v${PKG
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr       \
+--sbindir=/usr/bin  \
 --sysconfdir=/etc   \
 --libexecdir=/usr/lib/dhcpcd \
 --dbdir=/var/lib/dhcpcd      \
@@ -26,14 +26,12 @@ cd ${BUILD_DIR}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

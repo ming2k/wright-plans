@@ -26,7 +26,7 @@ uris = ["https://github.com/sxyazi/yazi/archive/refs/tags/v${PKG_VERSION}.tar.gz
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
+dockyard = "relaxed"
 env = { YAZI_GEN_COMPLETIONS = "true" }
 script = '''
 cd ${BUILD_DIR}
@@ -34,7 +34,6 @@ cargo build --release --locked
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 target/release/yazi ${PKG_DIR}/usr/bin/yazi

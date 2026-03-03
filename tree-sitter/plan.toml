@@ -14,14 +14,12 @@ uris = ["https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v${PKG_VER
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc) PREFIX=/usr
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make PREFIX=/usr DESTDIR=${PKG_DIR} install

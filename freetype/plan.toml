@@ -12,7 +12,6 @@ uris = ["https://download.savannah.gnu.org/releases/freetype/freetype-${PKG_VERS
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg
@@ -24,14 +23,12 @@ sed -r "s:.*(#.*SUBPIXEL_RENDERING) .*:\1:" \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} make install

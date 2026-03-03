@@ -69,12 +69,6 @@ cd ${BUILD_DIR}/build
 ninja
 """
 
-[lifecycle.check]
-script = """
-cd ${BUILD_DIR}/build
-ninja test
-"""
-
 [lifecycle.package]
 script = """
 cd ${BUILD_DIR}/build

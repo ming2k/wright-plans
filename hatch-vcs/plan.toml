@@ -1,0 +1,22 @@
+[plan]
+name = "hatch-vcs"
+version = "0.5.0"
+release = 1
+description = "Hatch plugin for versioning from VCS (git/hg) tags"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/ofek/hatch-vcs"
+
+[dependencies]
+build = ["python", "hatchling"]
+runtime = ["python", "hatchling", "setuptools-scm"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/h/hatch_vcs/hatch_vcs-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

@@ -1,0 +1,41 @@
+[plan]
+name = "dracut-ng"
+version = "110"
+release = 1
+description = "Event-driven initramfs infrastructure with UKI support"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/dracut-ng/dracut-ng"
+replaces = ["dracut"]
+
+[dependencies]
+build = ["gcc", "make", "pkgconf", "kmod"]
+runtime = ["bash", "coreutils", "cpio", "kmod", "systemd", "util-linux"]
+
+[sources]
+uris = ["https://github.com/dracut-ng/dracut-ng/archive/${PKG_VERSION}/dracut-ng-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --libdir=/usr/lib \
+  --sysconfdir=/etc \
+  --sbindir=/usr/bin \
+  --systemdsystemunitdir=/usr/lib/systemd/system \
+  --disable-documentation
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

@@ -17,7 +17,6 @@ uris = ["https://github.com/ostreedev/ostree/releases/download/v${PKG_VERSION}/l
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr       \
@@ -28,18 +27,18 @@ cd ${BUILD_DIR}
     --disable-man               \
     --disable-gtk-doc           \
     --with-gpgme                \
-    --disable-otmpfile
+    --sysconfdir=/etc            \
+    --disable-otmpfile          \
+    --with-builtin-grub2-mkconfig
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} make install

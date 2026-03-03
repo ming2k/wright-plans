@@ -1,6 +1,6 @@
 [plan]
 name = "linux-api-headers"
-version = "6.19.2"
+version = "6.18.15"
 release = 1
 description = "Sanitized Linux kernel headers for userspace"
 license = "GPL-2.0-only"
@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://www.kernel.org"
 
 [dependencies]
-build = ["make"]
+build = ["make", "zlib"]
 
 [sources]
 uris = ["https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz"]
@@ -27,5 +27,8 @@ make mrproper
 make headers
 find usr/include -name '.*' -delete
 rm -f usr/include/Makefile
+install -d ${PKG_DIR}/usr
 cp -a usr/include ${PKG_DIR}/usr/
+# Remove any stray files that leak into ${PKG_DIR}
+find ${PKG_DIR} -maxdepth 2 -name '*.pl' -delete
 '''

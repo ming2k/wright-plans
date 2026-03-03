@@ -1,0 +1,22 @@
+[plan]
+name = "python-snowballstemmer"
+version = "3.0.1"
+release = 1
+description = "Snowball stemming library collection for Python"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/snowballstem/snowball"
+
+[dependencies]
+build = ["python", "setuptools"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/s/snowballstemmer/snowballstemmer-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

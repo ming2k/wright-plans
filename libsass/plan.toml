@@ -14,7 +14,6 @@ uris = ["https://github.com/sass/libsass/archive/${PKG_VERSION}/libsass-${PKG_VE
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 autoreconf -fi
@@ -22,14 +21,12 @@ autoreconf -fi
 """
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make -j$(nproc)
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

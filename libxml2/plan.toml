@@ -8,7 +8,9 @@ arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/libxml2"
 
 [dependencies]
-build = ["gcc", "make"]
+build = ["doxygen", "gcc", "icu", "meson", "ninja", "python"]
+runtime = ["icu", "python"]
+
 [sources]
 uris = ["https://download.gnome.org/sources/libxml2/2.15/libxml2-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
@@ -16,23 +18,22 @@ sha256 = ["SKIP"]
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr           \
---sysconfdir=/etc       \
---disable-static        \
---with-history          \
---with-icu              \
-PYTHON=/usr/bin/python3 \
---docdir=/usr/share/doc/libxml2-${PKG_VERSION}
+mkdir -p build && cd build
+meson setup .. --prefix=/usr \
+    -D history=enabled \
+    -D icu=enabled \
+    -D python=enabled \
+    -D docs=disabled
 '''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
+cd ${BUILD_DIR}/build
+ninja -j$(nproc)
 '''
 
 [lifecycle.package]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+cd ${BUILD_DIR}/build
+DESTDIR=${PKG_DIR} ninja install
 '''

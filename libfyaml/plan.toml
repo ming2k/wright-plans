@@ -15,7 +15,6 @@ uris = ["https://github.com/pantoniou/libfyaml/archive/refs/tags/v${PKG_VERSION}
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 cmake -S . -B build \
@@ -28,13 +27,11 @@ cmake -S . -B build \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cmake --build ${BUILD_DIR}/build -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build
 install -d ${PKG_DIR}/usr/lib/pkgconfig

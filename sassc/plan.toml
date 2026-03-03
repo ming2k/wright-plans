@@ -9,13 +9,12 @@ url = "https://github.com/sass/sassc"
 
 [dependencies]
 build = ["autoconf", "automake", "gcc", "libtool", "make"]
-runtime = ["libsass"]
+link = ["libsass"]
 [sources]
 uris = ["https://github.com/sass/sassc/archive/${PKG_VERSION}/sassc-${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 autoreconf -fi
@@ -23,14 +22,12 @@ autoreconf -fi
 """
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make -j$(nproc)
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

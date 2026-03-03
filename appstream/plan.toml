@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Distributions/AppStream/"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "gettext", "gobject-introspection", "itstool", "gperf", "bash-completion", "docbook-xsl"]
+build = ["bash-completion", "meson", "ninja", "pkgconf", "gettext", "gobject-introspection", "itstool", "gperf", "docbook-xsl"]
 runtime = ["systemd"]
 link = ["glib", "libxml2", "libxmlb", "curl", "libfyaml", "zstd"]
 
@@ -17,7 +17,6 @@ uris = ["https://github.com/ximion/appstream/archive/refs/tags/v${PKG_VERSION}.t
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 sanitize_flags() {
@@ -40,7 +39,6 @@ meson setup build              \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 sanitize_flags() {
     printf "%s" "$1" | sed -E "s/(^|[[:space:]])-I([[:space:]]|$)/ /g; s/[[:space:]]+/ /g; s/^ //; s/ $//"
@@ -52,7 +50,6 @@ meson compile -C ${BUILD_DIR}/build
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
 '''

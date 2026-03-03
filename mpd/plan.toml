@@ -16,7 +16,6 @@ uris = ["https://github.com/MusicPlayerDaemon/MPD/archive/refs/tags/v${PKG_VERSI
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 meson setup build       \
@@ -53,14 +52,12 @@ meson setup build       \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ninja -C build -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install

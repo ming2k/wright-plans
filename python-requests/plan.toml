@@ -1,0 +1,22 @@
+[plan]
+name = "python-requests"
+version = "2.32.3"
+release = 1
+description = "Python HTTP for Humans"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://requests.readthedocs.io/"
+
+[dependencies]
+build = ["python", "setuptools"]
+runtime = ["python", "python-charset-normalizer", "python-idna", "python-urllib3", "python-certifi"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/r/requests/requests-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

@@ -16,7 +16,6 @@ uris = ["https://github.com/fish-shell/fish-shell/releases/download/${PKG_VERSIO
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 cmake -B build \
@@ -30,14 +29,12 @@ cmake -B build \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -C build -j$(nproc) VERBOSE=1
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} cmake --install build

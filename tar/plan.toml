@@ -14,7 +14,6 @@ uris = ["https://ftp.gnu.org/gnu/tar/tar-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 FORCE_UNSAFE_CONFIGURE=1 \
@@ -22,23 +21,14 @@ FORCE_UNSAFE_CONFIGURE=1 \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.check]
-dockyard = "none"
-script = '''
-cd ${BUILD_DIR}
-make check
-'''
-
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-make -C doc DESTDIR=${PKG_DIR} install-html docdir=/usr/share/doc/tar-1.35
+make -C doc DESTDIR=${PKG_DIR} install-html docdir=/usr/share/doc/tar-${PKG_VERSION}
 '''

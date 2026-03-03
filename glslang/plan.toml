@@ -15,7 +15,6 @@ uris = ["https://github.com/KhronosGroup/glslang/archive/${PKG_VERSION}/glslang-
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 mkdir build && cd build
@@ -27,14 +26,12 @@ cmake ..                                \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PKG_DIR} install

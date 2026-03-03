@@ -15,7 +15,7 @@ uris = ["https://github.com/starship/starship/archive/refs/tags/v${PKG_VERSION}.
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
+dockyard = "relaxed"
 env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
 script = """
 cd ${BUILD_DIR}
@@ -23,7 +23,6 @@ cargo build --release --locked
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 install -Dm755 target/release/starship ${PKG_DIR}/usr/bin/starship

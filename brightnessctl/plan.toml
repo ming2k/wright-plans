@@ -15,14 +15,12 @@ uris = ["https://github.com/Hummer12007/brightnessctl/archive/${PKG_VERSION}/bri
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make ENABLE_SYSTEMD=1
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make install \

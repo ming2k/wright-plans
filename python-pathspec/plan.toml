@@ -1,0 +1,22 @@
+[plan]
+name = "python-pathspec"
+version = "1.0.4"
+release = 1
+description = "Utility library for gitignore style pattern matching of file paths"
+license = "MPL-2.0"
+arch = "x86_64"
+url = "https://github.com/cpburnz/python-pathspec"
+
+[dependencies]
+build = ["python", "flit-core"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/p/pathspec/pathspec-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

@@ -27,7 +27,6 @@ uris = [
 sha256 = ["SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 # --with-privsep-user=nobody: no dedicated sshd user needed
@@ -48,14 +47,12 @@ cd ${BUILD_DIR}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

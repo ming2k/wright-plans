@@ -12,7 +12,6 @@ uris = ["https://github.com/KhronosGroup/Vulkan-Headers/archive/v${PKG_VERSION}/
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = """
 cmake -B build -S ${BUILD_DIR} \
 -DCMAKE_INSTALL_PREFIX=/usr \
@@ -23,7 +22,6 @@ cmake -B build -S ${BUILD_DIR} \
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 DESTDIR=${PKG_DIR} cmake --install build
 """

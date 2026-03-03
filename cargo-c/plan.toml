@@ -16,15 +16,14 @@ uris = ["https://github.com/lu-zero/cargo-c/archive/refs/tags/v${PKG_VERSION}.ta
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
+dockyard = "relaxed"
 env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
 script = """
 cd ${BUILD_DIR}
-LIBGIT2_NO_PKG_CONFIG=1 cargo build --release --locked
+LIBGIT2_NO_PKG_CONFIG=1 cargo build --release
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 install -Dm755 target/release/cargo-cbuild   ${PKG_DIR}/usr/bin/cargo-cbuild

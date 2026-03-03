@@ -1,0 +1,39 @@
+[plan]
+name = "elfutils"
+version = "0.194"
+release = 1
+description = "Collection of utilities and libraries for handling ELF files and DWARF data"
+license = "LGPL-3.0-or-later AND GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://sourceware.org/elfutils/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["zlib"]
+replaces = ["libelf"]
+
+[sources]
+uris = ["https://sourceware.org/ftp/elfutils/${PKG_VERSION}/elfutils-${PKG_VERSION}.tar.bz2"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr        \
+            --disable-debuginfod \
+            --enable-libdebuginfod=dummy
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+rm -f ${PKG_DIR}/usr/lib/lib*.a
+rm -rf ${PKG_DIR}/usr/etc
+'''

@@ -1,0 +1,65 @@
+[plan]
+name = "bluez"
+version = "5.86"
+release = 1
+description = "Official Linux Bluetooth protocol stack"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://www.bluez.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+runtime = ["dbus", "systemd"]
+link = ["glibc", "glib", "dbus", "ell", "alsa-lib", "json-c", "libical", "readline"]
+
+[sources]
+uris = ["https://www.kernel.org/pub/linux/bluetooth/bluez-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.prepare]
+script = """
+cd ${BUILD_DIR}
+# Remove bundled ell to ensure external ell is used exclusively
+rm -rf ell
+"""
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr          \
+    --sysconfdir=/etc              \
+    --localstatedir=/var           \
+    --libexecdir=/usr/lib          \
+    --enable-library               \
+    --enable-tools                 \
+    --enable-btpclient             \
+    --enable-midi                  \
+    --enable-sixaxis               \
+    --enable-mesh                  \
+    --enable-hid2hci               \
+    --enable-experimental          \
+    --enable-datafiles             \
+    --enable-external-ell          \
+    --enable-deprecated            \
+    --disable-manpages             \
+    --disable-static
+"""
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.package]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+
+# Install main bluetoothd config
+install -Dm644 src/main.conf ${PKG_DIR}/etc/bluetooth/main.conf
+"""
+
+[install_scripts]
+post_install = """
+systemctl daemon-reload 2>/dev/null || true
+systemctl enable bluetooth.service 2>/dev/null || true
+"""
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

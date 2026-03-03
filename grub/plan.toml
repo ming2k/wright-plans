@@ -1,49 +1,76 @@
 [plan]
 name = "grub"
 version = "2.12"
-release = 1
-description = "GRand Unified Bootloader"
+release = 2
+description = "GRand Unified Bootloader (BIOS + UEFI)"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/grub/"
 
 [dependencies]
-build = ["bison", "flex", "gcc", "make"]
+build = ["bison", "flex", "gcc", "make", "freetype"]
+runtime = ["dosfstools"]
+
 [sources]
 uris = ["https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.prepare]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 echo depends bli part_gpt > grub-core/extra_deps.lst
 '''
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
-cd ${BUILD_DIR}
-unset {C,CPP,CXX,LD}FLAGS
-./configure --prefix=/usr          \
---sysconfdir=/etc      \
---disable-efiemu       \
---disable-werror
+# Configure and compile are combined — GRUB requires two separate
+# configure/make cycles for BIOS and EFI platforms.
+echo "Skipping standalone configure — handled in compile stage."
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 unset {C,CPP,CXX,LD}FLAGS
+
+# ── Build 1: BIOS (i386-pc) ──────────────────────────────────────────────────
+mkdir -p build-bios
+cd build-bios
+../configure --prefix=/usr          \
+    --sysconfdir=/etc               \
+    --with-platform=pc              \
+    --target=i386                   \
+    --disable-efiemu                \
+    --disable-werror
+make -j$(nproc)
+
+# ── Build 2: UEFI (x86_64-efi) ───────────────────────────────────────────────
+cd ${BUILD_DIR}
+mkdir -p build-efi
+cd build-efi
+../configure --prefix=/usr          \
+    --sysconfdir=/etc               \
+    --with-platform=efi             \
+    --target=x86_64                 \
+    --disable-efiemu                \
+    --disable-werror
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
+
+# Install BIOS build first, then EFI on top (shared tools are identical)
+cd build-bios
 make DESTDIR=${PKG_DIR} install
+
+cd ${BUILD_DIR}/build-efi
+make DESTDIR=${PKG_DIR} install
+
+# Relocate bash completion
 mkdir -p ${PKG_DIR}/usr/share/bash-completion/completions
-mv -v ${PKG_DIR}/etc/bash_completion.d/grub ${PKG_DIR}/usr/share/bash-completion/completions/
+mv -v ${PKG_DIR}/etc/bash_completion.d/grub \
+    ${PKG_DIR}/usr/share/bash-completion/completions/ 2>/dev/null || true
+rmdir ${PKG_DIR}/etc/bash_completion.d 2>/dev/null || true
 '''

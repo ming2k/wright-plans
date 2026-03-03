@@ -8,7 +8,7 @@ arch = "any"
 url = "https://rsms.me/inter/"
 
 [dependencies]
-build = ["unzip"]
+build = ["libarchive"]
 
 [sources]
 uris = ["https://github.com/rsms/inter/releases/download/v${PKG_VERSION}/Inter-${PKG_VERSION}.zip"]
@@ -21,7 +21,8 @@ script = "echo preparing inter-font"
 script = '''
 cd ${BUILD_DIR}
 rm -rf inter-extracted
-unzip -q ${FILES_DIR}/Inter-${PKG_VERSION}.zip -d inter-extracted
+mkdir -p inter-extracted
+bsdtar xf ${FILES_DIR}/Inter-${PKG_VERSION}.zip -C inter-extracted
 '''
 
 [lifecycle.package]

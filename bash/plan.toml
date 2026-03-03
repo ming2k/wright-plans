@@ -1,6 +1,6 @@
 [plan]
 name = "bash"
-version = "5.3.9"
+version = "5.3"
 release = 1
 description = "The Bourne-Again Shell"
 license = "GPL-3.0-or-later"
@@ -10,17 +10,18 @@ url = "https://www.gnu.org/software/bash/"
 [dependencies]
 build = ["gcc", "make"]
 link = ["ncurses", "readline"]
+
 [sources]
-uris = ["https://ftp.gnu.org/gnu/bash/bash-5.3.tar.gz"]
+uris = ["https://ftp.gnu.org/gnu/bash/bash-${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr             \
---without-bash-malloc     \
---with-installed-readline \
---docdir=/usr/share/doc/bash-5.3
+            --without-bash-malloc     \
+            --with-installed-readline \
+            --docdir=/usr/share/doc/bash-${PKG_VERSION}
 '''
 
 [lifecycle.compile]

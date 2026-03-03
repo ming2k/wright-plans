@@ -8,58 +8,66 @@ arch = "x86_64"
 url = "https://mesa3d.org"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf"]
-link = ["libdrm >= 2.4.125"]
+build = [
+  "elfutils",
+  "glslang",
+  "libclc",
+  "llvm",
+  "meson",
+  "ninja",
+  "pkgconf",
+  "python-mako",
+  "python-pyyaml",
+  "spirv-llvm-translator",
+  "spirv-tools",
+  "wayland-protocols",
+]
+link = [
+  "elfutils",
+  "expat",
+  "libdisplay-info",
+  "libdrm",
+  "libglvnd",
+  "libunwind",
+  "llvm",
+  "vulkan-headers",
+  "wayland",
+  "zlib",
+  "zstd",
+]
+
 [sources]
 uris = ["https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [options]
 strip = true
-ccache = true
 
 [lifecycle.configure]
 script = """
 cd ${BUILD_DIR}
-# 为了保险，先清理旧的构建目录（如果之前构建失败残留了缓存）
-rm -rf build
-mkdir -p build && cd build
-
-meson setup .. \
---prefix=/usr \
---buildtype=release \
---strip \
--D platforms=wayland \
--D gallium-drivers=iris,crocus,llvmpipe \
--D vulkan-drivers=intel,intel_hasvk,swrast \
--D egl=enabled \
--D gbm=enabled \
--D gles1=disabled \
--D gles2=enabled \
--D glx=disabled \
--D llvm=enabled \
--D shared-llvm=enabled \
--D gallium-va=disabled \
--D vulkan-layers=device-select,overlay \
--D video-codecs=all \
--D valgrind=disabled \
--D libunwind=enabled
+meson setup build \
+  --prefix=/usr \
+  --buildtype=release \
+  -D platforms=wayland \
+  -D gallium-drivers=iris,crocus,llvmpipe \
+  -D vulkan-drivers=intel,intel_hasvk,swrast \
+  -D egl=enabled \
+  -D gbm=enabled \
+  -D gles1=disabled \
+  -D gles2=enabled \
+  -D glx=disabled \
+  -D llvm=enabled \
+  -D shared-llvm=enabled \
+  -D gallium-va=disabled \
+  -D vulkan-layers=device-select,overlay \
+  -D video-codecs=all \
+  -D valgrind=disabled \
+  -D libunwind=enabled
 """
 
 [lifecycle.compile]
-script = """
-cd ${BUILD_DIR}/build
-ninja -j$(nproc)
-"""
-
-[lifecycle.check]
-script = """
-cd ${BUILD_DIR}/build
-meson test --no-rebuild || true
-"""
+script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
 
 [lifecycle.package]
-script = """
-cd ${BUILD_DIR}/build
-DESTDIR=${PKG_DIR} ninja install
-"""
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

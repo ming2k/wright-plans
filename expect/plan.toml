@@ -18,14 +18,12 @@ uris = [
 sha256 = ["SKIP", "SKIP"]
 
 [lifecycle.prepare]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 patch -Np1 < ${FILES_DIR}/expect-${PKG_VERSION}-gcc15-1.patch
 '''
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr           \
@@ -37,21 +35,18 @@ cd ${BUILD_DIR}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.check]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make test
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

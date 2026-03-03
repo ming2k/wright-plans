@@ -15,19 +15,16 @@ uris = ["https://files.pythonhosted.org/packages/source/p/pyparsing/pyparsing-${
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 echo "python package"
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 echo "no build needed"
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PKG_DIR} .

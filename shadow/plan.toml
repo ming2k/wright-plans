@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://github.com/shadow-maint/shadow"
 
 [dependencies]
-build = ["gcc", "make"]
+build = ["gcc", "libxslt", "make"]
 link = ["glibc", "linux-pam"]
 [sources]
 uris = ["https://github.com/shadow-maint/shadow/releases/download/${PKG_VERSION}/shadow-${PKG_VERSION}.tar.xz"]

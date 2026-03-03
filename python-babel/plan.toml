@@ -1,0 +1,22 @@
+[plan]
+name = "python-babel"
+version = "2.18.0"
+release = 1
+description = "Internationalization utilities for Python"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://babel.pocoo.org/"
+
+[dependencies]
+build = ["python", "setuptools"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/b/babel/babel-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

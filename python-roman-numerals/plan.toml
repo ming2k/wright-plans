@@ -1,0 +1,22 @@
+[plan]
+name = "python-roman-numerals"
+version = "4.1.0"
+release = 1
+description = "Manipulate well-formed Roman numeral strings"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/AA-Turner/roman-numerals"
+
+[dependencies]
+build = ["python", "flit-core"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/r/roman_numerals/roman_numerals-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

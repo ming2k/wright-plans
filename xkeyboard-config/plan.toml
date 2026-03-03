@@ -16,7 +16,6 @@ sha256 = [
 ]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 mkdir -p build && cd build
@@ -24,14 +23,12 @@ meson setup --prefix=/usr --buildtype=release ..
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build
 ninja
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} ninja install

@@ -10,29 +10,26 @@ url = "https://libexpat.github.io/"
 [dependencies]
 build = ["gcc", "make"]
 [sources]
-uris = ["https://github.com/libexpat/libexpat/releases/download/R_2_7_1/expat-2.7.1.tar.xz"]
+uris = ["https://github.com/libexpat/libexpat/releases/download/R_2_7_1/expat-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
 --disable-static \
---docdir=/usr/share/doc/expat-2.7.1
+--docdir=/usr/share/doc/expat-${PKG_VERSION}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-install -v -m644 doc/*.{html,css} ${PKG_DIR}/usr/share/doc/expat-2.7.1
+install -v -m644 doc/*.{html,css} ${PKG_DIR}/usr/share/doc/expat-${PKG_VERSION}
 '''

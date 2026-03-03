@@ -1,0 +1,22 @@
+[plan]
+name = "python-certifi"
+version = "2025.4.26"
+release = 1
+description = "Python package for providing Mozilla's CA Bundle"
+license = "MPL-2.0"
+arch = "x86_64"
+url = "https://github.com/certifi/python-certifi"
+
+[dependencies]
+build = ["python", "setuptools"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/c/certifi/certifi-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

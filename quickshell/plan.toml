@@ -18,7 +18,6 @@ sha256 = [
 ]
 
 [lifecycle.configure]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 cmake -B build -G Ninja \
@@ -46,14 +45,12 @@ cmake -B build -G Ninja \
 """
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 cmake --build build
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} cmake --install build

@@ -14,28 +14,24 @@ uris = ["https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libc
 sha256 = ["SKIP"]
 
 [lifecycle.prepare]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 sed -i '/install -m.*STA/d' libcap/Makefile
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make prefix=/usr lib=lib SBINDIR=/usr/bin -j$(nproc)
 '''
 
 [lifecycle.check]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make test
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make prefix=/usr lib=lib SBINDIR=/usr/bin DESTDIR=${PKG_DIR} install

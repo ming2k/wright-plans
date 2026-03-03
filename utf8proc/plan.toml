@@ -12,13 +12,11 @@ uris = ["https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v${PKG_VERSI
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 echo "cmake project"
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 mkdir -p build && cd build
@@ -27,7 +25,6 @@ make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} make install

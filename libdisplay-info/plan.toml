@@ -8,13 +8,12 @@ arch = "x86_64"
 url = "https://gitlab.freedesktop.org/emersion/libdisplay-info"
 
 [dependencies]
-build = ["meson", "ninja"]
+build = ["hwdata", "meson", "ninja"]
 [sources]
 uris = ["https://gitlab.freedesktop.org/emersion/libdisplay-info/-/releases/${PKG_VERSION}/downloads/libdisplay-info-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 --prefix=/usr         \
@@ -22,9 +21,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.package]
-dockyard = "none"
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

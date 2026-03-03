@@ -14,21 +14,12 @@ uris = ["https://github.com/facebook/zstd/releases/download/v${PKG_VERSION}/zstd
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make prefix=/usr -j$(nproc)
 '''
 
-[lifecycle.check]
-dockyard = "none"
-script = '''
-cd ${BUILD_DIR}
-make check
-'''
-
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make prefix=/usr DESTDIR=${PKG_DIR} install

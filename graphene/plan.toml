@@ -15,7 +15,6 @@ uris = ["https://download.gnome.org/sources/graphene/1.10/graphene-${PKG_VERSION
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 meson setup build \
@@ -27,14 +26,12 @@ meson setup build \
 """
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 ninja -C build
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install

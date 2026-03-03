@@ -2,53 +2,43 @@
 name = "llvm"
 version = "21.1.8"
 release = 1
-description = "The LLVM Compiler Infrastructure (Optimized for AMD64/Gaming)"
+description = "The LLVM Compiler Infrastructure"
 license = "Apache-2.0-with-LLVM-exception"
 arch = "x86_64"
+url = "https://llvm.org"
 
 [dependencies]
+build = ["cmake", "gcc", "ninja", "pkgconf", "python"]
 runtime = ["llvm-libs"]
 link = ["libedit", "libffi", "libxml2", "zlib", "zstd"]
+
 [sources]
 uris = ["https://github.com/llvm/llvm-project/releases/download/llvmorg-${PKG_VERSION}/llvm-project-${PKG_VERSION}.src.tar.xz"]
 sha256 = ["SKIP"]
 
 [options]
 strip = true
-# 针对仅构建部分后端的情况，通常不需要限制并行数
-# jobs = 4
 
 [lifecycle.configure]
-# 针对本机 CPU 优化
-env = { CFLAGS = "-O3 -march=native -pipe", CXXFLAGS = "-O3 -march=native -pipe" }
-
 script = """
 cd ${BUILD_DIR}/llvm
-
-# 修复 Python 调用
-grep -rl '#!.*python' ../ | xargs sed -i '1s/python$/python3/' || true
-
 cmake -B build -G Ninja \
--DCMAKE_INSTALL_PREFIX=/usr \
--DCMAKE_BUILD_TYPE=Release \
--DCMAKE_SKIP_INSTALL_RPATH=ON \
-\
--DLLVM_ENABLE_PROJECTS="clang;lld" \
--DLLVM_ENABLE_RUNTIMES="compiler-rt" \
-\
--DLLVM_TARGETS_TO_BUILD="X86;AMDGPU;WebAssembly" \
-\
--DLLVM_BUILD_LLVM_DYLIB=ON \
--DLLVM_LINK_LLVM_DYLIB=ON \
--DLLVM_ENABLE_RTTI=ON \
--DLLVM_ENABLE_FFI=ON \
--DLLVM_ENABLE_ZLIB=ON \
--DLLVM_ENABLE_ZSTD=ON \
--DLLVM_ENABLE_LIBEDIT=ON \
--DLLVM_BINUTILS_INCDIR=/usr/include \
-\
--DCLANG_DEFAULT_PIE_ON_LINUX=ON \
--DCLANG_LINK_CLANG_DYLIB=ON
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_SKIP_INSTALL_RPATH=ON \
+  -DLLVM_ENABLE_PROJECTS="clang;lld" \
+  -DLLVM_ENABLE_RUNTIMES="compiler-rt" \
+  -DLLVM_TARGETS_TO_BUILD="X86;AMDGPU" \
+  -DLLVM_BUILD_LLVM_DYLIB=ON \
+  -DLLVM_LINK_LLVM_DYLIB=ON \
+  -DLLVM_ENABLE_RTTI=ON \
+  -DLLVM_ENABLE_FFI=ON \
+  -DLLVM_ENABLE_ZLIB=ON \
+  -DLLVM_ENABLE_ZSTD=ON \
+  -DLLVM_ENABLE_LIBEDIT=ON \
+  -DLLVM_BINUTILS_INCDIR=/usr/include \
+  -DCLANG_DEFAULT_PIE_ON_LINUX=ON \
+  -DCLANG_LINK_CLANG_DYLIB=ON
 """
 
 [lifecycle.compile]
@@ -60,26 +50,10 @@ ninja -C build -j$(nproc)
 [lifecycle.package]
 script = """
 cd ${BUILD_DIR}/llvm
-DESTDIR=${BUILD_DIR}/_install ninja -C build install
-
-# 复制全量
-cp -a ${BUILD_DIR}/_install/* ${PKG_DIR}/
-
-# --- 清理属于子包的文件 ---
-rm -f ${PKG_DIR}/usr/lib/libLLVM*.so*
-
-rm -rf ${PKG_DIR}/usr/bin/clang*
-rm -rf ${PKG_DIR}/usr/bin/git-clang-format
-rm -rf ${PKG_DIR}/usr/lib/clang
-rm -rf ${PKG_DIR}/usr/include/clang*
-rm -rf ${PKG_DIR}/usr/share/clang
-
-rm -rf ${PKG_DIR}/usr/bin/lld*
-rm -rf ${PKG_DIR}/usr/bin/ld.lld*
-rm -rf ${PKG_DIR}/usr/bin/wasm-ld
+DESTDIR=${PKG_DIR} ninja -C build install
 
 if [ ! -f ${PKG_DIR}/usr/bin/llvm-config ]; then
-ln -sf llvm-config-${PKG_VERSION%%.*} ${PKG_DIR}/usr/bin/llvm-config
+  ln -sf llvm-config-${PKG_VERSION%%.*} ${PKG_DIR}/usr/bin/llvm-config
 fi
 """
 
@@ -94,4 +68,37 @@ mv -v ${MAIN_PKG_DIR}/usr/lib/libLLVM-*.so ${PKG_DIR}/usr/lib/
 mv -v ${MAIN_PKG_DIR}/usr/lib/libLLVM.so* ${PKG_DIR}/usr/lib/
 mv -v ${MAIN_PKG_DIR}/usr/lib/libLTO.so* ${PKG_DIR}/usr/lib/
 mv -v ${MAIN_PKG_DIR}/usr/lib/libRemarks.so* ${PKG_DIR}/usr/lib/
+"""
+
+[split.clang]
+description = "C/C++/ObjC compiler frontend for LLVM"
+[split.clang.dependencies]
+runtime = ["llvm-libs"]
+link = ["glibc"]
+[split.clang.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/bin
+install -d ${PKG_DIR}/usr/lib
+install -d ${PKG_DIR}/usr/include
+install -d ${PKG_DIR}/usr/share
+
+mv -v ${MAIN_PKG_DIR}/usr/bin/clang* ${PKG_DIR}/usr/bin/
+mv -v ${MAIN_PKG_DIR}/usr/bin/git-clang-format ${PKG_DIR}/usr/bin/ 2>/dev/null || true
+mv -v ${MAIN_PKG_DIR}/usr/lib/clang ${PKG_DIR}/usr/lib/
+mv -v ${MAIN_PKG_DIR}/usr/lib/libclang*.so* ${PKG_DIR}/usr/lib/
+mv -v ${MAIN_PKG_DIR}/usr/include/clang* ${PKG_DIR}/usr/include/ 2>/dev/null || true
+mv -v ${MAIN_PKG_DIR}/usr/share/clang ${PKG_DIR}/usr/share/ 2>/dev/null || true
+"""
+
+[split.lld]
+description = "LLVM linker"
+[split.lld.dependencies]
+runtime = ["llvm-libs"]
+link = ["glibc"]
+[split.lld.lifecycle.package]
+script = """
+install -d ${PKG_DIR}/usr/bin
+mv -v ${MAIN_PKG_DIR}/usr/bin/lld* ${PKG_DIR}/usr/bin/
+mv -v ${MAIN_PKG_DIR}/usr/bin/ld.lld* ${PKG_DIR}/usr/bin/
+mv -v ${MAIN_PKG_DIR}/usr/bin/wasm-ld ${PKG_DIR}/usr/bin/ 2>/dev/null || true
 """

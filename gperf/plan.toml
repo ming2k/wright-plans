@@ -10,25 +10,22 @@ url = "https://www.gnu.org/software/gperf/"
 [dependencies]
 build = ["gcc", "make"]
 [sources]
-uris = ["https://ftp.gnu.org/gnu/gperf/gperf-3.3.tar.gz"]
+uris = ["https://ftp.gnu.org/gnu/gperf/gperf-${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr --docdir=/usr/share/doc/gperf-3.3
+./configure --prefix=/usr --docdir=/usr/share/doc/gperf-${PKG_VERSION}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

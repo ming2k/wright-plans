@@ -15,7 +15,6 @@ uris = ["https://ftp.gnu.org/gnu/mpfr/mpfr-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr        \
@@ -25,7 +24,6 @@ cd ${BUILD_DIR}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
@@ -33,14 +31,12 @@ make html
 '''
 
 [lifecycle.check]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make check
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

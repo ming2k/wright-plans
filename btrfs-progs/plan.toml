@@ -1,6 +1,6 @@
 [plan]
 name = "btrfs-progs"
-version = "6.13"
+version = "6.19"
 release = 1
 description = "Btrfs filesystem userspace utilities"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
@@ -9,7 +9,7 @@ url = "https://btrfs.readthedocs.io"
 
 [dependencies]
 build = ["pkgconf"]
-link = ["util-linux", "zlib", "lzo", "zstd", "e2fsprogs"]
+link = ["util-linux", "zlib", "lzo", "zstd", "e2fsprogs", "libgcrypt", "systemd"]
 
 [sources]
 uris = ["https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${PKG_VERSION}.tar.xz"]
@@ -22,7 +22,8 @@ cd ${BUILD_DIR}
     --prefix=/usr \
     --sbindir=/usr/bin \
     --disable-static \
-    --disable-documentation
+    --disable-documentation \
+    --with-crypto=libgcrypt
 """
 
 [lifecycle.compile]
@@ -30,3 +31,9 @@ script = "make -j$(nproc) -C ${BUILD_DIR}"
 
 [lifecycle.package]
 script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
+
+[install_scripts]
+post_install = """
+systemctl daemon-reload 2>/dev/null || true
+systemctl enable btrfs-scrub@-.timer 2>/dev/null || true
+"""

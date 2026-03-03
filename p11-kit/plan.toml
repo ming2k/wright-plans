@@ -17,18 +17,33 @@ uris = ["https://github.com/p11-glue/p11-kit/releases/download/${PKG_VERSION}/p1
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 --prefix=/usr               \
 --buildtype=release         \
--D trust_paths=/etc/pki/anchors
+-D trust_paths=/etc/ca-certificates/trust-source:/usr/share/ca-certificates/trust-source
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.package]
-dockyard = "none"
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = '''
+DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install
+
+# Create update-ca-trust script
+cat > ${PKG_DIR}/usr/bin/update-ca-trust << 'SCRIPT'
+#!/bin/sh
+# Extract CA certificates from p11-kit trust store
+# openssl-directory first, then bundle — bundle must come last
+# so it isn't deleted by --overwrite on the directory
+trust extract --format=openssl-directory --filter=ca-anchors \
+  --overwrite --purpose=server-auth /etc/ssl/certs/
+trust extract --format=pem-bundle --filter=ca-anchors \
+  --overwrite --purpose=server-auth /etc/ssl/certs/ca-certificates.crt
+SCRIPT
+chmod 755 ${PKG_DIR}/usr/bin/update-ca-trust
+
+# Link trust-extract-compat to update-ca-trust
+ln -sf ../../bin/update-ca-trust ${PKG_DIR}/usr/libexec/p11-kit/trust-extract-compat
+'''

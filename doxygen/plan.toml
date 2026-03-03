@@ -1,0 +1,38 @@
+[plan]
+name = "doxygen"
+version = "1.16.1"
+release = 1
+description = "Documentation system for C++, C, Java, IDL and PHP"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "http://www.doxygen.nl"
+
+[dependencies]
+build = ["cmake", "gcc", "flex", "python"]
+
+[sources]
+uris = ["https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_16_1.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build \
+    -DCMAKE_BUILD_TYPE=None \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -Dbuild_doc=OFF \
+    -Dbuild_wizard=OFF \
+    -Duse_libclang=OFF
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+cmake --build build -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} cmake --install build
+'''

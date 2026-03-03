@@ -14,7 +14,6 @@ uris = ["https://github.com/CLIUtils/CLI11/archive/refs/tags/v${PKG_VERSION}.tar
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 cmake -B build -G Ninja \
@@ -25,14 +24,12 @@ cmake -B build -G Ninja \
 """
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 ninja -C build
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install

@@ -15,7 +15,7 @@ uris = ["https://github.com/XTLS/Xray-core/archive/v${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
+dockyard = "relaxed"
 script = """
 cd ${BUILD_DIR}
 export CGO_ENABLED=0
@@ -27,7 +27,6 @@ go build -ldflags "-X github.com/xtls/xray-core.codename=xray \
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 install -Dm755 xray ${PKG_DIR}/usr/bin/xray

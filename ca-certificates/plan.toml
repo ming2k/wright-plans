@@ -1,0 +1,49 @@
+[plan]
+name = "ca-certificates"
+version = "3.121"
+release = 1
+description = "Mozilla's set of trusted CA certificates"
+license = "MPL-2.0"
+arch = "any"
+url = "https://firefox-source-docs.mozilla.org/security/nss/index.html"
+
+[dependencies]
+build = ["python"]
+runtime = ["p11-kit"]
+
+[sources]
+uris = [
+  "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${PKG_VERSION}.tar.gz",
+  "certdata2pem.py",
+  "bundle.sh",
+]
+sha256 = ["SKIP", "SKIP", "SKIP"]
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+mkdir -p certs
+ln -sf ${BUILD_DIR}/nss/lib/ckfw/builtins/certdata.txt certs/certdata.txt
+ln -sf ${BUILD_DIR}/nss/lib/ckfw/builtins/nssckbi.h certs/nssckbi.h
+
+cd certs
+python3 ${FILES_DIR}/certdata2pem.py
+
+cd ${BUILD_DIR}
+sh ${FILES_DIR}/bundle.sh
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+install -Dm644 ca-bundle.trust.p11-kit \
+  ${PKG_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit
+'''
+
+[install_scripts]
+post_install = '''
+update-ca-trust
+'''
+post_upgrade = '''
+update-ca-trust
+'''

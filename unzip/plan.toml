@@ -11,11 +11,8 @@ url = "https://infozip.sourceforge.net/UnZip.html"
 build = ["gcc", "make"]
 
 [sources]
-uris = ["https://downloads.sourceforge.net/infozip/unzip60.tar.gz"]
+uris = ["https://downloads.sourceforge.net/project/infozip/UnZip%206.x%20%28latest%29/UnZip%206.0/unzip60.tar.gz"]
 sha256 = ["SKIP"]
-
-[lifecycle.configure]
-script = "echo using upstream makefiles"
 
 [lifecycle.compile]
 script = '''

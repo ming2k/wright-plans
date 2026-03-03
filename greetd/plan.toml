@@ -17,14 +17,13 @@ uris = ["https://git.sr.ht/~kennylevinsen/greetd/archive/${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
+dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
 cargo build --release --locked
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 

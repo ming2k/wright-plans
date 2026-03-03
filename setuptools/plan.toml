@@ -10,12 +10,11 @@ url = "https://setuptools.pypa.io/"
 [dependencies]
 build = ["python", "wheel"]
 [sources]
-uris = ["https://pypi.org/packages/source/s/setuptools/setuptools-80.9.0.tar.gz"]
+uris = ["https://pypi.org/packages/source/s/setuptools/setuptools-${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-pip3 install --no-index --no-user --root=${PKG_DIR} --no-build-isolation .
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
 '''

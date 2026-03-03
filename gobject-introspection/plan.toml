@@ -16,7 +16,6 @@ uris = ["https://download.gnome.org/sources/gobject-introspection/1.86/gobject-i
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 meson setup build        \
@@ -25,13 +24,11 @@ meson setup build        \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 meson compile -C ${BUILD_DIR}/build
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
 '''

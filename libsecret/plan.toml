@@ -7,7 +7,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
 [dependencies]
-build = ["gettext", "gobject-introspection", "meson", "ninja", "pkgconf"]
+build = ["gettext", "glib", "gobject-introspection", "meson", "ninja", "pkgconf"]
 link = ["glib", "libgcrypt"]
 [sources]
 uris = ["https://download.gnome.org/sources/libsecret/0.21/libsecret-${PKG_VERSION}.tar.xz"]

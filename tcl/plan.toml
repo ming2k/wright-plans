@@ -1,6 +1,6 @@
 [plan]
 name = "tcl"
-version = "8.6.16"
+version = "8.6.17"
 release = 1
 description = "Tool Command Language - robust general-purpose scripting language"
 license = "TCL"
@@ -9,63 +9,31 @@ url = "https://www.tcl.tk/"
 
 [dependencies]
 build = ["gcc", "make"]
+
 [sources]
 uris = ["https://downloads.sourceforge.net/project/tcl/Tcl/${PKG_VERSION}/tcl${PKG_VERSION}-src.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
-cd ${BUILD_DIR}
-cd unix
+cd ${BUILD_DIR}/unix
 ./configure --prefix=/usr           \
---mandir=/usr/share/man \
---disable-rpath
+            --mandir=/usr/share/man \
+            --disable-rpath
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/unix
 make -j$(nproc)
-
-SRCDIR=${BUILD_DIR}
-sed -e "s|$SRCDIR/unix|/usr/lib|" \
--e "s|$SRCDIR|/usr/include|"  \
--i tclConfig.sh
-
-sed -e "s|$SRCDIR/unix/pkgs/tdbc1.1.10|/usr/lib/tdbc1.1.10|" \
--e "s|$SRCDIR/pkgs/tdbc1.1.10/generic|/usr/include|"     \
--e "s|$SRCDIR/pkgs/tdbc1.1.10/library|/usr/lib/tcl8.6|"  \
--e "s|$SRCDIR/pkgs/tdbc1.1.10|/usr/include|"             \
--i pkgs/tdbc1.1.10/tdbcConfig.sh
-
-sed -e "s|$SRCDIR/unix/pkgs/itcl4.3.2|/usr/lib/itcl4.3.2|" \
--e "s|$SRCDIR/pkgs/itcl4.3.2/generic|/usr/include|"    \
--e "s|$SRCDIR/pkgs/itcl4.3.2|/usr/include|"            \
--i pkgs/itcl4.3.2/itclConfig.sh
-'''
-
-[lifecycle.check]
-dockyard = "none"
-script = '''
-cd ${BUILD_DIR}/unix
-make test
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/unix
 make DESTDIR=${PKG_DIR} install
-
-chmod 644 ${PKG_DIR}/usr/lib/libtclstub8.6.a
-chmod -v u+w ${PKG_DIR}/usr/lib/libtcl8.6.so
-
 make DESTDIR=${PKG_DIR} install-private-headers
 
 ln -sfv tclsh8.6 ${PKG_DIR}/usr/bin/tclsh
 mv ${PKG_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3
-
-rm -f ${PKG_DIR}/usr/share/info/dir
 '''

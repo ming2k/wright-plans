@@ -1,0 +1,27 @@
+[plan]
+name = "popt"
+version = "1.19"
+release = 1
+description = "C library for parsing command line parameters"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/rpm-software-management/popt"
+
+[dependencies]
+link = ["glibc"]
+
+[sources]
+uris = ["https://ftp.osuosl.org/pub/rpm/popt/releases/popt-1.x/popt-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+"""
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.package]
+script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

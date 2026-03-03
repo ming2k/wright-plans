@@ -1,6 +1,6 @@
 [plan]
 name = "sing-box"
-version = "1.12.21"
+version = "1.13.0"
 release = 1
 description = "The universal proxy platform"
 license = "GPL-3.0-or-later"
@@ -14,7 +14,7 @@ uris = ["https://github.com/SagerNet/sing-box/archive/refs/tags/v${PKG_VERSION}.
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
+dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
 export PATH=/usr/lib/go/bin:$PATH
@@ -29,7 +29,6 @@ go build -o sing-box \
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 sing-box ${PKG_DIR}/usr/bin/sing-box

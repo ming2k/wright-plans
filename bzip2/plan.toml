@@ -8,6 +8,9 @@ arch = "x86_64"
 url = "https://www.sourceware.org/bzip2/"
 
 [dependencies]
+build = ["gcc", "make", "diffutils"]
+
+[mvp.dependencies]
 build = ["gcc", "make"]
 [sources]
 uris = [
@@ -17,7 +20,6 @@ uris = [
 sha256 = ["SKIP", "SKIP"]
 
 [lifecycle.prepare]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 
@@ -32,7 +34,6 @@ sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 
@@ -44,8 +45,15 @@ make clean
 make -j$(nproc)
 '''
 
+[mvp.lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -f Makefile-libbz2_so
+make clean
+make -j$(nproc) bzip2 bzip2recover
+'''
+
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 

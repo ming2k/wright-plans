@@ -17,7 +17,6 @@ sha256 = [
 ]
 
 [lifecycle.configure]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 meson setup build \
@@ -26,14 +25,12 @@ meson setup build \
 """
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 ninja -C build
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install

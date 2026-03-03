@@ -15,28 +15,24 @@ uris = ["https://github.com/gavinhoward/bc/releases/download/${PKG_VERSION}/bc-$
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 CC='gcc -std=c99' ./configure --prefix=/usr -G -O3 -r
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.check]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make test
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

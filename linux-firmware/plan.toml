@@ -23,7 +23,6 @@ strip = false
 # ═══════════════════════════════════════════════════════════════
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 mkdir -p _installed/usr/lib/firmware
@@ -31,7 +30,6 @@ mkdir -p _installed/usr/lib/firmware
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 mkdir -p ${PKG_DIR}/usr/share/doc/linux-firmware
 echo "linux-firmware ${PKG_VERSION} meta-package" > ${PKG_DIR}/usr/share/doc/linux-firmware/README
@@ -47,7 +45,6 @@ echo "linux-firmware ${PKG_VERSION} meta-package" > ${PKG_DIR}/usr/share/doc/lin
 description = "Firmware files for Linux - WHENCE license manifest"
 
 [split.linux-firmware-whence.lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 shopt -s nullglob
@@ -72,7 +69,6 @@ description = "Firmware for AMD Radeon GPUs (amdgpu + legacy radeon)"
 [split.linux-firmware-amdgpu.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-amdgpu.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -90,7 +86,6 @@ description = "Microcode update image for AMD CPUs"
 [split.amd-ucode.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.amd-ucode.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -106,7 +101,6 @@ description = "Firmware for Qualcomm Atheros wireless adapters"
 [split.linux-firmware-atheros.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-atheros.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 shopt -s nullglob
@@ -131,7 +125,6 @@ description = "Firmware for Broadcom wireless and Bluetooth"
 [split.linux-firmware-broadcom.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-broadcom.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -149,7 +142,6 @@ description = "Firmware for Cirrus Logic audio devices"
 [split.linux-firmware-cirrus.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-cirrus.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -165,7 +157,6 @@ description = "Firmware for Intel audio, Bluetooth, GPU, network, NPU, webcam"
 [split.linux-firmware-intel.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-intel.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 shopt -s nullglob
@@ -198,7 +189,6 @@ description = "Firmware for Cavium LiquidIO NICs"
 [split.linux-firmware-liquidio.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-liquidio.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -214,7 +204,6 @@ description = "Firmware for Marvell wireless, Bluetooth, and Ethernet"
 [split.linux-firmware-marvell.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-marvell.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -234,7 +223,6 @@ description = "Firmware for MediaTek and Ralink network adapters"
 [split.linux-firmware-mediatek.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-mediatek.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 shopt -s nullglob
@@ -256,7 +244,6 @@ description = "Firmware for Mellanox Ethernet and InfiniBand"
 [split.linux-firmware-mellanox.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-mellanox.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -272,7 +259,6 @@ description = "Firmware for Netronome Flow Processor NICs"
 [split.linux-firmware-nfp.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-nfp.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -288,7 +274,6 @@ description = "Firmware for NVIDIA GPUs (GSP, Nouveau)"
 [split.linux-firmware-nvidia.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-nvidia.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -304,7 +289,6 @@ description = "Firmware for Qualcomm SoC, modem, and Bluetooth"
 [split.linux-firmware-qcom.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-qcom.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -322,7 +306,6 @@ description = "Firmware for Realtek NICs, WiFi, and Bluetooth"
 [split.linux-firmware-realtek.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-realtek.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -341,7 +324,6 @@ description = "Firmware for Texas Instruments wireless and misc"
 [split.linux-firmware-ti.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-ti.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -359,7 +341,6 @@ description = "Firmware for Broadcom NetXtreme II Ethernet"
 [split.linux-firmware-bnx2x.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-bnx2x.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 mkdir -p ${PKG_DIR}/usr/lib/firmware
@@ -377,7 +358,6 @@ description = "Firmware for QLogic Fibre Channel and Ethernet"
 [split.linux-firmware-qlogic.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-qlogic.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 shopt -s nullglob
@@ -399,7 +379,6 @@ description = "Firmware files for Linux - miscellaneous remaining firmware"
 [split.linux-firmware-other.dependencies]
 runtime = ["linux-firmware-whence"]
 [split.linux-firmware-other.lifecycle.package]
-dockyard = "none"
 script = """
 FW="${BUILD_DIR}/_installed/usr/lib/firmware"
 shopt -s nullglob

@@ -1,0 +1,22 @@
+[plan]
+name = "python-docutils"
+version = "0.22.4"
+release = 1
+description = "Python documentation utilities"
+license = "BSD-2-Clause AND GPL-3.0-or-later AND PSF-2.0"
+arch = "x86_64"
+url = "https://docutils.sourceforge.io/"
+
+[dependencies]
+build = ["python", "flit-core"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/d/docutils/docutils-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

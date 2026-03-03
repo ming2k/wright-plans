@@ -1,0 +1,36 @@
+[plan]
+name = "cpio"
+version = "2.15"
+release = 1
+description = "GNU tool for managing archives of files"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/cpio/"
+
+[dependencies]
+link = ["glibc"]
+
+[sources]
+uris = [
+"https://ftp.gnu.org/gnu/cpio/cpio-${PKG_VERSION}.tar.gz",
+"patches/cpio-2.15-c23-conformity.patch",
+]
+sha256 = ["SKIP", "SKIP"]
+
+[lifecycle.prepare]
+script = """
+cd ${BUILD_DIR}
+patch -Np1 -i ${FILES_DIR}/cpio-2.15-c23-conformity.patch
+"""
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr --with-rmt=/dev/null
+"""
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.package]
+script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

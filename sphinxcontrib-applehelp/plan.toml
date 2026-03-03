@@ -1,0 +1,22 @@
+[plan]
+name = "sphinxcontrib-applehelp"
+version = "2.0.0"
+release = 1
+description = "Sphinx extension for Apple help book output"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/sphinx-doc/sphinxcontrib-applehelp"
+
+[dependencies]
+build = ["python", "flit-core"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/s/sphinxcontrib_applehelp/sphinxcontrib_applehelp-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

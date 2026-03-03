@@ -1,0 +1,22 @@
+[plan]
+name = "python-urllib3"
+version = "2.6.3"
+release = 1
+description = "HTTP library with thread-safe connection pooling and file post support"
+license = "MIT"
+arch = "x86_64"
+url = "https://urllib3.readthedocs.io/"
+
+[dependencies]
+build = ["python", "hatchling", "hatch-vcs"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://github.com/urllib3/urllib3/archive/${PKG_VERSION}/python-urllib3-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+SETUPTOOLS_SCM_PRETEND_VERSION=${PKG_VERSION} pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

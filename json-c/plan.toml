@@ -1,0 +1,37 @@
+[plan]
+name = "json-c"
+version = "0.18"
+release = 1
+description = "A JSON implementation in C"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/json-c/json-c"
+
+[dependencies]
+build = ["cmake", "ninja"]
+link = ["glibc"]
+
+[sources]
+uris = ["https://s3.amazonaws.com/json-c_releases/releases/json-c-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+mkdir -p build && cd build
+cmake .. \
+    -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DBUILD_STATIC_LIBS=OFF \
+    -DENABLE_RDRAND=OFF \
+    -DENABLE_THREADING=ON
+"""
+
+[lifecycle.compile]
+script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
+
+[lifecycle.package]
+script = "DESTDIR=${PKG_DIR} ninja install -C ${BUILD_DIR}/build"

@@ -13,7 +13,6 @@ sha256 = ["SKIP"]
 # Run wright build --update iana-etc to fill in the real checksum
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 install -Dm644 services  ${PKG_DIR}/etc/services

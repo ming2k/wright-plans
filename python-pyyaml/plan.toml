@@ -14,7 +14,6 @@ uris = ["https://files.pythonhosted.org/packages/source/p/pyyaml/pyyaml-${PKG_VE
 sha256 = ["SKIP"]
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 pip3 install --break-system-packages --no-deps --root=${PKG_DIR} --no-build-isolation .

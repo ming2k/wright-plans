@@ -12,24 +12,21 @@ uris = ["https://www.lua.org/ftp/lua-${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 sed -i 's/^CFLAGS=.*/CFLAGS= -O2 -Wall -Wextra -DLUA_COMPAT_5_3 -fPIC $(SYSCFLAGS) $(MYCFLAGS)/' src/Makefile
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc) linux-readline
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-make INSTALL_TOP=${PKG_DIR}/usr install
+make INSTALL_TOP=${PKG_DIR}/usr INSTALL_MAN=${PKG_DIR}/usr/share/man/man1 install
 
 mkdir -p ${PKG_DIR}/usr/lib/pkgconfig
 cat > ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc << PCEOF

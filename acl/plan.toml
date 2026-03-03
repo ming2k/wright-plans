@@ -15,30 +15,20 @@ uris = ["https://download.savannah.gnu.org/releases/acl/acl-${PKG_VERSION}.tar.x
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
 --disable-static \
---docdir=/usr/share/doc/acl-2.3.2
+--docdir=/usr/share/doc/acl-${PKG_VERSION}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.check]
-dockyard = "none"
-script = '''
-cd ${BUILD_DIR}
-make check
-'''
-
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

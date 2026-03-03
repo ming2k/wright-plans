@@ -1,7 +1,7 @@
 [plan]
 name = "linux"
-version = "6.19.2"
-release = 2
+version = "6.19.5"
+release = 1
 description = "The Linux kernel"
 license = "GPL-2.0-only"
 arch = "x86_64"
@@ -9,25 +9,23 @@ url = "https://www.kernel.org/"
 
 [dependencies]
 build = ["bc", "gcc", "make"]
+runtime = ["kmod", "dracut-ng"]
+
 [sources]
 uris = [
-"https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz",
-"config",
+  "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz",
+  "config",
 ]
-sha256 = [
-    "88611981582cceb7cdd4d688d9d881073cf4977176252193a23ca6d4b982ee5a",
-    "SKIP",
-]
+sha256 = ["SKIP", "SKIP"]
 
 [options]
 strip = false
 
 [lifecycle.prepare]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make mrproper
-cp ${FILES_DIR}/linux-config .config
+cp ${FILES_DIR}/config .config
 make olddefconfig
 
 # Branding
@@ -90,26 +88,21 @@ make olddefconfig
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-make INSTALL_MOD_PATH=${PKG_DIR} modules_install
+make INSTALL_MOD_PATH=${PKG_DIR}/usr modules_install
+rm -f ${PKG_DIR}/usr/lib/modules/*/build
 install -d ${PKG_DIR}/boot
 cp -v arch/x86/boot/bzImage ${PKG_DIR}/boot/vmlinuz-theseus
 cp -v System.map ${PKG_DIR}/boot/System.map
 cp -v .config ${PKG_DIR}/boot/config
 
-install -d ${PKG_DIR}/usr/lib/sysctl.d
-cat > ${PKG_DIR}/usr/lib/sysctl.d/60-flatpak-userns.conf << 'SYSCTLEOF'
-kernel.unprivileged_userns_clone = 1
-SYSCTLEOF
 '''
 
 [install_scripts]

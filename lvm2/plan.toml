@@ -1,6 +1,6 @@
 [plan]
 name = "lvm2"
-version = "2.03.28"
+version = "2.03.38"
 release = 1
 description = "Linux Logical Volume Manager 2 utilities"
 license = "GPL-2.0-only AND LGPL-2.1-only"
@@ -29,6 +29,7 @@ cd ${BUILD_DIR}
     --with-systemdsystemunitdir=/usr/lib/systemd/system \
     --enable-dmeventd \
     --enable-lvmpolld \
+    --enable-blkid_wiping \
     --with-readline
 """
 

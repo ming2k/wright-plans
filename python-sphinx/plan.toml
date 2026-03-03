@@ -1,0 +1,40 @@
+[plan]
+name = "python-sphinx"
+version = "8.2.3"
+release = 1
+description = "Python documentation generator"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://www.sphinx-doc.org/"
+
+[dependencies]
+build = ["python", "flit-core"]
+runtime = [
+    "python",
+    "python-jinja2",
+    "python-pygments",
+    "python-docutils",
+    "python-snowballstemmer",
+    "python-babel",
+    "python-alabaster",
+    "python-imagesize",
+    "python-requests",
+    "python-packaging",
+    "python-roman-numerals",
+    "sphinxcontrib-applehelp",
+    "sphinxcontrib-devhelp",
+    "sphinxcontrib-htmlhelp",
+    "sphinxcontrib-jsmath",
+    "sphinxcontrib-qthelp",
+    "sphinxcontrib-serializinghtml",
+]
+
+[sources]
+uris = ["https://pypi.org/packages/source/s/sphinx/sphinx-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

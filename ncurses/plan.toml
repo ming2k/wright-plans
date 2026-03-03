@@ -14,7 +14,6 @@ uris = ["https://ftp.gnu.org/gnu/ncurses/ncurses-6.6.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr           \
@@ -28,14 +27,12 @@ cd ${BUILD_DIR}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=$PWD/dest install

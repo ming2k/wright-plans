@@ -18,11 +18,16 @@ sha256 = [
 ]
 
 [lifecycle.prepare]
-dockyard = "none"
-script = """
+script = '''
 cd ${BUILD_DIR}
+
+# Patch deps.sh to use GitHub mirror for skcms instead of skia.googlesource.com
+sed -i 's|"https://skia.googlesource.com/skcms/+archive/"|google/skcms|' deps.sh
+
+# skcms now uses GitHub like the others, so it needs strip-components=1
+# Fix the download function: when project is not a URL, it uses GitHub with strip_components=1
 ./deps.sh
-"""
+'''
 
 [lifecycle.configure]
 script = """

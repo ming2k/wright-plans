@@ -12,7 +12,6 @@ uris = ["https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/${PKG_VER
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
     --prefix=/usr          \
@@ -21,11 +20,9 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.package]
-dockyard = "none"
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
 [install_scripts]

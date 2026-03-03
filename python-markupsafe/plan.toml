@@ -1,0 +1,23 @@
+[plan]
+name = "python-markupsafe"
+version = "3.0.2"
+release = 1
+description = "Python module that implements XML/HTML/XHTML Markup safe string"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://palletsprojects.com/p/markupsafe/"
+replaces = ["markupsafe"]
+
+[dependencies]
+build = ["python", "setuptools"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://files.pythonhosted.org/packages/source/m/markupsafe/markupsafe-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

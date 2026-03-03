@@ -1,0 +1,22 @@
+[plan]
+name = "python-pluggy"
+version = "1.6.0"
+release = 1
+description = "Plugin and hook calling mechanisms for Python"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/pytest-dev/pluggy"
+
+[dependencies]
+build = ["python", "setuptools"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/p/pluggy/pluggy-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

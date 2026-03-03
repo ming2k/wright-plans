@@ -8,7 +8,7 @@ arch = "any"
 url = "https://www.jetbrains.com/lp/mono/"
 
 [dependencies]
-build = ["unzip"]
+build = ["libarchive"]
 
 [sources]
 uris = ["https://github.com/JetBrains/JetBrainsMono/releases/download/v${PKG_VERSION}/JetBrainsMono-${PKG_VERSION}.zip"]
@@ -21,7 +21,7 @@ script = "echo preparing jetbrains-mono"
 script = '''
 cd ${BUILD_DIR}
 rm -rf jbmono
-unzip -q ${FILES_DIR}/JetBrainsMono-${PKG_VERSION}.zip -d jbmono
+bsdtar xf ${FILES_DIR}/JetBrainsMono-${PKG_VERSION}.zip -C jbmono
 '''
 
 [lifecycle.package]

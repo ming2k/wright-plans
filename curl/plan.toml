@@ -9,6 +9,7 @@ url = "https://curl.se/"
 
 [dependencies]
 build = ["gcc", "make"]
+runtime = ["ca-certificates"]
 link = ["libidn2", "libpsl", "nghttp2", "openssl"]
 [sources]
 uris = ["https://curl.se/download/curl-${PKG_VERSION}.tar.xz"]
@@ -17,7 +18,6 @@ sha256 = [
 ]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr                    \
@@ -28,14 +28,12 @@ cd ${BUILD_DIR}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

@@ -1,6 +1,6 @@
 [plan]
 name = "less"
-version = "679"
+version = "692"
 release = 1
 description = "A text file viewer"
 license = "GPL-3.0-or-later"
@@ -10,26 +10,24 @@ url = "https://www.greenwoodsoftware.com/less/"
 [dependencies]
 build = ["gcc", "make"]
 link = ["ncurses"]
+
 [sources]
-uris = ["https://www.greenwoodsoftware.com/less/less-679.tar.gz"]
+uris = ["https://www.greenwoodsoftware.com/less/less-${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --sysconfdir=/etc
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

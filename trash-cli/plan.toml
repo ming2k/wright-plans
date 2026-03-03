@@ -16,7 +16,6 @@ uris = ["https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${
 sha256 = ["SKIP"]
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PKG_DIR} .

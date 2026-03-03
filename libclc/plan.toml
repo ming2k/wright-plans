@@ -15,7 +15,6 @@ uris = ["https://github.com/llvm/llvm-project/releases/download/llvmorg-${PKG_VE
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 mkdir build-libclc && cd build-libclc
@@ -25,14 +24,12 @@ cmake ../libclc                              \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build-libclc
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build-libclc
 make DESTDIR=${PKG_DIR} install

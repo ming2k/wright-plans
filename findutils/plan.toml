@@ -10,25 +10,22 @@ url = "https://www.gnu.org/software/findutils/"
 [dependencies]
 build = ["gcc", "make"]
 [sources]
-uris = ["https://ftp.gnu.org/gnu/findutils/findutils-4.10.0.tar.xz"]
+uris = ["https://ftp.gnu.org/gnu/findutils/findutils-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --localstatedir=/var/lib/locate
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

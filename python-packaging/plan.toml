@@ -1,0 +1,23 @@
+[plan]
+name = "python-packaging"
+version = "25.0"
+release = 1
+description = "Core utilities for Python packages"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://packaging.pypa.io/"
+replaces = ["packaging"]
+
+[dependencies]
+build = ["flit-core", "python"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/p/packaging/packaging-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

@@ -10,7 +10,7 @@ url = "https://github.com/flatpak/xdg-desktop-portal-gtk"
 [dependencies]
 build = ["meson", "ninja", "pkgconf"]
 runtime = ["dbus", "xdg-desktop-portal"]
-link = ["gtk3"]
+link = ["gtk3", "gsettings-desktop-schemas"]
 [sources]
 uris = ["https://github.com/flatpak/xdg-desktop-portal-gtk/releases/download/${PKG_VERSION}/xdg-desktop-portal-gtk-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]

@@ -7,26 +7,26 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gnupg.org/software/libgcrypt/"
 
+[dependencies]
+build = ["libgpg-error"]
+
 [sources]
 uris = ["https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-${PKG_VERSION}.tar.bz2"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} make install

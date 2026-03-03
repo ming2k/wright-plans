@@ -12,7 +12,6 @@ uris = ["https://go.dev/dl/go${PKG_VERSION}.linux-amd64.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 mkdir -p ${PKG_DIR}/usr/lib
 cp -a ${BUILD_DIR} ${PKG_DIR}/usr/lib/go

@@ -8,8 +8,8 @@ arch = "x86_64"
 url = "https://flatpak.org"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "libxslt", "gettext", "gobject-introspection"]
-runtime = ["bubblewrap", "dbus", "systemd", "xdg-dbus-proxy", "xdg-desktop-portal", "xdg-desktop-portal-gtk", "shared-mime-info", "make-ca"]
+build = ["meson", "ninja", "pkgconf", "libxslt", "gettext", "gobject-introspection", "python-pyparsing", "bubblewrap", "xdg-dbus-proxy"]
+runtime = ["ca-certificates", "dbus", "systemd", "xdg-desktop-portal", "xdg-desktop-portal-gtk", "shared-mime-info"]
 link = ["glib", "libarchive", "libxml2", "ostree", "polkit", "json-glib", "curl", "appstream", "gdk-pixbuf", "libjpeg-turbo", "libfuse3", "gpgme", "libseccomp"]
 
 [sources]
@@ -46,6 +46,11 @@ script = "meson compile -C ${BUILD_DIR}/build"
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
 mkdir -p ${PKG_DIR}/var/lib/flatpak
+
+# Unprivileged user namespaces required by bubblewrap
+install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/sysctl.d/60-flatpak-userns.conf << 'SYSCTLEOF'
+kernel.unprivileged_userns_clone = 1
+SYSCTLEOF
 '''
 
 [install_scripts]

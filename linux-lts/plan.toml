@@ -1,0 +1,105 @@
+[plan]
+name = "linux-lts"
+version = "6.18.15"
+release = 1
+description = "The Linux kernel (LTS)"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://www.kernel.org/"
+
+[dependencies]
+build = ["bc", "gcc", "make"]
+
+[sources]
+uris = [
+  "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz",
+  "config",
+]
+sha256 = ["SKIP", "SKIP"]
+
+[options]
+strip = false
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+make mrproper
+cp ${FILES_DIR}/config .config
+make olddefconfig
+
+# Branding
+scripts/config --set-str LOCALVERSION "-theseus-lts"
+scripts/config --set-str DEFAULT_HOSTNAME "theseus"
+
+# Boot-critical: filesystem (no initramfs, must be built-in)
+scripts/config --enable EXT4_FS
+scripts/config --enable VFAT_FS
+scripts/config --enable NLS_CODEPAGE_437
+scripts/config --enable NLS_ISO8859_1
+scripts/config --enable NLS_UTF8
+
+# Boot-critical: NVMe storage
+scripts/config --enable BLK_DEV_NVME
+scripts/config --enable NVME_CORE
+
+# UEFI boot
+scripts/config --enable EFI
+scripts/config --enable EFI_STUB
+scripts/config --enable EFI_MIXED
+scripts/config --enable EFIVAR_FS
+scripts/config --enable EFI_RUNTIME_MAP
+
+# systemd hard requirements
+scripts/config --enable DEVTMPFS
+scripts/config --enable DEVTMPFS_MOUNT
+scripts/config --enable CGROUPS
+scripts/config --enable INOTIFY_USER
+scripts/config --enable SIGNALFD
+scripts/config --enable TIMERFD
+scripts/config --enable EPOLL
+scripts/config --enable AUTOFS_FS
+scripts/config --enable TMPFS
+scripts/config --enable TMPFS_POSIX_ACL
+scripts/config --enable TMPFS_XATTR
+scripts/config --enable SECCOMP
+scripts/config --enable SECCOMP_FILTER
+
+# Flatpak/bwrap hard requirements
+scripts/config --enable NAMESPACES
+scripts/config --enable USER_NS
+if grep -q '^CONFIG_USER_NS_UNPRIVILEGED=' .config || grep -q '^# CONFIG_USER_NS_UNPRIVILEGED is not set' .config; then
+    scripts/config --enable USER_NS_UNPRIVILEGED
+fi
+
+# systemd recommended
+scripts/config --enable DMIID
+scripts/config --enable NET
+scripts/config --enable SYSFS
+scripts/config --enable PROC_FS
+scripts/config --enable FHANDLE
+scripts/config --enable BPF_SYSCALL
+scripts/config --enable CGROUP_BPF
+
+# Disable uevent helper (systemd wants udev only)
+scripts/config --disable UEVENT_HELPER
+
+make olddefconfig
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+make INSTALL_MOD_PATH=${PKG_DIR}/usr modules_install
+rm -f ${PKG_DIR}/usr/lib/modules/*/build
+install -d ${PKG_DIR}/boot
+cp -v arch/x86/boot/bzImage ${PKG_DIR}/boot/vmlinuz-theseus-lts
+cp -v System.map ${PKG_DIR}/boot/System.map-lts
+cp -v .config ${PKG_DIR}/boot/config-lts
+
+'''

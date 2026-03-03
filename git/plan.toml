@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://git-scm.com/"
 
 [dependencies]
-runtime = ["curl", "expat", "perl", "openssl", "pcre2", "grep", "shadow", "zlib-ng", "openssh"]
+runtime = ["ca-certificates", "curl", "expat", "perl", "openssl", "pcre2", "grep", "shadow", "zlib-ng", "openssh"]
 build = ["python", "rust", "libsecret"]
 link = ["curl", "expat", "openssl", "pcre2", "zlib-ng", "libsecret"]
 optional = [

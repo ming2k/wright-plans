@@ -15,7 +15,6 @@ uris = ["https://files.pythonhosted.org/packages/source/g/glad2/glad2-${PKG_VERS
 sha256 = ["SKIP"]
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 pip3 install --break-system-packages --no-deps --root=${PKG_DIR} --no-build-isolation .

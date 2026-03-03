@@ -15,7 +15,6 @@ uris = ["https://www.freedesktop.org/software/uchardet/releases/uchardet-${PKG_V
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 mkdir -p ${BUILD_DIR}/build && cd ${BUILD_DIR}/build
 cmake -DCMAKE_INSTALL_PREFIX=/usr \
@@ -26,14 +25,12 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PKG_DIR} install

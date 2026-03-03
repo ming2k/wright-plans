@@ -10,7 +10,7 @@ url = "https://gitlab.gnome.org/GNOME/glycin"
 [dependencies]
 build = ["meson", "ninja", "pkgconf", "rust", "libseccomp"]
 runtime = ["bubblewrap"]
-link = ["glib", "lcms2", "fontconfig", "libjpeg-turbo", "libpng", "libheif", "libjxl", "librsvg"]
+link = ["glib", "gtk4", "lcms2", "fontconfig", "libjpeg-turbo", "libpng", "libheif", "libjxl", "librsvg"]
 
 [sources]
 uris = ["https://download.gnome.org/sources/glycin/2.0/glycin-${PKG_VERSION}.tar.xz"]
@@ -27,6 +27,24 @@ meson setup build \
   --buildtype=release \
   -Dtests=false \
   -Dvapi=false
+"""
+
+[mvp.dependencies]
+build = ["meson", "ninja", "pkgconf", "rust", "libseccomp"]
+runtime = ["bubblewrap"]
+link = ["glib", "lcms2", "fontconfig", "libjpeg-turbo", "libpng", "libheif", "libjxl"]
+
+[mvp.lifecycle.configure]
+dockyard = "relaxed"
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+  --prefix=/usr \
+  --buildtype=release \
+  -Dtests=false \
+  -Dvapi=false \
+  -Dlibglycin-gtk4=false \
+  -Dloaders=glycin-heif,glycin-image-rs,glycin-jxl
 """
 
 [lifecycle.compile]

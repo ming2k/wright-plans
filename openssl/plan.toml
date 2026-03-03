@@ -10,35 +10,31 @@ url = "https://www.openssl.org/"
 [dependencies]
 build = ["gcc", "make", "perl"]
 link = ["zlib"]
+
 [sources]
-uris = ["https://github.com/openssl/openssl/releases/download/openssl-3.5.2/openssl-3.5.2.tar.gz"]
-sha256 = [
-    "c53a47e5e441c930c3928cf7bf6fb00e5d129b630e0aa873b08258656e7345ec",
-]
+uris = ["https://github.com/openssl/openssl/releases/download/openssl-${PKG_VERSION}/openssl-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./config --prefix=/usr         \
---openssldir=/etc/ssl \
---libdir=lib          \
-shared                \
-zlib-dynamic
+         --openssldir=/etc/ssl \
+         --libdir=lib          \
+         shared                \
+         zlib-dynamic
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
 make MANSUFFIX=ssl DESTDIR=${PKG_DIR} install
-mv -v ${PKG_DIR}/usr/share/doc/openssl ${PKG_DIR}/usr/share/doc/openssl-3.5.2
+mv -v ${PKG_DIR}/usr/share/doc/openssl ${PKG_DIR}/usr/share/doc/openssl-${PKG_VERSION}
 '''

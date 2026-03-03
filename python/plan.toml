@@ -45,12 +45,3 @@ cat > ${PKG_DIR}/usr/lib/python3.14/EXTERNALLY-MANAGED << EOF
 Error=Please use 'wright install python-<package>' to install system-level Python packages.
 EOF
 '''
-
-[split.libpython]
-description = "Python shared library runtime"
-[split.libpython.lifecycle.package]
-script = """
-install -d ${PKG_DIR}/usr/lib
-mv -v ${MAIN_PKG_DIR}/usr/lib/libpython3.14.so* ${PKG_DIR}/usr/lib/
-mv -v ${MAIN_PKG_DIR}/usr/lib/libpython3.so ${PKG_DIR}/usr/lib/
-"""

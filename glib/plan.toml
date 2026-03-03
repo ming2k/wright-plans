@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://wiki.gnome.org/Projects/GLib"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "python", "gettext"]
+build = ["gobject-introspection", "meson", "ninja", "pkgconf", "python", "gettext"]
 link = ["libffi", "pcre2", "zlib", "util-linux"]
 
 [sources]
@@ -23,7 +23,8 @@ meson setup build          \
     --buildtype=release    \
     -Dman-pages=disabled   \
     -Dtests=false          \
-    -Dselinux=disabled
+    -Dselinux=disabled    \
+    -Dintrospection=enabled
 '''
 
 [lifecycle.compile]
@@ -44,4 +45,19 @@ gio-querymodules /usr/lib/gio/modules 2>/dev/null || true
 post_upgrade = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gio-querymodules /usr/lib/gio/modules 2>/dev/null || true
+'''
+
+[mvp.dependencies]
+build = ["meson", "ninja", "pkgconf", "python", "gettext"]
+
+[mvp.lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build          \
+    --prefix=/usr          \
+    --buildtype=release    \
+    -Dman-pages=disabled   \
+    -Dtests=false          \
+    -Dselinux=disabled    \
+    -Dintrospection=disabled
 '''

@@ -12,14 +12,12 @@ uris = ["https://www.kernel.org/pub/linux/docs/man-pages/man-pages-${PKG_VERSION
 sha256 = ["SKIP"]
 
 [lifecycle.prepare]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 rm -v man3/crypt*
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make -R GIT=false prefix=/usr DESTDIR=${PKG_DIR} install

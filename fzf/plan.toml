@@ -15,7 +15,7 @@ uris = ["https://github.com/junegunn/fzf/archive/refs/tags/v${PKG_VERSION}.tar.g
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
+dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
 export CGO_ENABLED=0
@@ -23,7 +23,6 @@ go build -trimpath -ldflags "-s -w -X main.version=${PKG_VERSION}" -o bin/fzf .
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 bin/fzf ${PKG_DIR}/usr/bin/fzf

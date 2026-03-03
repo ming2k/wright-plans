@@ -1,0 +1,22 @@
+[plan]
+name = "python-pygments"
+version = "2.19.2"
+release = 1
+description = "Python syntax highlighter"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://pygments.org/"
+
+[dependencies]
+build = ["python", "hatchling"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/p/pygments/pygments-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

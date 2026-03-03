@@ -1,0 +1,33 @@
+[plan]
+name = "cryptsetup"
+version = "2.8.4"
+release = 1
+description = "Userspace setup tool for transparent encryption of block devices using dm-crypt"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://gitlab.com/cryptsetup/cryptsetup"
+
+[dependencies]
+build = ["pkgconf", "util-linux"]
+runtime = ["lvm2"]
+link = ["glibc", "json-c", "openssl", "popt", "util-linux"]
+
+[sources]
+uris = ["https://www.kernel.org/pub/linux/utils/cryptsetup/v2.8/cryptsetup-${PKG_VERSION}.tar.xz"]
+sha256 = ["SKIP"]
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --sbindir=/usr/bin \
+    --disable-ssh-token \
+    --disable-static
+"""
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.package]
+script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

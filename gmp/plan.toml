@@ -18,14 +18,12 @@ uris = ["https://ftp.gnu.org/gnu/gmp/gmp-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.prepare]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 sed -i '/long long t1;/,+1s/()/(...)/' configure
 '''
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 unset CFLAGS CXXFLAGS
 cd ${BUILD_DIR}
@@ -36,7 +34,6 @@ cd ${BUILD_DIR}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 unset CFLAGS CXXFLAGS
 cd ${BUILD_DIR}
@@ -45,7 +42,6 @@ make html
 '''
 
 [lifecycle.check]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make check 2>&1 | tee gmp-check-log
@@ -53,7 +49,6 @@ awk '/# PASS:/{total+=$3} END{print total}' gmp-check-log
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

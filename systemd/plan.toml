@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://github.com/systemd/systemd"
 
 [dependencies]
-build = ["gcc", "gperf", "jinja2", "meson", "ninja", "pkgconf", "python"]
+build = ["gcc", "gperf", "llvm", "python-jinja2", "python-pyelftools", "meson", "ninja", "pkgconf", "python"]
 runtime = ["libsystemd", "libudev"]
 link = ["glibc", "linux-pam"]
 
@@ -38,7 +38,7 @@ meson setup ..                                    \
 -D sbindir=/usr/bin                             \
 -D version-tag="${PKG_VERSION}-theseus"         \
 -D default-dnssec=no                            \
--D firstboot=false                              \
+-D firstboot=true                               \
 -D install-tests=false                          \
 -D ldconfig=false                               \
 -D man=disabled                                 \
@@ -52,6 +52,7 @@ meson setup ..                                    \
 -D nobody-group=nogroup                         \
 -D sysupdate=disabled                           \
 -D ukify=disabled                               \
+-D bootloader=enabled                           \
 -D sbat-distro=theseus                          \
 -D sbat-distro-summary="Ship of Theseus"        \
 -D sbat-distro-pkgname=systemd                  \
@@ -103,7 +104,10 @@ PAMEOF
 
 [install_scripts]
 post_install = """
-systemd-machine-id-setup 2>/dev/null || true
+# Ensure machine-id is an empty file so systemd triggers first-boot
+# (which runs preset-all, enabling getty@tty1 and other default services).
+# systemd will populate machine-id automatically on first boot.
+truncate -s 0 /etc/machine-id 2>/dev/null || : > /etc/machine-id
 systemctl daemon-reexec 2>/dev/null || true
 """
 post_upgrade = """

@@ -7,12 +7,14 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://e2fsprogs.sourceforge.net"
 
+[dependencies]
+build = ["util-linux"]
+
 [sources]
 uris = ["https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${PKG_VERSION}/e2fsprogs-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 mkdir -p build && cd build
@@ -29,14 +31,12 @@ mkdir -p build && cd build
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} make install

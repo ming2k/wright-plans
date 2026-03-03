@@ -1,6 +1,6 @@
 [plan]
 name = "gettext"
-version = "0.26"
+version = "1.0"
 release = 1
 description = "Utilities for internationalization and localization"
 license = "GPL-3.0-or-later"
@@ -9,28 +9,26 @@ url = "https://www.gnu.org/software/gettext/"
 
 [dependencies]
 build = ["gcc", "make"]
+
 [sources]
-uris = ["https://ftp.gnu.org/gnu/gettext/gettext-0.26.tar.xz"]
+uris = ["https://ftp.gnu.org/gnu/gettext/gettext-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
---disable-static \
---docdir=/usr/share/doc/gettext-0.26
+            --disable-static \
+            --docdir=/usr/share/doc/gettext-${PKG_VERSION}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

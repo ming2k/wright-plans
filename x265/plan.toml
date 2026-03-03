@@ -15,7 +15,6 @@ uris = ["https://bitbucket.org/multicoreware/x265_git/downloads/x265_${PKG_VERSI
 sha256 = ["SKIP"]
 
 [lifecycle.prepare]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 # Fix cmake_minimum_required and policies removed in CMake 4.0
@@ -28,7 +27,6 @@ sed -i '/#include <limits>/a #include <cstdint>' source/dynamicHDR10/json11/json
 '''
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 local_opts="-S source -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_HDR10_PLUS=TRUE -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Wno-dev"
@@ -56,7 +54,6 @@ cmake -B build $local_opts \
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 cmake --build build-10 -- -j$(nproc)
@@ -67,7 +64,6 @@ cmake --build build -- -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} cmake --install build

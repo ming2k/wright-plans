@@ -12,7 +12,7 @@ build = ["gcc", "meson", "ninja"]
 link = ["openssl", "xz", "zlib", "zstd"]
 
 [sources]
-uris = ["git+https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git#tag=v${PKG_VERSION}"]
+uris = ["https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]

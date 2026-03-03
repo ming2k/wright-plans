@@ -1,0 +1,22 @@
+[plan]
+name = "python-trove-classifiers"
+version = "2026.1.14.14"
+release = 1
+description = "Canonical source for classifiers on PyPI"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/pypa/trove-classifiers"
+
+[dependencies]
+build = ["python", "setuptools"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/t/trove_classifiers/trove_classifiers-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

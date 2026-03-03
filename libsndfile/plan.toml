@@ -12,21 +12,18 @@ uris = ["https://github.com/libsndfile/libsndfile/releases/download/${PKG_VERSIO
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 CFLAGS="-std=gnu17" ./configure --prefix=/usr --disable-static
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} make install

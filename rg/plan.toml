@@ -17,14 +17,13 @@ uris = ["https://github.com/BurntSushi/ripgrep/archive/refs/tags/${PKG_VERSION}.
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
+dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
 cargo build --release --locked --features pcre2
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 target/release/rg ${PKG_DIR}/usr/bin/rg

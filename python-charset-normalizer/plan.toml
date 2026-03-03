@@ -1,0 +1,22 @@
+[plan]
+name = "python-charset-normalizer"
+version = "3.4.4"
+release = 1
+description = "The real First Universal Charset Detector"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/Ousret/charset_normalizer"
+
+[dependencies]
+build = ["python", "setuptools"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://pypi.org/packages/source/c/charset_normalizer/charset_normalizer-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

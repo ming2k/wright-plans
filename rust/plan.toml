@@ -16,20 +16,20 @@ uris = ["https://static.rust-lang.org/dist/rust-${PKG_VERSION}-x86_64-unknown-li
 sha256 = ["SKIP"]
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 ./install.sh --destdir=${PKG_DIR} --prefix=/usr --without=rust-docs
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 # install.sh already placed files into ${PKG_DIR}/usr
 # Remove install log that references the temp directory
 rm -f ${PKG_DIR}/usr/lib/rustlib/install.log
 rm -f ${PKG_DIR}/usr/lib/rustlib/uninstall.sh
 rm -rf ${PKG_DIR}/usr/lib/rustlib/manifest-*
+# Remove /usr/etc — not FHS-compliant
+rm -rf ${PKG_DIR}/usr/etc
 """
 
 [split.cargo]
@@ -39,7 +39,6 @@ description = "Cargo package manager for Rust"
 runtime = ["rust"]
 
 [split.cargo.lifecycle.package]
-dockyard = "none"
 script = """
 install -d ${PKG_DIR}/usr/bin
 install -d ${PKG_DIR}/usr/share/man/man1

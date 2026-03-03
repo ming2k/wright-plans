@@ -16,7 +16,6 @@ runtime = ["pinentry"]
 link = ["libgcrypt", "libgpg-error", "libassuan", "libksba", "npth", "readline", "gnutls", "sqlite"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr              \
@@ -30,14 +29,12 @@ cd ${BUILD_DIR}
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc) LDFLAGS="${LDFLAGS} -lreadline -lhistory"
 '''
 
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} make install

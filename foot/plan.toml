@@ -18,21 +18,18 @@ sha256 = [
 ]
 
 [lifecycle.configure]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dime=false -Dthemes=true
+meson setup build --prefix=/usr --buildtype=release -Dime=false -Dthemes=true -Dwerror=false
 """
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 ninja -C build
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install

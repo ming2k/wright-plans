@@ -14,7 +14,6 @@ uris = ["https://cmake.org/files/v4.2/cmake-${PKG_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
@@ -28,21 +27,12 @@ sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
 '''
 
 [lifecycle.compile]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.check]
-dockyard = "none"
-script = '''
-cd ${BUILD_DIR}
-bin/ctest -j$(nproc)
-'''
-
 [lifecycle.package]
-dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

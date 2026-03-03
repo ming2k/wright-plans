@@ -10,7 +10,7 @@ url = "https://wiki.linuxfoundation.org/networking/iproute2"
 [dependencies]
 build = ["gcc", "make"]
 [sources]
-uris = ["https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-6.19.0.tar.xz"]
+uris = ["https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${PKG_VERSION}.tar.xz"]
 sha256 = ["SKIP"]
 
 [lifecycle.prepare]

@@ -9,7 +9,7 @@ url = "https://neovim.io"
 maintainer = "Neovim contributors <neovim@neovim.io>"
 
 [dependencies]
-build = ["cmake", "curl", "gcc", "gettext", "make", "unzip"]
+build = ["cmake", "curl", "gcc", "gettext", "make"]
 link = ["glibc"]
 optional = [
   { name = "python", description = "Python provider support" },
@@ -24,21 +24,18 @@ strip = true
 ccache = true
 
 [lifecycle.configure]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr deps
 """
 
 [lifecycle.compile]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr
 """
 
 [lifecycle.package]
-dockyard = "none"
 script = """
 cd ${BUILD_DIR}
 make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${PKG_DIR} install

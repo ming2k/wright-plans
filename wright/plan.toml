@@ -9,6 +9,7 @@ url = "https://github.com/ming2k/wright"
 
 [dependencies]
 build = ["rust", "cargo"]
+runtime = ["ca-certificates"]
 
 [sources]
 uris = ["https://github.com/ming2k/wright/archive/refs/tags/v${PKG_VERSION}.tar.gz"]

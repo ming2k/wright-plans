@@ -1,0 +1,22 @@
+[plan]
+name = "sphinxcontrib-jsmath"
+version = "1.0.1"
+release = 1
+description = "Sphinx extension for rendering math via JavaScript"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/sphinx-doc/sphinxcontrib-jsmath"
+
+[dependencies]
+build = ["python", "setuptools"]
+runtime = ["python"]
+
+[sources]
+uris = ["https://files.pythonhosted.org/packages/b2/e8/9ed3830aeed71f17c026a07a5097edcf44b692850ef215b161b8ad875729/sphinxcontrib-jsmath-${PKG_VERSION}.tar.gz"]
+sha256 = ["SKIP"]
+
+[lifecycle.package]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''
