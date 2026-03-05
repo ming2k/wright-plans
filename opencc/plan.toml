@@ -1,0 +1,33 @@
+[plan]
+name = "opencc"
+version = "1.2.0"
+release = 1
+description = "Open Chinese Convert — Simplified/Traditional Chinese conversion"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/BYVoid/OpenCC"
+
+[dependencies]
+build = ["cmake", "ninja", "pkgconf"]
+link = ["marisa"]
+
+[[sources]]
+uri = "https://github.com/BYVoid/OpenCC/archive/refs/tags/ver.${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_PYTHON=OFF \
+    -DBUILD_TESTING=OFF \
+    -DBUILD_DOCUMENTATION=OFF
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

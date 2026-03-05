@@ -1,0 +1,33 @@
+[plan]
+name = "leveldb"
+version = "1.23"
+release = 1
+description = "Fast key-value storage library"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/google/leveldb"
+
+[dependencies]
+build = ["cmake", "ninja"]
+link = ["snappy"]
+
+[[sources]]
+uri = "https://github.com/google/leveldb/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=ON \
+    -DLEVELDB_BUILD_TESTS=OFF \
+    -DLEVELDB_BUILD_BENCHMARKS=OFF
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

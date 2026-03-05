@@ -1,0 +1,35 @@
+[plan]
+name = "boost"
+version = "1.89.0"
+release = 1
+description = "Free peer-reviewed portable C++ source libraries"
+license = "BSL-1.0"
+arch = "x86_64"
+url = "https://www.boost.org"
+
+[dependencies]
+build = ["make"]
+link = ["bzip2", "icu", "zlib", "zstd"]
+
+[[sources]]
+uri = "https://archives.boost.io/release/${PKG_VERSION}/source/boost_1_89_0.tar.bz2"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./bootstrap.sh --with-toolset=gcc --with-icu --prefix=/usr
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+./b2 variant=release threading=multi link=shared -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+./b2 variant=release threading=multi link=shared \
+    --prefix=${PKG_DIR}/usr install
+'''

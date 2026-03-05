@@ -1,0 +1,31 @@
+[plan]
+name = "extra-cmake-modules"
+version = "6.23.0"
+release = 1
+description = "Extra modules and scripts for CMake"
+license = "LGPL-2.0-or-later"
+arch = "any"
+url = "https://community.kde.org/Frameworks"
+
+[dependencies]
+build = ["cmake", "ninja"]
+
+[[sources]]
+uri = "https://download.kde.org/stable/frameworks/6.23/extra-cmake-modules-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_HTML_DOCS=OFF \
+    -DBUILD_QTHELP_DOCS=OFF \
+    -DBUILD_TESTING=OFF
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

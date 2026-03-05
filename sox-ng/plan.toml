@@ -1,0 +1,52 @@
+[plan]
+name = "sox-ng"
+version = "14.7.1"
+release = 1
+description = "The Swiss Army knife of sound processing tools"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://codeberg.org/sox_ng/sox_ng"
+
+[dependencies]
+build = ["autoconf", "automake", "libtool", "make", "pkgconf"]
+link = [
+    "alsa-lib",
+    "ffmpeg",
+    "libpng",
+    "libsndfile",
+    "libvorbis",
+    "libogg",
+    "zlib",
+]
+
+[[sources]]
+uri = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+autoreconf -fi
+'''
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --with-ffmpeg \
+    --without-gsm \
+    --without-ao \
+    --without-id3tag \
+    --without-mad \
+    --without-twolame \
+    --without-wavpack \
+    --without-opus
+'''
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR} -j$(nproc)"
+
+[lifecycle.staging]
+script = "make -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install"

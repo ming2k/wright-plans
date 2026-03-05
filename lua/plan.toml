@@ -1,11 +1,14 @@
 [plan]
 name = "lua"
 version = "5.4.7"
-release = 2
+release = 3
 description = "Powerful lightweight programming language"
 license = "MIT"
 arch = "x86_64"
 url = "https://www.lua.org"
+
+[dependencies]
+link = ["readline"]
 
 [[sources]]
 uri = "https://www.lua.org/ftp/lua-${PKG_VERSION}.tar.gz"
@@ -21,12 +24,21 @@ sed -i 's/^CFLAGS=.*/CFLAGS= -O2 -Wall -Wextra -DLUA_COMPAT_5_3 -fPIC $(SYSCFLAG
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc) linux-readline
+# Build shared library from the PIC-compiled archive objects
+cd ${BUILD_DIR}/src
+${CC:-gcc} -shared -fPIC -Wl,-soname,liblua.so.5.4 \
+    $(ar t liblua.a | tr '\n' ' ') \
+    -lm -ldl -o liblua.so.5.4
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make INSTALL_TOP=${PKG_DIR}/usr INSTALL_MAN=${PKG_DIR}/usr/share/man/man1 install
+
+# Install shared library
+install -Dm755 src/liblua.so.5.4 ${PKG_DIR}/usr/lib/liblua.so.5.4
+ln -sf liblua.so.5.4 ${PKG_DIR}/usr/lib/liblua.so
 
 mkdir -p ${PKG_DIR}/usr/lib/pkgconfig
 cat > ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc << PCEOF
@@ -38,8 +50,13 @@ includedir=\${prefix}/include
 Name: Lua
 Description: Lua language engine
 Version: ${PKG_VERSION}
-Libs: -L\${libdir} -llua -lm -ldl
+Libs: -L\${libdir} -llua
+Libs.private: -lm -ldl
 Cflags: -I\${includedir}
 PCEOF
 cp ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PKG_DIR}/usr/lib/pkgconfig/lua-5.4.pc
 '''
+
+[lifecycle.package]
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"

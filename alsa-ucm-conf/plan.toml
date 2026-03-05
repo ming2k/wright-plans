@@ -1,0 +1,32 @@
+[plan]
+name = "alsa-ucm-conf"
+version = "1.2.14"
+release = 1
+description = "ALSA Use Case Manager configuration files"
+license = "BSD-3-Clause"
+arch = "any"
+url = "https://github.com/alsa-project/alsa-ucm-conf"
+
+[dependencies]
+runtime = ["alsa-lib"]
+
+[[sources]]
+uri = "https://github.com/alsa-project/alsa-ucm-conf/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+echo "data-only package"
+'''
+
+[lifecycle.compile]
+script = '''
+echo "no build needed"
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+mkdir -p ${PKG_DIR}/usr/share/alsa
+cp -a ucm2 ${PKG_DIR}/usr/share/alsa/ucm2
+'''

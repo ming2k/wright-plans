@@ -1,0 +1,41 @@
+[plan]
+name = "librime"
+version = "1.16.1"
+release = 2
+description = "Rime input method engine"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/rime/librime"
+
+[dependencies]
+build = ["cmake", "ninja", "pkgconf"]
+link = [
+    "boost",
+    "google-glog",
+    "leveldb",
+    "lua",
+    "marisa",
+    "opencc",
+    "yaml-cpp",
+]
+
+[[sources]]
+uri = "https://github.com/rime/librime/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_CXX_FLAGS="-DNDEBUG -DGLOG_USE_GLOG_EXPORT" \
+    -DBUILD_TEST=OFF \
+    -DENABLE_EXTERNAL_PLUGINS=OFF
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

@@ -1,0 +1,18 @@
+[plan]
+name = "rime-prelude"
+version = "0.0.20251229"
+release = 1
+description = "RIME preset configuration (default.yaml, key bindings, punctuation, symbols)"
+license = "LGPL-3.0-or-later"
+arch = "any"
+url = "https://github.com/rime/rime-prelude"
+
+[[sources]]
+uri = "https://github.com/rime/rime-prelude/archive/db691d2.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+install -d ${PKG_DIR}/usr/share/rime-data
+install -Dm644 ${BUILD_DIR}/*.yaml -t ${PKG_DIR}/usr/share/rime-data/
+'''

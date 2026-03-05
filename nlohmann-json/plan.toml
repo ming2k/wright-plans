@@ -1,0 +1,29 @@
+[plan]
+name = "nlohmann-json"
+version = "3.12.0"
+release = 1
+description = "JSON for Modern C++ (header-only)"
+license = "MIT"
+arch = "any"
+url = "https://github.com/nlohmann/json"
+
+[dependencies]
+build = ["cmake", "ninja"]
+
+[[sources]]
+uri = "https://github.com/nlohmann/json/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DJSON_BuildTests=OFF
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

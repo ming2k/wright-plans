@@ -1,0 +1,33 @@
+[plan]
+name = "fcitx5-rime"
+version = "5.1.12"
+release = 1
+description = "RIME input method engine support for Fcitx5"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/fcitx/fcitx5-rime"
+
+[dependencies]
+runtime = ["fcitx5", "librime", "rime-prelude"]
+build = ["cmake", "extra-cmake-modules", "ninja", "pkgconf"]
+link = ["fcitx5", "librime"]
+
+[[sources]]
+uri = "https://github.com/fcitx/fcitx5-rime/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DRIME_DATA_DIR=/usr/share/rime-data
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

@@ -1,0 +1,21 @@
+[plan]
+name = "rime-luna-pinyin"
+version = "0.0.20250101"
+release = 1
+description = "Rime Lunar Pinyin input schema (朙月拼音)"
+license = "LGPL-3.0-or-later"
+arch = "any"
+url = "https://github.com/rime/rime-luna-pinyin"
+
+[dependencies]
+runtime = ["rime-prelude"]
+
+[[sources]]
+uri = "git+https://github.com/rime/rime-luna-pinyin.git#master"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+install -d ${PKG_DIR}/usr/share/rime-data
+install -Dm644 ${BUILD_DIR}/*.yaml -t ${PKG_DIR}/usr/share/rime-data/
+'''

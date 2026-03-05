@@ -1,0 +1,33 @@
+[plan]
+name = "yaml-cpp"
+version = "0.8.0"
+release = 1
+description = "YAML parser and emitter in C++"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/jbeder/yaml-cpp"
+
+[dependencies]
+build = ["cmake", "ninja"]
+
+[[sources]]
+uri = "https://github.com/jbeder/yaml-cpp/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_CXX_FLAGS="-include cstdint" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=ON \
+    -DYAML_CPP_BUILD_TESTS=OFF \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
