@@ -1,0 +1,28 @@
+[plan]
+name = "netavark"
+version = "1.17.2"
+release = 1
+description = "Container network stack for podman"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/containers/netavark"
+
+[dependencies]
+build = ["rust", "protobuf"]
+
+[[sources]]
+uri = "https://github.com/containers/netavark/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+dockyard = "relaxed"
+script = '''
+cd ${BUILD_DIR}
+cargo build --release --locked
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 target/release/netavark ${PKG_DIR}/usr/libexec/podman/netavark
+'''

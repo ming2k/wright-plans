@@ -1,0 +1,29 @@
+[plan]
+name = "conmon"
+version = "2.2.1"
+release = 1
+description = "OCI container runtime monitor"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/containers/conmon"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = ["glib", "libseccomp", "systemd"]
+
+[[sources]]
+uri = "https://github.com/containers/conmon/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+  --prefix=/usr \
+  --buildtype=release
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

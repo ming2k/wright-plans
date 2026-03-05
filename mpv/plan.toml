@@ -1,7 +1,7 @@
 [plan]
 name = "mpv"
 version = "0.41.0"
-release = 1
+release = 2
 description = "A free, open source, and cross-platform media player"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
@@ -17,6 +17,7 @@ link = [
     "libdrm",
     "libplacebo",
     "libva",
+    "luajit",
     "mesa",
     "pipewire",
     "vulkan-loader",
@@ -39,7 +40,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 -D libarchive=disabled \
 -D dvdnav=disabled \
 -D javascript=disabled \
--D lua=disabled \
+-D lua=luajit \
 -D uchardet=disabled \
 -D tests=false \
 -D alsa=enabled \

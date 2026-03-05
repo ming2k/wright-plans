@@ -1,0 +1,38 @@
+[plan]
+name = "kvantum"
+version = "1.1.6"
+release = 1
+description = "SVG-based theme engine for Qt6"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://github.com/tsujan/Kvantum"
+
+[dependencies]
+build = ["cmake", "gcc", "ninja", "pkgconf", "qt6-base", "qt6-svg", "qt6-tools"]
+link = ["qt6-base", "qt6-svg"]
+
+[[sources]]
+uri = "https://github.com/tsujan/Kvantum/archive/refs/tags/V${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}/Kvantum
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DENABLE_QT5=OFF \
+    -DWITHOUT_KF=ON
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/Kvantum
+ninja -j$(nproc) -C build
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}/Kvantum
+DESTDIR=${PKG_DIR} ninja -C build install
+'''

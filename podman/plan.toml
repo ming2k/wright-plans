@@ -1,0 +1,63 @@
+[plan]
+name = "podman"
+version = "5.8.0"
+release = 1
+description = "Tool for managing OCI containers and pods"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://podman.io"
+
+[dependencies]
+runtime = [
+    "containers-common",
+    "conmon",
+    "crun",
+    "fuse-overlayfs",
+    "netavark",
+    "aardvark-dns",
+    "slirp4netns",
+    "shadow",
+]
+build = ["go", "pkgconf"]
+link = ["gpgme", "libassuan", "btrfs-progs", "systemd"]
+
+[[sources]]
+uri = "https://github.com/containers/podman/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+dockyard = "relaxed"
+script = '''
+cd ${BUILD_DIR}
+export PATH=/usr/lib/go/bin:$PATH
+export GOPATH=/tmp/go-cache
+export GOCACHE=/tmp/go-cache/build
+make BUILDTAGS="seccomp systemd btrfs exclude_graphdriver_devicemapper" \
+     CGO_ENABLED=1 \
+     binaries
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install.bin
+make DESTDIR=${PKG_DIR} install.systemd
+
+# Relocate anything installed under /usr/local to /usr (FHS compliance)
+if [ -d ${PKG_DIR}/usr/local ]; then
+  cp -a ${PKG_DIR}/usr/local/. ${PKG_DIR}/usr/
+  rm -rf ${PKG_DIR}/usr/local
+fi
+
+# Shell completions
+install -Dm644 completions/bash/podman \
+  ${PKG_DIR}/usr/share/bash-completion/completions/podman
+install -Dm644 completions/zsh/_podman \
+  ${PKG_DIR}/usr/share/zsh/site-functions/_podman
+install -Dm644 completions/fish/podman.fish \
+  ${PKG_DIR}/usr/share/fish/vendor_completions.d/podman.fish
+'''
+
+[lifecycle.package]
+hooks.post_install = "systemctl daemon-reload 2>/dev/null || true"
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

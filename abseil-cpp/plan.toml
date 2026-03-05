@@ -1,0 +1,33 @@
+[plan]
+name = "abseil-cpp"
+version = "20260107.1"
+release = 1
+description = "Abseil C++ library (Google's common C++ utilities)"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/abseil/abseil-cpp"
+
+[dependencies]
+build = ["cmake", "ninja"]
+
+[[sources]]
+uri = "https://github.com/abseil/abseil-cpp/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cmake -B ${BUILD_DIR}/build -S ${BUILD_DIR} -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_LIBDIR=lib \
+  -DCMAKE_CXX_STANDARD=17 \
+  -DABSL_PROPAGATE_CXX_STD=ON \
+  -DABSL_BUILD_TESTING=OFF \
+  -DBUILD_SHARED_LIBS=ON
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

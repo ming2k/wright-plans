@@ -1,0 +1,50 @@
+[plan]
+name = "luajit"
+version = "2.1.1767980792+707c12b"
+release = 1
+description = "Just-in-time compiler for Lua"
+license = "MIT"
+arch = "x86_64"
+url = "https://luajit.org"
+
+[dependencies]
+build = ["make"]
+
+[[sources]]
+uri = "https://github.com/LuaJIT/LuaJIT/archive/707c12b.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+echo "LuaJIT uses the upstream make-based build"
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc) PREFIX=/usr XCFLAGS='-fPIC'
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make PREFIX=/usr DESTDIR=${PKG_DIR} install
+
+mkdir -p ${PKG_DIR}/usr/lib/pkgconfig
+cat > ${PKG_DIR}/usr/lib/pkgconfig/luajit.pc << PCEOF
+prefix=/usr
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/lib
+includedir=\${prefix}/include/luajit-2.1
+
+Name: LuaJIT
+Description: Just-in-time compiler for Lua
+Version: ${PKG_VERSION}
+Libs: -L\${libdir} -lluajit-5.1
+Cflags: -I\${includedir}
+PCEOF
+'''
+
+[lifecycle.package]
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"

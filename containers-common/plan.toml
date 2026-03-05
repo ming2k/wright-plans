@@ -1,0 +1,63 @@
+[plan]
+name = "containers-common"
+version = "0.64.1"
+release = 1
+description = "Default configuration files for container tools (podman, buildah, skopeo)"
+license = "Apache-2.0"
+arch = "any"
+url = "https://github.com/containers/common"
+
+[[sources]]
+uri = "https://github.com/containers/common/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+# Storage configuration
+install -dm755 ${PKG_DIR}/etc/containers
+install -dm755 ${PKG_DIR}/usr/share/containers
+
+install -Dm644 ${BUILD_DIR}/pkg/config/containers.conf \
+  ${PKG_DIR}/usr/share/containers/containers.conf
+
+# Minimal registries config (search docker.io by default)
+cat > ${PKG_DIR}/etc/containers/registries.conf << 'EOF'
+unqualified-search-registries = ["docker.io"]
+
+[[registry]]
+prefix = "docker.io"
+location = "docker.io"
+EOF
+
+# Permissive signature policy (accept any image)
+cat > ${PKG_DIR}/etc/containers/policy.json << 'EOF'
+{
+    "default": [
+        {
+            "type": "insecureAcceptAnything"
+        }
+    ],
+    "transports": {
+        "docker-daemon": {
+            "": [{"type": "insecureAcceptAnything"}]
+        }
+    }
+}
+EOF
+
+# Default storage config
+cat > ${PKG_DIR}/etc/containers/storage.conf << 'EOF'
+[storage]
+driver = "overlay"
+
+[storage.options.overlay]
+mount_program = "/usr/bin/fuse-overlayfs"
+EOF
+'''
+
+[lifecycle.package]
+backup = [
+    "/etc/containers/registries.conf",
+    "/etc/containers/policy.json",
+    "/etc/containers/storage.conf",
+]

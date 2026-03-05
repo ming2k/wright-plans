@@ -1,7 +1,7 @@
 [plan]
 name = "lua"
 version = "5.4.7"
-release = 3
+release = 4
 description = "Powerful lightweight programming language"
 license = "MIT"
 arch = "x86_64"
@@ -55,6 +55,7 @@ Libs.private: -lm -ldl
 Cflags: -I\${includedir}
 PCEOF
 cp ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PKG_DIR}/usr/lib/pkgconfig/lua-5.4.pc
+cp ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PKG_DIR}/usr/lib/pkgconfig/lua.pc
 '''
 
 [lifecycle.package]

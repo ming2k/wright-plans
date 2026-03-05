@@ -1,0 +1,29 @@
+[plan]
+name = "libslirp"
+version = "4.9.1"
+release = 1
+description = "General purpose TCP-IP emulator used by QEMU and other projects"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://gitlab.freedesktop.org/slirp/libslirp"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = ["glib"]
+
+[[sources]]
+uri = "https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v${PKG_VERSION}/libslirp-v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+  --prefix=/usr \
+  --buildtype=release
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

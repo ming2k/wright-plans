@@ -1,0 +1,33 @@
+[plan]
+name = "crun"
+version = "1.26"
+release = 1
+description = "Fast and lightweight OCI container runtime written in C"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://github.com/containers/crun"
+
+[dependencies]
+build = ["pkgconf"]
+link = ["libcap", "libseccomp", "systemd"]
+
+[[sources]]
+uri = "https://github.com/containers/crun/releases/download/${PKG_VERSION}/crun-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --disable-go \
+  --with-libseccomp \
+  --with-libcap \
+  --enable-embedded-yajl
+'''
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.staging]
+script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

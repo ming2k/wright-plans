@@ -1,0 +1,36 @@
+[plan]
+name = "qt6ct"
+version = "0.11"
+release = 1
+description = "Qt 6 Configuration Tool"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://www.opencode.net/trialuser/qt6ct"
+
+[dependencies]
+build = ["cmake", "gcc", "ninja", "pkgconf", "qt6-base", "qt6-svg", "qt6-tools"]
+link = ["qt6-base", "qt6-svg"]
+
+[[sources]]
+uri = "https://www.opencode.net/trialuser/qt6ct/-/archive/${PKG_VERSION}/qt6ct-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+ninja -j$(nproc) -C build
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+'''
