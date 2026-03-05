@@ -10,9 +10,10 @@ url = "https://www.lysator.liu.se/~nisse/nettle/"
 [dependencies]
 build = ["gcc", "make"]
 link = ["gmp"]
-[sources]
-uris = ["https://ftp.gnu.org/gnu/nettle/nettle-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/nettle/nettle-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -26,7 +27,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

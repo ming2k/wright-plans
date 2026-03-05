@@ -9,30 +9,24 @@ arch = "x86_64"
 [dependencies]
 build = ["cmake", "ninja", "gcc", "nasm"]
 
-[sources]
-uris = ["https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/${PKG_VERSION}/libjpeg-turbo-${PKG_VERSION}.tar.gz"]
-sha256 = [
-    "075920b826834ac4ddf97661cc73491047855859affd671d52079c6867c1c6c0",
-]
+[[sources]]
+uri = "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/${PKG_VERSION}/libjpeg-turbo-${PKG_VERSION}.tar.gz"
+sha256 = "075920b826834ac4ddf97661cc73491047855859affd671d52079c6867c1c6c0"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-cmake -B build -G Ninja \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_LIBDIR=lib \
-    -DWITH_JPEG8=ON
-"""
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DWITH_JPEG8=ON
+'''
 
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install
 # 兼容性软链接：确保 pkg-config 始终能找到 libjpeg.pc
 if [ ! -f ${PKG_DIR}/usr/lib/pkgconfig/libjpeg.pc ]; then
     ln -sv libjpeg-turbo.pc ${PKG_DIR}/usr/lib/pkgconfig/libjpeg.pc
 fi
-"""
+'''

@@ -9,9 +9,10 @@ url = "https://libexpat.github.io/"
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-uris = ["https://github.com/libexpat/libexpat/releases/download/R_2_7_1/expat-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://github.com/libexpat/libexpat/releases/download/R_2_7_1/expat-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -27,7 +28,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

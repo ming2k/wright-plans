@@ -9,9 +9,10 @@ url = "https://sr.ht/~kennylevinsen/seatd/"
 
 [dependencies]
 build = ["meson", "ninja"]
-[sources]
-uris = ["https://git.sr.ht/~kennylevinsen/seatd/archive/${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://git.sr.ht/~kennylevinsen/seatd/archive/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -25,12 +26,13 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/seatd.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 '''
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

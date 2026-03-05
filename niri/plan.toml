@@ -8,13 +8,24 @@ arch = "x86_64"
 url = "https://github.com/YaLTeR/niri"
 
 [dependencies]
-build = ["cargo", "pkgconf", "rust"]
 runtime = ["seatd", "pipewire", "xwayland", "polkit-gnome"]
-link = ["cairo", "glib", "libinput", "mesa", "pango", "pipewire", "seatd", "systemd", "wayland", "libxkbcommon"]
+build = ["cargo", "pkgconf", "rust"]
+link = [
+    "cairo",
+    "glib",
+    "libinput",
+    "mesa",
+    "pango",
+    "pipewire",
+    "seatd",
+    "systemd",
+    "wayland",
+    "libxkbcommon",
+]
 
-[sources]
-uris = ["https://github.com/YaLTeR/niri/archive/refs/tags/v25.05.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/YaLTeR/niri/archive/refs/tags/v25.05.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -23,13 +34,13 @@ echo "cargo project, no configure step"
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+env = {CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target"}
 script = '''
 cd ${BUILD_DIR}
 cargo build --release --no-default-features --locked
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 mkdir -p ${PKG_DIR}/usr/bin

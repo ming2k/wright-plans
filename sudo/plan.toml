@@ -10,9 +10,10 @@ url = "https://www.sudo.ws"
 [dependencies]
 build = ["gcc", "make"]
 link = ["glibc", "linux-pam"]
-[sources]
-uris = ["https://www.sudo.ws/dist/sudo-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://www.sudo.ws/dist/sudo-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -38,7 +39,8 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
+backup = ["/etc/sudoers", "/etc/pam.d/sudo", "/etc/pam.d/sudo-i"]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
@@ -61,6 +63,3 @@ session   include     sudo
 # End /etc/pam.d/sudo-i
 PAMEOF
 '''
-
-[backup]
-files = ["/etc/sudoers", "/etc/pam.d/sudo", "/etc/pam.d/sudo-i"]

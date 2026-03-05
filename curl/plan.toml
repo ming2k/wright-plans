@@ -8,14 +8,13 @@ arch = "x86_64"
 url = "https://curl.se/"
 
 [dependencies]
-build = ["gcc", "make"]
 runtime = ["ca-certificates"]
+build = ["gcc", "make"]
 link = ["libidn2", "libpsl", "nghttp2", "openssl"]
-[sources]
-uris = ["https://curl.se/download/curl-${PKG_VERSION}.tar.xz"]
-sha256 = [
-    "40df79166e74aa20149365e11ee4c798a46ad57c34e4f68fd13100e2c9a91946",
-]
+
+[[sources]]
+uri = "https://curl.se/download/curl-${PKG_VERSION}.tar.xz"
+sha256 = "40df79166e74aa20149365e11ee4c798a46ad57c34e4f68fd13100e2c9a91946"
 
 [lifecycle.configure]
 script = '''
@@ -33,7 +32,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

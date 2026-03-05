@@ -8,13 +8,13 @@ arch = "x86_64"
 url = "https://github.com/polkit-org/polkit"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf"]
 runtime = ["dbus", "systemd"]
+build = ["meson", "ninja", "pkgconf"]
 link = ["glib", "duktape", "linux-pam"]
 
-[sources]
-uris = ["https://github.com/polkit-org/polkit/archive/refs/tags/${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/polkit-org/polkit/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -34,13 +34,13 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 groupadd -fg 27 polkitd 2>/dev/null || true
 useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
     -c "PolicyKit Daemon Owner" polkitd 2>/dev/null || true
 '''
-post_upgrade = ""

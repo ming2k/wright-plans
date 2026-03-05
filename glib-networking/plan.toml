@@ -7,36 +7,32 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
 [dependencies]
-build = ["gettext", "meson", "ninja", "pkgconf"]
 runtime = ["gnutls", "gsettings-desktop-schemas", "libproxy"]
+build = ["gettext", "meson", "ninja", "pkgconf"]
 link = ["glib"]
-[sources]
-# 修正为存在的 2.80.1 版本
-uris = ["https://download.gnome.org/sources/glib-networking/2.80/glib-networking-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/glib-networking/2.80/glib-networking-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-env = { GIO_MODULE_DIR = "/usr/lib/gio/modules" }
-script = """
+env = {GIO_MODULE_DIR = "/usr/lib/gio/modules"}
+script = '''
 cd ${BUILD_DIR}
-meson setup build \
---prefix=/usr \
---buildtype=release \
--Dgnutls=enabled \
--Dlibproxy=enabled \
--Dopenssl=disabled
-"""
+meson setup build --prefix=/usr --buildtype=release -Dgnutls=enabled -Dlibproxy=enabled -Dopenssl=disabled
+'''
 
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
 rm -f ${PKG_DIR}/usr/lib/gio/modules/giomodule.cache
-"""
+'''
 
-[install_scripts]
-post_install = "gio-querymodules /usr/lib/gio/modules"
-post_upgrade = "gio-querymodules /usr/lib/gio/modules"
-pre_remove = "gio-querymodules /usr/lib/gio/modules"
+
+[lifecycle.package]
+hooks.post_install = "gio-querymodules /usr/lib/gio/modules"
+hooks.post_upgrade = "gio-querymodules /usr/lib/gio/modules"
+hooks.pre_remove = "gio-querymodules /usr/lib/gio/modules"

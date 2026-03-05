@@ -10,9 +10,10 @@ url = "https://gitlab.com/psmisc/psmisc"
 [dependencies]
 build = ["gcc", "make"]
 link = ["ncurses"]
-[sources]
-uris = ["https://downloads.sourceforge.net/project/psmisc/psmisc/psmisc-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://downloads.sourceforge.net/project/psmisc/psmisc/psmisc-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -26,7 +27,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

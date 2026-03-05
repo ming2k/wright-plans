@@ -11,13 +11,17 @@ url = "https://netfilter.org/projects/nftables/"
 build = ["autoconf", "automake", "bison", "flex", "gcc", "libmnl", "libnftnl", "make", "pkgconf"]
 link = ["gmp", "jansson", "libmnl", "libnftnl", "ncurses", "readline"]
 
-[sources]
-uris = [
-  "git+https://git.netfilter.org/nftables.git#tag=v${PKG_VERSION}",
-  "nftables.service",
-  "nftables.conf",
-]
-sha256 = ["SKIP", "SKIP", "SKIP"]
+[[sources]]
+uri = "git+https://git.netfilter.org/nftables.git#tag=v${PKG_VERSION}"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "nftables.service"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "nftables.conf"
+sha256 = "SKIP"
 
 [options]
 strip = true
@@ -49,7 +53,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
@@ -61,10 +65,9 @@ install -Dm644 ${FILES_DIR}/nftables.conf ${PKG_DIR}/etc/nftables.conf
 install -Dm644 ${FILES_DIR}/nftables.service ${PKG_DIR}/usr/lib/systemd/system/nftables.service
 '''
 
-[install_scripts]
-post_install = "ldconfig 2>/dev/null || true"
-post_upgrade = "ldconfig 2>/dev/null || true"
-pre_remove = "nft flush ruleset 2>/dev/null || true"
 
-[backup]
-files = ["/etc/nftables.conf"]
+[lifecycle.package]
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.pre_remove = "nft flush ruleset 2>/dev/null || true"
+backup = ["/etc/nftables.conf"]

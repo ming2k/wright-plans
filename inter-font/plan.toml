@@ -10,9 +10,9 @@ url = "https://rsms.me/inter/"
 [dependencies]
 build = ["libarchive"]
 
-[sources]
-uris = ["https://github.com/rsms/inter/releases/download/v${PKG_VERSION}/Inter-${PKG_VERSION}.zip"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/rsms/inter/releases/download/v${PKG_VERSION}/Inter-${PKG_VERSION}.zip"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = "echo preparing inter-font"
@@ -25,12 +25,13 @@ mkdir -p inter-extracted
 bsdtar xf ${FILES_DIR}/Inter-${PKG_VERSION}.zip -C inter-extracted
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 mkdir -p ${PKG_DIR}/usr/share/fonts/inter
 find ${BUILD_DIR}/inter-extracted -name '*.ttf' -exec cp {} ${PKG_DIR}/usr/share/fonts/inter/ \;
 '''
 
-[install_scripts]
-post_install = "fc-cache -s 2>/dev/null || true"
-post_upgrade = "fc-cache -s 2>/dev/null || true"
+
+[lifecycle.package]
+hooks.post_install = "fc-cache -s 2>/dev/null || true"
+hooks.post_upgrade = "fc-cache -s 2>/dev/null || true"

@@ -7,9 +7,9 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/xdg/shared-mime-info"
 
-[sources]
-uris = ["https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/${PKG_VERSION}/shared-mime-info-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/${PKG_VERSION}/shared-mime-info-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -22,9 +22,10 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
-[install_scripts]
-post_install = "update-mime-database /usr/share/mime 2>/dev/null || true"
-post_upgrade = "update-mime-database /usr/share/mime 2>/dev/null || true"
+
+[lifecycle.package]
+hooks.post_install = "update-mime-database /usr/share/mime 2>/dev/null || true"
+hooks.post_upgrade = "update-mime-database /usr/share/mime 2>/dev/null || true"

@@ -8,69 +8,45 @@ arch = "x86_64"
 url = "https://github.com/linux-pam/linux-pam"
 
 [dependencies]
-build = ["gcc", "meson", "ninja", "pkgconf"]
 runtime = ["libsystemd"]
+build = ["gcc", "meson", "ninja", "pkgconf"]
 link = ["glibc"]
 
-[mvp.dependencies]
-runtime = []
-link = ["glibc"]
-
-[sources]
-uris = ["https://github.com/linux-pam/linux-pam/releases/download/v${PKG_VERSION}/Linux-PAM-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/linux-pam/linux-pam/releases/download/v${PKG_VERSION}/Linux-PAM-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [options]
 strip = true
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 mkdir -p build
 cd build
-meson setup ..           \
---prefix=/usr          \
---buildtype=release    \
--Dsbindir=/usr/bin     \
--Dlogind=enabled       \
--Deconf=disabled       \
--Dselinux=disabled     \
--Delogind=disabled     \
--Dpam_userdb=disabled  \
--Dpwaccess=disabled    \
--Dvendordir=''         \
--Ddocs=disabled        \
--Ddocdir=/usr/share/doc/Linux-PAM-${PKG_VERSION}
-"""
-
-[mvp.lifecycle.configure]
-script = """
-cd ${BUILD_DIR}
-mkdir -p build
-cd build
-meson setup ..           \
---prefix=/usr          \
---buildtype=release    \
--Dsbindir=/usr/bin     \
--Dlogind=disabled      \
--Deconf=disabled       \
--Dselinux=disabled     \
--Delogind=disabled     \
--Dpam_userdb=disabled  \
--Dpwaccess=disabled    \
--Dvendordir=''         \
--Ddocs=disabled        \
--Ddocdir=/usr/share/doc/Linux-PAM-${PKG_VERSION}
-"""
+meson setup .. \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dsbindir=/usr/bin \
+    -Dlogind=enabled \
+    -Deconf=disabled \
+    -Dselinux=disabled \
+    -Delogind=disabled \
+    -Dpam_userdb=disabled \
+    -Dpwaccess=disabled \
+    -Dvendordir='' \
+    -Ddocs=disabled \
+    -Ddocdir=/usr/share/doc/Linux-PAM-${PKG_VERSION}
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}/build
 ninja
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} ninja install
 
@@ -116,17 +92,16 @@ session     required        pam_warn.so
 session     required        pam_deny.so
 # End /etc/pam.d/other
 PAMEOF
-"""
+'''
 
-[install_scripts]
-post_install = "ldconfig 2>/dev/null || true"
-post_upgrade = "ldconfig 2>/dev/null || true"
 
-[backup]
-files = [
-"/etc/pam.d/system-account",
-"/etc/pam.d/system-auth",
-"/etc/pam.d/system-session",
-"/etc/pam.d/system-password",
-"/etc/pam.d/other",
+[lifecycle.package]
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+backup = [
+    "/etc/pam.d/system-account",
+    "/etc/pam.d/system-auth",
+    "/etc/pam.d/system-session",
+    "/etc/pam.d/system-password",
+    "/etc/pam.d/other",
 ]

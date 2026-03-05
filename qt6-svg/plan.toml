@@ -8,36 +8,30 @@ arch = "x86_64"
 url = "https://www.qt.io"
 
 [dependencies]
-build = ["cmake", "gcc", "ninja", "qt6-base"]
 runtime = ["qt6-base"]
+build = ["cmake", "gcc", "ninja", "qt6-base"]
+
+[[sources]]
+uri = "https://download.qt.io/official_releases/qt/6.10/${PKG_VERSION}/submodules/qtsvg-everywhere-src-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [options]
 jobs = 4
 
-[sources]
-uris = ["https://download.qt.io/official_releases/qt/6.10/${PKG_VERSION}/submodules/qtsvg-everywhere-src-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
-
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-cmake -B build -G Ninja \
--DCMAKE_INSTALL_PREFIX=/usr \
--DCMAKE_BUILD_TYPE=Release \
--DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
--DCMAKE_EXE_LINKER_FLAGS="-Wl,--allow-multiple-definition" \
--DCMAKE_SHARED_LINKER_FLAGS="-Wl,--allow-multiple-definition" \
--DCMAKE_MODULE_LINKER_FLAGS="-Wl,--allow-multiple-definition"
-"""
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_EXE_LINKER_FLAGS="-Wl,--allow-multiple-definition" -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--allow-multiple-definition" -DCMAKE_MODULE_LINKER_FLAGS="-Wl,--allow-multiple-definition"
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ninja -j$(nproc) -C build
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install
-"""
+'''

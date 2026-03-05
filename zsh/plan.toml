@@ -11,9 +11,9 @@ url = "https://www.zsh.org/"
 build = ["gcc", "make", "ncurses", "libcap", "gdbm"]
 link = ["glibc", "ncurses", "libcap", "gdbm"]
 
-[sources]
-uris = ["https://www.zsh.org/pub/zsh-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://www.zsh.org/pub/zsh-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -41,23 +41,24 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
 '''
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 if ! grep -q /usr/bin/zsh /etc/shells 2>/dev/null; then
   echo /usr/bin/zsh >> /etc/shells
 fi
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 if ! grep -q /usr/bin/zsh /etc/shells 2>/dev/null; then
   echo /usr/bin/zsh >> /etc/shells
 fi
 '''
-pre_remove = '''
+hooks.pre_remove = '''
 sed -i '\|/usr/bin/zsh|d' /etc/shells 2>/dev/null || true
 '''

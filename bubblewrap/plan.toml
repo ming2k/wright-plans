@@ -11,9 +11,9 @@ url = "https://github.com/containers/bubblewrap"
 build = ["meson", "ninja", "pkgconf"]
 link = ["libcap", "libseccomp"]
 
-[sources]
-uris = ["https://github.com/containers/bubblewrap/releases/download/v${PKG_VERSION}/bubblewrap-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/containers/bubblewrap/releases/download/v${PKG_VERSION}/bubblewrap-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -30,7 +30,7 @@ cd ${BUILD_DIR}
 ninja -C build -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install

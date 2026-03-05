@@ -8,11 +8,12 @@ arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/libinput/"
 
 [dependencies]
-build = ["libevdev", "meson", "mtdev", "ninja"]
 runtime = ["libevdev", "mtdev"]
-[sources]
-uris = ["https://gitlab.freedesktop.org/libinput/libinput/-/archive/${PKG_VERSION}/libinput-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+build = ["libevdev", "meson", "mtdev", "ninja"]
+
+[[sources]]
+uri = "https://gitlab.freedesktop.org/libinput/libinput/-/archive/${PKG_VERSION}/libinput-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -28,5 +29,5 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

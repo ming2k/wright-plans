@@ -10,9 +10,9 @@ url = "https://github.com/xiph/ogg"
 [dependencies]
 build = ["gcc", "make"]
 
-[sources]
-uris = ["https://downloads.xiph.org/releases/ogg/libogg-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://downloads.xiph.org/releases/ogg/libogg-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -26,7 +26,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

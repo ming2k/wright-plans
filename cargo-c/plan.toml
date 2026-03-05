@@ -11,23 +11,23 @@ url = "https://github.com/lu-zero/cargo-c"
 build = ["rust", "pkgconf"]
 link = ["openssl"]
 
-[sources]
-uris = ["https://github.com/lu-zero/cargo-c/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/lu-zero/cargo-c/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
-script = """
+env = {CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target"}
+script = '''
 cd ${BUILD_DIR}
 LIBGIT2_NO_PKG_CONFIG=1 cargo build --release
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 install -Dm755 target/release/cargo-cbuild   ${PKG_DIR}/usr/bin/cargo-cbuild
 install -Dm755 target/release/cargo-cinstall ${PKG_DIR}/usr/bin/cargo-cinstall
 install -Dm755 target/release/cargo-capi     ${PKG_DIR}/usr/bin/cargo-capi
 install -Dm755 target/release/cargo-ctest    ${PKG_DIR}/usr/bin/cargo-ctest
-"""
+'''

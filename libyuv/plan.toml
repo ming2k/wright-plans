@@ -9,9 +9,9 @@ arch = "x86_64"
 [dependencies]
 build = ["cmake", "ninja", "gcc", "git"]
 
-[sources]
-uris = ["git+https://chromium.googlesource.com/libyuv/libyuv.git#branch=stable"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "git+https://chromium.googlesource.com/libyuv/libyuv.git#branch=stable"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -26,7 +26,7 @@ cmake -B build -G Ninja \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install
 

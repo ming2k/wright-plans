@@ -7,9 +7,9 @@ license = "BSD-3-Clause"
 arch = "any"
 url = "https://github.com/thesofproject/sof-bin"
 
-[sources]
-uris = ["https://github.com/thesofproject/sof-bin/releases/download/v${PKG_VERSION}/sof-bin-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/thesofproject/sof-bin/releases/download/v${PKG_VERSION}/sof-bin-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -21,7 +21,7 @@ script = '''
 echo "no build needed"
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 mkdir -p ${PKG_DIR}/usr/lib/firmware/intel

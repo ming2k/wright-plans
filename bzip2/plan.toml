@@ -10,14 +10,13 @@ url = "https://www.sourceware.org/bzip2/"
 [dependencies]
 build = ["gcc", "make", "diffutils"]
 
-[mvp.dependencies]
-build = ["gcc", "make"]
-[sources]
-uris = [
-"https://www.sourceware.org/pub/bzip2/bzip2-${PKG_VERSION}.tar.gz",
-"patches/bzip2-1.0.8-install_docs-1.patch",
-]
-sha256 = ["SKIP", "SKIP"]
+[[sources]]
+uri = "https://www.sourceware.org/pub/bzip2/bzip2-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "patches/bzip2-1.0.8-install_docs-1.patch"
+sha256 = "SKIP"
 
 [lifecycle.prepare]
 script = '''
@@ -45,15 +44,7 @@ make clean
 make -j$(nproc)
 '''
 
-[mvp.lifecycle.compile]
-script = '''
-cd ${BUILD_DIR}
-make -f Makefile-libbz2_so
-make clean
-make -j$(nproc) bzip2 bzip2recover
-'''
-
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 

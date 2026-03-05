@@ -9,14 +9,14 @@ url = "https://palletsprojects.com/p/jinja/"
 replaces = ["jinja2"]
 
 [dependencies]
-build = ["python-markupsafe", "python", "setuptools"]
 runtime = ["python-markupsafe", "python"]
+build = ["python-markupsafe", "python", "setuptools"]
 
-[sources]
-uris = ["https://files.pythonhosted.org/packages/source/j/jinja2/jinja2-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://files.pythonhosted.org/packages/source/j/jinja2/jinja2-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .

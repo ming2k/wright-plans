@@ -8,16 +8,20 @@ arch = "any"
 url = "https://firefox-source-docs.mozilla.org/security/nss/index.html"
 
 [dependencies]
-build = ["python"]
 runtime = ["p11-kit"]
+build = ["python"]
 
-[sources]
-uris = [
-  "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${PKG_VERSION}.tar.gz",
-  "certdata2pem.py",
-  "bundle.sh",
-]
-sha256 = ["SKIP", "SKIP", "SKIP"]
+[[sources]]
+uri = "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "certdata2pem.py"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "bundle.sh"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 script = '''
@@ -33,17 +37,18 @@ cd ${BUILD_DIR}
 sh ${FILES_DIR}/bundle.sh
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 install -Dm644 ca-bundle.trust.p11-kit \
   ${PKG_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit
 '''
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 update-ca-trust
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 update-ca-trust
 '''

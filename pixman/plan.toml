@@ -9,9 +9,10 @@ url = "https://www.pixman.org/"
 
 [dependencies]
 build = ["meson", "ninja"]
-[sources]
-uris = ["https://www.cairographics.org/releases/pixman-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://www.cairographics.org/releases/pixman-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -23,5 +24,5 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

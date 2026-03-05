@@ -8,14 +8,14 @@ arch = "x86_64"
 url = "https://github.com/pypa/trove-classifiers"
 
 [dependencies]
-build = ["python", "setuptools"]
 runtime = ["python"]
+build = ["python", "setuptools"]
 
-[sources]
-uris = ["https://pypi.org/packages/source/t/trove_classifiers/trove_classifiers-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://pypi.org/packages/source/t/trove_classifiers/trove_classifiers-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .

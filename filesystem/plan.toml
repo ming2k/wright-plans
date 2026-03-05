@@ -6,21 +6,23 @@ description = "Base FHS directory skeleton and essential system files"
 license = "MIT"
 arch = "x86_64"
 
-[sources]
-uris = [
-    "os-release",
-    "shells",
-    "profile",
-]
-sha256 = ["SKIP", "SKIP", "SKIP"]
+[[sources]]
+uri = "os-release"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "shells"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "profile"
+sha256 = "SKIP"
 
 [options]
 skip_fhs_check = true
 
-[backup]
-files = ["/etc/shells", "/etc/profile"]
-
-[lifecycle.package]
+[lifecycle.staging]
+backup = ["/etc/shells", "/etc/profile"]
 script = '''
 # --- FHS directory skeleton ---
 install -d -m 0755 ${PKG_DIR}/{boot,etc}

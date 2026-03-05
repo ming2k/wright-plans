@@ -9,9 +9,10 @@ url = "https://www.gnu.org/software/ncurses/"
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-uris = ["https://ftp.gnu.org/gnu/ncurses/ncurses-6.6.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/ncurses/ncurses-6.6.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -32,7 +33,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=$PWD/dest install

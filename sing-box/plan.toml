@@ -9,9 +9,10 @@ url = "https://sing-box.sagernet.org/"
 
 [dependencies]
 build = ["go"]
-[sources]
-uris = ["https://github.com/SagerNet/sing-box/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://github.com/SagerNet/sing-box/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 dockyard = "relaxed"
@@ -28,7 +29,7 @@ go build -o sing-box \
 ./cmd/sing-box
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 sing-box ${PKG_DIR}/usr/bin/sing-box
@@ -51,6 +52,7 @@ WantedBy=multi-user.target
 UNIT
 '''
 
-[install_scripts]
-post_install = "systemctl daemon-reload 2>/dev/null || true"
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+
+[lifecycle.package]
+hooks.post_install = "systemctl daemon-reload 2>/dev/null || true"
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

@@ -8,30 +8,30 @@ arch = "x86_64"
 url = "https://netfilter.org/projects/libnftnl/"
 
 [dependencies]
-build = ["gcc", "libmnl", "make", "pkgconf"]
 runtime = ["libmnl >= 1.0.4"]
-[sources]
-uris = ["https://netfilter.org/projects/libnftnl/files/libnftnl-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+build = ["gcc", "libmnl", "make", "pkgconf"]
+
+[[sources]]
+uri = "https://netfilter.org/projects/libnftnl/files/libnftnl-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [options]
 strip = true
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr \
---disable-static
-"""
+./configure --prefix=/usr --disable-static
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-"""
+'''

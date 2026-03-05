@@ -11,11 +11,9 @@ url = "https://www.gnu.org/software/inetutils/"
 build = ["gcc", "gettext", "make"]
 link = ["ncurses", "linux-pam", "readline", "libcap"]
 
-[sources]
-uris = [
-  "https://ftp.gnu.org/gnu/inetutils/inetutils-${PKG_VERSION}.tar.gz",
-]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/inetutils/inetutils-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -66,7 +64,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

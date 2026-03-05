@@ -10,9 +10,9 @@ url = "https://github.com/junegunn/fzf"
 [dependencies]
 build = ["go"]
 
-[sources]
-uris = ["https://github.com/junegunn/fzf/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/junegunn/fzf/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 dockyard = "relaxed"
@@ -22,7 +22,7 @@ export CGO_ENABLED=0
 go build -trimpath -ldflags "-s -w -X main.version=${PKG_VERSION}" -o bin/fzf .
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 bin/fzf ${PKG_DIR}/usr/bin/fzf

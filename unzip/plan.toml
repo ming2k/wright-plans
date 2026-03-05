@@ -10,9 +10,9 @@ url = "https://infozip.sourceforge.net/UnZip.html"
 [dependencies]
 build = ["gcc", "make"]
 
-[sources]
-uris = ["https://downloads.sourceforge.net/project/infozip/UnZip%206.x%20%28latest%29/UnZip%206.0/unzip60.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://downloads.sourceforge.net/project/infozip/UnZip%206.x%20%28latest%29/UnZip%206.0/unzip60.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 script = '''
@@ -20,7 +20,7 @@ cd ${BUILD_DIR}
 make -f unix/Makefile generic -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 unzip ${PKG_DIR}/usr/bin/unzip

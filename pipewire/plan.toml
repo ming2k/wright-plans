@@ -11,9 +11,9 @@ url = "https://pipewire.org"
 build = ["meson", "ninja", "pkgconf", "rtkit"]
 link = ["alsa-lib", "dbus", "glib", "libsndfile", "ncurses", "opus", "readline", "systemd"]
 
-[sources]
-uris = ["https://github.com/PipeWire/pipewire/archive/refs/tags/${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/PipeWire/pipewire/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -38,12 +38,13 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/pipewire.conf 2>/dev/null || true
 '''
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

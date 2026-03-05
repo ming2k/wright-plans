@@ -8,12 +8,13 @@ arch = "x86_64"
 url = "https://iwd.wiki.kernel.org/"
 
 [dependencies]
-build = ["dbus", "ell", "gcc", "make"]
 runtime = ["dbus", "ell"]
+build = ["dbus", "ell", "gcc", "make"]
 link = ["readline"]
-[sources]
-uris = ["https://www.kernel.org/pub/linux/network/wireless/iwd-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://www.kernel.org/pub/linux/network/wireless/iwd-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -35,7 +36,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

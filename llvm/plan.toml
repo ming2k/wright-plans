@@ -8,75 +8,55 @@ arch = "x86_64"
 url = "https://llvm.org"
 
 [dependencies]
-build = ["cmake", "gcc", "ninja", "pkgconf", "python"]
 runtime = ["llvm-libs"]
+build = ["cmake", "gcc", "ninja", "pkgconf", "python"]
 link = ["libedit", "libffi", "libxml2", "zlib", "zstd"]
 
-[sources]
-uris = ["https://github.com/llvm/llvm-project/releases/download/llvmorg-${PKG_VERSION}/llvm-project-${PKG_VERSION}.src.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${PKG_VERSION}/llvm-project-${PKG_VERSION}.src.tar.xz"
+sha256 = "SKIP"
 
 [options]
 strip = true
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}/llvm
-cmake -B build -G Ninja \
-  -DCMAKE_INSTALL_PREFIX=/usr \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_SKIP_INSTALL_RPATH=ON \
-  -DLLVM_ENABLE_PROJECTS="clang;lld" \
-  -DLLVM_ENABLE_RUNTIMES="compiler-rt" \
-  -DLLVM_TARGETS_TO_BUILD="X86;AMDGPU" \
-  -DLLVM_BUILD_LLVM_DYLIB=ON \
-  -DLLVM_LINK_LLVM_DYLIB=ON \
-  -DLLVM_ENABLE_RTTI=ON \
-  -DLLVM_ENABLE_FFI=ON \
-  -DLLVM_ENABLE_ZLIB=ON \
-  -DLLVM_ENABLE_ZSTD=ON \
-  -DLLVM_ENABLE_LIBEDIT=ON \
-  -DLLVM_BINUTILS_INCDIR=/usr/include \
-  -DCLANG_DEFAULT_PIE_ON_LINUX=ON \
-  -DCLANG_LINK_CLANG_DYLIB=ON
-"""
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_INSTALL_RPATH=ON -DLLVM_ENABLE_PROJECTS="clang;lld" -DLLVM_ENABLE_RUNTIMES="compiler-rt" -DLLVM_TARGETS_TO_BUILD="X86;AMDGPU" -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_LINK_LLVM_DYLIB=ON -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_FFI=ON -DLLVM_ENABLE_ZLIB=ON -DLLVM_ENABLE_ZSTD=ON -DLLVM_ENABLE_LIBEDIT=ON -DLLVM_BINUTILS_INCDIR=/usr/include -DCLANG_DEFAULT_PIE_ON_LINUX=ON -DCLANG_LINK_CLANG_DYLIB=ON
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}/llvm
 ninja -C build -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.package.llvm]
+script = '''
 cd ${BUILD_DIR}/llvm
 DESTDIR=${PKG_DIR} ninja -C build install
 
 if [ ! -f ${PKG_DIR}/usr/bin/llvm-config ]; then
   ln -sf llvm-config-${PKG_VERSION%%.*} ${PKG_DIR}/usr/bin/llvm-config
 fi
-"""
+'''
 
-[split.llvm-libs]
+[lifecycle.package.llvm-libs]
 description = "LLVM shared libraries"
-[split.llvm-libs.dependencies]
-link = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
-[split.llvm-libs.lifecycle.package]
-script = """
+dependencies.link = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
+script = '''
 install -d ${PKG_DIR}/usr/lib
 mv -v ${MAIN_PKG_DIR}/usr/lib/libLLVM-*.so ${PKG_DIR}/usr/lib/
 mv -v ${MAIN_PKG_DIR}/usr/lib/libLLVM.so* ${PKG_DIR}/usr/lib/
 mv -v ${MAIN_PKG_DIR}/usr/lib/libLTO.so* ${PKG_DIR}/usr/lib/
 mv -v ${MAIN_PKG_DIR}/usr/lib/libRemarks.so* ${PKG_DIR}/usr/lib/
-"""
+'''
 
-[split.clang]
+[lifecycle.package.clang]
 description = "C/C++/ObjC compiler frontend for LLVM"
-[split.clang.dependencies]
-runtime = ["llvm-libs"]
-link = ["glibc"]
-[split.clang.lifecycle.package]
-script = """
+dependencies.runtime = ["llvm-libs"]
+dependencies.link = ["glibc"]
+script = '''
 install -d ${PKG_DIR}/usr/bin
 install -d ${PKG_DIR}/usr/lib
 install -d ${PKG_DIR}/usr/include
@@ -88,17 +68,15 @@ mv -v ${MAIN_PKG_DIR}/usr/lib/clang ${PKG_DIR}/usr/lib/
 mv -v ${MAIN_PKG_DIR}/usr/lib/libclang*.so* ${PKG_DIR}/usr/lib/
 mv -v ${MAIN_PKG_DIR}/usr/include/clang* ${PKG_DIR}/usr/include/ 2>/dev/null || true
 mv -v ${MAIN_PKG_DIR}/usr/share/clang ${PKG_DIR}/usr/share/ 2>/dev/null || true
-"""
+'''
 
-[split.lld]
+[lifecycle.package.lld]
 description = "LLVM linker"
-[split.lld.dependencies]
-runtime = ["llvm-libs"]
-link = ["glibc"]
-[split.lld.lifecycle.package]
-script = """
+dependencies.runtime = ["llvm-libs"]
+dependencies.link = ["glibc"]
+script = '''
 install -d ${PKG_DIR}/usr/bin
 mv -v ${MAIN_PKG_DIR}/usr/bin/lld* ${PKG_DIR}/usr/bin/
 mv -v ${MAIN_PKG_DIR}/usr/bin/ld.lld* ${PKG_DIR}/usr/bin/
 mv -v ${MAIN_PKG_DIR}/usr/bin/wasm-ld ${PKG_DIR}/usr/bin/ 2>/dev/null || true
-"""
+'''

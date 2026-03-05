@@ -11,9 +11,9 @@ url = "https://github.com/haasn/libplacebo"
 build = ["meson", "ninja", "pkgconf", "python-glad2"]
 link = ["glslang", "lcms2", "shaderc", "spirv-cross", "vulkan-loader", "vulkan-headers"]
 
-[sources]
-uris = ["https://code.videolan.org/videolan/libplacebo/-/archive/v${PKG_VERSION}/libplacebo-v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://code.videolan.org/videolan/libplacebo/-/archive/v${PKG_VERSION}/libplacebo-v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -32,5 +32,5 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

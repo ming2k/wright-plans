@@ -7,9 +7,9 @@ license = "GPL-2.0-only AND LGPL-2.1-only"
 arch = "x86_64"
 url = "https://github.com/libfuse/libfuse"
 
-[sources]
-uris = ["https://github.com/libfuse/libfuse/releases/download/fuse-${PKG_VERSION}/fuse-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/libfuse/libfuse/releases/download/fuse-${PKG_VERSION}/fuse-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -25,7 +25,8 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
+backup = ["/etc/fuse.conf"]
 script = '''
 DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install
 
@@ -35,6 +36,3 @@ rm -rf ${PKG_DIR}/etc/init.d ${PKG_DIR}/dev 2>/dev/null || true
 # Allow non-root users to mount FUSE filesystems via fusermount3
 chmod u+s ${PKG_DIR}/usr/bin/fusermount3
 '''
-
-[backup]
-files = ["/etc/fuse.conf"]

@@ -9,28 +9,27 @@ arch = "x86_64"
 [dependencies]
 build = ["meson", "ninja", "pkgconf"]
 link = ["glib"]
-[sources]
-uris = ["https://wpewebkit.org/releases/libwpe-1.16.0.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://wpewebkit.org/releases/libwpe-1.16.0.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 # 修正：移除 -Dbuild_docs=false 选项
 # Meson 会自动检测，如果没有 hotdoc 工具会自动跳过文档
-meson setup build \
---prefix=/usr \
---libdir=lib
-"""
+meson setup build --prefix=/usr --libdir=lib
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}/build
 ninja -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} ninja install
-"""
+'''

@@ -8,34 +8,46 @@ arch = "x86_64"
 url = "https://www.gtk.org"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "gobject-introspection", "sassc", "vulkan-headers", "wayland-protocols", "shaderc"]
 runtime = ["adwaita-icon-theme", "shared-mime-info", "iso-codes"]
-link = ["glib", "pango", "cairo", "gdk-pixbuf", "libpng", "libjpeg-turbo", "libtiff", "graphene", "libepoxy", "libxkbcommon", "wayland", "vulkan-loader"]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "gobject-introspection",
+    "sassc",
+    "vulkan-headers",
+    "wayland-protocols",
+    "shaderc",
+]
+link = [
+    "glib",
+    "pango",
+    "cairo",
+    "gdk-pixbuf",
+    "libpng",
+    "libjpeg-turbo",
+    "libtiff",
+    "graphene",
+    "libepoxy",
+    "libxkbcommon",
+    "wayland",
+    "vulkan-loader",
+]
 
-[sources]
-uris = ["https://download.gnome.org/sources/gtk/4.20/gtk-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://download.gnome.org/sources/gtk/4.20/gtk-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-meson setup build \
-    --prefix=/usr \
-    --buildtype=release \
-    -Dwayland-backend=true \
-    -Dx11-backend=false \
-    -Dintrospection=enabled \
-    -Dvulkan=enabled \
-    -Dmedia-gstreamer=disabled \
-    -Dprint-cups=disabled \
-    -Dbuild-tests=false \
-    -Ddocumentation=false
-"""
+meson setup build --prefix=/usr --buildtype=release -Dwayland-backend=true -Dx11-backend=false -Dintrospection=enabled -Dvulkan=enabled -Dmedia-gstreamer=disabled -Dprint-cups=disabled -Dbuild-tests=false -Ddocumentation=false
+'''
 
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
 
@@ -60,13 +72,14 @@ rm -f \
     "${PKG_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg"
 '''
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
 gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
 gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true

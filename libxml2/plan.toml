@@ -8,12 +8,12 @@ arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/libxml2"
 
 [dependencies]
-build = ["doxygen", "gcc", "icu", "meson", "ninja", "python"]
 runtime = ["icu", "python"]
+build = ["doxygen", "gcc", "icu", "meson", "ninja", "python"]
 
-[sources]
-uris = ["https://download.gnome.org/sources/libxml2/2.15/libxml2-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -32,7 +32,7 @@ cd ${BUILD_DIR}/build
 ninja -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} ninja install

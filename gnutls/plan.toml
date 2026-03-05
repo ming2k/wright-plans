@@ -8,12 +8,13 @@ arch = "x86_64"
 url = "https://www.gnutls.org/"
 
 [dependencies]
-build = ["gcc", "libtasn1", "make", "nettle", "p11-kit", "pkgconf"]
 runtime = ["libtasn1", "nettle", "p11-kit"]
+build = ["gcc", "libtasn1", "make", "nettle", "p11-kit", "pkgconf"]
 link = ["libunistring"]
-[sources]
-uris = ["https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -29,7 +30,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

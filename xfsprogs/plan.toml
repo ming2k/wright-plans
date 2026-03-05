@@ -11,21 +11,18 @@ url = "https://xfs.wiki.kernel.org"
 build = ["pkgconf"]
 link = ["util-linux", "icu", "inih"]
 
-[sources]
-uris = ["https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure \
-    --prefix=/usr \
-    --sbindir=/usr/bin \
-    --disable-static
-"""
+./configure --prefix=/usr --sbindir=/usr/bin --disable-static
+'''
 
 [lifecycle.compile]
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

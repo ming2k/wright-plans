@@ -8,12 +8,13 @@ arch = "x86_64"
 url = "https://gi.readthedocs.io/"
 
 [dependencies]
-build = ["meson", "ninja", "python"]
 runtime = ["python"]
+build = ["meson", "ninja", "python"]
 link = ["glib"]
-[sources]
-uris = ["https://download.gnome.org/sources/gobject-introspection/1.86/gobject-introspection-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/gobject-introspection/1.86/gobject-introspection-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -28,7 +29,7 @@ script = '''
 meson compile -C ${BUILD_DIR}/build
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
 '''

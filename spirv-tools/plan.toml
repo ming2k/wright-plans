@@ -7,29 +7,20 @@ license = "Apache-2.0"
 arch = "x86_64"
 
 [dependencies]
-build = ["cmake", "gcc", "ninja", "python", "spirv-headers"]
 runtime = ["spirv-headers"]
-[sources]
-uris = ["https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+build = ["cmake", "gcc", "ninja", "python", "spirv-headers"]
+
+[[sources]]
+uri = "https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-# 使用标准的 GNU 目录定义，CMake 会自动处理大部分路径
-script = """
-cmake -B ${BUILD_DIR}/build -G Ninja \
--S ${BUILD_DIR} \
--DCMAKE_INSTALL_PREFIX=/usr \
--DCMAKE_BUILD_TYPE=Release \
--DCMAKE_INSTALL_LIBDIR=lib \
--DCMAKE_INSTALL_INCLUDEDIR=include \
--DSPIRV_WERROR=OFF \
--DSPIRV-Headers_SOURCE_DIR=/usr \
--DSPIRV_SKIP_TESTS=ON
-"""
+script = '''
+cmake -B ${BUILD_DIR}/build -G Ninja -S ${BUILD_DIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_INCLUDEDIR=include -DSPIRV_WERROR=OFF -DSPIRV-Headers_SOURCE_DIR=/usr -DSPIRV_SKIP_TESTS=ON
+'''
 
 [lifecycle.compile]
 script = "cmake --build ${BUILD_DIR}/build"
 
-[lifecycle.package]
-# 直接安装即可，无需手动移动文件
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build"

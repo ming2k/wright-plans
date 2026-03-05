@@ -7,9 +7,9 @@ license = "MIT"
 arch = "x86_64"
 url = "https://duktape.org"
 
-[sources]
-uris = ["https://duktape.org/duktape-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://duktape.org/duktape-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -23,7 +23,7 @@ sed -i 's/-Wall -Wextra/-Wall -Wextra -fPIC/' Makefile.sharedlibrary
 make -f Makefile.sharedlibrary -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 mkdir -p ${PKG_DIR}/usr/lib ${PKG_DIR}/usr/include ${PKG_DIR}/usr/lib/pkgconfig

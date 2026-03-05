@@ -10,27 +10,28 @@ url = "https://www.gnu.org/software/cpio/"
 [dependencies]
 link = ["glibc"]
 
-[sources]
-uris = [
-"https://ftp.gnu.org/gnu/cpio/cpio-${PKG_VERSION}.tar.gz",
-"patches/cpio-2.15-c23-conformity.patch",
-]
-sha256 = ["SKIP", "SKIP"]
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/cpio/cpio-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "patches/cpio-2.15-c23-conformity.patch"
+sha256 = "SKIP"
 
 [lifecycle.prepare]
-script = """
+script = '''
 cd ${BUILD_DIR}
 patch -Np1 -i ${FILES_DIR}/cpio-2.15-c23-conformity.patch
-"""
+'''
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --with-rmt=/dev/null
-"""
+'''
 
 [lifecycle.compile]
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

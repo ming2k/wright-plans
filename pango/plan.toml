@@ -7,13 +7,13 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://pango.gnome.org"
 
-[sources]
-uris = ["https://download.gnome.org/sources/pango/1.57/pango-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
-
 [dependencies]
 build = ["meson", "ninja", "pkgconf", "gobject-introspection", "python"]
 link = ["glib", "cairo", "harfbuzz", "fontconfig", "fribidi", "freetype"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/pango/1.57/pango-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -28,5 +28,5 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

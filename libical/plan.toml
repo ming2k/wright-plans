@@ -11,28 +11,19 @@ url = "https://github.com/libical/libical"
 build = ["cmake", "ninja"]
 link = ["glibc", "glib", "icu", "libxml2"]
 
-[sources]
-uris = ["https://github.com/libical/libical/archive/v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/libical/libical/archive/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 mkdir -p build && cd build
-cmake .. \
-    -G Ninja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBEXECDIR=lib \
-    -DSHARED_ONLY=true \
-    -DCMAKE_DISABLE_FIND_PACKAGE_BerkeleyDB=true \
-    -DGOBJECT_INTROSPECTION=false \
-    -DICAL_GLIB_VAPI=false \
-    -DENABLE_GTK_DOC=OFF
-"""
+cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBEXECDIR=lib -DSHARED_ONLY=true -DCMAKE_DISABLE_FIND_PACKAGE_BerkeleyDB=true -DGOBJECT_INTROSPECTION=false -DICAL_GLIB_VAPI=false -DENABLE_GTK_DOC=OFF
+'''
 
 [lifecycle.compile]
 script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja install -C ${BUILD_DIR}/build"

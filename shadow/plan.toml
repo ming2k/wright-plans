@@ -10,9 +10,10 @@ url = "https://github.com/shadow-maint/shadow"
 [dependencies]
 build = ["gcc", "libxslt", "make"]
 link = ["glibc", "linux-pam"]
-[sources]
-uris = ["https://github.com/shadow-maint/shadow/releases/download/${PKG_VERSION}/shadow-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://github.com/shadow-maint/shadow/releases/download/${PKG_VERSION}/shadow-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [options]
 strip = true
@@ -66,7 +67,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
@@ -141,8 +142,9 @@ PAMEOF
 done
 '''
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 # Ensure canonical shadow setup exists even on custom/minimal systems.
 if ! getent group shadow >/dev/null 2>&1; then
   groupadd --system shadow >/dev/null 2>&1 || true
@@ -160,8 +162,7 @@ chmod 0640 /etc/shadow /etc/gshadow 2>/dev/null || true
 pwconv  2>/dev/null || true
 grpconv 2>/dev/null || true
 '''
-
-post_upgrade = '''
+hooks.post_upgrade = '''
 if ! getent group shadow >/dev/null 2>&1; then
   groupadd --system shadow >/dev/null 2>&1 || true
 fi
@@ -178,12 +179,10 @@ chmod 0640 /etc/shadow /etc/gshadow 2>/dev/null || true
 pwconv  2>/dev/null || true
 grpconv 2>/dev/null || true
 '''
-
-[backup]
-files = [
-"/etc/login.defs",
-"/etc/default/useradd",
-"/etc/pam.d/login",
-"/etc/pam.d/passwd",
-"/etc/pam.d/su",
+backup = [
+    "/etc/login.defs",
+    "/etc/default/useradd",
+    "/etc/pam.d/login",
+    "/etc/pam.d/passwd",
+    "/etc/pam.d/su",
 ]

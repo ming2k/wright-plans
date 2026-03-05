@@ -10,9 +10,9 @@ url = "https://fmt.dev/"
 [dependencies]
 build = ["gcc", "cmake", "ninja"]
 
-[sources]
-uris = ["https://github.com/fmtlib/fmt/archive/refs/tags/${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/fmtlib/fmt/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -31,7 +31,7 @@ cd ${BUILD_DIR}
 ninja -C build -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install

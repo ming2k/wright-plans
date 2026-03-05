@@ -9,9 +9,10 @@ url = "https://bitmath.org/code/mtdev/"
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-uris = ["https://bitmath.org/code/mtdev/mtdev-${PKG_VERSION}.tar.bz2"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://bitmath.org/code/mtdev/mtdev-${PKG_VERSION}.tar.bz2"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -25,7 +26,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

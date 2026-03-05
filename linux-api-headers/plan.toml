@@ -10,9 +10,9 @@ url = "https://www.kernel.org"
 [dependencies]
 build = ["make", "zlib"]
 
-[sources]
-uris = ["https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = "echo preparing linux-api-headers"
@@ -20,7 +20,7 @@ script = "echo preparing linux-api-headers"
 [lifecycle.compile]
 script = "echo no compile stage for linux-api-headers"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make mrproper

@@ -8,13 +8,13 @@ arch = "x86_64"
 url = "https://ostreedev.github.io/ostree/"
 
 [dependencies]
-build = ["gcc", "make", "pkgconf", "gettext"]
 runtime = ["systemd"]
+build = ["gcc", "make", "pkgconf", "gettext"]
 link = ["glib", "libarchive", "curl", "gpgme"]
 
-[sources]
-uris = ["https://github.com/ostreedev/ostree/releases/download/v${PKG_VERSION}/libostree-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/ostreedev/ostree/releases/download/v${PKG_VERSION}/libostree-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -38,7 +38,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} make install

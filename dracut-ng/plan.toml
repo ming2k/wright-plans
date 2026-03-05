@@ -9,12 +9,12 @@ url = "https://github.com/dracut-ng/dracut-ng"
 replaces = ["dracut"]
 
 [dependencies]
-build = ["gcc", "make", "pkgconf", "kmod"]
 runtime = ["bash", "coreutils", "cpio", "kmod", "systemd", "util-linux"]
+build = ["gcc", "make", "pkgconf", "kmod"]
 
-[sources]
-uris = ["https://github.com/dracut-ng/dracut-ng/archive/${PKG_VERSION}/dracut-ng-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/dracut-ng/dracut-ng/archive/${PKG_VERSION}/dracut-ng-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -34,7 +34,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

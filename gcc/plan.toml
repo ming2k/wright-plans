@@ -8,62 +8,62 @@ arch = "x86_64"
 url = "https://gcc.gnu.org/"
 
 [dependencies]
-build = ["binutils", "make", "perl", "texinfo"]
 runtime = ["binutils"]
+build = ["binutils", "make", "perl", "texinfo"]
 link = ["gcc-libs", "gmp", "mpc", "mpfr", "zlib"]
 
-[sources]
-uris = ["https://ftp.gnu.org/gnu/gcc/gcc-${PKG_VERSION}/gcc-${PKG_VERSION}.tar.xz"]
-sha256 = ["438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e"]
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/gcc/gcc-${PKG_VERSION}/gcc-${PKG_VERSION}.tar.xz"
+sha256 = "438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e"
 
 [options]
 strip = true
 ccache = true
 
 [lifecycle.prepare]
-script = """
+script = '''
 cd ${BUILD_DIR}
 case $(uname -m) in
     x86_64) sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64 ;;
 esac
 mkdir -v build
-"""
+'''
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}/build
-SED=sed                               \
-../configure --prefix=/usr            \
-    LD=ld                    \
+SED=sed \
+../configure --prefix=/usr \
+    LD=ld \
     --enable-languages=c,c++ \
-    --enable-default-pie     \
-    --enable-default-ssp     \
-    --enable-host-pie        \
-    --disable-multilib       \
-    --disable-bootstrap      \
-    --disable-fixincludes    \
-    --enable-shared          \
-    --enable-threads=posix   \
-    --enable-__cxa_atexit    \
-    --enable-clocale=gnu     \
+    --enable-default-pie \
+    --enable-default-ssp \
+    --enable-host-pie \
+    --disable-multilib \
+    --disable-bootstrap \
+    --disable-fixincludes \
+    --enable-shared \
+    --enable-threads=posix \
+    --enable-__cxa_atexit \
+    --enable-clocale=gnu \
     --enable-gnu-indirect-function \
     --enable-linker-build-id \
-    --enable-lto             \
-    --enable-plugin          \
+    --enable-lto \
+    --enable-plugin \
     --enable-install-libiberty \
-    --with-system-zlib       \
+    --with-system-zlib \
     --with-linker-hash-style=gnu \
     --disable-werror
-"""
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}/build
 make -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.package.gcc]
+script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PKG_DIR} install
 
@@ -74,44 +74,26 @@ ln -sv gcc.1 "${PKG_DIR}/usr/share/man/man1/cc.1"
 GCC_VER="${PKG_VERSION}"
 TRIPLET=$(gcc -dumpmachine 2>/dev/null || echo x86_64-pc-linux-gnu)
 install -d "${PKG_DIR}/usr/lib/bfd-plugins"
-ln -sfv "../../libexec/gcc/${TRIPLET}/${GCC_VER}/liblto_plugin.so" \
-    "${PKG_DIR}/usr/lib/bfd-plugins/"
+ln -sfv "../../libexec/gcc/${TRIPLET}/${GCC_VER}/liblto_plugin.so" "${PKG_DIR}/usr/lib/bfd-plugins/"
 
 # Move GDB auto-load scripts
 install -d "${PKG_DIR}/usr/share/gdb/auto-load/usr/lib"
-mv -v "${PKG_DIR}"/usr/lib/*gdb.py \
-    "${PKG_DIR}/usr/share/gdb/auto-load/usr/lib/" 2>/dev/null || true
-"""
+mv -v "${PKG_DIR}"/usr/lib/*gdb.py "${PKG_DIR}/usr/share/gdb/auto-load/usr/lib/" 2>/dev/null || true
+'''
 
-# ============================================================
-# Split: libgcc
-# ============================================================
-
-[split.libgcc]
+[lifecycle.package.libgcc]
 description = "GCC runtime library (libgcc_s.so)"
-
-[split.libgcc.dependencies]
-link = ["glibc"]
-
-[split.libgcc.lifecycle.package]
-script = """
+dependencies.link = ["glibc"]
+script = '''
 install -d "${PKG_DIR}/usr/lib"
 mv -v "${MAIN_PKG_DIR}"/usr/lib/libgcc_s.so* "${PKG_DIR}/usr/lib/"
-"""
+'''
 
-# ============================================================
-# Split: libstdc++
-# ============================================================
-
-[split."libstdc++"]
+[lifecycle.package."libstdc++"]
 description = "GNU C++ standard library"
-
-[split."libstdc++".dependencies]
-runtime = ["libgcc"]
-link = ["glibc"]
-
-[split."libstdc++".lifecycle.package]
-script = """
+dependencies.runtime = ["libgcc"]
+dependencies.link = ["glibc"]
+script = '''
 install -d "${PKG_DIR}/usr/lib"
 install -d "${PKG_DIR}/usr/share/gdb/auto-load/usr/lib"
 install -d "${PKG_DIR}/usr/share/gcc-${PKG_VERSION}/python"
@@ -121,73 +103,40 @@ mv -v "${MAIN_PKG_DIR}"/usr/lib/libstdc++fs.so* "${PKG_DIR}/usr/lib/" 2>/dev/nul
 mv -v "${MAIN_PKG_DIR}"/usr/lib/libstdc++exp.so* "${PKG_DIR}/usr/lib/" 2>/dev/null || true
 mv -v "${MAIN_PKG_DIR}"/usr/share/gdb/auto-load/usr/lib/libstdc++* "${PKG_DIR}/usr/share/gdb/auto-load/usr/lib/" 2>/dev/null || true
 mv -v "${MAIN_PKG_DIR}"/usr/share/gcc-${PKG_VERSION}/python/libstdcxx "${PKG_DIR}/usr/share/gcc-${PKG_VERSION}/python/" 2>/dev/null || true
-"""
+'''
 
-# ============================================================
-# Split: libgomp
-# ============================================================
-
-[split.libgomp]
+[lifecycle.package.libgomp]
 description = "GNU OpenMP runtime library"
-
-[split.libgomp.dependencies]
-link = ["glibc"]
-
-[split.libgomp.lifecycle.package]
-script = """
+dependencies.link = ["glibc"]
+script = '''
 install -d "${PKG_DIR}/usr/lib"
 mv -v "${MAIN_PKG_DIR}"/usr/lib/libgomp.so* "${PKG_DIR}/usr/lib/"
 mv -v "${MAIN_PKG_DIR}"/usr/lib/libgomp.spec "${PKG_DIR}/usr/lib/" 2>/dev/null || true
-"""
+'''
 
-# ============================================================
-# Split: libatomic
-# ============================================================
-
-[split.libatomic]
+[lifecycle.package.libatomic]
 description = "GCC atomic operations fallback library"
-
-[split.libatomic.dependencies]
-link = ["glibc"]
-
-[split.libatomic.lifecycle.package]
-script = """
+dependencies.link = ["glibc"]
+script = '''
 install -d "${PKG_DIR}/usr/lib"
 mv -v "${MAIN_PKG_DIR}"/usr/lib/libatomic.so* "${PKG_DIR}/usr/lib/"
-"""
+'''
 
-# ============================================================
-# Split: libsanitizer
-# ============================================================
-
-[split.libsanitizer]
+[lifecycle.package.libsanitizer]
 description = "GCC sanitizer runtime libraries (ASan, LSan, TSan, UBSan)"
-
-[split.libsanitizer.dependencies]
-runtime = ["libgcc", "libstdc++"]
-link = ["glibc"]
-
-[split.libsanitizer.lifecycle.package]
-script = """
+dependencies.runtime = ["libgcc", "libstdc++"]
+dependencies.link = ["glibc"]
+script = '''
 install -d "${PKG_DIR}/usr/lib"
 for lib in asan lsan tsan ubsan hwasan; do
     mv -v "${MAIN_PKG_DIR}"/usr/lib/lib${lib}.so* "${PKG_DIR}/usr/lib/" 2>/dev/null || true
 done
-"""
+'''
 
-# ============================================================
-# Split: gcc-libs (meta-package)
-# ============================================================
-
-[split.gcc-libs]
+[lifecycle.package.gcc-libs]
 description = "GCC runtime libraries (meta-package)"
-
-[split.gcc-libs.dependencies]
-runtime = ["libatomic", "libgcc", "libgomp", "libstdc++"]
-
-[split.gcc-libs.lifecycle.package]
-script = """
+dependencies.runtime = ["libatomic", "libgcc", "libgomp", "libstdc++"]
+script = '''
 install -d "${PKG_DIR}/usr/share/doc/gcc-libs"
-echo "gcc-libs: meta-package pulling in libgcc, libstdc++, libgomp, libatomic" \
-    > "${PKG_DIR}/usr/share/doc/gcc-libs/README"
-"""
+echo "gcc-libs: meta-package pulling in libgcc, libstdc++, libgomp, libatomic" > "${PKG_DIR}/usr/share/doc/gcc-libs/README"
+'''

@@ -10,9 +10,9 @@ url = "https://github.com/pantoniou/libfyaml"
 [dependencies]
 build = ["cmake", "ninja"]
 
-[sources]
-uris = ["https://github.com/pantoniou/libfyaml/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -31,7 +31,7 @@ script = '''
 cmake --build ${BUILD_DIR}/build -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build
 install -d ${PKG_DIR}/usr/lib/pkgconfig

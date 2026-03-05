@@ -11,27 +11,19 @@ url = "https://github.com/json-c/json-c"
 build = ["cmake", "ninja"]
 link = ["glibc"]
 
-[sources]
-uris = ["https://s3.amazonaws.com/json-c_releases/releases/json-c-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://s3.amazonaws.com/json-c_releases/releases/json-c-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 mkdir -p build && cd build
-cmake .. \
-    -G Ninja \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=/usr/lib \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-    -DBUILD_STATIC_LIBS=OFF \
-    -DENABLE_RDRAND=OFF \
-    -DENABLE_THREADING=ON
-"""
+cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_STATIC_LIBS=OFF -DENABLE_RDRAND=OFF -DENABLE_THREADING=ON
+'''
 
 [lifecycle.compile]
 script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja install -C ${BUILD_DIR}/build"

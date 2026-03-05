@@ -11,12 +11,17 @@ url = "https://github.com/util-linux/util-linux"
 build = ["gcc", "meson", "ninja", "pkgconf", "python"]
 link = ["glibc", "ncurses", "zlib", "libcap", "linux-pam", "readline"]
 
-[sources]
-uris = ["https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
+'''
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 
 # Tool ownership policy:
@@ -24,77 +29,67 @@ cd ${BUILD_DIR}
 #     (better PAM + NSS + /etc/shadow integration)
 #   mesg, write — unique to util-linux (terminal messaging)
 #   line — obsolete, not built
-meson setup build                               \
-  --prefix=/usr                                 \
-  --buildtype=release                           \
-  -D sbindir=/usr/bin                           \
-  -D fs-search-path=/usr/bin:/usr/local/bin     \
-  -D libuser=disabled                           \
-  -D libutempter=disabled                       \
-  -D ncurses=disabled                           \
-  -D ncursesw=enabled                           \
-  -D econf=disabled                             \
-  -D build-chfn-chsh=disabled                   \
-  -D build-line=disabled                        \
-  -D build-login=disabled                       \
-  -D build-mesg=enabled                         \
-  -D build-newgrp=disabled                      \
-  -D build-nologin=disabled                     \
-  -D build-su=disabled                          \
-  -D build-vipw=disabled                        \
-  -D build-write=enabled
-"""
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -D sbindir=/usr/bin \
+    -D fs-search-path=/usr/bin:/usr/local/bin \
+    -D libuser=disabled \
+    -D libutempter=disabled \
+    -D ncurses=disabled \
+    -D ncursesw=enabled \
+    -D econf=disabled \
+    -D build-chfn-chsh=disabled \
+    -D build-line=disabled \
+    -D build-login=disabled \
+    -D build-mesg=enabled \
+    -D build-newgrp=disabled \
+    -D build-nologin=disabled \
+    -D build-su=disabled \
+    -D build-vipw=disabled \
+    -D build-write=enabled
+'''
 
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
-script = """
-DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
-
+[lifecycle.package.util-linux]
+script = '''
 # Remove static libraries
 rm -f ${PKG_DIR}/usr/lib/lib*.a*
 
 # Drop Python bindings (not needed)
 rm -rf ${PKG_DIR}/usr/lib/python*
-"""
+'''
 
-[split.libuuid]
+[lifecycle.package.libuuid]
 description = "Universally Unique Identifier library"
-[split.libuuid.dependencies]
-link = ["glibc"]
-[split.libuuid.lifecycle.package]
-script = """
+dependencies.link = ["glibc"]
+script = '''
 install -d ${PKG_DIR}/usr/lib
 mv -v ${MAIN_PKG_DIR}/usr/lib/libuuid.so* ${PKG_DIR}/usr/lib/
-"""
+'''
 
-[split.libblkid]
+[lifecycle.package.libblkid]
 description = "Block device identification library"
-[split.libblkid.dependencies]
-link = ["glibc", "libuuid"]
-[split.libblkid.lifecycle.package]
-script = """
+dependencies.link = ["glibc", "libuuid"]
+script = '''
 install -d ${PKG_DIR}/usr/lib
 mv -v ${MAIN_PKG_DIR}/usr/lib/libblkid.so* ${PKG_DIR}/usr/lib/
-"""
+'''
 
-[split.libmount]
+[lifecycle.package.libmount]
 description = "Device mounting library"
-[split.libmount.dependencies]
-link = ["glibc", "libblkid"]
-[split.libmount.lifecycle.package]
-script = """
+dependencies.link = ["glibc", "libblkid"]
+script = '''
 install -d ${PKG_DIR}/usr/lib
 mv -v ${MAIN_PKG_DIR}/usr/lib/libmount.so* ${PKG_DIR}/usr/lib/
-"""
+'''
 
-[split.libsmartcols]
+[lifecycle.package.libsmartcols]
 description = "Table or tree formatting library"
-[split.libsmartcols.dependencies]
-link = ["glibc"]
-[split.libsmartcols.lifecycle.package]
-script = """
+dependencies.link = ["glibc"]
+script = '''
 install -d ${PKG_DIR}/usr/lib
 mv -v ${MAIN_PKG_DIR}/usr/lib/libsmartcols.so* ${PKG_DIR}/usr/lib/
-"""
+'''

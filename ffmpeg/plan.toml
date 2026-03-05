@@ -9,11 +9,34 @@ url = "https://ffmpeg.org"
 
 [dependencies]
 build = ["gcc", "make", "nasm", "pkgconf"]
-link = ["alsa-lib", "aom", "dav1d", "freetype", "gnutls", "libass", "libdrm", "libglvnd", "libvorbis", "libvpx", "libwebp", "libxml2", "mesa", "opus", "pipewire", "vulkan-loader", "x264", "x265", "zlib", "bzip2", "lz4", "zstd"]
+link = [
+    "alsa-lib",
+    "aom",
+    "dav1d",
+    "freetype",
+    "gnutls",
+    "libass",
+    "libdrm",
+    "libglvnd",
+    "libvorbis",
+    "libvpx",
+    "libwebp",
+    "libxml2",
+    "mesa",
+    "opus",
+    "pipewire",
+    "vulkan-loader",
+    "x264",
+    "x265",
+    "zlib",
+    "bzip2",
+    "lz4",
+    "zstd",
+]
 
-[sources]
-uris = ["https://ffmpeg.org/releases/ffmpeg-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://ffmpeg.org/releases/ffmpeg-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -50,7 +73,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

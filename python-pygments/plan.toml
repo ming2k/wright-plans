@@ -8,14 +8,14 @@ arch = "x86_64"
 url = "https://pygments.org/"
 
 [dependencies]
-build = ["python", "hatchling"]
 runtime = ["python"]
+build = ["python", "hatchling"]
 
-[sources]
-uris = ["https://pypi.org/packages/source/p/pygments/pygments-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://pypi.org/packages/source/p/pygments/pygments-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .

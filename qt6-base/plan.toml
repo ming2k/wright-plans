@@ -8,16 +8,28 @@ arch = "x86_64"
 url = "https://www.qt.io"
 
 [dependencies]
-build = ["cmake", "gcc", "ninja", "perl", "pkgconf", "python"]
 runtime = ["dbus", "double-conversion", "mesa"]
-link = ["fontconfig", "freetype", "glib", "harfbuzz", "libdrm", "libpng", "libxkbcommon", "openssl", "pcre2", "vulkan-headers", "zlib"]
+build = ["cmake", "gcc", "ninja", "perl", "pkgconf", "python"]
+link = [
+    "fontconfig",
+    "freetype",
+    "glib",
+    "harfbuzz",
+    "libdrm",
+    "libpng",
+    "libxkbcommon",
+    "openssl",
+    "pcre2",
+    "vulkan-headers",
+    "zlib",
+]
+
+[[sources]]
+uri = "https://download.qt.io/official_releases/qt/6.10/${PKG_VERSION}/submodules/qtbase-everywhere-src-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [options]
 jobs = 4
-
-[sources]
-uris = ["https://download.qt.io/official_releases/qt/6.10/${PKG_VERSION}/submodules/qtbase-everywhere-src-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
 
 [lifecycle.configure]
 script = '''
@@ -46,5 +58,5 @@ cmake -B build -G Ninja \
 [lifecycle.compile]
 script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

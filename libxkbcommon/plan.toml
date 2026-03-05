@@ -10,25 +10,18 @@ arch = "x86_64"
 build = ["meson", "ninja", "pkgconf", "bison"]
 link = ["wayland", "wayland-protocols", "xkeyboard-config"]
 
-[sources]
-uris = ["https://github.com/xkbcommon/libxkbcommon/archive/refs/tags/xkbcommon-${PKG_VERSION}.tar.gz"]
-sha256 = [
-    "aeb951964c2f7ecc08174cb5517962d157595e9e3f38fc4a130b91dc2f9fec18",
-]
+[[sources]]
+uri = "https://github.com/xkbcommon/libxkbcommon/archive/refs/tags/xkbcommon-${PKG_VERSION}.tar.gz"
+sha256 = "aeb951964c2f7ecc08174cb5517962d157595e9e3f38fc4a130b91dc2f9fec18"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-meson setup build \
-    --prefix=/usr \
-    --buildtype=release \
-    -Denable-x11=false \
-    -Denable-wayland=true \
-    -Denable-docs=false
-"""
+meson setup build --prefix=/usr --buildtype=release -Denable-x11=false -Denable-wayland=true -Denable-docs=false
+'''
 
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build"

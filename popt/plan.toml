@@ -10,18 +10,18 @@ url = "https://github.com/rpm-software-management/popt"
 [dependencies]
 link = ["glibc"]
 
-[sources]
-uris = ["https://ftp.osuosl.org/pub/rpm/popt/releases/popt-1.x/popt-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://ftp.osuosl.org/pub/rpm/popt/releases/popt-1.x/popt-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
-"""
+'''
 
 [lifecycle.compile]
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

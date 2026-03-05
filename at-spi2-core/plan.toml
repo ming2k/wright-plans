@@ -8,13 +8,13 @@ arch = "x86_64"
 url = "https://wiki.gnome.org/Accessibility"
 
 [dependencies]
-build = ["dbus", "gobject-introspection", "meson", "ninja"]
 runtime = ["dbus", "systemd"]
+build = ["dbus", "gobject-introspection", "meson", "ninja"]
 link = ["glib"]
 
-[sources]
-uris = ["https://download.gnome.org/sources/at-spi2-core/2.58/at-spi2-core-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://download.gnome.org/sources/at-spi2-core/2.58/at-spi2-core-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -26,5 +26,5 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

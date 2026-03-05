@@ -10,11 +10,11 @@ url = "https://mesonbuild.com/"
 [dependencies]
 build = ["ninja", "python", "setuptools"]
 
-[sources]
-uris = ["https://github.com/mesonbuild/meson/releases/download/${PKG_VERSION}/meson-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/mesonbuild/meson/releases/download/${PKG_VERSION}/meson-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .

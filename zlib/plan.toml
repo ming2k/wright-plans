@@ -9,27 +9,27 @@ arch = "x86_64"
 [dependencies]
 build = ["gcc", "make"]
 
-[sources]
-uris = ["https://zlib.net/zlib-${PKG_VERSION}.tar.gz"]
-sha256 = ["bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16"]
+[[sources]]
+uri = "https://zlib.net/zlib-${PKG_VERSION}.tar.gz"
+sha256 = "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
-"""
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+'''
 
 [lifecycle.check]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make check
-"""
+'''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install"

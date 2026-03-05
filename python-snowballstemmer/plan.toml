@@ -8,14 +8,14 @@ arch = "x86_64"
 url = "https://github.com/snowballstem/snowball"
 
 [dependencies]
-build = ["python", "setuptools"]
 runtime = ["python"]
+build = ["python", "setuptools"]
 
-[sources]
-uris = ["https://pypi.org/packages/source/s/snowballstemmer/snowballstemmer-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://pypi.org/packages/source/s/snowballstemmer/snowballstemmer-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .

@@ -11,9 +11,9 @@ url = "https://gitlab.freedesktop.org/pipewire/rtkit"
 build = ["gcc", "meson", "ninja", "pkgconf", "vim"]
 link = ["dbus", "libcap", "polkit", "systemd"]
 
-[sources]
-uris = ["git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${PKG_VERSION}"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${PKG_VERSION}"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -27,7 +27,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
 
@@ -41,13 +41,14 @@ if [ -d ${PKG_DIR}/usr/sbin ]; then
 fi
 '''
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/rtkit.conf
 systemctl daemon-reload
 systemctl enable --now rtkit-daemon.service
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 systemd-sysusers /usr/lib/sysusers.d/rtkit.conf
 systemctl daemon-reload
 systemctl restart rtkit-daemon.service

@@ -11,29 +11,25 @@ url = "https://btrfs.readthedocs.io"
 build = ["pkgconf"]
 link = ["util-linux", "zlib", "lzo", "zstd", "e2fsprogs", "libgcrypt", "systemd"]
 
-[sources]
-uris = ["https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure \
-    --prefix=/usr \
-    --sbindir=/usr/bin \
-    --disable-static \
-    --disable-documentation \
-    --with-crypto=libgcrypt
-"""
+./configure --prefix=/usr --sbindir=/usr/bin --disable-static --disable-documentation --with-crypto=libgcrypt
+'''
 
 [lifecycle.compile]
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
 
-[install_scripts]
-post_install = """
+
+[lifecycle.package]
+hooks.post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable btrfs-scrub@-.timer 2>/dev/null || true
-"""
+'''

@@ -8,11 +8,12 @@ arch = "x86_64"
 url = "https://wireless.wiki.kernel.org/en/users/documentation/iw"
 
 [dependencies]
-build = ["gcc", "libnl", "make"]
 runtime = ["libnl"]
-[sources]
-uris = ["https://www.kernel.org/pub/software/network/iw/iw-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+build = ["gcc", "libnl", "make"]
+
+[[sources]]
+uri = "https://www.kernel.org/pub/software/network/iw/iw-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 script = '''
@@ -20,7 +21,7 @@ cd ${BUILD_DIR}
 make PREFIX=/usr -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make PREFIX=/usr DESTDIR=${PKG_DIR} install

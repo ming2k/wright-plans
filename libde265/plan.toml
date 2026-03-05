@@ -9,11 +9,9 @@ arch = "x86_64"
 [dependencies]
 build = ["gcc", "make", "cmake"]
 
-[sources]
-uris = ["https://github.com/strukturag/libde265/releases/download/v${PKG_VERSION}/libde265-${PKG_VERSION}.tar.gz"]
-sha256 = [
-    "b92beb6b53c346db9a8fae968d686ab706240099cdd5aff87777362d668b0de7",
-]
+[[sources]]
+uri = "https://github.com/strukturag/libde265/releases/download/v${PKG_VERSION}/libde265-${PKG_VERSION}.tar.gz"
+sha256 = "b92beb6b53c346db9a8fae968d686ab706240099cdd5aff87777362d668b0de7"
 
 [lifecycle.configure]
 script = "cd ${BUILD_DIR} && cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_SHARED=ON -DENABLE_STATIC=OFF"
@@ -21,5 +19,5 @@ script = "cd ${BUILD_DIR} && cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_
 [lifecycle.compile]
 script = "make -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make -C ${BUILD_DIR}/build DESTDIR=${PKG_DIR} install"

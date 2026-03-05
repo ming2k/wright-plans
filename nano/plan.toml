@@ -10,9 +10,10 @@ url = "https://www.nano-editor.org/"
 [dependencies]
 build = ["gcc", "make"]
 link = ["ncurses"]
-[sources]
-uris = ["https://www.nano-editor.org/dist/v8/nano-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://www.nano-editor.org/dist/v8/nano-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -29,7 +30,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

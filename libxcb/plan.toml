@@ -8,30 +8,27 @@ arch = "x86_64"
 url = "https://xcb.freedesktop.org"
 
 [dependencies]
-build = ["gcc", "make", "python", "xcb-proto"]
 runtime = ["xcb-proto"]
-[sources]
-uris = ["https://xorg.freedesktop.org/archive/individual/lib/libxcb-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+build = ["gcc", "make", "python", "xcb-proto"]
+
+[[sources]]
+uri = "https://xorg.freedesktop.org/archive/individual/lib/libxcb-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr \
---sysconfdir=/etc \
---localstatedir=/var \
---disable-static \
---without-doxygen
-"""
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --without-doxygen
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-"""
+'''

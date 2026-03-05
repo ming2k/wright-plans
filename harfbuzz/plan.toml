@@ -10,9 +10,9 @@ arch = "x86_64"
 build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
 link = ["cairo", "freetype", "glib", "icu"]
 
-[sources]
-uris = ["https://github.com/harfbuzz/harfbuzz/releases/download/12.3.2/harfbuzz-12.3.2.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/harfbuzz/harfbuzz/releases/download/12.3.2/harfbuzz-12.3.2.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -35,7 +35,7 @@ cd ${BUILD_DIR}/build
 ninja -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} ninja install

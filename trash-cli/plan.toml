@@ -11,11 +11,11 @@ url = "https://github.com/andreafrancia/trash-cli"
 runtime = ["python", "python-psutil", "python-six"]
 build = ["python"]
 
-[sources]
-uris = ["https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PKG_DIR} .

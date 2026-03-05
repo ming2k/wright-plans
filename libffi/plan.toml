@@ -8,21 +8,19 @@ arch = "x86_64"
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-# Libffi 官方 GitHub 发布源
-uris = ["https://github.com/libffi/libffi/releases/download/v${PKG_VERSION}/libffi-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://github.com/libffi/libffi/releases/download/v${PKG_VERSION}/libffi-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-# --disable-static: 仅构建共享库
-# --with-gcc-arch=native: 针对当前 CPU 优化 (如果你要在不同机器上运行，请去掉此项)
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static --with-gcc-arch=native
-"""
+'''
 
 [lifecycle.compile]
 script = "cd ${BUILD_DIR} && make -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"

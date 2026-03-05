@@ -8,37 +8,32 @@ arch = "x86_64"
 url = "https://github.com/swaywm/swaylock"
 
 [dependencies]
-build = ["meson", "ninja"]
 runtime = ["cairo", "gdk-pixbuf"]
+build = ["meson", "ninja"]
 link = ["libxkbcommon", "linux-pam", "wayland", "wayland-protocols"]
-[sources]
-uris = ["https://github.com/swaywm/swaylock/releases/download/v${PKG_VERSION}/swaylock-${PKG_VERSION}.tar.gz"]
-sha256 = [
-    "aa251d5a8f335fe2ac9ec3cc2a6ac8772aa4dba2ec710ccd415956c6e89b11d3",
-]
+
+[[sources]]
+uri = "https://github.com/swaywm/swaylock/releases/download/v${PKG_VERSION}/swaylock-${PKG_VERSION}.tar.gz"
+sha256 = "aa251d5a8f335fe2ac9ec3cc2a6ac8772aa4dba2ec710ccd415956c6e89b11d3"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-meson setup build \
---prefix=/usr \
---buildtype=release \
--Dpam=enabled \
--Dgdk-pixbuf=enabled \
--Dman-pages=disabled
-"""
+meson setup build --prefix=/usr --buildtype=release -Dpam=enabled -Dgdk-pixbuf=enabled -Dman-pages=disabled
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ninja -C build
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install
-"""
+'''
 
-[install_scripts]
-post_install = "chmod a+s /usr/bin/swaylock 2>/dev/null || true"
+
+[lifecycle.package]
+hooks.post_install = "chmod a+s /usr/bin/swaylock 2>/dev/null || true"

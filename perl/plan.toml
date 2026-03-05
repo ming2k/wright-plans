@@ -10,11 +10,10 @@ url = "https://www.perl.org/"
 [dependencies]
 build = ["bzip2", "gcc", "gdbm", "make"]
 link = ["zlib"]
-[sources]
-uris = ["https://www.cpan.org/src/5.0/perl-5.42.0.tar.xz"]
-sha256 = [
-    "73cf6cc1ea2b2b1c110a18c14bbbc73a362073003893ffcedc26d22ebdbdd0c3",
-]
+
+[[sources]]
+uri = "https://www.cpan.org/src/5.0/perl-5.42.0.tar.xz"
+sha256 = "73cf6cc1ea2b2b1c110a18c14bbbc73a362073003893ffcedc26d22ebdbdd0c3"
 
 [lifecycle.configure]
 script = '''
@@ -43,7 +42,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

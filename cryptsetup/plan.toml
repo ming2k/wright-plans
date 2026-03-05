@@ -8,26 +8,22 @@ arch = "x86_64"
 url = "https://gitlab.com/cryptsetup/cryptsetup"
 
 [dependencies]
-build = ["pkgconf", "util-linux"]
 runtime = ["lvm2"]
+build = ["pkgconf", "util-linux"]
 link = ["glibc", "json-c", "openssl", "popt", "util-linux"]
 
-[sources]
-uris = ["https://www.kernel.org/pub/linux/utils/cryptsetup/v2.8/cryptsetup-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://www.kernel.org/pub/linux/utils/cryptsetup/v2.8/cryptsetup-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure \
-    --prefix=/usr \
-    --sbindir=/usr/bin \
-    --disable-ssh-token \
-    --disable-static
-"""
+./configure --prefix=/usr --sbindir=/usr/bin --disable-ssh-token --disable-static
+'''
 
 [lifecycle.compile]
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

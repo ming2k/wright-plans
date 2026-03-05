@@ -8,12 +8,13 @@ arch = "x86_64"
 url = "https://www.gnu.org/software/emacs/"
 
 [dependencies]
-build = ["gcc", "gnutls", "make", "pkgconf", "tree-sitter"]
 runtime = ["gnutls", "tree-sitter"]
+build = ["gcc", "gnutls", "make", "pkgconf", "tree-sitter"]
 link = ["glib", "glibc", "ncurses"]
-[sources]
-uris = ["https://ftp.gnu.org/gnu/emacs/emacs-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/emacs/emacs-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -41,7 +42,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

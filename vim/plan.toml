@@ -10,11 +10,10 @@ url = "https://www.vim.org"
 [dependencies]
 build = ["gcc", "autoconf", "make", "pkgconf"]
 link = ["acl", "ncurses", "zlib"]
-provides = ["xxd"]
 
-[sources]
-uris = ["https://github.com/vim/vim/archive/v${PKG_VERSION}/vim-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/vim/vim/archive/v${PKG_VERSION}/vim-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.prepare]
 script = '''
@@ -48,7 +47,7 @@ cd ${BUILD_DIR}
 [lifecycle.compile]
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 make -j1 -C ${BUILD_DIR} VIMRCLOC=/etc DESTDIR=${PKG_DIR} install
 

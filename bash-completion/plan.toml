@@ -10,18 +10,18 @@ url = "https://github.com/scop/bash-completion"
 [dependencies]
 build = ["make"]
 
-[sources]
-uris = ["https://github.com/scop/bash-completion/releases/download/${PKG_VERSION}/bash-completion-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/scop/bash-completion/releases/download/${PKG_VERSION}/bash-completion-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --sysconfdir=/etc
-"""
+'''
 
 [lifecycle.compile]
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"

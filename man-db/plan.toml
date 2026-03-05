@@ -8,14 +8,12 @@ arch = "x86_64"
 url = "https://man-db.nongnu.org/"
 
 [dependencies]
-build = ["gcc", "gdbm", "groff", "libpipeline", "make"]
 runtime = ["gdbm", "groff", "libpipeline"]
-provides = ["man"]
-[sources]
-uris = [
-"https://download.savannah.gnu.org/releases/man-db/man-db-${PKG_VERSION}.tar.xz",
-]
-sha256 = ["SKIP"]
+build = ["gcc", "gdbm", "groff", "libpipeline", "make"]
+
+[[sources]]
+uri = "https://download.savannah.gnu.org/releases/man-db/man-db-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -43,12 +41,8 @@ cd ${BUILD_DIR}
 make check
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
 '''
-
-[install_scripts]
-post_install = ""
-post_upgrade = ""

@@ -7,14 +7,15 @@ license = "MIT"
 arch = "x86_64"
 
 [dependencies]
-build = ["cmake", "gcc", "make"]
 runtime = ["brotli"]
-[sources]
-uris = ["https://github.com/google/woff2/archive/v1.0.2.tar.gz"]
-sha256 = ["SKIP"]
+build = ["cmake", "gcc", "make"]
+
+[[sources]]
+uri = "https://github.com/google/woff2/archive/v1.0.2.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.prepare]
-script = """
+script = '''
 cd ${BUILD_DIR}
 
 # 修复 1: 提升 CMake 最低版本要求以兼容 CMake 4.x
@@ -22,26 +23,23 @@ sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/cmake_minimum_required(VERSION
 
 # 修复 2: 添加缺失的头文件 <cstdint> 以修复 GCC 13+ 上的 'uint8_t does not name a type' 错误
 sed -i '/#include <string>/a #include <cstdint>' include/woff2/output.h
-"""
+'''
 
 [lifecycle.configure]
-script = """
+script = '''
 mkdir -p ${BUILD_DIR}/build
 cd ${BUILD_DIR}/build
-cmake .. \
--DCMAKE_INSTALL_PREFIX=/usr \
--DCMAKE_INSTALL_LIBDIR=lib \
--DBUILD_SHARED_LIBS=ON
-"""
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}/build
 make -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PKG_DIR} install
 
@@ -88,4 +86,4 @@ Requires: libwoff2common
 Libs: -L${libdir} -lwoff2enc
 Cflags: -I${includedir}
 PC
-"""
+'''

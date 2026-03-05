@@ -7,13 +7,13 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/fontconfig/"
 
-[sources]
-uris = ["https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/${PKG_VERSION}/fontconfig-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
-
 [dependencies]
 build = ["freetype", "meson", "ninja", "pkgconf", "gperf"]
 link = ["freetype", "expat"]
+
+[[sources]]
+uri = "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/${PKG_VERSION}/fontconfig-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -28,9 +28,10 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
-[install_scripts]
-post_install = "fc-cache -s 2>/dev/null || true"
-post_upgrade = "fc-cache -s 2>/dev/null || true"
+
+[lifecycle.package]
+hooks.post_install = "fc-cache -s 2>/dev/null || true"
+hooks.post_upgrade = "fc-cache -s 2>/dev/null || true"

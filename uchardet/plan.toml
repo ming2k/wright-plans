@@ -10,9 +10,9 @@ url = "https://www.freedesktop.org/software/uchardet/"
 [dependencies]
 build = ["gcc", "make", "cmake"]
 
-[sources]
-uris = ["https://www.freedesktop.org/software/uchardet/releases/uchardet-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://www.freedesktop.org/software/uchardet/releases/uchardet-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -30,7 +30,7 @@ cd ${BUILD_DIR}/build
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PKG_DIR} install

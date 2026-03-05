@@ -9,9 +9,10 @@ url = "https://github.com/NetworkConfiguration/dhcpcd"
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-uris = ["https://github.com/NetworkConfiguration/dhcpcd/releases/download/v${PKG_VERSION}/dhcpcd-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v${PKG_VERSION}/dhcpcd-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -31,7 +32,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

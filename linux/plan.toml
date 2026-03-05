@@ -8,15 +8,16 @@ arch = "x86_64"
 url = "https://www.kernel.org/"
 
 [dependencies]
-build = ["bc", "gcc", "make"]
 runtime = ["kmod", "dracut-ng"]
+build = ["bc", "gcc", "make"]
 
-[sources]
-uris = [
-  "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz",
-  "config",
-]
-sha256 = ["SKIP", "SKIP"]
+[[sources]]
+uri = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "config"
+sha256 = "SKIP"
 
 [options]
 strip = false
@@ -93,7 +94,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make INSTALL_MOD_PATH=${PKG_DIR}/usr modules_install
@@ -104,7 +105,3 @@ cp -v System.map ${PKG_DIR}/boot/System.map
 cp -v .config ${PKG_DIR}/boot/config
 
 '''
-
-[install_scripts]
-post_install = ""
-post_upgrade = ""

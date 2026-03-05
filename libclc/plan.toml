@@ -8,11 +8,12 @@ arch = "x86_64"
 url = "https://libclc.llvm.org/"
 
 [dependencies]
-build = ["cmake", "llvm", "make"]
 runtime = ["llvm"]
-[sources]
-uris = ["https://github.com/llvm/llvm-project/releases/download/llvmorg-${PKG_VERSION}/llvm-project-${PKG_VERSION}.src.tar.xz"]
-sha256 = ["SKIP"]
+build = ["cmake", "llvm", "make"]
+
+[[sources]]
+uri = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${PKG_VERSION}/llvm-project-${PKG_VERSION}.src.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -29,7 +30,7 @@ cd ${BUILD_DIR}/build-libclc
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build-libclc
 make DESTDIR=${PKG_DIR} install

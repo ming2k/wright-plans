@@ -10,9 +10,9 @@ url = "https://icon-theme.freedesktop.org/"
 [dependencies]
 build = ["meson", "ninja"]
 
-[sources]
-uris = ["https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -23,9 +23,10 @@ meson setup build --prefix=/usr --buildtype=release
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"
 
-[install_scripts]
-post_install = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
-post_upgrade = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
+
+[lifecycle.package]
+hooks.post_install = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
+hooks.post_upgrade = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"

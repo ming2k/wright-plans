@@ -9,25 +9,25 @@ arch = "x86_64"
 [dependencies]
 build = ["gcc", "make"]
 link = ["ncurses"]
-[sources]
-uris = ["https://thrysoee.dk/editline/libedit-${PKG_VERSION}.tar.gz"]
-# 官方发布的 SHA256 校验和
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://thrysoee.dk/editline/libedit-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
-"""
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-"""
+'''

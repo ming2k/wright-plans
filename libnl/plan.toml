@@ -9,9 +9,10 @@ url = "https://github.com/thom311/libnl"
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-uris = ["https://github.com/thom311/libnl/releases/download/libnl3_11_0/libnl-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://github.com/thom311/libnl/releases/download/libnl3_11_0/libnl-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -27,7 +28,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

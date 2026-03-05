@@ -8,23 +8,33 @@ arch = "x86_64"
 url = "https://www.openssh.com/portable.html"
 
 [dependencies]
-build = ["gcc", "make", "pkgconf"]
 runtime = ["shadow"]
+build = ["gcc", "make", "pkgconf"]
 link = ["glibc", "libedit", "linux-pam", "openssl", "zlib", "libxcrypt"]
 
-[sources]
-uris = [
-  "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${PKG_VERSION}.tar.gz",
-  "sshd.service",
-  "sshdgenkeys.service",
-  "sshd.socket",
-  "sshd@.service",
-  "ssh-agent.service",
-  "ssh-agent.socket",
-  "sshd.pam",
-  "openssh.tmpfiles",
-]
-sha256 = ["SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP", "SKIP"]
+[[sources]]
+uri = "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "sshd.service"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "ssh-agent.service"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "ssh-agent.socket"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "sshd.pam"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "openssh.tmpfiles"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -52,16 +62,13 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
 
 # ── Systemd system units ──────────────────────────────────────────────────────
 install -Dm644 ${FILES_DIR}/sshd.service         ${PKG_DIR}/usr/lib/systemd/system/sshd.service
-install -Dm644 ${FILES_DIR}/sshdgenkeys.service  ${PKG_DIR}/usr/lib/systemd/system/sshdgenkeys.service
-install -Dm644 ${FILES_DIR}/sshd.socket          ${PKG_DIR}/usr/lib/systemd/system/sshd.socket
-install -Dm644 ${FILES_DIR}/sshd@.service        ${PKG_DIR}/usr/lib/systemd/system/sshd@.service
 
 # ── Systemd user units (ssh-agent) ────────────────────────────────────────────
 install -Dm644 ${FILES_DIR}/ssh-agent.service    ${PKG_DIR}/usr/lib/systemd/user/ssh-agent.service
@@ -84,20 +91,15 @@ if [ -e ${PKG_DIR}/usr/lib/ssh/ssh-keysign ]; then
 fi
 '''
 
-[install_scripts]
-post_install = '''
-systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
-ssh-keygen -A 2>/dev/null || true
-systemctl daemon-reload 2>/dev/null || true
-'''
-post_upgrade = '''
-systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
-systemctl daemon-reload 2>/dev/null || true
-'''
 
-[backup]
-files = [
-"/etc/ssh/ssh_config",
-"/etc/ssh/sshd_config",
-"/etc/pam.d/sshd",
-]
+
+[lifecycle.package]
+hooks.post_install = '''
+systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
+systemctl daemon-reload 2>/dev/null || true
+'''
+hooks.post_upgrade = '''
+systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
+systemctl daemon-reload 2>/dev/null || true
+'''
+backup = ["/etc/ssh/ssh_config", "/etc/ssh/sshd_config", "/etc/pam.d/sshd"]

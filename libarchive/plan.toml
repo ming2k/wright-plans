@@ -7,9 +7,9 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://libarchive.org"
 
-[sources]
-uris = ["https://github.com/libarchive/libarchive/releases/download/v${PKG_VERSION}/libarchive-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/libarchive/libarchive/releases/download/v${PKG_VERSION}/libarchive-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -23,7 +23,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} make install

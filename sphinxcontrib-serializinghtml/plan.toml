@@ -8,14 +8,14 @@ arch = "x86_64"
 url = "https://github.com/sphinx-doc/sphinxcontrib-serializinghtml"
 
 [dependencies]
-build = ["python", "flit-core"]
 runtime = ["python"]
+build = ["python", "flit-core"]
 
-[sources]
-uris = ["https://pypi.org/packages/source/s/sphinxcontrib_serializinghtml/sphinxcontrib_serializinghtml-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://pypi.org/packages/source/s/sphinxcontrib_serializinghtml/sphinxcontrib_serializinghtml-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .

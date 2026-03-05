@@ -10,9 +10,9 @@ url = "https://ninja-build.org/"
 [dependencies]
 build = ["gcc", "python"]
 
-[sources]
-uris = ["https://github.com/ninja-build/ninja/archive/v${PKG_VERSION}/ninja-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/ninja-build/ninja/archive/v${PKG_VERSION}/ninja-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 script = '''
@@ -20,7 +20,7 @@ cd ${BUILD_DIR}
 python3 configure.py --bootstrap --verbose
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 ninja ${PKG_DIR}/usr/bin/ninja

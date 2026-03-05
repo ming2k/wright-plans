@@ -10,9 +10,10 @@ url = "https://www.mpfr.org/"
 [dependencies]
 build = ["make"]
 link = ["gmp"]
-[sources]
-uris = ["https://ftp.gnu.org/gnu/mpfr/mpfr-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/mpfr/mpfr-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -36,7 +37,7 @@ cd ${BUILD_DIR}
 make check
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

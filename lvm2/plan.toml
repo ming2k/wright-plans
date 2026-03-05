@@ -10,38 +10,27 @@ url = "https://sourceware.org/lvm2"
 [dependencies]
 build = ["pkgconf"]
 link = ["systemd", "readline", "util-linux", "libaio"]
-provides = ["device-mapper"]
 
-[sources]
-uris = ["https://sourceware.org/pub/lvm2/LVM2.${PKG_VERSION}.tgz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://sourceware.org/pub/lvm2/LVM2.${PKG_VERSION}.tgz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure \
-    --prefix=/usr \
-    --sbindir=/usr/bin \
-    --enable-cmdlib \
-    --enable-pkgconfig \
-    --enable-udev_sync \
-    --with-udev-prefix=/usr \
-    --with-systemdsystemunitdir=/usr/lib/systemd/system \
-    --enable-dmeventd \
-    --enable-lvmpolld \
-    --enable-blkid_wiping \
-    --with-readline
-"""
+./configure --prefix=/usr --sbindir=/usr/bin --enable-cmdlib --enable-pkgconfig --enable-udev_sync --with-udev-prefix=/usr --with-systemdsystemunitdir=/usr/lib/systemd/system --enable-dmeventd --enable-lvmpolld --enable-blkid_wiping --with-readline
+'''
 
 [lifecycle.compile]
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
 
-[install_scripts]
-post_install = """
+
+[lifecycle.package]
+hooks.post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable lvm2-monitor.service 2>/dev/null || true
-"""
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+'''
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

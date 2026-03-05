@@ -11,9 +11,9 @@ url = "https://www.musicpd.org/"
 build = ["gcc", "meson", "ninja", "pkgconf"]
 link = ["alsa-lib", "pipewire", "ffmpeg", "sqlite", "curl", "dbus", "libsndfile", "fmt"]
 
-[sources]
-uris = ["https://github.com/MusicPlayerDaemon/MPD/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/MusicPlayerDaemon/MPD/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -57,7 +57,7 @@ cd ${BUILD_DIR}
 ninja -C build -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install
@@ -66,6 +66,7 @@ install -vDm644 doc/mpdconf.example \
   ${PKG_DIR}/usr/share/doc/mpd/mpdconf.example
 '''
 
-[install_scripts]
-post_install = "systemctl daemon-reload 2>/dev/null || true"
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+
+[lifecycle.package]
+hooks.post_install = "systemctl daemon-reload 2>/dev/null || true"
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

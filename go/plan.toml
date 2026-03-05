@@ -7,11 +7,11 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://go.dev"
 
-[sources]
-uris = ["https://go.dev/dl/go${PKG_VERSION}.linux-amd64.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://go.dev/dl/go${PKG_VERSION}.linux-amd64.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 mkdir -p ${PKG_DIR}/usr/lib
 cp -a ${BUILD_DIR} ${PKG_DIR}/usr/lib/go

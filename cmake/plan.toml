@@ -9,9 +9,10 @@ url = "https://cmake.org/"
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-uris = ["https://cmake.org/files/v4.2/cmake-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://cmake.org/files/v4.2/cmake-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -32,7 +33,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

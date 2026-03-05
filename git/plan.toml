@@ -8,29 +8,25 @@ arch = "x86_64"
 url = "https://git-scm.com/"
 
 [dependencies]
-runtime = ["ca-certificates", "curl", "expat", "perl", "openssl", "pcre2", "grep", "shadow", "zlib-ng", "openssh"]
+runtime = [
+    "ca-certificates",
+    "curl",
+    "expat",
+    "perl",
+    "openssl",
+    "pcre2",
+    "grep",
+    "shadow",
+    "zlib-ng",
+    "openssh",
+]
 build = ["python", "rust", "libsecret"]
 link = ["curl", "expat", "openssl", "pcre2", "zlib-ng", "libsecret"]
-optional = [
-  { name = "zsh", description = "upstream zsh completion" },
-  { name = "tk", description = "gitk and git gui" },
-  { name = "man", description = "show help with `git command --help`" },
-  { name = "perl-libwww", description = "git svn" },
-  { name = "perl-term-readkey", description = "git svn and interactive.singlekey" },
-  { name = "perl-io-socket-ssl", description = "git send-email TLS support" },
-  { name = "perl-authen-sasl", description = "git send-email TLS support" },
-  { name = "perl-cgi", description = "gitweb support" },
-  { name = "perl-error", description = "extended Perl error handling" },
-  { name = "perl-mailtools", description = "git send-email support" },
-  { name = "python", description = "git svn & git p4" },
-  { name = "subversion", description = "git svn" },
-    { name = "libsecret", description = "libsecret credential helper" },
-  { name = "less", description = "default pager" },
-]
+optional = [{name = "zsh", description = "upstream zsh completion"}, {name = "tk", description = "gitk and git gui"}, {name = "man", description = "show help with `git command --help`"}, {name = "perl-libwww", description = "git svn"}, {name = "perl-term-readkey", description = "git svn and interactive.singlekey"}, {name = "perl-io-socket-ssl", description = "git send-email TLS support"}, {name = "perl-authen-sasl", description = "git send-email TLS support"}, {name = "perl-cgi", description = "gitweb support"}, {name = "perl-error", description = "extended Perl error handling"}, {name = "perl-mailtools", description = "git send-email support"}, {name = "python", description = "git svn & git p4"}, {name = "subversion", description = "git svn"}, {name = "libsecret", description = "libsecret credential helper"}, {name = "less", description = "default pager"}]
 
-[sources]
-uris = ["https://www.kernel.org/pub/software/scm/git/git-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://www.kernel.org/pub/software/scm/git/git-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 script = '''
@@ -103,7 +99,7 @@ make \
   -C contrib/diff-highlight
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 

@@ -9,28 +9,18 @@ arch = "x86_64"
 [dependencies]
 build = ["gcc", "make", "readline", "zlib"]
 link = ["readline", "zlib"]
-[sources]
-uris = ["https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PKG_VERSION}/pcre2-${PKG_VERSION}.tar.bz2"]
-sha256 = [
-    "47fe8c99461250d42f89e6e8fdaeba9da057855d06eb7fc08d9ca03fd08d7bc7",
-]
+
+[[sources]]
+uri = "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PKG_VERSION}/pcre2-${PKG_VERSION}.tar.bz2"
+sha256 = "47fe8c99461250d42f89e6e8fdaeba9da057855d06eb7fc08d9ca03fd08d7bc7"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr \
---docdir=/usr/share/doc/pcre2-${PKG_VERSION} \
---enable-unicode \
---enable-jit \
---enable-pcre2-16 \
---enable-pcre2-32 \
---enable-pcre2grep-libz \
---enable-pcre2grep-libbz2 \
---enable-pcre2test-libreadline \
-"""
+./configure --prefix=/usr --docdir=/usr/share/doc/pcre2-${PKG_VERSION} --enable-unicode --enable-jit --enable-pcre2-16 --enable-pcre2-32 --enable-pcre2grep-libz --enable-pcre2grep-libbz2 --enable-pcre2test-libreadline '''
 
 [lifecycle.compile]
 script = "cd ${BUILD_DIR} && make -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"

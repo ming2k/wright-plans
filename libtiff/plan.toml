@@ -11,18 +11,18 @@ url = "https://libtiff.gitlab.io/libtiff/"
 build = ["gcc", "make"]
 link = ["zlib", "libjpeg-turbo"]
 
-[sources]
-uris = ["https://download.osgeo.org/libtiff/tiff-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://download.osgeo.org/libtiff/tiff-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static
-"""
+'''
 
 [lifecycle.compile]
 script = "make -C ${BUILD_DIR} -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "make -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install"

@@ -9,24 +9,25 @@ url = "https://xcb.freedesktop.org"
 
 [dependencies]
 build = ["python"]
-[sources]
-uris = ["https://xorg.freedesktop.org/archive/individual/proto/xcb-proto-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://xorg.freedesktop.org/archive/individual/proto/xcb-proto-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
-"""
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-"""
+'''

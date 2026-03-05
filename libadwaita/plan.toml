@@ -10,9 +10,9 @@ arch = "x86_64"
 build = ["meson", "ninja", "sassc"]
 link = ["glib", "gtk4"]
 
-[sources]
-uris = ["https://download.gnome.org/sources/libadwaita/1.8/libadwaita-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://download.gnome.org/sources/libadwaita/1.8/libadwaita-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = "meson setup build ${BUILD_DIR} --prefix=/usr --buildtype=release -Dintrospection=enabled -Dvapi=false -Dtests=false"
@@ -20,5 +20,5 @@ script = "meson setup build ${BUILD_DIR} --prefix=/usr --buildtype=release -Dint
 [lifecycle.compile]
 script = "ninja -C build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C build install"

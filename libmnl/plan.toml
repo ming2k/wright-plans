@@ -10,28 +10,28 @@ url = "https://netfilter.org/projects/libmnl/"
 [dependencies]
 build = ["gcc", "make"]
 link = ["glibc"]
-[sources]
-uris = ["https://netfilter.org/projects/libmnl/files/libmnl-${PKG_VERSION}.tar.bz2"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://netfilter.org/projects/libmnl/files/libmnl-${PKG_VERSION}.tar.bz2"
+sha256 = "SKIP"
 
 [options]
 strip = true
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr \
---disable-static
-"""
+./configure --prefix=/usr --disable-static
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-"""
+'''

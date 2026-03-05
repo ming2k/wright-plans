@@ -8,15 +8,13 @@ arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/dbus/"
 
 [dependencies]
-build = ["gcc", "meson", "ninja", "pkgconf"]
 runtime = ["systemd"]
+build = ["gcc", "meson", "ninja", "pkgconf"]
 link = ["expat", "libsystemd"]
 
-[sources]
-uris = [
-"https://dbus.freedesktop.org/releases/dbus/dbus-${PKG_VERSION}.tar.xz",
-]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://dbus.freedesktop.org/releases/dbus/dbus-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -46,7 +44,7 @@ cd ${BUILD_DIR}/build
 ninja
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} ninja install
@@ -55,8 +53,9 @@ DESTDIR=${PKG_DIR} ninja install
 ln -sfv /etc/machine-id ${PKG_DIR}/var/lib/dbus
 '''
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 groupadd -fg 22 dbus 2>/dev/null || true
 useradd -r -u 22 -g dbus -d /var/empty -s /usr/bin/nologin \
     -c "dbus unprivileged user" dbus 2>/dev/null || true
@@ -66,19 +65,20 @@ if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
     chmod 4750 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
 fi
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
     chown root:dbus /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
     chmod 4750 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
 fi
 '''
-
 [split.libdbus]
 description = "D-Bus low-level shared library"
+
 [split.libdbus.dependencies]
 link = ["glibc"]
+
 [split.libdbus.lifecycle.package]
-script = """
+script = '''
 install -d ${PKG_DIR}/usr/lib
 mv -v ${MAIN_PKG_DIR}/usr/lib/libdbus-1.so* ${PKG_DIR}/usr/lib/
-"""
+'''

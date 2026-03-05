@@ -10,9 +10,9 @@ url = "http://www.doxygen.nl"
 [dependencies]
 build = ["cmake", "gcc", "flex", "python"]
 
-[sources]
-uris = ["https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_16_1.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_16_1.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -31,7 +31,7 @@ cd ${BUILD_DIR}
 cmake --build build -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} cmake --install build

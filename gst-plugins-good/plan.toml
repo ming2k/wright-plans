@@ -7,32 +7,29 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
 [dependencies]
-build = ["cairo", "gdk-pixbuf", "gst-plugins-base", "gstreamer", "meson", "ninja", "pkgconf"]
 runtime = ["cairo", "gdk-pixbuf", "gst-plugins-base", "gstreamer"]
+build = ["cairo", "gdk-pixbuf", "gst-plugins-base", "gstreamer", "meson", "ninja", "pkgconf"]
 link = ["libsoup"]
-[sources]
-uris = ["https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.28.0.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.28.0.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
-meson setup build \
---prefix=/usr \
---libdir=lib \
--Dtests=disabled \
--Ddoc=disabled
-"""
+meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Ddoc=disabled
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}/build
 ninja -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} ninja install
-"""
+'''

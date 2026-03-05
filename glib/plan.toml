@@ -11,9 +11,9 @@ url = "https://wiki.gnome.org/Projects/GLib"
 build = ["gobject-introspection", "meson", "ninja", "pkgconf", "python", "gettext"]
 link = ["libffi", "pcre2", "zlib", "util-linux"]
 
-[sources]
-uris = ["https://download.gnome.org/sources/glib/2.86/glib-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://download.gnome.org/sources/glib/2.86/glib-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -32,32 +32,18 @@ script = '''
 meson compile -C ${BUILD_DIR}/build
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
 '''
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gio-querymodules /usr/lib/gio/modules 2>/dev/null || true
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gio-querymodules /usr/lib/gio/modules 2>/dev/null || true
-'''
-
-[mvp.dependencies]
-build = ["meson", "ninja", "pkgconf", "python", "gettext"]
-
-[mvp.lifecycle.configure]
-script = '''
-cd ${BUILD_DIR}
-meson setup build          \
-    --prefix=/usr          \
-    --buildtype=release    \
-    -Dman-pages=disabled   \
-    -Dtests=false          \
-    -Dselinux=disabled    \
-    -Dintrospection=disabled
 '''

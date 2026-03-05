@@ -11,9 +11,9 @@ url = "https://github.com/tmux/tmux/wiki"
 build = ["gcc", "make"]
 link = ["libevent", "ncurses", "systemd"]
 
-[sources]
-uris = ["https://github.com/tmux/tmux/releases/download/${PKG_VERSION}/tmux-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/tmux/tmux/releases/download/${PKG_VERSION}/tmux-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -29,7 +29,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

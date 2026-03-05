@@ -9,24 +9,25 @@ url = "https://salsa.debian.org/iso-codes-team/iso-codes"
 
 [dependencies]
 build = ["python"]
-[sources]
-uris = ["https://salsa.debian.org/iso-codes-team/iso-codes/-/archive/v${PKG_VERSION}/iso-codes-v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://salsa.debian.org/iso-codes-team/iso-codes/-/archive/v${PKG_VERSION}/iso-codes-v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
-"""
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-"""
+'''

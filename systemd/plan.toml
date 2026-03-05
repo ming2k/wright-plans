@@ -1,74 +1,127 @@
 [plan]
 name = "systemd"
-version = "259.1"
-release = 6
-description = "System and Service Manager (rebuilt with PAM support)"
+version = "259.2"
+release = 1
+description = "System and Service Manager"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/systemd/systemd"
 
 [dependencies]
-build = ["gcc", "gperf", "llvm", "python-jinja2", "python-pyelftools", "meson", "ninja", "pkgconf", "python"]
-runtime = ["libsystemd", "libudev"]
-link = ["glibc", "linux-pam"]
+runtime = ["bash", "dbus", "hwdata", "kbd", "kmod"]
+build = [
+    "gcc",
+    "gperf",
+    "llvm",
+    "python-jinja2",
+    "python-pyelftools",
+    "meson",
+    "ninja",
+    "pkgconf",
+    "python",
+]
+link = [
+    "acl",
+    "cryptsetup",
+    "glibc",
+    "libcap",
+    "libgcrypt",
+    "libidn2",
+    "libseccomp",
+    "libxcrypt",
+    "linux-pam",
+    "lz4",
+    "openssl",
+    "p11-kit",
+    "pcre2",
+    "util-linux",
+    "xz",
+    "zstd",
+]
 
-[sources]
-uris = ["https://github.com/systemd/systemd/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/systemd/systemd/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "90-theseus.preset"
+sha256 = "SKIP"
 
 [options]
 strip = true
 
 [lifecycle.prepare]
-script = """
+script = '''
 cd ${BUILD_DIR}
 sed -i -e 's/GROUP="render"/GROUP="video"/' \
--e 's/GROUP="sgx", //' \
-rules.d/50-udev-default.rules.in
-"""
+       -e 's/GROUP="sgx", //' \
+       rules.d/50-udev-default.rules.in
+'''
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 mkdir -p build
 cd build
-meson setup ..                                    \
---prefix=/usr                                   \
---buildtype=release                             \
--D sbindir=/usr/bin                             \
--D version-tag="${PKG_VERSION}-theseus"         \
--D default-dnssec=no                            \
--D firstboot=true                               \
--D install-tests=false                          \
--D ldconfig=false                               \
--D man=disabled                                 \
--D sysusers=true                               \
--D rpmmacrosdir=no                              \
--D homed=disabled                               \
--D mode=release                                 \
--D pam=enabled                                  \
--D pamconfdir=/usr/lib/pam.d                    \
--D dev-kvm-mode=0660                            \
--D nobody-group=nogroup                         \
--D sysupdate=disabled                           \
--D ukify=disabled                               \
--D bootloader=enabled                           \
--D sbat-distro=theseus                          \
--D sbat-distro-summary="Ship of Theseus"        \
--D sbat-distro-pkgname=systemd                  \
--D sbat-distro-version=${PKG_VERSION}           \
--D sbat-distro-url=https://github.com/anthropic \
--D docdir=/usr/share/doc/systemd-${PKG_VERSION}
-"""
+meson setup .. \
+    --prefix=/usr \
+    --buildtype=release \
+    -D libdir=lib \
+    -D sbindir=/usr/bin \
+    -D version-tag="${PKG_VERSION}-theseus" \
+    -D vcs-tag=false \
+    -D shared-lib-tag="${PKG_VERSION}" \
+    -D mode=release \
+    -D install-tests=false \
+    -D ldconfig=false \
+    -D man=disabled \
+    -D rpmmacrosdir=no \
+    -D sysvinit-path= \
+    -D sysvrcnd-path= \
+    -D dbuspolicydir=/usr/share/dbus-1/system.d \
+    -D firstboot=true \
+    -D sysusers=true \
+    -D pam=enabled \
+    -D pamconfdir=/usr/lib/pam.d \
+    -D logind=true \
+    -D networkd=true \
+    -D resolve=true \
+    -D seccomp=enabled \
+    -D libidn2=enabled \
+    -D lz4=enabled \
+    -D dns-over-tls=openssl \
+    -D ukify=auto \
+    -D bootloader=enabled \
+    -D homed=disabled \
+    -D sysupdate=disabled \
+    -D audit=disabled \
+    -D selinux=disabled \
+    -D default-dnssec=no \
+    -D default-kill-user-processes=false \
+    -D default-locale='C.UTF-8' \
+    -D fallback-hostname='theseus' \
+    -D nologin-path=/usr/bin/nologin \
+    -D dev-kvm-mode=0660 \
+    -D nobody-group=nogroup \
+    -D sbat-distro=theseus \
+    -D sbat-distro-summary="Ship of Theseus" \
+    -D sbat-distro-pkgname=systemd \
+    -D sbat-distro-version=${PKG_VERSION} \
+    -D sbat-distro-url=https://github.com/anthropic \
+    -D docdir=/usr/share/doc/systemd-${PKG_VERSION}
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}/build
 ninja -j$(nproc)
-"""
+'''
 
-[lifecycle.package]
-script = """
+# systemd's test suite requires a running systemd instance and root privileges,
+# making it impractical to run inside a build dockyard. Skip check stage.
+
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} ninja install
 
@@ -86,47 +139,123 @@ done
 # init → systemd
 ln -sf ../lib/systemd/systemd ${PKG_DIR}/usr/bin/init 2>/dev/null || true
 
-cat > ${PKG_DIR}/usr/lib/pam.d/systemd-user << 'PAMEOF'
-# Begin /usr/lib/pam.d/systemd-user
-account  required    pam_access.so
-account  include     system-account
-session  required    pam_env.so
-session  required    pam_limits.so
-session  required    pam_unix.so
-session  required    pam_loginuid.so
-session  optional    pam_keyinit.so force revoke
-session  optional    pam_systemd.so
-auth     required    pam_deny.so
-password required    pam_deny.so
-# End /usr/lib/pam.d/systemd-user
-PAMEOF
-"""
+# Ensure getty@tty1 enable symlink is baked into the package so it survives
+# upgrades without depending on systemctl being available at install time.
+mkdir -p ${PKG_DIR}/etc/systemd/system/getty.target.wants
+ln -sf /usr/lib/systemd/system/getty@.service \
+       ${PKG_DIR}/etc/systemd/system/getty.target.wants/getty@tty1.service
 
-[install_scripts]
-post_install = """
-systemctl preset getty@tty1.service 2>/dev/null || true
+# Preset policy: 90-theseus.preset explicitly enables core services.
+# 99-default.preset denies everything else. (Arch approach)
+install -Dm644 ${FILES_DIR}/90-theseus.preset ${PKG_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
+echo 'disable *' > ${PKG_DIR}/usr/lib/systemd/system-preset/99-default.preset
+
+# Remove factory files that conflict with the filesystem package
+rm -f ${PKG_DIR}/usr/share/factory/etc/issue
+rm -f ${PKG_DIR}/usr/share/factory/etc/nsswitch.conf
+sed -i '/^C \/etc\/nsswitch/d; /^C \/etc\/issue/d' \
+       ${PKG_DIR}/usr/lib/tmpfiles.d/etc.conf
+'''
+
+[lifecycle.package]
+
+# MVP: break the circular dependency systemd → cryptsetup → device-mapper → libudev (systemd).
+# First pass builds without cryptsetup so libudev.so gets installed on the system.
+# Second pass (full) builds with cryptsetup enabled.
+
+hooks.post_install = '''
+ldconfig 2>/dev/null || true
+systemd-machine-id-setup 2>/dev/null || true
+systemctl preset-all 2>/dev/null || true
 systemctl daemon-reexec 2>/dev/null || true
-"""
-post_upgrade = """
+'''
+hooks.post_upgrade = '''
+ldconfig 2>/dev/null || true
 systemctl daemon-reexec 2>/dev/null || true
-"""
+'''
+backup = [
+    "/etc/systemd/coredump.conf",
+    "/etc/systemd/journald.conf",
+    "/etc/systemd/logind.conf",
+    "/etc/systemd/networkd.conf",
+    "/etc/systemd/oomd.conf",
+    "/etc/systemd/resolved.conf",
+    "/etc/systemd/sleep.conf",
+    "/etc/systemd/system.conf",
+    "/etc/systemd/timesyncd.conf",
+    "/etc/systemd/user.conf",
+    "/etc/udev/iocost.conf",
+    "/etc/udev/udev.conf",
+]
+[mvp.dependencies]
+link = [
+    "acl",
+    "glibc",
+    "libcap",
+    "libgcrypt",
+    "libidn2",
+    "libseccomp",
+    "libxcrypt",
+    "linux-pam",
+    "lz4",
+    "openssl",
+    "p11-kit",
+    "pcre2",
+    "util-linux",
+    "xz",
+    "zstd",
+]
 
-[split.libudev]
-description = "Library for enumerating and introspecting local devices"
-[split.libudev.dependencies]
-link = ["glibc"]
-[split.libudev.lifecycle.package]
-script = """
-install -d ${PKG_DIR}/usr/lib
-mv -v ${MAIN_PKG_DIR}/usr/lib/libudev.so* ${PKG_DIR}/usr/lib/
-"""
-
-[split.libsystemd]
-description = "systemd client library"
-[split.libsystemd.dependencies]
-link = ["glibc", "libcap", "lz4", "zstd", "libgcrypt"]
-[split.libsystemd.lifecycle.package]
-script = """
-install -d ${PKG_DIR}/usr/lib
-mv -v ${MAIN_PKG_DIR}/usr/lib/libsystemd.so* ${PKG_DIR}/usr/lib/
-"""
+[mvp.lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+mkdir -p build
+cd build
+meson setup .. \
+    --prefix=/usr \
+    --buildtype=release \
+    -D libdir=lib \
+    -D sbindir=/usr/bin \
+    -D version-tag="${PKG_VERSION}-theseus" \
+    -D vcs-tag=false \
+    -D shared-lib-tag="${PKG_VERSION}" \
+    -D mode=release \
+    -D install-tests=false \
+    -D ldconfig=false \
+    -D man=disabled \
+    -D rpmmacrosdir=no \
+    -D sysvinit-path= \
+    -D sysvrcnd-path= \
+    -D dbuspolicydir=/usr/share/dbus-1/system.d \
+    -D firstboot=true \
+    -D sysusers=true \
+    -D pam=enabled \
+    -D pamconfdir=/usr/lib/pam.d \
+    -D logind=true \
+    -D networkd=true \
+    -D resolve=true \
+    -D seccomp=enabled \
+    -D libidn2=enabled \
+    -D lz4=enabled \
+    -D dns-over-tls=openssl \
+    -D ukify=auto \
+    -D bootloader=enabled \
+    -D homed=disabled \
+    -D sysupdate=disabled \
+    -D audit=disabled \
+    -D selinux=disabled \
+    -D libcryptsetup=disabled \
+    -D default-dnssec=no \
+    -D default-kill-user-processes=false \
+    -D default-locale='C.UTF-8' \
+    -D fallback-hostname='theseus' \
+    -D nologin-path=/usr/bin/nologin \
+    -D dev-kvm-mode=0660 \
+    -D nobody-group=nogroup \
+    -D sbat-distro=theseus \
+    -D sbat-distro-summary="Ship of Theseus" \
+    -D sbat-distro-pkgname=systemd \
+    -D sbat-distro-version=${PKG_VERSION} \
+    -D sbat-distro-url=https://github.com/anthropic \
+    -D docdir=/usr/share/doc/systemd-${PKG_VERSION}
+'''

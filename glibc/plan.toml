@@ -11,15 +11,16 @@ url = "https://www.gnu.org/software/libc/"
 runtime = ["linux-api-headers >= 4.10", "tzdata >= 2025c"]
 build = ["bison", "gawk", "gcc", "make", "python", "sed"]
 
-[sources]
-uris = [
-    "https://ftp.gnu.org/gnu/glibc/glibc-${PKG_VERSION}.tar.xz",
-    "locale.gen",
-]
-sha256 = ["SKIP", "SKIP"]
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/glibc/glibc-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "locale.gen"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 # Glibc requires an out-of-tree build
 mkdir -pv ${BUILD_DIR}/build
 cd ${BUILD_DIR}/build
@@ -34,38 +35,44 @@ sbindir=/usr/bin
 rootsbindir=/usr/bin
 EOF
 
-../configure                          \\
-  --prefix=/usr                       \\
-  --libdir=/usr/lib                   \\
-  --libexecdir=/usr/lib               \\
-  --with-headers=/usr/include         \\
-  --enable-bind-now                   \\
-  --enable-cet                        \\
-  --enable-fortify-source             \\
-  --enable-kernel=5.4                 \\
-  --enable-multi-arch                 \\
-  --enable-stack-protector=strong     \\
-  --disable-nscd                      \\
-  --disable-profile                   \\
+../configure                          \
+  --prefix=/usr                       \
+  --libdir=/usr/lib                   \
+  --libexecdir=/usr/lib               \
+  --with-headers=/usr/include         \
+  --enable-bind-now                   \
+  --enable-cet                        \
+  --enable-fortify-source             \
+  --enable-kernel=5.4                 \
+  --enable-multi-arch                 \
+  --enable-stack-protector=strong     \
+  --disable-nscd                      \
+  --disable-profile                   \
   --disable-werror
-"""
+'''
 
 [lifecycle.compile]
 dockyard = "strict"
-script = """
+script = '''
 cd ${BUILD_DIR}/build
 make -O -j$(nproc)
-"""
+'''
 
 [lifecycle.check]
 optional = true
-script = """
+script = '''
 cd ${BUILD_DIR}/build
 make -O check || true
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.post_package]
+script = '''
+mkdir -p /usr/lib/locale
+localedef -i C -f UTF-8 C.UTF-8
+'''
+
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}/build
 
 mkdir -p ${PKG_DIR}/etc
@@ -117,17 +124,15 @@ include /etc/ld.so.conf.d/*.conf
 
 LDEOF
 mkdir -pv ${PKG_DIR}/etc/ld.so.conf.d
-"""
+'''
 
-[lifecycle.post_package]
-script = """
-mkdir -p /usr/lib/locale
-localedef -i C -f UTF-8 C.UTF-8
-"""
 
-[backup]
-files = ["/etc/nsswitch.conf", "/etc/ld.so.conf", "/etc/locale.gen", "/etc/locale.conf"]
-
-[install_scripts]
-post_install = "ldconfig"
-post_upgrade = "ldconfig"
+[lifecycle.package]
+hooks.post_install = "ldconfig"
+hooks.post_upgrade = "ldconfig"
+backup = [
+    "/etc/nsswitch.conf",
+    "/etc/ld.so.conf",
+    "/etc/locale.gen",
+    "/etc/locale.conf",
+]

@@ -9,13 +9,23 @@ url = "https://www.python.org/"
 
 [dependencies]
 build = ["gcc", "make", "pkgconf"]
-link = ["expat", "libffi", "ncurses", "openssl", "readline", "zlib", "bzip2", "xz", "sqlite", "gdbm", "libxcrypt"]
-
-[sources]
-uris = ["https://www.python.org/ftp/python/${PKG_VERSION}/Python-${PKG_VERSION}.tar.xz"]
-sha256 = [
-    "a97d5549e9ad81fe17159ed02c68774ad5d266c72f8d9a0b5a9c371fe85d902b",
+link = [
+    "expat",
+    "libffi",
+    "ncurses",
+    "openssl",
+    "readline",
+    "zlib",
+    "bzip2",
+    "xz",
+    "sqlite",
+    "gdbm",
+    "libxcrypt",
 ]
+
+[[sources]]
+uri = "https://www.python.org/ftp/python/${PKG_VERSION}/Python-${PKG_VERSION}.tar.xz"
+sha256 = "a97d5549e9ad81fe17159ed02c68774ad5d266c72f8d9a0b5a9c371fe85d902b"
 
 [lifecycle.configure]
 script = '''
@@ -33,7 +43,7 @@ cd ${BUILD_DIR}
 [lifecycle.compile]
 script = "make -C ${BUILD_DIR} -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

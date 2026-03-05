@@ -10,9 +10,10 @@ url = "https://github.com/gavinhoward/bc"
 [dependencies]
 build = ["gcc", "make"]
 link = ["readline"]
-[sources]
-uris = ["https://github.com/gavinhoward/bc/releases/download/${PKG_VERSION}/bc-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://github.com/gavinhoward/bc/releases/download/${PKG_VERSION}/bc-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -32,7 +33,7 @@ cd ${BUILD_DIR}
 make test
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

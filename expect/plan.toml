@@ -8,14 +8,16 @@ arch = "x86_64"
 url = "https://core.tcl.tk/expect/"
 
 [dependencies]
-build = ["gcc", "make", "tcl"]
 runtime = ["tcl"]
-[sources]
-uris = [
-"https://downloads.sourceforge.net/project/expect/Expect/${PKG_VERSION}/expect${PKG_VERSION}.tar.gz",
-"https://www.linuxfromscratch.org/patches/lfs/12.4/expect-${PKG_VERSION}-gcc15-1.patch",
-]
-sha256 = ["SKIP", "SKIP"]
+build = ["gcc", "make", "tcl"]
+
+[[sources]]
+uri = "https://downloads.sourceforge.net/project/expect/Expect/${PKG_VERSION}/expect${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "https://www.linuxfromscratch.org/patches/lfs/12.4/expect-${PKG_VERSION}-gcc15-1.patch"
+sha256 = "SKIP"
 
 [lifecycle.prepare]
 script = '''
@@ -46,7 +48,7 @@ cd ${BUILD_DIR}
 make test
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

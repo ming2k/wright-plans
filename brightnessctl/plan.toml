@@ -8,24 +8,21 @@ arch = "x86_64"
 url = "https://github.com/Hummer12007/brightnessctl"
 
 [dependencies]
-build = ["gcc", "make"]
 runtime = ["systemd"]
-[sources]
-uris = ["https://github.com/Hummer12007/brightnessctl/archive/${PKG_VERSION}/brightnessctl-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+build = ["gcc", "make"]
+
+[[sources]]
+uri = "https://github.com/Hummer12007/brightnessctl/archive/${PKG_VERSION}/brightnessctl-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make ENABLE_SYSTEMD=1
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
-make install \
-DESTDIR=${PKG_DIR} \
-PREFIX=/usr \
-ENABLE_SYSTEMD=1 \
-INSTALL_UDEV_RULES=0
-"""
+make install DESTDIR=${PKG_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0
+'''

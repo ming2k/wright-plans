@@ -10,25 +10,25 @@ url = "http://hunspell.sourceforge.net/"
 [dependencies]
 build = ["gawk", "gcc", "make", "patch"]
 link = ["glibc"]
-[sources]
-# Using Debian mirror for stability
-uris = ["http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${PKG_VERSION}.orig.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${PKG_VERSION}.orig.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
-"""
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-"""
+'''

@@ -9,14 +9,14 @@ url = "https://packaging.pypa.io/"
 replaces = ["packaging"]
 
 [dependencies]
-build = ["flit-core", "python"]
 runtime = ["python"]
+build = ["flit-core", "python"]
 
-[sources]
-uris = ["https://pypi.org/packages/source/p/packaging/packaging-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://pypi.org/packages/source/p/packaging/packaging-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .

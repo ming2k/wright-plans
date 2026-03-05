@@ -10,11 +10,10 @@ options = ["!strip"]
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-uris = [
-"https://ftp.gnu.org/gnu/binutils/binutils-${PKG_VERSION}.tar.gz",
-]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/binutils/binutils-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -41,7 +40,7 @@ cd ${BUILD_DIR}/build
 make tooldir=/usr
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PKG_DIR} tooldir=/usr install
@@ -50,11 +49,12 @@ make DESTDIR=${PKG_DIR} tooldir=/usr install
 rm -fv ${PKG_DIR}/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a
 '''
 
-[install_scripts]
-post_install = """
+
+[lifecycle.package]
+hooks.post_install = '''
 # Clean old binutils residuals
 rm -f /usr/lib/libbfd-2.45.so /usr/lib/libbfd-2.44.so /usr/lib/libbfd-2.43.1.so
 rm -f /usr/lib/libsframe.so.1.0.0
 ldconfig
-"""
-post_upgrade = "ldconfig"
+'''
+hooks.post_upgrade = "ldconfig"

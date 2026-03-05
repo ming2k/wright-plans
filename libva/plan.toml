@@ -11,11 +11,9 @@ url = "https://github.com/intel/libva"
 build = ["meson", "ninja", "pkgconf"]
 link = ["libdrm", "mesa", "wayland"]
 
-[sources]
-uris = ["https://github.com/intel/libva/archive/refs/tags/${PKG_VERSION}.tar.gz"]
-sha256 = [
-    "b10aceb30e93ddf13b2030eb70079574ba437be9b3b76065caf28a72c07e23e7",
-]
+[[sources]]
+uri = "https://github.com/intel/libva/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "b10aceb30e93ddf13b2030eb70079574ba437be9b3b76065caf28a72c07e23e7"
 
 [lifecycle.configure]
 script = '''
@@ -31,5 +29,5 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

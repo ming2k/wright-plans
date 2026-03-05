@@ -11,9 +11,9 @@ url = "https://asciidoctor.org"
 runtime = ["ruby"]
 build = ["ruby"]
 
-[sources]
-uris = ["https://github.com/asciidoctor/asciidoctor/archive/refs/tags/v${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/asciidoctor/asciidoctor/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.prepare]
 script = '''
@@ -69,7 +69,7 @@ find "tmp_install${_gemdir}/extensions/" \
   -delete
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 

@@ -9,9 +9,10 @@ url = "https://facebook.github.io/zstd/"
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-uris = ["https://github.com/facebook/zstd/releases/download/v${PKG_VERSION}/zstd-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://github.com/facebook/zstd/releases/download/v${PKG_VERSION}/zstd-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 script = '''
@@ -19,7 +20,7 @@ cd ${BUILD_DIR}
 make prefix=/usr -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make prefix=/usr DESTDIR=${PKG_DIR} install

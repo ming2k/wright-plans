@@ -8,11 +8,12 @@ arch = "x86_64"
 url = "https://www.gnu.org/software/texinfo/"
 
 [dependencies]
-build = ["gcc", "make", "perl"]
 runtime = ["perl"]
-[sources]
-uris = ["https://ftp.gnu.org/gnu/texinfo/texinfo-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+build = ["gcc", "make", "perl"]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/texinfo/texinfo-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.prepare]
 script = '''
@@ -32,7 +33,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

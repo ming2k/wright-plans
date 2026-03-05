@@ -11,9 +11,9 @@ url = "https://pipewire.pages.freedesktop.org/wireplumber/"
 build = ["meson", "ninja", "pkgconf"]
 link = ["glib", "lua", "pipewire", "systemd"]
 
-[sources]
-uris = ["https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${PKG_VERSION}/wireplumber-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${PKG_VERSION}/wireplumber-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -30,9 +30,10 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
-[install_scripts]
-post_install = "systemctl daemon-reload 2>/dev/null || true"
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+
+[lifecycle.package]
+hooks.post_install = "systemctl daemon-reload 2>/dev/null || true"
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

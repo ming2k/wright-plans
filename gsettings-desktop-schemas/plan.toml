@@ -10,31 +10,30 @@ url = "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas"
 [dependencies]
 build = ["gobject-introspection", "meson", "ninja"]
 link = ["glib"]
-[sources]
-uris = ["https://download.gnome.org/sources/gsettings-desktop-schemas/49/gsettings-desktop-schemas-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/gsettings-desktop-schemas/49/gsettings-desktop-schemas-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-meson setup build \
---prefix=/usr \
---buildtype=release \
--Dintrospection=true
-"""
+meson setup build --prefix=/usr --buildtype=release -Dintrospection=true
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 ninja -C build
-"""
+'''
 
-[lifecycle.package]
-script = """
+[lifecycle.staging]
+script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} ninja -C build install
-"""
+'''
 
-[install_scripts]
-post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
-post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
+
+[lifecycle.package]
+hooks.post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
+hooks.post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"

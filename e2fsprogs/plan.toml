@@ -10,9 +10,9 @@ url = "https://e2fsprogs.sourceforge.net"
 [dependencies]
 build = ["util-linux"]
 
-[sources]
-uris = ["https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${PKG_VERSION}/e2fsprogs-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${PKG_VERSION}/e2fsprogs-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -36,7 +36,7 @@ cd ${BUILD_DIR}/build
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PKG_DIR} make install

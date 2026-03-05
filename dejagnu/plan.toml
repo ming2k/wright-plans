@@ -8,11 +8,12 @@ arch = "x86_64"
 url = "https://www.gnu.org/software/dejagnu/"
 
 [dependencies]
-build = ["expect", "make", "texinfo"]
 runtime = ["expect"]
-[sources]
-uris = ["https://ftp.gnu.org/gnu/dejagnu/dejagnu-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+build = ["expect", "make", "texinfo"]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/dejagnu/dejagnu-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -35,7 +36,7 @@ cd ${BUILD_DIR}/build
 make check
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PKG_DIR} install

@@ -10,9 +10,9 @@ url = "https://github.com/aristocratos/btop"
 [dependencies]
 build = ["gcc", "make", "libcap"]
 
-[sources]
-uris = ["https://github.com/aristocratos/btop/archive/refs/tags/v${PKG_VERSION}/btop-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/aristocratos/btop/archive/refs/tags/v${PKG_VERSION}/btop-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 script = '''
@@ -20,7 +20,7 @@ cd ${BUILD_DIR}
 make all -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} PREFIX=/usr install

@@ -11,9 +11,9 @@ url = "https://www.openssl.org/"
 build = ["gcc", "make", "perl"]
 link = ["zlib"]
 
-[sources]
-uris = ["https://github.com/openssl/openssl/releases/download/openssl-${PKG_VERSION}/openssl-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/openssl/openssl/releases/download/openssl-${PKG_VERSION}/openssl-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -31,7 +31,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile

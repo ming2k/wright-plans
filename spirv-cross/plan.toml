@@ -10,9 +10,9 @@ url = "https://github.com/KhronosGroup/SPIRV-Cross"
 [dependencies]
 build = ["gcc", "make", "cmake"]
 
-[sources]
-uris = ["https://github.com/KhronosGroup/SPIRV-Cross/archive/refs/tags/vulkan-sdk-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/KhronosGroup/SPIRV-Cross/archive/refs/tags/vulkan-sdk-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -32,7 +32,7 @@ cd ${BUILD_DIR}/build
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PKG_DIR} install

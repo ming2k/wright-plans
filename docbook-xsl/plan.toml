@@ -10,14 +10,14 @@ url = "https://github.com/docbook/xslt10-stylesheets"
 [dependencies]
 runtime = ["libxml2"]
 
+[[sources]]
+uri = "https://github.com/docbook/xslt10-stylesheets/releases/download/release/${PKG_VERSION}/docbook-xsl-nons-${PKG_VERSION}.tar.bz2"
+sha256 = "SKIP"
+
 [options]
 strip = false
 
-[sources]
-uris = ["https://github.com/docbook/xslt10-stylesheets/releases/download/release/${PKG_VERSION}/docbook-xsl-nons-${PKG_VERSION}.tar.bz2"]
-sha256 = ["SKIP"]
-
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 install -dm755 "${PKG_DIR}/usr/share/xml/docbook"
 cp -r "${BUILD_DIR}/." "${PKG_DIR}/usr/share/xml/docbook/xsl-stylesheets-${PKG_VERSION}/"
@@ -38,8 +38,9 @@ cat > "${PKG_DIR}/usr/share/xml/docbook/xsl-stylesheets-${PKG_VERSION}/catalog.x
 EOF
 '''
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 install -dm755 /etc/xml
 [ -f /etc/xml/catalog ] || xmlcatalog --noout --create /etc/xml/catalog
 xmlcatalog --noout --add rewriteURI "http://cdn.docbook.org/release/xsl/current/"             "file:///usr/share/xml/docbook/xsl-stylesheets/" /etc/xml/catalog
@@ -47,8 +48,7 @@ xmlcatalog --noout --add rewriteURI "http://cdn.docbook.org/release/xsl-nons/cur
 xmlcatalog --noout --add rewriteURI "http://docbook.sourceforge.net/release/xsl/current/"     "file:///usr/share/xml/docbook/xsl-stylesheets/" /etc/xml/catalog
 xmlcatalog --noout --add rewriteURI "http://docbook.sourceforge.net/release/xsl-nons/current/" "file:///usr/share/xml/docbook/xsl-stylesheets/" /etc/xml/catalog
 '''
-
-post_upgrade = '''
+hooks.post_upgrade = '''
 xmlcatalog --noout --del "http://cdn.docbook.org/release/xsl/current/"              /etc/xml/catalog 2>/dev/null || true
 xmlcatalog --noout --del "http://cdn.docbook.org/release/xsl-nons/current/"         /etc/xml/catalog 2>/dev/null || true
 xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl/current/"      /etc/xml/catalog 2>/dev/null || true
@@ -58,8 +58,7 @@ xmlcatalog --noout --add rewriteURI "http://cdn.docbook.org/release/xsl-nons/cur
 xmlcatalog --noout --add rewriteURI "http://docbook.sourceforge.net/release/xsl/current/"     "file:///usr/share/xml/docbook/xsl-stylesheets/" /etc/xml/catalog
 xmlcatalog --noout --add rewriteURI "http://docbook.sourceforge.net/release/xsl-nons/current/" "file:///usr/share/xml/docbook/xsl-stylesheets/" /etc/xml/catalog
 '''
-
-pre_remove = '''
+hooks.pre_remove = '''
 xmlcatalog --noout --del "http://cdn.docbook.org/release/xsl/current/"              /etc/xml/catalog 2>/dev/null || true
 xmlcatalog --noout --del "http://cdn.docbook.org/release/xsl-nons/current/"         /etc/xml/catalog 2>/dev/null || true
 xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl/current/"      /etc/xml/catalog 2>/dev/null || true

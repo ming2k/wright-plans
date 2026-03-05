@@ -11,9 +11,9 @@ url = "https://fishshell.com/"
 build = ["cmake", "make", "pkgconf", "rust", "git", "jq", "gettext"]
 link = ["pcre2"]
 
-[sources]
-uris = ["https://github.com/fish-shell/fish-shell/releases/download/${PKG_VERSION}/fish-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/fish-shell/fish-shell/releases/download/${PKG_VERSION}/fish-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -35,7 +35,7 @@ cd ${BUILD_DIR}
 make -C build -j$(nproc) VERBOSE=1
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} cmake --install build

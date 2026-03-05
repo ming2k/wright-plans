@@ -11,9 +11,9 @@ url = "https://libevent.org/"
 build = ["gcc", "make"]
 link = ["openssl"]
 
-[sources]
-uris = ["https://github.com/libevent/libevent/releases/download/release-${PKG_VERSION}/libevent-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/libevent/libevent/releases/download/release-${PKG_VERSION}/libevent-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -27,7 +27,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

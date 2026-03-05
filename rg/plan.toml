@@ -8,13 +8,13 @@ arch = "x86_64"
 url = "https://github.com/BurntSushi/ripgrep"
 
 [dependencies]
-build = ["rust"]
 runtime = ["pcre2"]
+build = ["rust"]
 link = ["gcc", "pcre2", "glibc"]
 
-[sources]
-uris = ["https://github.com/BurntSushi/ripgrep/archive/refs/tags/${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://github.com/BurntSushi/ripgrep/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 dockyard = "relaxed"
@@ -23,7 +23,7 @@ cd ${BUILD_DIR}
 cargo build --release --locked --features pcre2
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 target/release/rg ${PKG_DIR}/usr/bin/rg

@@ -8,14 +8,20 @@ arch = "x86_64"
 url = "https://hatch.pypa.io/"
 
 [dependencies]
+runtime = [
+    "python",
+    "python-packaging",
+    "python-pathspec",
+    "python-pluggy",
+    "python-trove-classifiers",
+]
 build = ["python"]
-runtime = ["python", "python-packaging", "python-pathspec", "python-pluggy", "python-trove-classifiers"]
 
-[sources]
-uris = ["https://pypi.org/packages/source/h/hatchling/hatchling-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://pypi.org/packages/source/h/hatchling/hatchling-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .

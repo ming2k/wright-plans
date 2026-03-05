@@ -11,9 +11,9 @@ url = "https://gnupg.org/software/pinentry/"
 build = ["gcc", "make", "pkgconf"]
 link = ["libassuan", "libgpg-error", "ncurses"]
 
-[sources]
-uris = ["https://gnupg.org/ftp/gcrypt/pinentry/pinentry-${PKG_VERSION}.tar.bz2"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://gnupg.org/ftp/gcrypt/pinentry/pinentry-${PKG_VERSION}.tar.bz2"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -37,7 +37,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} make install

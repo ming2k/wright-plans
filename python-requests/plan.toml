@@ -8,14 +8,20 @@ arch = "x86_64"
 url = "https://requests.readthedocs.io/"
 
 [dependencies]
+runtime = [
+    "python",
+    "python-charset-normalizer",
+    "python-idna",
+    "python-urllib3",
+    "python-certifi",
+]
 build = ["python", "setuptools"]
-runtime = ["python", "python-charset-normalizer", "python-idna", "python-urllib3", "python-certifi"]
 
-[sources]
-uris = ["https://pypi.org/packages/source/r/requests/requests-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://pypi.org/packages/source/r/requests/requests-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .

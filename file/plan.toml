@@ -9,9 +9,10 @@ url = "https://www.darwinsys.com/file/"
 
 [dependencies]
 build = ["gcc", "make"]
-[sources]
-uris = ["https://astron.com/pub/file/file-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://astron.com/pub/file/file-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -31,7 +32,7 @@ cd ${BUILD_DIR}
 make check
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

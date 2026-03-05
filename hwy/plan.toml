@@ -8,23 +8,18 @@ arch = "x86_64"
 
 [dependencies]
 build = ["cmake", "gcc", "ninja"]
-[sources]
-# 修正: 字段名必须是 uris
-uris = ["https://github.com/google/highway/archive/refs/tags/${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://github.com/google/highway/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
-cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja \
--DCMAKE_BUILD_TYPE=Release \
--DCMAKE_INSTALL_PREFIX=/usr \
--DBUILD_SHARED_LIBS=ON \
--DHWY_ENABLE_EXAMPLES=OFF \
--DHWY_ENABLE_TESTS=OFF
-"""
+script = '''
+cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON -DHWY_ENABLE_EXAMPLES=OFF -DHWY_ENABLE_TESTS=OFF
+'''
 
 [lifecycle.compile]
 script = "cmake --build ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build"

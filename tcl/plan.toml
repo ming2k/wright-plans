@@ -10,9 +10,9 @@ url = "https://www.tcl.tk/"
 [dependencies]
 build = ["gcc", "make"]
 
-[sources]
-uris = ["https://downloads.sourceforge.net/project/tcl/Tcl/${PKG_VERSION}/tcl${PKG_VERSION}-src.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://downloads.sourceforge.net/project/tcl/Tcl/${PKG_VERSION}/tcl${PKG_VERSION}-src.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -28,7 +28,7 @@ cd ${BUILD_DIR}/unix
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/unix
 make DESTDIR=${PKG_DIR} install

@@ -7,51 +7,27 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
 [dependencies]
+runtime = ["glycin"]
 build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
 link = ["glib", "glycin", "libjpeg-turbo", "libpng", "libtiff", "shared-mime-info"]
-runtime = ["glycin"]
 
-[sources]
-uris = ["https://download.gnome.org/sources/gdk-pixbuf/2.44/gdk-pixbuf-${PKG_VERSION}.tar.xz"]
-sha256 = [
-    "69b93e09139b80c0ee661503d60deb5a5874a31772b5184b9cd5462a4100ab68",
-]
+[[sources]]
+uri = "https://download.gnome.org/sources/gdk-pixbuf/2.44/gdk-pixbuf-${PKG_VERSION}.tar.xz"
+sha256 = "69b93e09139b80c0ee661503d60deb5a5874a31772b5184b9cd5462a4100ab68"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-meson setup build \
-    --prefix=/usr \
-    --buildtype=release \
-    -Dman=false \
-    -Dgtk_doc=false \
-    -Dtests=false \
-    -Dintrospection=enabled \
-    -Dglycin=enabled
-"""
+meson setup build --prefix=/usr --buildtype=release -Dman=false -Dgtk_doc=false -Dtests=false -Dintrospection=enabled -Dglycin=enabled
+'''
 
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"
 
-[install_scripts]
-post_install = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
-post_upgrade = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 
-[mvp.dependencies]
-link = ["glib", "libjpeg-turbo", "libpng", "libtiff", "shared-mime-info"]
-
-[mvp.lifecycle.configure]
-script = """
-cd ${BUILD_DIR}
-meson setup build \
-    --prefix=/usr \
-    --buildtype=release \
-    -Dman=false \
-    -Dgtk_doc=false \
-    -Dtests=false \
-    -Dintrospection=enabled \
-    -Dglycin=disabled
-"""
+[lifecycle.package]
+hooks.post_install = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
+hooks.post_upgrade = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"

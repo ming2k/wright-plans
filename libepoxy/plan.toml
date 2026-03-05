@@ -8,12 +8,13 @@ arch = "x86_64"
 url = "https://github.com/anholt/libepoxy"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf"]
 runtime = ["mesa"]
+build = ["meson", "ninja", "pkgconf"]
 link = ["mesa", "libglvnd"]
-[sources]
-uris = ["https://download.gnome.org/sources/libepoxy/1.5/libepoxy-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -29,7 +30,7 @@ script = '''
 meson compile -C ${BUILD_DIR}/build
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
 '''

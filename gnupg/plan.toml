@@ -7,13 +7,22 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://gnupg.org"
 
-[sources]
-uris = ["https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${PKG_VERSION}.tar.bz2"]
-sha256 = ["SKIP"]
-
 [dependencies]
 runtime = ["pinentry"]
-link = ["libgcrypt", "libgpg-error", "libassuan", "libksba", "npth", "readline", "gnutls", "sqlite"]
+link = [
+    "libgcrypt",
+    "libgpg-error",
+    "libassuan",
+    "libksba",
+    "npth",
+    "readline",
+    "gnutls",
+    "sqlite",
+]
+
+[[sources]]
+uri = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${PKG_VERSION}.tar.bz2"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -34,7 +43,7 @@ cd ${BUILD_DIR}
 make -j$(nproc) LDFLAGS="${LDFLAGS} -lreadline -lhistory"
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PKG_DIR} make install

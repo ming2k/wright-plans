@@ -11,9 +11,9 @@ url = "https://github.com/xiph/vorbis"
 build = ["gcc", "make"]
 link = ["libogg"]
 
-[sources]
-uris = ["https://downloads.xiph.org/releases/vorbis/libvorbis-${PKG_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://downloads.xiph.org/releases/vorbis/libvorbis-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -27,7 +27,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

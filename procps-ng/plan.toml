@@ -10,14 +10,10 @@ url = "https://gitlab.com/procps-ng/procps"
 [dependencies]
 build = ["gcc", "gettext", "make"]
 link = ["ncurses", "systemd"]
-provides = ["procps", "libproc2.so"]
-replaces = ["procps"]
 
-[sources]
-uris = [
-  "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${PKG_VERSION}.tar.xz",
-]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -41,7 +37,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install

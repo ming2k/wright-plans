@@ -8,15 +8,44 @@ arch = "x86_64"
 url = "https://flatpak.org"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "libxslt", "gettext", "gobject-introspection", "python-pyparsing", "bubblewrap", "xdg-dbus-proxy"]
-runtime = ["ca-certificates", "dbus", "systemd", "xdg-desktop-portal", "xdg-desktop-portal-gtk", "shared-mime-info"]
-link = ["glib", "libarchive", "libxml2", "ostree", "polkit", "json-glib", "curl", "appstream", "gdk-pixbuf", "libjpeg-turbo", "libfuse3", "gpgme", "libseccomp"]
-
-[sources]
-uris = ["https://github.com/flatpak/flatpak/releases/download/${PKG_VERSION}/flatpak-${PKG_VERSION}.tar.xz"]
-sha256 = [
-    "3d6bd3f5f8940e80c087286ca3e42182fc630d780894536511fcd2cffc12cf5b",
+runtime = [
+    "ca-certificates",
+    "dbus",
+    "systemd",
+    "xdg-desktop-portal",
+    "xdg-desktop-portal-gtk",
+    "shared-mime-info",
 ]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "libxslt",
+    "gettext",
+    "gobject-introspection",
+    "python-pyparsing",
+    "bubblewrap",
+    "xdg-dbus-proxy",
+]
+link = [
+    "glib",
+    "libarchive",
+    "libxml2",
+    "ostree",
+    "polkit",
+    "json-glib",
+    "curl",
+    "appstream",
+    "gdk-pixbuf",
+    "libjpeg-turbo",
+    "libfuse3",
+    "gpgme",
+    "libseccomp",
+]
+
+[[sources]]
+uri = "https://github.com/flatpak/flatpak/releases/download/${PKG_VERSION}/flatpak-${PKG_VERSION}.tar.xz"
+sha256 = "3d6bd3f5f8940e80c087286ca3e42182fc630d780894536511fcd2cffc12cf5b"
 
 [lifecycle.configure]
 script = '''
@@ -42,7 +71,7 @@ meson setup build \
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build"
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
 mkdir -p ${PKG_DIR}/var/lib/flatpak
@@ -53,13 +82,14 @@ kernel.unprivileged_userns_clone = 1
 SYSCTLEOF
 '''
 
-[install_scripts]
-post_install = '''
+
+[lifecycle.package]
+hooks.post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/flatpak.conf 2>/dev/null || true
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 '''

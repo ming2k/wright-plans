@@ -1,0 +1,9 @@
+enable systemd-networkd.service
+enable systemd-resolved.service
+enable systemd-timesyncd.service
+enable systemd-journald.service
+enable systemd-tmpfiles-setup.service
+enable systemd-tmpfiles-cleanup.timer
+enable systemd-udevd.service
+enable systemd-logind.service
+enable systemd-oomd.service

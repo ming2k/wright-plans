@@ -10,9 +10,10 @@ url = "https://gitlab.gnome.org/GNOME/libxslt"
 [dependencies]
 build = ["gcc", "make"]
 link = ["libxml2"]
-[sources]
-uris = ["https://download.gnome.org/sources/libxslt/1.1/libxslt-${PKG_VERSION}.tar.xz"]
-sha256 = ["SKIP"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/libxslt/1.1/libxslt-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -28,7 +29,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.package]
+[lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
