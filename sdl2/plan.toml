@@ -1,0 +1,42 @@
+[plan]
+name = "sdl2"
+version = "2.32.10"
+release = 1
+description = "Simple DirectMedia Layer"
+license = "Zlib"
+arch = "x86_64"
+url = "https://www.libsdl.org/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf", "wayland-protocols"]
+link = ["alsa-lib", "dbus", "libxkbcommon", "pipewire", "wayland"]
+
+[[sources]]
+uri = "https://www.libsdl.org/release/SDL2-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --disable-static \
+  --enable-video-wayland \
+  --disable-video-x11 \
+  --disable-rpath
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} make install
+
+rm -f ${PKG_DIR}/usr/lib/libSDL2.a
+test -f ${PKG_DIR}/usr/lib/pkgconfig/sdl2.pc
+'''

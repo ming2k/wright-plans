@@ -1,6 +1,6 @@
 [plan]
 name = "niri"
-version = "25.05"
+version = "25.11"
 release = 1
 description = "Scrollable-tiling Wayland compositor"
 license = "GPL-3.0-or-later"
@@ -8,7 +8,14 @@ arch = "x86_64"
 url = "https://github.com/YaLTeR/niri"
 
 [dependencies]
-runtime = ["seatd", "pipewire", "xwayland", "polkit-gnome"]
+runtime = [
+    "seatd",
+    "pipewire",
+    "xwayland",
+    "polkit-gnome",
+    "xdg-desktop-portal",
+    "xdg-desktop-portal-gtk",
+]
 build = ["cargo", "pkgconf", "rust"]
 link = [
     "cairo",
@@ -25,7 +32,7 @@ link = [
 
 [[sources]]
 uri = "https://github.com/YaLTeR/niri/archive/refs/tags/v25.05.tar.gz"
-sha256 = "SKIP"
+sha256 = "deb067a8af2febb29bdcf72b98a2e654e3e2a199e7f3b3d622436983071ebe32"
 
 [lifecycle.configure]
 script = '''
@@ -51,5 +58,12 @@ mkdir -p ${PKG_DIR}/usr/lib/systemd/user
 cp resources/niri.service ${PKG_DIR}/usr/lib/systemd/user/
 cp resources/niri-shutdown.target ${PKG_DIR}/usr/lib/systemd/user/
 install -Dm755 resources/niri-session ${PKG_DIR}/usr/bin/niri-session
-install -Dm644 resources/niri-portals.conf ${PKG_DIR}/usr/share/xdg-desktop-portal/niri-portals.conf
+install -Dm644 /dev/null ${PKG_DIR}/usr/share/xdg-desktop-portal/niri-portals.conf
+cat > ${PKG_DIR}/usr/share/xdg-desktop-portal/niri-portals.conf <<'EOF'
+[preferred]
+default=gtk;
+org.freedesktop.impl.portal.Access=gtk;
+org.freedesktop.impl.portal.Notification=gtk;
+org.freedesktop.impl.portal.Secret=gnome-keyring;
+EOF
 '''

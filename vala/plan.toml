@@ -1,0 +1,34 @@
+[plan]
+name = "vala"
+version = "0.56.18"
+release = 1
+description = "Programming language and compiler that generates GObject-based C code"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/vala"
+
+[dependencies]
+build = ["bison", "flex", "meson", "ninja", "pkgconf"]
+link = ["glib"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/vala/0.56/vala-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-valadoc
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

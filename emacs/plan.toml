@@ -1,7 +1,7 @@
 [plan]
 name = "emacs"
 version = "30.2"
-release = 1
+release = 2
 description = "The extensible, customizable, self-documenting real-time display editor"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/emacs/"
 [dependencies]
 runtime = ["gnutls", "tree-sitter"]
 build = ["gcc", "gnutls", "make", "pkgconf", "tree-sitter"]
-link = ["glib", "glibc", "ncurses"]
+link = ["glib", "glibc", "gtk3", "harfbuzz", "ncurses", "pango"]
 
 [[sources]]
 uri = "https://ftp.gnu.org/gnu/emacs/emacs-${PKG_VERSION}.tar.xz"
@@ -23,7 +23,7 @@ cd ${BUILD_DIR}
 --with-json              \
 --with-tree-sitter       \
 --with-native-compilation=no \
---without-x              \
+--with-pgtk                \
 --without-xpm            \
 --without-jpeg           \
 --without-tiff           \

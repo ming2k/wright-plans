@@ -1,14 +1,14 @@
 [plan]
 name = "ffmpeg"
 version = "8.0.1"
-release = 1
+release = 4
 description = "Complete, cross-platform solution to record, convert and stream audio and video"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://ffmpeg.org"
 
 [dependencies]
-build = ["gcc", "make", "nasm", "pkgconf"]
+build = ["gcc", "make", "nasm", "pkgconf", "sdl2"]
 link = [
     "alsa-lib",
     "aom",
@@ -25,6 +25,7 @@ link = [
     "mesa",
     "opus",
     "pipewire",
+    "sdl2",
     "vulkan-loader",
     "x264",
     "x265",
@@ -41,6 +42,17 @@ sha256 = "SKIP"
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
+
+pkg-config --exists sdl2 || {
+  echo "ffplay requested but SDL2 pkg-config metadata is missing"
+  exit 1
+}
+
+command -v sdl2-config >/dev/null 2>&1 || {
+  echo "ffplay requested but sdl2-config is missing from the build environment"
+  exit 1
+}
+
 ./configure \
   --prefix=/usr \
   --disable-debug \
@@ -61,6 +73,8 @@ cd ${BUILD_DIR}
   --enable-libx265 \
   --enable-libxml2 \
   --enable-libopus \
+  --enable-sdl2 \
+  --enable-ffplay \
   --enable-vulkan \
   --enable-libdrm \
   --enable-lto \
@@ -77,4 +91,6 @@ make -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
+
+test -x ${PKG_DIR}/usr/bin/ffplay
 '''

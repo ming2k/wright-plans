@@ -1,0 +1,45 @@
+[plan]
+name = "gnome-keyring"
+version = "48.0"
+release = 1
+description = "Secret storage service and key manager for GNOME"
+license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/gnome-keyring"
+
+[dependencies]
+runtime = ["dbus", "gcr3", "libsecret", "linux-pam", "p11-kit"]
+build = ["gettext", "libxslt", "meson", "ninja", "pkgconf"]
+link = ["dbus", "gcr3", "glib", "libsecret", "linux-pam", "p11-kit"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/gnome-keyring/48/gnome-keyring-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build --prefix=/usr --buildtype=release -Dsystemd=disabled -Dssh-agent=true
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+meson compile -C build
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+meson install -C build --destdir ${PKG_DIR}
+'''
+
+[lifecycle.package]
+hooks.post_install = '''
+glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
+ldconfig 2>/dev/null || true
+'''
+hooks.post_upgrade = '''
+glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
+ldconfig 2>/dev/null || true
+'''

@@ -1,0 +1,44 @@
+[plan]
+name = "ripgrep"
+version = "15.1.0"
+release = 1
+description = "Fast line-oriented regex search tool"
+license = "MIT OR Unlicense"
+arch = "x86_64"
+url = "https://github.com/BurntSushi/ripgrep"
+
+[dependencies]
+runtime = ["pcre2"]
+build = ["rust"]
+link = ["gcc", "pcre2", "glibc"]
+
+[relations]
+replaces = ["rg"]
+conflicts = ["rg"]
+provides = ["rg"]
+
+[[sources]]
+uri = "https://github.com/BurntSushi/ripgrep/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+dockyard = "relaxed"
+script = '''
+cd ${BUILD_DIR}
+cargo build --release --locked --features pcre2
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 target/release/rg ${PKG_DIR}/usr/bin/rg
+
+if [ -f doc/rg.1 ]; then
+  install -Dm644 doc/rg.1 ${PKG_DIR}/usr/share/man/man1/rg.1
+fi
+if [ -d complete ]; then
+  install -Dm644 complete/rg.bash ${PKG_DIR}/usr/share/bash-completion/completions/rg || true
+  install -Dm644 complete/_rg ${PKG_DIR}/usr/share/zsh/site-functions/_rg || true
+  install -Dm644 complete/rg.fish ${PKG_DIR}/usr/share/fish/vendor_completions.d/rg.fish || true
+fi
+'''
