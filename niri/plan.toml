@@ -11,10 +11,7 @@ url = "https://github.com/YaLTeR/niri"
 runtime = [
     "seatd",
     "pipewire",
-    "xwayland",
-    "polkit-gnome",
     "xdg-desktop-portal",
-    "xdg-desktop-portal-gtk",
 ]
 build = ["cargo", "pkgconf", "rust"]
 link = [
@@ -31,8 +28,9 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/YaLTeR/niri/archive/refs/tags/v25.05.tar.gz"
-sha256 = "deb067a8af2febb29bdcf72b98a2e654e3e2a199e7f3b3d622436983071ebe32"
+uri = "https://github.com/YaLTeR/niri/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
 
 [lifecycle.configure]
 script = '''
@@ -58,12 +56,4 @@ mkdir -p ${PKG_DIR}/usr/lib/systemd/user
 cp resources/niri.service ${PKG_DIR}/usr/lib/systemd/user/
 cp resources/niri-shutdown.target ${PKG_DIR}/usr/lib/systemd/user/
 install -Dm755 resources/niri-session ${PKG_DIR}/usr/bin/niri-session
-install -Dm644 /dev/null ${PKG_DIR}/usr/share/xdg-desktop-portal/niri-portals.conf
-cat > ${PKG_DIR}/usr/share/xdg-desktop-portal/niri-portals.conf <<'EOF'
-[preferred]
-default=gtk;
-org.freedesktop.impl.portal.Access=gtk;
-org.freedesktop.impl.portal.Notification=gtk;
-org.freedesktop.impl.portal.Secret=gnome-keyring;
-EOF
 '''

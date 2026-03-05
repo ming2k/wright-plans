@@ -1,0 +1,44 @@
+[plan]
+name = "xdg-desktop-portal-wlr"
+version = "0.7.1"
+release = 1
+description = "XDG Desktop Portal backend for wlroots-based Wayland compositors (including niri)"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/emersion/xdg-desktop-portal-wlr"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "scdoc"]
+link = [
+    "pipewire",
+    "wayland",
+    "inih",
+]
+runtime = ["xdg-desktop-portal", "pipewire"]
+
+[[sources]]
+uri = "https://github.com/emersion/xdg-desktop-portal-wlr/releases/download/v${PKG_VERSION}/xdg-desktop-portal-wlr-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build \
+  --prefix=/usr \
+  --sysconfdir=/etc \
+  --buildtype=release \
+  -Dsd-bus-provider=libsystemd \
+  -Dman-pages=enabled
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+ninja -C build
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PKG_DIR} ninja -C build install
+'''

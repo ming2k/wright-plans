@@ -1,0 +1,24 @@
+[plan]
+name = "scdoc"
+version = "1.11.3"
+release = 1
+description = "Simple man page generator"
+license = "MIT"
+arch = "x86_64"
+url = "https://git.sr.ht/~sircmpwn/scdoc"
+
+[[sources]]
+uri = "https://git.sr.ht/~sircmpwn/scdoc/archive/${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make PREFIX=/usr -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make PREFIX=/usr DESTDIR=${PKG_DIR} install
+'''
