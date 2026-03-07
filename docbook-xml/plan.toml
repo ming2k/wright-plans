@@ -1,0 +1,76 @@
+[plan]
+name = "docbook-xml"
+version = "4.5"
+release = 1
+description = "DocBook XML DTDs and catalogs"
+license = "DocBook-DTD"
+arch = "any"
+url = "https://www.oasis-open.org/docbook/"
+
+[dependencies]
+runtime = ["libxml2"]
+
+[[sources]]
+uri = "https://www.oasis-open.org/docbook/xml/4.5/docbook-xml-4.5.zip"
+sha256 = "4e4e037a2b83c98c6c94818390d4bdd3f6e10f6ec62dd79188594e26190dc7b4"
+
+[[sources]]
+uri = "https://www.oasis-open.org/docbook/xml/4.4/docbook-xml-4.4.zip"
+sha256 = "02f159eb88c4254d95e831c51c144b1863b216d909b5ff45743a1ce6f5273090"
+
+[[sources]]
+uri = "https://www.oasis-open.org/docbook/xml/4.3/docbook-xml-4.3.zip"
+sha256 = "23068a94ea6fd484b004c5a73ec36a66aa47ea8f0d6b62cc1695931f5c143464"
+
+[[sources]]
+uri = "https://www.oasis-open.org/docbook/xml/4.2/docbook-xml-4.2.zip"
+sha256 = "acc4601e4f97a196076b7e64b368d9248b07c7abf26b34a02cca40eeebe60fa2"
+
+[options]
+strip = false
+
+[lifecycle.staging]
+script = '''
+install -dm755 ${PKG_DIR}/usr/share/xml/docbook
+
+for ver in 4.2 4.3 4.4 4.5; do
+  dest_dir=${PKG_DIR}/usr/share/xml/docbook/${ver}
+  install -dm755 ${dest_dir}
+
+  python3 - "${FILES_DIR}/docbook-xml-${ver}.zip" "${dest_dir}" <<'PY'
+import sys
+import zipfile
+from pathlib import Path
+
+zip_path = Path(sys.argv[1])
+dest_dir = Path(sys.argv[2])
+
+with zipfile.ZipFile(zip_path) as zf:
+    zf.extractall(dest_dir)
+PY
+
+  if [ -f ${dest_dir}/catalog.xml ]; then
+    mv ${dest_dir}/catalog.xml ${dest_dir}/catalog
+  fi
+done
+
+sed -e 's|V4.2|V4.1.2|g' \
+  ${PKG_DIR}/usr/share/xml/docbook/4.2/catalog \
+  > ${PKG_DIR}/usr/share/xml/docbook/4.2/catalog-4.1.2
+'''
+
+[lifecycle.fabricate]
+hooks.post_install = '''
+install -dm755 /etc/xml
+[ -f /etc/xml/catalog ] || xmlcatalog --noout --create /etc/xml/catalog
+xmlcatalog --noout --add rewriteSystem "http://www.oasis-open.org/docbook/xml/4.2" "file:///usr/share/xml/docbook/4.2" /etc/xml/catalog
+xmlcatalog --noout --add rewriteSystem "http://www.oasis-open.org/docbook/xml/4.3" "file:///usr/share/xml/docbook/4.3" /etc/xml/catalog
+xmlcatalog --noout --add rewriteSystem "http://www.oasis-open.org/docbook/xml/4.4" "file:///usr/share/xml/docbook/4.4" /etc/xml/catalog
+xmlcatalog --noout --add rewriteSystem "http://www.oasis-open.org/docbook/xml/4.5" "file:///usr/share/xml/docbook/4.5" /etc/xml/catalog
+xmlcatalog --noout --add rewriteSystem "http://www.oasis-open.org/docbook/xml/4.1.2" "file:///usr/share/xml/docbook/4.2" /etc/xml/catalog
+xmlcatalog --noout --add nextCatalog "file:///usr/share/xml/docbook/4.2/catalog" /etc/xml/catalog
+xmlcatalog --noout --add nextCatalog "file:///usr/share/xml/docbook/4.3/catalog" /etc/xml/catalog
+xmlcatalog --noout --add nextCatalog "file:///usr/share/xml/docbook/4.4/catalog" /etc/xml/catalog
+xmlcatalog --noout --add nextCatalog "file:///usr/share/xml/docbook/4.5/catalog" /etc/xml/catalog
+xmlcatalog --noout --add nextCatalog "file:///usr/share/xml/docbook/4.2/catalog-4.1.2" /etc/xml/catalog
+'''

@@ -1,0 +1,33 @@
+[plan]
+name = "sbc"
+version = "2.0"
+release = 1
+description = "Bluetooth Sub-Band Codec (SBC) library"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://www.kernel.org/pub/linux/bluetooth/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["glibc"]
+
+[[sources]]
+uri = "https://www.kernel.org/pub/linux/bluetooth/sbc-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+    --disable-static \
+    --disable-tester
+'''
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

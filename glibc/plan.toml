@@ -65,12 +65,6 @@ cd ${BUILD_DIR}/build
 make -O check || true
 '''
 
-[lifecycle.post_package]
-script = '''
-mkdir -p /usr/lib/locale
-localedef -i C -f UTF-8 C.UTF-8
-'''
-
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
@@ -92,8 +86,8 @@ sed '/RTLDLIST=/s@/usr@@g' -i ${PKG_DIR}/usr/bin/ldd
 
 install -Dm644 ${FILES_DIR}/locale.gen ${PKG_DIR}/etc/locale.gen
 
-# stub /etc/locale.conf so it exists as a backup-managed file
-install -Dm644 /dev/null ${PKG_DIR}/etc/locale.conf
+# Default system locale
+echo 'LANG=en_US.UTF-8' > ${PKG_DIR}/etc/locale.conf
 
 # nsswitch.conf
 cat > ${PKG_DIR}/etc/nsswitch.conf << "NSEOF"
@@ -127,9 +121,19 @@ mkdir -pv ${PKG_DIR}/etc/ld.so.conf.d
 '''
 
 
-[lifecycle.package]
-hooks.post_install = "ldconfig"
-hooks.post_upgrade = "ldconfig"
+[lifecycle.fabricate]
+hooks.post_install = '''
+ldconfig
+mkdir -p /usr/lib/locale
+localedef -i C -f UTF-8 C.UTF-8
+localedef -i en_US -f UTF-8 en_US.UTF-8
+'''
+hooks.post_upgrade = '''
+ldconfig
+mkdir -p /usr/lib/locale
+localedef -i C -f UTF-8 C.UTF-8
+localedef -i en_US -f UTF-8 en_US.UTF-8
+'''
 backup = [
     "/etc/nsswitch.conf",
     "/etc/ld.so.conf",

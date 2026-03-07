@@ -1,0 +1,32 @@
+diff --git a/configure.ac b/configure.ac
+index 6e1a9c4..ef4b977 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -11,7 +11,18 @@ AC_CONFIG_MACRO_DIR([m4])
+ 
+ AM_PATH_PYTHON
+ 
+-AX_CHECK_ENABLE_DEBUG([no], [DEBUG], [NDEBUG])
++AC_ARG_ENABLE([debug],
++    AS_HELP_STRING([--enable-debug], [build with debug logging @<:@default=no@:>@]),
++    [],
++    [enable_debug=no])
++
++AS_IF([test "x$enable_debug" = "xyes"],
++      [AC_DEFINE([DEBUG], [1], [Define to 1 to enable debug logging])],
++      [AC_DEFINE([NDEBUG], [1], [Define to 1 to disable debug logging])])
+ 
+ AM_PROG_AR
+ AC_PROG_CC
+@@ -289,7 +300,10 @@ AS_IF([test "x$with_smart" != "xno"],
+                    [AS_HELP_STRING([--with-drivedb@<:@=PATH@:>@],
+                                    [support for smartmontools drivedb.h (EXPERIMENTAL) (default=$datarootdir/smartmontools)])],
+                    [], [with_drivedb=$drivedb_path])
+-       AX_RECURSIVE_EVAL([$with_drivedb], [drivedb_path])
++       drivedb_path="$with_drivedb"
++       dnl Expand nested directory variables without relying on autoconf-archive.
++       eval "drivedb_path=\"$drivedb_path\""
++       eval "drivedb_path=\"$drivedb_path\""
+        case $drivedb_path in
+          yes)
+            ;;

@@ -1,0 +1,32 @@
+[plan]
+name = "strace"
+version = "6.13"
+release = 1
+description = "Diagnostic, debugging and instructional userspace tracer"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://strace.io"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["glibc"]
+
+[[sources]]
+uri = "https://github.com/strace/strace/releases/download/v${PKG_VERSION}/strace-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+    --with-libiberty
+'''
+
+[lifecycle.compile]
+script = "make -j$(nproc) -C ${BUILD_DIR}"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

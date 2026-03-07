@@ -8,12 +8,14 @@ arch = "x86_64"
 url = "https://github.com/XTLS/Xray-core"
 
 [dependencies]
-runtime = ["iproute2", "nftables"]
 build = ["go"]
 
 [[sources]]
 uri = "https://github.com/XTLS/Xray-core/archive/v${PKG_VERSION}.tar.gz"
 sha256 = "SKIP"
+
+[[sources]]
+uri = "xray.service"
 
 [lifecycle.compile]
 dockyard = "relaxed"
@@ -29,26 +31,18 @@ script = '''
 cd ${BUILD_DIR}
 install -Dm755 xray ${PKG_DIR}/usr/bin/xray
 install -dm755 ${PKG_DIR}/etc/xray
-install -Dm644 ${FILES_DIR}/tproxy.json.example ${PKG_DIR}/etc/xray/tproxy.json.example
-install -Dm644 ${FILES_DIR}/xray-tproxy.nft ${PKG_DIR}/etc/xray/xray-tproxy.nft
-install -Dm644 ${FILES_DIR}/99-xray-tproxy.conf ${PKG_DIR}/usr/lib/sysctl.d/99-xray-tproxy.conf
 install -Dm644 ${FILES_DIR}/xray.service ${PKG_DIR}/usr/lib/systemd/system/xray.service
-install -Dm644 ${FILES_DIR}/xray-tproxy.service ${PKG_DIR}/usr/lib/systemd/system/xray-tproxy.service
 '''
 
-
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 echo ":: Create /etc/xray/config.json before starting xray"
-echo ":: See /etc/xray/tproxy.json.example for tproxy setup"
-echo ":: Enable with: systemctl enable --now xray xray-tproxy"
+echo ":: Enable with: systemctl enable --now xray"
 '''
 hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 hooks.pre_remove = '''
-systemctl stop xray-tproxy 2>/dev/null || true
 systemctl stop xray 2>/dev/null || true
-systemctl disable xray-tproxy 2>/dev/null || true
 systemctl disable xray 2>/dev/null || true
 '''
-backup = ["/etc/xray/config.json", "/etc/xray/xray-tproxy.nft"]
+backup = ["/etc/xray/config.json"]

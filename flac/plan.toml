@@ -1,0 +1,41 @@
+[plan]
+name = "flac"
+version = "1.5.0"
+release = 1
+description = "Free Lossless Audio Codec"
+license = "BSD-3-Clause, GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://xiph.org/flac/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["libogg"]
+
+[[sources]]
+uri = "https://downloads.xiph.org/releases/flac/flac-${PKG_VERSION}.tar.xz"
+sha256 = "f2c1c76592a82ffff8413ba3c4a1299b6c7ab06c734dee03fd88630485c2b920"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --disable-static \
+  --disable-rpath \
+  --disable-doxygen-docs \
+  --disable-examples \
+  --disable-thorough-tests \
+  --with-ogg=/usr
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

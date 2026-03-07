@@ -35,5 +35,3 @@ DESTDIR=${PKG_DIR} ninja -C build install
 '''
 
 
-[lifecycle.package]
-hooks.post_install = "chmod a+s /usr/bin/swaylock 2>/dev/null || true"

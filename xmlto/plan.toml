@@ -1,0 +1,35 @@
+[plan]
+name = "xmlto"
+version = "0.0.29"
+release = 1
+description = "Tool to transform XML documents into other formats"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://pagure.io/xmlto/"
+
+[dependencies]
+runtime = ["bash", "docbook-xsl", "libxslt"]
+build = ["autoconf", "automake", "gcc", "make", "docbook-xsl", "libxslt"]
+
+[[sources]]
+uri = "https://releases.pagure.org/xmlto/xmlto-${PKG_VERSION}.tar.bz2"
+sha256 = "6000d8e8f0f9040426c4f85d7ad86789bc88d4aeaef585c4d4110adb0b214f21"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+autoreconf -fi
+./configure --prefix=/usr ac_cv_path_BASH=/bin/bash
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

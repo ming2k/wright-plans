@@ -1,26 +1,36 @@
 [plan]
 name = "libffi"
-version = "3.5.2"
+version = "3.4.8"
 release = 1
-description = "Portable Foreign Function Interface library"
+description = "Portable foreign function interface library"
 license = "MIT"
 arch = "x86_64"
+url = "https://sourceware.org/libffi/"
 
 [dependencies]
-build = ["gcc", "make"]
+build = ["bash", "gcc", "make"]
 
 [[sources]]
 uri = "https://github.com/libffi/libffi/releases/download/v${PKG_VERSION}/libffi-${PKG_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
-script = '''
+script = """
 cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static --with-gcc-arch=native
-'''
+./configure \
+  --prefix=/usr \
+  --disable-static
+"""
 
 [lifecycle.compile]
-script = "cd ${BUILD_DIR} && make -j$(nproc)"
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""
+

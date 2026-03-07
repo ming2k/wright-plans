@@ -2,36 +2,35 @@
 name = "pkgconf"
 version = "2.3.0"
 release = 1
-description = "Package compiler and linker metadata toolkit"
+description = "Utility for discovering compiler and linker flags"
 license = "ISC"
 arch = "x86_64"
-url = "https://gitea.trerat.com/pkgconf/pkgconf"
+url = "https://pkgconf.org/"
 
 [dependencies]
-build = ["gcc", "make"]
+build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://distfiles.dereferenced.org/pkgconf/pkgconf-${PKG_VERSION}.tar.xz"
+uri = "https://distfiles.ariadne.space/pkgconf/pkgconf-${PKG_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
-script = '''
+script = """
 cd ${BUILD_DIR}
-./configure --prefix=/usr              \
---disable-static           \
---docdir=/usr/share/doc/pkgconf-2.3.0
-'''
+./configure \
+  --prefix=/usr \
+  --disable-static
+"""
 
 [lifecycle.compile]
-script = '''
+script = """
 cd ${BUILD_DIR}
 make -j$(nproc)
-'''
+"""
 
 [lifecycle.staging]
-script = '''
+script = """
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
-ln -sv pkgconf   ${PKG_DIR}/usr/bin/pkg-config
-ln -sv pkgconf.1 ${PKG_DIR}/usr/share/man/man1/pkg-config.1
-'''
+"""
+

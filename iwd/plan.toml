@@ -41,3 +41,11 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
 '''
+
+[lifecycle.fabricate]
+hooks.post_install = '''
+groupadd -f netdev 2>/dev/null || true
+systemctl daemon-reload 2>/dev/null || true
+systemctl enable iwd.service 2>/dev/null || true
+'''
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

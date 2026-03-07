@@ -32,7 +32,7 @@ rm -f ${PKG_DIR}/usr/lib/gio/modules/giomodule.cache
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = "gio-querymodules /usr/lib/gio/modules"
 hooks.post_upgrade = "gio-querymodules /usr/lib/gio/modules"
 hooks.pre_remove = "gio-querymodules /usr/lib/gio/modules"

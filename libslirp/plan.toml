@@ -2,13 +2,13 @@
 name = "libslirp"
 version = "4.9.1"
 release = 1
-description = "General purpose TCP-IP emulator used by QEMU and other projects"
+description = "User-mode networking library used by QEMU"
 license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/slirp/libslirp"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf"]
+build = ["bash", "python", "meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
@@ -16,14 +16,17 @@ uri = "https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v${PKG_VERSION}/l
 sha256 = "SKIP"
 
 [lifecycle.configure]
-script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+script = """
+cd ${BUILD_DIR}
+meson setup build \
   --prefix=/usr \
-  --buildtype=release
-'''
+  --buildtype=release \
+  -Ddefault_library=shared
+"""
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build"
+

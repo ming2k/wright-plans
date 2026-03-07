@@ -1,6 +1,6 @@
 [plan]
 name = "wright"
-version = "1.3.1"
+version = "1.5.1"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -62,7 +62,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 """
 
-[lifecycle.package]
+[lifecycle.fabricate]
 script = """
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
@@ -74,7 +74,7 @@ install -dm755 ${PKG_DIR}/var/lib/wright/plans
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 # Group for plan authors — members can edit plans without root
 groupadd -r wright 2>/dev/null || true

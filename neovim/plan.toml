@@ -41,7 +41,7 @@ make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${PKG_DIR} install
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 update-desktop-database -q 2>/dev/null || true
 '''

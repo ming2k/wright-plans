@@ -5,24 +5,28 @@ release = 1
 description = "Low-level pixel manipulation library"
 license = "MIT"
 arch = "x86_64"
-url = "https://www.pixman.org/"
+url = "http://pixman.org/"
 
 [dependencies]
-build = ["meson", "ninja"]
+build = ["bash", "python", "meson", "ninja", "pkgconf"]
 
 [[sources]]
 uri = "https://www.cairographics.org/releases/pixman-${PKG_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
-script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
---prefix=/usr         \
---buildtype=release
-'''
+script = """
+cd ${BUILD_DIR}
+meson setup build \
+  --prefix=/usr \
+  --buildtype=release \
+  -Ddefault_library=shared \
+  -Dtests=disabled
+"""
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build"
+

@@ -31,7 +31,7 @@ cd ${BUILD_DIR}/llvm
 ninja -C build -j$(nproc)
 '''
 
-[lifecycle.package.llvm]
+[lifecycle.fabricate]
 script = '''
 cd ${BUILD_DIR}/llvm
 DESTDIR=${PKG_DIR} ninja -C build install
@@ -41,7 +41,7 @@ if [ ! -f ${PKG_DIR}/usr/bin/llvm-config ]; then
 fi
 '''
 
-[lifecycle.package.llvm-libs]
+[lifecycle.fabricate.llvm-libs]
 description = "LLVM shared libraries"
 dependencies.link = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
 script = '''
@@ -52,7 +52,7 @@ mv -v ${MAIN_PKG_DIR}/usr/lib/libLTO.so* ${PKG_DIR}/usr/lib/
 mv -v ${MAIN_PKG_DIR}/usr/lib/libRemarks.so* ${PKG_DIR}/usr/lib/
 '''
 
-[lifecycle.package.clang]
+[lifecycle.fabricate.clang]
 description = "C/C++/ObjC compiler frontend for LLVM"
 dependencies.runtime = ["llvm-libs"]
 dependencies.link = ["glibc"]
@@ -70,7 +70,7 @@ mv -v ${MAIN_PKG_DIR}/usr/include/clang* ${PKG_DIR}/usr/include/ 2>/dev/null || 
 mv -v ${MAIN_PKG_DIR}/usr/share/clang ${PKG_DIR}/usr/share/ 2>/dev/null || true
 '''
 
-[lifecycle.package.lld]
+[lifecycle.fabricate.lld]
 description = "LLVM linker"
 dependencies.runtime = ["llvm-libs"]
 dependencies.link = ["glibc"]

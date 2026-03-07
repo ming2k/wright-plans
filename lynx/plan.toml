@@ -1,0 +1,54 @@
+[plan]
+name = "lynx"
+version = "2.9.2"
+release = 1
+description = "Text-mode web browser"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://lynx.invisible-island.net/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["bzip2", "ncurses", "openssl", "zlib"]
+
+[[sources]]
+uri = "https://invisible-mirror.net/archives/lynx/tarballs/lynx${PKG_VERSION}.tar.bz2"
+sha256 = "7374b89936d991669e101f4e97f2c9592036e1e8cdaa7bafc259a77ab6fb07ce"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+sed -i configure \
+  -e '/LDFLAGS="-L$cf_add_libdir $LDFLAGS"/d' \
+  -e 's;,$BUILD_CC;,$CC_FOR_BUILD;' \
+  -e 's;,$BUILD_CFLAGS;,$CFLAGS_FOR_BUILD;' \
+  -e 's;,$BUILD_LDFLAGS;,$LDFLAGS_FOR_BUILD;'
+./configure \
+  --prefix=/usr \
+  --with-screen=ncurses \
+  --with-build-cc=gcc \
+  --enable-widec \
+  --with-zlib \
+  --with-bzlib \
+  --with-ssl \
+  --enable-ipv6 \
+  cf_cv_header_path_ssl=/usr/include/openssl
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc) BUILD_CC=gcc BUILD_CPP='gcc -E'
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+
+if [ -d ${PKG_DIR}/usr/etc ]; then
+  mkdir -p ${PKG_DIR}/etc
+  cp -a ${PKG_DIR}/usr/etc/. ${PKG_DIR}/etc/
+  rm -rf ${PKG_DIR}/usr/etc
+fi
+'''

@@ -1,0 +1,34 @@
+[plan]
+name = "keyutils"
+version = "1.6.3"
+release = 1
+description = "Linux kernel key management utilities and library"
+license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["glibc"]
+
+[[sources]]
+uri = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make \
+  DESTDIR=${PKG_DIR} \
+  NO_ARLIB=1 \
+  LIBDIR=/usr/lib \
+  BINDIR=/usr/bin \
+  SBINDIR=/usr/bin \
+  install
+'''

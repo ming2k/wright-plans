@@ -55,7 +55,7 @@ mount_program = "/usr/bin/fuse-overlayfs"
 EOF
 '''
 
-[lifecycle.package]
+[lifecycle.fabricate]
 backup = [
     "/etc/containers/registries.conf",
     "/etc/containers/policy.json",

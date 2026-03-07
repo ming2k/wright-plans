@@ -39,7 +39,7 @@ EOF
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 install -dm755 /etc/xml
 [ -f /etc/xml/catalog ] || xmlcatalog --noout --create /etc/xml/catalog

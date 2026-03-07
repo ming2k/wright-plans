@@ -1,49 +1,34 @@
 [plan]
 name = "glib"
-version = "2.86.4"
-release = 2
-description = "Low-level core library for GNOME"
+version = "2.84.0"
+release = 1
+description = "Core application building blocks library"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
-url = "https://wiki.gnome.org/Projects/GLib"
+url = "https://www.gtk.org/"
 
 [dependencies]
-build = ["gobject-introspection", "meson", "ninja", "pkgconf", "python", "gettext"]
-link = ["libffi", "pcre2", "zlib", "util-linux"]
+build = ["bash", "python", "meson", "ninja", "pkgconf"]
+link = ["libffi", "pcre2"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/glib/2.86/glib-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/glib/2.84/glib-${PKG_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
-script = '''
+script = """
 cd ${BUILD_DIR}
-meson setup build          \
-    --prefix=/usr          \
-    --buildtype=release    \
-    -Dman-pages=disabled   \
-    -Dtests=false          \
-    -Dselinux=disabled    \
-    -Dintrospection=enabled
-'''
+meson setup build \
+  --prefix=/usr \
+  --buildtype=release \
+  -Ddefault_library=shared \
+  -Dtests=false \
+  -Dinstalled_tests=false
+"""
 
 [lifecycle.compile]
-script = '''
-meson compile -C ${BUILD_DIR}/build
-'''
+script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
-'''
+script = "DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build"
 
-
-[lifecycle.package]
-hooks.post_install = '''
-glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
-gio-querymodules /usr/lib/gio/modules 2>/dev/null || true
-'''
-hooks.post_upgrade = '''
-glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
-gio-querymodules /usr/lib/gio/modules 2>/dev/null || true
-'''

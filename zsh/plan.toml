@@ -48,7 +48,7 @@ make DESTDIR=${PKG_DIR} install
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 if ! grep -q /usr/bin/zsh /etc/shells 2>/dev/null; then
   echo /usr/bin/zsh >> /etc/shells

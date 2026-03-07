@@ -45,6 +45,6 @@ Cflags: -I\${includedir}
 PCEOF
 '''
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = "ldconfig 2>/dev/null || true"
 hooks.post_upgrade = "ldconfig 2>/dev/null || true"

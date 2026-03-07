@@ -1,0 +1,85 @@
+[plan]
+name = "libblockdev"
+version = "3.3.1"
+release = 1
+description = "Library for manipulating block devices"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/storaged-project/libblockdev"
+
+[dependencies]
+build = ["autoconf", "automake", "gcc", "libtool", "make", "pkgconf", "python", "setuptools"]
+runtime = ["mdadm"]
+link = ["btrfs-progs", "cryptsetup", "glib", "json-glib", "keyutils", "kmod", "libatasmart", "libbytesize", "libyaml", "lvm2", "util-linux"]
+
+[[sources]]
+uri = "https://github.com/storaged-project/libblockdev/archive/refs/tags/${PKG_VERSION}.tar.gz"
+sha256 = "7d313d790dbf2921d19bed0bba591fc3530113bc0f3e7818ee80f028c988a286"
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+python3 - <<'PY'
+from pathlib import Path
+
+path = Path("configure.ac")
+text = path.read_text()
+
+old_debug = "AX_CHECK_ENABLE_DEBUG([no], [DEBUG], [NDEBUG])"
+new_debug = """AC_ARG_ENABLE([debug],
+    AS_HELP_STRING([--enable-debug], [build with debug logging @<:@default=no@:>@]),
+    [],
+    [enable_debug=no])
+
+AS_IF([test \"x$enable_debug\" = \"xyes\"],
+      [AC_DEFINE([DEBUG], [1], [Define to 1 to enable debug logging])],
+      [AC_DEFINE([NDEBUG], [1], [Define to 1 to disable debug logging])])"""
+
+old_drivedb = "       AX_RECURSIVE_EVAL([$with_drivedb], [drivedb_path])"
+new_drivedb = """       drivedb_path=\"$with_drivedb\"
+       dnl Expand nested directory variables without relying on autoconf-archive.
+       eval \"drivedb_path=\\\"$drivedb_path\\\"\"
+       eval \"drivedb_path=\\\"$drivedb_path\\\"\""""
+
+if old_debug not in text:
+    raise SystemExit("expected debug macro not found in configure.ac")
+if old_drivedb not in text:
+    raise SystemExit("expected drivedb macro not found in configure.ac")
+
+text = text.replace(old_debug, new_debug, 1)
+text = text.replace(old_drivedb, new_drivedb, 1)
+path.write_text(text)
+PY
+'''
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+autoreconf -fi
+./configure --prefix=/usr \
+  --with-gtk-doc=no \
+  --with-escrow=no \
+  --with-mpath=no \
+  --with-tools=no \
+  --with-nvdimm=no \
+  --with-nvme=no \
+  --with-smartmontools=no
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+
+if [ -d ${PKG_DIR}/usr/etc ]; then
+  mkdir -p ${PKG_DIR}/etc
+  cp -a ${PKG_DIR}/usr/etc/. ${PKG_DIR}/etc/
+  rm -rf ${PKG_DIR}/usr/etc
+fi
+'''

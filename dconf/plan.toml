@@ -38,7 +38,7 @@ install -dm2775 "${PKG_DIR}/etc/dconf/profile"
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 groupadd -r dconf 2>/dev/null || true
 chgrp dconf /etc/dconf/profile

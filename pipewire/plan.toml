@@ -9,7 +9,7 @@ url = "https://pipewire.org"
 
 [dependencies]
 build = ["meson", "ninja", "pkgconf", "rtkit"]
-link = ["alsa-lib", "dbus", "glib", "libsndfile", "ncurses", "opus", "readline", "systemd"]
+link = ["alsa-lib", "bluez", "dbus", "glib", "libsndfile", "ncurses", "opus", "readline", "sbc", "systemd"]
 
 [[sources]]
 uri = "https://github.com/PipeWire/pipewire/archive/refs/tags/${PKG_VERSION}.tar.gz"
@@ -32,7 +32,9 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 -D rlimits-install=false             \
 -D selinux=disabled                  \
 -D udevrulesdir=/usr/lib/udev/rules.d \
--D session-managers=[]
+-D session-managers=[]               \
+-D bluez5=enabled                    \
+-D libcamera=disabled
 '''
 
 [lifecycle.compile]
@@ -42,7 +44,7 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/pipewire.conf 2>/dev/null || true

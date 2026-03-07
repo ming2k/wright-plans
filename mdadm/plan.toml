@@ -1,0 +1,38 @@
+[plan]
+name = "mdadm"
+version = "4.4"
+release = 1
+description = "Tool for creating, managing, and monitoring Linux MD RAID arrays"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://www.kernel.org/pub/linux/utils/raid/mdadm/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["systemd", "util-linux"]
+
+[[sources]]
+uri = "https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make CWFLAGS="-Wall -Werror -Wstrict-prototypes -Wextra -Wno-unused-parameter -Wformat -Wformat-security -Werror=format-security -fstack-protector-strong -fPIE -Warray-bounds -Wimplicit-fallthrough=0 -Wno-error=implicit-fallthrough -Wno-error=unterminated-string-initialization"
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make \
+  DESTDIR=${PKG_DIR} \
+  BINDIR=/usr/bin \
+  SBINDIR=/usr/bin \
+  install
+
+if [ -d ${PKG_DIR}/usr/etc ]; then
+  mkdir -p ${PKG_DIR}/etc
+  cp -a ${PKG_DIR}/usr/etc/. ${PKG_DIR}/etc/
+  rm -rf ${PKG_DIR}/usr/etc
+fi
+'''

@@ -143,7 +143,7 @@ done
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 # Ensure canonical shadow setup exists even on custom/minimal systems.
 if ! getent group shadow >/dev/null 2>&1; then

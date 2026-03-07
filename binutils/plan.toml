@@ -50,7 +50,7 @@ rm -fv ${PKG_DIR}/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 # Clean old binutils residuals
 rm -f /usr/lib/libbfd-2.45.so /usr/lib/libbfd-2.44.so /usr/lib/libbfd-2.43.1.so

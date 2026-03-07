@@ -28,7 +28,7 @@ script = "make -j$(nproc) -C ${BUILD_DIR}"
 script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable lvm2-monitor.service 2>/dev/null || true

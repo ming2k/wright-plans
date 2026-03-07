@@ -38,7 +38,7 @@ script = "meson compile -C ${BUILD_DIR}/build"
 script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true

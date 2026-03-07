@@ -45,7 +45,7 @@ install -Dm644 ca-bundle.trust.p11-kit \
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 update-ca-trust
 '''

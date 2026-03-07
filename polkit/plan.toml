@@ -38,7 +38,7 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 groupadd -fg 27 polkitd 2>/dev/null || true
 useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \

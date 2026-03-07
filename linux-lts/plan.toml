@@ -1,6 +1,6 @@
 [plan]
 name = "linux-lts"
-version = "6.18.15"
+version = "6.18.16"
 release = 1
 description = "The Linux kernel (LTS)"
 license = "GPL-2.0-only"

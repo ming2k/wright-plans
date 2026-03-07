@@ -1,0 +1,39 @@
+[plan]
+name = "adwaita-icon-theme-legacy"
+version = "46.2"
+release = 1
+description = "Adwaita fallback icons for legacy applications"
+license = "LGPL-3.0-or-later"
+arch = "any"
+url = "https://gitlab.gnome.org/GNOME/adwaita-icon-theme-legacy"
+
+[dependencies]
+runtime = ["hicolor-icon-theme"]
+build = ["meson", "ninja", "pkgconf"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/adwaita-icon-theme-legacy/46/adwaita-icon-theme-legacy-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build --prefix=/usr --buildtype=release
+'''
+
+[lifecycle.compile]
+script = "meson compile -C ${BUILD_DIR}/build"
+
+[lifecycle.staging]
+script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"
+
+
+[lifecycle.fabricate]
+hooks.post_install = '''
+gtk-update-icon-cache -qtf /usr/share/icons/AdwaitaLegacy 2>/dev/null || true
+gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
+'''
+hooks.post_upgrade = '''
+gtk-update-icon-cache -qtf /usr/share/icons/AdwaitaLegacy 2>/dev/null || true
+gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
+'''

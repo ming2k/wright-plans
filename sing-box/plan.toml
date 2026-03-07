@@ -1,7 +1,7 @@
 [plan]
 name = "sing-box"
-version = "1.13.0"
-release = 1
+version = "1.13.2"
+release = 3
 description = "The universal proxy platform"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -13,6 +13,9 @@ build = ["go"]
 [[sources]]
 uri = "https://github.com/SagerNet/sing-box/archive/refs/tags/v${PKG_VERSION}.tar.gz"
 sha256 = "SKIP"
+
+[[sources]]
+uri = "sing-box.service"
 
 [lifecycle.compile]
 dockyard = "relaxed"
@@ -35,24 +38,19 @@ cd ${BUILD_DIR}
 install -Dm755 sing-box ${PKG_DIR}/usr/bin/sing-box
 install -dm755 ${PKG_DIR}/etc/sing-box
 echo '{}' > ${PKG_DIR}/etc/sing-box/config.json
-install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/systemd/system/sing-box.service << 'UNIT'
-
-[Unit]
-Description=sing-box service
-After=network.target nss-lookup.target
-
-[Service]
-ExecStart=/usr/bin/sing-box run -c /etc/sing-box/config.json
-Restart=on-failure
-RestartSec=10s
-LimitNOFILE=infinity
-
-[Install]
-WantedBy=multi-user.target
-UNIT
+install -Dm644 ${FILES_DIR}/sing-box.service ${PKG_DIR}/usr/lib/systemd/system/sing-box.service
 '''
 
 
-[lifecycle.package]
-hooks.post_install = "systemctl daemon-reload 2>/dev/null || true"
+[lifecycle.fabricate]
+hooks.post_install = '''
+systemctl daemon-reload 2>/dev/null || true
+echo ":: Edit /etc/sing-box/config.json before starting sing-box"
+echo ":: Enable with: systemctl enable --now sing-box"
+'''
 hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+hooks.pre_remove = '''
+systemctl stop sing-box 2>/dev/null || true
+systemctl disable sing-box 2>/dev/null || true
+'''
+backup = ["/etc/sing-box/config.json"]

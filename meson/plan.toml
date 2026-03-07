@@ -1,21 +1,29 @@
 [plan]
 name = "meson"
-version = "1.10.1"
+version = "1.7.0"
 release = 1
-description = "Open source build system meant to be fast and user friendly"
+description = "High productivity build system"
 license = "Apache-2.0"
 arch = "x86_64"
 url = "https://mesonbuild.com/"
 
 [dependencies]
-build = ["ninja", "python", "setuptools"]
+build = ["bash", "python", "python-setuptools", "ninja"]
+runtime = ["python", "ninja"]
 
 [[sources]]
 uri = "https://github.com/mesonbuild/meson/releases/download/${PKG_VERSION}/meson-${PKG_VERSION}.tar.gz"
 sha256 = "SKIP"
 
-[lifecycle.staging]
-script = '''
+[lifecycle.compile]
+script = """
 cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
-'''
+python3 setup.py build
+"""
+
+[lifecycle.staging]
+script = """
+cd ${BUILD_DIR}
+python3 setup.py install --root=${PKG_DIR} --prefix=/usr --optimize=1
+"""
+

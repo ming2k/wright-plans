@@ -62,7 +62,7 @@ cd ${BUILD_DIR}/build
 make -j$(nproc)
 '''
 
-[lifecycle.package.gcc]
+[lifecycle.fabricate]
 script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PKG_DIR} install
@@ -81,7 +81,7 @@ install -d "${PKG_DIR}/usr/share/gdb/auto-load/usr/lib"
 mv -v "${PKG_DIR}"/usr/lib/*gdb.py "${PKG_DIR}/usr/share/gdb/auto-load/usr/lib/" 2>/dev/null || true
 '''
 
-[lifecycle.package.libgcc]
+[lifecycle.fabricate.libgcc]
 description = "GCC runtime library (libgcc_s.so)"
 dependencies.link = ["glibc"]
 script = '''
@@ -89,7 +89,7 @@ install -d "${PKG_DIR}/usr/lib"
 mv -v "${MAIN_PKG_DIR}"/usr/lib/libgcc_s.so* "${PKG_DIR}/usr/lib/"
 '''
 
-[lifecycle.package."libstdc++"]
+[lifecycle.fabricate."libstdc++"]
 description = "GNU C++ standard library"
 dependencies.runtime = ["libgcc"]
 dependencies.link = ["glibc"]
@@ -105,7 +105,7 @@ mv -v "${MAIN_PKG_DIR}"/usr/share/gdb/auto-load/usr/lib/libstdc++* "${PKG_DIR}/u
 mv -v "${MAIN_PKG_DIR}"/usr/share/gcc-${PKG_VERSION}/python/libstdcxx "${PKG_DIR}/usr/share/gcc-${PKG_VERSION}/python/" 2>/dev/null || true
 '''
 
-[lifecycle.package.libgomp]
+[lifecycle.fabricate.libgomp]
 description = "GNU OpenMP runtime library"
 dependencies.link = ["glibc"]
 script = '''
@@ -114,7 +114,7 @@ mv -v "${MAIN_PKG_DIR}"/usr/lib/libgomp.so* "${PKG_DIR}/usr/lib/"
 mv -v "${MAIN_PKG_DIR}"/usr/lib/libgomp.spec "${PKG_DIR}/usr/lib/" 2>/dev/null || true
 '''
 
-[lifecycle.package.libatomic]
+[lifecycle.fabricate.libatomic]
 description = "GCC atomic operations fallback library"
 dependencies.link = ["glibc"]
 script = '''
@@ -122,7 +122,7 @@ install -d "${PKG_DIR}/usr/lib"
 mv -v "${MAIN_PKG_DIR}"/usr/lib/libatomic.so* "${PKG_DIR}/usr/lib/"
 '''
 
-[lifecycle.package.libsanitizer]
+[lifecycle.fabricate.libsanitizer]
 description = "GCC sanitizer runtime libraries (ASan, LSan, TSan, UBSan)"
 dependencies.runtime = ["libgcc", "libstdc++"]
 dependencies.link = ["glibc"]
@@ -133,7 +133,7 @@ for lib in asan lsan tsan ubsan hwasan; do
 done
 '''
 
-[lifecycle.package.gcc-libs]
+[lifecycle.fabricate.gcc-libs]
 description = "GCC runtime libraries (meta-package)"
 dependencies.runtime = ["libatomic", "libgcc", "libgomp", "libstdc++"]
 script = '''

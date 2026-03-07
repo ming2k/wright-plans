@@ -1,0 +1,41 @@
+[plan]
+name = "udisks2"
+version = "2.10.1"
+release = 1
+description = "Disk management service"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://www.freedesktop.org/wiki/Software/udisks/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf", "gettext", "glib", "docbook-xsl", "libxslt", "polkit"]
+link = ["acl", "libatasmart", "libblockdev", "libgudev", "polkit", "systemd"]
+
+[[sources]]
+uri = "https://github.com/storaged-project/udisks/releases/download/udisks-${PKG_VERSION}/udisks-${PKG_VERSION}.tar.bz2"
+sha256 = "b75734ccf602540dedb4068bec206adcb508a4c003725e117ae8f994d92d8ece"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --disable-static \
+  --with-udevdir=/usr/lib/udev \
+  --enable-lvm2 \
+  --enable-btrfs \
+  --disable-man
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+install -dm750 ${PKG_DIR}/var/lib/udisks2
+'''

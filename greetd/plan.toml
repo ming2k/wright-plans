@@ -1,7 +1,7 @@
 [plan]
 name = "greetd"
 version = "0.10.3"
-release = 1
+release = 2
 description = "Minimal and flexible Wayland login manager daemon"
 license = "GPL-3.0-only"
 arch = "x86_64"
@@ -74,6 +74,8 @@ session   include     system-session
 password  include     system-password
 PAMEOF
 
+install -dm750 ${PKG_DIR}/var/lib/greetd
+
 install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/sysusers.d/greetd.conf << 'SYSUSERS'
 u greeter - "Greeter user" /var/lib/greetd
 m greeter video
@@ -81,13 +83,15 @@ SYSUSERS
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/greetd.conf 2>/dev/null || true
+chown greeter:greeter /var/lib/greetd 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 '''
 hooks.post_upgrade = '''
 systemd-sysusers /usr/lib/sysusers.d/greetd.conf 2>/dev/null || true
+chown greeter:greeter /var/lib/greetd 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 '''
 backup = ["/etc/greetd/config.toml", "/etc/pam.d/greetd"]

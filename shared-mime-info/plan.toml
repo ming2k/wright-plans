@@ -26,6 +26,6 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = "update-mime-database /usr/share/mime 2>/dev/null || true"
 hooks.post_upgrade = "update-mime-database /usr/share/mime 2>/dev/null || true"

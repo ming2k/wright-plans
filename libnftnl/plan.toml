@@ -5,14 +5,14 @@ release = 1
 description = "Netfilter nf_tables netlink userspace library"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
-url = "https://netfilter.org/projects/libnftnl/"
+url = "https://www.netfilter.org/projects/libnftnl/"
 
 [dependencies]
 runtime = ["libmnl >= 1.0.4"]
 build = ["gcc", "libmnl", "make", "pkgconf"]
 
 [[sources]]
-uri = "https://netfilter.org/projects/libnftnl/files/libnftnl-${PKG_VERSION}.tar.xz"
+uri = "https://www.netfilter.org/pub/libnftnl/libnftnl-${PKG_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [options]

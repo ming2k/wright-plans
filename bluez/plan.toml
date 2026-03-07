@@ -1,7 +1,7 @@
 [plan]
 name = "bluez"
 version = "5.86"
-release = 1
+release = 2
 description = "Official Linux Bluetooth protocol stack"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
@@ -55,12 +55,17 @@ make DESTDIR=${PKG_DIR} install
 
 # Install main bluetoothd config
 install -Dm644 src/main.conf ${PKG_DIR}/etc/bluetooth/main.conf
+chmod 0555 ${PKG_DIR}/etc/bluetooth
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
+chmod 555 /etc/bluetooth 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable bluetooth.service 2>/dev/null || true
 '''
-hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+hooks.post_upgrade = '''
+chmod 555 /etc/bluetooth 2>/dev/null || true
+systemctl daemon-reload 2>/dev/null || true
+'''

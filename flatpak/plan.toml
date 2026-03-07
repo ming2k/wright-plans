@@ -75,15 +75,10 @@ script = "meson compile -C ${BUILD_DIR}/build"
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
 mkdir -p ${PKG_DIR}/var/lib/flatpak
-
-# Unprivileged user namespaces required by bubblewrap
-install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/sysctl.d/60-flatpak-userns.conf << 'SYSCTLEOF'
-kernel.unprivileged_userns_clone = 1
-SYSCTLEOF
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/flatpak.conf 2>/dev/null || true
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true

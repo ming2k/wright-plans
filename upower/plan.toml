@@ -1,0 +1,41 @@
+[plan]
+name = "upower"
+version = "1.91.1"
+release = 1
+description = "Abstraction for enumerating power devices"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://gitlab.freedesktop.org/upower/upower"
+
+[dependencies]
+build = ["gettext", "gobject-introspection", "meson", "ninja", "pkgconf", "polkit", "docbook-xsl", "libxslt"]
+link = ["glib", "libgudev", "libusb", "polkit", "systemd"]
+
+[[sources]]
+uri = "https://gitlab.freedesktop.org/upower/upower/-/archive/v${PKG_VERSION}/upower-v${PKG_VERSION}.tar.bz2"
+sha256 = "d568638d670a63a1886335b7b136f4888cb38a3b28f3f4bcdeaffcca0b0f6df8"
+
+[lifecycle.configure]
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+  --prefix=/usr \
+  --buildtype=release \
+  -Dos_backend=linux \
+  -Dgtk-doc=false \
+  -Dsystemdsystemunitdir=/usr/lib/systemd/system
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = '''
+DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install
+'''
+
+[lifecycle.fabricate]
+hooks.post_install = '''
+systemctl daemon-reload 2>/dev/null || true
+systemctl enable upower.service 2>/dev/null || true
+'''
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

@@ -1,14 +1,14 @@
 [plan]
 name = "adwaita-icon-theme"
 version = "48.1"
-release = 1
+release = 2
 description = "Adwaita icon theme"
 license = "LGPL-3.0-or-later"
 arch = "any"
 url = "https://gitlab.gnome.org/GNOME/adwaita-icon-theme"
 
 [dependencies]
-runtime = ["hicolor-icon-theme"]
+runtime = ["adwaita-icon-theme-legacy", "hicolor-icon-theme"]
 build = ["meson", "ninja", "pkgconf"]
 
 [[sources]]
@@ -28,12 +28,14 @@ script = "meson compile -C ${BUILD_DIR}/build"
 script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 gtk-update-icon-cache -qtf /usr/share/icons/Adwaita 2>/dev/null || true
+gtk-update-icon-cache -qtf /usr/share/icons/AdwaitaLegacy 2>/dev/null || true
 gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 '''
 hooks.post_upgrade = '''
 gtk-update-icon-cache -qtf /usr/share/icons/Adwaita 2>/dev/null || true
+gtk-update-icon-cache -qtf /usr/share/icons/AdwaitaLegacy 2>/dev/null || true
 gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 '''

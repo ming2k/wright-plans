@@ -53,7 +53,7 @@ meson setup build \
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
-[lifecycle.package.util-linux]
+[lifecycle.fabricate]
 script = '''
 # Remove static libraries
 rm -f ${PKG_DIR}/usr/lib/lib*.a*
@@ -62,7 +62,7 @@ rm -f ${PKG_DIR}/usr/lib/lib*.a*
 rm -rf ${PKG_DIR}/usr/lib/python*
 '''
 
-[lifecycle.package.libuuid]
+[lifecycle.fabricate.libuuid]
 description = "Universally Unique Identifier library"
 dependencies.link = ["glibc"]
 script = '''
@@ -70,7 +70,7 @@ install -d ${PKG_DIR}/usr/lib
 mv -v ${MAIN_PKG_DIR}/usr/lib/libuuid.so* ${PKG_DIR}/usr/lib/
 '''
 
-[lifecycle.package.libblkid]
+[lifecycle.fabricate.libblkid]
 description = "Block device identification library"
 dependencies.link = ["glibc", "libuuid"]
 script = '''
@@ -78,7 +78,7 @@ install -d ${PKG_DIR}/usr/lib
 mv -v ${MAIN_PKG_DIR}/usr/lib/libblkid.so* ${PKG_DIR}/usr/lib/
 '''
 
-[lifecycle.package.libmount]
+[lifecycle.fabricate.libmount]
 description = "Device mounting library"
 dependencies.link = ["glibc", "libblkid"]
 script = '''
@@ -86,7 +86,7 @@ install -d ${PKG_DIR}/usr/lib
 mv -v ${MAIN_PKG_DIR}/usr/lib/libmount.so* ${PKG_DIR}/usr/lib/
 '''
 
-[lifecycle.package.libsmartcols]
+[lifecycle.fabricate.libsmartcols]
 description = "Table or tree formatting library"
 dependencies.link = ["glibc"]
 script = '''

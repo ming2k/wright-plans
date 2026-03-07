@@ -1,0 +1,31 @@
+[plan]
+name = "slurp"
+version = "1.5.0"
+release = 1
+description = "Select a region in a Wayland compositor"
+license = "MIT"
+arch = "x86_64"
+url = "https://wayland.emersion.fr/slurp/"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "scdoc"]
+link = ["cairo", "libxkbcommon", "wayland", "wayland-protocols"]
+
+[[sources]]
+uri = "https://github.com/emersion/slurp/archive/v${PKG_VERSION}.tar.gz"
+sha256 = "0fa880d4a93e1c795e3b5929fbea47546df0955bea34fc2f7ffeb1751678f663"
+
+[lifecycle.configure]
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+  --prefix=/usr \
+  --buildtype=release
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = '''
+DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install
+'''

@@ -1,6 +1,6 @@
 [plan]
 name = "linux"
-version = "6.19.5"
+version = "6.19.6"
 release = 1
 description = "The Linux kernel"
 license = "GPL-2.0-only"

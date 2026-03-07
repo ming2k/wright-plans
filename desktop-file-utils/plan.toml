@@ -33,6 +33,6 @@ meson install -C build --destdir ${PKG_DIR}
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = "update-desktop-database -q /usr/share/applications 2>/dev/null || true"
 hooks.post_upgrade = "update-desktop-database -q /usr/share/applications 2>/dev/null || true"

@@ -93,7 +93,7 @@ fi
 
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true

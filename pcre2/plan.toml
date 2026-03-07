@@ -1,26 +1,37 @@
 [plan]
 name = "pcre2"
-version = "10.47"
-release = 3
-description = "Perl Compatible Regular Expressions v2"
+version = "10.45"
+release = 1
+description = "Perl-compatible regular expression library"
 license = "BSD-3-Clause"
 arch = "x86_64"
+url = "https://www.pcre.org/"
 
 [dependencies]
-build = ["gcc", "make", "readline", "zlib"]
-link = ["readline", "zlib"]
+build = ["bash", "gcc", "make"]
 
 [[sources]]
 uri = "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PKG_VERSION}/pcre2-${PKG_VERSION}.tar.bz2"
-sha256 = "47fe8c99461250d42f89e6e8fdaeba9da057855d06eb7fc08d9ca03fd08d7bc7"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = '''
+script = """
 cd ${BUILD_DIR}
-./configure --prefix=/usr --docdir=/usr/share/doc/pcre2-${PKG_VERSION} --enable-unicode --enable-jit --enable-pcre2-16 --enable-pcre2-32 --enable-pcre2grep-libz --enable-pcre2grep-libbz2 --enable-pcre2test-libreadline '''
+./configure \
+  --prefix=/usr \
+  --disable-static \
+  --enable-unicode
+"""
 
 [lifecycle.compile]
-script = "cd ${BUILD_DIR} && make -j$(nproc)"
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""
+

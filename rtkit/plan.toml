@@ -42,7 +42,7 @@ fi
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/rtkit.conf
 systemctl daemon-reload

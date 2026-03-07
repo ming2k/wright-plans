@@ -62,7 +62,7 @@ install -v -m644 doc/*.{ps,pdf,html,dvi} ${PKG_DIR}/usr/share/doc/readline-${PKG
 '''
 
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = "ldconfig 2>/dev/null || true"
 hooks.post_upgrade = "ldconfig 2>/dev/null || true"
 backup = ["/etc/inputrc"]

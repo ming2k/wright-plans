@@ -1,0 +1,34 @@
+[plan]
+name = "libbytesize"
+version = "2.12"
+release = 1
+description = "Library for working with sizes in bytes"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/storaged-project/libbytesize"
+
+[dependencies]
+build = ["gcc", "make", "python-pygments"]
+link = ["glib", "mpfr", "pcre2"]
+
+[[sources]]
+uri = "https://github.com/storaged-project/libbytesize/releases/download/${PKG_VERSION}/libbytesize-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

@@ -21,7 +21,7 @@ cd ${BUILD_DIR}
 ./install.sh --destdir=${PKG_DIR} --prefix=/usr --without=rust-docs
 '''
 
-[lifecycle.package.rust]
+[lifecycle.fabricate]
 script = '''
 # install.sh already placed files into ${PKG_DIR}/usr
 # Remove install log that references the temp directory
@@ -32,7 +32,7 @@ rm -rf ${PKG_DIR}/usr/lib/rustlib/manifest-*
 rm -rf ${PKG_DIR}/usr/etc
 '''
 
-[lifecycle.package.cargo]
+[lifecycle.fabricate.cargo]
 description = "Cargo package manager for Rust"
 dependencies.runtime = ["rust"]
 script = '''

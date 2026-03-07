@@ -1,6 +1,6 @@
 [plan]
 name = "linux-firmware"
-version = "20260110"
+version = "20260221"
 release = 2
 description = "Firmware files for Linux - complete collection with vendor split packages"
 license = "GPL-2.0-only AND GPL-2.0-or-later AND custom"
@@ -24,13 +24,13 @@ mkdir -p _installed/usr/lib/firmware
 ./copy-firmware.sh _installed/usr/lib/firmware
 '''
 
-[lifecycle.package.linux-firmware]
+[lifecycle.fabricate]
 script = '''
 mkdir -p ${PKG_DIR}/usr/share/doc/linux-firmware
 echo "linux-firmware ${PKG_VERSION} meta-package" > ${PKG_DIR}/usr/share/doc/linux-firmware/README
 '''
 
-[lifecycle.package.linux-firmware-whence]
+[lifecycle.fabricate.linux-firmware-whence]
 description = "Firmware files for Linux - WHENCE license manifest"
 script = '''
 cd ${BUILD_DIR}
@@ -48,7 +48,7 @@ install -m644 "$f" ${PKG_DIR}/usr/lib/firmware/"$f"
 done
 '''
 
-[lifecycle.package.linux-firmware-amdgpu]
+[lifecycle.fabricate.linux-firmware-amdgpu]
 description = "Firmware for AMD Radeon GPUs (amdgpu + legacy radeon)"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -60,7 +60,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/radeon" ] && cp -a "$FW/radeon" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.amd-ucode]
+[lifecycle.fabricate.amd-ucode]
 description = "Microcode update image for AMD CPUs"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -70,7 +70,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/amd-ucode" ] && cp -a "$FW/amd-ucode" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-atheros]
+[lifecycle.fabricate.linux-firmware-atheros]
 description = "Firmware for Qualcomm Atheros wireless adapters"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -89,7 +89,7 @@ for f in "$FW"/htc_*.fw "$FW"/htc_*.bin; do
 done
 '''
 
-[lifecycle.package.linux-firmware-broadcom]
+[lifecycle.fabricate.linux-firmware-broadcom]
 description = "Firmware for Broadcom wireless and Bluetooth"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -101,7 +101,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/cypress" ] && cp -a "$FW/cypress" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-cirrus]
+[lifecycle.fabricate.linux-firmware-cirrus]
 description = "Firmware for Cirrus Logic audio devices"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -111,7 +111,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/cirrus" ] && cp -a "$FW/cirrus" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-intel]
+[lifecycle.fabricate.linux-firmware-intel]
 description = "Firmware for Intel audio, Bluetooth, GPU, network, NPU, webcam"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -138,7 +138,7 @@ for f in "$FW"/ibt-*.sfi "$FW"/ibt-*.ddc; do
 done
 '''
 
-[lifecycle.package.linux-firmware-liquidio]
+[lifecycle.fabricate.linux-firmware-liquidio]
 description = "Firmware for Cavium LiquidIO NICs"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -148,7 +148,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/liquidio" ] && cp -a "$FW/liquidio" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-marvell]
+[lifecycle.fabricate.linux-firmware-marvell]
 description = "Firmware for Marvell wireless, Bluetooth, and Ethernet"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -162,7 +162,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/mwlwifi" ] && cp -a "$FW/mwlwifi" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-mediatek]
+[lifecycle.fabricate.linux-firmware-mediatek]
 description = "Firmware for MediaTek and Ralink network adapters"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -178,7 +178,7 @@ for f in rt73.bin rt2561.bin rt2561s.bin rt2661.bin rt2860.bin rt2870.bin rt3071
 done
 '''
 
-[lifecycle.package.linux-firmware-mellanox]
+[lifecycle.fabricate.linux-firmware-mellanox]
 description = "Firmware for Mellanox Ethernet and InfiniBand"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -188,7 +188,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/mellanox" ] && cp -a "$FW/mellanox" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-nfp]
+[lifecycle.fabricate.linux-firmware-nfp]
 description = "Firmware for Netronome Flow Processor NICs"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -198,7 +198,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/netronome" ] && cp -a "$FW/netronome" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-nvidia]
+[lifecycle.fabricate.linux-firmware-nvidia]
 description = "Firmware for NVIDIA GPUs (GSP, Nouveau)"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -208,7 +208,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/nvidia" ] && cp -a "$FW/nvidia" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-qcom]
+[lifecycle.fabricate.linux-firmware-qcom]
 description = "Firmware for Qualcomm SoC, modem, and Bluetooth"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -220,7 +220,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/qca" ] && cp -a "$FW/qca" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-realtek]
+[lifecycle.fabricate.linux-firmware-realtek]
 description = "Firmware for Realtek NICs, WiFi, and Bluetooth"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -233,7 +233,7 @@ for dir in rtl_nic rtl_bt rtlwifi rtw88 rtw89; do
 done
 '''
 
-[lifecycle.package.linux-firmware-ti]
+[lifecycle.fabricate.linux-firmware-ti]
 description = "Firmware for Texas Instruments wireless and misc"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -245,7 +245,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/ti-keystone" ] && cp -a "$FW/ti-keystone" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-bnx2x]
+[lifecycle.fabricate.linux-firmware-bnx2x]
 description = "Firmware for Broadcom NetXtreme II Ethernet"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -257,7 +257,7 @@ mkdir -p ${PKG_DIR}/usr/lib/firmware
 [ -d "$FW/bnx2x" ] && cp -a "$FW/bnx2x" ${PKG_DIR}/usr/lib/firmware/
 '''
 
-[lifecycle.package.linux-firmware-qlogic]
+[lifecycle.fabricate.linux-firmware-qlogic]
 description = "Firmware for QLogic Fibre Channel and Ethernet"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''
@@ -273,7 +273,7 @@ for f in "$FW"/ql2*.bin; do
 done
 '''
 
-[lifecycle.package.linux-firmware-other]
+[lifecycle.fabricate.linux-firmware-other]
 description = "Firmware files for Linux - miscellaneous remaining firmware"
 dependencies.runtime = ["linux-firmware-whence"]
 script = '''

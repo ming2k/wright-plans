@@ -34,7 +34,7 @@ cd ${BUILD_DIR}
 meson install -C build --destdir ${PKG_DIR}
 '''
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 ldconfig 2>/dev/null || true

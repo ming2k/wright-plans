@@ -1,24 +1,36 @@
 [plan]
 name = "cmus"
-version = "2.12.0"
+version = "3.0.0"
 release = 1
 description = "Feature-rich ncurses-based music player"
 license = "GPL-2.0-only"
 arch = "x86_64"
-url = "https://cmus.github.io/"
+url = "https://github.com/ming2k/cmus"
 
 [dependencies]
-build = ["gcc", "make"]
-link = ["ncurses", "alsa-lib", "ffmpeg"]
+runtime = ["pipewire"]
+build = ["gcc", "make", "pkgconf"]
+link = ["alsa-lib", "flac", "libvorbis", "mpg123", "ncurses"]
 
 [[sources]]
-uri = "https://github.com/cmus/cmus/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/ming2k/cmus/archive/refs/tags/v${PKG_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-./configure prefix=/usr
+./configure \
+  prefix=/usr \
+  CONFIG_FFMPEG=n \
+  CONFIG_FLAC=y \
+  CONFIG_MAD=n \
+  CONFIG_MPG123=y \
+  CONFIG_OPUS=n \
+  CONFIG_PULSE=n \
+  CONFIG_JACK=n \
+  CONFIG_MODPLUG=n \
+  CONFIG_MP4=n \
+  CONFIG_AAC=n
 '''
 
 [lifecycle.compile]

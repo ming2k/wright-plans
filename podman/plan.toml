@@ -58,6 +58,6 @@ install -Dm644 completions/fish/podman.fish \
   ${PKG_DIR}/usr/share/fish/vendor_completions.d/podman.fish
 '''
 
-[lifecycle.package]
+[lifecycle.fabricate]
 hooks.post_install = "systemctl daemon-reload 2>/dev/null || true"
 hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

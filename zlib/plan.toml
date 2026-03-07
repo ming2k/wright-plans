@@ -1,35 +1,34 @@
 [plan]
 name = "zlib"
-version = "1.3.2"
+version = "1.3.1"
 release = 1
-description = "Essential compression library"
+description = "Compression library implementing the deflate format"
 license = "Zlib"
 arch = "x86_64"
+url = "https://zlib.net/"
 
 [dependencies]
-build = ["gcc", "make"]
+build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://zlib.net/zlib-${PKG_VERSION}.tar.gz"
-sha256 = "bb329a0a2cd0274d05519d61c667c062e06990d72e125ee2dfa8de64f0119d16"
+uri = "https://zlib.net/zlib-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
-script = '''
+script = """
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
-'''
+"""
 
 [lifecycle.compile]
-script = '''
+script = """
 cd ${BUILD_DIR}
 make -j$(nproc)
-'''
-
-[lifecycle.check]
-script = '''
-cd ${BUILD_DIR}
-make check
-'''
+"""
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install"
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""
+

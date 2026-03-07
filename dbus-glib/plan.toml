@@ -1,0 +1,36 @@
+[plan]
+name = "dbus-glib"
+version = "0.112"
+release = 1
+description = "GLib bindings for D-Bus"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://dbus.freedesktop.org/doc/dbus-glib/"
+
+[dependencies]
+runtime = ["dbus"]
+build = ["gcc", "make", "pkgconf"]
+link = ["dbus", "glib"]
+
+[[sources]]
+uri = "https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-${PKG_VERSION}.tar.gz"
+sha256 = "7d550dccdfcd286e33895501829ed971eeb65c614e73aadb4a08aeef719b143a"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+sed -e 's,SUBDIRS = . examples, SUBDIRS = .,' -i dbus/Makefile.in
+./configure --prefix=/usr --disable-static --disable-bash-completion
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''

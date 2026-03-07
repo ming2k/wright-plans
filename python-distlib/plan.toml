@@ -1,0 +1,22 @@
+[plan]
+name = "python-distlib"
+version = "0.4.0"
+release = 1
+description = "Low-level Python packaging utilities used by installer tooling"
+license = "Python-2.0"
+arch = "x86_64"
+url = "https://pypi.org/project/distlib/"
+
+[dependencies]
+runtime = ["python"]
+build = ["python", "setuptools"]
+
+[[sources]]
+uri = "https://pypi.org/packages/source/d/distlib/distlib-${PKG_VERSION}.tar.gz"
+sha256 = "feec40075be03a04501a973d81f633735b4b69f98b05450592310c0f401a4e0d"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

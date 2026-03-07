@@ -157,7 +157,7 @@ sed -i '/^C \/etc\/nsswitch/d; /^C \/etc\/issue/d' \
        ${PKG_DIR}/usr/lib/tmpfiles.d/etc.conf
 '''
 
-[lifecycle.package]
+[lifecycle.fabricate]
 
 # MVP: break the circular dependency systemd → cryptsetup → device-mapper → libudev (systemd).
 # First pass builds without cryptsetup so libudev.so gets installed on the system.

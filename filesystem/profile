@@ -9,6 +9,10 @@ if [ -r /etc/locale.conf ]; then
     export LANG LANGUAGE LC_ALL LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME
 fi
 
+# XDG base directories
+export XDG_CONFIG_DIRS=${XDG_CONFIG_DIRS:-/etc/xdg}
+export XDG_DATA_DIRS=${XDG_DATA_DIRS:-/usr/local/share:/usr/share}
+
 # Source profile.d snippets
 if [ -d /etc/profile.d ]; then
     for f in /etc/profile.d/*.sh; do

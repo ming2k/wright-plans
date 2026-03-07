@@ -1,0 +1,49 @@
+[plan]
+name = "qemu"
+version = "9.2.0"
+release = 1
+description = "Machine emulator and virtualizer"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://www.qemu.org/"
+
+[dependencies]
+build = ["bash", "python", "python-distlib", "perl", "meson", "ninja", "pkgconf"]
+link = ["glib", "pixman", "zlib", "libslirp", "dtc"]
+runtime = ["seabios"]
+
+[[sources]]
+uri = "https://download.qemu.org/qemu-${PKG_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[options]
+timeout = 14400
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --sysconfdir=/etc \
+  --localstatedir=/var \
+  --target-list=x86_64-softmmu \
+  --python=/usr/bin/python3 \
+  --disable-download \
+  --enable-fdt=system \
+  --audio-drv-list= \
+  --enable-slirp \
+  --disable-docs \
+  --disable-werror
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.staging]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+"""
