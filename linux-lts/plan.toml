@@ -8,6 +8,7 @@ arch = "x86_64"
 url = "https://www.kernel.org/"
 
 [dependencies]
+runtime = ["kmod", "dracut-ng"]
 build = ["bc", "gcc", "make"]
 
 [[sources]]
@@ -88,19 +89,20 @@ make olddefconfig
 '''
 
 [lifecycle.compile]
+dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
 [lifecycle.staging]
+dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make INSTALL_MOD_PATH=${PKG_DIR}/usr modules_install
 rm -f ${PKG_DIR}/usr/lib/modules/*/build
 install -d ${PKG_DIR}/boot
 cp -v arch/x86/boot/bzImage ${PKG_DIR}/boot/vmlinuz-theseus-lts
-cp -v System.map ${PKG_DIR}/boot/System.map-lts
-cp -v .config ${PKG_DIR}/boot/config-lts
-
+cp -v System.map ${PKG_DIR}/boot/System.map-theseus-lts
+cp -v .config ${PKG_DIR}/boot/config-theseus-lts
 '''

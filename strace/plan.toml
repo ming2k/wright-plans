@@ -1,6 +1,6 @@
 [plan]
 name = "strace"
-version = "6.13"
+version = "6.19"
 release = 1
 description = "Diagnostic, debugging and instructional userspace tracer"
 license = "LGPL-2.1-or-later"

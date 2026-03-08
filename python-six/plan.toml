@@ -1,0 +1,22 @@
+[plan]
+name = "python-six"
+version = "1.17.0"
+release = 1
+description = "Python 2 and 3 compatibility utilities"
+license = "MIT"
+arch = "any"
+url = "https://pypi.org/project/six/"
+
+[dependencies]
+runtime = ["python"]
+build = ["python", "setuptools"]
+
+[[sources]]
+uri = "https://files.pythonhosted.org/packages/source/s/six/six-${PKG_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+'''

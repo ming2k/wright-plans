@@ -1,0 +1,35 @@
+[plan]
+name = "intel-media-driver"
+version = "25.4.6"
+release = 1
+description = "Intel Media Driver for VAAPI — Broadwell+ iGPUs"
+license = "BSD-3-Clause AND MIT"
+arch = "x86_64"
+url = "https://github.com/intel/media-driver"
+
+[dependencies]
+build = ["cmake"]
+link = ["glibc", "intel-gmmlib", "libva"]
+
+[[sources]]
+uri = "https://github.com/intel/media-driver/archive/intel-media-${PKG_VERSION}/intel-media-driver-${PKG_VERSION}.tar.gz"
+sha256 = "e5cf57c66e22359d1ec07d766b04e5da43677b9330999ce0dbf686aac60cf6bb"
+
+[lifecycle.configure]
+script = '''
+cmake -B ${BUILD_DIR}/build -S ${BUILD_DIR} \
+    -G "Unix Makefiles" \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+    -DMEDIA_BUILD_FATAL_WARNINGS=OFF
+'''
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "make -C ${BUILD_DIR}/build DESTDIR=${PKG_DIR} install"
+
+[lifecycle.fabricate]
+script = "install -Dm644 ${BUILD_DIR}/LICENSE.md ${PKG_DIR}/usr/share/licenses/intel-media-driver/LICENSE.md"

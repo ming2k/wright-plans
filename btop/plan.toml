@@ -8,7 +8,8 @@ arch = "x86_64"
 url = "https://github.com/aristocratos/btop"
 
 [dependencies]
-build = ["gcc", "make", "libcap"]
+build = ["gcc", "make", "libcap", "libdrm"]
+link = ["libdrm"]
 
 [[sources]]
 uri = "https://github.com/aristocratos/btop/archive/refs/tags/v${PKG_VERSION}/btop-${PKG_VERSION}.tar.gz"
@@ -24,5 +25,8 @@ make all -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} PREFIX=/usr install
-make DESTDIR=${PKG_DIR} PREFIX=/usr setcap
 '''
+
+[lifecycle.fabricate]
+hooks.post_install = "setcap 'cap_perfmon=+ep' /usr/bin/btop"
+hooks.post_upgrade = "setcap 'cap_perfmon=+ep' /usr/bin/btop"

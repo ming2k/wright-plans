@@ -1,0 +1,47 @@
+[plan]
+name = "igt-gpu-tools"
+version = "2.3"
+release = 1
+description = "Tools for development and testing of the Intel DRM driver"
+license = "MIT"
+arch = "x86_64"
+url = "https://gitlab.freedesktop.org/drm/igt-gpu-tools"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = [
+    "cairo",
+    "glibc",
+    "kmod",
+    "libdrm",
+    "libpciaccess",
+    "libunwind",
+    "procps-ng",
+    "systemd",
+]
+
+[[sources]]
+uri = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${PKG_VERSION}/igt-gpu-tools-v${PKG_VERSION}.tar.gz"
+sha256 = "e5a7b37f6797917864a33dc727209b13716e2ea3c3f1b308d4e856a3154d1869"
+
+[lifecycle.configure]
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+    --prefix=/usr \
+    --buildtype=release \
+    -D chamelium=disabled \
+    -D docs=disabled \
+    -D man=disabled \
+    -D overlay=disabled \
+    -D runner=disabled \
+    -D testplan=disabled \
+    -D tests=disabled \
+    -D valgrind=disabled \
+    -D oping=disabled
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"

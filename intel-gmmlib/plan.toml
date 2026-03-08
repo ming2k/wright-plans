@@ -1,0 +1,33 @@
+[plan]
+name = "intel-gmmlib"
+version = "22.9.0"
+release = 1
+description = "Intel Graphics Memory Management Library"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/intel/gmmlib"
+
+[dependencies]
+build = ["cmake"]
+link = ["glibc"]
+
+[[sources]]
+uri = "https://github.com/intel/gmmlib/archive/intel-gmmlib-${PKG_VERSION}/intel-gmmlib-${PKG_VERSION}.tar.gz"
+sha256 = "6ae262b95540681ad5478c63affb880135f772c95410b092009a6f7dfc04a5ba"
+
+[lifecycle.configure]
+script = '''
+cmake -B ${BUILD_DIR}/build -S ${BUILD_DIR} \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_TESTING=ON
+'''
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "make -C ${BUILD_DIR}/build DESTDIR=${PKG_DIR} install"
+
+[lifecycle.fabricate]
+script = "install -Dm644 ${BUILD_DIR}/LICENSE.md ${PKG_DIR}/usr/share/licenses/intel-gmmlib/LICENSE.md"
