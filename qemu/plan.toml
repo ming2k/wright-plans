@@ -9,7 +9,7 @@ url = "https://www.qemu.org/"
 
 [dependencies]
 build = ["bash", "python", "python-distlib", "perl", "meson", "ninja", "pkgconf"]
-link = ["glib", "pixman", "zlib", "libslirp", "dtc"]
+link = ["glib", "pixman", "zlib", "libslirp", "dtc", "spice"]
 runtime = ["seabios"]
 
 [[sources]]
@@ -32,6 +32,7 @@ cd ${BUILD_DIR}
   --enable-fdt=system \
   --audio-drv-list= \
   --enable-slirp \
+  --enable-spice \
   --disable-docs \
   --disable-werror
 """

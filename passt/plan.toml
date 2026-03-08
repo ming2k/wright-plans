@@ -1,0 +1,28 @@
+[plan]
+name = "passt"
+version = "2026_01_20.386b5f5"
+release = 1
+description = "Translation layer for networking of VMs and containers (provides pasta)"
+license = "GPL-2.0-or-later AND BSD-3-Clause"
+arch = "x86_64"
+url = "https://passt.top/passt/about/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["glibc"]
+
+[[sources]]
+uri = "https://passt.top/passt/snapshot/passt-${PKG_VERSION}.tar.zst"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make VERSION="${PKG_VERSION}" -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} prefix=/usr install
+'''

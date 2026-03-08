@@ -45,6 +45,14 @@ cat > ${PKG_DIR}/etc/containers/policy.json << 'EOF'
 }
 EOF
 
+# Set netavark to use nftables firewall backend
+sed -i 's/^#firewall_driver = ""/firewall_driver = "nftables"/' \
+  ${PKG_DIR}/usr/share/containers/containers.conf
+
+# Suppress "Executing external compose provider" hint
+sed -i 's/^#compose_warning_logs = true/compose_warning_logs = false/' \
+  ${PKG_DIR}/usr/share/containers/containers.conf
+
 # Default storage config
 cat > ${PKG_DIR}/etc/containers/storage.conf << 'EOF'
 [storage]

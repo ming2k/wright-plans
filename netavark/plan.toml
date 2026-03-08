@@ -8,6 +8,7 @@ arch = "x86_64"
 url = "https://github.com/containers/netavark"
 
 [dependencies]
+runtime = ["nftables"]
 build = ["rust", "protobuf"]
 
 [[sources]]

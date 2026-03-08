@@ -153,6 +153,10 @@ fi
 chown root:root /usr/bin/passwd 2>/dev/null || true
 chmod 4755 /usr/bin/passwd 2>/dev/null || true
 
+# File capabilities for rootless user namespace mapping
+setcap cap_setuid+ep /usr/bin/newuidmap 2>/dev/null || true
+setcap cap_setgid+ep /usr/bin/newgidmap 2>/dev/null || true
+
 chown root:root /etc/passwd 2>/dev/null || true
 chmod 0644 /etc/passwd 2>/dev/null || true
 
@@ -161,6 +165,19 @@ chmod 0640 /etc/shadow /etc/gshadow 2>/dev/null || true
 
 pwconv  2>/dev/null || true
 grpconv 2>/dev/null || true
+
+# Subordinate UID/GID ranges for rootless containers
+# Allocate a 65536-ID range starting at 100000 for each real user (UID >= 1000)
+for f in /etc/subuid /etc/subgid; do
+  if [ ! -f "$f" ]; then
+    touch "$f"
+    chmod 0644 "$f"
+  fi
+done
+awk -F: '$3 >= 1000 && $3 < 65534 { print $1 }' /etc/passwd | while read -r user; do
+  grep -q "^${user}:" /etc/subuid 2>/dev/null || echo "${user}:100000:65536" >> /etc/subuid
+  grep -q "^${user}:" /etc/subgid 2>/dev/null || echo "${user}:100000:65536" >> /etc/subgid
+done
 '''
 hooks.post_upgrade = '''
 if ! getent group shadow >/dev/null 2>&1; then
@@ -170,6 +187,10 @@ fi
 chown root:root /usr/bin/passwd 2>/dev/null || true
 chmod 4755 /usr/bin/passwd 2>/dev/null || true
 
+# File capabilities for rootless user namespace mapping
+setcap cap_setuid+ep /usr/bin/newuidmap 2>/dev/null || true
+setcap cap_setgid+ep /usr/bin/newgidmap 2>/dev/null || true
+
 chown root:root /etc/passwd 2>/dev/null || true
 chmod 0644 /etc/passwd 2>/dev/null || true
 
@@ -178,6 +199,18 @@ chmod 0640 /etc/shadow /etc/gshadow 2>/dev/null || true
 
 pwconv  2>/dev/null || true
 grpconv 2>/dev/null || true
+
+# Subordinate UID/GID ranges for rootless containers
+for f in /etc/subuid /etc/subgid; do
+  if [ ! -f "$f" ]; then
+    touch "$f"
+    chmod 0644 "$f"
+  fi
+done
+awk -F: '$3 >= 1000 && $3 < 65534 { print $1 }' /etc/passwd | while read -r user; do
+  grep -q "^${user}:" /etc/subuid 2>/dev/null || echo "${user}:100000:65536" >> /etc/subuid
+  grep -q "^${user}:" /etc/subgid 2>/dev/null || echo "${user}:100000:65536" >> /etc/subgid
+done
 '''
 backup = [
     "/etc/login.defs",
@@ -185,4 +218,6 @@ backup = [
     "/etc/pam.d/login",
     "/etc/pam.d/passwd",
     "/etc/pam.d/su",
+    "/etc/subuid",
+    "/etc/subgid",
 ]

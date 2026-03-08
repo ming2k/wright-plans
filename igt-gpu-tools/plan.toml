@@ -45,3 +45,7 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
 script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+
+[lifecycle.fabricate]
+hooks.post_install = "setcap cap_perfmon=+ep /usr/bin/intel_gpu_top"
+hooks.post_upgrade = "setcap cap_perfmon=+ep /usr/bin/intel_gpu_top"

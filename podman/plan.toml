@@ -17,6 +17,7 @@ runtime = [
     "aardvark-dns",
     "slirp4netns",
     "shadow",
+    "passt",
 ]
 build = ["go", "pkgconf"]
 link = ["gpgme", "libassuan", "btrfs-progs", "systemd"]
@@ -40,14 +41,8 @@ make BUILDTAGS="seccomp systemd btrfs exclude_graphdriver_devicemapper" \
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install.bin
-make DESTDIR=${PKG_DIR} install.systemd
-
-# Relocate anything installed under /usr/local to /usr (FHS compliance)
-if [ -d ${PKG_DIR}/usr/local ]; then
-  cp -a ${PKG_DIR}/usr/local/. ${PKG_DIR}/usr/
-  rm -rf ${PKG_DIR}/usr/local
-fi
+make DESTDIR=${PKG_DIR} PREFIX=/usr install.bin
+make DESTDIR=${PKG_DIR} PREFIX=/usr LIBDIR=/usr/lib install.systemd
 
 # Shell completions
 install -Dm644 completions/bash/podman \
