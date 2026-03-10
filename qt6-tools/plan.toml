@@ -12,7 +12,7 @@ build = ["cmake", "gcc", "ninja", "pkgconf", "python", "qt6-base", "qt6-declarat
 link = ["qt6-base", "qt6-declarative"]
 
 [[sources]]
-uri = "https://download.qt.io/official_releases/qt/6.10/${PKG_VERSION}/submodules/qttools-everywhere-src-${PKG_VERSION}.tar.xz"
+uri = "https://download.qt.io/official_releases/qt/6.10/${PART_VERSION}/submodules/qttools-everywhere-src-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [options]
@@ -38,5 +38,5 @@ ninja -j$(nproc) -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''

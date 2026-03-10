@@ -12,7 +12,7 @@ build = ["gcc", "make", "pkgconf", "wayland-protocols"]
 link = ["alsa-lib", "dbus", "libxkbcommon", "pipewire", "wayland"]
 
 [[sources]]
-uri = "https://www.libsdl.org/release/SDL2-${PKG_VERSION}.tar.gz"
+uri = "https://www.libsdl.org/release/SDL2-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -35,8 +35,8 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 
-rm -f ${PKG_DIR}/usr/lib/libSDL2.a
-test -f ${PKG_DIR}/usr/lib/pkgconfig/sdl2.pc
+rm -f ${PART_DIR}/usr/lib/libSDL2.a
+test -f ${PART_DIR}/usr/lib/pkgconfig/sdl2.pc
 '''

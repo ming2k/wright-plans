@@ -11,7 +11,7 @@ url = "https://github.com/exfatprogs/exfatprogs"
 build = ["pkgconf"]
 
 [[sources]]
-uri = "https://github.com/exfatprogs/exfatprogs/releases/download/${PKG_VERSION}/exfatprogs-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/exfatprogs/exfatprogs/releases/download/${PART_VERSION}/exfatprogs-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -24,4 +24,4 @@ cd ${BUILD_DIR}
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
 [lifecycle.staging]
-script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
+script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"

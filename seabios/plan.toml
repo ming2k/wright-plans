@@ -11,7 +11,7 @@ url = "https://www.seabios.org/"
 build = ["bash", "gcc", "make", "python"]
 
 [[sources]]
-uri = "https://www.seabios.org/downloads/seabios-${PKG_VERSION}.tar.gz"
+uri = "https://www.seabios.org/downloads/seabios-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -23,9 +23,9 @@ make -j$(nproc) PYTHON=python3
 [lifecycle.staging]
 script = """
 cd ${BUILD_DIR}
-install -Dm644 out/bios.bin ${PKG_DIR}/usr/share/qemu/bios.bin
+install -Dm644 out/bios.bin ${PART_DIR}/usr/share/qemu/bios.bin
 if [ -f out/vgabios.bin ]; then
-  install -Dm644 out/vgabios.bin ${PKG_DIR}/usr/share/qemu/vgabios.bin
+  install -Dm644 out/vgabios.bin ${PART_DIR}/usr/share/qemu/vgabios.bin
 fi
-install -Dm644 COPYING ${PKG_DIR}/usr/share/doc/seabios/COPYING
+install -Dm644 COPYING ${PART_DIR}/usr/share/doc/seabios/COPYING
 """

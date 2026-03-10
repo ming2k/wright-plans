@@ -11,7 +11,7 @@ url = "https://github.com/ajeetdsouza/zoxide"
 build = ["rust"]
 
 [[sources]]
-uri = "https://github.com/ajeetdsouza/zoxide/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/ajeetdsouza/zoxide/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -25,9 +25,9 @@ cargo build --release --locked
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-install -Dm755 target/release/zoxide ${PKG_DIR}/usr/bin/zoxide
-install -Dm644 contrib/completions/zoxide.bash ${PKG_DIR}/usr/share/bash-completion/completions/zoxide
-install -Dm644 contrib/completions/_zoxide     ${PKG_DIR}/usr/share/zsh/site-functions/_zoxide
-install -Dm644 contrib/completions/zoxide.fish ${PKG_DIR}/usr/share/fish/vendor_completions.d/zoxide.fish
-install -Dm644 man/man1/*.1 -t ${PKG_DIR}/usr/share/man/man1/
+install -Dm755 target/release/zoxide ${PART_DIR}/usr/bin/zoxide
+install -Dm644 contrib/completions/zoxide.bash ${PART_DIR}/usr/share/bash-completion/completions/zoxide
+install -Dm644 contrib/completions/_zoxide     ${PART_DIR}/usr/share/zsh/site-functions/_zoxide
+install -Dm644 contrib/completions/zoxide.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/zoxide.fish
+install -Dm644 man/man1/*.1 -t ${PART_DIR}/usr/share/man/man1/
 '''

@@ -12,7 +12,7 @@ build = ["pkgconf"]
 link = ["systemd", "readline", "util-linux", "libaio"]
 
 [[sources]]
-uri = "https://sourceware.org/pub/lvm2/LVM2.${PKG_VERSION}.tgz"
+uri = "https://sourceware.org/pub/lvm2/LVM2.${PART_VERSION}.tgz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -25,7 +25,7 @@ cd ${BUILD_DIR}
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
 [lifecycle.staging]
-script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
+script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"
 
 
 [lifecycle.fabricate]

@@ -12,7 +12,7 @@ build = ["gcc", "meson", "ninja", "pkgconf", "vim"]
 link = ["dbus", "libcap", "polkit", "systemd"]
 
 [[sources]]
-uri = "git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${PKG_VERSION}"
+uri = "git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${PART_VERSION}"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -29,15 +29,15 @@ script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
+DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build
 
-install -Dm644 ${BUILD_DIR}/LICENSE -t ${PKG_DIR}/usr/share/licenses/rtkit/
+install -Dm644 ${BUILD_DIR}/LICENSE -t ${PART_DIR}/usr/share/licenses/rtkit/
 sed -n '4,25p' ${BUILD_DIR}/rtkit.c |
-  install -Dm644 /dev/stdin ${PKG_DIR}/usr/share/licenses/rtkit/LICENSE.MIT
+  install -Dm644 /dev/stdin ${PART_DIR}/usr/share/licenses/rtkit/LICENSE.MIT
 
-if [ -d ${PKG_DIR}/usr/sbin ]; then
-  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
-  rm -rf ${PKG_DIR}/usr/sbin
+if [ -d ${PART_DIR}/usr/sbin ]; then
+  cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
+  rm -rf ${PART_DIR}/usr/sbin
 fi
 '''
 

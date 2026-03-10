@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://www.alsa-project.org"
 
 [[sources]]
-uri = "https://www.alsa-project.org/files/pub/lib/alsa-lib-${PKG_VERSION}.tar.bz2"
+uri = "https://www.alsa-project.org/files/pub/lib/alsa-lib-${PART_VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -26,5 +26,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 '''

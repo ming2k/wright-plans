@@ -11,7 +11,7 @@ url = "https://www.gnu.org/software/m4/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/m4/m4-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/m4/m4-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -35,6 +35,6 @@ make check
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-rm -f ${PKG_DIR}/usr/share/info/dir
+make DESTDIR=${PART_DIR} install
+rm -f ${PART_DIR}/usr/share/info/dir
 '''

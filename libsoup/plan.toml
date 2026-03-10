@@ -12,7 +12,7 @@ build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
 link = ["glib", "libpsl", "libxml2", "nghttp2", "sqlite"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libsoup/3.6/libsoup-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libsoup/3.6/libsoup-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -25,4 +25,4 @@ meson setup build --prefix=/usr --buildtype=release -Dvapi=disabled -Dsysprof=di
 script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build"
+script = "DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build"

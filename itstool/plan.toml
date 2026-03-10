@@ -12,7 +12,7 @@ runtime = ["libxml2", "python"]
 build = ["libxml2", "python"]
 
 [[sources]]
-uri = "https://github.com/itstool/itstool/archive/refs/tags/${PKG_VERSION}.tar.gz"
+uri = "https://github.com/itstool/itstool/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,5 +31,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 '''

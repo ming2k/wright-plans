@@ -14,11 +14,10 @@ link = ["glibc"]
 optional = [{name = "python", description = "Python provider support"}, {name = "xclip", description = "Clipboard support via xclip"}]
 
 [[sources]]
-uri = "https://github.com/neovim/neovim/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/neovim/neovim/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [options]
-strip = true
 ccache = true
 
 [lifecycle.configure]
@@ -37,7 +36,7 @@ make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${PKG_DIR} install
+make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${PART_DIR} install
 '''
 
 

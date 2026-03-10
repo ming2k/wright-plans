@@ -13,7 +13,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["dbus", "glib"]
 
 [[sources]]
-uri = "https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-${PKG_VERSION}.tar.gz"
+uri = "https://dbus.freedesktop.org/releases/dbus-glib/dbus-glib-${PART_VERSION}.tar.gz"
 sha256 = "7d550dccdfcd286e33895501829ed971eeb65c614e73aadb4a08aeef719b143a"
 
 [lifecycle.configure]
@@ -32,5 +32,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

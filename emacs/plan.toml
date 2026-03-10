@@ -13,7 +13,7 @@ build = ["gcc", "gnutls", "make", "pkgconf", "tree-sitter"]
 link = ["glib", "glibc", "gtk3", "harfbuzz", "ncurses", "pango"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/emacs/emacs-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/emacs/emacs-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -45,5 +45,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

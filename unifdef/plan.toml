@@ -31,5 +31,5 @@ make -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 # prefix 定义安装路径
-make prefix=${PKG_DIR}/usr install
+make prefix=${PART_DIR}/usr install
 '''

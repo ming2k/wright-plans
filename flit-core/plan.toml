@@ -11,11 +11,11 @@ url = "https://flit.pypa.io/"
 build = ["python"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/f/flit_core/flit_core-${PKG_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/f/flit_core/flit_core-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
 '''

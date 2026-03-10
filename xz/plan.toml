@@ -11,7 +11,7 @@ url = "https://tukaani.org/xz/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/tukaani-project/xz/releases/download/v${PKG_VERSION}/xz-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/tukaani-project/xz/releases/download/v${PART_VERSION}/xz-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -19,7 +19,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
 --disable-static \
---docdir=/usr/share/doc/xz-${PKG_VERSION}
+--docdir=/usr/share/doc/xz-${PART_VERSION}
 '''
 
 [lifecycle.compile]
@@ -37,5 +37,5 @@ make check
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

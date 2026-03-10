@@ -12,7 +12,7 @@ build = ["meson", "ninja"]
 link = ["wayland", "wayland-protocols"]
 
 [[sources]]
-uri = "https://github.com/bugaevc/wl-clipboard/archive/v${PKG_VERSION}/wl-clipboard-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/bugaevc/wl-clipboard/archive/v${PART_VERSION}/wl-clipboard-${PART_VERSION}.tar.gz"
 sha256 = "6eb8081207fb5581d1d82c4bcd9587205a31a3d47bea3ebeb7f41aa1143783eb"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ ninja -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''

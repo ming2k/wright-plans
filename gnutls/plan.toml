@@ -13,7 +13,7 @@ build = ["gcc", "libtasn1", "make", "nettle", "p11-kit", "pkgconf"]
 link = ["libunistring"]
 
 [[sources]]
-uri = "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${PKG_VERSION}.tar.xz"
+uri = "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -33,5 +33,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

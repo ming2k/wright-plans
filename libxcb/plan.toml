@@ -12,7 +12,7 @@ runtime = ["xcb-proto"]
 build = ["gcc", "make", "python", "xcb-proto"]
 
 [[sources]]
-uri = "https://xorg.freedesktop.org/archive/individual/lib/libxcb-${PKG_VERSION}.tar.xz"
+uri = "https://xorg.freedesktop.org/archive/individual/lib/libxcb-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

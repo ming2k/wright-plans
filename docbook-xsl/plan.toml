@@ -11,23 +11,22 @@ url = "https://github.com/docbook/xslt10-stylesheets"
 runtime = ["libxml2"]
 
 [[sources]]
-uri = "https://github.com/docbook/xslt10-stylesheets/releases/download/release/${PKG_VERSION}/docbook-xsl-nons-${PKG_VERSION}.tar.bz2"
+uri = "https://github.com/docbook/xslt10-stylesheets/releases/download/release/${PART_VERSION}/docbook-xsl-nons-${PART_VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [options]
-strip = false
 
 [lifecycle.staging]
 script = '''
-install -dm755 "${PKG_DIR}/usr/share/xml/docbook"
-cp -r "${BUILD_DIR}/." "${PKG_DIR}/usr/share/xml/docbook/xsl-stylesheets-${PKG_VERSION}/"
-ln -sfn "xsl-stylesheets-${PKG_VERSION}" "${PKG_DIR}/usr/share/xml/docbook/xsl-stylesheets"
-ln -sfn "xsl-stylesheets-${PKG_VERSION}" "${PKG_DIR}/usr/share/xml/docbook/xsl-stylesheets-nons"
+install -dm755 "${PART_DIR}/usr/share/xml/docbook"
+cp -r "${BUILD_DIR}/." "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-${PART_VERSION}/"
+ln -sfn "xsl-stylesheets-${PART_VERSION}" "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets"
+ln -sfn "xsl-stylesheets-${PART_VERSION}" "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-nons"
 
 # Write a comprehensive catalog for use inside strict build sandboxes
 # (where /etc/xml/catalog is not mounted). Build tools set XML_CATALOG_FILES
 # to this file to resolve all common DocBook XSL URIs locally.
-cat > "${PKG_DIR}/usr/share/xml/docbook/xsl-stylesheets-${PKG_VERSION}/catalog.xml" << 'EOF'
+cat > "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-${PART_VERSION}/catalog.xml" << 'EOF'
 <?xml version="1.0"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
   <rewriteURI uriStartString="http://cdn.docbook.org/release/xsl/current/"         rewritePrefix="./"/>

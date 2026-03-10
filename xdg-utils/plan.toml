@@ -11,7 +11,7 @@ url = "https://www.freedesktop.org/wiki/Software/xdg-utils/"
 build = ["gcc", "make", "lynx", "xmlto", "docbook-xml"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/xdg/xdg-utils/-/archive/v${PKG_VERSION}/xdg-utils-v${PKG_VERSION}.tar.bz2"
+uri = "https://gitlab.freedesktop.org/xdg/xdg-utils/-/archive/v${PART_VERSION}/xdg-utils-v${PART_VERSION}.tar.bz2"
 sha256 = "93d510dccf328378f012fe195b4574c2fac1cd65a74d0852d6eaa72e5a2065a7"
 
 [lifecycle.configure]
@@ -31,5 +31,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

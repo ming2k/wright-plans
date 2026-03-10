@@ -1,6 +1,6 @@
 [plan]
 name = "pipewire"
-version = "1.6.0"
+version = "1.6.1"
 release = 1
 description = "Low-latency audio/video router and processor"
 license = "MIT"
@@ -12,7 +12,7 @@ build = ["meson", "ninja", "pkgconf", "rtkit"]
 link = ["alsa-lib", "bluez", "dbus", "glib", "libsndfile", "ncurses", "opus", "readline", "sbc", "systemd"]
 
 [[sources]]
-uri = "https://github.com/PipeWire/pipewire/archive/refs/tags/${PKG_VERSION}.tar.gz"
+uri = "https://github.com/PipeWire/pipewire/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -41,7 +41,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
 
 
 [lifecycle.fabricate]

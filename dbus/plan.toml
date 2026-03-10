@@ -13,7 +13,7 @@ build = ["gcc", "meson", "ninja", "pkgconf"]
 link = ["expat", "libsystemd"]
 
 [[sources]]
-uri = "https://dbus.freedesktop.org/releases/dbus/dbus-${PKG_VERSION}.tar.xz"
+uri = "https://dbus.freedesktop.org/releases/dbus/dbus-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -47,16 +47,16 @@ ninja
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-DESTDIR=${PKG_DIR} ninja install
+DESTDIR=${PART_DIR} ninja install
 
 # Symlink so D-Bus and systemd share machine-id
-ln -sfv /etc/machine-id ${PKG_DIR}/var/lib/dbus
+ln -sfv /etc/machine-id ${PART_DIR}/var/lib/dbus
 
 # Set dbus-daemon-launch-helper setuid root:messagebus in the package.
 # Use GID 18 directly so this works even when the messagebus group
 # doesn't exist in the build environment.
-chown 0:18 ${PKG_DIR}/usr/libexec/dbus-daemon-launch-helper
-chmod 4750 ${PKG_DIR}/usr/libexec/dbus-daemon-launch-helper
+chown 0:18 ${PART_DIR}/usr/libexec/dbus-daemon-launch-helper
+chmod 4750 ${PART_DIR}/usr/libexec/dbus-daemon-launch-helper
 '''
 
 
@@ -78,6 +78,6 @@ fi
 description = "D-Bus low-level shared library"
 dependencies.link = ["glibc"]
 script = '''
-install -d ${PKG_DIR}/usr/lib
-mv -v ${MAIN_PKG_DIR}/usr/lib/libdbus-1.so* ${PKG_DIR}/usr/lib/
+install -d ${PART_DIR}/usr/lib
+mv -v ${MAIN_PART_DIR}/usr/lib/libdbus-1.so* ${PART_DIR}/usr/lib/
 '''

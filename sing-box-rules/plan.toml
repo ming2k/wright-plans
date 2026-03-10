@@ -20,11 +20,10 @@ uri = "https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-google.srs"
 sha256 = "SKIP"
 
 [options]
-strip = false
 
 [lifecycle.staging]
 script = '''
-install -Dm644 "${FILES_DIR}/geoip-cn.srs" "${PKG_DIR}/usr/share/sing-box/rules/geoip-cn.srs"
-install -Dm644 "${FILES_DIR}/geosite-cn.srs" "${PKG_DIR}/usr/share/sing-box/rules/geosite-cn.srs"
-install -Dm644 "${FILES_DIR}/geosite-google.srs" "${PKG_DIR}/usr/share/sing-box/rules/geosite-google.srs"
+install -Dm644 "${FILES_DIR}/geoip-cn.srs" "${PART_DIR}/usr/share/sing-box/rules/geoip-cn.srs"
+install -Dm644 "${FILES_DIR}/geosite-cn.srs" "${PART_DIR}/usr/share/sing-box/rules/geosite-cn.srs"
+install -Dm644 "${FILES_DIR}/geosite-google.srs" "${PART_DIR}/usr/share/sing-box/rules/geosite-google.srs"
 '''

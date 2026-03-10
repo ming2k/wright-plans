@@ -11,7 +11,7 @@ url = "https://github.com/scop/bash-completion"
 build = ["make"]
 
 [[sources]]
-uri = "https://github.com/scop/bash-completion/releases/download/${PKG_VERSION}/bash-completion-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/scop/bash-completion/releases/download/${PART_VERSION}/bash-completion-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -24,4 +24,4 @@ cd ${BUILD_DIR}
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
 [lifecycle.staging]
-script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
+script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"

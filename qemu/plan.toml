@@ -13,7 +13,7 @@ link = ["glib", "pixman", "zlib", "libslirp", "dtc", "spice"]
 runtime = ["seabios"]
 
 [[sources]]
-uri = "https://download.qemu.org/qemu-${PKG_VERSION}.tar.xz"
+uri = "https://download.qemu.org/qemu-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [options]
@@ -46,5 +46,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = """
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 """

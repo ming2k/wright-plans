@@ -11,7 +11,7 @@ build = ["cmake", "ninja", "gcc", "pkgconf"]
 link = ["libde265", "dav1d", "aom", "libjpeg-turbo", "libpng"]
 
 [[sources]]
-uri = "https://github.com/strukturag/libheif/releases/download/v${PKG_VERSION}/libheif-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/strukturag/libheif/releases/download/v${PART_VERSION}/libheif-${PART_VERSION}.tar.gz"
 sha256 = "75f530b7154bc93e7ecf846edfc0416bf5f490612de8c45983c36385aa742b42"
 
 [lifecycle.configure]
@@ -24,4 +24,4 @@ cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -
 script = "ninja -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

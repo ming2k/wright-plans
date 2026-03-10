@@ -11,7 +11,7 @@ build = ["pkgconf", "meson", "ninja", "rust", "cargo-c", "python", "gobject-intr
 link = ["cairo", "gdk-pixbuf", "pango", "glib", "libxml2", "harfbuzz", "freetype", "fribidi"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/librsvg/2.61/librsvg-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/librsvg/2.61/librsvg-${PART_VERSION}.tar.xz"
 sha256 = "fca0ea28d1f28f95c8407d2579f4702dac085e7c758644daca8b40d1e072ca0c"
 
 [lifecycle.configure]
@@ -27,4 +27,4 @@ env = {LD_LIBRARY_PATH = "${BUILD_DIR}/build/librsvg"}
 script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"
+script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"

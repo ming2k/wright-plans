@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://www.kernel.org/doc/man-pages/"
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-${PKG_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -20,5 +20,5 @@ rm -v man3/crypt*
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make -R GIT=false prefix=/usr DESTDIR=${PKG_DIR} install
+make -R GIT=false prefix=/usr DESTDIR=${PART_DIR} install
 '''

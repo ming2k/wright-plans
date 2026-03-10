@@ -12,7 +12,7 @@ build = ["cmake", "gcc", "ninja", "pkgconf", "qt6-base", "qt6-svg", "qt6-tools"]
 link = ["qt6-base", "qt6-svg"]
 
 [[sources]]
-uri = "https://github.com/tsujan/Kvantum/archive/refs/tags/V${PKG_VERSION}.tar.gz"
+uri = "https://github.com/tsujan/Kvantum/archive/refs/tags/V${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -34,5 +34,5 @@ ninja -j$(nproc) -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/Kvantum
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''

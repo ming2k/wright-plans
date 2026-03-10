@@ -12,7 +12,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["freetype", "fribidi", "harfbuzz", "fontconfig"]
 
 [[sources]]
-uri = "https://github.com/libass/libass/releases/download/${PKG_VERSION}/libass-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/libass/libass/releases/download/${PART_VERSION}/libass-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

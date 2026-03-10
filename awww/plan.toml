@@ -12,7 +12,7 @@ build = ["rust"]
 link = ["lz4", "wayland", "wayland-protocols"]
 
 [[sources]]
-uri = "https://codeberg.org/LGFae/awww/archive/v${PKG_VERSION}.tar.gz"
+uri = "https://codeberg.org/LGFae/awww/archive/v${PART_VERSION}.tar.gz"
 sha256 = "0bd1d3a7461b1bc0b99f49aa64ce01d3e84412c5afd6534a1221c4aa3341ccd6"
 
 [lifecycle.compile]
@@ -26,10 +26,10 @@ cargo build --release --locked
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-install -Dm755 target/release/swww ${PKG_DIR}/usr/bin/swww
-install -Dm755 target/release/swww-daemon ${PKG_DIR}/usr/bin/swww-daemon
+install -Dm755 target/release/swww ${PART_DIR}/usr/bin/swww
+install -Dm755 target/release/swww-daemon ${PART_DIR}/usr/bin/swww-daemon
 
-install -Dm644 completions/swww.bash ${PKG_DIR}/usr/share/bash-completion/completions/swww
-install -Dm644 completions/swww.fish ${PKG_DIR}/usr/share/fish/vendor_completions.d/swww.fish
-install -Dm644 completions/_swww ${PKG_DIR}/usr/share/zsh/site-functions/_swww
+install -Dm644 completions/swww.bash ${PART_DIR}/usr/share/bash-completion/completions/swww
+install -Dm644 completions/swww.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/swww.fish
+install -Dm644 completions/_swww ${PART_DIR}/usr/share/zsh/site-functions/_swww
 '''

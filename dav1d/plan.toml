@@ -10,7 +10,7 @@ arch = "x86_64"
 build = ["meson", "ninja", "nasm", "gcc"]
 
 [[sources]]
-uri = "https://code.videolan.org/videolan/dav1d/-/archive/${PKG_VERSION}/dav1d-${PKG_VERSION}.tar.gz"
+uri = "https://code.videolan.org/videolan/dav1d/-/archive/${PART_VERSION}/dav1d-${PART_VERSION}.tar.gz"
 sha256 = "cbe212b02faf8c6eed5b6d55ef8a6e363aaab83f15112e960701a9c3df813686"
 
 [lifecycle.configure]
@@ -20,4 +20,4 @@ script = "cd ${BUILD_DIR} && meson setup build --prefix=/usr --buildtype=release
 script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"
+script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"

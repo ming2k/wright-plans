@@ -16,6 +16,6 @@ sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
-install -d ${PKG_DIR}/usr/share/rime-data
-install -Dm644 ${BUILD_DIR}/*.yaml -t ${PKG_DIR}/usr/share/rime-data/
+install -d ${PART_DIR}/usr/share/rime-data
+install -Dm644 ${BUILD_DIR}/*.yaml -t ${PART_DIR}/usr/share/rime-data/
 '''

@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["bzip2", "ncurses", "openssl", "zlib"]
 
 [[sources]]
-uri = "https://invisible-mirror.net/archives/lynx/tarballs/lynx${PKG_VERSION}.tar.bz2"
+uri = "https://invisible-mirror.net/archives/lynx/tarballs/lynx${PART_VERSION}.tar.bz2"
 sha256 = "7374b89936d991669e101f4e97f2c9592036e1e8cdaa7bafc259a77ab6fb07ce"
 
 [lifecycle.configure]
@@ -44,11 +44,11 @@ make -j$(nproc) BUILD_CC=gcc BUILD_CPP='gcc -E'
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
-if [ -d ${PKG_DIR}/usr/etc ]; then
-  mkdir -p ${PKG_DIR}/etc
-  cp -a ${PKG_DIR}/usr/etc/. ${PKG_DIR}/etc/
-  rm -rf ${PKG_DIR}/usr/etc
+if [ -d ${PART_DIR}/usr/etc ]; then
+  mkdir -p ${PART_DIR}/etc
+  cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
+  rm -rf ${PART_DIR}/usr/etc
 fi
 '''

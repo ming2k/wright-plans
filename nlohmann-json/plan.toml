@@ -11,7 +11,7 @@ url = "https://github.com/nlohmann/json"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/nlohmann/json/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/nlohmann/json/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -26,4 +26,4 @@ cmake -B build -G Ninja \
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

@@ -13,7 +13,7 @@ build = ["gettext", "libxslt", "meson", "ninja", "pkgconf"]
 link = ["dbus", "gcr3", "glib", "libsecret", "linux-pam", "p11-kit"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gnome-keyring/48/gnome-keyring-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gnome-keyring/48/gnome-keyring-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,7 +31,7 @@ meson compile -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-meson install -C build --destdir ${PKG_DIR}
+meson install -C build --destdir ${PART_DIR}
 '''
 
 [lifecycle.fabricate]

@@ -11,7 +11,7 @@ url = "https://www.darwinsys.com/file/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://astron.com/pub/file/file-${PKG_VERSION}.tar.gz"
+uri = "https://astron.com/pub/file/file-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -35,5 +35,5 @@ make check
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

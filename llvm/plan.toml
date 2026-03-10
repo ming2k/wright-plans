@@ -13,11 +13,10 @@ build = ["cmake", "gcc", "ninja", "pkgconf", "python"]
 link = ["libedit", "libffi", "libxml2", "zlib", "zstd"]
 
 [[sources]]
-uri = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${PKG_VERSION}/llvm-project-${PKG_VERSION}.src.tar.xz"
+uri = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${PART_VERSION}/llvm-project-${PART_VERSION}.src.tar.xz"
 sha256 = "SKIP"
 
 [options]
-strip = true
 
 [lifecycle.configure]
 script = '''
@@ -34,10 +33,10 @@ ninja -C build -j$(nproc)
 [lifecycle.fabricate]
 script = '''
 cd ${BUILD_DIR}/llvm
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 
-if [ ! -f ${PKG_DIR}/usr/bin/llvm-config ]; then
-  ln -sf llvm-config-${PKG_VERSION%%.*} ${PKG_DIR}/usr/bin/llvm-config
+if [ ! -f ${PART_DIR}/usr/bin/llvm-config ]; then
+  ln -sf llvm-config-${PKG_VERSION%%.*} ${PART_DIR}/usr/bin/llvm-config
 fi
 '''
 
@@ -45,11 +44,11 @@ fi
 description = "LLVM shared libraries"
 dependencies.link = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
 script = '''
-install -d ${PKG_DIR}/usr/lib
-mv -v ${MAIN_PKG_DIR}/usr/lib/libLLVM-*.so ${PKG_DIR}/usr/lib/
-mv -v ${MAIN_PKG_DIR}/usr/lib/libLLVM.so* ${PKG_DIR}/usr/lib/
-mv -v ${MAIN_PKG_DIR}/usr/lib/libLTO.so* ${PKG_DIR}/usr/lib/
-mv -v ${MAIN_PKG_DIR}/usr/lib/libRemarks.so* ${PKG_DIR}/usr/lib/
+install -d ${PART_DIR}/usr/lib
+mv -v ${MAIN_PART_DIR}/usr/lib/libLLVM-*.so ${PART_DIR}/usr/lib/
+mv -v ${MAIN_PART_DIR}/usr/lib/libLLVM.so* ${PART_DIR}/usr/lib/
+mv -v ${MAIN_PART_DIR}/usr/lib/libLTO.so* ${PART_DIR}/usr/lib/
+mv -v ${MAIN_PART_DIR}/usr/lib/libRemarks.so* ${PART_DIR}/usr/lib/
 '''
 
 [lifecycle.fabricate.clang]
@@ -57,17 +56,17 @@ description = "C/C++/ObjC compiler frontend for LLVM"
 dependencies.runtime = ["llvm-libs"]
 dependencies.link = ["glibc"]
 script = '''
-install -d ${PKG_DIR}/usr/bin
-install -d ${PKG_DIR}/usr/lib
-install -d ${PKG_DIR}/usr/include
-install -d ${PKG_DIR}/usr/share
+install -d ${PART_DIR}/usr/bin
+install -d ${PART_DIR}/usr/lib
+install -d ${PART_DIR}/usr/include
+install -d ${PART_DIR}/usr/share
 
-mv -v ${MAIN_PKG_DIR}/usr/bin/clang* ${PKG_DIR}/usr/bin/
-mv -v ${MAIN_PKG_DIR}/usr/bin/git-clang-format ${PKG_DIR}/usr/bin/ 2>/dev/null || true
-mv -v ${MAIN_PKG_DIR}/usr/lib/clang ${PKG_DIR}/usr/lib/
-mv -v ${MAIN_PKG_DIR}/usr/lib/libclang*.so* ${PKG_DIR}/usr/lib/
-mv -v ${MAIN_PKG_DIR}/usr/include/clang* ${PKG_DIR}/usr/include/ 2>/dev/null || true
-mv -v ${MAIN_PKG_DIR}/usr/share/clang ${PKG_DIR}/usr/share/ 2>/dev/null || true
+mv -v ${MAIN_PART_DIR}/usr/bin/clang* ${PART_DIR}/usr/bin/
+mv -v ${MAIN_PART_DIR}/usr/bin/git-clang-format ${PART_DIR}/usr/bin/ 2>/dev/null || true
+mv -v ${MAIN_PART_DIR}/usr/lib/clang ${PART_DIR}/usr/lib/
+mv -v ${MAIN_PART_DIR}/usr/lib/libclang*.so* ${PART_DIR}/usr/lib/
+mv -v ${MAIN_PART_DIR}/usr/include/clang* ${PART_DIR}/usr/include/ 2>/dev/null || true
+mv -v ${MAIN_PART_DIR}/usr/share/clang ${PART_DIR}/usr/share/ 2>/dev/null || true
 '''
 
 [lifecycle.fabricate.lld]
@@ -75,8 +74,8 @@ description = "LLVM linker"
 dependencies.runtime = ["llvm-libs"]
 dependencies.link = ["glibc"]
 script = '''
-install -d ${PKG_DIR}/usr/bin
-mv -v ${MAIN_PKG_DIR}/usr/bin/lld* ${PKG_DIR}/usr/bin/
-mv -v ${MAIN_PKG_DIR}/usr/bin/ld.lld* ${PKG_DIR}/usr/bin/
-mv -v ${MAIN_PKG_DIR}/usr/bin/wasm-ld ${PKG_DIR}/usr/bin/ 2>/dev/null || true
+install -d ${PART_DIR}/usr/bin
+mv -v ${MAIN_PART_DIR}/usr/bin/lld* ${PART_DIR}/usr/bin/
+mv -v ${MAIN_PART_DIR}/usr/bin/ld.lld* ${PART_DIR}/usr/bin/
+mv -v ${MAIN_PART_DIR}/usr/bin/wasm-ld ${PART_DIR}/usr/bin/ 2>/dev/null || true
 '''

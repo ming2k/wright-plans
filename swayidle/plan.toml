@@ -13,7 +13,7 @@ build = ["meson", "ninja"]
 link = ["wayland", "wayland-protocols"]
 
 [[sources]]
-uri = "https://github.com/swaywm/swayidle/releases/download/v${PKG_VERSION}/swayidle-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/swaywm/swayidle/releases/download/v${PART_VERSION}/swayidle-${PART_VERSION}.tar.gz"
 sha256 = "6c1b769038b60250c88e47380cbb021cfa57a65f872bf4d6c340b5e3057096ac"
 
 [lifecycle.configure]
@@ -31,5 +31,5 @@ ninja -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''

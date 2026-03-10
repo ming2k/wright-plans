@@ -12,7 +12,7 @@ build = ["cmake", "ninja", "pkgconf", "gcc"]
 link = ["brotli", "hwy", "lcms2", "libjpeg-turbo", "libpng"]
 
 [[sources]]
-uri = "https://github.com/libjxl/libjxl/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/libjxl/libjxl/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "ab38928f7f6248e2a98cc184956021acb927b16a0dee71b4d260dc040a4320ea"
 
 [lifecycle.prepare]
@@ -37,4 +37,4 @@ cmake -B build -G Ninja -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_
 script = "ninja -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

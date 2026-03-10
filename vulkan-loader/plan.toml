@@ -11,7 +11,7 @@ build = ["cmake", "ninja", "vulkan-headers", "python"]
 link = ["glibc", "wayland"]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -24,4 +24,4 @@ cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -
 script = "ninja -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

@@ -11,7 +11,7 @@ url = "https://www.gnu.org/software/cpio/"
 link = ["glibc"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/cpio/cpio-${PKG_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/cpio/cpio-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -34,4 +34,4 @@ cd ${BUILD_DIR}
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
 [lifecycle.staging]
-script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
+script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"

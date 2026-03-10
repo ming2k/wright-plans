@@ -20,7 +20,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${PKG_VERSION}.tar.gz"
+uri = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -49,4 +49,4 @@ cd ${BUILD_DIR}
 script = "make -C ${BUILD_DIR} -j$(nproc)"
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install"
+script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"

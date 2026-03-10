@@ -8,13 +8,13 @@ arch = "x86_64"
 url = "https://www.iana.org/protocols"
 
 [[sources]]
-uri = "https://github.com/Mic92/iana-etc/releases/download/${PKG_VERSION}/iana-etc-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/Mic92/iana-etc/releases/download/${PART_VERSION}/iana-etc-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 backup = ["/etc/services", "/etc/protocols"]
 script = '''
 cd ${BUILD_DIR}
-install -Dm644 services  ${PKG_DIR}/etc/services
-install -Dm644 protocols ${PKG_DIR}/etc/protocols
+install -Dm644 services  ${PART_DIR}/etc/services
+install -Dm644 protocols ${PART_DIR}/etc/protocols
 '''

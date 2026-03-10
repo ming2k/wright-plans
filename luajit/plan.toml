@@ -28,10 +28,10 @@ make -j$(nproc) PREFIX=/usr XCFLAGS='-fPIC'
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make PREFIX=/usr DESTDIR=${PKG_DIR} install
+make PREFIX=/usr DESTDIR=${PART_DIR} install
 
-mkdir -p ${PKG_DIR}/usr/lib/pkgconfig
-cat > ${PKG_DIR}/usr/lib/pkgconfig/luajit.pc << PCEOF
+mkdir -p ${PART_DIR}/usr/lib/pkgconfig
+cat > ${PART_DIR}/usr/lib/pkgconfig/luajit.pc << PCEOF
 prefix=/usr
 exec_prefix=\${prefix}
 libdir=\${exec_prefix}/lib
@@ -39,7 +39,7 @@ includedir=\${prefix}/include/luajit-2.1
 
 Name: LuaJIT
 Description: Just-in-time compiler for Lua
-Version: ${PKG_VERSION}
+Version: ${PART_VERSION}
 Libs: -L\${libdir} -lluajit-5.1
 Cflags: -I\${includedir}
 PCEOF

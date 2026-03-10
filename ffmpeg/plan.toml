@@ -36,7 +36,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://ffmpeg.org/releases/ffmpeg-${PKG_VERSION}.tar.xz"
+uri = "https://ffmpeg.org/releases/ffmpeg-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -90,7 +90,7 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
-test -x ${PKG_DIR}/usr/bin/ffplay
+test -x ${PART_DIR}/usr/bin/ffplay
 '''

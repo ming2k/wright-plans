@@ -25,7 +25,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.qt.io/official_releases/qt/6.10/${PKG_VERSION}/submodules/qtbase-everywhere-src-${PKG_VERSION}.tar.xz"
+uri = "https://download.qt.io/official_releases/qt/6.10/${PART_VERSION}/submodules/qtbase-everywhere-src-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [options]
@@ -59,4 +59,4 @@ cmake -B build -G Ninja \
 script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

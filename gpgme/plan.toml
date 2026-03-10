@@ -12,7 +12,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["libassuan", "libgpg-error", "gnupg"]
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/gpgme/gpgme-${PKG_VERSION}.tar.bz2"
+uri = "https://gnupg.org/ftp/gcrypt/gpgme/gpgme-${PART_VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -33,5 +33,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 '''

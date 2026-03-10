@@ -12,7 +12,7 @@ build = ["autoconf", "automake", "gcc", "libtool", "make", "pkgconf"]
 link = ["systemd"]
 
 [[sources]]
-uri = "http://0pointer.de/public/libatasmart-${PKG_VERSION}.tar.xz"
+uri = "http://0pointer.de/public/libatasmart-${PART_VERSION}.tar.xz"
 sha256 = "61f0ea345f63d28ab2ff0dc352c22271661b66bf09642db3a4049ac9dbdb0f8d"
 
 [lifecycle.configure]
@@ -31,5 +31,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

@@ -63,14 +63,14 @@ cd ${BUILD_DIR}
 
 # Install BIOS build first, then EFI on top (shared tools are identical)
 cd build-bios
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
 cd ${BUILD_DIR}/build-efi
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
 # Relocate bash completion
-mkdir -p ${PKG_DIR}/usr/share/bash-completion/completions
-mv -v ${PKG_DIR}/etc/bash_completion.d/grub \
-    ${PKG_DIR}/usr/share/bash-completion/completions/ 2>/dev/null || true
-rmdir ${PKG_DIR}/etc/bash_completion.d 2>/dev/null || true
+mkdir -p ${PART_DIR}/usr/share/bash-completion/completions
+mv -v ${PART_DIR}/etc/bash_completion.d/grub \
+    ${PART_DIR}/usr/share/bash-completion/completions/ 2>/dev/null || true
+rmdir ${PART_DIR}/etc/bash_completion.d 2>/dev/null || true
 '''

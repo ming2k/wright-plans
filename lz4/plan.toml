@@ -11,7 +11,7 @@ url = "https://lz4.github.io/lz4/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/lz4/lz4/releases/download/v${PKG_VERSION}/lz4-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/lz4/lz4/releases/download/v${PART_VERSION}/lz4-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -29,5 +29,5 @@ make -j1 check
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PKG_DIR} install
+make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PART_DIR} install
 '''

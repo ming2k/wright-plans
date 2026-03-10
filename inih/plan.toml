@@ -11,7 +11,7 @@ url = "https://github.com/benhoyt/inih"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://github.com/benhoyt/inih/archive/refs/tags/${PKG_VERSION}.tar.gz"
+uri = "https://github.com/benhoyt/inih/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -24,4 +24,4 @@ meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared -Dd
 script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"
+script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"

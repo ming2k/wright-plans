@@ -11,7 +11,7 @@ url = "https://www.gnu.org/software/libtool/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/libtool/libtool-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/libtool/libtool-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -29,6 +29,6 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-rm -fv ${PKG_DIR}/usr/lib/libltdl.a
+make DESTDIR=${PART_DIR} install
+rm -fv ${PART_DIR}/usr/lib/libltdl.a
 '''

@@ -12,7 +12,7 @@ build = ["pkgconf"]
 link = ["util-linux", "icu", "inih"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${PKG_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -25,4 +25,4 @@ cd ${BUILD_DIR}
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
 [lifecycle.staging]
-script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
+script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"

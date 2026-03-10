@@ -13,7 +13,7 @@ build = ["gcc", "make"]
 link = ["glibc", "glib", "dbus", "ell", "alsa-lib", "json-c", "libical", "readline"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/bluetooth/bluez-${PKG_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/bluetooth/bluez-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -51,11 +51,11 @@ script = "make -j$(nproc) -C ${BUILD_DIR}"
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
 # Install main bluetoothd config
-install -Dm644 src/main.conf ${PKG_DIR}/etc/bluetooth/main.conf
-chmod 0555 ${PKG_DIR}/etc/bluetooth
+install -Dm644 src/main.conf ${PART_DIR}/etc/bluetooth/main.conf
+chmod 0555 ${PART_DIR}/etc/bluetooth
 '''
 
 

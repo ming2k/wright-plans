@@ -12,11 +12,11 @@ runtime = ["python", "hatchling", "setuptools-scm"]
 build = ["python", "hatchling"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/h/hatch_vcs/hatch_vcs-${PKG_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/h/hatch_vcs/hatch_vcs-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
 '''

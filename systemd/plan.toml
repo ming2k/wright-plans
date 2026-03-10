@@ -1,6 +1,6 @@
 [plan]
 name = "systemd"
-version = "259.2"
+version = "259.3"
 release = 1
 description = "System and Service Manager"
 license = "LGPL-2.1-or-later"
@@ -40,7 +40,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/systemd/systemd/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/systemd/systemd/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -48,7 +48,6 @@ uri = "90-theseus.preset"
 sha256 = "SKIP"
 
 [options]
-strip = true
 
 [lifecycle.prepare]
 script = '''
@@ -68,9 +67,9 @@ meson setup .. \
     --buildtype=release \
     -D libdir=lib \
     -D sbindir=/usr/bin \
-    -D version-tag="${PKG_VERSION}-theseus" \
+    -D version-tag="${PART_VERSION}-theseus" \
     -D vcs-tag=false \
-    -D shared-lib-tag="${PKG_VERSION}" \
+    -D shared-lib-tag="${PART_VERSION}" \
     -D mode=release \
     -D install-tests=false \
     -D ldconfig=false \
@@ -106,9 +105,9 @@ meson setup .. \
     -D sbat-distro=theseus \
     -D sbat-distro-summary="Ship of Theseus" \
     -D sbat-distro-pkgname=systemd \
-    -D sbat-distro-version=${PKG_VERSION} \
+    -D sbat-distro-version=${PART_VERSION} \
     -D sbat-distro-url=https://github.com/anthropic \
-    -D docdir=/usr/share/doc/systemd-${PKG_VERSION}
+    -D docdir=/usr/share/doc/systemd-${PART_VERSION}
 '''
 
 [lifecycle.compile]
@@ -123,38 +122,39 @@ ninja -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-DESTDIR=${PKG_DIR} ninja install
+DESTDIR=${PART_DIR} ninja install
 
 # Relocate any sbin files — systemd installs sysvinit compat shims to /usr/sbin
 # regardless of -D sbindir. Move them, then replace with proper symlinks to systemctl.
-if [ -d ${PKG_DIR}/usr/sbin ]; then
-  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
-  rm -rf ${PKG_DIR}/usr/sbin
+if [ -d ${PART_DIR}/usr/sbin ]; then
+  cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
+  rm -rf ${PART_DIR}/usr/sbin
 fi
 
 # Sysvinit compat: halt/poweroff/reboot/shutdown → systemctl (Arch approach)
 for cmd in halt poweroff reboot shutdown; do
-  ln -sf systemctl ${PKG_DIR}/usr/bin/${cmd}
+  ln -sf systemctl ${PART_DIR}/usr/bin/${cmd}
 done
 # init → systemd
-ln -sf ../lib/systemd/systemd ${PKG_DIR}/usr/bin/init 2>/dev/null || true
-
-# Ensure getty@tty1 enable symlink is baked into the package so it survives
-# upgrades without depending on systemctl being available at install time.
-mkdir -p ${PKG_DIR}/etc/systemd/system/getty.target.wants
-ln -sf /usr/lib/systemd/system/getty@.service \
-       ${PKG_DIR}/etc/systemd/system/getty.target.wants/getty@tty1.service
+ln -sf ../lib/systemd/systemd ${PART_DIR}/usr/bin/init 2>/dev/null || true
 
 # Preset policy: 90-theseus.preset explicitly enables core services.
 # 99-default.preset denies everything else. (Arch approach)
-install -Dm644 ${FILES_DIR}/90-theseus.preset ${PKG_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
-echo 'disable *' > ${PKG_DIR}/usr/lib/systemd/system-preset/99-default.preset
+install -Dm644 ${FILES_DIR}/90-theseus.preset ${PART_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
+echo 'disable *' > ${PART_DIR}/usr/lib/systemd/system-preset/99-default.preset
+
+# Ship local console logins on tty1-tty6 without relying on preset application.
+install -d ${PART_DIR}/etc/systemd/system/getty.target.wants
+for tty in 1 2 3 4 5 6; do
+  ln -sf /usr/lib/systemd/system/getty@.service \
+    ${PART_DIR}/etc/systemd/system/getty.target.wants/getty@tty${tty}.service
+done
 
 # Remove factory files that conflict with the filesystem package
-rm -f ${PKG_DIR}/usr/share/factory/etc/issue
-rm -f ${PKG_DIR}/usr/share/factory/etc/nsswitch.conf
+rm -f ${PART_DIR}/usr/share/factory/etc/issue
+rm -f ${PART_DIR}/usr/share/factory/etc/nsswitch.conf
 sed -i '/^C \/etc\/nsswitch/d; /^C \/etc\/issue/d' \
-       ${PKG_DIR}/usr/lib/tmpfiles.d/etc.conf
+       ${PART_DIR}/usr/lib/tmpfiles.d/etc.conf
 '''
 
 [lifecycle.fabricate]
@@ -167,6 +167,9 @@ hooks.post_install = '''
 ldconfig 2>/dev/null || true
 systemd-machine-id-setup 2>/dev/null || true
 systemctl preset-all 2>/dev/null || true
+for tty in 1 2 3 4 5 6; do
+  systemctl enable getty@tty${tty}.service 2>/dev/null || true
+done
 systemctl daemon-reexec 2>/dev/null || true
 '''
 hooks.post_upgrade = '''
@@ -216,9 +219,9 @@ meson setup .. \
     --buildtype=release \
     -D libdir=lib \
     -D sbindir=/usr/bin \
-    -D version-tag="${PKG_VERSION}-theseus" \
+    -D version-tag="${PART_VERSION}-theseus" \
     -D vcs-tag=false \
-    -D shared-lib-tag="${PKG_VERSION}" \
+    -D shared-lib-tag="${PART_VERSION}" \
     -D mode=release \
     -D install-tests=false \
     -D ldconfig=false \
@@ -255,7 +258,7 @@ meson setup .. \
     -D sbat-distro=theseus \
     -D sbat-distro-summary="Ship of Theseus" \
     -D sbat-distro-pkgname=systemd \
-    -D sbat-distro-version=${PKG_VERSION} \
+    -D sbat-distro-version=${PART_VERSION} \
     -D sbat-distro-url=https://github.com/anthropic \
-    -D docdir=/usr/share/doc/systemd-${PKG_VERSION}
+    -D docdir=/usr/share/doc/systemd-${PART_VERSION}
 '''

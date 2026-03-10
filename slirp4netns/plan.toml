@@ -12,7 +12,7 @@ build = ["autoconf", "automake", "pkgconf"]
 link = ["glib", "libcap", "libseccomp", "libslirp"]
 
 [[sources]]
-uri = "https://github.com/rootless-containers/slirp4netns/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/rootless-containers/slirp4netns/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -26,4 +26,4 @@ cd ${BUILD_DIR}
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
 [lifecycle.staging]
-script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
+script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"

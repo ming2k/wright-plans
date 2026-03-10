@@ -11,7 +11,7 @@ build = ["meson", "ninja", "sassc"]
 link = ["glib", "gtk4"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libadwaita/1.8/libadwaita-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libadwaita/1.8/libadwaita-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -21,4 +21,4 @@ script = "meson setup build ${BUILD_DIR} --prefix=/usr --buildtype=release -Dint
 script = "ninja -C build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C build install"
+script = "DESTDIR=${PART_DIR} ninja -C build install"

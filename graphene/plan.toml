@@ -12,7 +12,7 @@ build = ["gobject-introspection", "meson", "ninja"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/graphene/1.10/graphene-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/graphene/1.10/graphene-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ ninja -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''

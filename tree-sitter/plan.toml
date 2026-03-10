@@ -11,7 +11,7 @@ url = "https://tree-sitter.github.io/tree-sitter/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -23,5 +23,5 @@ make -j$(nproc) PREFIX=/usr
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make PREFIX=/usr DESTDIR=${PKG_DIR} install
+make PREFIX=/usr DESTDIR=${PART_DIR} install
 '''

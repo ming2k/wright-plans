@@ -12,7 +12,7 @@ build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
 link = ["glib", "gtk4", "gtk3"]
 
 [[sources]]
-uri = "https://github.com/flatpak/libportal/releases/download/${PKG_VERSION}/libportal-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/flatpak/libportal/releases/download/${PART_VERSION}/libportal-${PART_VERSION}.tar.xz"
 sha256 = "297b90b263fad22190a26b8c7e8ea938fe6b18fb936265e588927179920d3805"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ meson compile -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-meson install -C build --destdir ${PKG_DIR}
+meson install -C build --destdir ${PART_DIR}
 '''

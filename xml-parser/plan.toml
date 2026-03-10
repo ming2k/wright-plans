@@ -12,7 +12,7 @@ build = ["make", "perl"]
 link = ["expat"]
 
 [[sources]]
-uri = "https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-${PKG_VERSION}.tar.gz"
+uri = "https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

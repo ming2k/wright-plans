@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["readline"]
 
 [[sources]]
-uri = "https://github.com/gavinhoward/bc/releases/download/${PKG_VERSION}/bc-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/gavinhoward/bc/releases/download/${PART_VERSION}/bc-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -36,6 +36,6 @@ make test
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-rm -f ${PKG_DIR}/usr/share/info/dir
+make DESTDIR=${PART_DIR} install
+rm -f ${PART_DIR}/usr/share/info/dir
 '''

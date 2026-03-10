@@ -12,7 +12,7 @@ build = ["bash", "gcc", "make", "python"]
 runtime = ["python"]
 
 [[sources]]
-uri = "https://github.com/ninja-build/ninja/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/ninja-build/ninja/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -24,7 +24,7 @@ python3 configure.py --bootstrap
 [lifecycle.staging]
 script = """
 cd ${BUILD_DIR}
-install -Dm755 ninja ${PKG_DIR}/usr/bin/ninja
-install -Dm644 misc/bash-completion ${PKG_DIR}/usr/share/bash-completion/completions/ninja
+install -Dm755 ninja ${PART_DIR}/usr/bin/ninja
+install -Dm644 misc/bash-completion ${PART_DIR}/usr/share/bash-completion/completions/ninja
 """
 

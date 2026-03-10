@@ -6,13 +6,12 @@ description = "A set of programs to assemble and manipulate binary and object fi
 license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/binutils/"
-options = ["!strip"]
 
 [dependencies]
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/binutils/binutils-${PKG_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/binutils/binutils-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -43,10 +42,10 @@ make tooldir=/usr
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-make DESTDIR=${PKG_DIR} tooldir=/usr install
+make DESTDIR=${PART_DIR} tooldir=/usr install
 
 # Remove static libraries
-rm -fv ${PKG_DIR}/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a
+rm -fv ${PART_DIR}/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a
 '''
 
 

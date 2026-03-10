@@ -12,7 +12,7 @@ build = ["pkgconf"]
 link = ["libcap", "libseccomp", "systemd"]
 
 [[sources]]
-uri = "https://github.com/containers/crun/releases/download/${PKG_VERSION}/crun-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/containers/crun/releases/download/${PART_VERSION}/crun-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,4 +30,4 @@ cd ${BUILD_DIR}
 script = "make -j$(nproc) -C ${BUILD_DIR}"
 
 [lifecycle.staging]
-script = "make DESTDIR=${PKG_DIR} install -C ${BUILD_DIR}"
+script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"

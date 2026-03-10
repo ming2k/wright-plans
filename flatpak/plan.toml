@@ -44,7 +44,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/flatpak/flatpak/releases/download/${PKG_VERSION}/flatpak-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/flatpak/flatpak/releases/download/${PART_VERSION}/flatpak-${PART_VERSION}.tar.xz"
 sha256 = "3d6bd3f5f8940e80c087286ca3e42182fc630d780894536511fcd2cffc12cf5b"
 
 [lifecycle.configure]
@@ -73,8 +73,8 @@ script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
-mkdir -p ${PKG_DIR}/var/lib/flatpak
+meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
+mkdir -p ${PART_DIR}/var/lib/flatpak
 '''
 
 

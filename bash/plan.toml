@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["ncurses", "readline"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/bash/bash-${PKG_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/bash/bash-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -21,7 +21,7 @@ cd ${BUILD_DIR}
 ./configure --prefix=/usr             \
             --without-bash-malloc     \
             --with-installed-readline \
-            --docdir=/usr/share/doc/bash-${PKG_VERSION}
+            --docdir=/usr/share/doc/bash-${PART_VERSION}
 '''
 
 [lifecycle.compile]
@@ -33,5 +33,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

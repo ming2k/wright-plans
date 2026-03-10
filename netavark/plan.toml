@@ -12,7 +12,7 @@ runtime = ["nftables"]
 build = ["rust", "protobuf"]
 
 [[sources]]
-uri = "https://github.com/containers/netavark/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/containers/netavark/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -25,5 +25,5 @@ cargo build --release --locked
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-install -Dm755 target/release/netavark ${PKG_DIR}/usr/libexec/podman/netavark
+install -Dm755 target/release/netavark ${PART_DIR}/usr/libexec/podman/netavark
 '''

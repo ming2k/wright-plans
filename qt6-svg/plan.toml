@@ -12,7 +12,7 @@ runtime = ["qt6-base"]
 build = ["cmake", "gcc", "ninja", "qt6-base"]
 
 [[sources]]
-uri = "https://download.qt.io/official_releases/qt/6.10/${PKG_VERSION}/submodules/qtsvg-everywhere-src-${PKG_VERSION}.tar.xz"
+uri = "https://download.qt.io/official_releases/qt/6.10/${PART_VERSION}/submodules/qtsvg-everywhere-src-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [options]
@@ -33,5 +33,5 @@ ninja -j$(nproc) -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''

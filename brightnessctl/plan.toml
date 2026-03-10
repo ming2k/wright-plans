@@ -12,7 +12,7 @@ runtime = ["systemd"]
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/Hummer12007/brightnessctl/archive/${PKG_VERSION}/brightnessctl-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/Hummer12007/brightnessctl/archive/${PART_VERSION}/brightnessctl-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -24,5 +24,5 @@ make ENABLE_SYSTEMD=1
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make install DESTDIR=${PKG_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0
+make install DESTDIR=${PART_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0
 '''

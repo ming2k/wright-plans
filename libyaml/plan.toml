@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://pyyaml.org/wiki/LibYAML"
 
 [[sources]]
-uri = "https://github.com/yaml/libyaml/releases/download/${PKG_VERSION}/yaml-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/yaml/libyaml/releases/download/${PART_VERSION}/yaml-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -26,5 +26,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 '''

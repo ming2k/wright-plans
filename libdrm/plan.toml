@@ -11,7 +11,7 @@ url = "https://dri.freedesktop.org/libdrm/"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://dri.freedesktop.org/libdrm/libdrm-${PKG_VERSION}.tar.xz"
+uri = "https://dri.freedesktop.org/libdrm/libdrm-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -27,4 +27,4 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

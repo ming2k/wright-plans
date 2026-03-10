@@ -1,6 +1,6 @@
 [plan]
 name = "wright"
-version = "1.5.3"
+version = "1.5.4"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -12,7 +12,7 @@ runtime = ["ca-certificates"]
 build = ["rust", "cargo"]
 
 [[sources]]
-uri = "https://github.com/ming2k/wright/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/ming2k/wright/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -26,12 +26,12 @@ cargo build --release
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-install -Dm755 target/release/wright ${PKG_DIR}/usr/bin/wright
-install -Dm755 target/release/wbuild ${PKG_DIR}/usr/bin/wbuild
+install -Dm755 target/release/wright ${PART_DIR}/usr/bin/wright
+install -Dm755 target/release/wbuild ${PART_DIR}/usr/bin/wbuild
 
 # Skeleton plan for new packages
-install -dm755 ${PKG_DIR}/usr/share/wright/skel
-cat > ${PKG_DIR}/usr/share/wright/skel/plan.toml << 'EOF'
+install -dm755 ${PART_DIR}/usr/share/wright/skel
+cat > ${PART_DIR}/usr/share/wright/skel/plan.toml << 'EOF'
 [plan]
 name = "pkgname"
 version = "1.0.0"
@@ -47,7 +47,7 @@ link = []
 runtime = []
 
 [sources]
-uris = ["https://example.com/pkgname-${PKG_VERSION}.tar.gz"]
+uris = ["https://example.com/pkgname-${PART_VERSION}.tar.gz"]
 sha256 = ["SKIP"]
 
 [lifecycle.configure]
@@ -65,12 +65,12 @@ make -j$(nproc)
 [lifecycle.fabricate]
 script = """
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 """
 EOF
 
 # Plans workspace — created here so permissions are managed by the package
-install -dm755 ${PKG_DIR}/var/lib/wright/plans
+install -dm755 ${PART_DIR}/var/lib/wright/plans
 '''
 
 

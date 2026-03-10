@@ -12,7 +12,7 @@ build = ["cmake", "gcc", "ninja", "pkgconf", "qt6-base", "qt6-svg", "qt6-tools"]
 link = ["qt6-base", "qt6-svg"]
 
 [[sources]]
-uri = "https://www.opencode.net/trialuser/qt6ct/-/archive/${PKG_VERSION}/qt6ct-${PKG_VERSION}.tar.gz"
+uri = "https://www.opencode.net/trialuser/qt6ct/-/archive/${PART_VERSION}/qt6ct-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -32,5 +32,5 @@ ninja -j$(nproc) -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''

@@ -12,7 +12,7 @@ runtime = ["expect"]
 build = ["expect", "make", "texinfo"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/dejagnu/dejagnu-${PKG_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/dejagnu/dejagnu-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -39,7 +39,7 @@ make check
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-make DESTDIR=${PKG_DIR} install
-install -v -dm755  ${PKG_DIR}/usr/share/doc/dejagnu-1.6.3
-install -v -m644   doc/dejagnu.{html,txt} ${PKG_DIR}/usr/share/doc/dejagnu-1.6.3
+make DESTDIR=${PART_DIR} install
+install -v -dm755  ${PART_DIR}/usr/share/doc/dejagnu-1.6.3
+install -v -m644   doc/dejagnu.{html,txt} ${PART_DIR}/usr/share/doc/dejagnu-1.6.3
 '''

@@ -23,7 +23,7 @@ build = [
 link = ["glib", "libxml2", "libxmlb", "curl", "libfyaml", "zstd"]
 
 [[sources]]
-uri = "https://github.com/ximion/appstream/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/ximion/appstream/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -61,5 +61,5 @@ meson compile -C ${BUILD_DIR}/build
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
+meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
 '''

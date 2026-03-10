@@ -11,7 +11,7 @@ url = "https://savannah.nongnu.org/projects/attr"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://download.savannah.gnu.org/releases/attr/attr-${PKG_VERSION}.tar.gz"
+uri = "https://download.savannah.gnu.org/releases/attr/attr-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -38,5 +38,5 @@ make check
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

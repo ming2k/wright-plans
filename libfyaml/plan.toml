@@ -11,7 +11,7 @@ url = "https://github.com/pantoniou/libfyaml"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -33,9 +33,9 @@ cmake --build ${BUILD_DIR}/build -j$(nproc)
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build
-install -d ${PKG_DIR}/usr/lib/pkgconfig
-cat > ${PKG_DIR}/usr/lib/pkgconfig/libfyaml.pc << 'PCEOF'
+DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build
+install -d ${PART_DIR}/usr/lib/pkgconfig
+cat > ${PART_DIR}/usr/lib/pkgconfig/libfyaml.pc << 'PCEOF'
 prefix=/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
@@ -43,7 +43,7 @@ includedir=${prefix}/include
 
 Name: libfyaml
 Description: Fully feature complete YAML parser and emitter library
-Version: ${PKG_VERSION}
+Version: ${PART_VERSION}
 Libs: -L${libdir} -lfyaml
 Cflags: -I${includedir}
 PCEOF

@@ -11,7 +11,7 @@ url = "https://zlib.net/"
 build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://zlib.net/zlib-${PKG_VERSION}.tar.xz"
+uri = "https://zlib.net/zlib-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -29,6 +29,6 @@ make -j$(nproc)
 [lifecycle.staging]
 script = """
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 """
 

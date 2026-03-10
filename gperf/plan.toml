@@ -11,13 +11,13 @@ url = "https://www.gnu.org/software/gperf/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gperf/gperf-${PKG_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/gperf/gperf-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr --docdir=/usr/share/doc/gperf-${PKG_VERSION}
+./configure --prefix=/usr --docdir=/usr/share/doc/gperf-${PART_VERSION}
 '''
 
 [lifecycle.compile]
@@ -29,5 +29,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

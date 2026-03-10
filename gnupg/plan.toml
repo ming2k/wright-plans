@@ -21,7 +21,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${PKG_VERSION}.tar.bz2"
+uri = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${PART_VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -46,7 +46,7 @@ make -j$(nproc) LDFLAGS="${LDFLAGS} -lreadline -lhistory"
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
-ln -sf gpg  ${PKG_DIR}/usr/bin/gpg2
-ln -sf gpgv ${PKG_DIR}/usr/bin/gpgv2
+DESTDIR=${PART_DIR} make install
+ln -sf gpg  ${PART_DIR}/usr/bin/gpg2
+ln -sf gpgv ${PART_DIR}/usr/bin/gpgv2
 '''

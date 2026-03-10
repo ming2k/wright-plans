@@ -11,7 +11,7 @@ url = "http://pixman.org/"
 build = ["bash", "python", "meson", "ninja", "pkgconf"]
 
 [[sources]]
-uri = "https://www.cairographics.org/releases/pixman-${PKG_VERSION}.tar.gz"
+uri = "https://www.cairographics.org/releases/pixman-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -28,5 +28,5 @@ meson setup build \
 script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build"
+script = "DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build"
 

@@ -8,7 +8,7 @@ arch = "any"
 url = "https://github.com/thesofproject/sof-bin"
 
 [[sources]]
-uri = "https://github.com/thesofproject/sof-bin/releases/download/v${PKG_VERSION}/sof-bin-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/thesofproject/sof-bin/releases/download/v${PART_VERSION}/sof-bin-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -24,11 +24,11 @@ echo "no build needed"
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-mkdir -p ${PKG_DIR}/usr/lib/firmware/intel
-cp -a sof ${PKG_DIR}/usr/lib/firmware/intel/sof
-cp -a sof-ipc4 ${PKG_DIR}/usr/lib/firmware/intel/sof-ipc4
-cp -a sof-ipc4-lib ${PKG_DIR}/usr/lib/firmware/intel/sof-ipc4-lib
-cp -a sof-tplg ${PKG_DIR}/usr/lib/firmware/intel/sof-tplg
-cp -a sof-ace-tplg ${PKG_DIR}/usr/lib/firmware/intel/sof-ace-tplg
-cp -a sof-ipc4-tplg ${PKG_DIR}/usr/lib/firmware/intel/sof-ipc4-tplg
+mkdir -p ${PART_DIR}/usr/lib/firmware/intel
+cp -a sof ${PART_DIR}/usr/lib/firmware/intel/sof
+cp -a sof-ipc4 ${PART_DIR}/usr/lib/firmware/intel/sof-ipc4
+cp -a sof-ipc4-lib ${PART_DIR}/usr/lib/firmware/intel/sof-ipc4-lib
+cp -a sof-tplg ${PART_DIR}/usr/lib/firmware/intel/sof-tplg
+cp -a sof-ace-tplg ${PART_DIR}/usr/lib/firmware/intel/sof-ace-tplg
+cp -a sof-ipc4-tplg ${PART_DIR}/usr/lib/firmware/intel/sof-ipc4-tplg
 '''

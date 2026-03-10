@@ -1,0 +1,10 @@
+--- a/src/backend_librsvg.c
++++ b/src/backend_librsvg.c
+@@ -2,6 +2,7 @@
+ #include "backend.h"
+ #include "source.h"
+ #include "source_private.h"
++#include <stdio.h>
+
+ #include <stdlib.h>
+ #include <string.h>

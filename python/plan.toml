@@ -24,7 +24,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.python.org/ftp/python/${PKG_VERSION}/Python-${PKG_VERSION}.tar.xz"
+uri = "https://www.python.org/ftp/python/${PART_VERSION}/Python-${PART_VERSION}.tar.xz"
 sha256 = "a97d5549e9ad81fe17159ed02c68774ad5d266c72f8d9a0b5a9c371fe85d902b"
 
 [lifecycle.configure]
@@ -46,11 +46,11 @@ script = "make -C ${BUILD_DIR} -j$(nproc)"
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-rm -rf ${PKG_DIR}/usr/lib/python3.14/test
-rm -rf ${PKG_DIR}/usr/lib/python3.14/*/test
-mkdir -p ${PKG_DIR}/usr/lib/python3.14
-cat > ${PKG_DIR}/usr/lib/python3.14/EXTERNALLY-MANAGED << EOF
+make DESTDIR=${PART_DIR} install
+rm -rf ${PART_DIR}/usr/lib/python3.14/test
+rm -rf ${PART_DIR}/usr/lib/python3.14/*/test
+mkdir -p ${PART_DIR}/usr/lib/python3.14
+cat > ${PART_DIR}/usr/lib/python3.14/EXTERNALLY-MANAGED << EOF
 [externally-managed]
 Error=Please use 'wright install python-<package>' to install system-level Python packages.
 EOF

@@ -13,7 +13,7 @@ link = ["openssl", "zlib", "zstd", "lz4"]
 optional = [{name = "openssh", description = "ssh transport"}]
 
 [[sources]]
-uri = "https://www.samba.org/ftp/rsync/src/rsync-${PKG_VERSION}.tar.gz"
+uri = "https://www.samba.org/ftp/rsync/src/rsync-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -34,5 +34,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

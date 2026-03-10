@@ -13,11 +13,11 @@ build = ["make"]
 optional = [{name = "wl-clipboard", description = "copy generated passwords to Wayland clipboard"}]
 
 [[sources]]
-uri = "https://git.zx2c4.com/password-store/snapshot/password-store-${PKG_VERSION}.tar.xz"
+uri = "https://git.zx2c4.com/password-store/snapshot/password-store-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make PREFIX=/usr DESTDIR=${PKG_DIR} install
+make PREFIX=/usr DESTDIR=${PART_DIR} install
 '''

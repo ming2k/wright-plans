@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://www.greenwoodsoftware.com/less/less-${PKG_VERSION}.tar.gz"
+uri = "https://www.greenwoodsoftware.com/less/less-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

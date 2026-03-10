@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["zlib"]
 
 [[sources]]
-uri = "https://sourceware.org/ftp/elfutils/${PKG_VERSION}/elfutils-${PKG_VERSION}.tar.bz2"
+uri = "https://sourceware.org/ftp/elfutils/${PART_VERSION}/elfutils-${PART_VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -32,7 +32,7 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-rm -f ${PKG_DIR}/usr/lib/lib*.a
-rm -rf ${PKG_DIR}/usr/etc
+make DESTDIR=${PART_DIR} install
+rm -f ${PART_DIR}/usr/lib/lib*.a
+rm -rf ${PART_DIR}/usr/etc
 '''

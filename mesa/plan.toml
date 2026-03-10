@@ -37,15 +37,25 @@ link = [
 ]
 
 [[sources]]
-uri = "https://mesa.freedesktop.org/archive/mesa-${PKG_VERSION}.tar.xz"
+uri = "https://mesa.freedesktop.org/archive/mesa-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [options]
-strip = true
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
+# Pure Wayland build:
+# -Dplatforms=wayland keeps the EGL/GBM Wayland platform and intentionally
+#   drops X11. This does not disable Wayland EGL support.
+# -Dglx=disabled only removes the X11 GLX API; it is not a prerequisite for
+#   EGL_WL_bind_wayland_display.
+# If niri logs "error binding wl-display in EGL:
+# EglExtensionNotSupported([\"EGL_WL_bind_wayland_display\"])", that points to
+# runtime EGL driver/feature availability in Mesa's loaded stack, not to GLX
+# being disabled in this build plan.
+# The separate GL_INVALID_VALUE/glTexSubImage2D error is a renderer/runtime bug
+# path and should be investigated independently from this packaging choice.
 meson setup build --prefix=/usr --buildtype=release -D platforms=wayland -D gallium-drivers=iris,crocus,llvmpipe -D vulkan-drivers=intel,intel_hasvk,swrast -D egl=enabled -D gbm=enabled -D gles1=disabled -D gles2=enabled -D glx=disabled -D llvm=enabled -D shared-llvm=enabled -D gallium-va=disabled -D vulkan-layers=device-select,overlay -D video-codecs=all -D valgrind=disabled -D libunwind=enabled
 '''
 
@@ -53,4 +63,4 @@ meson setup build --prefix=/usr --buildtype=release -D platforms=wayland -D gall
 script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

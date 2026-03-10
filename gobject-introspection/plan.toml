@@ -13,7 +13,7 @@ build = ["meson", "ninja", "python"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gobject-introspection/1.86/gobject-introspection-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gobject-introspection/1.86/gobject-introspection-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,5 +31,5 @@ meson compile -C ${BUILD_DIR}/build
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
+meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
 '''

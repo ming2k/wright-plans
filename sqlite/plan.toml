@@ -25,4 +25,4 @@ cd ${BUILD_DIR}
 script = "cd ${BUILD_DIR} && make -j$(nproc)"
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"
+script = "cd ${BUILD_DIR} && make DESTDIR=${PART_DIR} install"

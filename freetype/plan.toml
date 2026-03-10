@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://freetype.org"
 
 [[sources]]
-uri = "https://download.savannah.gnu.org/releases/freetype/freetype-${PKG_VERSION}.tar.xz"
+uri = "https://download.savannah.gnu.org/releases/freetype/freetype-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,5 +31,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 '''

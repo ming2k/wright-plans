@@ -22,7 +22,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gtk/3.24/gtk-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gtk/3.24/gtk-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -35,7 +35,7 @@ meson setup build --prefix=/usr --buildtype=release -Dwayland_backend=true -Dx11
 script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}"
+script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"
 
 
 [lifecycle.fabricate]

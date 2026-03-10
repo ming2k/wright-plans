@@ -28,7 +28,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/YaLTeR/niri/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/YaLTeR/niri/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 
@@ -42,18 +42,18 @@ dockyard = "relaxed"
 env = {CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target"}
 script = '''
 cd ${BUILD_DIR}
-cargo build --release --no-default-features --locked
+cargo build --release --no-default-features --features systemd --locked
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-mkdir -p ${PKG_DIR}/usr/bin
-cp target/release/niri ${PKG_DIR}/usr/bin/
-mkdir -p ${PKG_DIR}/usr/share/wayland-sessions
-cp resources/niri.desktop ${PKG_DIR}/usr/share/wayland-sessions/
-mkdir -p ${PKG_DIR}/usr/lib/systemd/user
-cp resources/niri.service ${PKG_DIR}/usr/lib/systemd/user/
-cp resources/niri-shutdown.target ${PKG_DIR}/usr/lib/systemd/user/
-install -Dm755 resources/niri-session ${PKG_DIR}/usr/bin/niri-session
+mkdir -p ${PART_DIR}/usr/bin
+cp target/release/niri ${PART_DIR}/usr/bin/
+mkdir -p ${PART_DIR}/usr/share/wayland-sessions
+cp resources/niri.desktop ${PART_DIR}/usr/share/wayland-sessions/
+mkdir -p ${PART_DIR}/usr/lib/systemd/user
+cp resources/niri.service ${PART_DIR}/usr/lib/systemd/user/
+cp resources/niri-shutdown.target ${PART_DIR}/usr/lib/systemd/user/
+install -Dm755 resources/niri-session ${PART_DIR}/usr/bin/niri-session
 '''

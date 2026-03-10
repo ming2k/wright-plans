@@ -8,14 +8,14 @@ arch = "x86_64"
 url = "https://go.dev"
 
 [[sources]]
-uri = "https://go.dev/dl/go${PKG_VERSION}.linux-amd64.tar.gz"
+uri = "https://go.dev/dl/go${PART_VERSION}.linux-amd64.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
-mkdir -p ${PKG_DIR}/usr/lib
-cp -a ${BUILD_DIR} ${PKG_DIR}/usr/lib/go
-mkdir -p ${PKG_DIR}/usr/bin
-ln -sf ../lib/go/bin/go ${PKG_DIR}/usr/bin/go
-ln -sf ../lib/go/bin/gofmt ${PKG_DIR}/usr/bin/gofmt
+mkdir -p ${PART_DIR}/usr/lib
+cp -a ${BUILD_DIR} ${PART_DIR}/usr/lib/go
+mkdir -p ${PART_DIR}/usr/bin
+ln -sf ../lib/go/bin/go ${PART_DIR}/usr/bin/go
+ln -sf ../lib/go/bin/gofmt ${PART_DIR}/usr/bin/gofmt
 '''

@@ -35,7 +35,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gtk/4.20/gtk-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gtk/4.20/gtk-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -49,9 +49,9 @@ script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
+meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
 
-pc_file="${PKG_DIR}/usr/lib/pkgconfig/gtk4.pc"
+pc_file="${PART_DIR}/usr/lib/pkgconfig/gtk4.pc"
 if [ -f "${pc_file}" ]; then
     if ! grep -q 'libjpeg' "${pc_file}"; then
         sed -i "s/^Requires: /Requires: libjpeg, libpng, /" "${pc_file}"
@@ -60,16 +60,16 @@ fi
 
 # Remove GTK demo applications (gtk4-node-editor, gtk4-print-editor)
 rm -f \
-    "${PKG_DIR}/usr/bin/gtk4-node-editor" \
-    "${PKG_DIR}/usr/bin/gtk4-print-editor" \
-    "${PKG_DIR}/usr/share/applications/org.gtk.gtk4.NodeEditor.desktop" \
-    "${PKG_DIR}/usr/share/applications/org.gtk.PrintEditor4.desktop" \
-    "${PKG_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor.svg" \
-    "${PKG_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor.Devel.svg" \
-    "${PKG_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.PrintEditor4.svg" \
-    "${PKG_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.PrintEditor4.Devel.svg" \
-    "${PKG_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.gtk4.NodeEditor-symbolic.svg" \
-    "${PKG_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg"
+    "${PART_DIR}/usr/bin/gtk4-node-editor" \
+    "${PART_DIR}/usr/bin/gtk4-print-editor" \
+    "${PART_DIR}/usr/share/applications/org.gtk.gtk4.NodeEditor.desktop" \
+    "${PART_DIR}/usr/share/applications/org.gtk.PrintEditor4.desktop" \
+    "${PART_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor.svg" \
+    "${PART_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor.Devel.svg" \
+    "${PART_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.PrintEditor4.svg" \
+    "${PART_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.PrintEditor4.Devel.svg" \
+    "${PART_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.gtk4.NodeEditor-symbolic.svg" \
+    "${PART_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg"
 '''
 
 

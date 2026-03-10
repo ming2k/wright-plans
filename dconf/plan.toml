@@ -13,7 +13,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/dconf/0.49/dconf-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/dconf/0.49/dconf-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -29,12 +29,12 @@ meson compile -C ${BUILD_DIR}/build
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PKG_DIR}
+meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
 
 # /etc/dconf/db  — root-only: dconf-update writes compiled .db files here
 # /etc/dconf/profile — group-writable: users in the 'dconf' group can add profiles
-install -dm755  "${PKG_DIR}/etc/dconf/db"
-install -dm2775 "${PKG_DIR}/etc/dconf/profile"
+install -dm755  "${PART_DIR}/etc/dconf/db"
+install -dm2775 "${PART_DIR}/etc/dconf/profile"
 '''
 
 

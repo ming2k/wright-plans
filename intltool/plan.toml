@@ -35,6 +35,6 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-install -v -Dm644 doc/I18N-HOWTO ${PKG_DIR}/usr/share/doc/intltool-${PKG_VERSION}/I18N-HOWTO
+make DESTDIR=${PART_DIR} install
+install -v -Dm644 doc/I18N-HOWTO ${PART_DIR}/usr/share/doc/intltool-${PART_VERSION}/I18N-HOWTO
 '''

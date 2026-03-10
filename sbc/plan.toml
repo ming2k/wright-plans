@@ -12,7 +12,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/bluetooth/sbc-${PKG_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/bluetooth/sbc-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -29,5 +29,5 @@ script = "make -j$(nproc) -C ${BUILD_DIR}"
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

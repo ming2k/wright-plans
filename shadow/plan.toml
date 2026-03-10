@@ -12,11 +12,10 @@ build = ["gcc", "libxslt", "make"]
 link = ["glibc", "linux-pam"]
 
 [[sources]]
-uri = "https://github.com/shadow-maint/shadow/releases/download/${PKG_VERSION}/shadow-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/shadow-maint/shadow/releases/download/${PART_VERSION}/shadow-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [options]
-strip = true
 
 [lifecycle.prepare]
 script = '''
@@ -70,18 +69,18 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-make -C man DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
+make -C man DESTDIR=${PART_DIR} install
 
 # Relocate anything installed to /usr/sbin — shadow ignores --sbindir for some tools
-if [ -d ${PKG_DIR}/usr/sbin ]; then
-  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
-  rm -rf ${PKG_DIR}/usr/sbin
+if [ -d ${PART_DIR}/usr/sbin ]; then
+  cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
+  rm -rf ${PART_DIR}/usr/sbin
 fi
 
-install -vdm755 ${PKG_DIR}/etc/pam.d
+install -vdm755 ${PART_DIR}/etc/pam.d
 
-cat > ${PKG_DIR}/etc/pam.d/login << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/login << 'PAMEOF'
 # Begin /etc/pam.d/login
 auth      optional    pam_faildelay.so  delay=3000000
 auth      requisite   pam_nologin.so
@@ -97,13 +96,13 @@ password  include     system-password
 # End /etc/pam.d/login
 PAMEOF
 
-cat > ${PKG_DIR}/etc/pam.d/passwd << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/passwd << 'PAMEOF'
 # Begin /etc/pam.d/passwd
 password  include     system-password
 # End /etc/pam.d/passwd
 PAMEOF
 
-cat > ${PKG_DIR}/etc/pam.d/su << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/su << 'PAMEOF'
 # Begin /etc/pam.d/su
 auth      sufficient  pam_rootok.so
 auth      include     system-auth
@@ -115,14 +114,14 @@ password  include     system-password
 # End /etc/pam.d/su
 PAMEOF
 
-cat > ${PKG_DIR}/etc/pam.d/chpasswd << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/chpasswd << 'PAMEOF'
 # Begin /etc/pam.d/chpasswd
 auth      sufficient  pam_rootok.so
 password  include     system-password
 # End /etc/pam.d/chpasswd
 PAMEOF
 
-cat > ${PKG_DIR}/etc/pam.d/newusers << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/newusers << 'PAMEOF'
 # Begin /etc/pam.d/newusers
 auth      sufficient  pam_rootok.so
 password  include     system-password
@@ -131,7 +130,7 @@ PAMEOF
 
 for PROGRAM in chage chfn chgpasswd chsh groupadd groupdel \
 groupmems groupmod useradd userdel usermod; do
-cat > ${PKG_DIR}/etc/pam.d/${PROGRAM} << PAMEOF
+cat > ${PART_DIR}/etc/pam.d/${PROGRAM} << PAMEOF
 # Begin /etc/pam.d/${PROGRAM}
 auth      sufficient  pam_rootok.so
 account   include     system-account

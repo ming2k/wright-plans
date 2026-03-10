@@ -11,14 +11,14 @@ url = "https://github.com/westes/flex"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/westes/flex/releases/download/v${PKG_VERSION}/flex-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/westes/flex/releases/download/v${PART_VERSION}/flex-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr \
---docdir=/usr/share/doc/flex-${PKG_VERSION} \
+--docdir=/usr/share/doc/flex-${PART_VERSION} \
 --disable-static
 '''
 
@@ -37,11 +37,11 @@ make check
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
 # Create lex compatibility symlinks
-ln -sv flex   ${PKG_DIR}/usr/bin/lex
-ln -sv flex.1 ${PKG_DIR}/usr/share/man/man1/lex.1
+ln -sv flex   ${PART_DIR}/usr/bin/lex
+ln -sv flex.1 ${PART_DIR}/usr/share/man/man1/lex.1
 
-rm -f ${PKG_DIR}/usr/share/info/dir
+rm -f ${PART_DIR}/usr/share/info/dir
 '''

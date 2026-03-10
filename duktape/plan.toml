@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://duktape.org"
 
 [[sources]]
-uri = "https://duktape.org/duktape-${PKG_VERSION}.tar.xz"
+uri = "https://duktape.org/duktape-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -26,12 +26,12 @@ make -f Makefile.sharedlibrary -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-mkdir -p ${PKG_DIR}/usr/lib ${PKG_DIR}/usr/include ${PKG_DIR}/usr/lib/pkgconfig
-install -m755 libduktape.so.207.20700 ${PKG_DIR}/usr/lib/
-ln -sf libduktape.so.207.20700 ${PKG_DIR}/usr/lib/libduktape.so.207
-ln -sf libduktape.so.207 ${PKG_DIR}/usr/lib/libduktape.so
-cp src/duktape.h src/duk_config.h ${PKG_DIR}/usr/include/
-cat > ${PKG_DIR}/usr/lib/pkgconfig/duktape.pc << PCEOF
+mkdir -p ${PART_DIR}/usr/lib ${PART_DIR}/usr/include ${PART_DIR}/usr/lib/pkgconfig
+install -m755 libduktape.so.207.20700 ${PART_DIR}/usr/lib/
+ln -sf libduktape.so.207.20700 ${PART_DIR}/usr/lib/libduktape.so.207
+ln -sf libduktape.so.207 ${PART_DIR}/usr/lib/libduktape.so
+cp src/duktape.h src/duk_config.h ${PART_DIR}/usr/include/
+cat > ${PART_DIR}/usr/lib/pkgconfig/duktape.pc << PCEOF
 prefix=/usr
 exec_prefix=\${prefix}
 libdir=\${exec_prefix}/lib
@@ -39,7 +39,7 @@ includedir=\${prefix}/include
 
 Name: Duktape
 Description: Embeddable Javascript engine
-Version: ${PKG_VERSION}
+Version: ${PART_VERSION}
 Libs: -L\${libdir} -lduktape -lm
 Cflags: -I\${includedir}
 PCEOF

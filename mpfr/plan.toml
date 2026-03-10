@@ -12,7 +12,7 @@ build = ["make"]
 link = ["gmp"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/mpfr/mpfr-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/mpfr/mpfr-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -40,6 +40,6 @@ make check
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-make DESTDIR=${PKG_DIR} install-html
+make DESTDIR=${PART_DIR} install
+make DESTDIR=${PART_DIR} install-html
 '''

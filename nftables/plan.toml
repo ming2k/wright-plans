@@ -12,7 +12,7 @@ build = ["autoconf", "automake", "bison", "flex", "gcc", "libmnl", "libnftnl", "
 link = ["gmp", "jansson", "libmnl", "libnftnl", "ncurses", "readline"]
 
 [[sources]]
-uri = "https://www.netfilter.org/pub/nftables/nftables-${PKG_VERSION}.tar.xz"
+uri = "https://www.netfilter.org/pub/nftables/nftables-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -24,7 +24,6 @@ uri = "nftables.conf"
 sha256 = "SKIP"
 
 [options]
-strip = true
 ccache = true
 
 [lifecycle.prepare]
@@ -56,10 +55,10 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
-install -Dm644 ${FILES_DIR}/nftables.conf ${PKG_DIR}/etc/nftables.conf
-install -Dm644 ${FILES_DIR}/nftables.service ${PKG_DIR}/usr/lib/systemd/system/nftables.service
+install -Dm644 ${FILES_DIR}/nftables.conf ${PART_DIR}/etc/nftables.conf
+install -Dm644 ${FILES_DIR}/nftables.service ${PART_DIR}/usr/lib/systemd/system/nftables.service
 '''
 
 [lifecycle.fabricate]

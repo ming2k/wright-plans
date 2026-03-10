@@ -12,7 +12,7 @@ build = ["make"]
 link = ["bzip2", "icu", "zlib", "zstd"]
 
 [[sources]]
-uri = "https://archives.boost.io/release/${PKG_VERSION}/source/boost_1_89_0.tar.bz2"
+uri = "https://archives.boost.io/release/${PART_VERSION}/source/boost_1_89_0.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,5 +31,5 @@ cd ${BUILD_DIR}
 script = '''
 cd ${BUILD_DIR}
 ./b2 variant=release threading=multi link=shared \
-    --prefix=${PKG_DIR}/usr install
+    --prefix=${PART_DIR}/usr install
 '''

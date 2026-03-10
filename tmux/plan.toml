@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["libevent", "ncurses", "systemd"]
 
 [[sources]]
-uri = "https://github.com/tmux/tmux/releases/download/${PKG_VERSION}/tmux-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/tmux/tmux/releases/download/${PART_VERSION}/tmux-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -32,5 +32,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

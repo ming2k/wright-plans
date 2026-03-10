@@ -12,7 +12,7 @@ build = ["cmake", "make", "pkgconf", "rust", "git", "jq", "gettext"]
 link = ["pcre2"]
 
 [[sources]]
-uri = "https://github.com/fish-shell/fish-shell/releases/download/${PKG_VERSION}/fish-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/fish-shell/fish-shell/releases/download/${PART_VERSION}/fish-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -38,5 +38,5 @@ make -C build -j$(nproc) VERBOSE=1
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} cmake --install build
+DESTDIR=${PART_DIR} cmake --install build
 '''

@@ -12,7 +12,7 @@ runtime = ["perl"]
 build = ["gcc", "make", "perl"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/texinfo/texinfo-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/texinfo/texinfo-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -36,6 +36,6 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-make DESTDIR=${PKG_DIR} TEXMF=/usr/share/texmf install-tex
+make DESTDIR=${PART_DIR} install
+make DESTDIR=${PART_DIR} TEXMF=/usr/share/texmf install-tex
 '''

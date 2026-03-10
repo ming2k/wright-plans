@@ -13,7 +13,7 @@ build = ["dbus", "ell", "gcc", "make"]
 link = ["readline"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/network/wireless/iwd-${PKG_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/network/wireless/iwd-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -39,7 +39,7 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''
 
 [lifecycle.fabricate]

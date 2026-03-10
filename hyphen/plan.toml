@@ -12,7 +12,7 @@ build = ["gawk", "gcc", "make", "patch"]
 link = ["glibc"]
 
 [[sources]]
-uri = "http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${PKG_VERSION}.orig.tar.gz"
+uri = "http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${PART_VERSION}.orig.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ make
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

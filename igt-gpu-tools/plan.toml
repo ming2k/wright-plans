@@ -21,7 +21,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${PKG_VERSION}/igt-gpu-tools-v${PKG_VERSION}.tar.gz"
+uri = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${PART_VERSION}/igt-gpu-tools-v${PART_VERSION}.tar.gz"
 sha256 = "e5a7b37f6797917864a33dc727209b13716e2ea3c3f1b308d4e856a3154d1869"
 
 [lifecycle.configure]
@@ -44,7 +44,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
 
 [lifecycle.fabricate]
 hooks.post_install = "setcap cap_perfmon=+ep /usr/bin/intel_gpu_top"

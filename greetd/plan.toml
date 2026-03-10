@@ -13,7 +13,7 @@ build = ["rust"]
 link = ["glibc", "linux-pam", "seatd", "systemd"]
 
 [[sources]]
-uri = "https://git.sr.ht/~kennylevinsen/greetd/archive/${PKG_VERSION}.tar.gz"
+uri = "https://git.sr.ht/~kennylevinsen/greetd/archive/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -27,13 +27,13 @@ cargo build --release --locked
 script = '''
 cd ${BUILD_DIR}
 
-install -Dm755 target/release/greetd ${PKG_DIR}/usr/bin/greetd
-install -Dm755 target/release/agreety ${PKG_DIR}/usr/bin/agreety
+install -Dm755 target/release/greetd ${PART_DIR}/usr/bin/greetd
+install -Dm755 target/release/agreety ${PART_DIR}/usr/bin/agreety
 
 if [ -f greetd.service ]; then
-  install -Dm644 greetd.service ${PKG_DIR}/usr/lib/systemd/system/greetd.service
+  install -Dm644 greetd.service ${PART_DIR}/usr/lib/systemd/system/greetd.service
 else
-  install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/systemd/system/greetd.service << 'UNITEOF'
+  install -Dm644 /dev/stdin ${PART_DIR}/usr/lib/systemd/system/greetd.service << 'UNITEOF'
 [Unit]
 Description=Greeter daemon
 After=systemd-user-sessions.service plymouth-quit-wait.service getty@tty1.service
@@ -50,11 +50,11 @@ Alias=display-manager.service
 UNITEOF
 fi
 
-install -dm755 ${PKG_DIR}/etc/greetd
+install -dm755 ${PART_DIR}/etc/greetd
 if [ -f config.toml ]; then
-  install -Dm644 config.toml ${PKG_DIR}/etc/greetd/config.toml
+  install -Dm644 config.toml ${PART_DIR}/etc/greetd/config.toml
 else
-  install -Dm644 /dev/stdin ${PKG_DIR}/etc/greetd/config.toml << 'CFGEOF'
+  install -Dm644 /dev/stdin ${PART_DIR}/etc/greetd/config.toml << 'CFGEOF'
 [terminal]
 vt = 1
 
@@ -64,7 +64,7 @@ user = "greeter"
 CFGEOF
 fi
 
-install -Dm644 /dev/stdin ${PKG_DIR}/etc/pam.d/greetd << 'PAMEOF'
+install -Dm644 /dev/stdin ${PART_DIR}/etc/pam.d/greetd << 'PAMEOF'
 # /etc/pam.d/greetd
 auth      include     system-auth
 account   include     system-account
@@ -74,9 +74,9 @@ session   include     system-session
 password  include     system-password
 PAMEOF
 
-install -dm750 ${PKG_DIR}/var/lib/greetd
+install -dm750 ${PART_DIR}/var/lib/greetd
 
-install -Dm644 /dev/stdin ${PKG_DIR}/usr/lib/sysusers.d/greetd.conf << 'SYSUSERS'
+install -Dm644 /dev/stdin ${PART_DIR}/usr/lib/sysusers.d/greetd.conf << 'SYSUSERS'
 u greeter - "Greeter user" /var/lib/greetd
 m greeter video
 SYSUSERS

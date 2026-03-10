@@ -13,7 +13,7 @@ runtime = ["bash", "coreutils", "cpio", "kmod", "systemd", "util-linux"]
 build = ["gcc", "make", "pkgconf", "kmod"]
 
 [[sources]]
-uri = "https://github.com/dracut-ng/dracut-ng/archive/${PKG_VERSION}/dracut-ng-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/dracut-ng/dracut-ng/archive/${PART_VERSION}/dracut-ng-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -37,5 +37,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

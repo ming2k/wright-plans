@@ -12,7 +12,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["systemd", "util-linux"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-${PKG_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -25,14 +25,14 @@ make CWFLAGS="-Wall -Werror -Wstrict-prototypes -Wextra -Wno-unused-parameter -W
 script = '''
 cd ${BUILD_DIR}
 make \
-  DESTDIR=${PKG_DIR} \
+  DESTDIR=${PART_DIR} \
   BINDIR=/usr/bin \
   SBINDIR=/usr/bin \
   install
 
-if [ -d ${PKG_DIR}/usr/etc ]; then
-  mkdir -p ${PKG_DIR}/etc
-  cp -a ${PKG_DIR}/usr/etc/. ${PKG_DIR}/etc/
-  rm -rf ${PKG_DIR}/usr/etc
+if [ -d ${PART_DIR}/usr/etc ]; then
+  mkdir -p ${PART_DIR}/etc
+  cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
+  rm -rf ${PART_DIR}/usr/etc
 fi
 '''

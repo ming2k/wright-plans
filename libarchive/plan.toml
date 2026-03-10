@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://libarchive.org"
 
 [[sources]]
-uri = "https://github.com/libarchive/libarchive/releases/download/v${PKG_VERSION}/libarchive-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/libarchive/libarchive/releases/download/v${PART_VERSION}/libarchive-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -26,5 +26,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 '''

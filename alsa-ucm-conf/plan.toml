@@ -11,7 +11,7 @@ url = "https://github.com/alsa-project/alsa-ucm-conf"
 runtime = ["alsa-lib"]
 
 [[sources]]
-uri = "https://github.com/alsa-project/alsa-ucm-conf/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/alsa-project/alsa-ucm-conf/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -27,6 +27,6 @@ echo "no build needed"
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-mkdir -p ${PKG_DIR}/usr/share/alsa
-cp -a ucm2 ${PKG_DIR}/usr/share/alsa/ucm2
+mkdir -p ${PART_DIR}/usr/share/alsa
+cp -a ucm2 ${PART_DIR}/usr/share/alsa/ucm2
 '''

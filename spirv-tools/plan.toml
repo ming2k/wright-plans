@@ -11,7 +11,7 @@ runtime = ["spirv-headers"]
 build = ["cmake", "gcc", "ninja", "python", "spirv-headers"]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -23,4 +23,4 @@ cmake -B ${BUILD_DIR}/build -G Ninja -S ${BUILD_DIR} -DCMAKE_INSTALL_PREFIX=/usr
 script = "cmake --build ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build"
+script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"

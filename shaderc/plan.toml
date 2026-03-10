@@ -12,7 +12,7 @@ build = ["asciidoctor", "cmake", "ninja", "python", "spirv-headers", "spirv-tool
 link = ["spirv-tools", "glslang"]
 
 [[sources]]
-uri = "https://github.com/google/shaderc/archive/v${PKG_VERSION}/shaderc-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/google/shaderc/archive/v${PART_VERSION}/shaderc-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -27,7 +27,7 @@ spirv_tools_ver=$(pkg-config --modversion spirv-tools 2>/dev/null || pkg-config 
 glslang_ver=$(pkg-config --modversion glslang 2>/dev/null || echo unknown)
 
 cat <<- BUILDVER_EOF > glslc/src/build-version.inc
-"${PKG_VERSION}\\n"
+"${PART_VERSION}\\n"
 "${spirv_tools_ver}\\n"
 "${glslang_ver}\\n"
 BUILDVER_EOF
@@ -54,7 +54,7 @@ asciidoctor -b manpage README.asciidoc -o glslc.1
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build
-install -Dm 644 ${BUILD_DIR}/glslc/glslc.1 ${PKG_DIR}/usr/share/man/man1/glslc.1
-rm -f ${PKG_DIR}/usr/lib/pkgconfig/shaderc_static.pc
+DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build
+install -Dm 644 ${BUILD_DIR}/glslc/glslc.1 ${PART_DIR}/usr/share/man/man1/glslc.1
+rm -f ${PART_DIR}/usr/lib/pkgconfig/shaderc_static.pc
 '''

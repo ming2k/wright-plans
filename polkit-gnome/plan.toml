@@ -13,7 +13,7 @@ build = ["gcc", "intltool", "make", "pkgconf"]
 link = ["glib", "gtk3"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/polkit-gnome/0.105/polkit-gnome-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/polkit-gnome/0.105/polkit-gnome-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -35,6 +35,6 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-install -Dm644 ${FILES_DIR}/polkit-gnome-authentication-agent-1.desktop ${PKG_DIR}/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
+make DESTDIR=${PART_DIR} install
+install -Dm644 ${FILES_DIR}/polkit-gnome-authentication-agent-1.desktop ${PART_DIR}/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
 '''

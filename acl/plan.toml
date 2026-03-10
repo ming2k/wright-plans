@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["attr"]
 
 [[sources]]
-uri = "https://download.savannah.gnu.org/releases/acl/acl-${PKG_VERSION}.tar.xz"
+uri = "https://download.savannah.gnu.org/releases/acl/acl-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -20,7 +20,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
 --disable-static \
---docdir=/usr/share/doc/acl-${PKG_VERSION}
+--docdir=/usr/share/doc/acl-${PART_VERSION}
 '''
 
 [lifecycle.compile]
@@ -32,5 +32,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

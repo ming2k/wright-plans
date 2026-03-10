@@ -12,7 +12,7 @@ runtime = ["ruby"]
 build = ["ruby"]
 
 [[sources]]
-uri = "https://github.com/asciidoctor/asciidoctor/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/asciidoctor/asciidoctor/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -40,13 +40,13 @@ gem install \
   --no-user-install \
   --install-dir "tmp_install${_gemdir}" \
   --bindir "tmp_install/usr/bin" \
-  "asciidoctor-${PKG_VERSION}.gem"
+  "asciidoctor-${PART_VERSION}.gem"
 
 # Remove unreproducible files
 rm --force --recursive --verbose \
   "tmp_install${_gemdir}/cache/" \
-  "tmp_install${_gemdir}/gems/asciidoctor-${PKG_VERSION}/vendor/" \
-  "tmp_install${_gemdir}/doc/asciidoctor-${PKG_VERSION}/ri/ext/"
+  "tmp_install${_gemdir}/gems/asciidoctor-${PART_VERSION}/vendor/" \
+  "tmp_install${_gemdir}/doc/asciidoctor-${PART_VERSION}/ri/ext/"
 
 find "tmp_install${_gemdir}/gems/" \
   -type f \
@@ -76,13 +76,13 @@ cd ${BUILD_DIR}
 _gemdir=$(gem env gemdir)
 
 install --verbose -D --mode=0644 \
-  "tmp_install${_gemdir}/gems/asciidoctor-${PKG_VERSION}/man/asciidoctor.1" \
-  "${PKG_DIR}/usr/share/man/man1/asciidoctor.1"
+  "tmp_install${_gemdir}/gems/asciidoctor-${PART_VERSION}/man/asciidoctor.1" \
+  "${PART_DIR}/usr/share/man/man1/asciidoctor.1"
 
-cp --archive --verbose tmp_install/* "${PKG_DIR}"
+cp --archive --verbose tmp_install/* "${PART_DIR}"
 
 install --verbose -D --mode=0644 LICENSE* \
-  --target-directory "${PKG_DIR}/usr/share/licenses/asciidoctor"
+  --target-directory "${PART_DIR}/usr/share/licenses/asciidoctor"
 install --verbose -D --mode=0644 *.adoc \
-  --target-directory "${PKG_DIR}/usr/share/doc/asciidoctor"
+  --target-directory "${PART_DIR}/usr/share/doc/asciidoctor"
 '''

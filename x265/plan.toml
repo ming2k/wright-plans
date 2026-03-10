@@ -11,7 +11,7 @@ url = "https://bitbucket.org/multicoreware/x265_git"
 build = ["gcc", "make", "cmake", "nasm"]
 
 [[sources]]
-uri = "https://bitbucket.org/multicoreware/x265_git/downloads/x265_${PKG_VERSION}.tar.gz"
+uri = "https://bitbucket.org/multicoreware/x265_git/downloads/x265_${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -66,5 +66,5 @@ cmake --build build -- -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} cmake --install build
+DESTDIR=${PART_DIR} cmake --install build
 '''

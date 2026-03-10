@@ -12,11 +12,11 @@ runtime = ["python"]
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/b2/e8/9ed3830aeed71f17c026a07a5097edcf44b692850ef215b161b8ad875729/sphinxcontrib-jsmath-${PKG_VERSION}.tar.gz"
+uri = "https://files.pythonhosted.org/packages/b2/e8/9ed3830aeed71f17c026a07a5097edcf44b692850ef215b161b8ad875729/sphinxcontrib-jsmath-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
 '''

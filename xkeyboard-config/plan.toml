@@ -11,7 +11,7 @@ url = "https://www.freedesktop.org/wiki/Software/XKeyboardConfig/"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-${PKG_VERSION}.tar.xz"
+uri = "https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-${PART_VERSION}.tar.xz"
 sha256 = "10c58218fb60d08fb1f7b30304deb3ba47613195aa8a08a81f1972775ccc3640"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ ninja
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-DESTDIR=${PKG_DIR} ninja install
+DESTDIR=${PART_DIR} ninja install
 '''

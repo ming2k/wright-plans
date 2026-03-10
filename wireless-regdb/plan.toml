@@ -8,12 +8,12 @@ arch = "any"
 url = "https://wireless.wiki.kernel.org/en/developers/regulatory/wireless-regdb"
 
 [[sources]]
-uri = "https://www.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-${PKG_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-install -Dm644 regulatory.db ${PKG_DIR}/usr/lib/firmware/regulatory.db
-install -Dm644 regulatory.db.p7s ${PKG_DIR}/usr/lib/firmware/regulatory.db.p7s
+install -Dm644 regulatory.db ${PART_DIR}/usr/lib/firmware/regulatory.db
+install -Dm644 regulatory.db.p7s ${PART_DIR}/usr/lib/firmware/regulatory.db.p7s
 '''

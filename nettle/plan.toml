@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["gmp"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/nettle/nettle-${PKG_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/nettle/nettle-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,6 +30,6 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-chmod -v 755 ${PKG_DIR}/usr/lib/lib{hogweed,nettle}.so
+make DESTDIR=${PART_DIR} install
+chmod -v 755 ${PART_DIR}/usr/lib/lib{hogweed,nettle}.so
 '''

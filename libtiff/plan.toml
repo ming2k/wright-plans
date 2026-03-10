@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["zlib", "libjpeg-turbo"]
 
 [[sources]]
-uri = "https://download.osgeo.org/libtiff/tiff-${PKG_VERSION}.tar.xz"
+uri = "https://download.osgeo.org/libtiff/tiff-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -25,4 +25,4 @@ cd ${BUILD_DIR}
 script = "make -C ${BUILD_DIR} -j$(nproc)"
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR} DESTDIR=${PKG_DIR} install"
+script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"

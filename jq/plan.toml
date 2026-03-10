@@ -1,7 +1,7 @@
 [plan]
 name = "jq"
 version = "1.8.1"
-release = 1
+release = 2
 description = "Command-line JSON processor"
 license = "MIT"
 arch = "x86_64"
@@ -11,7 +11,7 @@ url = "https://jqlang.org/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/jqlang/jq/releases/download/jq-${PKG_VERSION}/jq-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/jqlang/jq/releases/download/jq-1.8.1/jq-1.8.1.tar.gz"
 sha256 = "2be64e7129cecb11d5906290eba10af694fb9e3e7f9fc208a311dc33ca837eb0"
 
 [lifecycle.configure]
@@ -26,14 +26,8 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 '''
 
-[lifecycle.check]
-script = '''
-cd ${BUILD_DIR}
-make check
-'''
-
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

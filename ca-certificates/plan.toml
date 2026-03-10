@@ -12,7 +12,7 @@ runtime = ["p11-kit"]
 build = ["python"]
 
 [[sources]]
-uri = "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${PKG_VERSION}.tar.gz"
+uri = "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -41,7 +41,7 @@ sh ${FILES_DIR}/bundle.sh
 script = '''
 cd ${BUILD_DIR}
 install -Dm644 ca-bundle.trust.p11-kit \
-  ${PKG_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit
+  ${PART_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit
 '''
 
 

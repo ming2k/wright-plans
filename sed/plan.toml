@@ -11,7 +11,7 @@ url = "https://www.gnu.org/software/sed/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/sed/sed-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/sed/sed-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,7 +30,7 @@ make html
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-install -d -m755           ${PKG_DIR}/usr/share/doc/sed-4.9
-install -m644 doc/sed.html ${PKG_DIR}/usr/share/doc/sed-4.9
+make DESTDIR=${PART_DIR} install
+install -d -m755           ${PART_DIR}/usr/share/doc/sed-4.9
+install -m644 doc/sed.html ${PART_DIR}/usr/share/doc/sed-4.9
 '''

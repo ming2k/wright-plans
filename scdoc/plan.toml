@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://git.sr.ht/~sircmpwn/scdoc"
 
 [[sources]]
-uri = "https://git.sr.ht/~sircmpwn/scdoc/archive/${PKG_VERSION}.tar.gz"
+uri = "https://git.sr.ht/~sircmpwn/scdoc/archive/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -20,5 +20,5 @@ make PREFIX=/usr -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make PREFIX=/usr DESTDIR=${PKG_DIR} install
+make PREFIX=/usr DESTDIR=${PART_DIR} install
 '''

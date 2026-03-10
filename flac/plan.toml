@@ -12,7 +12,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["libogg"]
 
 [[sources]]
-uri = "https://downloads.xiph.org/releases/flac/flac-${PKG_VERSION}.tar.xz"
+uri = "https://downloads.xiph.org/releases/flac/flac-${PART_VERSION}.tar.xz"
 sha256 = "f2c1c76592a82ffff8413ba3c4a1299b6c7ab06c734dee03fd88630485c2b920"
 
 [lifecycle.configure]
@@ -37,5 +37,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

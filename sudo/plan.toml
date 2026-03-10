@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["glibc", "linux-pam"]
 
 [[sources]]
-uri = "https://www.sudo.ws/dist/sudo-${PKG_VERSION}.tar.gz"
+uri = "https://www.sudo.ws/dist/sudo-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -29,7 +29,7 @@ cd ${BUILD_DIR}
 --with-all-insults \
 --with-secure-path-value=/usr/local/sbin:/usr/local/bin:/usr/bin \
 --enable-tmpfiles.d \
---docdir=/usr/share/doc/sudo-${PKG_VERSION} \
+--docdir=/usr/share/doc/sudo-${PART_VERSION} \
 --with-passprompt="[sudo] password for %p: "
 '''
 
@@ -43,11 +43,11 @@ make -j$(nproc)
 backup = ["/etc/sudoers", "/etc/pam.d/sudo", "/etc/pam.d/sudo-i"]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-mkdir -p ${PKG_DIR}/etc/sudoers.d
-install -vdm755 ${PKG_DIR}/etc/pam.d
+make DESTDIR=${PART_DIR} install
+mkdir -p ${PART_DIR}/etc/sudoers.d
+install -vdm755 ${PART_DIR}/etc/pam.d
 
-cat > ${PKG_DIR}/etc/pam.d/sudo << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/sudo << 'PAMEOF'
 # Begin /etc/pam.d/sudo
 auth      include     system-auth
 account   include     system-account
@@ -55,7 +55,7 @@ session   include     system-session
 # End /etc/pam.d/sudo
 PAMEOF
 
-cat > ${PKG_DIR}/etc/pam.d/sudo-i << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/sudo-i << 'PAMEOF'
 # Begin /etc/pam.d/sudo-i
 auth      include     sudo
 account   include     sudo

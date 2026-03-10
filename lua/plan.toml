@@ -11,7 +11,7 @@ url = "https://www.lua.org"
 link = ["readline"]
 
 [[sources]]
-uri = "https://www.lua.org/ftp/lua-${PKG_VERSION}.tar.gz"
+uri = "https://www.lua.org/ftp/lua-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -34,14 +34,14 @@ ${CC:-gcc} -shared -fPIC -Wl,-soname,liblua.so.5.4 \
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make INSTALL_TOP=${PKG_DIR}/usr INSTALL_MAN=${PKG_DIR}/usr/share/man/man1 install
+make INSTALL_TOP=${PART_DIR}/usr INSTALL_MAN=${PART_DIR}/usr/share/man/man1 install
 
 # Install shared library
-install -Dm755 src/liblua.so.5.4 ${PKG_DIR}/usr/lib/liblua.so.5.4
-ln -sf liblua.so.5.4 ${PKG_DIR}/usr/lib/liblua.so
+install -Dm755 src/liblua.so.5.4 ${PART_DIR}/usr/lib/liblua.so.5.4
+ln -sf liblua.so.5.4 ${PART_DIR}/usr/lib/liblua.so
 
-mkdir -p ${PKG_DIR}/usr/lib/pkgconfig
-cat > ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc << PCEOF
+mkdir -p ${PART_DIR}/usr/lib/pkgconfig
+cat > ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc << PCEOF
 prefix=/usr
 exec_prefix=\${prefix}
 libdir=\${exec_prefix}/lib
@@ -49,13 +49,13 @@ includedir=\${prefix}/include
 
 Name: Lua
 Description: Lua language engine
-Version: ${PKG_VERSION}
+Version: ${PART_VERSION}
 Libs: -L\${libdir} -llua
 Libs.private: -lm -ldl
 Cflags: -I\${includedir}
 PCEOF
-cp ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PKG_DIR}/usr/lib/pkgconfig/lua-5.4.pc
-cp ${PKG_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PKG_DIR}/usr/lib/pkgconfig/lua.pc
+cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua-5.4.pc
+cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua.pc
 '''
 
 [lifecycle.fabricate]

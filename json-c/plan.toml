@@ -12,7 +12,7 @@ build = ["cmake", "ninja"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://s3.amazonaws.com/json-c_releases/releases/json-c-${PKG_VERSION}.tar.gz"
+uri = "https://s3.amazonaws.com/json-c_releases/releases/json-c-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -26,4 +26,4 @@ cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -D
 script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja install -C ${BUILD_DIR}/build"
+script = "DESTDIR=${PART_DIR} ninja install -C ${BUILD_DIR}/build"

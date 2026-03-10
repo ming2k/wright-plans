@@ -12,7 +12,7 @@ build = ["rust"]
 link = ["gcc", "glibc"]
 
 [[sources]]
-uri = "https://github.com/sharkdp/fd/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/sharkdp/fd/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -25,14 +25,14 @@ cargo build --release --locked
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-install -Dm755 target/release/fd ${PKG_DIR}/usr/bin/fd
+install -Dm755 target/release/fd ${PART_DIR}/usr/bin/fd
 
 if [ -f doc/fd.1 ]; then
-  install -Dm644 doc/fd.1 ${PKG_DIR}/usr/share/man/man1/fd.1
+  install -Dm644 doc/fd.1 ${PART_DIR}/usr/share/man/man1/fd.1
 fi
 if [ -d completions ]; then
-  install -Dm644 completions/fd.bash ${PKG_DIR}/usr/share/bash-completion/completions/fd || true
-  install -Dm644 completions/_fd ${PKG_DIR}/usr/share/zsh/site-functions/_fd || true
-  install -Dm644 completions/fd.fish ${PKG_DIR}/usr/share/fish/vendor_completions.d/fd.fish || true
+  install -Dm644 completions/fd.bash ${PART_DIR}/usr/share/bash-completion/completions/fd || true
+  install -Dm644 completions/_fd ${PART_DIR}/usr/share/zsh/site-functions/_fd || true
+  install -Dm644 completions/fd.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/fd.fish || true
 fi
 '''

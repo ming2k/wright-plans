@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://gnupg.org/software/libassuan/"
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/libassuan/libassuan-${PKG_VERSION}.tar.bz2"
+uri = "https://gnupg.org/ftp/gcrypt/libassuan/libassuan-${PART_VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -26,5 +26,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 '''

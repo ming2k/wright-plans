@@ -10,7 +10,7 @@ arch = "x86_64"
 build = ["cmake", "gcc", "ninja"]
 
 [[sources]]
-uri = "https://github.com/google/highway/archive/refs/tags/${PKG_VERSION}.tar.gz"
+uri = "https://github.com/google/highway/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -22,4 +22,4 @@ cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja -DCMAKE_BUILD_TYPE=Release 
 script = "cmake --build ${BUILD_DIR}/build"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build"
+script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"

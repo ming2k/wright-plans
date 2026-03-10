@@ -11,7 +11,7 @@ url = "https://github.com/XTLS/Xray-core"
 build = ["go"]
 
 [[sources]]
-uri = "https://github.com/XTLS/Xray-core/archive/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/XTLS/Xray-core/archive/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -23,15 +23,15 @@ script = '''
 cd ${BUILD_DIR}
 export CGO_ENABLED=0
 export GOFLAGS="-trimpath"
-go build -ldflags "-X github.com/xtls/xray-core.codename=xray -X github.com/xtls/xray-core.version=${PKG_VERSION} -buildid=" -o xray ./main
+go build -ldflags "-X github.com/xtls/xray-core.codename=xray -X github.com/xtls/xray-core.version=${PART_VERSION} -buildid=" -o xray ./main
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-install -Dm755 xray ${PKG_DIR}/usr/bin/xray
-install -dm755 ${PKG_DIR}/etc/xray
-install -Dm644 ${FILES_DIR}/xray.service ${PKG_DIR}/usr/lib/systemd/system/xray.service
+install -Dm755 xray ${PART_DIR}/usr/bin/xray
+install -dm755 ${PART_DIR}/etc/xray
+install -Dm644 ${FILES_DIR}/xray.service ${PART_DIR}/usr/lib/systemd/system/xray.service
 '''
 
 [lifecycle.fabricate]

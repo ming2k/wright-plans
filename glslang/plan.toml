@@ -12,7 +12,7 @@ runtime = ["spirv-tools"]
 build = ["cmake", "make", "spirv-headers", "spirv-tools"]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/glslang/archive/${PKG_VERSION}/glslang-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/KhronosGroup/glslang/archive/${PART_VERSION}/glslang-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -35,5 +35,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

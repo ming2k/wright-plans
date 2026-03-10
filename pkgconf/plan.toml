@@ -11,7 +11,7 @@ url = "https://pkgconf.org/"
 build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://distfiles.ariadne.space/pkgconf/pkgconf-${PKG_VERSION}.tar.xz"
+uri = "https://distfiles.ariadne.space/pkgconf/pkgconf-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,6 +31,6 @@ make -j$(nproc)
 [lifecycle.staging]
 script = """
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 """
 

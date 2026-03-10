@@ -27,14 +27,13 @@ uri = "https://www.oasis-open.org/docbook/xml/4.2/docbook-xml-4.2.zip"
 sha256 = "acc4601e4f97a196076b7e64b368d9248b07c7abf26b34a02cca40eeebe60fa2"
 
 [options]
-strip = false
 
 [lifecycle.staging]
 script = '''
-install -dm755 ${PKG_DIR}/usr/share/xml/docbook
+install -dm755 ${PART_DIR}/usr/share/xml/docbook
 
 for ver in 4.2 4.3 4.4 4.5; do
-  dest_dir=${PKG_DIR}/usr/share/xml/docbook/${ver}
+  dest_dir=${PART_DIR}/usr/share/xml/docbook/${ver}
   install -dm755 ${dest_dir}
 
   python3 - "${FILES_DIR}/docbook-xml-${ver}.zip" "${dest_dir}" <<'PY'
@@ -55,8 +54,8 @@ PY
 done
 
 sed -e 's|V4.2|V4.1.2|g' \
-  ${PKG_DIR}/usr/share/xml/docbook/4.2/catalog \
-  > ${PKG_DIR}/usr/share/xml/docbook/4.2/catalog-4.1.2
+  ${PART_DIR}/usr/share/xml/docbook/4.2/catalog \
+  > ${PART_DIR}/usr/share/xml/docbook/4.2/catalog-4.1.2
 '''
 
 [lifecycle.fabricate]

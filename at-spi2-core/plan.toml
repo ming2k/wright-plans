@@ -13,7 +13,7 @@ build = ["dbus", "gobject-introspection", "meson", "ninja"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/at-spi2-core/2.58/at-spi2-core-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/at-spi2-core/2.58/at-spi2-core-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -27,4 +27,4 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

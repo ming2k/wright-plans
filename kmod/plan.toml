@@ -12,7 +12,7 @@ build = ["gcc", "meson", "ninja"]
 link = ["openssl", "xz", "zlib", "zstd"]
 
 [[sources]]
-uri = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-${PKG_VERSION}.tar.gz"
+uri = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -34,11 +34,11 @@ script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
+DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build
 
 # Create standard module configuration directories
-install -dm755 ${PKG_DIR}/etc/depmod.d
-install -dm755 ${PKG_DIR}/etc/modprobe.d
-install -dm755 ${PKG_DIR}/usr/lib/depmod.d
-install -dm755 ${PKG_DIR}/usr/lib/modprobe.d
+install -dm755 ${PART_DIR}/etc/depmod.d
+install -dm755 ${PART_DIR}/etc/modprobe.d
+install -dm755 ${PART_DIR}/usr/lib/depmod.d
+install -dm755 ${PART_DIR}/usr/lib/modprobe.d
 '''

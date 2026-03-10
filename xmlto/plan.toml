@@ -12,7 +12,7 @@ runtime = ["bash", "docbook-xsl", "libxslt"]
 build = ["autoconf", "automake", "gcc", "make", "docbook-xsl", "libxslt"]
 
 [[sources]]
-uri = "https://releases.pagure.org/xmlto/xmlto-${PKG_VERSION}.tar.bz2"
+uri = "https://releases.pagure.org/xmlto/xmlto-${PART_VERSION}.tar.bz2"
 sha256 = "6000d8e8f0f9040426c4f85d7ad86789bc88d4aeaef585c4d4110adb0b214f21"
 
 [lifecycle.configure]
@@ -31,5 +31,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

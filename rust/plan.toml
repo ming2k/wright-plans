@@ -12,58 +12,58 @@ runtime = ["gcc"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://static.rust-lang.org/dist/rust-${PKG_VERSION}-x86_64-unknown-linux-gnu.tar.xz"
+uri = "https://static.rust-lang.org/dist/rust-${PART_VERSION}-x86_64-unknown-linux-gnu.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
-./install.sh --destdir=${PKG_DIR} --prefix=/usr --without=rust-docs
+./install.sh --destdir=${PART_DIR} --prefix=/usr --without=rust-docs
 '''
 
 [lifecycle.fabricate]
 script = '''
-# install.sh already placed files into ${PKG_DIR}/usr
+# install.sh already placed files into ${PART_DIR}/usr
 # Remove install log that references the temp directory
-rm -f ${PKG_DIR}/usr/lib/rustlib/install.log
-rm -f ${PKG_DIR}/usr/lib/rustlib/uninstall.sh
-rm -rf ${PKG_DIR}/usr/lib/rustlib/manifest-*
+rm -f ${PART_DIR}/usr/lib/rustlib/install.log
+rm -f ${PART_DIR}/usr/lib/rustlib/uninstall.sh
+rm -rf ${PART_DIR}/usr/lib/rustlib/manifest-*
 # Remove /usr/etc — not FHS-compliant
-rm -rf ${PKG_DIR}/usr/etc
+rm -rf ${PART_DIR}/usr/etc
 '''
 
 [lifecycle.fabricate.cargo]
 description = "Cargo package manager for Rust"
 dependencies.runtime = ["rust"]
 script = '''
-install -d ${PKG_DIR}/usr/bin
-install -d ${PKG_DIR}/usr/share/man/man1
-install -d ${PKG_DIR}/usr/share/bash-completion/completions
-install -d ${PKG_DIR}/usr/share/fish/vendor_completions.d
-install -d ${PKG_DIR}/usr/share/zsh/site-functions
+install -d ${PART_DIR}/usr/bin
+install -d ${PART_DIR}/usr/share/man/man1
+install -d ${PART_DIR}/usr/share/bash-completion/completions
+install -d ${PART_DIR}/usr/share/fish/vendor_completions.d
+install -d ${PART_DIR}/usr/share/zsh/site-functions
 
 # Binaries
 for bin in cargo cargo-*; do
-  if [ -f "${MAIN_PKG_DIR}/usr/bin/${bin}" ]; then
-    mv -v "${MAIN_PKG_DIR}/usr/bin/${bin}" "${PKG_DIR}/usr/bin/"
+  if [ -f "${MAIN_PART_DIR}/usr/bin/${bin}" ]; then
+    mv -v "${MAIN_PART_DIR}/usr/bin/${bin}" "${PART_DIR}/usr/bin/"
   fi
 done
 
 # Man pages
 for man in cargo*.1; do
-  if [ -f "${MAIN_PKG_DIR}/usr/share/man/man1/${man}" ]; then
-    mv -v "${MAIN_PKG_DIR}/usr/share/man/man1/${man}" "${PKG_DIR}/usr/share/man/man1/"
+  if [ -f "${MAIN_PART_DIR}/usr/share/man/man1/${man}" ]; then
+    mv -v "${MAIN_PART_DIR}/usr/share/man/man1/${man}" "${PART_DIR}/usr/share/man/man1/"
   fi
 done
 
 # Shell completions if present
-if [ -f "${MAIN_PKG_DIR}/usr/share/bash-completion/completions/cargo" ]; then
-  mv -v "${MAIN_PKG_DIR}/usr/share/bash-completion/completions/cargo" "${PKG_DIR}/usr/share/bash-completion/completions/"
+if [ -f "${MAIN_PART_DIR}/usr/share/bash-completion/completions/cargo" ]; then
+  mv -v "${MAIN_PART_DIR}/usr/share/bash-completion/completions/cargo" "${PART_DIR}/usr/share/bash-completion/completions/"
 fi
-if [ -f "${MAIN_PKG_DIR}/usr/share/fish/vendor_completions.d/cargo.fish" ]; then
-  mv -v "${MAIN_PKG_DIR}/usr/share/fish/vendor_completions.d/cargo.fish" "${PKG_DIR}/usr/share/fish/vendor_completions.d/"
+if [ -f "${MAIN_PART_DIR}/usr/share/fish/vendor_completions.d/cargo.fish" ]; then
+  mv -v "${MAIN_PART_DIR}/usr/share/fish/vendor_completions.d/cargo.fish" "${PART_DIR}/usr/share/fish/vendor_completions.d/"
 fi
-if [ -f "${MAIN_PKG_DIR}/usr/share/zsh/site-functions/_cargo" ]; then
-  mv -v "${MAIN_PKG_DIR}/usr/share/zsh/site-functions/_cargo" "${PKG_DIR}/usr/share/zsh/site-functions/"
+if [ -f "${MAIN_PART_DIR}/usr/share/zsh/site-functions/_cargo" ]; then
+  mv -v "${MAIN_PART_DIR}/usr/share/zsh/site-functions/_cargo" "${PART_DIR}/usr/share/zsh/site-functions/"
 fi
 '''

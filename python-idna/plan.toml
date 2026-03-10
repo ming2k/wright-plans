@@ -12,11 +12,11 @@ runtime = ["python"]
 build = ["python", "flit-core"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/i/idna/idna-${PKG_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/i/idna/idna-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
 '''

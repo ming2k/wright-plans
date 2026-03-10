@@ -11,7 +11,7 @@ url = "https://www.kernel.org"
 build = ["make", "zlib"]
 
 [[sources]]
-uri = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PKG_VERSION}.tar.xz"
+uri = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -27,8 +27,8 @@ make mrproper
 make headers
 find usr/include -name '.*' -delete
 rm -f usr/include/Makefile
-install -d ${PKG_DIR}/usr
-cp -a usr/include ${PKG_DIR}/usr/
-# Remove any stray files that leak into ${PKG_DIR}
-find ${PKG_DIR} -maxdepth 2 -name '*.pl' -delete
+install -d ${PART_DIR}/usr
+cp -a usr/include ${PART_DIR}/usr/
+# Remove any stray files that leak into ${PART_DIR}
+find ${PART_DIR} -maxdepth 2 -name '*.pl' -delete
 '''

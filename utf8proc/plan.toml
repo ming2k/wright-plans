@@ -8,7 +8,7 @@ arch = "x86_64"
 url = "https://github.com/JuliaStrings/utf8proc"
 
 [[sources]]
-uri = "https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -27,5 +27,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 '''

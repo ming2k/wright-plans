@@ -11,13 +11,13 @@ url = "https://www.gnu.org/software/automake/"
 build = ["autoconf", "make", "perl"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/automake/automake-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/automake/automake-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr --docdir=/usr/share/doc/automake-${PKG_VERSION}
+./configure --prefix=/usr --docdir=/usr/share/doc/automake-${PART_VERSION}
 '''
 
 [lifecycle.compile]
@@ -29,5 +29,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

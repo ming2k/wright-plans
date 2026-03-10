@@ -11,7 +11,7 @@ url = "https://community.kde.org/Frameworks"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://download.kde.org/stable/frameworks/6.23/extra-cmake-modules-${PKG_VERSION}.tar.xz"
+uri = "https://download.kde.org/stable/frameworks/6.23/extra-cmake-modules-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -28,4 +28,4 @@ cmake -B build -G Ninja \
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

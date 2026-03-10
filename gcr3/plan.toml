@@ -13,7 +13,7 @@ build = ["gettext", "gobject-introspection", "libxslt", "meson", "ninja", "pkgco
 link = ["dbus", "glib", "gtk3", "libgcrypt", "p11-kit"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gcr/3.41/gcr-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gcr/3.41/gcr-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,5 +31,5 @@ meson compile -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-meson install -C build --destdir ${PKG_DIR}
+meson install -C build --destdir ${PART_DIR}
 '''

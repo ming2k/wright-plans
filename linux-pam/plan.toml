@@ -13,11 +13,10 @@ build = ["gcc", "meson", "ninja", "pkgconf"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/linux-pam/linux-pam/releases/download/v${PKG_VERSION}/Linux-PAM-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/linux-pam/linux-pam/releases/download/v${PART_VERSION}/Linux-PAM-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [options]
-strip = true
 
 [lifecycle.configure]
 script = '''
@@ -36,7 +35,7 @@ meson setup .. \
     -Dpwaccess=disabled \
     -Dvendordir='' \
     -Ddocs=disabled \
-    -Ddocdir=/usr/share/doc/Linux-PAM-${PKG_VERSION}
+    -Ddocdir=/usr/share/doc/Linux-PAM-${PART_VERSION}
 '''
 
 [lifecycle.compile]
@@ -48,39 +47,39 @@ ninja
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-DESTDIR=${PKG_DIR} ninja install
+DESTDIR=${PART_DIR} ninja install
 
-chmod -v 4755 ${PKG_DIR}/usr/bin/unix_chkpwd
+chmod -v 4755 ${PART_DIR}/usr/bin/unix_chkpwd
 
-rm -rf ${PKG_DIR}/usr/lib/systemd
+rm -rf ${PART_DIR}/usr/lib/systemd
 
-install -vdm755 ${PKG_DIR}/etc/pam.d
+install -vdm755 ${PART_DIR}/etc/pam.d
 
-cat > ${PKG_DIR}/etc/pam.d/system-account << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/system-account << 'PAMEOF'
 # Begin /etc/pam.d/system-account
 account   required    pam_unix.so
 # End /etc/pam.d/system-account
 PAMEOF
 
-cat > ${PKG_DIR}/etc/pam.d/system-auth << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/system-auth << 'PAMEOF'
 # Begin /etc/pam.d/system-auth
 auth      required    pam_unix.so
 # End /etc/pam.d/system-auth
 PAMEOF
 
-cat > ${PKG_DIR}/etc/pam.d/system-session << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/system-session << 'PAMEOF'
 # Begin /etc/pam.d/system-session
 session   required    pam_unix.so
 # End /etc/pam.d/system-session
 PAMEOF
 
-cat > ${PKG_DIR}/etc/pam.d/system-password << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/system-password << 'PAMEOF'
 # Begin /etc/pam.d/system-password
 password  required    pam_unix.so       yescrypt shadow try_first_pass
 # End /etc/pam.d/system-password
 PAMEOF
 
-cat > ${PKG_DIR}/etc/pam.d/other << 'PAMEOF'
+cat > ${PART_DIR}/etc/pam.d/other << 'PAMEOF'
 # Begin /etc/pam.d/other
 auth        required        pam_warn.so
 auth        required        pam_deny.so

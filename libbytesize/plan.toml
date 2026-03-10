@@ -12,7 +12,7 @@ build = ["gcc", "make", "python-pygments"]
 link = ["glib", "mpfr", "pcre2"]
 
 [[sources]]
-uri = "https://github.com/storaged-project/libbytesize/releases/download/${PKG_VERSION}/libbytesize-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/storaged-project/libbytesize/releases/download/${PART_VERSION}/libbytesize-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

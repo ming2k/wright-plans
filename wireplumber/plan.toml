@@ -12,7 +12,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["glib", "lua", "pipewire", "systemd"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${PKG_VERSION}/wireplumber-${PKG_VERSION}.tar.gz"
+uri = "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${PART_VERSION}/wireplumber-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,7 +31,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
 
 
 [lifecycle.fabricate]

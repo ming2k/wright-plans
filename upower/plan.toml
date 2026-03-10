@@ -12,7 +12,7 @@ build = ["gettext", "gobject-introspection", "meson", "ninja", "pkgconf", "polki
 link = ["glib", "libgudev", "libusb", "polkit", "systemd"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/upower/upower/-/archive/v${PKG_VERSION}/upower-v${PKG_VERSION}.tar.bz2"
+uri = "https://gitlab.freedesktop.org/upower/upower/-/archive/v${PART_VERSION}/upower-v${PART_VERSION}.tar.bz2"
 sha256 = "d568638d670a63a1886335b7b136f4888cb38a3b28f3f4bcdeaffcca0b0f6df8"
 
 [lifecycle.configure]
@@ -30,7 +30,7 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install
+DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
 '''
 
 [lifecycle.fabricate]

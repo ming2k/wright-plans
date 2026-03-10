@@ -12,7 +12,7 @@ build = ["gcc", "groff", "make", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://github.com/AbiWord/enchant/releases/download/v${PKG_VERSION}/enchant-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/AbiWord/enchant/releases/download/v${PART_VERSION}/enchant-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ make
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

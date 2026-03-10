@@ -8,20 +8,20 @@ arch = "any"
 url = "https://github.com/containers/common"
 
 [[sources]]
-uri = "https://github.com/containers/common/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/containers/common/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
 # Storage configuration
-install -dm755 ${PKG_DIR}/etc/containers
-install -dm755 ${PKG_DIR}/usr/share/containers
+install -dm755 ${PART_DIR}/etc/containers
+install -dm755 ${PART_DIR}/usr/share/containers
 
 install -Dm644 ${BUILD_DIR}/pkg/config/containers.conf \
-  ${PKG_DIR}/usr/share/containers/containers.conf
+  ${PART_DIR}/usr/share/containers/containers.conf
 
 # Minimal registries config (search docker.io by default)
-cat > ${PKG_DIR}/etc/containers/registries.conf << 'EOF'
+cat > ${PART_DIR}/etc/containers/registries.conf << 'EOF'
 unqualified-search-registries = ["docker.io"]
 
 [[registry]]
@@ -30,7 +30,7 @@ location = "docker.io"
 EOF
 
 # Permissive signature policy (accept any image)
-cat > ${PKG_DIR}/etc/containers/policy.json << 'EOF'
+cat > ${PART_DIR}/etc/containers/policy.json << 'EOF'
 {
     "default": [
         {
@@ -47,14 +47,14 @@ EOF
 
 # Set netavark to use nftables firewall backend
 sed -i 's/^#firewall_driver = ""/firewall_driver = "nftables"/' \
-  ${PKG_DIR}/usr/share/containers/containers.conf
+  ${PART_DIR}/usr/share/containers/containers.conf
 
 # Suppress "Executing external compose provider" hint
 sed -i 's/^#compose_warning_logs = true/compose_warning_logs = false/' \
-  ${PKG_DIR}/usr/share/containers/containers.conf
+  ${PART_DIR}/usr/share/containers/containers.conf
 
 # Default storage config
-cat > ${PKG_DIR}/etc/containers/storage.conf << 'EOF'
+cat > ${PART_DIR}/etc/containers/storage.conf << 'EOF'
 [storage]
 driver = "overlay"
 

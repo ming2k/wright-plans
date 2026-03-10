@@ -31,5 +31,5 @@ ninja -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-DESTDIR=${PKG_DIR} ninja install
+DESTDIR=${PART_DIR} ninja install
 '''

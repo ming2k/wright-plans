@@ -12,7 +12,7 @@ build = ["gcc", "gettext", "make"]
 link = ["acl", "attr", "libcap", "openssl"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/coreutils/coreutils-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/coreutils/coreutils-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -35,8 +35,8 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-mkdir -p ${PKG_DIR}/usr/share/man/man8
-mv -v ${PKG_DIR}/usr/share/man/man1/chroot.1 ${PKG_DIR}/usr/share/man/man8/chroot.8
-sed -i 's/"1"/"8"/' ${PKG_DIR}/usr/share/man/man8/chroot.8
+make DESTDIR=${PART_DIR} install
+mkdir -p ${PART_DIR}/usr/share/man/man8
+mv -v ${PART_DIR}/usr/share/man/man1/chroot.1 ${PART_DIR}/usr/share/man/man8/chroot.8
+sed -i 's/"1"/"8"/' ${PART_DIR}/usr/share/man/man8/chroot.8
 '''

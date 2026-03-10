@@ -11,7 +11,7 @@ url = "https://www.gnu.org/software/gettext/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gettext/gettext-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/gettext/gettext-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -19,7 +19,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
             --disable-static \
-            --docdir=/usr/share/doc/gettext-${PKG_VERSION}
+            --docdir=/usr/share/doc/gettext-${PART_VERSION}
 '''
 
 [lifecycle.compile]
@@ -31,6 +31,6 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-chmod -v 0755 ${PKG_DIR}/usr/lib/preloadable_libintl.so
+make DESTDIR=${PART_DIR} install
+chmod -v 0755 ${PART_DIR}/usr/lib/preloadable_libintl.so
 '''

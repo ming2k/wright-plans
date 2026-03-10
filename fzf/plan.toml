@@ -11,7 +11,7 @@ url = "https://github.com/junegunn/fzf"
 build = ["go"]
 
 [[sources]]
-uri = "https://github.com/junegunn/fzf/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/junegunn/fzf/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -19,17 +19,17 @@ dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
 export CGO_ENABLED=0
-go build -trimpath -ldflags "-s -w -X main.version=${PKG_VERSION}" -o bin/fzf .
+go build -trimpath -ldflags "-s -w -X main.version=${PART_VERSION}" -o bin/fzf .
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-install -Dm755 bin/fzf ${PKG_DIR}/usr/bin/fzf
-install -Dm644 man/man1/fzf.1 ${PKG_DIR}/usr/share/man/man1/fzf.1
-install -Dm644 shell/completion.bash ${PKG_DIR}/usr/share/bash-completion/completions/fzf
-install -Dm644 shell/completion.zsh ${PKG_DIR}/usr/share/zsh/site-functions/_fzf
-install -Dm644 shell/key-bindings.bash ${PKG_DIR}/usr/share/fzf/key-bindings.bash
-install -Dm644 shell/key-bindings.zsh ${PKG_DIR}/usr/share/fzf/key-bindings.zsh
-install -Dm644 shell/key-bindings.fish ${PKG_DIR}/usr/share/fish/vendor_functions.d/fzf_key_bindings.fish
+install -Dm755 bin/fzf ${PART_DIR}/usr/bin/fzf
+install -Dm644 man/man1/fzf.1 ${PART_DIR}/usr/share/man/man1/fzf.1
+install -Dm644 shell/completion.bash ${PART_DIR}/usr/share/bash-completion/completions/fzf
+install -Dm644 shell/completion.zsh ${PART_DIR}/usr/share/zsh/site-functions/_fzf
+install -Dm644 shell/key-bindings.bash ${PART_DIR}/usr/share/fzf/key-bindings.bash
+install -Dm644 shell/key-bindings.zsh ${PART_DIR}/usr/share/fzf/key-bindings.zsh
+install -Dm644 shell/key-bindings.fish ${PART_DIR}/usr/share/fish/vendor_functions.d/fzf_key_bindings.fish
 '''

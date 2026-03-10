@@ -12,7 +12,7 @@ build = ["gcc", "gettext", "make"]
 link = ["ncurses", "systemd"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${PKG_VERSION}.tar.xz"
+uri = "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -40,10 +40,10 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
-if [ -d ${PKG_DIR}/usr/sbin ]; then
-  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
-  rm -rf ${PKG_DIR}/usr/sbin
+if [ -d ${PART_DIR}/usr/sbin ]; then
+  cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
+  rm -rf ${PART_DIR}/usr/sbin
 fi
 '''

@@ -12,11 +12,11 @@ runtime = ["python"]
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/s/six/six-${PKG_VERSION}.tar.gz"
+uri = "https://files.pythonhosted.org/packages/source/s/six/six-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --root=${PKG_DIR} --no-build-isolation .
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
 '''

@@ -12,12 +12,12 @@ build = ["gcc", "meson", "ninja", "pkgconf", "python"]
 link = ["glibc", "ncurses", "zlib", "libcap", "linux-pam", "readline"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${PKG_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build
+DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build
 '''
 
 [lifecycle.configure]
@@ -56,40 +56,40 @@ script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 [lifecycle.fabricate]
 script = '''
 # Remove static libraries
-rm -f ${PKG_DIR}/usr/lib/lib*.a*
+rm -f ${PART_DIR}/usr/lib/lib*.a*
 
 # Drop Python bindings (not needed)
-rm -rf ${PKG_DIR}/usr/lib/python*
+rm -rf ${PART_DIR}/usr/lib/python*
 '''
 
 [lifecycle.fabricate.libuuid]
 description = "Universally Unique Identifier library"
 dependencies.link = ["glibc"]
 script = '''
-install -d ${PKG_DIR}/usr/lib
-mv -v ${MAIN_PKG_DIR}/usr/lib/libuuid.so* ${PKG_DIR}/usr/lib/
+install -d ${PART_DIR}/usr/lib
+mv -v ${MAIN_PART_DIR}/usr/lib/libuuid.so* ${PART_DIR}/usr/lib/
 '''
 
 [lifecycle.fabricate.libblkid]
 description = "Block device identification library"
 dependencies.link = ["glibc", "libuuid"]
 script = '''
-install -d ${PKG_DIR}/usr/lib
-mv -v ${MAIN_PKG_DIR}/usr/lib/libblkid.so* ${PKG_DIR}/usr/lib/
+install -d ${PART_DIR}/usr/lib
+mv -v ${MAIN_PART_DIR}/usr/lib/libblkid.so* ${PART_DIR}/usr/lib/
 '''
 
 [lifecycle.fabricate.libmount]
 description = "Device mounting library"
 dependencies.link = ["glibc", "libblkid"]
 script = '''
-install -d ${PKG_DIR}/usr/lib
-mv -v ${MAIN_PKG_DIR}/usr/lib/libmount.so* ${PKG_DIR}/usr/lib/
+install -d ${PART_DIR}/usr/lib
+mv -v ${MAIN_PART_DIR}/usr/lib/libmount.so* ${PART_DIR}/usr/lib/
 '''
 
 [lifecycle.fabricate.libsmartcols]
 description = "Table or tree formatting library"
 dependencies.link = ["glibc"]
 script = '''
-install -d ${PKG_DIR}/usr/lib
-mv -v ${MAIN_PKG_DIR}/usr/lib/libsmartcols.so* ${PKG_DIR}/usr/lib/
+install -d ${PART_DIR}/usr/lib
+mv -v ${MAIN_PART_DIR}/usr/lib/libsmartcols.so* ${PART_DIR}/usr/lib/
 '''

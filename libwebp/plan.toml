@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["libpng"]
 
 [[sources]]
-uri = "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${PKG_VERSION}.tar.gz"
+uri = "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${PART_VERSION}.tar.gz"
 sha256 = "7d6fab70cf844bf6769077bd5d7a74893f8ffd4dfb42861745750c63c2a5c92c"
 
 [lifecycle.configure]
@@ -24,4 +24,4 @@ cd ${BUILD_DIR}
 script = "cd ${BUILD_DIR} && make -j$(nproc)"
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && make DESTDIR=${PKG_DIR} install"
+script = "cd ${BUILD_DIR} && make DESTDIR=${PART_DIR} install"

@@ -13,7 +13,7 @@ build = ["gobject-introspection", "meson", "ninja"]
 link = ["glib", "gtk4", "libseccomp", "libxkbcommon"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,7 +31,7 @@ ninja -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''
 
 

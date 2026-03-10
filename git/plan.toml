@@ -25,7 +25,7 @@ link = ["curl", "expat", "openssl", "pcre2", "zlib-ng", "libsecret"]
 optional = [{name = "zsh", description = "upstream zsh completion"}, {name = "tk", description = "gitk and git gui"}, {name = "man", description = "show help with `git command --help`"}, {name = "perl-libwww", description = "git svn"}, {name = "perl-term-readkey", description = "git svn and interactive.singlekey"}, {name = "perl-io-socket-ssl", description = "git send-email TLS support"}, {name = "perl-authen-sasl", description = "git send-email TLS support"}, {name = "perl-cgi", description = "gitweb support"}, {name = "perl-error", description = "extended Perl error handling"}, {name = "perl-mailtools", description = "git send-email support"}, {name = "python", description = "git svn & git p4"}, {name = "subversion", description = "git svn"}, {name = "libsecret", description = "libsecret credential helper"}, {name = "less", description = "default pager"}]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/software/scm/git/git-${PKG_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/software/scm/git/git-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -106,7 +106,7 @@ cd ${BUILD_DIR}
 _perllibdir=$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')
 
 make \
-  DESTDIR=${PKG_DIR} \
+  DESTDIR=${PART_DIR} \
   prefix=/usr \
   gitexecdir=/usr/lib/git-core \
   perllibdir="${_perllibdir}" \
@@ -123,18 +123,18 @@ make \
   install
 
 # bash completion
-mkdir -p ${PKG_DIR}/usr/share/bash-completion/completions/
+mkdir -p ${PART_DIR}/usr/share/bash-completion/completions/
 install -m 0644 ./contrib/completion/git-completion.bash \
-  ${PKG_DIR}/usr/share/bash-completion/completions/git
+  ${PART_DIR}/usr/share/bash-completion/completions/git
 
 # git prompt
-mkdir -p ${PKG_DIR}/usr/share/git/
+mkdir -p ${PART_DIR}/usr/share/git/
 install -m 0644 ./contrib/completion/git-prompt.sh \
-  ${PKG_DIR}/usr/share/git/git-prompt.sh
+  ${PART_DIR}/usr/share/git/git-prompt.sh
 
 # libsecret credentials helper
 install -m 0755 contrib/credential/libsecret/git-credential-libsecret \
-  ${PKG_DIR}/usr/lib/git-core/git-credential-libsecret
+  ${PART_DIR}/usr/lib/git-core/git-credential-libsecret
 make \
   prefix=/usr \
   gitexecdir=/usr/lib/git-core \
@@ -153,7 +153,7 @@ make \
 
 # subtree install
 make \
-  DESTDIR=${PKG_DIR} \
+  DESTDIR=${PART_DIR} \
   prefix=/usr \
   gitexecdir=/usr/lib/git-core \
   perllibdir="${_perllibdir}" \
@@ -171,10 +171,10 @@ make \
 
 # contrib extras
 find contrib/ -name '.gitignore' -delete
-cp -a ./contrib/* ${PKG_DIR}/usr/share/git/
+cp -a ./contrib/* ${PART_DIR}/usr/share/git/
 
 # zsh completion (merged into main package)
-install -d ${PKG_DIR}/usr/share/zsh/site-functions/
+install -d ${PART_DIR}/usr/share/zsh/site-functions/
 ln -s ../../git/completion/git-completion.zsh \
-  ${PKG_DIR}/usr/share/zsh/site-functions/_git
+  ${PART_DIR}/usr/share/zsh/site-functions/_git
 '''

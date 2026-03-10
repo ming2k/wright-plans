@@ -11,7 +11,7 @@ build = ["gettext", "glib", "gobject-introspection", "meson", "ninja", "pkgconf"
 link = ["glib", "libgcrypt"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libsecret/0.21/libsecret-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libsecret/0.21/libsecret-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -24,4 +24,4 @@ meson setup build --prefix=/usr --buildtype=release -Dvapi=false -Dgtk_doc=false
 script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} meson install -C ${BUILD_DIR}/build"
+script = "DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build"

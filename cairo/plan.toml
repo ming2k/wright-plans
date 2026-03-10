@@ -11,7 +11,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["pixman", "libpng", "fontconfig", "freetype", "zlib"]
 
 [[sources]]
-uri = "https://cairographics.org/releases/cairo-${PKG_VERSION}.tar.xz"
+uri = "https://cairographics.org/releases/cairo-${PART_VERSION}.tar.xz"
 sha256 = "445ed8208a6e4823de1226a74ca319d3600e83f6369f99b14265006599c32ccb"
 
 [lifecycle.configure]
@@ -33,4 +33,4 @@ meson setup build \
 script = "cd ${BUILD_DIR} && meson compile -C build"
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && meson install -C build --destdir ${PKG_DIR}"
+script = "cd ${BUILD_DIR} && meson install -C build --destdir ${PART_DIR}"

@@ -13,7 +13,7 @@ build = ["gcc", "make", "pkgconf", "gettext"]
 link = ["glib", "libarchive", "curl", "gpgme"]
 
 [[sources]]
-uri = "https://github.com/ostreedev/ostree/releases/download/v${PKG_VERSION}/libostree-${PKG_VERSION}.tar.xz"
+uri = "https://github.com/ostreedev/ostree/releases/download/v${PART_VERSION}/libostree-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -41,5 +41,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} make install
+DESTDIR=${PART_DIR} make install
 '''

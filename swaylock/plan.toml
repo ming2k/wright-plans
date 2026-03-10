@@ -13,7 +13,7 @@ build = ["meson", "ninja"]
 link = ["libxkbcommon", "linux-pam", "wayland", "wayland-protocols"]
 
 [[sources]]
-uri = "https://github.com/swaywm/swaylock/releases/download/v${PKG_VERSION}/swaylock-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/swaywm/swaylock/releases/download/v${PART_VERSION}/swaylock-${PART_VERSION}.tar.gz"
 sha256 = "aa251d5a8f335fe2ac9ec3cc2a6ac8772aa4dba2ec710ccd415956c6e89b11d3"
 
 [lifecycle.configure]
@@ -31,7 +31,7 @@ ninja -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''
 
 

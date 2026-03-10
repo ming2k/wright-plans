@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-${PKG_VERSION}.tar.gz"
+uri = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -25,7 +25,7 @@ make
 script = '''
 cd ${BUILD_DIR}
 make \
-  DESTDIR=${PKG_DIR} \
+  DESTDIR=${PART_DIR} \
   NO_ARLIB=1 \
   LIBDIR=/usr/lib \
   BINDIR=/usr/bin \

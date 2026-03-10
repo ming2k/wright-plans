@@ -11,7 +11,7 @@ url = "https://www.tcl.tk/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/tcl/Tcl/${PKG_VERSION}/tcl${PKG_VERSION}-src.tar.gz"
+uri = "https://downloads.sourceforge.net/project/tcl/Tcl/${PART_VERSION}/tcl${PART_VERSION}-src.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,9 +31,9 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/unix
-make DESTDIR=${PKG_DIR} install
-make DESTDIR=${PKG_DIR} install-private-headers
+make DESTDIR=${PART_DIR} install
+make DESTDIR=${PART_DIR} install-private-headers
 
-ln -sfv tclsh8.6 ${PKG_DIR}/usr/bin/tclsh
-mv ${PKG_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3
+ln -sfv tclsh8.6 ${PART_DIR}/usr/bin/tclsh
+mv ${PART_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3
 '''

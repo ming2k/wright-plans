@@ -12,7 +12,7 @@ build = ["bash", "python", "python-setuptools", "ninja"]
 runtime = ["python", "ninja"]
 
 [[sources]]
-uri = "https://github.com/mesonbuild/meson/releases/download/${PKG_VERSION}/meson-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/mesonbuild/meson/releases/download/${PART_VERSION}/meson-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -24,6 +24,6 @@ python3 setup.py build
 [lifecycle.staging]
 script = """
 cd ${BUILD_DIR}
-python3 setup.py install --root=${PKG_DIR} --prefix=/usr --optimize=1
+python3 setup.py install --root=${PART_DIR} --prefix=/usr --optimize=1
 """
 

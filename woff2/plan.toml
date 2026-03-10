@@ -41,12 +41,12 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
 # 手动生成 WebKitGTK 所需的 pkg-config 文件
-mkdir -p ${PKG_DIR}/usr/lib/pkgconfig
+mkdir -p ${PART_DIR}/usr/lib/pkgconfig
 
-cat > ${PKG_DIR}/usr/lib/pkgconfig/libwoff2common.pc << 'PC'
+cat > ${PART_DIR}/usr/lib/pkgconfig/libwoff2common.pc << 'PC'
 prefix=/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
@@ -59,7 +59,7 @@ Libs: -L${libdir} -lwoff2common
 Cflags: -I${includedir}
 PC
 
-cat > ${PKG_DIR}/usr/lib/pkgconfig/libwoff2dec.pc << 'PC'
+cat > ${PART_DIR}/usr/lib/pkgconfig/libwoff2dec.pc << 'PC'
 prefix=/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
@@ -73,7 +73,7 @@ Libs: -L${libdir} -lwoff2dec
 Cflags: -I${includedir}
 PC
 
-cat > ${PKG_DIR}/usr/lib/pkgconfig/libwoff2enc.pc << 'PC'
+cat > ${PART_DIR}/usr/lib/pkgconfig/libwoff2enc.pc << 'PC'
 prefix=/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib

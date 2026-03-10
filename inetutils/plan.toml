@@ -12,7 +12,7 @@ build = ["gcc", "gettext", "make"]
 link = ["ncurses", "linux-pam", "readline", "libcap"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/inetutils/inetutils-${PKG_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/inetutils/inetutils-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -67,14 +67,14 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
 # Remove setuid bits from r-commands (they use PAM, not setuid, for auth)
-chmod -s ${PKG_DIR}/usr/bin/rcp ${PKG_DIR}/usr/bin/rlogin ${PKG_DIR}/usr/bin/rsh
+chmod -s ${PART_DIR}/usr/bin/rcp ${PART_DIR}/usr/bin/rlogin ${PART_DIR}/usr/bin/rsh
 
 # Relocate anything that escaped to /usr/sbin
-if [ -d ${PKG_DIR}/usr/sbin ]; then
-  cp -a ${PKG_DIR}/usr/sbin/. ${PKG_DIR}/usr/bin/
-  rm -rf ${PKG_DIR}/usr/sbin
+if [ -d ${PART_DIR}/usr/sbin ]; then
+  cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
+  rm -rf ${PART_DIR}/usr/sbin
 fi
 '''

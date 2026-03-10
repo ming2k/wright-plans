@@ -41,15 +41,15 @@ install -vm755 dest/usr/lib/libncursesw.so.6.6 /usr/lib
 rm -v  dest/usr/lib/libncursesw.so.6.6
 sed -e 's/^#if.*XOPEN.*$/#if 1/' \
 -i dest/usr/include/curses.h
-cp -av dest/* ${PKG_DIR}/
+cp -av dest/* ${PART_DIR}/
 
 for lib in ncurses form panel menu ; do
-ln -sfv lib${lib}w.so ${PKG_DIR}/usr/lib/lib${lib}.so
-ln -sfv ${lib}w.pc    ${PKG_DIR}/usr/lib/pkgconfig/${lib}.pc
+ln -sfv lib${lib}w.so ${PART_DIR}/usr/lib/lib${lib}.so
+ln -sfv ${lib}w.pc    ${PART_DIR}/usr/lib/pkgconfig/${lib}.pc
 done
 
-ln -sfv libncursesw.so ${PKG_DIR}/usr/lib/libcurses.so
+ln -sfv libncursesw.so ${PART_DIR}/usr/lib/libcurses.so
 
-mkdir -p ${PKG_DIR}/usr/share/doc/ncurses-6.6
-cp -v -R doc/* ${PKG_DIR}/usr/share/doc/ncurses-6.6/
+mkdir -p ${PART_DIR}/usr/share/doc/ncurses-6.6
+cp -v -R doc/* ${PART_DIR}/usr/share/doc/ncurses-6.6/
 '''

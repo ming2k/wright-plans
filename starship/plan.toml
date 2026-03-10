@@ -11,7 +11,7 @@ url = "https://starship.rs/"
 build = ["rust"]
 
 [[sources]]
-uri = "https://github.com/starship/starship/archive/refs/tags/v${PKG_VERSION}.tar.gz"
+uri = "https://github.com/starship/starship/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -25,11 +25,11 @@ cargo build --release --locked
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-install -Dm755 target/release/starship ${PKG_DIR}/usr/bin/starship
-install -dm755 ${PKG_DIR}/usr/share/bash-completion/completions
-install -dm755 ${PKG_DIR}/usr/share/zsh/site-functions
-install -dm755 ${PKG_DIR}/usr/share/fish/vendor_completions.d
-target/release/starship completions bash > ${PKG_DIR}/usr/share/bash-completion/completions/starship
-target/release/starship completions zsh  > ${PKG_DIR}/usr/share/zsh/site-functions/_starship
-target/release/starship completions fish > ${PKG_DIR}/usr/share/fish/vendor_completions.d/starship.fish
+install -Dm755 target/release/starship ${PART_DIR}/usr/bin/starship
+install -dm755 ${PART_DIR}/usr/share/bash-completion/completions
+install -dm755 ${PART_DIR}/usr/share/zsh/site-functions
+install -dm755 ${PART_DIR}/usr/share/fish/vendor_completions.d
+target/release/starship completions bash > ${PART_DIR}/usr/share/bash-completion/completions/starship
+target/release/starship completions zsh  > ${PART_DIR}/usr/share/zsh/site-functions/_starship
+target/release/starship completions fish > ${PART_DIR}/usr/share/fish/vendor_completions.d/starship.fish
 '''

@@ -12,7 +12,7 @@ build = ["gcc", "make", "pkgconf", "gettext", "glib", "docbook-xsl", "libxslt", 
 link = ["acl", "libatasmart", "libblockdev", "libgudev", "polkit", "systemd"]
 
 [[sources]]
-uri = "https://github.com/storaged-project/udisks/releases/download/udisks-${PKG_VERSION}/udisks-${PKG_VERSION}.tar.bz2"
+uri = "https://github.com/storaged-project/udisks/releases/download/udisks-${PART_VERSION}/udisks-${PART_VERSION}.tar.bz2"
 sha256 = "b75734ccf602540dedb4068bec206adcb508a4c003725e117ae8f994d92d8ece"
 
 [lifecycle.configure]
@@ -37,7 +37,7 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-install -dm750 ${PKG_DIR}/var/lib/udisks2
+make DESTDIR=${PART_DIR} install
+install -dm750 ${PART_DIR}/var/lib/udisks2
 
 '''

@@ -12,7 +12,7 @@ runtime = ["icu", "python"]
 build = ["doxygen", "gcc", "icu", "meson", "ninja", "python"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -35,5 +35,5 @@ ninja -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
-DESTDIR=${PKG_DIR} ninja install
+DESTDIR=${PART_DIR} ninja install
 '''

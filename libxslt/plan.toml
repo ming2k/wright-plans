@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["libxml2"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libxslt/1.1/libxslt-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libxslt/1.1/libxslt-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -20,7 +20,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr                 \
 --disable-static              \
---docdir=/usr/share/doc/libxslt-${PKG_VERSION}
+--docdir=/usr/share/doc/libxslt-${PART_VERSION}
 '''
 
 [lifecycle.compile]
@@ -32,5 +32,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

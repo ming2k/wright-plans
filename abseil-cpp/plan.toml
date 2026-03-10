@@ -11,7 +11,7 @@ url = "https://github.com/abseil/abseil-cpp"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/abseil/abseil-cpp/archive/refs/tags/${PKG_VERSION}.tar.gz"
+uri = "https://github.com/abseil/abseil-cpp/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,4 +30,4 @@ cmake -B ${BUILD_DIR}/build -S ${BUILD_DIR} -G Ninja \
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

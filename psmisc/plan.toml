@@ -12,7 +12,7 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/psmisc/psmisc/psmisc-${PKG_VERSION}.tar.xz"
+uri = "https://downloads.sourceforge.net/project/psmisc/psmisc/psmisc-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -30,5 +30,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

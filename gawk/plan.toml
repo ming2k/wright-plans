@@ -11,7 +11,7 @@ url = "https://www.gnu.org/software/gawk/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gawk/gawk-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/gawk/gawk-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -35,5 +35,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

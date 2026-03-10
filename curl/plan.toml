@@ -13,7 +13,7 @@ build = ["gcc", "make"]
 link = ["libidn2", "libpsl", "nghttp2", "openssl"]
 
 [[sources]]
-uri = "https://curl.se/download/curl-${PKG_VERSION}.tar.xz"
+uri = "https://curl.se/download/curl-${PART_VERSION}.tar.xz"
 sha256 = "40df79166e74aa20149365e11ee4c798a46ad57c34e4f68fd13100e2c9a91946"
 
 [lifecycle.configure]
@@ -35,5 +35,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

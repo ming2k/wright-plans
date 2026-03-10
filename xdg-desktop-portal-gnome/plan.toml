@@ -13,7 +13,7 @@ build = ["meson", "ninja", "pkgconf", "xdg-desktop-portal"]
 link = ["gtk4", "libadwaita"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/xdg-desktop-portal-gnome/49/xdg-desktop-portal-gnome-${PKG_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/xdg-desktop-portal-gnome/49/xdg-desktop-portal-gnome-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -31,7 +31,7 @@ ninja -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-DESTDIR=${PKG_DIR} ninja -C build install
+DESTDIR=${PART_DIR} ninja -C build install
 '''
 
 

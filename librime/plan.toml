@@ -20,7 +20,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/rime/librime/archive/refs/tags/${PKG_VERSION}.tar.gz"
+uri = "https://github.com/rime/librime/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -38,4 +38,4 @@ cmake -B build -G Ninja \
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PKG_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

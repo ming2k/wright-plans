@@ -11,7 +11,7 @@ url = "https://github.com/zlib-ng/zlib-ng"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/zlib-ng/zlib-ng/archive/refs/tags/${PKG_VERSION}.tar.gz"
+uri = "https://github.com/zlib-ng/zlib-ng/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -29,7 +29,7 @@ script = "cmake --build ${BUILD_DIR}/build"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PKG_DIR} cmake --install ${BUILD_DIR}/build
-install -Dm 644 ${BUILD_DIR}/LICENSE.md ${PKG_DIR}/usr/share/licenses/zlib-ng/LICENSE.md
-install -Dm 644 ${BUILD_DIR}/README.md ${PKG_DIR}/usr/share/doc/zlib-ng/README.md
+DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build
+install -Dm 644 ${BUILD_DIR}/LICENSE.md ${PART_DIR}/usr/share/licenses/zlib-ng/LICENSE.md
+install -Dm 644 ${BUILD_DIR}/README.md ${PART_DIR}/usr/share/doc/zlib-ng/README.md
 '''

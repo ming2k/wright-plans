@@ -11,7 +11,7 @@ url = "https://gmplib.org/"
 build = ["gcc", "m4", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gmp/gmp-${PKG_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/gmp/gmp-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -48,6 +48,6 @@ awk '/# PASS:/{total+=$3} END{print total}' gmp-check-log
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
-make DESTDIR=${PKG_DIR} install-html
+make DESTDIR=${PART_DIR} install
+make DESTDIR=${PART_DIR} install-html
 '''

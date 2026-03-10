@@ -11,7 +11,7 @@ url = "https://github.com/vcrhonek/hwdata"
 build = ["make"]
 
 [[sources]]
-uri = "https://github.com/vcrhonek/hwdata/archive/v${PKG_VERSION}/hwdata-${PKG_VERSION}.tar.gz"
+uri = "https://github.com/vcrhonek/hwdata/archive/v${PART_VERSION}/hwdata-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -29,5 +29,5 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 '''

@@ -11,7 +11,7 @@ url = "https://www.freedesktop.org/wiki/Software/desktop-file-utils/"
 link = ["glib"]
 
 [[sources]]
-uri = "https://www.freedesktop.org/software/desktop-file-utils/releases/desktop-file-utils-${PKG_VERSION}.tar.xz"
+uri = "https://www.freedesktop.org/software/desktop-file-utils/releases/desktop-file-utils-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -29,7 +29,7 @@ meson compile -C build
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-meson install -C build --destdir ${PKG_DIR}
+meson install -C build --destdir ${PART_DIR}
 '''
 
 

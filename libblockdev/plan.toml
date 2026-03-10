@@ -13,7 +13,7 @@ runtime = ["mdadm"]
 link = ["btrfs-progs", "cryptsetup", "glib", "json-glib", "keyutils", "kmod", "libatasmart", "libbytesize", "libnvme", "libyaml", "lvm2", "util-linux"]
 
 [[sources]]
-uri = "https://github.com/storaged-project/libblockdev/archive/refs/tags/${PKG_VERSION}.tar.gz"
+uri = "https://github.com/storaged-project/libblockdev/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "7d313d790dbf2921d19bed0bba591fc3530113bc0f3e7818ee80f028c988a286"
 
 [lifecycle.prepare]
@@ -75,11 +75,11 @@ make -j$(nproc)
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PKG_DIR} install
+make DESTDIR=${PART_DIR} install
 
-if [ -d ${PKG_DIR}/usr/etc ]; then
-  mkdir -p ${PKG_DIR}/etc
-  cp -a ${PKG_DIR}/usr/etc/. ${PKG_DIR}/etc/
-  rm -rf ${PKG_DIR}/usr/etc
+if [ -d ${PART_DIR}/usr/etc ]; then
+  mkdir -p ${PART_DIR}/etc
+  cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
+  rm -rf ${PART_DIR}/usr/etc
 fi
 '''
