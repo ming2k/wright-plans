@@ -1,7 +1,7 @@
 [plan]
 name = "foot"
 version = "1.26.0"
-release = 1
+release = 3
 description = "A fast, lightweight and minimalistic Wayland terminal emulator"
 license = "MIT"
 arch = "x86_64"
@@ -16,6 +16,7 @@ link = [
     "harfbuzz",
     "libxkbcommon",
     "ncurses",
+    "utf8proc",
     "wayland",
     "wayland-protocols",
 ]
@@ -27,7 +28,7 @@ sha256 = "e7ea148942b02d4f51280d236b44bba1d7ab34538e69b701d05b75c06d19eac5"
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dime=false -Dthemes=true -Dwerror=false
+meson setup build --prefix=/usr --buildtype=release -Dime=true -Dthemes=true -Dwerror=false
 '''
 
 [lifecycle.compile]

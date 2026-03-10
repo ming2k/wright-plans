@@ -1,13 +1,14 @@
 [plan]
 name = "mise"
 version = "2026.3.3"
-release = 1
+release = 2
 description = "Dev tools, env vars, task runner"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/jdx/mise"
 
 [dependencies]
+runtime = ["jq"]
 build = ["curl", "rust"]
 link = ["openssl"]
 

@@ -1,0 +1,37 @@
+[plan]
+name = "libnvme"
+version = "1.16.1"
+release = 1
+description = "C library for NVM Express on Linux"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/linux-nvme/libnvme"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "gcc"]
+link = ["dbus", "json-c", "keyutils", "openssl"]
+
+[[sources]]
+uri = "https://github.com/linux-nvme/libnvme/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "ce1d9d393feb84c4e82ca096db2bdb7dd4a5fd1997d711cc1904796944f2c579"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build \
+  --prefix=/usr \
+  -Ddocs=false \
+  -Dpython=disabled
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+ninja -C build
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PART_DIR} ninja -C build install
+'''

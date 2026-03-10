@@ -1,7 +1,7 @@
 [plan]
 name = "libblockdev"
 version = "3.3.1"
-release = 1
+release = 2
 description = "Library for manipulating block devices"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -10,7 +10,7 @@ url = "https://github.com/storaged-project/libblockdev"
 [dependencies]
 build = ["autoconf", "automake", "gcc", "libtool", "make", "pkgconf", "python", "setuptools"]
 runtime = ["mdadm"]
-link = ["btrfs-progs", "cryptsetup", "glib", "json-glib", "keyutils", "kmod", "libatasmart", "libbytesize", "libyaml", "lvm2", "util-linux"]
+link = ["btrfs-progs", "cryptsetup", "glib", "json-glib", "keyutils", "kmod", "libatasmart", "libbytesize", "libnvme", "libyaml", "lvm2", "util-linux"]
 
 [[sources]]
 uri = "https://github.com/storaged-project/libblockdev/archive/refs/tags/${PKG_VERSION}.tar.gz"
@@ -62,7 +62,7 @@ autoreconf -fi
   --with-mpath=no \
   --with-tools=no \
   --with-nvdimm=no \
-  --with-nvme=no \
+  --with-nvme=yes \
   --with-smartmontools=no
 '''
 

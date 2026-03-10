@@ -20,11 +20,12 @@ script = '''
 cd ${BUILD_DIR}
 ./configure \
   --prefix=/usr \
+  --sbindir=/usr/bin \
+  --sysconfdir=/etc \
   --disable-static \
   --with-udevdir=/usr/lib/udev \
   --enable-lvm2 \
-  --enable-btrfs \
-  --disable-man
+  --enable-btrfs
 '''
 
 [lifecycle.compile]
@@ -38,4 +39,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PKG_DIR} install
 install -dm750 ${PKG_DIR}/var/lib/udisks2
+
 '''

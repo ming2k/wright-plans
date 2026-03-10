@@ -1,0 +1,39 @@
+[plan]
+name = "jq"
+version = "1.8.1"
+release = 1
+description = "Command-line JSON processor"
+license = "MIT"
+arch = "x86_64"
+url = "https://jqlang.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+
+[[sources]]
+uri = "https://github.com/jqlang/jq/releases/download/jq-${PKG_VERSION}/jq-${PKG_VERSION}.tar.gz"
+sha256 = "2be64e7129cecb11d5906290eba10af694fb9e3e7f9fc208a311dc33ca837eb0"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static --with-oniguruma=builtin
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.check]
+script = '''
+cd ${BUILD_DIR}
+make check
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PKG_DIR} install
+'''
