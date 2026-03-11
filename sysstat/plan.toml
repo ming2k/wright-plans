@@ -1,0 +1,56 @@
+[plan]
+name = "sysstat"
+version = "12.7.9"
+release = 1
+description = "System performance monitoring tools (sar, iostat, mpstat, pidstat)"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://github.com/sysstat/sysstat"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["systemd"]
+
+[[sources]]
+uri = "https://github.com/sysstat/sysstat/archive/v${PART_VERSION}.tar.gz"
+sha256 = "e48fc69401135dc08d2cd4ff58dbdbfce9b7485f76fc9049d97848e313c08dda"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+sa_lib_dir=/usr/lib/sa \
+sa_dir=/var/log/sa \
+conf_dir=/etc/default \
+./configure \
+  --prefix=/usr \
+  --bindir=/usr/bin \
+  --sbindir=/usr/bin \
+  --libdir=/usr/lib \
+  --sysconfdir=/etc \
+  --disable-file-attr \
+  --enable-install-cron \
+  --enable-copy-only
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+if [ -d ${PART_DIR}/usr/sbin ]; then
+  cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
+  rm -rf ${PART_DIR}/usr/sbin
+fi
+'''
+
+[lifecycle.fabricate]
+hooks.post_install = "systemctl enable --now sysstat 2>/dev/null || true"
+hooks.post_upgrade = "systemctl try-restart sysstat 2>/dev/null || true"
+hooks.pre_remove = "systemctl disable --now sysstat 2>/dev/null || true"
+backup = ["/etc/default/sysstat"]

@@ -1,6 +1,6 @@
 [plan]
 name = "alsa-lib"
-version = "1.2.13"
+version = "1.2.15.3"
 release = 1
 description = "ALSA library"
 license = "LGPL-2.1-or-later"

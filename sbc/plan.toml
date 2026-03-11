@@ -1,6 +1,6 @@
 [plan]
 name = "sbc"
-version = "2.0"
+version = "2.2"
 release = 1
 description = "Bluetooth Sub-Band Codec (SBC) library"
 license = "LGPL-2.1-or-later"

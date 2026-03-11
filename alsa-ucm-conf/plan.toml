@@ -1,6 +1,6 @@
 [plan]
 name = "alsa-ucm-conf"
-version = "1.2.14"
+version = "1.2.15.3"
 release = 1
 description = "ALSA Use Case Manager configuration files"
 license = "BSD-3-Clause"
