@@ -1,4 +1,3 @@
-[plan]
 name = "python-requests"
 version = "2.32.3"
 release = 1
@@ -25,4 +24,5 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+
 '''

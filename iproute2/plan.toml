@@ -1,4 +1,3 @@
-[plan]
 name = "iproute2"
 version = "6.19.0"
 release = 1
@@ -19,16 +18,19 @@ script = '''
 cd ${BUILD_DIR}
 sed -i /ARPD/d Makefile
 rm -fv man/man8/arpd.8
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make NETNS_RUN_DIR=/run/netns -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make SBINDIR=/usr/bin DESTDIR=${PART_DIR} install
+
 '''

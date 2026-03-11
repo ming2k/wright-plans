@@ -1,4 +1,3 @@
-[plan]
 name = "sing-box"
 version = "1.13.2"
 release = 3
@@ -30,6 +29,7 @@ go build -o sing-box \
 -tags "with_quic,with_dhcp,with_wireguard,with_utls,with_clash_api,with_gvisor" \
 -ldflags "-s -w -X github.com/sagernet/sing-box/constant.Version=${PART_VERSION}" \
 ./cmd/sing-box
+
 '''
 
 [lifecycle.staging]
@@ -39,18 +39,22 @@ install -Dm755 sing-box ${PART_DIR}/usr/bin/sing-box
 install -dm755 ${PART_DIR}/etc/sing-box
 echo '{}' > ${PART_DIR}/etc/sing-box/config.json
 install -Dm644 ${FILES_DIR}/sing-box.service ${PART_DIR}/usr/lib/systemd/system/sing-box.service
+
 '''
 
-
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 echo ":: Edit /etc/sing-box/config.json before starting sing-box"
 echo ":: Enable with: systemctl enable --now sing-box"
+
 '''
-hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-hooks.pre_remove = '''
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+pre_remove = '''
 systemctl stop sing-box 2>/dev/null || true
 systemctl disable sing-box 2>/dev/null || true
+
 '''
+
+[output]
 backup = ["/etc/sing-box/config.json"]

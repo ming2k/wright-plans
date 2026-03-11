@@ -1,4 +1,3 @@
-[plan]
 name = "double-conversion"
 version = "3.3.0"
 release = 1
@@ -18,16 +17,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_SHARED_LIBS=ON -DBUILD_TESTING=OFF
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 ninja -C build
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} ninja -C build install
+
 '''

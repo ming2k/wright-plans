@@ -1,4 +1,3 @@
-[plan]
 name = "gperf"
 version = "3.3"
 release = 1
@@ -18,16 +17,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --docdir=/usr/share/doc/gperf-${PART_VERSION}
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

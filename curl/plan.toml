@@ -1,4 +1,3 @@
-[plan]
 name = "curl"
 version = "8.18.0"
 release = 1
@@ -10,7 +9,12 @@ url = "https://curl.se/"
 [dependencies]
 runtime = ["ca-certificates"]
 build = ["gcc", "make"]
-link = ["libidn2", "libpsl", "nghttp2", "openssl"]
+link = [
+    "libidn2",
+    "libpsl",
+    "nghttp2",
+    "openssl",
+]
 
 [[sources]]
 uri = "https://curl.se/download/curl-${PART_VERSION}.tar.xz"
@@ -24,16 +28,19 @@ cd ${BUILD_DIR}
 --with-openssl                   \
 --enable-threaded-resolver       \
 --with-ca-path=/etc/ssl/certs
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

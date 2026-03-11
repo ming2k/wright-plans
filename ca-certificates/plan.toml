@@ -1,4 +1,3 @@
-[plan]
 name = "ca-certificates"
 version = "3.121"
 release = 1
@@ -35,6 +34,7 @@ python3 ${FILES_DIR}/certdata2pem.py
 
 cd ${BUILD_DIR}
 sh ${FILES_DIR}/bundle.sh
+
 '''
 
 [lifecycle.staging]
@@ -42,13 +42,15 @@ script = '''
 cd ${BUILD_DIR}
 install -Dm644 ca-bundle.trust.p11-kit \
   ${PART_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit
+
 '''
 
+[hooks]
+post_install = '''
+update-ca-trust
 
-[lifecycle.fabricate]
-hooks.post_install = '''
-update-ca-trust
 '''
-hooks.post_upgrade = '''
+post_upgrade = '''
 update-ca-trust
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "freetype"
 version = "2.13.3"
 release = 1
@@ -20,16 +19,19 @@ sed -r "s:.*(#.*SUBPIXEL_RENDERING) .*:\1:" \
 ./configure --prefix=/usr     \
 --enable-freetype-config \
 --disable-static
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} make install
+
 '''

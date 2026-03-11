@@ -1,4 +1,3 @@
-[plan]
 name = "libsndfile"
 version = "1.2.2"
 release = 1
@@ -15,16 +14,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 CFLAGS="-std=gnu17" ./configure --prefix=/usr --disable-static
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} make install
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "dconf"
 version = "0.49.0"
 release = 1
@@ -20,11 +19,13 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dvapi=false -Dman=false
+
 '''
 
 [lifecycle.compile]
 script = '''
 meson compile -C ${BUILD_DIR}/build
+
 '''
 
 [lifecycle.staging]
@@ -35,11 +36,12 @@ meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
 # /etc/dconf/profile — group-writable: users in the 'dconf' group can add profiles
 install -dm755  "${PART_DIR}/etc/dconf/db"
 install -dm2775 "${PART_DIR}/etc/dconf/profile"
+
 '''
 
-
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 groupadd -r dconf 2>/dev/null || true
 chgrp dconf /etc/dconf/profile
+
 '''

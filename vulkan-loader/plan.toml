@@ -1,4 +1,3 @@
-[plan]
 name = "vulkan-loader"
 version = "1.4.343"
 release = 2
@@ -7,7 +6,12 @@ license = "Apache-2.0"
 arch = "x86_64"
 
 [dependencies]
-build = ["cmake", "ninja", "vulkan-headers", "python"]
+build = [
+    "cmake",
+    "ninja",
+    "vulkan-headers",
+    "python",
+]
 link = ["glibc", "wayland"]
 
 [[sources]]
@@ -18,6 +22,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DVULKAN_HEADERS_INSTALL_DIR=/usr -DBUILD_WSI_XCB_SUPPORT=OFF -DBUILD_WSI_XLIB_SUPPORT=OFF -DBUILD_WSI_WAYLAND_SUPPORT=ON
+
 '''
 
 [lifecycle.compile]

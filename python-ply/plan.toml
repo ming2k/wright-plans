@@ -1,0 +1,22 @@
+name = "python-ply"
+version = "3.11"
+release = 1
+description = "Python Lex-Yacc parsing tool"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://www.dabeaz.com/ply/"
+
+[dependencies]
+runtime = ["python"]
+build = ["python", "setuptools"]
+
+[[sources]]
+uri = "https://files.pythonhosted.org/packages/source/p/ply/ply-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+
+'''

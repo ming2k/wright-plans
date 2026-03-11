@@ -1,4 +1,3 @@
-[plan]
 name = "pkgconf"
 version = "2.3.0"
 release = 1
@@ -15,22 +14,22 @@ uri = "https://distfiles.ariadne.space/pkgconf/pkgconf-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure \
-  --prefix=/usr \
-  --disable-static
-"""
+./configure --prefix=/usr --disable-static
+
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+
+'''
 
 [lifecycle.staging]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
-"""
 
+'''

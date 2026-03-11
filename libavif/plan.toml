@@ -1,4 +1,3 @@
-[plan]
 name = "libavif"
 version = "1.3.0"
 release = 1
@@ -7,8 +6,19 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 
 [dependencies]
-build = ["cmake", "ninja", "pkgconf", "gcc"]
-link = ["aom", "dav1d", "libpng", "libjpeg-turbo", "libyuv"]
+build = [
+    "cmake",
+    "ninja",
+    "pkgconf",
+    "gcc",
+]
+link = [
+    "aom",
+    "dav1d",
+    "libpng",
+    "libjpeg-turbo",
+    "libyuv",
+]
 
 [[sources]]
 uri = "https://github.com/AOMediaCodec/libavif/archive/refs/tags/v${PART_VERSION}.tar.gz"
@@ -18,6 +28,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DAVIF_CODEC_AOM=SYSTEM -DAVIF_CODEC_DAV1D=SYSTEM -DAVIF_LIBYUV=SYSTEM -DAVIF_BUILD_APPS=OFF
+
 '''
 
 [lifecycle.compile]

@@ -1,4 +1,3 @@
-[plan]
 name = "intltool"
 version = "0.51.0"
 release = 1
@@ -18,18 +17,21 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 sed -i 's:\\\${:\\\$\\{:' intltool-update.in
+
 '''
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -37,4 +39,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 install -v -Dm644 doc/I18N-HOWTO ${PART_DIR}/usr/share/doc/intltool-${PART_VERSION}/I18N-HOWTO
+
 '''

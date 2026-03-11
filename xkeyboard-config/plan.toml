@@ -1,4 +1,3 @@
-[plan]
 name = "xkeyboard-config"
 version = "2.46"
 release = 1
@@ -19,16 +18,19 @@ script = '''
 cd ${BUILD_DIR}
 mkdir -p build && cd build
 meson setup --prefix=/usr --buildtype=release ..
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/build
 ninja
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PART_DIR} ninja install
+
 '''

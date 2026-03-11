@@ -1,4 +1,3 @@
-[plan]
 name = "btrfs-progs"
 version = "6.19"
 release = 1
@@ -9,7 +8,15 @@ url = "https://btrfs.readthedocs.io"
 
 [dependencies]
 build = ["pkgconf"]
-link = ["util-linux", "zlib", "lzo", "zstd", "e2fsprogs", "libgcrypt", "systemd"]
+link = [
+    "util-linux",
+    "zlib",
+    "lzo",
+    "zstd",
+    "e2fsprogs",
+    "libgcrypt",
+    "systemd",
+]
 
 [[sources]]
 uri = "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${PART_VERSION}.tar.xz"
@@ -19,6 +26,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static --disable-documentation --with-crypto=libgcrypt
+
 '''
 
 [lifecycle.compile]
@@ -27,9 +35,9 @@ script = "make -j$(nproc) -C ${BUILD_DIR}"
 [lifecycle.staging]
 script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"
 
-
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable btrfs-scrub@-.timer 2>/dev/null || true
+
 '''

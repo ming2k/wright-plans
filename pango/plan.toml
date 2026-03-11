@@ -1,4 +1,3 @@
-[plan]
 name = "pango"
 version = "1.57.0"
 release = 1
@@ -8,8 +7,21 @@ arch = "x86_64"
 url = "https://pango.gnome.org"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "gobject-introspection", "python"]
-link = ["glib", "cairo", "harfbuzz", "fontconfig", "fribidi", "freetype"]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "gobject-introspection",
+    "python",
+]
+link = [
+    "glib",
+    "cairo",
+    "harfbuzz",
+    "fontconfig",
+    "fribidi",
+    "freetype",
+]
 
 [[sources]]
 uri = "https://download.gnome.org/sources/pango/1.57/pango-${PART_VERSION}.tar.xz"
@@ -23,6 +35,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 --wrap-mode=nofallback      \
 -D xft=disabled             \
 -D introspection=enabled
+
 '''
 
 [lifecycle.compile]

@@ -1,4 +1,3 @@
-[plan]
 name = "docker-compose"
 version = "5.1.0"
 release = 1
@@ -26,6 +25,7 @@ export GOPROXY=https://proxy.golang.org,direct
 CGO_ENABLED=0 go build -trimpath \
   -ldflags="-s -w -X github.com/docker/compose/v2/internal.Version=v${PART_VERSION}" \
   -o docker-compose ./cmd
+
 '''
 
 [lifecycle.staging]
@@ -36,4 +36,5 @@ install -Dm755 docker-compose ${PART_DIR}/usr/bin/docker-compose
 # Install as docker CLI plugin
 install -dm755 ${PART_DIR}/usr/lib/docker/cli-plugins
 ln -s /usr/bin/docker-compose ${PART_DIR}/usr/lib/docker/cli-plugins/docker-compose
+
 '''

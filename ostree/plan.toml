@@ -1,4 +1,3 @@
-[plan]
 name = "ostree"
 version = "2025.7"
 release = 2
@@ -9,8 +8,18 @@ url = "https://ostreedev.github.io/ostree/"
 
 [dependencies]
 runtime = ["systemd"]
-build = ["gcc", "make", "pkgconf", "gettext"]
-link = ["glib", "libarchive", "curl", "gpgme"]
+build = [
+    "gcc",
+    "make",
+    "pkgconf",
+    "gettext",
+]
+link = [
+    "glib",
+    "libarchive",
+    "curl",
+    "gpgme",
+]
 
 [[sources]]
 uri = "https://github.com/ostreedev/ostree/releases/download/v${PART_VERSION}/libostree-${PART_VERSION}.tar.xz"
@@ -30,16 +39,19 @@ cd ${BUILD_DIR}
     --sysconfdir=/etc            \
     --disable-otmpfile          \
     --with-builtin-grub2-mkconfig
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} make install
+
 '''

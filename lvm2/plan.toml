@@ -1,4 +1,3 @@
-[plan]
 name = "lvm2"
 version = "2.03.38"
 release = 1
@@ -9,7 +8,12 @@ url = "https://sourceware.org/lvm2"
 
 [dependencies]
 build = ["pkgconf"]
-link = ["systemd", "readline", "util-linux", "libaio"]
+link = [
+    "systemd",
+    "readline",
+    "util-linux",
+    "libaio",
+]
 
 [[sources]]
 uri = "https://sourceware.org/pub/lvm2/LVM2.${PART_VERSION}.tgz"
@@ -19,6 +23,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --sbindir=/usr/bin --enable-cmdlib --enable-pkgconfig --enable-udev_sync --with-udev-prefix=/usr --with-systemdsystemunitdir=/usr/lib/systemd/system --enable-dmeventd --enable-lvmpolld --enable-blkid_wiping --with-readline
+
 '''
 
 [lifecycle.compile]
@@ -27,10 +32,10 @@ script = "make -j$(nproc) -C ${BUILD_DIR}"
 [lifecycle.staging]
 script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"
 
-
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable lvm2-monitor.service 2>/dev/null || true
+
 '''
-hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

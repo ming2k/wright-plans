@@ -1,4 +1,3 @@
-[plan]
 name = "icu"
 version = "78.2"
 release = 1
@@ -18,16 +17,19 @@ script = '''
 # ICU 的源码位于解压后的 source 子目录中
 cd ${BUILD_DIR}/source
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static --enable-tests=no --enable-samples=no
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/source
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/source
 make DESTDIR=${PART_DIR} install
+
 '''

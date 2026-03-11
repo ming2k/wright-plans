@@ -1,4 +1,3 @@
-[plan]
 name = "npth"
 version = "1.8"
 release = 1
@@ -15,16 +14,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} make install
+
 '''

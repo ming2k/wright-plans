@@ -1,4 +1,3 @@
-[plan]
 name = "quickshell"
 version = "0.2.1"
 release = 1
@@ -8,7 +7,14 @@ arch = "x86_64"
 url = "https://quickshell.outfoxxed.me"
 
 [dependencies]
-runtime = ["jemalloc", "polkit", "qt6-base", "qt6-declarative", "qt6-svg", "qt6-wayland"]
+runtime = [
+    "jemalloc",
+    "polkit",
+    "qt6-base",
+    "qt6-declarative",
+    "qt6-svg",
+    "qt6-wayland",
+]
 build = [
     "cli11",
     "cmake",
@@ -23,7 +29,13 @@ build = [
     "qt6-svg",
     "qt6-wayland",
 ]
-link = ["glib", "libdrm", "pipewire", "wayland", "wayland-protocols"]
+link = [
+    "glib",
+    "libdrm",
+    "pipewire",
+    "wayland",
+    "wayland-protocols",
+]
 
 [[sources]]
 uri = "https://git.outfoxxed.me/quickshell/quickshell/archive/v${PART_VERSION}.tar.gz"
@@ -33,16 +45,19 @@ sha256 = "d815c5f99f4a0a28545ffaa90464420c773b7c0ab62f713d9d8735a8e7282ca7"
 script = '''
 cd ${BUILD_DIR}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_EXE_LINKER_FLAGS="-Wl,--allow-multiple-definition" -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--allow-multiple-definition" -DCMAKE_MODULE_LINKER_FLAGS="-Wl,--allow-multiple-definition" -DX11=OFF -DCRASH_REPORTER=OFF -DUSE_JEMALLOC=ON -DWAYLAND=ON -DWAYLAND_WLR_LAYERSHELL=ON -DWAYLAND_SESSION_LOCK=ON -DWAYLAND_TOPLEVEL_MANAGEMENT=ON -DSCREENCOPY=ON -DHYPRLAND=OFF -DI3=OFF -DSERVICE_PIPEWIRE=ON -DSERVICE_STATUS_NOTIFIER=ON -DSERVICE_MPRIS=ON -DSERVICE_PAM=ON -DSERVICE_POLKIT=ON
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 cmake --build build
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} cmake --install build
+
 '''

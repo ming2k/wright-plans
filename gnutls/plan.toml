@@ -1,4 +1,3 @@
-[plan]
 name = "gnutls"
 version = "3.8.12"
 release = 1
@@ -9,7 +8,14 @@ url = "https://www.gnutls.org/"
 
 [dependencies]
 runtime = ["libtasn1", "nettle", "p11-kit"]
-build = ["gcc", "libtasn1", "make", "nettle", "p11-kit", "pkgconf"]
+build = [
+    "gcc",
+    "libtasn1",
+    "make",
+    "nettle",
+    "p11-kit",
+    "pkgconf",
+]
 link = ["libunistring"]
 
 [[sources]]
@@ -22,16 +28,19 @@ cd ${BUILD_DIR}
 ./configure --prefix=/usr          \
 --disable-static       \
 --with-default-trust-store-pkcs11="pkcs11:"
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

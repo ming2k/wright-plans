@@ -1,4 +1,3 @@
-[plan]
 name = "libmnl"
 version = "1.0.5"
 release = 1
@@ -15,22 +14,23 @@ link = ["glibc"]
 uri = "https://www.netfilter.org/pub/libmnl/libmnl-${PART_VERSION}.tar.bz2"
 sha256 = "SKIP"
 
-[options]
-
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

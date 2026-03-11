@@ -1,4 +1,3 @@
-[plan]
 name = "python-sphinx"
 version = "8.2.3"
 release = 1
@@ -37,4 +36,5 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+
 '''

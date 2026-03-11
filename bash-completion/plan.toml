@@ -1,4 +1,3 @@
-[plan]
 name = "bash-completion"
 version = "2.17.0"
 release = 1
@@ -18,6 +17,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --sysconfdir=/etc
+
 '''
 
 [lifecycle.compile]

@@ -1,4 +1,3 @@
-[plan]
 name = "fcitx5"
 version = "5.1.17"
 release = 1
@@ -9,7 +8,14 @@ url = "https://github.com/fcitx/fcitx5"
 
 [dependencies]
 runtime = ["iso-codes"]
-build = ["cmake", "extra-cmake-modules", "ninja", "nlohmann-json", "pkgconf", "wayland-protocols"]
+build = [
+    "cmake",
+    "extra-cmake-modules",
+    "ninja",
+    "nlohmann-json",
+    "pkgconf",
+    "wayland-protocols",
+]
 link = [
     "cairo",
     "enchant",
@@ -34,6 +40,7 @@ cmake -B build -G Ninja \
     -DCMAKE_INSTALL_LIBEXECDIR=lib \
     -DCMAKE_BUILD_TYPE=Release \
     -DENABLE_X11=OFF
+
 '''
 
 [lifecycle.compile]

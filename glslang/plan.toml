@@ -1,4 +1,3 @@
-[plan]
 name = "glslang"
 version = "15.1.0"
 release = 1
@@ -9,7 +8,12 @@ url = "https://github.com/KhronosGroup/glslang"
 
 [dependencies]
 runtime = ["spirv-tools"]
-build = ["cmake", "make", "spirv-headers", "spirv-tools"]
+build = [
+    "cmake",
+    "make",
+    "spirv-headers",
+    "spirv-tools",
+]
 
 [[sources]]
 uri = "https://github.com/KhronosGroup/glslang/archive/${PART_VERSION}/glslang-${PART_VERSION}.tar.gz"
@@ -24,16 +28,19 @@ cmake ..                                \
 -DCMAKE_BUILD_TYPE=Release        \
 -DALLOW_EXTERNAL_SPIRV_TOOLS=ON   \
 -DBUILD_SHARED_LIBS=ON
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/build
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 make DESTDIR=${PART_DIR} install
+
 '''

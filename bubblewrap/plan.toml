@@ -1,4 +1,3 @@
-[plan]
 name = "bubblewrap"
 version = "0.11.0"
 release = 1
@@ -22,16 +21,19 @@ meson setup build      \
 --prefix=/usr          \
 --buildtype=release    \
 -D tests=false
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 ninja -C build -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} ninja -C build install
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "libfuse3"
 version = "3.18.1"
 release = 6
@@ -20,13 +19,13 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
   -D tests=false         \
   -D examples=false      \
   -D useroot=false
+
 '''
 
 [lifecycle.compile]
 script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-backup = ["/etc/fuse.conf"]
 script = '''
 DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
 
@@ -35,4 +34,8 @@ rm -rf ${PART_DIR}/etc/init.d ${PART_DIR}/dev 2>/dev/null || true
 
 # Allow non-root users to mount FUSE filesystems via fusermount3
 chmod u+s ${PART_DIR}/usr/bin/fusermount3
+
 '''
+
+[output]
+backup = ["/etc/fuse.conf"]

@@ -1,4 +1,3 @@
-[plan]
 name = "zstd"
 version = "1.5.7"
 release = 1
@@ -18,6 +17,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 make prefix=/usr -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -25,4 +25,5 @@ script = '''
 cd ${BUILD_DIR}
 make prefix=/usr DESTDIR=${PART_DIR} install
 rm -v ${PART_DIR}/usr/lib/libzstd.a
+
 '''

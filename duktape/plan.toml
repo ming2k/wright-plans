@@ -1,4 +1,3 @@
-[plan]
 name = "duktape"
 version = "2.7.0"
 release = 1
@@ -14,6 +13,7 @@ sha256 = "SKIP"
 [lifecycle.configure]
 script = '''
 echo "makefile project"
+
 '''
 
 [lifecycle.compile]
@@ -21,6 +21,7 @@ script = '''
 cd ${BUILD_DIR}
 sed -i 's/-Wall -Wextra/-Wall -Wextra -fPIC/' Makefile.sharedlibrary
 make -f Makefile.sharedlibrary -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -43,4 +44,5 @@ Version: ${PART_VERSION}
 Libs: -L\${libdir} -lduktape -lm
 Cflags: -I\${includedir}
 PCEOF
+
 '''

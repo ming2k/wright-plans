@@ -1,4 +1,3 @@
-[plan]
 name = "m4"
 version = "1.4.21"
 release = 1
@@ -18,18 +17,21 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.check]
 script = '''
 cd ${BUILD_DIR}
 make check
+
 '''
 
 [lifecycle.staging]
@@ -37,4 +39,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 rm -f ${PART_DIR}/usr/share/info/dir
+
 '''

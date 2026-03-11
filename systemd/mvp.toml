@@ -1,0 +1,73 @@
+[dependencies]
+link = [
+    "acl",
+    "glibc",
+    "libcap",
+    "libgcrypt",
+    "libidn2",
+    "libseccomp",
+    "libxcrypt",
+    "linux-pam",
+    "lz4",
+    "openssl",
+    "p11-kit",
+    "pcre2",
+    "util-linux",
+    "xz",
+    "zstd",
+]
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+mkdir -p build
+cd build
+meson setup .. \
+    --prefix=/usr \
+    --buildtype=release \
+    -D libdir=lib \
+    -D sbindir=/usr/bin \
+    -D version-tag="${PART_VERSION}-theseus" \
+    -D vcs-tag=false \
+    -D shared-lib-tag="${PART_VERSION}" \
+    -D mode=release \
+    -D install-tests=false \
+    -D ldconfig=false \
+    -D man=disabled \
+    -D rpmmacrosdir=no \
+    -D sysvinit-path= \
+    -D sysvrcnd-path= \
+    -D dbuspolicydir=/usr/share/dbus-1/system.d \
+    -D firstboot=true \
+    -D sysusers=true \
+    -D pam=enabled \
+    -D pamconfdir=/usr/lib/pam.d \
+    -D logind=true \
+    -D networkd=true \
+    -D resolve=true \
+    -D seccomp=enabled \
+    -D libidn2=enabled \
+    -D lz4=enabled \
+    -D dns-over-tls=openssl \
+    -D ukify=auto \
+    -D bootloader=enabled \
+    -D homed=disabled \
+    -D sysupdate=disabled \
+    -D audit=disabled \
+    -D selinux=disabled \
+    -D libcryptsetup=disabled \
+    -D default-dnssec=no \
+    -D default-kill-user-processes=false \
+    -D default-locale='C.UTF-8' \
+    -D fallback-hostname='theseus' \
+    -D nologin-path=/usr/bin/nologin \
+    -D dev-kvm-mode=0660 \
+    -D nobody-group=nogroup \
+    -D sbat-distro=theseus \
+    -D sbat-distro-summary="Ship of Theseus" \
+    -D sbat-distro-pkgname=systemd \
+    -D sbat-distro-version=${PART_VERSION} \
+    -D sbat-distro-url=https://github.com/anthropic \
+    -D docdir=/usr/share/doc/systemd-${PART_VERSION}
+
+'''

@@ -1,4 +1,3 @@
-[plan]
 name = "iana-etc"
 version = "20250807"
 release = 1
@@ -12,9 +11,12 @@ uri = "https://github.com/Mic92/iana-etc/releases/download/${PART_VERSION}/iana-
 sha256 = "SKIP"
 
 [lifecycle.staging]
-backup = ["/etc/services", "/etc/protocols"]
 script = '''
 cd ${BUILD_DIR}
 install -Dm644 services  ${PART_DIR}/etc/services
 install -Dm644 protocols ${PART_DIR}/etc/protocols
+
 '''
+
+[output]
+backup = ["/etc/services", "/etc/protocols"]

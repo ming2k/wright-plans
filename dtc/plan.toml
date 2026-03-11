@@ -1,4 +1,3 @@
-[plan]
 name = "dtc"
 version = "1.7.2"
 release = 1
@@ -8,20 +7,29 @@ arch = "x86_64"
 url = "https://www.kernel.org/pub/software/utils/dtc/"
 
 [dependencies]
-build = ["bash", "gcc", "make", "pkgconf", "flex", "bison"]
+build = [
+    "bash",
+    "gcc",
+    "make",
+    "pkgconf",
+    "flex",
+    "bison",
+]
 
 [[sources]]
 uri = "https://www.kernel.org/pub/software/utils/dtc/dtc-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc) NO_PYTHON=1 PREFIX=/usr CFLAGS="${CFLAGS} -std=gnu17"
-"""
+
+'''
 
 [lifecycle.staging]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} NO_PYTHON=1 PREFIX=/usr CFLAGS="${CFLAGS} -std=gnu17" install
-"""
+
+'''

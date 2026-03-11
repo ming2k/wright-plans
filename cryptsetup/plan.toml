@@ -1,4 +1,3 @@
-[plan]
 name = "cryptsetup"
 version = "2.8.4"
 release = 1
@@ -10,7 +9,13 @@ url = "https://gitlab.com/cryptsetup/cryptsetup"
 [dependencies]
 runtime = ["lvm2"]
 build = ["pkgconf", "util-linux"]
-link = ["glibc", "json-c", "openssl", "popt", "util-linux"]
+link = [
+    "glibc",
+    "json-c",
+    "openssl",
+    "popt",
+    "util-linux",
+]
 
 [[sources]]
 uri = "https://www.kernel.org/pub/linux/utils/cryptsetup/v2.8/cryptsetup-${PART_VERSION}.tar.xz"
@@ -20,6 +25,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-ssh-token --disable-static
+
 '''
 
 [lifecycle.compile]

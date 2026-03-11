@@ -1,4 +1,3 @@
-[plan]
 name = "sdl2"
 version = "2.32.10"
 release = 1
@@ -8,8 +7,19 @@ arch = "x86_64"
 url = "https://www.libsdl.org/"
 
 [dependencies]
-build = ["gcc", "make", "pkgconf", "wayland-protocols"]
-link = ["alsa-lib", "dbus", "libxkbcommon", "pipewire", "wayland"]
+build = [
+    "gcc",
+    "make",
+    "pkgconf",
+    "wayland-protocols",
+]
+link = [
+    "alsa-lib",
+    "dbus",
+    "libxkbcommon",
+    "pipewire",
+    "wayland",
+]
 
 [[sources]]
 uri = "https://www.libsdl.org/release/SDL2-${PART_VERSION}.tar.gz"
@@ -24,12 +34,14 @@ cd ${BUILD_DIR}
   --enable-video-wayland \
   --disable-video-x11 \
   --disable-rpath
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -39,4 +51,5 @@ DESTDIR=${PART_DIR} make install
 
 rm -f ${PART_DIR}/usr/lib/libSDL2.a
 test -f ${PART_DIR}/usr/lib/pkgconfig/sdl2.pc
+
 '''

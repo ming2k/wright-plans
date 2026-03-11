@@ -1,4 +1,3 @@
-[plan]
 name = "cargo-c"
 version = "0.10.20"
 release = 1
@@ -17,10 +16,11 @@ sha256 = "SKIP"
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = {CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target"}
+env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
 script = '''
 cd ${BUILD_DIR}
 LIBGIT2_NO_PKG_CONFIG=1 cargo build --release
+
 '''
 
 [lifecycle.staging]
@@ -30,4 +30,5 @@ install -Dm755 target/release/cargo-cbuild   ${PART_DIR}/usr/bin/cargo-cbuild
 install -Dm755 target/release/cargo-cinstall ${PART_DIR}/usr/bin/cargo-cinstall
 install -Dm755 target/release/cargo-capi     ${PART_DIR}/usr/bin/cargo-capi
 install -Dm755 target/release/cargo-ctest    ${PART_DIR}/usr/bin/cargo-ctest
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "imv"
 version = "5.0.1"
 release = 1
@@ -9,7 +8,12 @@ url = "https://git.sr.ht/~exec64/imv"
 
 [dependencies]
 runtime = ["wayland"]
-build = ["meson", "ninja", "pkgconf", "wayland-protocols"]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "wayland-protocols",
+]
 link = [
     "pango",
     "libxkbcommon",
@@ -38,6 +42,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 patch -Np1 < ${FILES_DIR}/fix-missing-stdio.patch
+
 '''
 
 [lifecycle.configure]
@@ -51,16 +56,19 @@ meson setup build \
     -Dlibnsbmp=disabled \
     -Dtest=disabled \
     -Dman=disabled
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 ninja -C build
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} ninja -C build install
+
 '''

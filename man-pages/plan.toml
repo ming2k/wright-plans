@@ -1,4 +1,3 @@
-[plan]
 name = "man-pages"
 version = "6.15"
 release = 1
@@ -15,10 +14,12 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 rm -v man3/crypt*
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make -R GIT=false prefix=/usr DESTDIR=${PART_DIR} install
+
 '''

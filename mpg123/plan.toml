@@ -1,4 +1,3 @@
-[plan]
 name = "mpg123"
 version = "1.33.3"
 release = 1
@@ -23,16 +22,19 @@ cd ${BUILD_DIR}
   --disable-static \
   --with-optimization=0 \
   --with-default-audio=alsa
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

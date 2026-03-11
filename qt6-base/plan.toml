@@ -1,4 +1,3 @@
-[plan]
 name = "qt6-base"
 version = "6.10.2"
 release = 1
@@ -9,7 +8,14 @@ url = "https://www.qt.io"
 
 [dependencies]
 runtime = ["dbus", "double-conversion", "mesa"]
-build = ["cmake", "gcc", "ninja", "perl", "pkgconf", "python"]
+build = [
+    "cmake",
+    "gcc",
+    "ninja",
+    "perl",
+    "pkgconf",
+    "python",
+]
 link = [
     "fontconfig",
     "freetype",
@@ -27,9 +33,6 @@ link = [
 [[sources]]
 uri = "https://download.qt.io/official_releases/qt/6.10/${PART_VERSION}/submodules/qtbase-everywhere-src-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
-
-[options]
-jobs = 4
 
 [lifecycle.configure]
 script = '''
@@ -53,6 +56,7 @@ cmake -B build -G Ninja \
     -DQT_FEATURE_system_freetype=ON \
     -DQT_FEATURE_vulkan=ON \
     -DQT_FEATURE_sql=OFF
+
 '''
 
 [lifecycle.compile]

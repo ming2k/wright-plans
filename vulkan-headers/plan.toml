@@ -1,4 +1,3 @@
-[plan]
 name = "vulkan-headers"
 version = "1.4.344"
 release = 1
@@ -14,9 +13,11 @@ sha256 = "SKIP"
 [lifecycle.configure]
 script = '''
 cmake -B build -S ${BUILD_DIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -GNinja -DCMAKE_CXX_SCAN_FOR_MODULES=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+
 '''
 
 [lifecycle.staging]
 script = '''
 DESTDIR=${PART_DIR} cmake --install build
+
 '''

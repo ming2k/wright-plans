@@ -1,4 +1,3 @@
-[plan]
 name = "woff2"
 version = "1.0.2"
 release = 1
@@ -23,6 +22,7 @@ sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/cmake_minimum_required(VERSION
 
 # 修复 2: 添加缺失的头文件 <cstdint> 以修复 GCC 13+ 上的 'uint8_t does not name a type' 错误
 sed -i '/#include <string>/a #include <cstdint>' include/woff2/output.h
+
 '''
 
 [lifecycle.configure]
@@ -30,12 +30,14 @@ script = '''
 mkdir -p ${BUILD_DIR}/build
 cd ${BUILD_DIR}/build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/build
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -86,4 +88,5 @@ Requires: libwoff2common
 Libs: -L${libdir} -lwoff2enc
 Cflags: -I${includedir}
 PC
+
 '''

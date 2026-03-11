@@ -1,4 +1,3 @@
-[plan]
 name = "go"
 version = "1.26.0"
 release = 1
@@ -18,4 +17,5 @@ cp -a ${BUILD_DIR} ${PART_DIR}/usr/lib/go
 mkdir -p ${PART_DIR}/usr/bin
 ln -sf ../lib/go/bin/go ${PART_DIR}/usr/bin/go
 ln -sf ../lib/go/bin/gofmt ${PART_DIR}/usr/bin/gofmt
+
 '''

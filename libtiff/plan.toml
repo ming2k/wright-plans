@@ -1,4 +1,3 @@
-[plan]
 name = "libtiff"
 version = "4.7.1"
 release = 1
@@ -19,6 +18,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static
+
 '''
 
 [lifecycle.compile]

@@ -1,4 +1,3 @@
-[plan]
 name = "scdoc"
 version = "1.11.3"
 release = 1
@@ -15,10 +14,12 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 make PREFIX=/usr -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make PREFIX=/usr DESTDIR=${PART_DIR} install
+
 '''

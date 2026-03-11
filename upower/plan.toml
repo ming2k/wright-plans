@@ -1,4 +1,3 @@
-[plan]
 name = "upower"
 version = "1.91.1"
 release = 1
@@ -8,8 +7,23 @@ arch = "x86_64"
 url = "https://gitlab.freedesktop.org/upower/upower"
 
 [dependencies]
-build = ["gettext", "gobject-introspection", "meson", "ninja", "pkgconf", "polkit", "docbook-xsl", "libxslt"]
-link = ["glib", "libgudev", "libusb", "polkit", "systemd"]
+build = [
+    "gettext",
+    "gobject-introspection",
+    "meson",
+    "ninja",
+    "pkgconf",
+    "polkit",
+    "docbook-xsl",
+    "libxslt",
+]
+link = [
+    "glib",
+    "libgudev",
+    "libusb",
+    "polkit",
+    "systemd",
+]
 
 [[sources]]
 uri = "https://gitlab.freedesktop.org/upower/upower/-/archive/v${PART_VERSION}/upower-v${PART_VERSION}.tar.bz2"
@@ -23,6 +37,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
   -Dos_backend=linux \
   -Dgtk-doc=false \
   -Dsystemdsystemunitdir=/usr/lib/systemd/system
+
 '''
 
 [lifecycle.compile]
@@ -31,11 +46,13 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 [lifecycle.staging]
 script = '''
 DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
+
 '''
 
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable upower.service 2>/dev/null || true
+
 '''
-hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

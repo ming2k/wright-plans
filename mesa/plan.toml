@@ -1,4 +1,3 @@
-[plan]
 name = "mesa"
 version = "26.0.0"
 release = 1
@@ -40,8 +39,6 @@ link = [
 uri = "https://mesa.freedesktop.org/archive/mesa-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
-[options]
-
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
@@ -57,6 +54,7 @@ cd ${BUILD_DIR}
 # The separate GL_INVALID_VALUE/glTexSubImage2D error is a renderer/runtime bug
 # path and should be investigated independently from this packaging choice.
 meson setup build --prefix=/usr --buildtype=release -D platforms=wayland -D gallium-drivers=iris,crocus,llvmpipe -D vulkan-drivers=intel,intel_hasvk,swrast -D egl=enabled -D gbm=enabled -D gles1=disabled -D gles2=enabled -D glx=disabled -D llvm=enabled -D shared-llvm=enabled -D gallium-va=disabled -D vulkan-layers=device-select,overlay -D video-codecs=all -D valgrind=disabled -D libunwind=enabled
+
 '''
 
 [lifecycle.compile]

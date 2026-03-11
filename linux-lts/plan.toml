@@ -1,4 +1,3 @@
-[plan]
 name = "linux-lts"
 version = "6.18.16"
 release = 1
@@ -18,8 +17,6 @@ sha256 = "SKIP"
 [[sources]]
 uri = "config"
 sha256 = "SKIP"
-
-[options]
 
 [lifecycle.prepare]
 script = '''
@@ -85,6 +82,7 @@ scripts/config --enable CGROUP_BPF
 scripts/config --disable UEVENT_HELPER
 
 make olddefconfig
+
 '''
 
 [lifecycle.compile]
@@ -92,6 +90,7 @@ dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -104,4 +103,5 @@ install -d ${PART_DIR}/boot
 cp -v arch/x86/boot/bzImage ${PART_DIR}/boot/vmlinuz-theseus-lts
 cp -v System.map ${PART_DIR}/boot/System.map-theseus-lts
 cp -v .config ${PART_DIR}/boot/config-theseus-lts
+
 '''

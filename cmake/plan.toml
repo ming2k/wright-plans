@@ -1,4 +1,3 @@
-[plan]
 name = "cmake"
 version = "4.2.3"
 release = 1
@@ -25,16 +24,19 @@ sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
 --mandir=/share/man \
 --docdir=/share/doc/cmake-${PART_VERSION} \
 --parallel=$(nproc)
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

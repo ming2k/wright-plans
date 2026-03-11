@@ -1,4 +1,3 @@
-[plan]
 name = "vim"
 version = "9.2.0043"
 release = 2
@@ -8,7 +7,12 @@ arch = "x86_64"
 url = "https://www.vim.org"
 
 [dependencies]
-build = ["gcc", "autoconf", "make", "pkgconf"]
+build = [
+    "gcc",
+    "autoconf",
+    "make",
+    "pkgconf",
+]
 link = ["acl", "ncurses", "zlib"]
 
 [[sources]]
@@ -21,6 +25,7 @@ script = '''
 sed -E 's|^.*(#define SYS_.*VIMRC_FILE.*").*$|\1|g' -i ${BUILD_DIR}/src/feature.h
 sed -E 's|^.*(#define VIMRC_FILE.*").*$|\1|g' -i ${BUILD_DIR}/src/feature.h
 (cd ${BUILD_DIR}/src && autoconf)
+
 '''
 
 [lifecycle.configure]
@@ -42,6 +47,7 @@ cd ${BUILD_DIR}
   --enable-rubyinterp=dynamic \
   --enable-tclinterp=dynamic \
   --disable-canberra
+
 '''
 
 [lifecycle.compile]
@@ -58,4 +64,5 @@ find ${PART_DIR}/usr/share/man -name 'ex.1' -o -name 'view.1' -o -name 'evim.1' 
 
 install -Dm644 ${BUILD_DIR}/runtime/doc/uganda.txt \
   ${PART_DIR}/usr/share/licenses/vim/license.txt
+
 '''

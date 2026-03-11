@@ -1,4 +1,3 @@
-[plan]
 name = "kmod"
 version = "34.2"
 release = 3
@@ -9,7 +8,12 @@ url = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git"
 
 [dependencies]
 build = ["gcc", "meson", "ninja"]
-link = ["openssl", "xz", "zlib", "zstd"]
+link = [
+    "openssl",
+    "xz",
+    "zlib",
+    "zstd",
+]
 
 [[sources]]
 uri = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-${PART_VERSION}.tar.gz"
@@ -27,6 +31,7 @@ meson setup build          \
   -D xz=enabled            \
   -D zlib=enabled          \
   -D zstd=enabled
+
 '''
 
 [lifecycle.compile]
@@ -41,4 +46,5 @@ install -dm755 ${PART_DIR}/etc/depmod.d
 install -dm755 ${PART_DIR}/etc/modprobe.d
 install -dm755 ${PART_DIR}/usr/lib/depmod.d
 install -dm755 ${PART_DIR}/usr/lib/modprobe.d
+
 '''

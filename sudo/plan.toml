@@ -1,4 +1,3 @@
-[plan]
 name = "sudo"
 version = "1.9.17p2"
 release = 4
@@ -31,16 +30,17 @@ cd ${BUILD_DIR}
 --enable-tmpfiles.d \
 --docdir=/usr/share/doc/sudo-${PART_VERSION} \
 --with-passprompt="[sudo] password for %p: "
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
-backup = ["/etc/sudoers", "/etc/pam.d/sudo", "/etc/pam.d/sudo-i"]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
@@ -62,4 +62,8 @@ account   include     sudo
 session   include     sudo
 # End /etc/pam.d/sudo-i
 PAMEOF
+
 '''
+
+[output]
+backup = ["/etc/sudoers", "/etc/pam.d/sudo", "/etc/pam.d/sudo-i"]

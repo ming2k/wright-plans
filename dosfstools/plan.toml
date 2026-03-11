@@ -1,4 +1,3 @@
-[plan]
 name = "dosfstools"
 version = "4.2"
 release = 1
@@ -18,6 +17,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --sbindir=/usr/bin --enable-compat-symlinks
+
 '''
 
 [lifecycle.compile]

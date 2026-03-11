@@ -1,4 +1,3 @@
-[plan]
 name = "systemd"
 version = "259.3"
 release = 1
@@ -8,7 +7,13 @@ arch = "x86_64"
 url = "https://github.com/systemd/systemd"
 
 [dependencies]
-runtime = ["bash", "dbus", "hwdata", "kbd", "kmod"]
+runtime = [
+    "bash",
+    "dbus",
+    "hwdata",
+    "kbd",
+    "kmod",
+]
 build = [
     "gcc",
     "gperf",
@@ -47,14 +52,13 @@ sha256 = "SKIP"
 uri = "90-theseus.preset"
 sha256 = "SKIP"
 
-[options]
-
 [lifecycle.prepare]
 script = '''
 cd ${BUILD_DIR}
 sed -i -e 's/GROUP="render"/GROUP="video"/' \
        -e 's/GROUP="sgx", //' \
        rules.d/50-udev-default.rules.in
+
 '''
 
 [lifecycle.configure]
@@ -108,16 +112,15 @@ meson setup .. \
     -D sbat-distro-version=${PART_VERSION} \
     -D sbat-distro-url=https://github.com/anthropic \
     -D docdir=/usr/share/doc/systemd-${PART_VERSION}
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/build
 ninja -j$(nproc)
-'''
 
-# systemd's test suite requires a running systemd instance and root privileges,
-# making it impractical to run inside a build dockyard. Skip check stage.
+'''
 
 [lifecycle.staging]
 script = '''
@@ -155,15 +158,11 @@ rm -f ${PART_DIR}/usr/share/factory/etc/issue
 rm -f ${PART_DIR}/usr/share/factory/etc/nsswitch.conf
 sed -i '/^C \/etc\/nsswitch/d; /^C \/etc\/issue/d' \
        ${PART_DIR}/usr/lib/tmpfiles.d/etc.conf
+
 '''
 
-[lifecycle.fabricate]
-
-# MVP: break the circular dependency systemd → cryptsetup → device-mapper → libudev (systemd).
-# First pass builds without cryptsetup so libudev.so gets installed on the system.
-# Second pass (full) builds with cryptsetup enabled.
-
-hooks.post_install = '''
+[hooks]
+post_install = '''
 ldconfig 2>/dev/null || true
 systemd-machine-id-setup 2>/dev/null || true
 systemctl preset-all 2>/dev/null || true
@@ -171,11 +170,15 @@ for tty in 1 2 3 4 5 6; do
   systemctl enable getty@tty${tty}.service 2>/dev/null || true
 done
 systemctl daemon-reexec 2>/dev/null || true
+
 '''
-hooks.post_upgrade = '''
+post_upgrade = '''
 ldconfig 2>/dev/null || true
 systemctl daemon-reexec 2>/dev/null || true
+
 '''
+
+[output]
 backup = [
     "/etc/systemd/coredump.conf",
     "/etc/systemd/journald.conf",
@@ -190,75 +193,3 @@ backup = [
     "/etc/udev/iocost.conf",
     "/etc/udev/udev.conf",
 ]
-[mvp.dependencies]
-link = [
-    "acl",
-    "glibc",
-    "libcap",
-    "libgcrypt",
-    "libidn2",
-    "libseccomp",
-    "libxcrypt",
-    "linux-pam",
-    "lz4",
-    "openssl",
-    "p11-kit",
-    "pcre2",
-    "util-linux",
-    "xz",
-    "zstd",
-]
-
-[mvp.lifecycle.configure]
-script = '''
-cd ${BUILD_DIR}
-mkdir -p build
-cd build
-meson setup .. \
-    --prefix=/usr \
-    --buildtype=release \
-    -D libdir=lib \
-    -D sbindir=/usr/bin \
-    -D version-tag="${PART_VERSION}-theseus" \
-    -D vcs-tag=false \
-    -D shared-lib-tag="${PART_VERSION}" \
-    -D mode=release \
-    -D install-tests=false \
-    -D ldconfig=false \
-    -D man=disabled \
-    -D rpmmacrosdir=no \
-    -D sysvinit-path= \
-    -D sysvrcnd-path= \
-    -D dbuspolicydir=/usr/share/dbus-1/system.d \
-    -D firstboot=true \
-    -D sysusers=true \
-    -D pam=enabled \
-    -D pamconfdir=/usr/lib/pam.d \
-    -D logind=true \
-    -D networkd=true \
-    -D resolve=true \
-    -D seccomp=enabled \
-    -D libidn2=enabled \
-    -D lz4=enabled \
-    -D dns-over-tls=openssl \
-    -D ukify=auto \
-    -D bootloader=enabled \
-    -D homed=disabled \
-    -D sysupdate=disabled \
-    -D audit=disabled \
-    -D selinux=disabled \
-    -D libcryptsetup=disabled \
-    -D default-dnssec=no \
-    -D default-kill-user-processes=false \
-    -D default-locale='C.UTF-8' \
-    -D fallback-hostname='theseus' \
-    -D nologin-path=/usr/bin/nologin \
-    -D dev-kvm-mode=0660 \
-    -D nobody-group=nogroup \
-    -D sbat-distro=theseus \
-    -D sbat-distro-summary="Ship of Theseus" \
-    -D sbat-distro-pkgname=systemd \
-    -D sbat-distro-version=${PART_VERSION} \
-    -D sbat-distro-url=https://github.com/anthropic \
-    -D docdir=/usr/share/doc/systemd-${PART_VERSION}
-'''

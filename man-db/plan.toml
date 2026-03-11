@@ -1,4 +1,3 @@
-[plan]
 name = "man-db"
 version = "2.13.1"
 release = 3
@@ -9,7 +8,13 @@ url = "https://man-db.nongnu.org/"
 
 [dependencies]
 runtime = ["gdbm", "groff", "libpipeline"]
-build = ["gcc", "gdbm", "groff", "libpipeline", "make"]
+build = [
+    "gcc",
+    "gdbm",
+    "groff",
+    "libpipeline",
+    "make",
+]
 
 [[sources]]
 uri = "https://download.savannah.gnu.org/releases/man-db/man-db-${PART_VERSION}.tar.xz"
@@ -27,22 +32,26 @@ cd ${BUILD_DIR}
 --with-browser=/usr/bin/lynx            \
 --with-vgrind=/usr/bin/vgrind           \
 --with-grap=/usr/bin/grap
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.check]
 script = '''
 cd ${BUILD_DIR}
 make check
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

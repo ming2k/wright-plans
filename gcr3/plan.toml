@@ -1,4 +1,3 @@
-[plan]
 name = "gcr3"
 version = "3.41.2"
 release = 1
@@ -9,8 +8,22 @@ url = "https://gitlab.gnome.org/GNOME/gcr"
 
 [dependencies]
 runtime = ["libsecret", "p11-kit"]
-build = ["gettext", "gobject-introspection", "libxslt", "meson", "ninja", "pkgconf", "vala"]
-link = ["dbus", "glib", "gtk3", "libgcrypt", "p11-kit"]
+build = [
+    "gettext",
+    "gobject-introspection",
+    "libxslt",
+    "meson",
+    "ninja",
+    "pkgconf",
+    "vala",
+]
+link = [
+    "dbus",
+    "glib",
+    "gtk3",
+    "libgcrypt",
+    "p11-kit",
+]
 
 [[sources]]
 uri = "https://download.gnome.org/sources/gcr/3.41/gcr-${PART_VERSION}.tar.xz"
@@ -20,16 +33,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dintrospection=true
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 meson compile -C build
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 meson install -C build --destdir ${PART_DIR}
+
 '''

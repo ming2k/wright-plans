@@ -1,13 +1,10 @@
-[plan]
 name = "linux-firmware"
 version = "20260309"
 release = 1
 description = "Firmware files for Linux"
 license = "GPL-2.0-only AND GPL-2.0-or-later AND custom"
-url = "https://gitlab.com/kernel-firmware/linux-firmware"
 arch = "any"
-
-[dependencies]
+url = "https://gitlab.com/kernel-firmware/linux-firmware"
 
 [[sources]]
 uri = "https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-${PART_VERSION}.tar.gz"
@@ -18,4 +15,5 @@ script = '''
 cd ${BUILD_DIR}
 mkdir -p ${PART_DIR}/usr/lib/firmware
 ./copy-firmware.sh ${PART_DIR}/usr/lib/firmware
+
 '''

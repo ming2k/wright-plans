@@ -1,4 +1,3 @@
-[plan]
 name = "lz4"
 version = "1.10.0"
 release = 1
@@ -18,16 +17,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 make BUILD_STATIC=no PREFIX=/usr -j$(nproc)
+
 '''
 
 [lifecycle.check]
 script = '''
 cd ${BUILD_DIR}
 make -j1 check
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PART_DIR} install
+
 '''

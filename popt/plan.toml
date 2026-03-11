@@ -1,4 +1,3 @@
-[plan]
 name = "popt"
 version = "1.19"
 release = 1
@@ -18,6 +17,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
+
 '''
 
 [lifecycle.compile]

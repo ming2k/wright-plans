@@ -1,4 +1,3 @@
-[plan]
 name = "appstream"
 version = "1.1.2"
 release = 10
@@ -20,7 +19,14 @@ build = [
     "gperf",
     "docbook-xsl",
 ]
-link = ["glib", "libxml2", "libxmlb", "curl", "libfyaml", "zstd"]
+link = [
+    "glib",
+    "libxml2",
+    "libxmlb",
+    "curl",
+    "libfyaml",
+    "zstd",
+]
 
 [[sources]]
 uri = "https://github.com/ximion/appstream/archive/refs/tags/v${PART_VERSION}.tar.gz"
@@ -46,6 +52,7 @@ meson setup build              \
     -Dgir=true                 \
     -Dinstall-docs=false       \
     -Dman=false
+
 '''
 
 [lifecycle.compile]
@@ -57,9 +64,11 @@ export CPPFLAGS="$(sanitize_flags "${CPPFLAGS:-}")"
 export CFLAGS="$(sanitize_flags "${CFLAGS:-}")"
 export CXXFLAGS="$(sanitize_flags "${CXXFLAGS:-}")"
 meson compile -C ${BUILD_DIR}/build
+
 '''
 
 [lifecycle.staging]
 script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
+
 '''

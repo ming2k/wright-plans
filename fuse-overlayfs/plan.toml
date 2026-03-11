@@ -1,4 +1,3 @@
-[plan]
 name = "fuse-overlayfs"
 version = "1.16"
 release = 1
@@ -20,6 +19,7 @@ script = '''
 cd ${BUILD_DIR}
 autoreconf -fi
 ./configure --prefix=/usr
+
 '''
 
 [lifecycle.compile]

@@ -1,4 +1,3 @@
-[plan]
 name = "boost"
 version = "1.89.0"
 release = 1
@@ -9,7 +8,12 @@ url = "https://www.boost.org"
 
 [dependencies]
 build = ["make"]
-link = ["bzip2", "icu", "zlib", "zstd"]
+link = [
+    "bzip2",
+    "icu",
+    "zlib",
+    "zstd",
+]
 
 [[sources]]
 uri = "https://archives.boost.io/release/${PART_VERSION}/source/boost_1_89_0.tar.bz2"
@@ -19,12 +23,14 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./bootstrap.sh --with-toolset=gcc --with-icu --prefix=/usr
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 ./b2 variant=release threading=multi link=shared -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -32,4 +38,5 @@ script = '''
 cd ${BUILD_DIR}
 ./b2 variant=release threading=multi link=shared \
     --prefix=${PART_DIR}/usr install
+
 '''

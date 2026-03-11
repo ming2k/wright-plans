@@ -1,4 +1,3 @@
-[plan]
 name = "gtk4"
 version = "4.20.3"
 release = 1
@@ -42,6 +41,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 meson setup build --prefix=/usr --buildtype=release -Dwayland-backend=true -Dx11-backend=false -Dintrospection=enabled -Dvulkan=enabled -Dmedia-gstreamer=disabled -Dprint-cups=disabled -Dbuild-tests=false -Ddocumentation=false
+
 '''
 
 [lifecycle.compile]
@@ -70,17 +70,19 @@ rm -f \
     "${PART_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.PrintEditor4.Devel.svg" \
     "${PART_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.gtk4.NodeEditor-symbolic.svg" \
     "${PART_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg"
+
 '''
 
-
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
 gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
+
 '''
-hooks.post_upgrade = '''
+post_upgrade = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
 gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
+
 '''

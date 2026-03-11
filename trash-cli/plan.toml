@@ -1,4 +1,3 @@
-[plan]
 name = "trash-cli"
 version = "0.24.5.26"
 release = 1
@@ -19,4 +18,5 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PART_DIR} .
+
 '''

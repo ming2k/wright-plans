@@ -1,4 +1,3 @@
-[plan]
 name = "crun"
 version = "1.26"
 release = 1
@@ -24,6 +23,7 @@ cd ${BUILD_DIR}
   --with-libseccomp \
   --with-libcap \
   --enable-embedded-yajl
+
 '''
 
 [lifecycle.compile]

@@ -1,4 +1,3 @@
-[plan]
 name = "sox-ng"
 version = "14.7.1"
 release = 1
@@ -8,7 +7,13 @@ arch = "x86_64"
 url = "https://codeberg.org/sox_ng/sox_ng"
 
 [dependencies]
-build = ["autoconf", "automake", "libtool", "make", "pkgconf"]
+build = [
+    "autoconf",
+    "automake",
+    "libtool",
+    "make",
+    "pkgconf",
+]
 link = [
     "alsa-lib",
     "ffmpeg",
@@ -27,6 +32,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 autoreconf -fi
+
 '''
 
 [lifecycle.configure]
@@ -43,6 +49,7 @@ cd ${BUILD_DIR}
     --without-twolame \
     --without-wavpack \
     --without-opus
+
 '''
 
 [lifecycle.compile]

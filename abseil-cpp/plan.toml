@@ -1,4 +1,3 @@
-[plan]
 name = "abseil-cpp"
 version = "20260107.1"
 release = 1
@@ -24,6 +23,7 @@ cmake -B ${BUILD_DIR}/build -S ${BUILD_DIR} -G Ninja \
   -DABSL_PROPAGATE_CXX_STD=ON \
   -DABSL_BUILD_TESTING=OFF \
   -DBUILD_SHARED_LIBS=ON
+
 '''
 
 [lifecycle.compile]

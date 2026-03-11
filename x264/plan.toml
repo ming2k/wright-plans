@@ -1,4 +1,3 @@
-[plan]
 name = "x264"
 version = "0.165.r3222.b35605a"
 release = 1
@@ -22,16 +21,19 @@ cd ${BUILD_DIR}
             --disable-static \
             --enable-lto \
             --disable-cli
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

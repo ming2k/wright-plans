@@ -1,4 +1,3 @@
-[plan]
 name = "libxml2"
 version = "2.15.1"
 release = 1
@@ -9,7 +8,14 @@ url = "https://gitlab.gnome.org/GNOME/libxml2"
 
 [dependencies]
 runtime = ["icu", "python"]
-build = ["doxygen", "gcc", "icu", "meson", "ninja", "python"]
+build = [
+    "doxygen",
+    "gcc",
+    "icu",
+    "meson",
+    "ninja",
+    "python",
+]
 
 [[sources]]
 uri = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${PART_VERSION}.tar.xz"
@@ -24,16 +30,19 @@ meson setup .. --prefix=/usr \
     -D icu=enabled \
     -D python=enabled \
     -D docs=disabled
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/build
 ninja -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PART_DIR} ninja install
+
 '''

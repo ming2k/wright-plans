@@ -1,4 +1,3 @@
-[plan]
 name = "procps-ng"
 version = "4.0.6"
 release = 4
@@ -29,12 +28,14 @@ cd ${BUILD_DIR}
   --disable-modern-top \
   --enable-watch8bit \
   --with-systemd
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -46,4 +47,5 @@ if [ -d ${PART_DIR}/usr/sbin ]; then
   cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
   rm -rf ${PART_DIR}/usr/sbin
 fi
+
 '''

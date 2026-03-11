@@ -1,4 +1,3 @@
-[plan]
 name = "nano"
 version = "8.6"
 release = 1
@@ -22,12 +21,14 @@ cd ${BUILD_DIR}
 --sysconfdir=/etc \
 --enable-utf8 \
 --docdir=/usr/share/doc/nano-${PART_VERSION}
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -35,4 +36,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 install -v -m644 doc/{nano.html,sample.nanorc} ${PART_DIR}/usr/share/doc/nano-${PART_VERSION}
+
 '''

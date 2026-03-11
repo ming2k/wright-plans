@@ -1,4 +1,3 @@
-[plan]
 name = "dracut-ng"
 version = "110"
 release = 1
@@ -6,11 +5,22 @@ description = "Event-driven initramfs infrastructure with UKI support"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/dracut-ng/dracut-ng"
-replaces = ["dracut"]
 
 [dependencies]
-runtime = ["bash", "coreutils", "cpio", "kmod", "systemd", "util-linux"]
-build = ["gcc", "make", "pkgconf", "kmod"]
+runtime = [
+    "bash",
+    "coreutils",
+    "cpio",
+    "kmod",
+    "systemd",
+    "util-linux",
+]
+build = [
+    "gcc",
+    "make",
+    "pkgconf",
+    "kmod",
+]
 
 [[sources]]
 uri = "https://github.com/dracut-ng/dracut-ng/archive/${PART_VERSION}/dracut-ng-${PART_VERSION}.tar.gz"
@@ -26,16 +36,19 @@ cd ${BUILD_DIR}
   --sbindir=/usr/bin \
   --systemdsystemunitdir=/usr/lib/systemd/system \
   --disable-documentation
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

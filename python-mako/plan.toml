@@ -1,4 +1,3 @@
-[plan]
 name = "python-mako"
 version = "1.3.10"
 release = 1
@@ -18,4 +17,5 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 pip3 install --break-system-packages --no-deps --root=${PART_DIR} --no-build-isolation .
+
 '''

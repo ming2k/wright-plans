@@ -1,4 +1,3 @@
-[plan]
 name = "grub"
 version = "2.12"
 release = 2
@@ -9,7 +8,13 @@ url = "https://www.gnu.org/software/grub/"
 
 [dependencies]
 runtime = ["dosfstools"]
-build = ["bison", "flex", "gcc", "make", "freetype"]
+build = [
+    "bison",
+    "flex",
+    "gcc",
+    "make",
+    "freetype",
+]
 
 [[sources]]
 uri = "https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz"
@@ -19,6 +24,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 echo depends bli part_gpt > grub-core/extra_deps.lst
+
 '''
 
 [lifecycle.configure]
@@ -26,6 +32,7 @@ script = '''
 # Configure and compile are combined — GRUB requires two separate
 # configure/make cycles for BIOS and EFI platforms.
 echo "Skipping standalone configure — handled in compile stage."
+
 '''
 
 [lifecycle.compile]
@@ -55,6 +62,7 @@ cd build-efi
     --disable-efiemu                \
     --disable-werror
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -73,4 +81,5 @@ mkdir -p ${PART_DIR}/usr/share/bash-completion/completions
 mv -v ${PART_DIR}/etc/bash_completion.d/grub \
     ${PART_DIR}/usr/share/bash-completion/completions/ 2>/dev/null || true
 rmdir ${PART_DIR}/etc/bash_completion.d 2>/dev/null || true
+
 '''

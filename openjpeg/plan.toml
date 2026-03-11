@@ -1,4 +1,3 @@
-[plan]
 name = "openjpeg"
 version = "2.5.3"
 release = 1
@@ -17,6 +16,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_STATIC_LIBS=OFF -DBUILD_DOC=OFF -DBUILD_TESTING=OFF
+
 '''
 
 [lifecycle.compile]

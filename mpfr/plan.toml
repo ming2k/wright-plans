@@ -1,4 +1,3 @@
-[plan]
 name = "mpfr"
 version = "4.2.2"
 release = 1
@@ -22,6 +21,7 @@ cd ${BUILD_DIR}
 --disable-static     \
 --enable-thread-safe \
 --docdir=/usr/share/doc/mpfr-4.2.2
+
 '''
 
 [lifecycle.compile]
@@ -29,12 +29,14 @@ script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 make html
+
 '''
 
 [lifecycle.check]
 script = '''
 cd ${BUILD_DIR}
 make check
+
 '''
 
 [lifecycle.staging]
@@ -42,4 +44,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 make DESTDIR=${PART_DIR} install-html
+
 '''

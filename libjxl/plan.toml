@@ -1,4 +1,3 @@
-[plan]
 name = "libjxl"
 version = "0.11.2"
 release = 1
@@ -8,8 +7,19 @@ arch = "x86_64"
 url = "https://github.com/libjxl/libjxl"
 
 [dependencies]
-build = ["cmake", "ninja", "pkgconf", "gcc"]
-link = ["brotli", "hwy", "lcms2", "libjpeg-turbo", "libpng"]
+build = [
+    "cmake",
+    "ninja",
+    "pkgconf",
+    "gcc",
+]
+link = [
+    "brotli",
+    "hwy",
+    "lcms2",
+    "libjpeg-turbo",
+    "libpng",
+]
 
 [[sources]]
 uri = "https://github.com/libjxl/libjxl/archive/refs/tags/v${PART_VERSION}.tar.gz"
@@ -25,12 +35,14 @@ sed -i 's|"https://skia.googlesource.com/skcms/+archive/"|google/skcms|' deps.sh
 # skcms now uses GitHub like the others, so it needs strip-components=1
 # Fix the download function: when project is not a URL, it uses GitHub with strip_components=1
 ./deps.sh
+
 '''
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 cmake -B build -G Ninja -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DJPEGXL_ENABLE_BENCHMARK=OFF -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_TESTS=OFF -DJPEGXL_FORCE_SYSTEM_BROTLI=ON -DJPEGXL_FORCE_SYSTEM_HWY=ON -DJPEGXL_FORCE_SYSTEM_LCMS2=ON
+
 '''
 
 [lifecycle.compile]

@@ -1,6 +1,5 @@
-[plan]
 name = "wright"
-version = "1.5.4"
+version = "1.6.0"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -21,6 +20,7 @@ script = '''
 cd ${BUILD_DIR}
 export CARGO_HOME=${BUILD_DIR}/.cargo
 cargo build --release
+
 '''
 
 [lifecycle.staging]
@@ -32,7 +32,6 @@ install -Dm755 target/release/wbuild ${PART_DIR}/usr/bin/wbuild
 # Skeleton plan for new packages
 install -dm755 ${PART_DIR}/usr/share/wright/skel
 cat > ${PART_DIR}/usr/share/wright/skel/plan.toml << 'EOF'
-[plan]
 name = "pkgname"
 version = "1.0.0"
 release = 1
@@ -46,9 +45,9 @@ build = []
 link = []
 runtime = []
 
-[sources]
-uris = ["https://example.com/pkgname-${PART_VERSION}.tar.gz"]
-sha256 = ["SKIP"]
+[[sources]]
+uri = "https://example.com/pkgname-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = """
@@ -62,7 +61,7 @@ cd ${BUILD_DIR}
 make -j$(nproc)
 """
 
-[lifecycle.fabricate]
+[lifecycle.staging]
 script = """
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
@@ -71,11 +70,11 @@ EOF
 
 # Plans workspace — created here so permissions are managed by the package
 install -dm755 ${PART_DIR}/var/lib/wright/plans
+
 '''
 
-
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 # Group for plan authors — members can edit plans without root
 groupadd -r wright 2>/dev/null || true
 
@@ -87,11 +86,13 @@ chmod -R o-w /var/lib/wright/plans/
 
 echo "Add yourself to the wright group to edit plans without sudo:"
 echo "  usermod -aG wright \$USER"
+
 '''
-hooks.post_upgrade = '''
+post_upgrade = '''
 # Re-apply in case a manual chmod/chown drifted the state
 groupadd -r wright 2>/dev/null || true
 chgrp wright /var/lib/wright/plans
 chmod 2775 /var/lib/wright/plans
 chmod -R o-w /var/lib/wright/plans/
+
 '''

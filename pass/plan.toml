@@ -1,4 +1,3 @@
-[plan]
 name = "pass"
 version = "1.7.4"
 release = 1
@@ -10,7 +9,9 @@ url = "https://www.passwordstore.org/"
 [dependencies]
 runtime = ["bash", "gnupg", "git"]
 build = ["make"]
-optional = [{name = "wl-clipboard", description = "copy generated passwords to Wayland clipboard"}]
+optional = [
+    { name = "wl-clipboard", description = "copy generated passwords to Wayland clipboard" },
+]
 
 [[sources]]
 uri = "https://git.zx2c4.com/password-store/snapshot/password-store-${PART_VERSION}.tar.xz"
@@ -20,4 +21,5 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 make PREFIX=/usr DESTDIR=${PART_DIR} install
+
 '''

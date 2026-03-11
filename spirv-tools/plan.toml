@@ -1,4 +1,3 @@
-[plan]
 name = "spirv-tools"
 version = "1.4.341.0"
 release = 1
@@ -8,7 +7,13 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["spirv-headers"]
-build = ["cmake", "gcc", "ninja", "python", "spirv-headers"]
+build = [
+    "cmake",
+    "gcc",
+    "ninja",
+    "python",
+    "spirv-headers",
+]
 
 [[sources]]
 uri = "https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-${PART_VERSION}.tar.gz"
@@ -17,6 +22,7 @@ sha256 = "SKIP"
 [lifecycle.configure]
 script = '''
 cmake -B ${BUILD_DIR}/build -G Ninja -S ${BUILD_DIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_INCLUDEDIR=include -DSPIRV_WERROR=OFF -DSPIRV-Headers_SOURCE_DIR=/usr -DSPIRV_SKIP_TESTS=ON
+
 '''
 
 [lifecycle.compile]

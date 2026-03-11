@@ -1,4 +1,3 @@
-[plan]
 name = "spirv-headers"
 version = "1.4.341.0"
 release = 1
@@ -18,16 +17,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 cmake --build build -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} cmake --install build
+
 '''

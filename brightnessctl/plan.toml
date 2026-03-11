@@ -1,4 +1,3 @@
-[plan]
 name = "brightnessctl"
 version = "0.5.1"
 release = 1
@@ -19,10 +18,12 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 make ENABLE_SYSTEMD=1
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make install DESTDIR=${PART_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0
+
 '''

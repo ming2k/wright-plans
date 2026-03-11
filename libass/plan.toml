@@ -1,4 +1,3 @@
-[plan]
 name = "libass"
 version = "0.17.4"
 release = 1
@@ -9,7 +8,12 @@ url = "https://github.com/libass/libass"
 
 [dependencies]
 build = ["gcc", "make", "pkgconf"]
-link = ["freetype", "fribidi", "harfbuzz", "fontconfig"]
+link = [
+    "freetype",
+    "fribidi",
+    "harfbuzz",
+    "fontconfig",
+]
 
 [[sources]]
 uri = "https://github.com/libass/libass/releases/download/${PART_VERSION}/libass-${PART_VERSION}.tar.xz"
@@ -19,16 +23,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

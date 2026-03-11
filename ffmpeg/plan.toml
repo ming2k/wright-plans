@@ -1,4 +1,3 @@
-[plan]
 name = "ffmpeg"
 version = "8.0.1"
 release = 4
@@ -8,7 +7,13 @@ arch = "x86_64"
 url = "https://ffmpeg.org"
 
 [dependencies]
-build = ["gcc", "make", "nasm", "pkgconf", "sdl2"]
+build = [
+    "gcc",
+    "make",
+    "nasm",
+    "pkgconf",
+    "sdl2",
+]
 link = [
     "alsa-lib",
     "aom",
@@ -79,12 +84,14 @@ command -v sdl2-config >/dev/null 2>&1 || {
   --enable-libdrm \
   --enable-lto \
   --enable-pic
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -93,4 +100,5 @@ cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 
 test -x ${PART_DIR}/usr/bin/ffplay
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "seabios"
 version = "1.16.3"
 release = 1
@@ -8,24 +7,31 @@ arch = "x86_64"
 url = "https://www.seabios.org/"
 
 [dependencies]
-build = ["bash", "gcc", "make", "python"]
+build = [
+    "bash",
+    "gcc",
+    "make",
+    "python",
+]
 
 [[sources]]
 uri = "https://www.seabios.org/downloads/seabios-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc) PYTHON=python3
-"""
+
+'''
 
 [lifecycle.staging]
-script = """
+script = '''
 cd ${BUILD_DIR}
 install -Dm644 out/bios.bin ${PART_DIR}/usr/share/qemu/bios.bin
 if [ -f out/vgabios.bin ]; then
   install -Dm644 out/vgabios.bin ${PART_DIR}/usr/share/qemu/vgabios.bin
 fi
 install -Dm644 COPYING ${PART_DIR}/usr/share/doc/seabios/COPYING
-"""
+
+'''

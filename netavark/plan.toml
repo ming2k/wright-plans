@@ -1,4 +1,3 @@
-[plan]
 name = "netavark"
 version = "1.17.2"
 release = 1
@@ -20,10 +19,12 @@ dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
 cargo build --release --locked
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 target/release/netavark ${PART_DIR}/usr/libexec/podman/netavark
+
 '''

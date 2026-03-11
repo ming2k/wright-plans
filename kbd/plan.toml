@@ -1,4 +1,3 @@
-[plan]
 name = "kbd"
 version = "2.8.0"
 release = 1
@@ -24,18 +23,21 @@ cd ${BUILD_DIR}
 patch -Np1 < ${FILES_DIR}/kbd-${PART_VERSION}-backspace-1.patch
 sed -i '/RESIZECONS_PROGS=/s/yes/no/' configure
 sed -i 's/resizecons.8 //' docs/man/man8/Makefile.in
+
 '''
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-vlock
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -44,4 +46,5 @@ cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 mkdir -p ${PART_DIR}/usr/share/doc/kbd-${PART_VERSION}
 cp -R -v docs/doc/* ${PART_DIR}/usr/share/doc/kbd-${PART_VERSION}
+
 '''

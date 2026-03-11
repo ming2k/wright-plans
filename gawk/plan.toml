@@ -1,4 +1,3 @@
-[plan]
 name = "gawk"
 version = "5.3.2"
 release = 1
@@ -18,22 +17,26 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 sed -i 's/extras//' Makefile.in
+
 '''
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "alsa-ucm-conf"
 version = "1.2.15.3"
 release = 1
@@ -17,11 +16,13 @@ sha256 = "SKIP"
 [lifecycle.configure]
 script = '''
 echo "data-only package"
+
 '''
 
 [lifecycle.compile]
 script = '''
 echo "no build needed"
+
 '''
 
 [lifecycle.staging]
@@ -29,4 +30,5 @@ script = '''
 cd ${BUILD_DIR}
 mkdir -p ${PART_DIR}/usr/share/alsa
 cp -a ucm2 ${PART_DIR}/usr/share/alsa/ucm2
+
 '''

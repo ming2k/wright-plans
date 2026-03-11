@@ -1,4 +1,3 @@
-[plan]
 name = "expect"
 version = "5.45.4"
 release = 1
@@ -23,6 +22,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 patch -Np1 < ${FILES_DIR}/expect-${PART_VERSION}-gcc15-1.patch
+
 '''
 
 [lifecycle.configure]
@@ -34,18 +34,21 @@ cd ${BUILD_DIR}
 --disable-rpath         \
 --mandir=/usr/share/man \
 --with-tclinclude=/usr/include
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.check]
 script = '''
 cd ${BUILD_DIR}
 make test
+
 '''
 
 [lifecycle.staging]
@@ -53,4 +56,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 ln -svf expect${PART_VERSION}/libexpect${PART_VERSION}.so ${PART_DIR}/usr/lib
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "nftables"
 version = "1.1.6"
 release = 5
@@ -8,8 +7,25 @@ arch = "x86_64"
 url = "https://www.netfilter.org/projects/nftables/"
 
 [dependencies]
-build = ["autoconf", "automake", "bison", "flex", "gcc", "libmnl", "libnftnl", "make", "pkgconf"]
-link = ["gmp", "jansson", "libmnl", "libnftnl", "ncurses", "readline"]
+build = [
+    "autoconf",
+    "automake",
+    "bison",
+    "flex",
+    "gcc",
+    "libmnl",
+    "libnftnl",
+    "make",
+    "pkgconf",
+]
+link = [
+    "gmp",
+    "jansson",
+    "libmnl",
+    "libnftnl",
+    "ncurses",
+    "readline",
+]
 
 [[sources]]
 uri = "https://www.netfilter.org/pub/nftables/nftables-${PART_VERSION}.tar.xz"
@@ -30,6 +46,7 @@ ccache = true
 script = '''
 cd ${BUILD_DIR}
 autoreconf -fiv
+
 '''
 
 [lifecycle.configure]
@@ -44,12 +61,14 @@ cd ${BUILD_DIR}
   --disable-man-doc   \
   --disable-python    \
   --with-mini-gmp=no
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -59,10 +78,13 @@ make DESTDIR=${PART_DIR} install
 
 install -Dm644 ${FILES_DIR}/nftables.conf ${PART_DIR}/etc/nftables.conf
 install -Dm644 ${FILES_DIR}/nftables.service ${PART_DIR}/usr/lib/systemd/system/nftables.service
+
 '''
 
-[lifecycle.fabricate]
-hooks.post_install = "ldconfig 2>/dev/null || true"
-hooks.post_upgrade = "ldconfig 2>/dev/null || true"
-hooks.pre_remove = "nft flush ruleset 2>/dev/null || true"
+[hooks]
+post_install = "ldconfig 2>/dev/null || true"
+post_upgrade = "ldconfig 2>/dev/null || true"
+pre_remove = "nft flush ruleset 2>/dev/null || true"
+
+[output]
 backup = ["/etc/nftables.conf"]

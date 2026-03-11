@@ -1,0 +1,35 @@
+name = "libpcap"
+version = "1.10.6"
+release = 1
+description = "Portable library for network traffic capture"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://www.tcpdump.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+
+[[sources]]
+uri = "https://www.tcpdump.org/release/libpcap-${PART_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''

@@ -1,4 +1,3 @@
-[plan]
 name = "libwpe"
 version = "1.16.0"
 release = 1
@@ -20,16 +19,19 @@ cd ${BUILD_DIR}
 # 修正：移除 -Dbuild_docs=false 选项
 # Meson 会自动检测，如果没有 hotdoc 工具会自动跳过文档
 meson setup build --prefix=/usr --libdir=lib
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/build
 ninja -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PART_DIR} ninja install
+
 '''

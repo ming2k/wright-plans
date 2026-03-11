@@ -1,4 +1,3 @@
-[plan]
 name = "pipewire"
 version = "1.6.1"
 release = 1
@@ -8,8 +7,28 @@ arch = "x86_64"
 url = "https://pipewire.org"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "rtkit"]
-link = ["alsa-lib", "bluez", "dbus", "glib", "libsndfile", "ncurses", "opus", "readline", "sbc", "systemd"]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "rtkit",
+    "python-docutils",
+]
+link = [
+    "alsa-lib",
+    "bluez",
+    "dbus",
+    "glib",
+    "gstreamer",
+    "libcamera",
+    "libsndfile",
+    "ncurses",
+    "opus",
+    "readline",
+    "sbc",
+    "systemd",
+    "v4l-utils",
+]
 
 [[sources]]
 uri = "https://github.com/PipeWire/pipewire/archive/refs/tags/${PART_VERSION}.tar.gz"
@@ -21,20 +40,22 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 --prefix=/usr                        \
 --buildtype=release                  \
 -D docs=disabled                     \
--D man=disabled                      \
--D tests=disabled                    \
--D gstreamer=disabled                \
--D v4l2=disabled                     \
+-D man=enabled                       \
+-D tests=enabled                     \
+-D gstreamer=enabled                 \
+-D v4l2=enabled                      \
 -D jack=disabled                     \
--D pipewire-jack=disabled            \
+-D pipewire-jack=enabled             \
 -D pipewire-alsa=enabled             \
--D pipewire-v4l2=disabled            \
+-D libpulse=auto                     \
+-D pipewire-v4l2=enabled             \
 -D rlimits-install=false             \
 -D selinux=disabled                  \
 -D udevrulesdir=/usr/lib/udev/rules.d \
--D session-managers=[]               \
 -D bluez5=enabled                    \
--D libcamera=disabled
+-D libcamera=enabled                \
+-D session-managers=
+
 '''
 
 [lifecycle.compile]
@@ -43,10 +64,10 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 [lifecycle.staging]
 script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
 
-
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/pipewire.conf 2>/dev/null || true
+
 '''
-hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

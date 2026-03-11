@@ -1,4 +1,3 @@
-[plan]
 name = "libtool"
 version = "2.5.4"
 release = 1
@@ -18,12 +17,14 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -31,4 +32,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 rm -fv ${PART_DIR}/usr/lib/libltdl.a
+
 '''

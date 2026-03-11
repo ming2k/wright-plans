@@ -1,4 +1,3 @@
-[plan]
 name = "tzdata"
 version = "2025c"
 release = 1
@@ -22,12 +21,14 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 sed -i "s:sbin:bin:g" Makefile
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make CC=gcc LFLAGS="${LDFLAGS}" -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -55,4 +56,5 @@ rm -f ${PART_DIR}/etc/localtime
 
 # License
 install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/tzdata/LICENSE
+
 '''

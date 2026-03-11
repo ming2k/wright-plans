@@ -1,4 +1,3 @@
-[plan]
 name = "fcitx5-rime"
 version = "5.1.12"
 release = 1
@@ -9,7 +8,12 @@ url = "https://github.com/fcitx/fcitx5-rime"
 
 [dependencies]
 runtime = ["fcitx5", "librime", "rime-prelude"]
-build = ["cmake", "extra-cmake-modules", "ninja", "pkgconf"]
+build = [
+    "cmake",
+    "extra-cmake-modules",
+    "ninja",
+    "pkgconf",
+]
 link = ["fcitx5", "librime"]
 
 [[sources]]
@@ -24,6 +28,7 @@ cmake -B build -G Ninja \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_BUILD_TYPE=Release \
     -DRIME_DATA_DIR=/usr/share/rime-data
+
 '''
 
 [lifecycle.compile]

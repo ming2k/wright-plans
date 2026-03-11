@@ -1,4 +1,3 @@
-[plan]
 name = "tree-sitter"
 version = "0.24.7"
 release = 1
@@ -18,10 +17,12 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc) PREFIX=/usr
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make PREFIX=/usr DESTDIR=${PART_DIR} install
+
 '''

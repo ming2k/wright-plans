@@ -1,4 +1,3 @@
-[plan]
 name = "libcap"
 version = "2.76"
 release = 3
@@ -18,22 +17,26 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 sed -i '/install -m.*STA/d' libcap/Makefile
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make prefix=/usr lib=lib SBINDIR=/usr/bin -j$(nproc)
+
 '''
 
 [lifecycle.check]
 script = '''
 cd ${BUILD_DIR}
 make test
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make prefix=/usr lib=lib SBINDIR=/usr/bin DESTDIR=${PART_DIR} install
+
 '''

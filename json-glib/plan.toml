@@ -1,4 +1,3 @@
-[plan]
 name = "json-glib"
 version = "1.10.8"
 release = 2
@@ -8,7 +7,12 @@ arch = "x86_64"
 url = "https://wiki.gnome.org/Projects/JsonGlib"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "gobject-introspection",
+]
 link = ["glib"]
 
 [[sources]]
@@ -23,6 +27,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
     -Dtests=false             \
     -Dintrospection=enabled   \
     -Dman=false
+
 '''
 
 [lifecycle.compile]

@@ -1,4 +1,3 @@
-[plan]
 name = "rsync"
 version = "3.4.1"
 release = 1
@@ -9,8 +8,15 @@ url = "https://rsync.samba.org/"
 
 [dependencies]
 build = ["gcc", "make"]
-link = ["openssl", "zlib", "zstd", "lz4"]
-optional = [{name = "openssh", description = "ssh transport"}]
+link = [
+    "openssl",
+    "zlib",
+    "zstd",
+    "lz4",
+]
+optional = [
+    { name = "openssh", description = "ssh transport" },
+]
 
 [[sources]]
 uri = "https://www.samba.org/ftp/rsync/src/rsync-${PART_VERSION}.tar.gz"
@@ -23,16 +29,19 @@ cd ${BUILD_DIR}
 --disable-xxhash             \
 --without-included-popt      \
 --without-included-zlib
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

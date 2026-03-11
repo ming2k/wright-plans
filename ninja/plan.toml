@@ -1,4 +1,3 @@
-[plan]
 name = "ninja"
 version = "1.12.1"
 release = 1
@@ -8,23 +7,29 @@ arch = "x86_64"
 url = "https://ninja-build.org/"
 
 [dependencies]
-build = ["bash", "gcc", "make", "python"]
 runtime = ["python"]
+build = [
+    "bash",
+    "gcc",
+    "make",
+    "python",
+]
 
 [[sources]]
 uri = "https://github.com/ninja-build/ninja/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 python3 configure.py --bootstrap
-"""
+
+'''
 
 [lifecycle.staging]
-script = """
+script = '''
 cd ${BUILD_DIR}
 install -Dm755 ninja ${PART_DIR}/usr/bin/ninja
 install -Dm644 misc/bash-completion ${PART_DIR}/usr/share/bash-completion/completions/ninja
-"""
 
+'''

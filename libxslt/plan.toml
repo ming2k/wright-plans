@@ -1,4 +1,3 @@
-[plan]
 name = "libxslt"
 version = "1.1.45"
 release = 1
@@ -21,16 +20,19 @@ cd ${BUILD_DIR}
 ./configure --prefix=/usr                 \
 --disable-static              \
 --docdir=/usr/share/doc/libxslt-${PART_VERSION}
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

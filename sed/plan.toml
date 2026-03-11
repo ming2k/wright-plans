@@ -1,4 +1,3 @@
-[plan]
 name = "sed"
 version = "4.9"
 release = 1
@@ -18,6 +17,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
+
 '''
 
 [lifecycle.compile]
@@ -25,6 +25,7 @@ script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
 make html
+
 '''
 
 [lifecycle.staging]
@@ -33,4 +34,5 @@ cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 install -d -m755           ${PART_DIR}/usr/share/doc/sed-4.9
 install -m644 doc/sed.html ${PART_DIR}/usr/share/doc/sed-4.9
+
 '''

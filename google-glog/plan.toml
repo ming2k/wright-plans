@@ -1,4 +1,3 @@
-[plan]
 name = "google-glog"
 version = "0.7.1"
 release = 1
@@ -24,6 +23,7 @@ cmake -B build -G Ninja \
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_TESTING=OFF \
     -DWITH_PKGCONFIG=ON
+
 '''
 
 [lifecycle.compile]

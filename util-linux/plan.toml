@@ -1,4 +1,3 @@
-[plan]
 name = "util-linux"
 version = "2.41.3"
 release = 5
@@ -8,8 +7,21 @@ arch = "x86_64"
 url = "https://github.com/util-linux/util-linux"
 
 [dependencies]
-build = ["gcc", "meson", "ninja", "pkgconf", "python"]
-link = ["glibc", "ncurses", "zlib", "libcap", "linux-pam", "readline"]
+build = [
+    "gcc",
+    "meson",
+    "ninja",
+    "pkgconf",
+    "python",
+]
+link = [
+    "glibc",
+    "ncurses",
+    "zlib",
+    "libcap",
+    "linux-pam",
+    "readline",
+]
 
 [[sources]]
 uri = "https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${PART_VERSION}.tar.xz"
@@ -18,6 +30,7 @@ sha256 = "SKIP"
 [lifecycle.staging]
 script = '''
 DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build
+
 '''
 
 [lifecycle.configure]
@@ -48,6 +61,7 @@ meson setup build \
     -D build-su=disabled \
     -D build-vipw=disabled \
     -D build-write=enabled
+
 '''
 
 [lifecycle.compile]
@@ -60,36 +74,49 @@ rm -f ${PART_DIR}/usr/lib/lib*.a*
 
 # Drop Python bindings (not needed)
 rm -rf ${PART_DIR}/usr/lib/python*
+
 '''
 
-[lifecycle.fabricate.libuuid]
+[output.libuuid]
 description = "Universally Unique Identifier library"
-dependencies.link = ["glibc"]
 script = '''
 install -d ${PART_DIR}/usr/lib
 mv -v ${MAIN_PART_DIR}/usr/lib/libuuid.so* ${PART_DIR}/usr/lib/
+
 '''
 
-[lifecycle.fabricate.libblkid]
+[output.libuuid.dependencies]
+link = ["glibc"]
+
+[output.libblkid]
 description = "Block device identification library"
-dependencies.link = ["glibc", "libuuid"]
 script = '''
 install -d ${PART_DIR}/usr/lib
 mv -v ${MAIN_PART_DIR}/usr/lib/libblkid.so* ${PART_DIR}/usr/lib/
+
 '''
 
-[lifecycle.fabricate.libmount]
+[output.libblkid.dependencies]
+link = ["glibc", "libuuid"]
+
+[output.libmount]
 description = "Device mounting library"
-dependencies.link = ["glibc", "libblkid"]
 script = '''
 install -d ${PART_DIR}/usr/lib
 mv -v ${MAIN_PART_DIR}/usr/lib/libmount.so* ${PART_DIR}/usr/lib/
+
 '''
 
-[lifecycle.fabricate.libsmartcols]
+[output.libmount.dependencies]
+link = ["glibc", "libblkid"]
+
+[output.libsmartcols]
 description = "Table or tree formatting library"
-dependencies.link = ["glibc"]
 script = '''
 install -d ${PART_DIR}/usr/lib
 mv -v ${MAIN_PART_DIR}/usr/lib/libsmartcols.so* ${PART_DIR}/usr/lib/
+
 '''
+
+[output.libsmartcols.dependencies]
+link = ["glibc"]

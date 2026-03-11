@@ -1,4 +1,3 @@
-[plan]
 name = "alsa-utils"
 version = "1.2.15.2"
 release = 1
@@ -8,8 +7,8 @@ arch = "x86_64"
 url = "https://www.alsa-project.org"
 
 [dependencies]
-link = ["alsa-lib", "ncurses"]
 runtime = ["alsa-ucm-conf"]
+link = ["alsa-lib", "ncurses"]
 
 [[sources]]
 uri = "https://www.alsa-project.org/files/pub/utils/alsa-utils-${PART_VERSION}.tar.bz2"
@@ -19,19 +18,22 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-alsaloop --disable-bat --disable-xmlto --disable-rst2man
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} make install
+
 '''
 
-[lifecycle.fabricate]
-hooks.post_install = "alsactl init 2>/dev/null || true"
+[hooks]
+post_install = "alsactl init 2>/dev/null || true"

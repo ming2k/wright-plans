@@ -1,4 +1,3 @@
-[plan]
 name = "filesystem"
 version = "1.0"
 release = 1
@@ -22,7 +21,6 @@ sha256 = "SKIP"
 skip_fhs_check = true
 
 [lifecycle.staging]
-backup = ["/etc/shells", "/etc/profile"]
 script = '''
 # --- FHS directory skeleton ---
 install -d -m 0700 ${PART_DIR}/boot
@@ -54,4 +52,8 @@ install -m 0644 ${FILES_DIR}/os-release ${PART_DIR}/etc/os-release
 install -m 0644 ${FILES_DIR}/shells     ${PART_DIR}/etc/shells
 install -m 0644 ${FILES_DIR}/profile    ${PART_DIR}/etc/profile
 install -d -m 0755 ${PART_DIR}/etc/profile.d
+
 '''
+
+[output]
+backup = ["/etc/shells", "/etc/profile"]

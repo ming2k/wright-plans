@@ -1,4 +1,3 @@
-[plan]
 name = "at-spi2-core"
 version = "2.58.3"
 release = 1
@@ -9,7 +8,12 @@ url = "https://wiki.gnome.org/Accessibility"
 
 [dependencies]
 runtime = ["dbus", "systemd"]
-build = ["dbus", "gobject-introspection", "meson", "ninja"]
+build = [
+    "dbus",
+    "gobject-introspection",
+    "meson",
+    "ninja",
+]
 link = ["glib"]
 
 [[sources]]
@@ -21,6 +25,7 @@ script = '''
 meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 --prefix=/usr               \
 --buildtype=release
+
 '''
 
 [lifecycle.compile]

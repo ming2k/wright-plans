@@ -1,4 +1,3 @@
-[plan]
 name = "cli11"
 version = "2.4.2"
 release = 1
@@ -18,16 +17,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 ninja -C build
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} ninja -C build install
+
 '''

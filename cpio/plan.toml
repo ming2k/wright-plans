@@ -1,4 +1,3 @@
-[plan]
 name = "cpio"
 version = "2.15"
 release = 1
@@ -22,12 +21,14 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 patch -Np1 -i ${FILES_DIR}/cpio-2.15-c23-conformity.patch
+
 '''
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --with-rmt=/dev/null
+
 '''
 
 [lifecycle.compile]

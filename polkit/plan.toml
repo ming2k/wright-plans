@@ -1,4 +1,3 @@
-[plan]
 name = "polkit"
 version = "126"
 release = 2
@@ -29,6 +28,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
     -D gtk_doc=false            \
     -D os_type=lfs              \
     -D examples=false
+
 '''
 
 [lifecycle.compile]
@@ -37,10 +37,10 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 [lifecycle.staging]
 script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
 
-
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 groupadd -fg 27 polkitd 2>/dev/null || true
 useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
     -c "PolicyKit Daemon Owner" polkitd 2>/dev/null || true
+
 '''

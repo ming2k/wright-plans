@@ -1,4 +1,3 @@
-[plan]
 name = "strace"
 version = "6.19"
 release = 1
@@ -20,6 +19,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr \
     --with-libiberty
+
 '''
 
 [lifecycle.compile]
@@ -29,4 +29,5 @@ script = "make -j$(nproc) -C ${BUILD_DIR}"
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "lua"
 version = "5.4.7"
 release = 4
@@ -18,6 +17,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 sed -i 's/^CFLAGS=.*/CFLAGS= -O2 -Wall -Wextra -DLUA_COMPAT_5_3 -fPIC $(SYSCFLAGS) $(MYCFLAGS)/' src/Makefile
+
 '''
 
 [lifecycle.compile]
@@ -29,6 +29,7 @@ cd ${BUILD_DIR}/src
 ${CC:-gcc} -shared -fPIC -Wl,-soname,liblua.so.5.4 \
     $(ar t liblua.a | tr '\n' ' ') \
     -lm -ldl -o liblua.so.5.4
+
 '''
 
 [lifecycle.staging]
@@ -56,8 +57,9 @@ Cflags: -I\${includedir}
 PCEOF
 cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua-5.4.pc
 cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua.pc
+
 '''
 
-[lifecycle.fabricate]
-hooks.post_install = "ldconfig 2>/dev/null || true"
-hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+[hooks]
+post_install = "ldconfig 2>/dev/null || true"
+post_upgrade = "ldconfig 2>/dev/null || true"

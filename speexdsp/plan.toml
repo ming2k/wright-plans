@@ -1,0 +1,35 @@
+name = "speexdsp"
+version = "1.2.1"
+release = 1
+description = "Digital signal processing library from the Speex project"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://www.speex.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+
+[[sources]]
+uri = "https://downloads.xiph.org/releases/speex/speexdsp-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --disable-static
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''

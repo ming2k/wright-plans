@@ -1,4 +1,3 @@
-[plan]
 name = "libunwind"
 version = "1.8.1"
 release = 2
@@ -26,16 +25,19 @@ export CFLAGS="$CFLAGS -Wno-error -std=gnu99"
 # 关键修复：修改生成的 Makefile，从 SUBDIRS 中删除 'tests'
 # 这样 make 就不会进入 tests 目录编译那些报错的文件了
 sed -i 's/ tests//g' Makefile
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

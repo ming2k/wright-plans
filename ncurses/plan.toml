@@ -1,4 +1,3 @@
-[plan]
 name = "ncurses"
 version = "6.6"
 release = 1
@@ -25,12 +24,14 @@ cd ${BUILD_DIR}
 --with-cxx-shared       \
 --enable-pc-files       \
 --with-pkg-config-libdir=/usr/lib/pkgconfig
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -52,4 +53,5 @@ ln -sfv libncursesw.so ${PART_DIR}/usr/lib/libcurses.so
 
 mkdir -p ${PART_DIR}/usr/share/doc/ncurses-6.6
 cp -v -R doc/* ${PART_DIR}/usr/share/doc/ncurses-6.6/
+
 '''

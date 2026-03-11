@@ -1,4 +1,3 @@
-[plan]
 name = "shadow"
 version = "4.19.3"
 release = 8
@@ -14,8 +13,6 @@ link = ["glibc", "linux-pam"]
 [[sources]]
 uri = "https://github.com/shadow-maint/shadow/releases/download/${PART_VERSION}/shadow-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
-
-[options]
 
 [lifecycle.prepare]
 script = '''
@@ -33,6 +30,7 @@ sed -e 's:#ENCRYPT_METHOD DES:ENCRYPT_METHOD YESCRYPT:' \
 -i etc/login.defs
 
 touch ${BUILD_DIR}/passwd_dummy
+
 '''
 
 [lifecycle.configure]
@@ -58,12 +56,14 @@ cd ${BUILD_DIR}
 --without-libbsd           \
 --without-selinux          \
 --with-group-name-max-length=32
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -139,11 +139,11 @@ session   include     system-session
 # End /etc/pam.d/${PROGRAM}
 PAMEOF
 done
+
 '''
 
-
-[lifecycle.fabricate]
-hooks.post_install = '''
+[hooks]
+post_install = '''
 # Ensure canonical shadow setup exists even on custom/minimal systems.
 if ! getent group shadow >/dev/null 2>&1; then
   groupadd --system shadow >/dev/null 2>&1 || true
@@ -177,8 +177,9 @@ awk -F: '$3 >= 1000 && $3 < 65534 { print $1 }' /etc/passwd | while read -r user
   grep -q "^${user}:" /etc/subuid 2>/dev/null || echo "${user}:100000:65536" >> /etc/subuid
   grep -q "^${user}:" /etc/subgid 2>/dev/null || echo "${user}:100000:65536" >> /etc/subgid
 done
+
 '''
-hooks.post_upgrade = '''
+post_upgrade = '''
 if ! getent group shadow >/dev/null 2>&1; then
   groupadd --system shadow >/dev/null 2>&1 || true
 fi
@@ -210,7 +211,10 @@ awk -F: '$3 >= 1000 && $3 < 65534 { print $1 }' /etc/passwd | while read -r user
   grep -q "^${user}:" /etc/subuid 2>/dev/null || echo "${user}:100000:65536" >> /etc/subuid
   grep -q "^${user}:" /etc/subgid 2>/dev/null || echo "${user}:100000:65536" >> /etc/subgid
 done
+
 '''
+
+[output]
 backup = [
     "/etc/login.defs",
     "/etc/default/useradd",

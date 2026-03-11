@@ -1,4 +1,3 @@
-[plan]
 name = "coreutils"
 version = "9.10"
 release = 3
@@ -9,7 +8,12 @@ url = "https://www.gnu.org/software/coreutils/"
 
 [dependencies]
 build = ["gcc", "gettext", "make"]
-link = ["acl", "attr", "libcap", "openssl"]
+link = [
+    "acl",
+    "attr",
+    "libcap",
+    "openssl",
+]
 
 [[sources]]
 uri = "https://ftp.gnu.org/gnu/coreutils/coreutils-${PART_VERSION}.tar.xz"
@@ -24,12 +28,14 @@ FORCE_UNSAFE_CONFIGURE=1 ./configure \
 --libexecdir=/usr/lib    \
 --with-openssl           \
 --enable-no-install-program=hostname,kill,uptime
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -39,4 +45,5 @@ make DESTDIR=${PART_DIR} install
 mkdir -p ${PART_DIR}/usr/share/man/man8
 mv -v ${PART_DIR}/usr/share/man/man1/chroot.1 ${PART_DIR}/usr/share/man/man8/chroot.8
 sed -i 's/"1"/"8"/' ${PART_DIR}/usr/share/man/man8/chroot.8
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "tcl"
 version = "8.6.17"
 release = 1
@@ -20,12 +19,14 @@ cd ${BUILD_DIR}/unix
 ./configure --prefix=/usr           \
             --mandir=/usr/share/man \
             --disable-rpath
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/unix
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -36,4 +37,5 @@ make DESTDIR=${PART_DIR} install-private-headers
 
 ln -sfv tclsh8.6 ${PART_DIR}/usr/bin/tclsh
 mv ${PART_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3
+
 '''

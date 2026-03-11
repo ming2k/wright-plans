@@ -1,4 +1,3 @@
-[plan]
 name = "xml-parser"
 version = "2.47"
 release = 1
@@ -19,16 +18,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 perl Makefile.PL
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

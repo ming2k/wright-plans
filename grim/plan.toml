@@ -1,4 +1,3 @@
-[plan]
 name = "grim"
 version = "1.5.0"
 release = 1
@@ -8,8 +7,19 @@ arch = "x86_64"
 url = "https://gitlab.freedesktop.org/emersion/grim"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "scdoc"]
-link = ["libjpeg-turbo", "libpng", "pixman", "wayland", "wayland-protocols"]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "scdoc",
+]
+link = [
+    "libjpeg-turbo",
+    "libpng",
+    "pixman",
+    "wayland",
+    "wayland-protocols",
+]
 
 [[sources]]
 uri = "https://gitlab.freedesktop.org/emersion/grim/-/archive/v${PART_VERSION}/grim-v${PART_VERSION}.tar.gz"
@@ -22,6 +32,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
   --buildtype=release \
   -Djpeg=enabled \
   -Dwerror=false
+
 '''
 
 [lifecycle.compile]
@@ -30,4 +41,5 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 [lifecycle.staging]
 script = '''
 DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
+
 '''

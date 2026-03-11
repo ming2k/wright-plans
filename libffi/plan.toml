@@ -1,4 +1,3 @@
-[plan]
 name = "libffi"
 version = "3.4.8"
 release = 1
@@ -15,22 +14,22 @@ uri = "https://github.com/libffi/libffi/releases/download/v${PART_VERSION}/libff
 sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure \
-  --prefix=/usr \
-  --disable-static
-"""
+./configure --prefix=/usr --disable-static
+
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+
+'''
 
 [lifecycle.staging]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
-"""
 
+'''

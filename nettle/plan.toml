@@ -1,4 +1,3 @@
-[plan]
 name = "nettle"
 version = "3.10.2"
 release = 1
@@ -19,12 +18,14 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -32,4 +33,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 chmod -v 755 ${PART_DIR}/usr/lib/lib{hogweed,nettle}.so
+
 '''

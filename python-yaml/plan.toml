@@ -1,5 +1,4 @@
-[plan]
-name = "python-pyyaml"
+name = "python-yaml"
 version = "6.0.2"
 release = 1
 description = "YAML parser and emitter for Python"
@@ -18,4 +17,5 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 pip3 install --break-system-packages --no-deps --root=${PART_DIR} --no-build-isolation .
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "mpv"
 version = "0.41.0"
 release = 2
@@ -48,6 +47,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 -D vulkan=enabled \
 -D wayland=enabled \
 -D gl=enabled
+
 '''
 
 [lifecycle.compile]

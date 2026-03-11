@@ -1,4 +1,3 @@
-[plan]
 name = "python-sphinx-rtd-theme"
 version = "2.0.0"
 release = 1
@@ -9,7 +8,12 @@ url = "https://github.com/readthedocs/sphinx_rtd_theme"
 
 [dependencies]
 runtime = ["python", "python-sphinx", "python-sphinxcontrib-jquery"]
-build = ["python", "setuptools-scm", "setuptools", "wheel"]
+build = [
+    "python",
+    "setuptools-scm",
+    "setuptools",
+    "wheel",
+]
 
 [[sources]]
 uri = "https://github.com/readthedocs/sphinx_rtd_theme/archive/refs/tags/${PART_VERSION}.tar.gz"
@@ -19,4 +23,5 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 SETUPTOOLS_SCM_PRETEND_VERSION=${PART_VERSION} pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+
 '''

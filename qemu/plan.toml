@@ -1,4 +1,3 @@
-[plan]
 name = "qemu"
 version = "9.2.0"
 release = 1
@@ -8,9 +7,24 @@ arch = "x86_64"
 url = "https://www.qemu.org/"
 
 [dependencies]
-build = ["bash", "python", "python-distlib", "perl", "meson", "ninja", "pkgconf"]
-link = ["glib", "pixman", "zlib", "libslirp", "dtc", "spice"]
 runtime = ["seabios"]
+build = [
+    "bash",
+    "python",
+    "python-distlib",
+    "perl",
+    "meson",
+    "ninja",
+    "pkgconf",
+]
+link = [
+    "glib",
+    "pixman",
+    "zlib",
+    "libslirp",
+    "dtc",
+    "spice",
+]
 
 [[sources]]
 uri = "https://download.qemu.org/qemu-${PART_VERSION}.tar.xz"
@@ -20,31 +34,22 @@ sha256 = "SKIP"
 timeout = 14400
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-./configure \
-  --prefix=/usr \
-  --sysconfdir=/etc \
-  --localstatedir=/var \
-  --target-list=x86_64-softmmu \
-  --python=/usr/bin/python3 \
-  --disable-download \
-  --enable-fdt=system \
-  --audio-drv-list= \
-  --enable-slirp \
-  --enable-spice \
-  --disable-docs \
-  --disable-werror
-"""
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --target-list=x86_64-softmmu --python=/usr/bin/python3 --disable-download --enable-fdt=system --audio-drv-list= --enable-slirp --enable-spice --disable-docs --disable-werror
+
+'''
 
 [lifecycle.compile]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
-"""
+
+'''
 
 [lifecycle.staging]
-script = """
+script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
-"""
+
+'''

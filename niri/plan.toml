@@ -1,4 +1,3 @@
-[plan]
 name = "niri"
 version = "25.11"
 release = 1
@@ -8,11 +7,7 @@ arch = "x86_64"
 url = "https://github.com/YaLTeR/niri"
 
 [dependencies]
-runtime = [
-    "seatd",
-    "pipewire",
-    "xdg-desktop-portal",
-]
+runtime = ["seatd", "pipewire", "xdg-desktop-portal"]
 build = ["cargo", "pkgconf", "rust"]
 link = [
     "cairo",
@@ -31,18 +26,19 @@ link = [
 uri = "https://github.com/YaLTeR/niri/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
-
 [lifecycle.configure]
 script = '''
 echo "cargo project, no configure step"
+
 '''
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = {CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target"}
+env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
 script = '''
 cd ${BUILD_DIR}
 cargo build --release --no-default-features --features systemd --locked
+
 '''
 
 [lifecycle.staging]
@@ -56,4 +52,5 @@ mkdir -p ${PART_DIR}/usr/lib/systemd/user
 cp resources/niri.service ${PART_DIR}/usr/lib/systemd/user/
 cp resources/niri-shutdown.target ${PART_DIR}/usr/lib/systemd/user/
 install -Dm755 resources/niri-session ${PART_DIR}/usr/bin/niri-session
+
 '''

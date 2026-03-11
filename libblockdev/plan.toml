@@ -1,4 +1,3 @@
-[plan]
 name = "libblockdev"
 version = "3.3.1"
 release = 2
@@ -8,9 +7,31 @@ arch = "x86_64"
 url = "https://github.com/storaged-project/libblockdev"
 
 [dependencies]
-build = ["autoconf", "automake", "gcc", "libtool", "make", "pkgconf", "python", "setuptools"]
 runtime = ["mdadm"]
-link = ["btrfs-progs", "cryptsetup", "glib", "json-glib", "keyutils", "kmod", "libatasmart", "libbytesize", "libnvme", "libyaml", "lvm2", "util-linux"]
+build = [
+    "autoconf",
+    "automake",
+    "gcc",
+    "libtool",
+    "make",
+    "pkgconf",
+    "python",
+    "setuptools",
+]
+link = [
+    "btrfs-progs",
+    "cryptsetup",
+    "glib",
+    "json-glib",
+    "keyutils",
+    "kmod",
+    "libatasmart",
+    "libbytesize",
+    "libnvme",
+    "libyaml",
+    "lvm2",
+    "util-linux",
+]
 
 [[sources]]
 uri = "https://github.com/storaged-project/libblockdev/archive/refs/tags/${PART_VERSION}.tar.gz"
@@ -50,6 +71,7 @@ text = text.replace(old_debug, new_debug, 1)
 text = text.replace(old_drivedb, new_drivedb, 1)
 path.write_text(text)
 PY
+
 '''
 
 [lifecycle.configure]
@@ -64,12 +86,14 @@ autoreconf -fi
   --with-nvdimm=no \
   --with-nvme=yes \
   --with-smartmontools=no
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -82,4 +106,5 @@ if [ -d ${PART_DIR}/usr/etc ]; then
   cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
   rm -rf ${PART_DIR}/usr/etc
 fi
+
 '''

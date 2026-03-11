@@ -1,4 +1,3 @@
-[plan]
 name = "lzo"
 version = "2.10"
 release = 1
@@ -17,6 +16,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --enable-shared --disable-static --docdir=/usr/share/doc/lzo-${PART_VERSION}
+
 '''
 
 [lifecycle.compile]

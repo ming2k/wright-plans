@@ -1,4 +1,3 @@
-[plan]
 name = "jetbrains-mono"
 version = "2.304"
 release = 2
@@ -22,15 +21,16 @@ script = '''
 cd ${BUILD_DIR}
 rm -rf jbmono
 bsdtar xf ${FILES_DIR}/JetBrainsMono-${PART_VERSION}.zip -C jbmono
+
 '''
 
 [lifecycle.staging]
 script = '''
 mkdir -p ${PART_DIR}/usr/share/fonts/jetbrains-mono
 find ${BUILD_DIR}/jbmono -name '*.ttf' -not -name '*NL*' -exec cp {} ${PART_DIR}/usr/share/fonts/jetbrains-mono/ \;
+
 '''
 
-
-[lifecycle.fabricate]
-hooks.post_install = "fc-cache -s 2>/dev/null || true"
-hooks.post_upgrade = "fc-cache -s 2>/dev/null || true"
+[hooks]
+post_install = "fc-cache -s 2>/dev/null || true"
+post_upgrade = "fc-cache -s 2>/dev/null || true"

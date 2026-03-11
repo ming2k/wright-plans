@@ -1,4 +1,3 @@
-[plan]
 name = "libnvme"
 version = "1.16.1"
 release = 1
@@ -8,8 +7,18 @@ arch = "x86_64"
 url = "https://github.com/linux-nvme/libnvme"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "gcc"]
-link = ["dbus", "json-c", "keyutils", "openssl"]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "gcc",
+]
+link = [
+    "dbus",
+    "json-c",
+    "keyutils",
+    "openssl",
+]
 
 [[sources]]
 uri = "https://github.com/linux-nvme/libnvme/archive/refs/tags/v${PART_VERSION}.tar.gz"
@@ -22,16 +31,19 @@ meson setup build \
   --prefix=/usr \
   -Ddocs=false \
   -Dpython=disabled
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 ninja -C build
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} ninja -C build install
+
 '''

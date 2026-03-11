@@ -1,4 +1,3 @@
-[plan]
 name = "setuptools-scm"
 version = "9.2.2"
 release = 1
@@ -19,4 +18,5 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 SETUPTOOLS_SCM_PRETEND_VERSION=${PART_VERSION} pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "libwebp"
 version = "1.5.0"
 release = 1
@@ -18,6 +17,7 @@ sha256 = "7d6fab70cf844bf6769077bd5d7a74893f8ffd4dfb42861745750c63c2a5c92c"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static --enable-libwebpmux --enable-libwebpdemux --enable-libwebpextras --enable-swap-16bit-csp
+
 '''
 
 [lifecycle.compile]

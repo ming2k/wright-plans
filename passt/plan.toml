@@ -1,4 +1,3 @@
-[plan]
 name = "passt"
 version = "2026_01_20.386b5f5"
 release = 1
@@ -19,10 +18,12 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 make VERSION="${PART_VERSION}" -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} prefix=/usr install
+
 '''

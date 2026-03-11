@@ -1,4 +1,3 @@
-[plan]
 name = "gcc"
 version = "15.2.0"
 release = 3
@@ -9,8 +8,19 @@ url = "https://gcc.gnu.org/"
 
 [dependencies]
 runtime = ["binutils"]
-build = ["binutils", "make", "perl", "texinfo"]
-link = ["gcc-libs", "gmp", "mpc", "mpfr", "zlib"]
+build = [
+    "binutils",
+    "make",
+    "perl",
+    "texinfo",
+]
+link = [
+    "gcc-libs",
+    "gmp",
+    "mpc",
+    "mpfr",
+    "zlib",
+]
 
 [[sources]]
 uri = "https://ftp.gnu.org/gnu/gcc/gcc-${PART_VERSION}/gcc-${PART_VERSION}.tar.xz"
@@ -26,6 +36,7 @@ case $(uname -m) in
     x86_64) sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64 ;;
 esac
 mkdir -v build
+
 '''
 
 [lifecycle.configure]
@@ -53,12 +64,14 @@ SED=sed \
     --with-system-zlib \
     --with-linker-hash-style=gnu \
     --disable-werror
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/build
 make -j$(nproc)
+
 '''
 
 [lifecycle.fabricate]
@@ -78,20 +91,22 @@ ln -sfv "../../libexec/gcc/${TRIPLET}/${GCC_VER}/liblto_plugin.so" "${PART_DIR}/
 # Move GDB auto-load scripts
 install -d "${PART_DIR}/usr/share/gdb/auto-load/usr/lib"
 mv -v "${PART_DIR}"/usr/lib/*gdb.py "${PART_DIR}/usr/share/gdb/auto-load/usr/lib/" 2>/dev/null || true
+
 '''
 
-[lifecycle.fabricate.libgcc]
+[output.libgcc]
 description = "GCC runtime library (libgcc_s.so)"
-dependencies.link = ["glibc"]
 script = '''
 install -d "${PART_DIR}/usr/lib"
 mv -v "${MAIN_PART_DIR}"/usr/lib/libgcc_s.so* "${PART_DIR}/usr/lib/"
+
 '''
 
-[lifecycle.fabricate."libstdc++"]
+[output.libgcc.dependencies]
+link = ["glibc"]
+
+[output."libstdc++"]
 description = "GNU C++ standard library"
-dependencies.runtime = ["libgcc"]
-dependencies.link = ["glibc"]
 script = '''
 install -d "${PART_DIR}/usr/lib"
 install -d "${PART_DIR}/usr/share/gdb/auto-load/usr/lib"
@@ -102,40 +117,62 @@ mv -v "${MAIN_PART_DIR}"/usr/lib/libstdc++fs.so* "${PART_DIR}/usr/lib/" 2>/dev/n
 mv -v "${MAIN_PART_DIR}"/usr/lib/libstdc++exp.so* "${PART_DIR}/usr/lib/" 2>/dev/null || true
 mv -v "${MAIN_PART_DIR}"/usr/share/gdb/auto-load/usr/lib/libstdc++* "${PART_DIR}/usr/share/gdb/auto-load/usr/lib/" 2>/dev/null || true
 mv -v "${MAIN_PART_DIR}"/usr/share/gcc-${PART_VERSION}/python/libstdcxx "${PART_DIR}/usr/share/gcc-${PART_VERSION}/python/" 2>/dev/null || true
+
 '''
 
-[lifecycle.fabricate.libgomp]
+[output."libstdc++".dependencies]
+runtime = ["libgcc"]
+link = ["glibc"]
+
+[output.libgomp]
 description = "GNU OpenMP runtime library"
-dependencies.link = ["glibc"]
 script = '''
 install -d "${PART_DIR}/usr/lib"
 mv -v "${MAIN_PART_DIR}"/usr/lib/libgomp.so* "${PART_DIR}/usr/lib/"
 mv -v "${MAIN_PART_DIR}"/usr/lib/libgomp.spec "${PART_DIR}/usr/lib/" 2>/dev/null || true
+
 '''
 
-[lifecycle.fabricate.libatomic]
+[output.libgomp.dependencies]
+link = ["glibc"]
+
+[output.libatomic]
 description = "GCC atomic operations fallback library"
-dependencies.link = ["glibc"]
 script = '''
 install -d "${PART_DIR}/usr/lib"
 mv -v "${MAIN_PART_DIR}"/usr/lib/libatomic.so* "${PART_DIR}/usr/lib/"
+
 '''
 
-[lifecycle.fabricate.libsanitizer]
+[output.libatomic.dependencies]
+link = ["glibc"]
+
+[output.libsanitizer]
 description = "GCC sanitizer runtime libraries (ASan, LSan, TSan, UBSan)"
-dependencies.runtime = ["libgcc", "libstdc++"]
-dependencies.link = ["glibc"]
 script = '''
 install -d "${PART_DIR}/usr/lib"
 for lib in asan lsan tsan ubsan hwasan; do
     mv -v "${MAIN_PART_DIR}"/usr/lib/lib${lib}.so* "${PART_DIR}/usr/lib/" 2>/dev/null || true
 done
+
 '''
 
-[lifecycle.fabricate.gcc-libs]
+[output.libsanitizer.dependencies]
+runtime = ["libgcc", "libstdc++"]
+link = ["glibc"]
+
+[output.gcc-libs]
 description = "GCC runtime libraries (meta-package)"
-dependencies.runtime = ["libatomic", "libgcc", "libgomp", "libstdc++"]
 script = '''
 install -d "${PART_DIR}/usr/share/doc/gcc-libs"
 echo "gcc-libs: meta-package pulling in libgcc, libstdc++, libgomp, libatomic" > "${PART_DIR}/usr/share/doc/gcc-libs/README"
+
 '''
+
+[output.gcc-libs.dependencies]
+runtime = [
+    "libatomic",
+    "libgcc",
+    "libgomp",
+    "libstdc++",
+]

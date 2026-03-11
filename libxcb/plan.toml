@@ -1,4 +1,3 @@
-[plan]
 name = "libxcb"
 version = "1.17.0"
 release = 1
@@ -9,7 +8,12 @@ url = "https://xcb.freedesktop.org"
 
 [dependencies]
 runtime = ["xcb-proto"]
-build = ["gcc", "make", "python", "xcb-proto"]
+build = [
+    "gcc",
+    "make",
+    "python",
+    "xcb-proto",
+]
 
 [[sources]]
 uri = "https://xorg.freedesktop.org/archive/individual/lib/libxcb-${PART_VERSION}.tar.xz"
@@ -19,16 +23,19 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --disable-static --without-doxygen
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

@@ -1,4 +1,3 @@
-[plan]
 name = "e2fsprogs"
 version = "1.47.3"
 release = 3
@@ -28,12 +27,14 @@ mkdir -p build && cd build
 --disable-libuuid       \
 --disable-uuidd         \
 --disable-fsck
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/build
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -44,4 +45,5 @@ DESTDIR=${PART_DIR} make install-libs
 
 # Remove static libraries
 rm -f ${PART_DIR}/usr/lib/lib{com_err,e2p,ext2fs,ss}.a
+
 '''

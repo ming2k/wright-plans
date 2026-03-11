@@ -1,4 +1,3 @@
-[plan]
 name = "jansson"
 version = "2.14.1"
 release = 1
@@ -15,28 +14,30 @@ link = ["glibc"]
 uri = "https://github.com/akheron/jansson/releases/download/v${PART_VERSION}/jansson-${PART_VERSION}.tar.bz2"
 sha256 = "SKIP"
 
-[options]
-
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr --disable-static
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.check]
 script = '''
 cd ${BUILD_DIR}
 make check
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+
 '''

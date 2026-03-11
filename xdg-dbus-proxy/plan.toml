@@ -1,4 +1,3 @@
-[plan]
 name = "xdg-dbus-proxy"
 version = "0.1.6"
 release = 1
@@ -24,16 +23,19 @@ meson setup build      \
 --buildtype=release    \
 -D tests=false         \
 -D man=disabled
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 ninja -C build -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} ninja -C build install
+
 '''

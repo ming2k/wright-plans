@@ -1,4 +1,3 @@
-[plan]
 name = "pinentry"
 version = "1.3.2"
 release = 1
@@ -29,12 +28,14 @@ cd ${BUILD_DIR}
   --disable-pinentry-qt \
   --disable-pinentry-qt5 \
   --disable-pinentry-qt6
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -46,4 +47,5 @@ DESTDIR=${PART_DIR} make install
 if [ ! -e ${PART_DIR}/usr/bin/pinentry ] && [ -e ${PART_DIR}/usr/bin/pinentry-curses ]; then
   ln -sf pinentry-curses ${PART_DIR}/usr/bin/pinentry
 fi
+
 '''

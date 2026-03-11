@@ -1,0 +1,52 @@
+name = "libcamera"
+version = "0.7.0"
+release = 1
+description = "Linux camera stack and framework"
+license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://libcamera.org"
+
+[dependencies]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "python-yaml",
+    "python-jinja2",
+    "python-ply",
+]
+link = [
+    "gnutls",
+    "libevent",
+    "libyaml",
+    "systemd",
+    "gstreamer",
+    "v4l-utils",
+]
+
+[[sources]]
+uri = "git+https://github.com/libcamera-org/libcamera.git#v${PART_VERSION}"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+dockyard = "relaxed"
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+--prefix=/usr                        \
+--buildtype=release                  \
+-D documentation=disabled            \
+-D test=false                        \
+-D qcam=disabled                     \
+-D pycamera=disabled                 \
+-D gstreamer=enabled                 \
+-D v4l2=enabled                      \
+-D udev=enabled                      \
+-D cam=enabled
+
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"

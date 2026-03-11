@@ -1,4 +1,3 @@
-[plan]
 name = "gmp"
 version = "6.3.0"
 release = 2
@@ -18,6 +17,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 sed -i '/long long t1;/,+1s/()/(...)/' configure
+
 '''
 
 [lifecycle.configure]
@@ -28,6 +28,7 @@ cd ${BUILD_DIR}
 --enable-cxx     \
 --disable-static \
 --docdir=/usr/share/doc/gmp-6.3.0
+
 '''
 
 [lifecycle.compile]
@@ -36,6 +37,7 @@ unset CFLAGS CXXFLAGS
 cd ${BUILD_DIR}
 make -j$(nproc)
 make html
+
 '''
 
 [lifecycle.check]
@@ -43,6 +45,7 @@ script = '''
 cd ${BUILD_DIR}
 make check 2>&1 | tee gmp-check-log
 awk '/# PASS:/{total+=$3} END{print total}' gmp-check-log
+
 '''
 
 [lifecycle.staging]
@@ -50,4 +53,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 make DESTDIR=${PART_DIR} install-html
+
 '''

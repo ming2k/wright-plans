@@ -1,4 +1,3 @@
-[plan]
 name = "rust"
 version = "1.93.1"
 release = 1
@@ -19,6 +18,7 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 ./install.sh --destdir=${PART_DIR} --prefix=/usr --without=rust-docs
+
 '''
 
 [lifecycle.fabricate]
@@ -30,11 +30,11 @@ rm -f ${PART_DIR}/usr/lib/rustlib/uninstall.sh
 rm -rf ${PART_DIR}/usr/lib/rustlib/manifest-*
 # Remove /usr/etc — not FHS-compliant
 rm -rf ${PART_DIR}/usr/etc
+
 '''
 
-[lifecycle.fabricate.cargo]
+[output.cargo]
 description = "Cargo package manager for Rust"
-dependencies.runtime = ["rust"]
 script = '''
 install -d ${PART_DIR}/usr/bin
 install -d ${PART_DIR}/usr/share/man/man1
@@ -66,4 +66,8 @@ fi
 if [ -f "${MAIN_PART_DIR}/usr/share/zsh/site-functions/_cargo" ]; then
   mv -v "${MAIN_PART_DIR}/usr/share/zsh/site-functions/_cargo" "${PART_DIR}/usr/share/zsh/site-functions/"
 fi
+
 '''
+
+[output.cargo.dependencies]
+runtime = ["rust"]

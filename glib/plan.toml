@@ -1,4 +1,3 @@
-[plan]
 name = "glib"
 version = "2.84.0"
 release = 1
@@ -8,7 +7,13 @@ arch = "x86_64"
 url = "https://www.gtk.org/"
 
 [dependencies]
-build = ["bash", "python", "meson", "ninja", "pkgconf"]
+build = [
+    "bash",
+    "python",
+    "meson",
+    "ninja",
+    "pkgconf",
+]
 link = ["libffi", "pcre2"]
 
 [[sources]]
@@ -16,19 +21,14 @@ uri = "https://download.gnome.org/sources/glib/2.84/glib-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
-script = """
+script = '''
 cd ${BUILD_DIR}
-meson setup build \
-  --prefix=/usr \
-  --buildtype=release \
-  -Ddefault_library=shared \
-  -Dtests=false \
-  -Dinstalled_tests=false
-"""
+meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared -Dtests=false -Dinstalled_tests=false
+
+'''
 
 [lifecycle.compile]
 script = "meson compile -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
 script = "DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build"
-

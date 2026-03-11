@@ -1,4 +1,3 @@
-[plan]
 name = "neovim"
 version = "0.11.6"
 release = 1
@@ -9,9 +8,18 @@ url = "https://neovim.io"
 maintainer = "Neovim contributors <neovim@neovim.io>"
 
 [dependencies]
-build = ["cmake", "curl", "gcc", "gettext", "make"]
+build = [
+    "cmake",
+    "curl",
+    "gcc",
+    "gettext",
+    "make",
+]
 link = ["glibc"]
-optional = [{name = "python", description = "Python provider support"}, {name = "xclip", description = "Clipboard support via xclip"}]
+optional = [
+    { name = "python", description = "Python provider support" },
+    { name = "xclip", description = "Clipboard support via xclip" },
+]
 
 [[sources]]
 uri = "https://github.com/neovim/neovim/archive/refs/tags/v${PART_VERSION}.tar.gz"
@@ -25,25 +33,29 @@ dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr deps
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${PART_DIR} install
+
 '''
 
+[hooks]
+post_install = '''
+update-desktop-database -q 2>/dev/null || true
 
-[lifecycle.fabricate]
-hooks.post_install = '''
-update-desktop-database -q 2>/dev/null || true
 '''
-hooks.post_upgrade = '''
+post_upgrade = '''
 update-desktop-database -q 2>/dev/null || true
+
 '''

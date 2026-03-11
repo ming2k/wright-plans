@@ -1,4 +1,3 @@
-[plan]
 name = "libplacebo"
 version = "7.360.0"
 release = 1
@@ -8,8 +7,20 @@ arch = "x86_64"
 url = "https://github.com/haasn/libplacebo"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf", "python-glad2"]
-link = ["glslang", "lcms2", "shaderc", "spirv-cross", "vulkan-loader", "vulkan-headers"]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "python-glad2",
+]
+link = [
+    "glslang",
+    "lcms2",
+    "shaderc",
+    "spirv-cross",
+    "vulkan-loader",
+    "vulkan-headers",
+]
 
 [[sources]]
 uri = "https://code.videolan.org/videolan/libplacebo/-/archive/v${PART_VERSION}/libplacebo-v${PART_VERSION}.tar.gz"
@@ -27,6 +38,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 -D vulkan=enabled \
 -D lcms=enabled \
 -D opengl=disabled
+
 '''
 
 [lifecycle.compile]

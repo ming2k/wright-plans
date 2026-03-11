@@ -1,4 +1,3 @@
-[plan]
 name = "texinfo"
 version = "7.2"
 release = 1
@@ -19,18 +18,21 @@ sha256 = "SKIP"
 script = '''
 cd ${BUILD_DIR}
 sed 's/! $output_file eq/$output_file ne/' -i tp/Texinfo/Convert/*.pm
+
 '''
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
 make -j$(nproc)
+
 '''
 
 [lifecycle.staging]
@@ -38,4 +40,5 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 make DESTDIR=${PART_DIR} TEXMF=/usr/share/texmf install-tex
+
 '''

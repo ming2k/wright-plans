@@ -1,4 +1,3 @@
-[plan]
 name = "gst-plugins-bad"
 version = "1.28.0"
 release = 1
@@ -8,7 +7,14 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["gst-plugins-base", "gstreamer", "libwpe"]
-build = ["gst-plugins-base", "gstreamer", "libwpe", "meson", "ninja", "pkgconf"]
+build = [
+    "gst-plugins-base",
+    "gstreamer",
+    "libwpe",
+    "meson",
+    "ninja",
+    "pkgconf",
+]
 link = ["openssl"]
 
 [[sources]]
@@ -25,16 +31,19 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
 # -Dintrospection=disabled: 修复缺少依赖 GIR 的错误
 # -Dgpl=enabled: 启用必要的 GPL 插件
 meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Ddoc=disabled -Dgpl=enabled -Dsctp=disabled -Dintrospection=disabled
+
 '''
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}/build
 ninja -j$(nproc)
+
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}/build
 DESTDIR=${PART_DIR} ninja install
+
 '''
