@@ -1,0 +1,34 @@
+name = "pkgname"
+version = "1.0.0"
+release = 1
+description = ""
+license = "MIT"
+arch = "x86_64"
+url = ""
+
+[dependencies]
+build = []
+link = []
+runtime = []
+
+[[sources]]
+uri = "https://example.com/pkgname-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.staging]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+"""

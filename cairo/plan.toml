@@ -4,6 +4,7 @@ release = 1
 description = "Multi-platform 2D graphics library (Pure Wayland)"
 license = "LGPL-2.1"
 arch = "x86_64"
+url = "https://cairographics.org/"
 
 [dependencies]
 build = ["meson", "ninja", "pkgconf"]

@@ -1,5 +1,5 @@
 name = "wright"
-version = "1.6.0"
+version = "1.7.2"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -12,6 +12,10 @@ build = ["rust", "cargo"]
 
 [[sources]]
 uri = "https://github.com/ming2k/wright/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "skel-plan.toml"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -28,45 +32,10 @@ script = '''
 cd ${BUILD_DIR}
 install -Dm755 target/release/wright ${PART_DIR}/usr/bin/wright
 install -Dm755 target/release/wbuild ${PART_DIR}/usr/bin/wbuild
+install -Dm755 target/release/wrepo ${PART_DIR}/usr/bin/wrepo
 
 # Skeleton plan for new packages
-install -dm755 ${PART_DIR}/usr/share/wright/skel
-cat > ${PART_DIR}/usr/share/wright/skel/plan.toml << 'EOF'
-name = "pkgname"
-version = "1.0.0"
-release = 1
-description = ""
-license = "MIT"
-arch = "x86_64"
-url = ""
-
-[dependencies]
-build = []
-link = []
-runtime = []
-
-[[sources]]
-uri = "https://example.com/pkgname-${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
-
-[lifecycle.configure]
-script = """
-cd ${BUILD_DIR}
-./configure --prefix=/usr
-"""
-
-[lifecycle.compile]
-script = """
-cd ${BUILD_DIR}
-make -j$(nproc)
-"""
-
-[lifecycle.staging]
-script = """
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-"""
-EOF
+install -Dm644 ${FILES_DIR}/skel-plan.toml ${PART_DIR}/usr/share/wright/skel/plan.toml
 
 # Plans workspace — created here so permissions are managed by the package
 install -dm755 ${PART_DIR}/var/lib/wright/plans

@@ -1,5 +1,5 @@
 name = "gtk4"
-version = "4.20.3"
+version = "4.22.0"
 release = 1
 description = "GTK4 — the GIMP Toolkit (Pure Wayland)"
 license = "LGPL-2.1-or-later"
@@ -34,13 +34,25 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gtk/4.20/gtk-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gtk/4.22/gtk-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dwayland-backend=true -Dx11-backend=false -Dintrospection=enabled -Dvulkan=enabled -Dmedia-gstreamer=disabled -Dprint-cups=disabled -Dbuild-tests=false -Ddocumentation=false
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dwayland-backend=true \
+    -Dx11-backend=false \
+    -Dintrospection=enabled \
+    -Dvulkan=enabled \
+    -Dmedia-gstreamer=disabled \
+    -Dprint-cups=disabled \
+    -Dbuild-tests=false \
+    -Dbuild-examples=false \
+    -Dbuild-demos=false \
+    -Ddocumentation=false
 
 '''
 
@@ -57,19 +69,6 @@ if [ -f "${pc_file}" ]; then
         sed -i "s/^Requires: /Requires: libjpeg, libpng, /" "${pc_file}"
     fi
 fi
-
-# Remove GTK demo applications (gtk4-node-editor, gtk4-print-editor)
-rm -f \
-    "${PART_DIR}/usr/bin/gtk4-node-editor" \
-    "${PART_DIR}/usr/bin/gtk4-print-editor" \
-    "${PART_DIR}/usr/share/applications/org.gtk.gtk4.NodeEditor.desktop" \
-    "${PART_DIR}/usr/share/applications/org.gtk.PrintEditor4.desktop" \
-    "${PART_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor.svg" \
-    "${PART_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.gtk4.NodeEditor.Devel.svg" \
-    "${PART_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.PrintEditor4.svg" \
-    "${PART_DIR}/usr/share/icons/hicolor/scalable/apps/org.gtk.PrintEditor4.Devel.svg" \
-    "${PART_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.gtk4.NodeEditor-symbolic.svg" \
-    "${PART_DIR}/usr/share/icons/hicolor/symbolic/apps/org.gtk.PrintEditor4-symbolic.svg"
 
 '''
 

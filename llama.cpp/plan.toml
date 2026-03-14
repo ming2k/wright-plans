@@ -1,0 +1,49 @@
+name = "llama.cpp"
+version = "b8327"
+release = 1
+description = "LLM inference in C/C++"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/ggml-org/llama.cpp"
+
+[dependencies]
+build = ["gcc", "cmake", "ninja", "pkgconf"]
+link = ["openssl"]
+optional = [
+    { name = "curl", description = "HTTPS support for model downloading" },
+]
+
+[[sources]]
+uri = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr/lib/llama.cpp \
+  -DBUILD_SHARED_LIBS=OFF \
+  -DGGML_NATIVE=OFF \
+  -DLLAMA_CURL=OFF
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+ninja -C build -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PART_DIR} ninja -C build install
+'''
+
+[lifecycle.fabricate]
+script = '''
+mkdir -p ${PART_DIR}/usr/bin
+for bin in ${PART_DIR}/usr/lib/llama.cpp/bin/*; do
+  ln -sf /usr/lib/llama.cpp/bin/$(basename "$bin") ${PART_DIR}/usr/bin/$(basename "$bin")
+done
+'''

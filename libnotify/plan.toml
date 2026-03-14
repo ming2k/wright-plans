@@ -1,0 +1,36 @@
+name = "libnotify"
+version = "0.8.8"
+release = 1
+description = "Library for sending desktop notifications"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://gnome.pages.gitlab.gnome.org/libnotify/"
+
+[dependencies]
+build = [
+    "meson",
+    "ninja",
+    "pkgconf",
+    "gobject-introspection",
+]
+link = [
+    "glib",
+    "gdk-pixbuf",
+]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/libnotify/0.8/libnotify-${PART_VERSION}.tar.xz"
+sha256 = "23420ef619dc2cb5aebad613f4823a2fa41c07e5a1d05628d40f6ec4b35bfddd"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build --prefix=/usr --buildtype=release -Dtests=false -Dintrospection=enabled -Dman=false -Dgtk_doc=false -Ddocbook_docs=disabled
+
+'''
+
+[lifecycle.compile]
+script = "meson compile -C ${BUILD_DIR}/build"
+
+[lifecycle.staging]
+script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"

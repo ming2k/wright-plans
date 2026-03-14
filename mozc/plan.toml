@@ -1,0 +1,39 @@
+name = "mozc"
+version = "3.33.6089"
+release = 1
+description = "The Open Source edition of Google Japanese Input"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/google/mozc"
+
+[dependencies]
+build = ["bazelisk", "openjdk", "python", "gcc"]
+link = ["qt6-base"]
+runtime = ["qt6-base"]
+
+[[sources]]
+uri = "https://github.com/google/mozc/archive/refs/tags/${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/src
+bazel --batch build server:mozc_server gui/tool:mozc_tool \
+  --config=oss_linux \
+  --config=release_build \
+  --host_cxxopt=-O2 \
+  --host_cxxopt=-pipe \
+  --cxxopt=-O2 \
+  --cxxopt=-pipe
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}/src
+
+install -Dm755 bazel-bin/server/mozc_server ${PART_DIR}/usr/lib/mozc/mozc_server
+install -Dm755 bazel-bin/gui/tool/mozc_tool ${PART_DIR}/usr/lib/mozc/mozc_tool
+
+install -Dm644 ${BUILD_DIR}/LICENSE ${PART_DIR}/usr/share/licenses/mozc/LICENSE
+'''

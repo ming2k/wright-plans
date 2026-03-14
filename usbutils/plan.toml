@@ -1,0 +1,33 @@
+name = "usbutils"
+version = "019"
+release = 1
+description = "USB device utilities including lsusb"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://github.com/gregkh/usbutils"
+
+[dependencies]
+build = ["gcc", "meson", "ninja", "pkgconf"]
+link = ["glibc", "libusb", "systemd"]
+runtime = ["hwdata"]
+
+[[sources]]
+uri = "https://github.com/gregkh/usbutils/archive/v${PART_VERSION}/usbutils-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build \
+    --prefix=/usr
+
+'''
+
+[lifecycle.compile]
+script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = '''
+DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build
+
+'''
