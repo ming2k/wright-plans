@@ -34,3 +34,5 @@ cd ${BUILD_DIR}
 make SBINDIR=/usr/bin DESTDIR=${PART_DIR} install
 
 '''
+
+[lifecycle.fabricate]

@@ -34,3 +34,5 @@ cp -a sof-ace-tplg ${PART_DIR}/usr/lib/firmware/intel/sof-ace-tplg
 cp -a sof-ipc4-tplg ${PART_DIR}/usr/lib/firmware/intel/sof-ipc4-tplg
 
 '''
+
+[lifecycle.fabricate]

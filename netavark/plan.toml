@@ -28,3 +28,5 @@ cd ${BUILD_DIR}
 install -Dm755 target/release/netavark ${PART_DIR}/usr/libexec/podman/netavark
 
 '''
+
+[lifecycle.fabricate]

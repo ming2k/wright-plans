@@ -47,3 +47,5 @@ DESTDIR=${PART_DIR} make install-libs
 rm -f ${PART_DIR}/usr/lib/lib{com_err,e2p,ext2fs,ss}.a
 
 '''
+
+[lifecycle.fabricate]

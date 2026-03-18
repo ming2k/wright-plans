@@ -41,3 +41,5 @@ systemctl daemon-reload 2>/dev/null || true
 systemctl enable btrfs-scrub@-.timer 2>/dev/null || true
 
 '''
+
+[lifecycle.fabricate]

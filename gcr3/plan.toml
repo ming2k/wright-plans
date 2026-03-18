@@ -49,3 +49,5 @@ cd ${BUILD_DIR}
 meson install -C build --destdir ${PART_DIR}
 
 '''
+
+[lifecycle.fabricate]

@@ -17,3 +17,5 @@ mkdir -p ${PART_DIR}/usr/lib/firmware
 ./copy-firmware.sh ${PART_DIR}/usr/lib/firmware
 
 '''
+
+[lifecycle.fabricate]

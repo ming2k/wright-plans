@@ -27,3 +27,5 @@ cd ${BUILD_DIR}
 install -Dm755 target/release/aardvark-dns ${PART_DIR}/usr/libexec/podman/aardvark-dns
 
 '''
+
+[lifecycle.fabricate]

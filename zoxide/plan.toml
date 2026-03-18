@@ -32,3 +32,5 @@ install -Dm644 contrib/completions/zoxide.fish ${PART_DIR}/usr/share/fish/vendor
 install -Dm644 man/man1/*.1 -t ${PART_DIR}/usr/share/man/man1/
 
 '''
+
+[lifecycle.fabricate]

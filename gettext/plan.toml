@@ -36,3 +36,5 @@ make DESTDIR=${PART_DIR} install
 chmod -v 0755 ${PART_DIR}/usr/lib/preloadable_libintl.so
 
 '''
+
+[lifecycle.fabricate]

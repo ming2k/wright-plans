@@ -37,3 +37,5 @@ DESTDIR=${PART_DIR} make install
 
 [hooks]
 post_install = "alsactl init 2>/dev/null || true"
+
+[lifecycle.fabricate]

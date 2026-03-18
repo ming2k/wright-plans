@@ -31,3 +31,5 @@ script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
 script = "DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build"
+
+[lifecycle.fabricate]

@@ -34,3 +34,5 @@ find ${BUILD_DIR}/jbmono -name '*.ttf' -not -name '*NL*' -exec cp {} ${PART_DIR}
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"
 post_upgrade = "fc-cache -s 2>/dev/null || true"
+
+[lifecycle.fabricate]

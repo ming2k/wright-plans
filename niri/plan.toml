@@ -54,3 +54,5 @@ cp resources/niri-shutdown.target ${PART_DIR}/usr/lib/systemd/user/
 install -Dm755 resources/niri-session ${PART_DIR}/usr/bin/niri-session
 
 '''
+
+[lifecycle.fabricate]

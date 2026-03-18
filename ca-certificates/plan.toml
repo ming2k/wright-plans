@@ -54,3 +54,5 @@ post_upgrade = '''
 update-ca-trust
 
 '''
+
+[lifecycle.fabricate]

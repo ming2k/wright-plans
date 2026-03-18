@@ -48,3 +48,5 @@ mkdir -p ${PART_DIR}/usr/share/doc/kbd-${PART_VERSION}
 cp -R -v docs/doc/* ${PART_DIR}/usr/share/doc/kbd-${PART_VERSION}
 
 '''
+
+[lifecycle.fabricate]

@@ -26,3 +26,5 @@ cd ${BUILD_DIR}
 make PREFIX=/usr DESTDIR=${PART_DIR} install
 
 '''
+
+[lifecycle.fabricate]

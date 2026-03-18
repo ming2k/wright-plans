@@ -46,3 +46,5 @@ install -v -dm755  ${PART_DIR}/usr/share/doc/dejagnu-1.6.3
 install -v -m644   doc/dejagnu.{html,txt} ${PART_DIR}/usr/share/doc/dejagnu-1.6.3
 
 '''
+
+[lifecycle.fabricate]

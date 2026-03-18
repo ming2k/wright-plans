@@ -58,3 +58,5 @@ rm -f ${PART_DIR}/etc/localtime
 install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/tzdata/LICENSE
 
 '''
+
+[lifecycle.fabricate]

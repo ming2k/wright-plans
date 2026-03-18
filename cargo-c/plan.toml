@@ -32,3 +32,5 @@ install -Dm755 target/release/cargo-capi     ${PART_DIR}/usr/bin/cargo-capi
 install -Dm755 target/release/cargo-ctest    ${PART_DIR}/usr/bin/cargo-ctest
 
 '''
+
+[lifecycle.fabricate]

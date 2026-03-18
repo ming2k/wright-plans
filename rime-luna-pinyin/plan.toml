@@ -19,3 +19,5 @@ install -d ${PART_DIR}/usr/share/rime-data
 install -Dm644 ${BUILD_DIR}/*.yaml -t ${PART_DIR}/usr/share/rime-data/
 
 '''
+
+[lifecycle.fabricate]

@@ -45,3 +45,5 @@ make DESTDIR=${PART_DIR} install
 install -Dm644 ${FILES_DIR}/polkit-gnome-authentication-agent-1.desktop ${PART_DIR}/etc/xdg/autostart/polkit-gnome-authentication-agent-1.desktop
 
 '''
+
+[lifecycle.fabricate]

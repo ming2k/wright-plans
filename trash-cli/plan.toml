@@ -20,3 +20,5 @@ cd ${BUILD_DIR}
 pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PART_DIR} .
 
 '''
+
+[lifecycle.fabricate]

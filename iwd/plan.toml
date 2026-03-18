@@ -57,3 +57,5 @@ systemctl enable iwd.service 2>/dev/null || true
 
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+
+[lifecycle.fabricate]

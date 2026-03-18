@@ -41,3 +41,5 @@ make DESTDIR=${PART_DIR} install
 install -v -Dm644 doc/I18N-HOWTO ${PART_DIR}/usr/share/doc/intltool-${PART_VERSION}/I18N-HOWTO
 
 '''
+
+[lifecycle.fabricate]

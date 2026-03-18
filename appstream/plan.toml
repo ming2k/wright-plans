@@ -72,3 +72,5 @@ script = '''
 meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
 
 '''
+
+[lifecycle.fabricate]

@@ -31,3 +31,5 @@ cd ${BUILD_DIR}/build
 DESTDIR=${PART_DIR} make install
 
 '''
+
+[lifecycle.fabricate]

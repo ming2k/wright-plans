@@ -18,3 +18,5 @@ script = '''
 install -Dm755 ${FILES_DIR}/bazelisk-linux-amd64 ${PART_DIR}/usr/bin/bazelisk
 ln -sf bazelisk ${PART_DIR}/usr/bin/bazel
 '''
+
+[lifecycle.fabricate]

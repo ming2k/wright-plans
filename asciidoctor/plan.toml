@@ -88,3 +88,5 @@ install --verbose -D --mode=0644 *.adoc \
   --target-directory "${PART_DIR}/usr/share/doc/asciidoctor"
 
 '''
+
+[lifecycle.fabricate]

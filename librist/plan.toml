@@ -1,0 +1,34 @@
+name = "librist"
+version = "0.2.11"
+release = 1
+description = "Reliable Internet Stream Transport protocol library"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://code.videolan.org/rist/librist"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = ["mbedtls"]
+
+[[sources]]
+uri = "https://code.videolan.org/rist/librist/-/archive/v${PART_VERSION}/librist-v${PART_VERSION}.tar.bz2"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -D built_tools=false \
+    -D test=false
+
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
+
+[lifecycle.fabricate]

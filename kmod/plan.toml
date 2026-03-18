@@ -48,3 +48,5 @@ install -dm755 ${PART_DIR}/usr/lib/depmod.d
 install -dm755 ${PART_DIR}/usr/lib/modprobe.d
 
 '''
+
+[lifecycle.fabricate]

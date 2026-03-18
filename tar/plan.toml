@@ -35,3 +35,5 @@ make DESTDIR=${PART_DIR} install
 make -C doc DESTDIR=${PART_DIR} install-html docdir=/usr/share/doc/tar-${PART_VERSION}
 
 '''
+
+[lifecycle.fabricate]

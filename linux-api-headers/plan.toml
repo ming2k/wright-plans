@@ -32,3 +32,5 @@ cp -a usr/include ${PART_DIR}/usr/
 find ${PART_DIR} -maxdepth 2 -name '*.pl' -delete
 
 '''
+
+[lifecycle.fabricate]

@@ -1,5 +1,5 @@
 name = "libffi"
-version = "3.4.8"
+version = "3.5.2"
 release = 1
 description = "Portable foreign function interface library"
 license = "MIT"
@@ -33,3 +33,5 @@ cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 
 '''
+
+[lifecycle.fabricate]

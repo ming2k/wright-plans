@@ -1,0 +1,38 @@
+name = "qrcodegen"
+version = "1.8.0"
+release = 1
+description = "QR Code generator library for C and C++"
+license = "MIT"
+arch = "x86_64"
+url = "https://www.nayuki.io/page/qr-code-generator-library"
+
+[dependencies]
+build = ["gcc", "make"]
+
+[[sources]]
+uri = "https://github.com/nayuki/QR-Code-generator/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/c
+gcc -c -O2 -fPIC -o qrcodegen.o qrcodegen.c
+gcc -shared -o libqrcodegen.so qrcodegen.o
+
+cd ${BUILD_DIR}/cpp
+g++ -c -O2 -fPIC -std=c++17 -o qrcodegen.o qrcodegen.cpp
+g++ -shared -o libqrcodegencpp.so qrcodegen.o
+
+'''
+
+[lifecycle.staging]
+script = '''
+install -Dm755 ${BUILD_DIR}/c/libqrcodegen.so ${PART_DIR}/usr/lib/libqrcodegen.so
+install -Dm644 ${BUILD_DIR}/c/qrcodegen.h ${PART_DIR}/usr/include/qrcodegen.h
+
+install -Dm755 ${BUILD_DIR}/cpp/libqrcodegencpp.so ${PART_DIR}/usr/lib/libqrcodegencpp.so
+install -Dm644 ${BUILD_DIR}/cpp/qrcodegen.hpp ${PART_DIR}/usr/include/qrcodegen.hpp
+
+'''
+
+[lifecycle.fabricate]

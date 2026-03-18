@@ -32,3 +32,5 @@ mkdir -p ${PART_DIR}/usr/share/alsa
 cp -a ucm2 ${PART_DIR}/usr/share/alsa/ucm2
 
 '''
+
+[lifecycle.fabricate]

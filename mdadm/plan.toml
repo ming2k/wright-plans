@@ -37,3 +37,5 @@ if [ -d ${PART_DIR}/usr/etc ]; then
 fi
 
 '''
+
+[lifecycle.fabricate]

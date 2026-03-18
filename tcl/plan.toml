@@ -39,3 +39,5 @@ ln -sfv tclsh8.6 ${PART_DIR}/usr/bin/tclsh
 mv ${PART_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3
 
 '''
+
+[lifecycle.fabricate]

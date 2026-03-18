@@ -17,3 +17,5 @@ install -Dm644 regulatory.db ${PART_DIR}/usr/lib/firmware/regulatory.db
 install -Dm644 regulatory.db.p7s ${PART_DIR}/usr/lib/firmware/regulatory.db.p7s
 
 '''
+
+[lifecycle.fabricate]

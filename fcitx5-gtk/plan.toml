@@ -42,3 +42,5 @@ script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
 [hooks]
 post_install = "gtk-query-immodules-3.0 --update-cache 2>/dev/null || true"
 post_upgrade = "gtk-query-immodules-3.0 --update-cache 2>/dev/null || true"
+
+[lifecycle.fabricate]

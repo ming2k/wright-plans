@@ -46,3 +46,5 @@ cd ${BUILD_DIR}/Kvantum
 DESTDIR=${PART_DIR} ninja -C build install
 
 '''
+
+[lifecycle.fabricate]

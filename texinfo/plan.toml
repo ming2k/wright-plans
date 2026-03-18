@@ -42,3 +42,5 @@ make DESTDIR=${PART_DIR} install
 make DESTDIR=${PART_DIR} TEXMF=/usr/share/texmf install-tex
 
 '''
+
+[lifecycle.fabricate]

@@ -26,3 +26,5 @@ script = "make -C ${BUILD_DIR} -j$(nproc)"
 
 [lifecycle.staging]
 script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"
+
+[lifecycle.fabricate]

@@ -85,3 +85,5 @@ if [ -d ${PART_DIR}/usr/sbin ]; then
 fi
 
 '''
+
+[lifecycle.fabricate]

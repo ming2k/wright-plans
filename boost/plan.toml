@@ -40,3 +40,5 @@ cd ${BUILD_DIR}
     --prefix=${PART_DIR}/usr install
 
 '''
+
+[lifecycle.fabricate]

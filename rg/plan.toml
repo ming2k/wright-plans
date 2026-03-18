@@ -39,3 +39,5 @@ if [ -d complete ]; then
 fi
 
 '''
+
+[lifecycle.fabricate]

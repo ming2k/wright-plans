@@ -1,5 +1,5 @@
 name = "ninja"
-version = "1.12.1"
+version = "1.13.2"
 release = 1
 description = "Small build system with a focus on speed"
 license = "Apache-2.0"
@@ -33,3 +33,5 @@ install -Dm755 ninja ${PART_DIR}/usr/bin/ninja
 install -Dm644 misc/bash-completion ${PART_DIR}/usr/share/bash-completion/completions/ninja
 
 '''
+
+[lifecycle.fabricate]

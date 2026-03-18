@@ -39,3 +39,5 @@ cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} ninja -C build install
 
 '''
+
+[lifecycle.fabricate]

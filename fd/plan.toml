@@ -37,3 +37,5 @@ if [ -d completions ]; then
 fi
 
 '''
+
+[lifecycle.fabricate]

@@ -10,7 +10,7 @@ url = "https://zlib.net/"
 build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://zlib.net/zlib-${PART_VERSION}.tar.xz"
+uri = "https://github.com/madler/zlib/releases/download/v${PART_VERSION}/zlib-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -33,3 +33,5 @@ cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 
 '''
+
+[lifecycle.fabricate]

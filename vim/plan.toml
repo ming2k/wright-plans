@@ -66,3 +66,5 @@ install -Dm644 ${BUILD_DIR}/runtime/doc/uganda.txt \
   ${PART_DIR}/usr/share/licenses/vim/license.txt
 
 '''
+
+[lifecycle.fabricate]

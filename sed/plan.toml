@@ -36,3 +36,5 @@ install -d -m755           ${PART_DIR}/usr/share/doc/sed-4.9
 install -m644 doc/sed.html ${PART_DIR}/usr/share/doc/sed-4.9
 
 '''
+
+[lifecycle.fabricate]

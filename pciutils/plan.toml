@@ -1,0 +1,40 @@
+name = "pciutils"
+version = "3.14.0"
+release = 1
+description = "PCI bus utility programs and library"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://mj.ucw.cz/sw/pciutils/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["systemd", "zlib"]
+
+[[sources]]
+uri = "https://mj.ucw.cz/download/linux/pci/pciutils-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make PREFIX=/usr \
+     SHAREDIR=/usr/share/hwdata \
+     SHARED=yes \
+     ZLIB=yes \
+     -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make PREFIX=/usr \
+     SBINDIR=/usr/bin \
+     SHAREDIR=/usr/share/hwdata \
+     SHARED=yes \
+     DESTDIR=${PART_DIR} \
+     install install-lib
+
+'''
+
+[lifecycle.fabricate]

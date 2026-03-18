@@ -1,5 +1,5 @@
 name = "expat"
-version = "2.7.1"
+version = "2.7.3"
 release = 1
 description = "Stream oriented C library for parsing XML"
 license = "MIT"
@@ -10,7 +10,7 @@ url = "https://libexpat.github.io/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/libexpat/libexpat/releases/download/R_2_7_1/expat-${PART_VERSION}.tar.xz"
+uri = "https://github.com/libexpat/libexpat/releases/download/R_2_7_3/expat-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -36,3 +36,5 @@ make DESTDIR=${PART_DIR} install
 install -v -m644 doc/*.{html,css} ${PART_DIR}/usr/share/doc/expat-${PART_VERSION}
 
 '''
+
+[lifecycle.fabricate]

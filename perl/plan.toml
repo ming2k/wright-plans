@@ -55,3 +55,5 @@ make DESTDIR=${PART_DIR} install
 unset BUILD_ZLIB BUILD_BZIP2
 
 '''
+
+[lifecycle.fabricate]

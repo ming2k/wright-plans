@@ -1,0 +1,49 @@
+name = "libtpms"
+version = "0.10.2"
+release = 1
+description = "Trusted Platform Module library for virtual machines"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/stefanberger/libtpms"
+
+[dependencies]
+build = [
+    "autoconf",
+    "automake",
+    "bash",
+    "gcc",
+    "libtool",
+    "make",
+    "pkgconf",
+]
+link = [
+    "openssl",
+]
+
+[[sources]]
+uri = "https://github.com/stefanberger/libtpms/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./autogen.sh
+./configure --prefix=/usr --disable-static --with-openssl CFLAGS="${CFLAGS:--O2} -Wno-error=discarded-qualifiers"
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''
+
+[lifecycle.fabricate]

@@ -50,3 +50,5 @@ cd ${BUILD_DIR}
 DESTDIR=${PART_DIR} cmake --install build
 
 '''
+
+[lifecycle.fabricate]

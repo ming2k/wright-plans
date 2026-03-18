@@ -41,3 +41,5 @@ rm -f ${PART_DIR}/usr/lib/gio/modules/giomodule.cache
 post_install = "gio-querymodules /usr/lib/gio/modules"
 post_upgrade = "gio-querymodules /usr/lib/gio/modules"
 pre_remove = "gio-querymodules /usr/lib/gio/modules"
+
+[lifecycle.fabricate]

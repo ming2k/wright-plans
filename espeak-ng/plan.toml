@@ -1,0 +1,41 @@
+name = "espeak-ng"
+version = "1.52.0"
+release = 1
+description = "Open source speech synthesizer that supports more than 100 languages"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://github.com/espeak-ng/espeak-ng"
+
+[dependencies]
+build = ["gcc", "cmake", "ninja"]
+
+[[sources]]
+uri = "https://github.com/espeak-ng/espeak-ng/archive/refs/tags/${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DBUILD_SHARED_LIBS=ON \
+  -DUSE_MBROLA=OFF \
+  -DUSE_LIBSONIC=OFF \
+  -DUSE_LIBPCAUDIO=OFF \
+  -DUSE_ASYNC=OFF
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+ninja -C build -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PART_DIR} ninja -C build install
+'''
+
+[lifecycle.fabricate]

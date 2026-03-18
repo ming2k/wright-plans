@@ -46,3 +46,5 @@ make DESTDIR=${PART_DIR} install
 make DESTDIR=${PART_DIR} install-html
 
 '''
+
+[lifecycle.fabricate]

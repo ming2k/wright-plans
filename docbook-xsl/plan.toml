@@ -63,3 +63,5 @@ xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl/current/"  
 xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl-nons/current/" /etc/xml/catalog 2>/dev/null || true
 
 '''
+
+[lifecycle.fabricate]

@@ -27,3 +27,5 @@ script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
 
 [lifecycle.staging]
 script = "DESTDIR=${PART_DIR} ninja install -C ${BUILD_DIR}/build"
+
+[lifecycle.fabricate]

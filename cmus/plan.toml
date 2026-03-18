@@ -57,3 +57,5 @@ install -vDm644 contrib/_cmus ${PART_DIR}/usr/share/zsh/site-functions/_cmus
 install -vDm644 contrib/cmus.bash-completion ${PART_DIR}/usr/share/bash-completion/completions/cmus
 
 '''
+
+[lifecycle.fabricate]

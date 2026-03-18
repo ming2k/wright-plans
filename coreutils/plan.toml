@@ -47,3 +47,5 @@ mv -v ${PART_DIR}/usr/share/man/man1/chroot.1 ${PART_DIR}/usr/share/man/man8/chr
 sed -i 's/"1"/"8"/' ${PART_DIR}/usr/share/man/man8/chroot.8
 
 '''
+
+[lifecycle.fabricate]

@@ -79,3 +79,5 @@ post_upgrade = '''
 update-desktop-database -q /usr/share/applications 2>/dev/null || true
 
 '''
+
+[lifecycle.fabricate]

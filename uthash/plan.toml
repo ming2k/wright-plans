@@ -1,0 +1,20 @@
+name = "uthash"
+version = "2.3.0"
+release = 1
+description = "Hash table macros for C structures"
+license = "BSD-1-Clause"
+arch = "x86_64"
+url = "https://troydhanson.github.io/uthash/"
+
+[[sources]]
+uri = "https://github.com/troydhanson/uthash/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+install -d ${PART_DIR}/usr/include
+install -m644 ${BUILD_DIR}/src/*.h ${PART_DIR}/usr/include/
+
+'''
+
+[lifecycle.fabricate]

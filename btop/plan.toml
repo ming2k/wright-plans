@@ -36,3 +36,5 @@ make DESTDIR=${PART_DIR} PREFIX=/usr install
 [hooks]
 post_install = "setcap 'cap_perfmon=+ep' /usr/bin/btop"
 post_upgrade = "setcap 'cap_perfmon=+ep' /usr/bin/btop"
+
+[lifecycle.fabricate]

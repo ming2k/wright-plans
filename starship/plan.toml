@@ -34,3 +34,5 @@ target/release/starship completions zsh  > ${PART_DIR}/usr/share/zsh/site-functi
 target/release/starship completions fish > ${PART_DIR}/usr/share/fish/vendor_completions.d/starship.fish
 
 '''
+
+[lifecycle.fabricate]

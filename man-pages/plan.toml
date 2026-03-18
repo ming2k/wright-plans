@@ -23,3 +23,5 @@ cd ${BUILD_DIR}
 make -R GIT=false prefix=/usr DESTDIR=${PART_DIR} install
 
 '''
+
+[lifecycle.fabricate]

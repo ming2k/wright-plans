@@ -35,3 +35,5 @@ make DESTDIR=${PART_DIR} install
 chmod -v 755 ${PART_DIR}/usr/lib/lib{hogweed,nettle}.so
 
 '''
+
+[lifecycle.fabricate]

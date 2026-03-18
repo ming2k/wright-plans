@@ -1,0 +1,53 @@
+name = "swtpm"
+version = "0.10.1"
+release = 1
+description = "Libtpms-based TPM emulator for QEMU and other hypervisors"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/stefanberger/swtpm"
+
+[dependencies]
+runtime = ["libtpms"]
+build = [
+    "autoconf",
+    "automake",
+    "bash",
+    "gcc",
+    "libtool",
+    "make",
+    "pkgconf",
+]
+link = [
+    "glib",
+    "gmp",
+    "json-glib",
+    "libtpms",
+    "openssl",
+]
+
+[[sources]]
+uri = "https://github.com/stefanberger/swtpm/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./autogen.sh --prefix=/usr --disable-static --without-cuse --without-selinux --without-seccomp --disable-tests
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''
+
+[lifecycle.fabricate]

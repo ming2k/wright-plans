@@ -52,3 +52,5 @@ ln -sf gpg  ${PART_DIR}/usr/bin/gpg2
 ln -sf gpgv ${PART_DIR}/usr/bin/gpgv2
 
 '''
+
+[lifecycle.fabricate]

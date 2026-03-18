@@ -38,3 +38,5 @@ make DESTDIR=${PART_DIR} install
 install -v -m644 doc/{nano.html,sample.nanorc} ${PART_DIR}/usr/share/doc/nano-${PART_VERSION}
 
 '''
+
+[lifecycle.fabricate]

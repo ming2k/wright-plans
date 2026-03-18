@@ -45,3 +45,5 @@ groupadd -r dconf 2>/dev/null || true
 chgrp dconf /etc/dconf/profile
 
 '''
+
+[lifecycle.fabricate]

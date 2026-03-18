@@ -19,3 +19,5 @@ cd ${BUILD_DIR}
 pip3 install --break-system-packages --no-deps --root=${PART_DIR} --no-build-isolation .
 
 '''
+
+[lifecycle.fabricate]

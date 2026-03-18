@@ -49,3 +49,5 @@ if [ ! -e ${PART_DIR}/usr/bin/pinentry ] && [ -e ${PART_DIR}/usr/bin/pinentry-cu
 fi
 
 '''
+
+[lifecycle.fabricate]

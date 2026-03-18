@@ -48,3 +48,5 @@ ln -sv flex.1 ${PART_DIR}/usr/share/man/man1/lex.1
 rm -f ${PART_DIR}/usr/share/info/dir
 
 '''
+
+[lifecycle.fabricate]

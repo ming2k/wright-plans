@@ -1,0 +1,60 @@
+name = "dnsmasq"
+version = "2.92"
+release = 1
+description = "Lightweight, easy to configure DNS forwarder and DHCP server"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://thekelleys.org.uk/dnsmasq/doc.html"
+
+[dependencies]
+link = ["glibc", "gmp", "nettle", "libidn2", "dbus", "libnetfilter_conntrack", "nftables"]
+build = ["gcc", "make", "pkg-config"]
+
+[[sources]]
+uri = "https://thekelleys.org.uk/dnsmasq/dnsmasq-${PART_VERSION}.tar.xz"
+sha256 = "4bf50c2c1018f9fbc26037df51b90ecea0cb73d46162846763b92df0d6c3a458"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make \
+    CFLAGS="${CFLAGS}" \
+    LDFLAGS="${LDFLAGS}" \
+    COPTS="-DHAVE_DNSSEC -DHAVE_DBUS -DHAVE_LIBIDN2 -DHAVE_CONNTRACK -DHAVE_NFTSET" \
+    PREFIX=/usr \
+    BINDIR=/usr/bin \
+    all-i18n -j$(nproc)
+
+cd contrib/lease-tools
+make all -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make \
+    COPTS="-DHAVE_DNSSEC -DHAVE_DBUS -DHAVE_LIBIDN2 -DHAVE_CONNTRACK -DHAVE_NFTSET" \
+    PREFIX=/usr \
+    BINDIR=/usr/bin \
+    DESTDIR=${PART_DIR} \
+    install install-i18n
+
+install -Dm755 contrib/lease-tools/dhcp_release ${PART_DIR}/usr/bin/dhcp_release
+install -Dm755 contrib/lease-tools/dhcp_release6 ${PART_DIR}/usr/bin/dhcp_release6
+install -Dm755 contrib/lease-tools/dhcp_lease_time ${PART_DIR}/usr/bin/dhcp_lease_time
+
+install -Dm644 dbus/dnsmasq.conf ${PART_DIR}/usr/share/dbus-1/system.d/dnsmasq.conf
+
+install -Dm644 dnsmasq.conf.example ${PART_DIR}/etc/dnsmasq.conf
+install -Dm644 trust-anchors.conf ${PART_DIR}/usr/share/dnsmasq/trust-anchors.conf
+
+sed -i 's,%%PREFIX%%,/usr,' ${PART_DIR}/etc/dnsmasq.conf
+'''
+
+[hooks]
+post_install = "systemctl daemon-reload 2>/dev/null || true"
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+pre_remove = "systemctl stop dnsmasq 2>/dev/null || true"
+
+[output]
+backup = ["/etc/dnsmasq.conf"]

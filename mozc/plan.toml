@@ -37,3 +37,5 @@ install -Dm755 bazel-bin/gui/tool/mozc_tool ${PART_DIR}/usr/lib/mozc/mozc_tool
 
 install -Dm644 ${BUILD_DIR}/LICENSE ${PART_DIR}/usr/share/licenses/mozc/LICENSE
 '''
+
+[lifecycle.fabricate]

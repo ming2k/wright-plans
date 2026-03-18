@@ -24,3 +24,5 @@ script = "cmake --build ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
 script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"
+
+[lifecycle.fabricate]

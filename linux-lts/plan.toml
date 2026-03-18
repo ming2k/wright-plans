@@ -105,3 +105,5 @@ cp -v System.map ${PART_DIR}/boot/System.map-theseus-lts
 cp -v .config ${PART_DIR}/boot/config-theseus-lts
 
 '''
+
+[lifecycle.fabricate]

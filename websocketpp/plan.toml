@@ -1,0 +1,29 @@
+name = "websocketpp"
+version = "0.8.2"
+release = 1
+description = "Header-only C++ WebSocket client/server library"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/zaphoyd/websocketpp"
+
+[dependencies]
+build = ["cmake", "ninja"]
+
+[[sources]]
+uri = "https://github.com/zaphoyd/websocketpp/archive/refs/tags/${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DBUILD_EXAMPLES=OFF \
+    -DBUILD_TESTS=OFF
+
+'''
+
+[lifecycle.staging]
+script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
+
+[lifecycle.fabricate]

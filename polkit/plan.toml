@@ -44,3 +44,5 @@ useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
     -c "PolicyKit Daemon Owner" polkitd 2>/dev/null || true
 
 '''
+
+[lifecycle.fabricate]

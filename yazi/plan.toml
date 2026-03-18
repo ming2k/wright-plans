@@ -54,3 +54,5 @@ install -Dm644 assets/yazi.desktop ${PART_DIR}/usr/share/applications/yazi.deskt
 install -Dm644 assets/yazi.svg     ${PART_DIR}/usr/share/icons/hicolor/scalable/apps/yazi.svg || true
 
 '''
+
+[lifecycle.fabricate]

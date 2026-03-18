@@ -53,3 +53,5 @@ rm -f ${PART_DIR}/usr/lib/libSDL2.a
 test -f ${PART_DIR}/usr/lib/pkgconfig/sdl2.pc
 
 '''
+
+[lifecycle.fabricate]

@@ -25,3 +25,5 @@ install -Dm644 "${FILES_DIR}/geosite-cn.srs" "${PART_DIR}/usr/share/sing-box/rul
 install -Dm644 "${FILES_DIR}/geosite-google.srs" "${PART_DIR}/usr/share/sing-box/rules/geosite-google.srs"
 
 '''
+
+[lifecycle.fabricate]

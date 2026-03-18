@@ -37,3 +37,5 @@ install -Dm755 gocryptfs ${PART_DIR}/usr/bin/gocryptfs
 install -Dm755 gocryptfs-xray/gocryptfs-xray ${PART_DIR}/usr/bin/gocryptfs-xray
 
 '''
+
+[lifecycle.fabricate]

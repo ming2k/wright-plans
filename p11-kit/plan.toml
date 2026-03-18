@@ -48,3 +48,5 @@ chmod 755 ${PART_DIR}/usr/bin/update-ca-trust
 ln -sf ../../bin/update-ca-trust ${PART_DIR}/usr/libexec/p11-kit/trust-extract-compat
 
 '''
+
+[lifecycle.fabricate]

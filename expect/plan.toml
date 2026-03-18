@@ -58,3 +58,5 @@ make DESTDIR=${PART_DIR} install
 ln -svf expect${PART_VERSION}/libexpect${PART_VERSION}.so ${PART_DIR}/usr/lib
 
 '''
+
+[lifecycle.fabricate]

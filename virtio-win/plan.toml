@@ -1,0 +1,19 @@
+name = "virtio-win"
+version = "0.1.285-1"
+release = 1
+description = "VirtIO driver ISO and guest tools for Windows virtual machines"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://fedorapeople.org/groups/virt/virtio-win/"
+
+[[sources]]
+uri = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.285-1/virtio-win.iso"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+install -Dm644 ${FILES_DIR}/virtio-win.iso ${PART_DIR}/usr/share/virtio-win/virtio-win.iso
+
+'''
+
+[lifecycle.fabricate]

@@ -30,3 +30,5 @@ cd ${BUILD_DIR}
 install -Dm755 target/release/mise ${PART_DIR}/usr/bin/mise
 
 '''
+
+[lifecycle.fabricate]

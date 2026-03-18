@@ -33,3 +33,5 @@ cd ${BUILD_DIR}
 make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PART_DIR} install
 
 '''
+
+[lifecycle.fabricate]

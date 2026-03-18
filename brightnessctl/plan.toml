@@ -27,3 +27,5 @@ cd ${BUILD_DIR}
 make install DESTDIR=${PART_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0
 
 '''
+
+[lifecycle.fabricate]

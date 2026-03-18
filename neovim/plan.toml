@@ -59,3 +59,5 @@ post_upgrade = '''
 update-desktop-database -q 2>/dev/null || true
 
 '''
+
+[lifecycle.fabricate]

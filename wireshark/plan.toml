@@ -70,3 +70,5 @@ DESTDIR=${PART_DIR} ninja -C build install
 [hooks]
 post_install = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
 post_upgrade = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
+
+[lifecycle.fabricate]

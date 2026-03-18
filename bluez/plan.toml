@@ -81,3 +81,5 @@ chmod 555 /etc/bluetooth 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
+
+[lifecycle.fabricate]

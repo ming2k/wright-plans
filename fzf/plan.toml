@@ -34,3 +34,5 @@ install -Dm644 shell/key-bindings.zsh ${PART_DIR}/usr/share/fzf/key-bindings.zsh
 install -Dm644 shell/key-bindings.fish ${PART_DIR}/usr/share/fish/vendor_functions.d/fzf_key_bindings.fish
 
 '''
+
+[lifecycle.fabricate]

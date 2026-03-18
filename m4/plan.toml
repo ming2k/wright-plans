@@ -41,3 +41,5 @@ make DESTDIR=${PART_DIR} install
 rm -f ${PART_DIR}/usr/share/info/dir
 
 '''
+
+[lifecycle.fabricate]

@@ -90,3 +90,5 @@ Cflags: -I${includedir}
 PC
 
 '''
+
+[lifecycle.fabricate]

@@ -1,5 +1,5 @@
 name = "wright"
-version = "1.7.2"
+version = "1.7.10"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -65,3 +65,5 @@ chmod 2775 /var/lib/wright/plans
 chmod -R o-w /var/lib/wright/plans/
 
 '''
+
+[lifecycle.fabricate]

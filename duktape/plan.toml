@@ -46,3 +46,5 @@ Cflags: -I\${includedir}
 PCEOF
 
 '''
+
+[lifecycle.fabricate]

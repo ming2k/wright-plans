@@ -69,3 +69,5 @@ install -Dm 644 ${BUILD_DIR}/glslc/glslc.1 ${PART_DIR}/usr/share/man/man1/glslc.
 rm -f ${PART_DIR}/usr/lib/pkgconfig/shaderc_static.pc
 
 '''
+
+[lifecycle.fabricate]

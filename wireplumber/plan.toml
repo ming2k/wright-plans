@@ -41,3 +41,5 @@ script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
 [hooks]
 post_install = "systemctl daemon-reload 2>/dev/null || true"
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+
+[lifecycle.fabricate]

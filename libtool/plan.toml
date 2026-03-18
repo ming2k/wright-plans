@@ -34,3 +34,5 @@ make DESTDIR=${PART_DIR} install
 rm -fv ${PART_DIR}/usr/lib/libltdl.a
 
 '''
+
+[lifecycle.fabricate]

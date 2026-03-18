@@ -36,3 +36,5 @@ if [ ! -f ${PART_DIR}/usr/lib/pkgconfig/libjpeg.pc ]; then
 fi
 
 '''
+
+[lifecycle.fabricate]

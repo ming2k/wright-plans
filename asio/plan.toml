@@ -1,0 +1,21 @@
+name = "asio"
+version = "1.38.0"
+release = 1
+description = "Cross-platform C++ library for network programming"
+license = "BSL-1.0"
+arch = "x86_64"
+url = "https://think-async.com/Asio/"
+
+[[sources]]
+uri = "https://github.com/chriskohlhoff/asio/archive/refs/tags/asio-1-38-0.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+install -d ${PART_DIR}/usr/include
+cp -r ${BUILD_DIR}/asio/include/asio.hpp ${PART_DIR}/usr/include/
+cp -r ${BUILD_DIR}/asio/include/asio ${PART_DIR}/usr/include/
+
+'''
+
+[lifecycle.fabricate]

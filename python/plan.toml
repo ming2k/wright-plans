@@ -56,3 +56,5 @@ Error=Please use 'wright install python-<package>' to install system-level Pytho
 EOF
 
 '''
+
+[lifecycle.fabricate]

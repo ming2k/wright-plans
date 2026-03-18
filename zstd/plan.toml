@@ -27,3 +27,5 @@ make prefix=/usr DESTDIR=${PART_DIR} install
 rm -v ${PART_DIR}/usr/lib/libzstd.a
 
 '''
+
+[lifecycle.fabricate]

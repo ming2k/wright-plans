@@ -38,3 +38,5 @@ install -dm755 ${PART_DIR}/usr/lib/docker/cli-plugins
 ln -s /usr/bin/docker-compose ${PART_DIR}/usr/lib/docker/cli-plugins/docker-compose
 
 '''
+
+[lifecycle.fabricate]

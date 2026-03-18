@@ -15,3 +15,5 @@ script = "make -j$(nproc) -C ${BUILD_DIR} prefix=/usr"
 
 [lifecycle.staging]
 script = "make -C ${BUILD_DIR} prefix=/usr DESTDIR=${PART_DIR} install"
+
+[lifecycle.fabricate]

@@ -28,3 +28,5 @@ script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
 [hooks]
 post_install = "update-mime-database /usr/share/mime 2>/dev/null || true"
 post_upgrade = "update-mime-database /usr/share/mime 2>/dev/null || true"
+
+[lifecycle.fabricate]

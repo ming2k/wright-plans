@@ -33,3 +33,5 @@ cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} NO_PYTHON=1 PREFIX=/usr CFLAGS="${CFLAGS} -std=gnu17" install
 
 '''
+
+[lifecycle.fabricate]

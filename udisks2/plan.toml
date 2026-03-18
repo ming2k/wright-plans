@@ -59,3 +59,5 @@ install -dm750 ${PART_DIR}/var/lib/udisks2
 
 
 '''
+
+[lifecycle.fabricate]

@@ -37,3 +37,5 @@ meson install -C build --destdir ${PART_DIR}
 [hooks]
 post_install = "update-desktop-database -q /usr/share/applications 2>/dev/null || true"
 post_upgrade = "update-desktop-database -q /usr/share/applications 2>/dev/null || true"
+
+[lifecycle.fabricate]

@@ -1,0 +1,46 @@
+name = "swig"
+version = "4.4.1"
+release = 1
+description = "Simplified Wrapper and Interface Generator"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://swig.org"
+
+[dependencies]
+build = ["gcc", "make", "autoconf", "automake", "bison"]
+link = ["pcre2", "zlib"]
+
+[[sources]]
+uri = "https://github.com/swig/swig/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+./autogen.sh
+
+'''
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+            --with-pcre2
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''
+
+[lifecycle.fabricate]

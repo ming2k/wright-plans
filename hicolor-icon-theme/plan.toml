@@ -29,3 +29,5 @@ script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"
 [hooks]
 post_install = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
 post_upgrade = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
+
+[lifecycle.fabricate]

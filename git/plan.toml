@@ -201,3 +201,5 @@ ln -s ../../git/completion/git-completion.zsh \
   ${PART_DIR}/usr/share/zsh/site-functions/_git
 
 '''
+
+[lifecycle.fabricate]

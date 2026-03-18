@@ -34,3 +34,5 @@ install -Dm644 completions/swww.fish ${PART_DIR}/usr/share/fish/vendor_completio
 install -Dm644 completions/_swww ${PART_DIR}/usr/share/zsh/site-functions/_swww
 
 '''
+
+[lifecycle.fabricate]

@@ -1,0 +1,42 @@
+name = "acpica"
+version = "20251212"
+release = 1
+description = "ACPICA tools and reference implementation, including iasl"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/acpica/acpica"
+
+[dependencies]
+build = [
+    "bash",
+    "bison",
+    "flex",
+    "gcc",
+    "make",
+]
+
+[[sources]]
+uri = "https://github.com/acpica/acpica/releases/download/20251212/acpica-unix2-20251212.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -C generate/unix -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 generate/unix/bin/iasl ${PART_DIR}/usr/bin/iasl
+install -Dm755 generate/unix/bin/acpibin ${PART_DIR}/usr/bin/acpibin
+install -Dm755 generate/unix/bin/acpidump ${PART_DIR}/usr/bin/acpidump
+install -Dm755 generate/unix/bin/acpiexec ${PART_DIR}/usr/bin/acpiexec
+install -Dm755 generate/unix/bin/acpihelp ${PART_DIR}/usr/bin/acpihelp
+install -Dm755 generate/unix/bin/acpisrc ${PART_DIR}/usr/bin/acpisrc
+install -Dm644 changes.txt ${PART_DIR}/usr/share/doc/acpica/changes.txt
+
+'''
+
+[lifecycle.fabricate]

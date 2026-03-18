@@ -102,3 +102,5 @@ make DESTDIR=${PART_DIR} install
 test -x ${PART_DIR}/usr/bin/ffplay
 
 '''
+
+[lifecycle.fabricate]

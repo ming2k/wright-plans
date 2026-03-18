@@ -40,3 +40,5 @@ make MANSUFFIX=ssl DESTDIR=${PART_DIR} install
 mv -v ${PART_DIR}/usr/share/doc/openssl ${PART_DIR}/usr/share/doc/openssl-${PART_VERSION}
 
 '''
+
+[lifecycle.fabricate]

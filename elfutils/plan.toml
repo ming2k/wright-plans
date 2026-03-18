@@ -38,3 +38,5 @@ rm -f ${PART_DIR}/usr/lib/lib*.a
 rm -rf ${PART_DIR}/usr/etc
 
 '''
+
+[lifecycle.fabricate]

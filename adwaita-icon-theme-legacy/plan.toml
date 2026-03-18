@@ -38,3 +38,5 @@ gtk-update-icon-cache -qtf /usr/share/icons/AdwaitaLegacy 2>/dev/null || true
 gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 
 '''
+
+[lifecycle.fabricate]

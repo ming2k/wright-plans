@@ -25,3 +25,5 @@ script = "cd ${BUILD_DIR} && meson compile -C build"
 
 [lifecycle.staging]
 script = "cd ${BUILD_DIR} && meson install -C build --destdir ${PART_DIR}"
+
+[lifecycle.fabricate]

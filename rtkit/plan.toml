@@ -66,3 +66,5 @@ systemctl daemon-reload
 systemctl restart rtkit-daemon.service
 
 '''
+
+[lifecycle.fabricate]

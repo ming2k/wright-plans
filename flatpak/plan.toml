@@ -90,3 +90,5 @@ systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
+
+[lifecycle.fabricate]

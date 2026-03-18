@@ -42,3 +42,5 @@ script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"
 [hooks]
 post_install = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 post_upgrade = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
+
+[lifecycle.fabricate]

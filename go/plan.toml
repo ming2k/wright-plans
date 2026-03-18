@@ -19,3 +19,5 @@ ln -sf ../lib/go/bin/go ${PART_DIR}/usr/bin/go
 ln -sf ../lib/go/bin/gofmt ${PART_DIR}/usr/bin/gofmt
 
 '''
+
+[lifecycle.fabricate]

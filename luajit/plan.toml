@@ -50,3 +50,5 @@ PCEOF
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
+
+[lifecycle.fabricate]
