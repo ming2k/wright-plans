@@ -1,0 +1,41 @@
+name = "krb5"
+version = "1.22.2"
+release = 1
+description = "MIT Kerberos network authentication system"
+license = "MIT"
+arch = "x86_64"
+url = "https://web.mit.edu/kerberos/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["keyutils", "openssl"]
+
+[[sources]]
+uri = "https://web.mit.edu/Kerberos/dist/krb5/1.22/krb5-${PART_VERSION}.tar.gz"
+sha256 = "3243ffbc8ea4d4ac22ddc7dd2a1dc54c57874c40648b60ff97009763554eaf13"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}/src
+./configure --prefix=/usr \
+    --sbindir=/usr/bin \
+    --disable-static \
+    --without-ldap
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/src
+make WARN_CFLAGS= -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}/src
+make DESTDIR=${PART_DIR} install
+
+'''
+
+[lifecycle.fabricate]

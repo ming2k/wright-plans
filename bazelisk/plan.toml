@@ -6,9 +6,6 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/bazelbuild/bazelisk"
 
-[relations]
-provides = ["bazel"]
-
 [[sources]]
 uri = "https://github.com/bazelbuild/bazelisk/releases/download/v${PART_VERSION}/bazelisk-linux-amd64"
 sha256 = "SKIP"
@@ -18,5 +15,8 @@ script = '''
 install -Dm755 ${FILES_DIR}/bazelisk-linux-amd64 ${PART_DIR}/usr/bin/bazelisk
 ln -sf bazelisk ${PART_DIR}/usr/bin/bazel
 '''
+
+[output]
+provides = ["bazel"]
 
 [lifecycle.fabricate]

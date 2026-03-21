@@ -1,6 +1,6 @@
 name = "sing-box"
-version = "1.13.2"
-release = 3
+version = "1.13.3"
+release = 1
 description = "The universal proxy platform"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -11,7 +11,7 @@ build = ["go"]
 
 [[sources]]
 uri = "https://github.com/SagerNet/sing-box/archive/refs/tags/v${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "bf8933cd43e2797afcffb47528282e1c1aee078bf5eeda888d80a151fef726e1"
 
 [[sources]]
 uri = "sing-box.service"

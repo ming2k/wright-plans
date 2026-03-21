@@ -1,5 +1,5 @@
 name = "typio"
-version = "2.1.1"
+version = "2.1.4"
 release = 1
 description = "Native Wayland input method daemon with optional GTK4 control panel"
 license = "NOASSERTION"

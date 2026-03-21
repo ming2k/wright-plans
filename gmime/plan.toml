@@ -1,0 +1,42 @@
+name = "gmime"
+version = "3.2.7"
+release = 1
+description = "MIME message parser and creator library"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/jstedfast/gmime"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["glib", "gpgme", "zlib"]
+
+[[sources]]
+uri = "https://download.gnome.org/sources/gmime/3.2/gmime-${PART_VERSION}.tar.xz"
+sha256 = "2aea96647a468ba2160a64e17c6dc6afe674ed9ac86070624a3f584c10737d44"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+    --disable-static \
+    --disable-maintainer-mode \
+    --disable-gtk-doc \
+    --enable-introspection=no
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''
+
+[lifecycle.fabricate]

@@ -1,0 +1,57 @@
+name = "notmuch"
+version = "0.40"
+release = 1
+description = "Thread-based email index, search, and tagging tool"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://notmuchmail.org/"
+
+[dependencies]
+build = ["bash", "gcc", "make", "pkgconf", "python"]
+link = ["gmime", "talloc", "xapian-core", "zlib"]
+
+[[sources]]
+uri = "https://notmuchmail.org/releases/notmuch-${PART_VERSION}.tar.xz"
+sha256 = "4b4314bbf1c2029fdf793637e6c7bb15c1b1730d22be9aa04803c98c5bbc446f"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+set +e
+./configure --prefix=/usr \
+    --without-docs \
+    --without-emacs \
+    --without-desktop \
+    --without-ruby \
+    --without-bash-completion \
+    --without-zsh-completion
+status=$?
+set -e
+
+if [ $status -ne 0 ]; then
+    test -f Makefile.config
+    # notmuch 0.40 treats several GMime runtime self-tests as fatal during
+    # configure even though the build configuration is already generated.
+    sed -i \
+        -e 's/^NOTMUCH_GMIME_X509_CERT_VALIDITY=.*/NOTMUCH_GMIME_X509_CERT_VALIDITY=0/' \
+        -e 's/^NOTMUCH_GMIME_VERIFY_WITH_SESSION_KEY=.*/NOTMUCH_GMIME_VERIFY_WITH_SESSION_KEY=0/' \
+        Makefile.config
+fi
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} prefix=/usr install
+
+'''
+
+[lifecycle.fabricate]

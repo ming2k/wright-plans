@@ -1,6 +1,6 @@
 name = "util-linux"
 version = "2.41.3"
-release = 5
+release = 1
 description = "Miscellaneous system utilities for Linux"
 license = "GPL-2.0-only AND GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.1-or-later AND BSD-2-Clause AND BSD-3-Clause AND LicenseRef-PublicDomain"
 arch = "x86_64"
@@ -77,46 +77,3 @@ rm -rf ${PART_DIR}/usr/lib/python*
 
 '''
 
-[output.libuuid]
-description = "Universally Unique Identifier library"
-script = '''
-install -d ${PART_DIR}/usr/lib
-mv -v ${MAIN_PART_DIR}/usr/lib/libuuid.so* ${PART_DIR}/usr/lib/
-
-'''
-
-[output.libuuid.dependencies]
-link = ["glibc"]
-
-[output.libblkid]
-description = "Block device identification library"
-script = '''
-install -d ${PART_DIR}/usr/lib
-mv -v ${MAIN_PART_DIR}/usr/lib/libblkid.so* ${PART_DIR}/usr/lib/
-
-'''
-
-[output.libblkid.dependencies]
-link = ["glibc", "libuuid"]
-
-[output.libmount]
-description = "Device mounting library"
-script = '''
-install -d ${PART_DIR}/usr/lib
-mv -v ${MAIN_PART_DIR}/usr/lib/libmount.so* ${PART_DIR}/usr/lib/
-
-'''
-
-[output.libmount.dependencies]
-link = ["glibc", "libblkid"]
-
-[output.libsmartcols]
-description = "Table or tree formatting library"
-script = '''
-install -d ${PART_DIR}/usr/lib
-mv -v ${MAIN_PART_DIR}/usr/lib/libsmartcols.so* ${PART_DIR}/usr/lib/
-
-'''
-
-[output.libsmartcols.dependencies]
-link = ["glibc"]

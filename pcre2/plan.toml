@@ -1,6 +1,6 @@
 name = "pcre2"
-version = "10.45"
-release = 1
+version = "10.47"
+release = 2
 description = "Perl-compatible regular expression library"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -16,7 +16,7 @@ sha256 = "SKIP"
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static --enable-unicode
+./configure --prefix=/usr --disable-static --enable-unicode --enable-pcre2-16 --enable-pcre2-32
 
 '''
 

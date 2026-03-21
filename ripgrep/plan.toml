@@ -11,11 +11,6 @@ runtime = ["pcre2"]
 build = ["rust"]
 link = ["gcc", "pcre2", "glibc"]
 
-[relations]
-replaces = ["rg"]
-conflicts = ["rg"]
-provides = ["rg"]
-
 [[sources]]
 uri = "https://github.com/BurntSushi/ripgrep/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
@@ -43,5 +38,10 @@ if [ -d complete ]; then
 fi
 
 '''
+
+[output]
+replaces = ["rg"]
+conflicts = ["rg"]
+provides = ["rg"]
 
 [lifecycle.fabricate]
