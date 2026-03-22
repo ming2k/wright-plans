@@ -1,5 +1,5 @@
 name = "spirv-llvm-translator"
-version = "21.1.4"
+version = "22.1.0"
 release = 1
 description = "Bi-directional translation between SPIR-V and LLVM IR"
 license = "UoI-NCSA"
@@ -19,7 +19,7 @@ build = [
 
 [[sources]]
 uri = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "a5d476404ab88ac0d148211da50428178c89caef8af8042a3ca8e71e58ed9427"
 
 [options]
 ccache = true

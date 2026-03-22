@@ -15,7 +15,6 @@ build = [
 ]
 link = [
     "glib",
-    "glycin",
     "libjpeg-turbo",
     "libpng",
     "libtiff",

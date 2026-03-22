@@ -9,7 +9,6 @@ url = "https://www.freedesktop.org/wiki/Distributions/AppStream/"
 [dependencies]
 runtime = ["systemd"]
 build = [
-    "bash-completion",
     "meson",
     "ninja",
     "pkgconf",
@@ -51,7 +50,8 @@ meson setup build              \
     -Dcompose=false            \
     -Dgir=true                 \
     -Dinstall-docs=false       \
-    -Dman=false
+    -Dman=true                 \
+    -Dbash-completion=false
 
 '''
 

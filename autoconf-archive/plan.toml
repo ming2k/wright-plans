@@ -1,0 +1,38 @@
+name = "autoconf-archive"
+version = "2024.10.16"
+release = 1
+description = "GNU Autoconf macros"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/autoconf-archive/"
+
+[dependencies]
+build = ["make"]
+runtime = ["m4"]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/autoconf-archive/autoconf-archive-${PART_VERSION}.tar.xz"
+sha256 = "7bcd5d001916f3a50ed7436f4f700e3d2b1bade3ed803219c592d62502a57363"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''
+
+[lifecycle.fabricate]

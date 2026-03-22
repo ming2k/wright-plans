@@ -1,5 +1,5 @@
 name = "qemu"
-version = "9.2.0"
+version = "10.2.0"
 release = 1
 description = "Machine emulator and virtualizer"
 license = "GPL-2.0-or-later"

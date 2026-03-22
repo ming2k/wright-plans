@@ -1,6 +1,6 @@
 name = "vim"
-version = "9.2.0043"
-release = 2
+version = "9.2.0137"
+release = 1
 description = "Vi Improved, a highly configurable text editor"
 license = "custom:vim"
 arch = "x86_64"

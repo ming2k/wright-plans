@@ -1,0 +1,24 @@
+name = "noto-fonts-emoji"
+version = "2.047"
+release = 1
+description = "Google Noto Color Emoji font"
+license = "OFL-1.1"
+arch = "any"
+url = "https://github.com/googlefonts/noto-emoji"
+
+[[sources]]
+uri = "https://github.com/googlefonts/noto-emoji/raw/v${PART_VERSION}/fonts/NotoColorEmoji.ttf"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+mkdir -p ${PART_DIR}/usr/share/fonts/noto-emoji
+cp ${FILES_DIR}/NotoColorEmoji.ttf ${PART_DIR}/usr/share/fonts/noto-emoji/
+
+'''
+
+[hooks]
+post_install = "fc-cache -s 2>/dev/null || true"
+post_upgrade = "fc-cache -s 2>/dev/null || true"
+
+[lifecycle.fabricate]

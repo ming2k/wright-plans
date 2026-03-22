@@ -1,0 +1,28 @@
+name = "noto-fonts-cjk"
+version = "2.004"
+release = 1
+description = "Google Noto CJK fonts (Simplified/Traditional Chinese, Japanese, Korean)"
+license = "OFL-1.1"
+arch = "any"
+url = "https://github.com/notofonts/noto-cjk"
+
+[[sources]]
+uri = "https://github.com/notofonts/noto-cjk/releases/download/Sans${PART_VERSION}/01_NotoSansCJK-OTF-VF.tar.xz"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "https://github.com/notofonts/noto-cjk/releases/download/Serif${PART_VERSION}/04_NotoSerifCJK-OTF-VF.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+mkdir -p ${PART_DIR}/usr/share/fonts/noto-cjk
+find ${BUILD_DIR} -name '*.otf' -exec cp {} ${PART_DIR}/usr/share/fonts/noto-cjk/ \;
+
+'''
+
+[hooks]
+post_install = "fc-cache -s 2>/dev/null || true"
+post_upgrade = "fc-cache -s 2>/dev/null || true"
+
+[lifecycle.fabricate]

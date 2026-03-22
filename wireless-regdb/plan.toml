@@ -1,5 +1,5 @@
 name = "wireless-regdb"
-version = "2024.10.07"
+version = "2026.02.04"
 release = 1
 description = "Wireless regulatory database for cfg80211"
 license = "ISC"

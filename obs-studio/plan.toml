@@ -48,8 +48,7 @@ runtime = [
 optional = [
     { name = "srt", description = "SRT streaming protocol support" },
     { name = "librist", description = "RIST streaming protocol support" },
-    { name = "websocketpp", description = "WebSocket remote control" },
-    { name = "qrcodegen", description = "QR code generation for WebSocket" },
+    { name = "qrcodegen", description = "QR code generation" },
     { name = "luajit", description = "Lua scripting support" },
     { name = "python", description = "Python scripting support" },
 ]

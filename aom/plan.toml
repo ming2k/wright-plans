@@ -1,5 +1,5 @@
 name = "aom"
-version = "3.9.1"
+version = "3.13.1"
 release = 1
 description = "Alliance for Open Media AV1 Codec SDK"
 license = "BSD-2-Clause"
@@ -16,7 +16,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://storage.googleapis.com/aom-releases/libaom-3.9.1.tar.gz"
+uri = "https://storage.googleapis.com/aom-releases/libaom-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]

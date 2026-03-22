@@ -6,7 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
 [dependencies]
-build = ["meson", "ninja", "sassc"]
+build = ["meson", "ninja"]
 link = ["glib", "gtk4"]
 
 [[sources]]

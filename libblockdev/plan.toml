@@ -1,6 +1,6 @@
 name = "libblockdev"
-version = "3.3.1"
-release = 2
+version = "3.4.0"
+release = 1
 description = "Library for manipulating block devices"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -10,6 +10,7 @@ url = "https://github.com/storaged-project/libblockdev"
 runtime = ["mdadm"]
 build = [
     "autoconf",
+    "autoconf-archive",
     "automake",
     "gcc",
     "libtool",
@@ -34,45 +35,8 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/storaged-project/libblockdev/archive/refs/tags/${PART_VERSION}.tar.gz"
-sha256 = "7d313d790dbf2921d19bed0bba591fc3530113bc0f3e7818ee80f028c988a286"
-
-[lifecycle.prepare]
-script = '''
-cd ${BUILD_DIR}
-python3 - <<'PY'
-from pathlib import Path
-
-path = Path("configure.ac")
-text = path.read_text()
-
-old_debug = "AX_CHECK_ENABLE_DEBUG([no], [DEBUG], [NDEBUG])"
-new_debug = """AC_ARG_ENABLE([debug],
-    AS_HELP_STRING([--enable-debug], [build with debug logging @<:@default=no@:>@]),
-    [],
-    [enable_debug=no])
-
-AS_IF([test \"x$enable_debug\" = \"xyes\"],
-      [AC_DEFINE([DEBUG], [1], [Define to 1 to enable debug logging])],
-      [AC_DEFINE([NDEBUG], [1], [Define to 1 to disable debug logging])])"""
-
-old_drivedb = "       AX_RECURSIVE_EVAL([$with_drivedb], [drivedb_path])"
-new_drivedb = """       drivedb_path=\"$with_drivedb\"
-       dnl Expand nested directory variables without relying on autoconf-archive.
-       eval \"drivedb_path=\\\"$drivedb_path\\\"\"
-       eval \"drivedb_path=\\\"$drivedb_path\\\"\""""
-
-if old_debug not in text:
-    raise SystemExit("expected debug macro not found in configure.ac")
-if old_drivedb not in text:
-    raise SystemExit("expected drivedb macro not found in configure.ac")
-
-text = text.replace(old_debug, new_debug, 1)
-text = text.replace(old_drivedb, new_drivedb, 1)
-path.write_text(text)
-PY
-
-'''
+uri = "https://github.com/storaged-project/libblockdev/releases/download/${PART_VERSION}/libblockdev-${PART_VERSION}.tar.gz"
+sha256 = "65ef9a37babd44b85b8ff9b273f90f9f7d5f8ff7b0c76a8edb69240325fd83f4"
 
 [lifecycle.configure]
 script = '''

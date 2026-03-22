@@ -6,11 +6,10 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
 [dependencies]
-runtime = ["gst-plugins-base", "gstreamer", "libwpe"]
+runtime = ["gst-plugins-base", "gstreamer"]
 build = [
     "gst-plugins-base",
     "gstreamer",
-    "libwpe",
     "meson",
     "ninja",
     "pkgconf",

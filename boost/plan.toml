@@ -1,5 +1,5 @@
 name = "boost"
-version = "1.89.0"
+version = "1.90.0"
 release = 1
 description = "Free peer-reviewed portable C++ source libraries"
 license = "BSL-1.0"
@@ -16,8 +16,8 @@ link = [
 ]
 
 [[sources]]
-uri = "https://archives.boost.io/release/${PART_VERSION}/source/boost_1_89_0.tar.bz2"
-sha256 = "SKIP"
+uri = "https://archives.boost.io/release/${PART_VERSION}/source/boost_1_90_0.tar.bz2"
+sha256 = "49551aff3b22cbc5c5a9ed3dbc92f0e23ea50a0f7325b0d198b705e8ee3fc305"
 
 [lifecycle.configure]
 script = '''

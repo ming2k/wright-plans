@@ -1,0 +1,45 @@
+name = "wget"
+version = "1.25.0"
+release = 1
+description = "Network utility to retrieve files from the web"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/wget/"
+
+[dependencies]
+runtime = ["ca-certificates"]
+build = ["gcc", "make"]
+link = [
+    "openssl",
+    "libidn2",
+    "libpsl",
+    "pcre2",
+    "zlib",
+]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/wget/wget-${PART_VERSION}.tar.lz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr      \
+    --sysconfdir=/etc          \
+    --with-ssl=openssl
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''

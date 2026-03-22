@@ -1,22 +1,30 @@
 name = "iana-etc"
-version = "20250807"
+version = "20260318"
 release = 1
 description = "Data for network services and protocols (/etc/services and /etc/protocols)"
 license = "MIT"
 arch = "x86_64"
 url = "https://www.iana.org/protocols"
 
+[dependencies]
+build = ["python"]
+
 [[sources]]
-uri = "https://github.com/Mic92/iana-etc/releases/download/${PART_VERSION}/iana-etc-${PART_VERSION}.tar.gz"
+uri = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv"
+sha256 = "7c799c0ac86672b1e3573333b0485b04b3e5fdb4a7a3232f85ee7d8df207f795"
+
+[[sources]]
+uri = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers-1.csv"
+sha256 = "e704ee14e69347681b3a6271af02195a9741236074fc311449ebb032101bdf2c"
+
+[[sources]]
+uri = "generate_iana_etc.py"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-install -Dm644 services  ${PART_DIR}/etc/services
-install -Dm644 protocols ${PART_DIR}/etc/protocols
-
+python3 ${FILES_DIR}/generate_iana_etc.py \
+  ${FILES_DIR}/service-names-port-numbers.csv \
+  ${FILES_DIR}/protocol-numbers-1.csv \
+  ${PART_DIR}
 '''
-
-[output]
-backup = ["/etc/services", "/etc/protocols"]
