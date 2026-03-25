@@ -1,0 +1,60 @@
+name = "glfw"
+version = "3.4"
+release = 1
+description = "Multi-platform library for OpenGL, OpenGL ES, Vulkan, window and input"
+license = "Zlib"
+arch = "x86_64"
+url = "https://www.glfw.org/"
+
+[dependencies]
+build = [
+    "cmake",
+    "gcc",
+    "make",
+    "pkgconf",
+    "wayland-protocols",
+]
+link = [
+    "wayland",
+    "libxkbcommon",
+]
+runtime = [
+    "wayland",
+    "libxkbcommon",
+]
+
+[[sources]]
+uri = "git+https://github.com/glfw/glfw.git#${PART_VERSION}"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DGLFW_BUILD_WAYLAND=ON \
+  -DGLFW_BUILD_X11=OFF \
+  -DGLFW_LIBRARY_TYPE=SHARED \
+  -DGLFW_BUILD_EXAMPLES=OFF \
+  -DGLFW_BUILD_TESTS=OFF \
+  -DGLFW_BUILD_DOCS=OFF
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+cmake --build build -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PART_DIR} cmake --install build
+
+'''
+
+[output]
+provides = ["libglfw"]

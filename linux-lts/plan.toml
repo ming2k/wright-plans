@@ -1,5 +1,5 @@
 name = "linux-lts"
-version = "6.18.18"
+version = "6.18.20"
 release = 1
 description = "The Linux kernel (LTS)"
 license = "GPL-2.0-only"
@@ -21,6 +21,15 @@ sha256 = "SKIP"
 [lifecycle.prepare]
 script = '''
 cd ${BUILD_DIR}
+
+# Configuration policy:
+# - ${FILES_DIR}/config is the primary kernel config source and should reflect
+#   the baseline that users can inspect and edit directly.
+# - Prefer changing config for normal feature choices so the resulting policy is
+#   visible in one place.
+# - Keep scripts/config usage minimal and limited to a small set of
+#   strategy-critical assertions or version-drift guardrails that cannot be
+#   expressed cleanly as the maintained config baseline.
 cp ${FILES_DIR}/config .config
 make olddefconfig
 

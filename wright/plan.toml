@@ -1,5 +1,5 @@
 name = "wright"
-version = "1.11.0"
+version = "1.11.3"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"

@@ -1,0 +1,80 @@
+name = "lwjgl3"
+version = "3.4.1"
+release = 1
+description = "Lightweight Java Game Library 3 - access to OpenGL, Vulkan, OpenAL, and more from Java"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://www.lwjgl.org/"
+
+[dependencies]
+build = [
+    "openjdk",
+    "ant",
+    "gcc",
+    "make",
+]
+link = [
+    "glfw",
+    "libffi",
+    "jemalloc",
+]
+runtime = [
+    "openjdk",
+    "glfw",
+    "libffi",
+    "jemalloc",
+    "vulkan-loader",
+]
+optional = [
+    { name = "freetype", description = "FreeType font rendering support" },
+]
+
+[[sources]]
+uri = "git+https://github.com/LWJGL/lwjgl3.git#${PART_VERSION}"
+sha256 = "SKIP"
+
+[options]
+env = { JAVA_HOME = "/usr/lib/jvm/java-21-openjdk" }
+timeout = 1800
+
+[lifecycle.configure]
+dockyard = "relaxed"
+script = '''
+cd ${BUILD_DIR}
+
+export LWJGL_BUILD_TYPE="release/${PART_VERSION}"
+
+ant init
+ant compile-templates
+ant generate
+
+'''
+
+[lifecycle.compile]
+dockyard = "relaxed"
+script = '''
+cd ${BUILD_DIR}
+
+export LWJGL_BUILD_TYPE="release/${PART_VERSION}"
+
+ant compile
+ant compile-native
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+
+DEST=${PART_DIR}/usr/share/java/lwjgl3
+install -dm755 "$DEST"
+install -dm755 "$DEST/native"
+
+find bin/out -maxdepth 1 -name '*.jar' -exec install -Dm644 {} "$DEST/" \;
+
+find bin/out/native/linux/x64 -name '*.so' -exec install -Dm755 {} "$DEST/native/" \;
+
+# Symlink system GLFW into native dir so LWJGL finds it
+ln -sf /usr/lib/libglfw.so "$DEST/native/libglfw.so"
+
+'''

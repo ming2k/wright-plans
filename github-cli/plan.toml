@@ -1,0 +1,34 @@
+name = "github-cli"
+version = "2.88.1"
+release = 1
+description = "GitHub CLI"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/cli/cli"
+
+[dependencies]
+build = ["go", "make"]
+
+[[sources]]
+uri = "https://github.com/cli/cli/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+dockyard = "relaxed"
+script = '''
+cd ${BUILD_DIR}
+export PATH=/usr/lib/go/bin:$PATH
+export CGO_ENABLED=0
+make bin/gh
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make install prefix=/usr DESTDIR=${PART_DIR}
+install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/github-cli/LICENSE
+
+'''
+
+[lifecycle.fabricate]

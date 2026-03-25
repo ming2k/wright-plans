@@ -1,0 +1,29 @@
+name = "ant"
+version = "1.10.15"
+release = 1
+description = "Java-based build tool"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://ant.apache.org/"
+
+[dependencies]
+runtime = ["openjdk"]
+
+[[sources]]
+uri = "https://dlcdn.apache.org/ant/binaries/apache-ant-${PART_VERSION}-bin.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+
+install -dm755 ${PART_DIR}/usr/share/ant
+cp -a bin lib etc ${PART_DIR}/usr/share/ant/
+
+install -dm755 ${PART_DIR}/usr/bin
+ln -sf ../share/ant/bin/ant ${PART_DIR}/usr/bin/ant
+
+'''
+
+[output]
+provides = ["apache-ant"]

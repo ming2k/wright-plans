@@ -1,6 +1,6 @@
 name = "foot"
-version = "1.26.0"
-release = 3
+version = "1.26.1"
+release = 1
 description = "A fast, lightweight and minimalistic Wayland terminal emulator"
 license = "MIT"
 arch = "x86_64"
@@ -29,7 +29,7 @@ link = [
 
 [[sources]]
 uri = "https://codeberg.org/dnkl/foot/releases/download/${PART_VERSION}/foot-${PART_VERSION}.tar.gz"
-sha256 = "e7ea148942b02d4f51280d236b44bba1d7ab34538e69b701d05b75c06d19eac5"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
