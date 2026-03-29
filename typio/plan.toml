@@ -1,5 +1,5 @@
 name = "typio"
-version = "2.2.4"
+version = "2.4.0"
 release = 1
 description = "Native Wayland input method daemon with optional GTK4 control panel"
 license = "NOASSERTION"
@@ -37,7 +37,6 @@ cmake -S . -B build -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_TESTS=OFF \
     -DBUILD_CONTROL_PANEL=ON \
-    -DENABLE_SYSTRAY=ON \
     -DBUILD_RIME_ENGINE=ON \
     -DBUILD_WHISPER=ON \
     -DBUILD_MOZC_ENGINE=ON \

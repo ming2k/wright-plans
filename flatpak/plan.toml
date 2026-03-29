@@ -1,6 +1,6 @@
 name = "flatpak"
 version = "1.16.3"
-release = 7
+release = 8
 description = "Universal app distribution framework (Pure Wayland)"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -14,6 +14,7 @@ runtime = [
     "xdg-desktop-portal",
     "xdg-desktop-portal-gtk",
     "shared-mime-info",
+    "desktop-file-utils",
 ]
 build = [
     "meson",
@@ -82,11 +83,15 @@ mkdir -p ${PART_DIR}/var/lib/flatpak
 post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/flatpak.conf 2>/dev/null || true
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true
+[ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
+update-mime-database /usr/share/mime 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
 post_upgrade = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true
+[ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
+update-mime-database /usr/share/mime 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''

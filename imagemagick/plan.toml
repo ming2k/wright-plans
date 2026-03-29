@@ -1,0 +1,75 @@
+name = "imagemagick"
+version = "7.1.2-18"
+release = 2
+description = "Tools and libraries for reading, writing, and manipulating images"
+license = "ImageMagick"
+arch = "x86_64"
+url = "https://imagemagick.org"
+
+[dependencies]
+build = [
+    "gcc",
+    "make",
+    "pkgconf",
+]
+link = [
+    "bzip2",
+    "fontconfig",
+    "freetype",
+    "lcms2",
+    "libjpeg-turbo",
+    "libpng",
+    "libtiff",
+    "libwebp",
+    "libxml2",
+    "openjpeg",
+    "xz",
+    "zlib",
+]
+
+[[sources]]
+uri = "https://imagemagick.org/archive/releases/ImageMagick-${PART_VERSION}.tar.xz"
+sha256 = "abb85df40f06fddf17d031629c7ad2778a55d478a8bff80d55ffee75c90a3982"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --disable-static \
+    --disable-docs \
+    --with-modules \
+    --with-perl=no \
+    --without-x \
+    --without-djvu \
+    --without-heic \
+    --without-jbig \
+    --without-jxl \
+    --without-lqr \
+    --without-openexr \
+    --without-pango \
+    --without-raqm \
+    --without-raw \
+    --without-zip \
+    --without-zstd
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+test -x ${PART_DIR}/usr/bin/magick
+
+'''
+
+[lifecycle.fabricate]

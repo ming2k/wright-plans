@@ -1,13 +1,19 @@
 name = "niri"
 version = "25.11"
-release = 1
+release = 2
 description = "Scrollable-tiling Wayland compositor"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://github.com/YaLTeR/niri"
 
 [dependencies]
-runtime = ["seatd", "pipewire", "xdg-desktop-portal"]
+runtime = [
+    "seatd",
+    "pipewire",
+    "xdg-desktop-portal",
+    "xdg-desktop-portal-gtk",
+    "xdg-desktop-portal-wlr",
+]
 build = ["cargo", "pkgconf", "rust"]
 link = [
     "cairo",

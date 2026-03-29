@@ -1,6 +1,6 @@
 name = "desktop-file-utils"
 version = "0.27"
-release = 1
+release = 2
 description = "Utilities for manipulating .desktop files"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
@@ -35,7 +35,13 @@ meson install -C build --destdir ${PART_DIR}
 '''
 
 [hooks]
-post_install = "update-desktop-database -q /usr/share/applications 2>/dev/null || true"
-post_upgrade = "update-desktop-database -q /usr/share/applications 2>/dev/null || true"
+post_install = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+[ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
+'''
+post_upgrade = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+[ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
+'''
 
 [lifecycle.fabricate]
