@@ -1,5 +1,5 @@
 name = "cmake"
-version = "4.2.3"
+version = "4.3.1"
 release = 1
 description = "A modern toolset used for generating Makefiles and other build systems"
 license = "BSD-3-Clause"
@@ -10,7 +10,7 @@ url = "https://cmake.org/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://cmake.org/files/v4.2/cmake-${PART_VERSION}.tar.gz"
+uri = "https://cmake.org/files/v4.3/cmake-${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

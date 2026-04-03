@@ -1,0 +1,24 @@
+name = "python-pyproject-metadata"
+version = "0.11.0"
+release = 1
+description = "PEP 621 project metadata parser"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/pypa/pyproject-metadata"
+
+[dependencies]
+runtime = ["python", "python-packaging"]
+build = ["flit-core", "python", "python-packaging"]
+
+[[sources]]
+uri = "https://pypi.org/packages/source/p/pyproject_metadata/pyproject_metadata-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+
+'''
+
+[lifecycle.fabricate]

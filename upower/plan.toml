@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://gitlab.freedesktop.org/upower/upower"
 
 [dependencies]
+runtime = ["systemd"]
 build = [
     "gettext",
     "gobject-introspection",
@@ -22,7 +23,6 @@ link = [
     "libgudev",
     "libusb",
     "polkit",
-    "systemd",
 ]
 
 [[sources]]

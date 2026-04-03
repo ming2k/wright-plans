@@ -1,5 +1,5 @@
 name = "sing-box"
-version = "1.13.4"
+version = "1.13.5"
 release = 1
 description = "The universal proxy platform"
 license = "GPL-3.0-or-later"

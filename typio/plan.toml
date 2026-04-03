@@ -1,5 +1,5 @@
 name = "typio"
-version = "2.4.0"
+version = "2.6.2"
 release = 1
 description = "Native Wayland input method daemon with optional GTK4 control panel"
 license = "NOASSERTION"
@@ -30,24 +30,25 @@ sha256 = "SKIP"
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-cmake -S . -B build \
+ cmake -S . -B build \
 cmake -S . -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_TESTS=OFF \
+    -DENABLE_NOTIFICATIONS=ON \
     -DBUILD_CONTROL_PANEL=ON \
     -DBUILD_RIME_ENGINE=ON \
     -DBUILD_WHISPER=ON \
-    -DBUILD_MOZC_ENGINE=ON \
     -DBUILD_SHERPA_ONNX=ON \
-    -DENABLE_NOTIFICATIONS=ON
+    -DBUILD_MOZC_ENGINE=ON \
+    -DENABLE_SYSTRAY=OFF
 '''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = "cmake --build ${BUILD_DIR}/build -j$(nproc)"
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
+script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"
 
 [lifecycle.fabricate]

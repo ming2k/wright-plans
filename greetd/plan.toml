@@ -7,13 +7,12 @@ arch = "x86_64"
 url = "https://sr.ht/~kennylevinsen/greetd"
 
 [dependencies]
-runtime = ["seatd"]
+runtime = ["seatd", "systemd"]
 build = ["rust"]
 link = [
     "glibc",
     "linux-pam",
     "seatd",
-    "systemd",
 ]
 
 [[sources]]

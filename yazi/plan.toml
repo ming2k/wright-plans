@@ -9,16 +9,7 @@ url = "https://github.com/sxyazi/yazi"
 [dependencies]
 build = ["rust"]
 link = ["gcc", "glibc"]
-optional = [
-    { name = "ffmpeg", description = "Video and audio file previews" },
-    { name = "fd", description = "File search integration" },
-    { name = "rg", description = "Content search integration" },
-    { name = "zoxide", description = "Directory jumping" },
-    { name = "fzf", description = "Fuzzy finder integration" },
-    { name = "poppler", description = "PDF preview support" },
-    { name = "jq", description = "JSON file preview" },
-    { name = "imagemagick", description = "Additional image format support" },
-]
+optional = []
 
 [[sources]]
 uri = "https://github.com/sxyazi/yazi/archive/refs/tags/v${PART_VERSION}.tar.gz"

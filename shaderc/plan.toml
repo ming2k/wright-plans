@@ -70,4 +70,7 @@ rm -f ${PART_DIR}/usr/lib/pkgconfig/shaderc_static.pc
 
 '''
 
+[output]
+provides = ["glslc"]
+
 [lifecycle.fabricate]

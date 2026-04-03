@@ -1,5 +1,5 @@
 name = "xz"
-version = "5.8.2"
+version = "5.8.3"
 release = 1
 description = "Programs for compressing and decompressing files in the XZ/LZMA format"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"

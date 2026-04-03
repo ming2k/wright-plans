@@ -17,13 +17,13 @@ runtime = [
     "slirp4netns",
     "shadow",
     "passt",
+    "systemd",
 ]
 build = ["go", "pkgconf"]
 link = [
     "gpgme",
     "libassuan",
     "btrfs-progs",
-    "systemd",
 ]
 
 [[sources]]

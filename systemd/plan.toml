@@ -1,5 +1,5 @@
 name = "systemd"
-version = "259.3"
+version = "260.1"
 release = 1
 description = "System and Service Manager"
 license = "LGPL-2.1-or-later"

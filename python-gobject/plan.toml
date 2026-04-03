@@ -1,0 +1,25 @@
+name = "python-gobject"
+version = "3.56.2"
+release = 1
+description = "Python bindings for GObject Introspection"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://pygobject.gnome.org/"
+
+[dependencies]
+runtime = ["python", "python-pycairo", "gobject-introspection", "glib"]
+build = ["python", "meson-python", "pkgconf", "gobject-introspection", "python-pycairo"]
+link = ["cairo", "gobject-introspection", "glib"]
+
+[[sources]]
+uri = "https://pypi.org/packages/source/p/pygobject/pygobject-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+
+'''
+
+[lifecycle.fabricate]

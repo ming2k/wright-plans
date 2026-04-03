@@ -1,0 +1,25 @@
+name = "python-pycairo"
+version = "1.29.0"
+release = 1
+description = "Python bindings for cairo"
+license = "LGPL-2.1-only OR MPL-1.1"
+arch = "x86_64"
+url = "https://pycairo.readthedocs.io/"
+
+[dependencies]
+runtime = ["python", "cairo"]
+build = ["python", "meson-python", "pkgconf"]
+link = ["cairo"]
+
+[[sources]]
+uri = "https://pypi.org/packages/source/p/pycairo/pycairo-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+
+'''
+
+[lifecycle.fabricate]

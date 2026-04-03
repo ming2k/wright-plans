@@ -1,5 +1,5 @@
 name = "util-linux"
-version = "2.41.3"
+version = "2.42"
 release = 1
 description = "Miscellaneous system utilities for Linux"
 license = "GPL-2.0-only AND GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.1-or-later AND BSD-2-Clause AND BSD-3-Clause AND LicenseRef-PublicDomain"
@@ -24,7 +24,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/util-linux/v2.41/util-linux-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/utils/util-linux/v2.42/util-linux-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
@@ -76,4 +76,3 @@ rm -f ${PART_DIR}/usr/lib/lib*.a*
 rm -rf ${PART_DIR}/usr/lib/python*
 
 '''
-

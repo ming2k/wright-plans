@@ -1,30 +1,31 @@
-name = "tree-sitter"
+name = "tree-sitter-cli"
 version = "0.26.8"
 release = 1
-description = "An incremental parsing system for programming tools"
+description = "CLI tool for developing, testing, and using Tree-sitter parsers"
 license = "MIT"
 arch = "x86_64"
-url = "https://tree-sitter.github.io/tree-sitter/"
+url = "https://github.com/tree-sitter/tree-sitter"
 
 [dependencies]
-build = ["gcc", "make"]
-link = ["glibc"]
+build = ["gcc", "rust"]
+link = ["gcc", "glibc"]
 
 [[sources]]
 uri = "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v${PART_VERSION}.tar.gz"
 sha256 = "e6826b7533ec3a885aba598377a6d20b5a6321ff3db76968e960c2352d3a5077"
 
 [lifecycle.compile]
+dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
-make -j$(nproc) PREFIX=/usr
+cargo build --release --locked -p tree-sitter-cli
 
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-make PREFIX=/usr DESTDIR=${PART_DIR} install
+install -Dm755 target/release/tree-sitter ${PART_DIR}/usr/bin/tree-sitter
 
 '''
 

@@ -1,5 +1,5 @@
 name = "vim"
-version = "9.2.0137"
+version = "9.2.0287"
 release = 1
 description = "Vi Improved, a highly configurable text editor"
 license = "custom:vim"

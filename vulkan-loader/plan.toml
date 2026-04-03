@@ -31,4 +31,7 @@ script = "ninja -C ${BUILD_DIR}/build"
 [lifecycle.staging]
 script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
 
+[output]
+provides = ["vulkan-icd-loader"]
+
 [lifecycle.fabricate]

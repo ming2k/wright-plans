@@ -1,5 +1,5 @@
 name = "mesa"
-version = "26.0.0"
+version = "26.0.4"
 release = 1
 description = "Open-source OpenGL and Vulkan drivers"
 license = "MIT"
