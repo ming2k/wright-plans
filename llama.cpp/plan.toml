@@ -1,21 +1,27 @@
 name = "llama.cpp"
-version = "b8327"
-release = 1
+version = "b8661"
+release = 3
 description = "LLM inference in C/C++"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ggml-org/llama.cpp"
 
 [dependencies]
-build = ["gcc", "cmake", "ninja", "pkgconf"]
-link = ["openssl"]
-optional = [
-    { name = "curl", description = "HTTPS support for model downloading" },
-]
+build = ["gcc", "cmake", "ninja", "pkgconf", "shaderc", "vulkan-headers"]
+link = ["openssl", "vulkan-loader"]
+
+[[sources]]
+uri = "patches/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch"
 
 [[sources]]
 uri = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "48baf1d389f377d2c0cbc620a16a9b6720964b4d26e545552644ab269d5d2d1f"
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+patch -Np1 < ${FILES_DIR}/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch
+'''
 
 [lifecycle.configure]
 script = '''
@@ -25,7 +31,8 @@ cmake -B build -G Ninja \
   -DCMAKE_INSTALL_PREFIX=/usr/lib/llama.cpp \
   -DBUILD_SHARED_LIBS=OFF \
   -DGGML_NATIVE=OFF \
-  -DLLAMA_CURL=OFF
+  -DGGML_VULKAN=ON \
+  -DLLAMA_OPENSSL=ON
 '''
 
 [lifecycle.compile]
@@ -46,4 +53,7 @@ mkdir -p ${PART_DIR}/usr/bin
 for bin in ${PART_DIR}/usr/lib/llama.cpp/bin/*; do
   ln -sf /usr/lib/llama.cpp/bin/$(basename "$bin") ${PART_DIR}/usr/bin/$(basename "$bin")
 done
+
+mkdir -p ${PART_DIR}/usr/lib/pkgconfig
+ln -sf /usr/lib/llama.cpp/lib/pkgconfig/llama.pc ${PART_DIR}/usr/lib/pkgconfig/llama.pc
 '''
