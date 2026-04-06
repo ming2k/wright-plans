@@ -1,0 +1,17 @@
+name = "v2fly-geoip"
+version = "202604050243"
+release = 1
+description = "V2Fly GeoIP data for Xray"
+license = "CC-BY-SA-4.0"
+arch = "x86_64"
+url = "https://github.com/v2fly/geoip"
+
+[[sources]]
+uri = "https://github.com/v2fly/geoip/releases/download/${PART_VERSION}/geoip.dat"
+sha256 = "16dbd19ff8dddb69960f313a3b0c0623cae82dc9725687110c28740226d3b285"
+
+[lifecycle.staging]
+script = '''
+install -Dm644 ${FILES_DIR}/geoip.dat ${PART_DIR}/usr/share/v2fly-geoip/geoip.dat
+
+'''

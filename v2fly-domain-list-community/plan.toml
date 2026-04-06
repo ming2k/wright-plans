@@ -1,0 +1,17 @@
+name = "v2fly-domain-list-community"
+version = "20260406143728"
+release = 1
+description = "V2Fly domain list data for Xray geosite rules"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/v2fly/domain-list-community"
+
+[[sources]]
+uri = "https://github.com/v2fly/domain-list-community/releases/download/${PART_VERSION}/dlc.dat"
+sha256 = "1e3cd11272a5f4afa3d9e31f4dc57d0a55e73a587637e67e09d16f41995b910e"
+
+[lifecycle.staging]
+script = '''
+install -Dm644 ${FILES_DIR}/dlc.dat ${PART_DIR}/usr/share/v2fly-domain-list-community/dlc.dat
+
+'''

@@ -1,0 +1,52 @@
+name = "iputils"
+version = "20250605"
+release = 1
+description = "Network monitoring tools (ping, arping, etc.)"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/iputils/iputils"
+
+[dependencies]
+build = ["meson", "ninja", "gcc", "libcap", "libidn2", "docbook-xsl", "docbook-xml", "libxslt"]
+link = ["libcap", "libidn2"]
+
+[[sources]]
+uri = "https://github.com/iputils/iputils/archive/refs/tags/${PART_VERSION}.tar.gz"
+sha256 = "19e680c9eef8c079da4da37040b5f5453763205b4edfb1e2c114de77908927e4"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+mkdir build
+cd build
+meson setup \
+    --prefix=/usr \
+    --buildtype=release \
+    -DSKIP_TESTS=true \
+    -DBUILD_HTML_MANS=true \
+    -DBUILD_MANS=true \
+    -DUSE_IDN=true \
+    ..
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/build
+ninja
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}/build
+DESTDIR=${PART_DIR} ninja install
+'''
+
+[hooks]
+post_install = '''
+setcap cap_net_raw+ep /usr/bin/ping 2>/dev/null || true
+'''
+post_upgrade = '''
+setcap cap_net_raw+ep /usr/bin/ping 2>/dev/null || true
+'''
+
+[lifecycle.fabricate]

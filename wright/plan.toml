@@ -1,5 +1,5 @@
 name = "wright"
-version = "1.11.5"
+version = "1.11.7"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -20,6 +20,7 @@ sha256 = "SKIP"
 
 [lifecycle.compile]
 dockyard = "relaxed"
+# dockyard = "native"
 script = '''
 cd ${BUILD_DIR}
 export CARGO_HOME=${BUILD_DIR}/.cargo

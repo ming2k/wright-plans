@@ -1,0 +1,87 @@
+name = "godot-bin"
+version = "4.6.2"
+release = 3
+description = "Prebuilt upstream Godot Engine editor binary"
+license = "MIT"
+arch = "x86_64"
+url = "https://godotengine.org"
+
+[dependencies]
+build = ["libarchive"]
+
+[[sources]]
+uri = "https://godot-releases.nbg1.your-objectstorage.com/${PART_VERSION}-stable/Godot_v${PART_VERSION}-stable_linux.x86_64.zip"
+sha256 = "30e6b6d141f0cd5bebd629ad1d0ef1324e60091bb20662d026b402ba58c59937"
+
+[lifecycle.configure]
+script = "echo preparing godot-bin"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+chmod 755 Godot_v${PART_VERSION}-stable_linux.x86_64
+
+'''
+
+[lifecycle.staging]
+script = '''
+install -Dm755 ${BUILD_DIR}/Godot_v${PART_VERSION}-stable_linux.x86_64 ${PART_DIR}/usr/lib/godot-bin/godot
+
+install -Dm755 /dev/stdin ${PART_DIR}/usr/bin/godot <<'EOF'
+#!/bin/sh
+set -eu
+
+bin=/usr/lib/godot-bin/godot
+want_wayland=0
+
+if [ "${XDG_SESSION_TYPE:-}" = "wayland" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; then
+  want_wayland=1
+fi
+
+for arg in "$@"; do
+  case "$arg" in
+    --display-driver|--display-driver=*)
+      want_wayland=0
+      break
+      ;;
+  esac
+done
+
+if [ "$want_wayland" -eq 1 ]; then
+  exec "$bin" --display-driver wayland "$@"
+fi
+
+exec "$bin" "$@"
+EOF
+
+install -Dm644 /dev/stdin ${PART_DIR}/usr/share/applications/godot.desktop <<'EOF'
+[Desktop Entry]
+Type=Application
+Name=Godot Engine
+Comment=Advanced cross-platform 2D and 3D game engine
+Exec=godot %F
+Terminal=false
+Categories=Development;IDE;Graphics;
+Keywords=Godot;Game;Engine;Editor;
+Icon=applications-development
+StartupNotify=true
+EOF
+
+'''
+
+[output]
+replaces = ["godot"]
+conflicts = ["godot"]
+provides = ["godot"]
+
+[hooks]
+post_install = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+
+'''
+post_upgrade = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+
+'''
+
+[lifecycle.fabricate]
