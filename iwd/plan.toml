@@ -1,5 +1,5 @@
 name = "iwd"
-version = "3.11"
+version = "3.12"
 release = 1
 description = "Intel iNet Wireless Daemon - lightweight wireless daemon"
 license = "LGPL-2.1-only"
