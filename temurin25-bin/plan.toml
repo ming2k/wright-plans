@@ -1,0 +1,36 @@
+name = "temurin25-bin"
+version = "25.0.2+10"
+release = 1
+description = "Eclipse Temurin 25 binary JDK"
+license = "GPL-2.0-with-classpath-exception"
+arch = "x86_64"
+url = "https://github.com/adoptium/temurin25-binaries"
+
+[[sources]]
+uri = "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_x64_linux_hotspot_25.0.2_10.tar.gz"
+sha256 = "987387933b64b9833846dee373b640440d3e1fd48a04804ec01a6dbf718e8ab8"
+
+[lifecycle.staging]
+script = '''
+install -dm755 ${PART_DIR}/usr/lib/jvm
+cp -a ${BUILD_DIR} ${PART_DIR}/usr/lib/jvm/java-25-temurin
+
+install -dm755 ${PART_DIR}/usr/bin
+for bin in ${PART_DIR}/usr/lib/jvm/java-25-temurin/bin/*; do
+    name=$(basename "${bin}")
+    ln -sf ../lib/jvm/java-25-temurin/bin/${name} ${PART_DIR}/usr/bin/${name}
+done
+
+install -dm755 ${PART_DIR}/etc/profile.d
+cat > ${PART_DIR}/etc/profile.d/jdk.sh << 'PROF'
+export JAVA_HOME=/usr/lib/jvm/java-25-temurin
+PROF
+'''
+
+[output]
+provides = ["java", "jdk"]
+conflicts = ["openjdk"]
+replaces = ["openjdk"]
+backup = ["/etc/profile.d/jdk.sh"]
+
+[lifecycle.fabricate]

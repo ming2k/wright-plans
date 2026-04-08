@@ -1,0 +1,39 @@
+name = "zip"
+version = "3.0"
+release = 2
+description = "Utilities for creating ZIP archives"
+license = "Info-ZIP"
+arch = "x86_64"
+url = "https://infozip.sourceforge.net/Zip.html"
+
+[dependencies]
+build = ["bash", "bzip2", "gcc", "make"]
+runtime = ["bzip2"]
+
+[[sources]]
+uri = "https://downloads.sourceforge.net/project/infozip/Zip%203.x%20%28latest%29/3.0/zip30.tar.gz"
+sha256 = "f0e8bb1f9b7eb0b01285495a2699df3a4b766784c1765a8f1aeedf63c0806369"
+
+[[sources]]
+uri = "patches/fix-memfuncs.patch"
+sha256 = "SKIP"
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+patch -Np1 < ${FILES_DIR}/fix-memfuncs.patch
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -f unix/Makefile prefix=/usr generic_gcc
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make prefix=${PART_DIR}/usr \
+    MANDIR=${PART_DIR}/usr/share/man/man1 \
+    -f unix/Makefile install
+'''
