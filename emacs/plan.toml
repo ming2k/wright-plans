@@ -1,13 +1,27 @@
 name = "emacs"
 version = "30.2"
-release = 7
+release = 8
 description = "The extensible, customizable, self-documenting real-time display editor"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/emacs/"
 
 [dependencies]
-runtime = ["gnutls", "tree-sitter"]
+runtime = [
+    "giflib",
+    "glib",
+    "gnutls",
+    "gtk3",
+    "harfbuzz",
+    "libjpeg-turbo",
+    "libpng",
+    "librsvg",
+    "libtiff",
+    "libwebp",
+    "ncurses",
+    "pango",
+    "tree-sitter",
+]
 build = [
     "gcc",
     "gnutls",
@@ -17,10 +31,17 @@ build = [
     "tree-sitter",
 ]
 link = [
+    "giflib",
     "glib",
     "glibc",
+    "gnutls",
     "gtk3",
     "harfbuzz",
+    "libjpeg-turbo",
+    "libpng",
+    "librsvg",
+    "libtiff",
+    "libwebp",
     "ncurses",
     "pango",
     "tree-sitter",
@@ -44,20 +65,20 @@ patch -Np1 < ${FILES_DIR}/emacs-30.2-tree-sitter-abi-version-r2.patch
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr            \
---with-json              \
---with-tree-sitter       \
---with-native-compilation=no \
---with-pgtk                \
---without-xpm            \
---without-jpeg           \
---without-tiff           \
---without-gif            \
---without-png            \
---without-rsvg           \
---without-imagemagick    \
---without-gconf          \
---without-gsettings      \
+./configure --prefix=/usr                 \
+--with-json                               \
+--with-tree-sitter                        \
+--with-native-compilation=no              \
+--with-pgtk                               \
+--with-jpeg                               \
+--with-tiff                               \
+--with-gif                                \
+--with-png                                \
+--with-rsvg                               \
+--with-webp                               \
+--without-imagemagick                     \
+--without-gconf                           \
+--without-gsettings                       \
 --with-gnutls
 
 '''

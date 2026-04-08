@@ -1,0 +1,31 @@
+name = "giflib"
+version = "6.1.2"
+release = 1
+description = "Library and utilities for reading and writing GIF images"
+license = "MIT"
+arch = "x86_64"
+url = "https://sourceforge.net/projects/giflib/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["glibc"]
+
+[[sources]]
+uri = "https://downloads.sourceforge.net/project/giflib/giflib-6.x/giflib-${PART_VERSION}.tar.gz"
+sha256 = "2421abb54f5906b14965d28a278fb49e1ec9fe5ebbc56244dd012383a973d5c0"
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc) shared-lib static-lib gifbuild giffix giftext giftool gifclrmp PREFIX=/usr
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} PREFIX=/usr install-bin install-include install-lib
+
+'''
+
+[lifecycle.fabricate]
