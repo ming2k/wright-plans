@@ -1,5 +1,5 @@
 name = "igt-gpu-tools"
-version = "2.3"
+version = "2.4"
 release = 1
 description = "Tools for development and testing of the Intel DRM driver"
 license = "MIT"
@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://gitlab.freedesktop.org/drm/igt-gpu-tools"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf"]
+build = ["meson", "ninja", "pkgconf", "python-docutils"]
 link = [
     "cairo",
     "glibc",
@@ -21,7 +21,7 @@ link = [
 
 [[sources]]
 uri = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${PART_VERSION}/igt-gpu-tools-v${PART_VERSION}.tar.gz"
-sha256 = "e5a7b37f6797917864a33dc727209b13716e2ea3c3f1b308d4e856a3154d1869"
+sha256 = "675a46af1ec7998909819a0829aec6b03c79f0b573d1588d858dd54ac3063329"
 
 [lifecycle.configure]
 script = '''
@@ -30,7 +30,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
     --buildtype=release \
     -D chamelium=disabled \
     -D docs=disabled \
-    -D man=disabled \
+    -D man=enabled \
     -D overlay=disabled \
     -D runner=disabled \
     -D testplan=disabled \
