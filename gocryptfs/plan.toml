@@ -1,6 +1,6 @@
 name = "gocryptfs"
 version = "2.6.1"
-release = 1
+release = 2
 description = "Encrypted overlay filesystem written in Go"
 license = "MIT"
 arch = "x86_64"
@@ -18,23 +18,15 @@ sha256 = "SKIP"
 [lifecycle.compile]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
-CGO_ENABLED=1 go build \
-    -trimpath \
-    -buildmode=pie \
-    -ldflags "-X main.GitVersion=v${PART_VERSION} -X main.BuildDate=unknown" \
-    -o gocryptfs .
-CGO_ENABLED=1 go build \
-    -trimpath \
-    -o gocryptfs-xray ./gocryptfs-xray
+cd ${BUILD_DIR}/gocryptfs-*/
+CGO_ENABLED=1 ./build.bash
 
 '''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-install -Dm755 gocryptfs ${PART_DIR}/usr/bin/gocryptfs
-install -Dm755 gocryptfs-xray/gocryptfs-xray ${PART_DIR}/usr/bin/gocryptfs-xray
+cd ${BUILD_DIR}/gocryptfs-*/
+make DESTDIR=${PART_DIR} install
 
 '''
 

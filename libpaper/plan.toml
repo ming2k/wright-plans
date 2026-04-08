@@ -1,0 +1,54 @@
+name = "libpaper"
+version = "2.2.7"
+release = 2
+description = "Library for handling paper size information"
+license = "LGPL-2.1-or-later AND GPL-3.0-or-later AND FSFAP"
+arch = "x86_64"
+url = "https://github.com/rrthomas/libpaper"
+
+[dependencies]
+build = ["gcc", "make"]
+
+[[sources]]
+uri = "https://github.com/rrthomas/libpaper/releases/download/v2.2.7/libpaper-2.2.7.tar.gz"
+sha256 = "3925401edf1eda596277bc2485e050b704fd7f364f257c874b0c40ac5aa627c0"
+
+[[sources]]
+uri = "localepaper.c"
+sha256 = "SKIP"
+
+[lifecycle.prepare]
+script = """
+cp ${FILES_DIR}/localepaper.c ${BUILD_DIR}/src/
+"""
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --sysconfdir=/etc \
+  --sbindir=/usr/bin
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+cd src
+gcc $CFLAGS $LDFLAGS -I.. -Ilibgnu -o localepaper localepaper.c libgnu/.libs/libgnupaper.a
+"""
+
+[lifecycle.staging]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+install -Dt ${PART_DIR}/usr/lib -m0755 src/localepaper
+install -dm755 ${PART_DIR}/etc
+echo '# Simply write the paper name. See man 1 paper and "paper --no-size --all" for possible values' \
+    > ${PART_DIR}/etc/papersize
+install -dm755 ${PART_DIR}/etc/libpaper.d
+"""
+
+[output]
+backup = ["/etc/papersize"]

@@ -1,0 +1,45 @@
+name = "cava"
+version = "0.10.7"
+release = 1
+description = "Console-based audio visualizer for ALSA, PipeWire, PulseAudio and more"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/karlstav/cava"
+
+[dependencies]
+build = ["gcc", "make", "automake", "autoconf", "libtool", "pkgconf", "fftw", "iniparser"]
+link = ["fftw", "iniparser", "alsa-lib", "pipewire", "ncurses", "pulseaudio"]
+runtime = ["alsa-lib", "pipewire", "ncurses", "pulseaudio"]
+optional = ["sdl2", "portaudio", "jack"]
+
+[[sources]]
+uri = "https://github.com/karlstav/cava/archive/refs/tags/${PART_VERSION}.tar.gz"
+sha256 = "43f994f7e609fab843af868d8a7bc21471ac62c5a4724ef97693201eac42e70a"
+
+[lifecycle.prepare]
+script = """
+cd ${BUILD_DIR}
+autoreconf -vfi
+"""
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+make -j$(nproc)
+"""
+
+[lifecycle.staging]
+script = """
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+"""
+
+[output]
+backup = ["/etc/cava/config"]

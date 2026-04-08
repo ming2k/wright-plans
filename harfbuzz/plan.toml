@@ -11,12 +11,14 @@ build = [
     "meson",
     "ninja",
     "pkgconf",
+    "graphite2",
 ]
 link = [
     "cairo",
     "freetype",
     "glib",
     "icu",
+    "graphite2",
 ]
 
 [[sources]]
@@ -34,6 +36,7 @@ meson setup build \
     -D icu=enabled         \
     -D glib=enabled        \
     -D gobject=enabled     \
+    -D graphite2=enabled   \
     -D tests=disabled      \
     -D docs=disabled
 

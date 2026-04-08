@@ -1,0 +1,38 @@
+name = "zziplib"
+version = "0.13.80"
+release = 2
+description = "Lightweight library for transparent read access to zipped files"
+license = "LGPL-2.0-or-later OR MPL-1.1"
+arch = "x86_64"
+url = "https://github.com/gdraheim/zziplib"
+
+[dependencies]
+build = ["gcc", "cmake", "ninja", "zlib"]
+runtime = ["zlib"]
+link = ["zlib"]
+
+[[sources]]
+uri = "https://github.com/gdraheim/zziplib/archive/v0.13.80.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = """
+cd ${BUILD_DIR}
+cmake -B build \
+  -G Ninja \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DZZIPDOCS=OFF \
+  -DZZIPTEST=OFF
+"""
+
+[lifecycle.compile]
+script = """
+cd ${BUILD_DIR}
+ninja -C build
+"""
+
+[lifecycle.staging]
+script = """
+cd ${BUILD_DIR}
+DESTDIR=${PART_DIR} ninja -C build install
+"""

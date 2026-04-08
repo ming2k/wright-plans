@@ -1,0 +1,38 @@
+name = "fftw"
+version = "3.3.10"
+release = 1
+description = "A library for computing the discrete Fourier transform (DFT)"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "http://www.fftw.org/"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["glibc"]
+
+[[sources]]
+uri = "http://www.fftw.org/fftw-${PART_VERSION}.tar.gz"
+sha256 = "56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --enable-shared \
+    --enable-threads \
+    --enable-sse2 \
+    --enable-avx
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+'''

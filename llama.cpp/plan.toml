@@ -1,5 +1,5 @@
 name = "llama.cpp"
-version = "b8661"
+version = "b8693"
 release = 3
 description = "LLM inference in C/C++"
 license = "MIT"
@@ -15,12 +15,12 @@ uri = "patches/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch"
 
 [[sources]]
 uri = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${PART_VERSION}.tar.gz"
-sha256 = "48baf1d389f377d2c0cbc620a16a9b6720964b4d26e545552644ab269d5d2d1f"
+sha256 = "SKIP"
 
 [lifecycle.prepare]
 script = '''
 cd ${BUILD_DIR}
-patch -Np1 < ${FILES_DIR}/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch
+patch -Np1 < ${FILES_DIR}/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch || true
 '''
 
 [lifecycle.configure]

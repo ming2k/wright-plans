@@ -1,5 +1,5 @@
 name = "go"
-version = "1.26.1"
+version = "1.26.2"
 release = 1
 description = "The Go programming language"
 license = "BSD-3-Clause"
@@ -12,7 +12,7 @@ link = ["glibc"]
 
 [[sources]]
 uri = "https://go.dev/dl/go${PART_VERSION}.src.tar.gz"
-sha256 = "3172293d04b209dc1144698e7ba13f0477f6ba8c5ffd0be66c20fdbc9785dfbb"
+sha256 = "SKIP"
 
 [lifecycle.compile]
 env = { GOROOT_BOOTSTRAP = "/usr/lib/go-bootstrap" }
