@@ -1,0 +1,34 @@
+name = "xvid"
+version = "1.3.7"
+release = 1
+description = "Xvid is an open-source MPEG-4 video codec"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make", "nasm"]
+link = []
+
+[[sources]]
+uri = "https://downloads.xvid.com/downloads/xvidcore-1.3.7.tar.gz"
+sha256 = "abbdcbd39555691dd1c9b4d08f0a031376a3b211652c0d8b3b8aa9be1303ce2d"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}/build/generic
+./configure --prefix=/usr
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/build/generic
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}/build/generic
+make DESTDIR=${PART_DIR} install
+'''
+
+[lifecycle.fabricate]

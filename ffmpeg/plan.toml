@@ -1,6 +1,6 @@
 name = "ffmpeg"
-version = "8.0.1"
-release = 4
+version = "8.1"
+release = 5
 description = "Complete, cross-platform solution to record, convert and stream audio and video"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
@@ -13,6 +13,7 @@ build = [
     "nasm",
     "pkgconf",
     "sdl2",
+    "cmake",
 ]
 link = [
     "alsa-lib",
@@ -20,17 +21,25 @@ link = [
     "dav1d",
     "freetype",
     "gnutls",
+    "lame",
     "libass",
     "libdrm",
     "libglvnd",
+    "libplacebo",
+    "libsndfile",
+    "libtheora",
+    "libva",
     "libvorbis",
     "libvpx",
     "libwebp",
     "libxml2",
     "mesa",
+    "openjpeg",
     "opus",
     "pipewire",
     "sdl2",
+    "srt",
+    "svt-av1",
     "vulkan-loader",
     "x264",
     "x265",
@@ -43,6 +52,12 @@ link = [
 [[sources]]
 uri = "https://ffmpeg.org/releases/ffmpeg-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+
+'''
 
 [lifecycle.configure]
 script = '''
@@ -71,16 +86,23 @@ command -v sdl2-config >/dev/null 2>&1 || {
   --enable-libaom \
   --enable-libdav1d \
   --enable-libfreetype \
+  --enable-libmp3lame \
+  --enable-libopenjpeg \
+  --enable-libopus \
+  --enable-libplacebo \
+  --enable-libsrt \
+  --enable-libsvtav1 \
+  --enable-libtheora \
   --enable-libvorbis \
   --enable-libvpx \
   --enable-libwebp \
   --enable-libx264 \
   --enable-libx265 \
   --enable-libxml2 \
-  --enable-libopus \
   --enable-sdl2 \
   --enable-ffplay \
   --enable-vulkan \
+  --enable-vaapi \
   --enable-libdrm \
   --enable-lto \
   --enable-pic

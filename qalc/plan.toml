@@ -1,0 +1,53 @@
+name = "qalc"
+version = "5.10.0"
+release = 1
+description = "Powerful command-line calculator built on libqalculate"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://qalculate.github.io/"
+
+[dependencies]
+build = ["gcc", "gettext", "make", "pkgconf"]
+runtime = ["curl", "gettext", "gmp", "icu", "libxml2", "mpfr", "readline"]
+link = ["curl", "gettext", "gmp", "icu", "libxml2", "mpfr", "readline"]
+
+[[sources]]
+uri = "https://github.com/Qalculate/libqalculate/releases/download/v${PART_VERSION}/libqalculate-${PART_VERSION}.tar.gz"
+sha256 = "904592d33a98ed4a26a59fa34c855578e096144fb91965b8afc90e06797dba8e"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+    --disable-static \
+    --with-readline \
+    --docdir=/usr/share/doc/qalc-${PART_VERSION}
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.check]
+script = '''
+cd ${BUILD_DIR}
+make check
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''
+
+[hooks]
+post_install = "ldconfig 2>/dev/null || true"
+post_upgrade = "ldconfig 2>/dev/null || true"
+
+[lifecycle.fabricate]

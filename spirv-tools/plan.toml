@@ -1,12 +1,11 @@
 name = "spirv-tools"
-version = "1.4.341.0"
+version = "2026.1"
 release = 1
 description = "API and commands for processing SPIR-V modules"
 license = "Apache-2.0"
 arch = "x86_64"
 
 [dependencies]
-runtime = ["spirv-headers"]
 build = [
     "cmake",
     "gcc",
@@ -16,8 +15,8 @@ build = [
 ]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/vulkan-sdk-${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+uri = "https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "35dc16cf2dc64be5b6bbbe86d210e6f4a82b070cffd751605a3365cd8bce2d7e"
 
 [lifecycle.configure]
 script = '''
@@ -30,5 +29,8 @@ script = "cmake --build ${BUILD_DIR}/build"
 
 [lifecycle.staging]
 script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"
+
+[output]
+provides = ["spirv-opt"]
 
 [lifecycle.fabricate]

@@ -1,6 +1,6 @@
 name = "flatpak"
-version = "1.16.3"
-release = 8
+version = "1.17.6"
+release = 1
 description = "Universal app distribution framework (Pure Wayland)"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -45,7 +45,7 @@ link = [
 
 [[sources]]
 uri = "https://github.com/flatpak/flatpak/releases/download/${PART_VERSION}/flatpak-${PART_VERSION}.tar.xz"
-sha256 = "3d6bd3f5f8940e80c087286ca3e42182fc630d780894536511fcd2cffc12cf5b"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
@@ -56,7 +56,6 @@ meson setup build \
     --localstatedir=/var \
     -Dsystem_bubblewrap=/usr/bin/bwrap \
     -Dsystem_dbus_proxy=/usr/bin/xdg-dbus-proxy \
-    -Dhttp_backend=curl \
     -Dsystemd=enabled \
     -Ddbus_config_dir=/usr/share/dbus-1/system.d \
     -Dselinux_module=disabled \

@@ -1,0 +1,37 @@
+name = "vid.stab"
+version = "1.1.1"
+release = 1
+description = "Video stabilization library"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make", "cmake"]
+link = []
+
+[[sources]]
+uri = "https://github.com/georgmartius/vid.stab/archive/refs/tags/v1.1.1.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_SHARED_LIBS=ON
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+cmake --build build -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PART_DIR} cmake --install build
+'''
+
+[lifecycle.fabricate]

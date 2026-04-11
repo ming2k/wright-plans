@@ -1,0 +1,99 @@
+name = "openjdk"
+version = "26"
+release = 2
+description = "OpenJDK 26 (source build)"
+license = "GPL-2.0-with-classpath-exception"
+arch = "x86_64"
+url = "https://openjdk.org"
+
+[dependencies]
+runtime = ["alsa-lib", "freetype", "giflib", "lcms2", "libjpeg-turbo", "libpng", "zlib"]
+build = [
+    "autoconf",
+    "make",
+    "gcc",
+    "bash",
+    "zip",
+    "unzip",
+    "fontconfig",
+    "temurin25",
+]
+link = ["alsa-lib", "freetype", "giflib", "lcms2", "libjpeg-turbo", "libpng", "zlib"]
+
+[[sources]]
+uri = "git+https://github.com/openjdk/jdk.git#jdk-26-ga"
+sha256 = "SKIP"
+
+[options]
+ccache = true
+timeout = 7200
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+
+BOOT_JDK="${BOOT_JDK_PATH:-}"
+if [ -z "${BOOT_JDK}" ]; then
+    for candidate in \
+        /usr/lib/jvm/java-26-openjdk \
+        /usr/lib/jvm/java-25-temurin \
+        /usr/lib/jvm/java-25-openjdk \
+        /usr/lib/jvm/java-26-temurin
+    do
+        if [ -x "${candidate}/bin/java" ]; then
+            BOOT_JDK="${candidate}"
+            break
+        fi
+    done
+fi
+
+if [ -z "${BOOT_JDK}" ]; then
+    echo "No supported Boot JDK found. Set BOOT_JDK_PATH or install JDK 25/26." >&2
+    exit 1
+fi
+
+bash configure \
+    --with-boot-jdk="${BOOT_JDK}" \
+    --with-version-pre="" \
+    --with-version-opt="" \
+    --with-native-debug-symbols=none \
+    --with-jvm-variants=server \
+    --with-giflib=system \
+    --with-lcms=system \
+    --with-libjpeg=system \
+    --with-libpng=system \
+    --with-zlib=system \
+    --with-freetype=system \
+    --enable-headless-only \
+    --disable-warnings-as-errors
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make images JOBS=$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+
+JDK_IMAGE=build/linux-x86_64-server-release/images/jdk
+
+install -dm755 ${PART_DIR}/usr/lib/jvm/java-26-openjdk
+cp -a ${JDK_IMAGE}/* ${PART_DIR}/usr/lib/jvm/java-26-openjdk/
+
+install -dm755 ${PART_DIR}/usr/bin
+for bin in java javac jar jlink jmod keytool jshell javadoc javap jcmd jps jstat; do
+    ln -sf ../lib/jvm/java-26-openjdk/bin/$bin ${PART_DIR}/usr/bin/$bin
+done
+
+install -dm755 ${PART_DIR}/etc/profile.d
+cat > ${PART_DIR}/etc/profile.d/jdk.sh << 'PROF'
+export JAVA_HOME=/usr/lib/jvm/java-26-openjdk
+PROF
+'''
+
+[output]
+provides = ["java", "jdk"]
+backup = ["/etc/profile.d/jdk.sh"]

@@ -23,7 +23,8 @@ cmake -B build -G Ninja \
     -DENABLE_STATIC=OFF \
     -DENABLE_SHARED=ON \
     -DENABLE_APPS=OFF \
-    -DUSE_ENCLIB=openssl
+    -DUSE_ENCLIB=openssl \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 
 '''
 

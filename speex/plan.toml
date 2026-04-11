@@ -1,0 +1,34 @@
+name = "speex"
+version = "1.2.1"
+release = 1
+description = "Speex is an Open Source/Free Software patent-free audio compression format designed for speech"
+license = "BSD-3-Clause"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make"]
+link = ["libogg"]
+
+[[sources]]
+uri = "https://downloads.xiph.org/releases/speex/speex-1.2.1.tar.gz"
+sha256 = "4b44d4f2b38a370a2d98a78329fefc56a0cf93d1c1be70029217baae6628feea"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --enable-shared --disable-static
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+'''
+
+[lifecycle.fabricate]

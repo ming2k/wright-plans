@@ -1,5 +1,5 @@
 name = "wright"
-version = "1.12.5"
+version = "2.0.2"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -25,22 +25,18 @@ script = '''
 cd ${BUILD_DIR}
 export CARGO_HOME=${BUILD_DIR}/.cargo
 cargo build --release
-
 '''
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
 install -Dm755 target/release/wright ${PART_DIR}/usr/bin/wright
-install -Dm755 target/release/wbuild ${PART_DIR}/usr/bin/wbuild
-install -Dm755 target/release/wrepo ${PART_DIR}/usr/bin/wrepo
 
 # Skeleton plan for new packages
 install -Dm644 ${FILES_DIR}/skel-plan.toml ${PART_DIR}/usr/share/wright/skel/plan.toml
 
 # Plans workspace — created here so permissions are managed by the package
 install -dm755 ${PART_DIR}/var/lib/wright/plans
-
 '''
 
 [hooks]
@@ -56,7 +52,6 @@ chmod -R o-w /var/lib/wright/plans/
 
 echo "Add yourself to the wright group to edit plans without sudo:"
 echo "  usermod -aG wright \$USER"
-
 '''
 post_upgrade = '''
 # Re-apply in case a manual chmod/chown drifted the state
@@ -64,7 +59,6 @@ groupadd -r wright 2>/dev/null || true
 chgrp wright /var/lib/wright/plans
 chmod 2775 /var/lib/wright/plans
 chmod -R o-w /var/lib/wright/plans/
-
 '''
 
 [lifecycle.fabricate]

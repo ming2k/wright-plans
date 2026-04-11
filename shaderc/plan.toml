@@ -10,17 +10,19 @@ url = "https://github.com/google/shaderc"
 build = [
     "asciidoctor",
     "cmake",
+    "gcc",
     "ninja",
     "python",
     "spirv-headers",
     "spirv-tools",
     "glslang",
 ]
+runtime = ["glslang"]
 link = ["spirv-tools", "glslang"]
 
 [[sources]]
-uri = "https://github.com/google/shaderc/archive/v${PART_VERSION}/shaderc-${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+uri = "https://github.com/google/shaderc/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "245002feccbe7f8361b223545a5654cea69780745886872d7efff50a38d96c66"
 
 [lifecycle.prepare]
 script = '''

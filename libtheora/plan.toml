@@ -1,0 +1,34 @@
+name = "libtheora"
+version = "1.2.0"
+release = 1
+description = "Theora video compression reference implementation"
+license = "BSD-3-Clause"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["libogg", "libvorbis"]
+
+[[sources]]
+uri = "https://downloads.xiph.org/releases/theora/libtheora-1.2.0.tar.gz"
+sha256 = "279327339903b544c28a92aeada7d0dcfd0397b59c2f368cc698ac56f515906e"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --enable-shared --disable-static
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+'''
+
+[lifecycle.fabricate]

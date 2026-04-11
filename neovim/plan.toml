@@ -1,5 +1,5 @@
 name = "neovim"
-version = "0.12.0"
+version = "0.12.1"
 release = 1
 description = "Hyperextensible Vim-based text editor"
 license = "Apache-2.0"
@@ -16,10 +16,7 @@ build = [
     "make",
 ]
 link = ["glibc"]
-optional = [
-    { name = "python", description = "Python provider support" },
-    { name = "xclip", description = "Clipboard support via xclip" },
-]
+optional = [ "python", "xclip" ]
 
 [[sources]]
 uri = "https://github.com/neovim/neovim/archive/refs/tags/v${PART_VERSION}.tar.gz"

@@ -1,0 +1,38 @@
+name = "lame"
+version = "3.100"
+release = 1
+description = "High quality MP3 encoder"
+license = "LGPL-2.0-or-later"
+arch = "x86_64"
+
+[dependencies]
+build = ["gcc", "make", "nasm"]
+link = ["ncurses"]
+
+[[sources]]
+uri = "https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz"
+sha256 = "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --enable-shared \
+    --enable-nasm \
+    --disable-static
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+'''
+
+[lifecycle.fabricate]

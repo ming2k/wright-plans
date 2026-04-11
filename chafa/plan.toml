@@ -1,0 +1,59 @@
+name = "chafa"
+version = "1.18.1"
+release = 1
+description = "Image-to-text converter for terminal graphics"
+license = "LGPL-3.0-or-later"
+arch = "x86_64"
+url = "https://hpjansson.org/chafa/"
+
+[dependencies]
+runtime = [
+    "glib",
+    "freetype",
+    "libjpeg-turbo",
+    "librsvg",
+    "libtiff",
+    "libwebp",
+    "libavif",
+    "libheif",
+    "libjxl",
+]
+build = [
+    "gcc",
+    "make",
+    "pkgconf",
+]
+link = [
+    "glib",
+    "freetype",
+    "libjpeg-turbo",
+    "librsvg",
+    "libtiff",
+    "libwebp",
+    "libavif",
+    "libheif",
+    "libjxl",
+]
+
+[[sources]]
+uri = "https://github.com/hpjansson/chafa/releases/download/${PART_VERSION}/chafa-${PART_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+  --prefix=/usr \
+  --disable-static \
+  --disable-gtk-doc \
+  --disable-man
+
+'''
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR} -j$(nproc)"
+
+[lifecycle.staging]
+script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"
+
+[lifecycle.fabricate]

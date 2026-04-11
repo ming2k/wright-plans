@@ -1,5 +1,5 @@
 name = "protobuf"
-version = "34.0"
+version = "34.1"
 release = 1
 description = "Protocol Buffers - Google's data interchange format"
 license = "BSD-3-Clause"
