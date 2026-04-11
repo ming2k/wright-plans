@@ -1,5 +1,5 @@
 name = "polkit"
-version = "126"
+version = "127"
 release = 2
 description = "Application-level toolkit for defining and handling authorization"
 license = "LGPL-2.0-or-later"

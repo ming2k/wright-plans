@@ -1,9 +1,10 @@
 name = "librsvg"
-version = "2.61.4"
+version = "2.62.1"
 release = 2
 description = "SVG rendering library using Rust"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+
 
 [dependencies]
 build = [
@@ -27,8 +28,8 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/librsvg/2.61/librsvg-${PART_VERSION}.tar.xz"
-sha256 = "fca0ea28d1f28f95c8407d2579f4702dac085e7c758644daca8b40d1e072ca0c"
+uri = "https://download.gnome.org/sources/librsvg/2.62/librsvg-${PART_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 dockyard = "relaxed"

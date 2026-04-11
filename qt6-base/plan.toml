@@ -1,10 +1,11 @@
 name = "qt6-base"
-version = "6.10.2"
+version = "6.11.0"
 release = 2
 description = "Qt 6 base module (Wayland Only)"
 license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
+
 
 [dependencies]
 runtime = ["dbus", "double-conversion", "mesa", "pcre2"]
@@ -31,7 +32,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.qt.io/official_releases/qt/6.10/${PART_VERSION}/submodules/qtbase-everywhere-src-${PART_VERSION}.tar.xz"
+uri = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtbase-everywhere-src-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -41,8 +42,8 @@ cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_CXX_FLAGS="-Wno-error" \
-    -DINSTALL_BINDIR=lib/qt6/bin \
-    -DINSTALL_PUBLICBINDIR=usr/bin \
+    -DINSTALL_BINDIR=bin \
+    -DINSTALL_PUBLICBINDIR=bin \
     -DINSTALL_LIBEXECDIR=lib/qt6 \
     -DINSTALL_INCLUDEDIR=include/qt6 \
     -DINSTALL_MKSPECSDIR=lib/qt6/mkspecs \

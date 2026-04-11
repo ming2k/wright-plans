@@ -1,5 +1,5 @@
 name = "glib"
-version = "2.84.0"
+version = "2.86.5"
 release = 1
 description = "Core application building blocks library"
 license = "LGPL-2.1-or-later"
@@ -17,8 +17,8 @@ build = [
 link = ["libffi", "pcre2"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/glib/2.84/glib-${PART_VERSION}.tar.xz"
-sha256 = "SKIP"
+uri = "https://download.gnome.org/sources/glib/2.86/glib-${PART_VERSION}.tar.xz"
+sha256 = "ce85a947bb8b3c0204dbeff79aec39bcb46371c6fafb64ba5b8726c71e038d5f"
 
 [lifecycle.configure]
 script = '''

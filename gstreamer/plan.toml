@@ -1,5 +1,5 @@
 name = "gstreamer"
-version = "1.28.0"
+version = "1.28.2"
 release = 1
 description = "Streaming media framework"
 license = "LGPL-2.0-or-later"

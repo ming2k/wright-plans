@@ -1,5 +1,5 @@
 name = "desktop-file-utils"
-version = "0.27"
+version = "0.28"
 release = 2
 description = "Utilities for manipulating .desktop files"
 license = "GPL-2.0-or-later"

@@ -1,5 +1,5 @@
 name = "libadwaita"
-version = "1.8.4"
+version = "1.9.0"
 release = 1
 description = "Library with common API for Wayland GNOME applications"
 license = "LGPL-2.1-or-later"
@@ -10,11 +10,13 @@ build = ["meson", "ninja"]
 link = ["glib", "gtk4"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libadwaita/1.8/libadwaita-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libadwaita/1.9/libadwaita-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
-script = "meson setup build ${BUILD_DIR} --prefix=/usr --buildtype=release -Dintrospection=enabled -Dvapi=false -Dtests=false"
+dockyard = "relaxed"
+ENV="PATH=/usr/bin:/bin"
+script = "meson setup build ${BUILD_DIR} --prefix=/usr --buildtype=release -Dintrospection=enabled -Dvapi=false -Dtests=false -Ddocumentation=false "
 
 [lifecycle.compile]
 script = "ninja -C build"

@@ -1,5 +1,5 @@
 name = "libgcrypt"
-version = "1.11.0"
+version = "1.12.1"
 release = 1
 description = "GnuPG cryptographic library"
 license = "LGPL-2.1-or-later"

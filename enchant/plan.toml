@@ -1,5 +1,5 @@
 name = "enchant"
-version = "2.8.2"
+version = "2.8.15"
 release = 1
 description = "Generic spell checking library"
 license = "LGPL-2.1-or-later"
@@ -36,6 +36,7 @@ make
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
+install -dm755 ${PART_DIR}/usr/lib/enchant-2
 make DESTDIR=${PART_DIR} install
 
 '''

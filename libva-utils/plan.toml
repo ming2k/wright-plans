@@ -1,0 +1,36 @@
+name = "libva-utils"
+version = "2.23.0"
+release = 1
+description = "Utilities for VA-API, including vainfo"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/intel/libva-utils"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf"]
+link = ["libdrm", "libva", "wayland"]
+runtime = ["libdrm", "libva", "wayland"]
+
+[[sources]]
+uri = "https://github.com/intel/libva-utils/archive/refs/tags/${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+--prefix=/usr                        \
+--buildtype=release                  \
+-D tests=false
+
+'''
+
+[lifecycle.compile]
+script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = '''
+DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
+
+'''
+
+[lifecycle.fabricate]

@@ -30,7 +30,6 @@ build = [
     "qt6-wayland",
 ]
 link = [
-    "glib",
     "libdrm",
     "pipewire",
     "wayland",

@@ -1,5 +1,5 @@
 name = "pipewire"
-version = "1.6.2"
+version = "1.6.3"
 release = 2
 description = "Low-latency audio/video router and processor"
 license = "MIT"
@@ -34,14 +34,9 @@ link = [
 uri = "https://github.com/PipeWire/pipewire/archive/refs/tags/${PART_VERSION}.tar.gz"
 sha256 = "SKIP"
 
-[[sources]]
-uri = "patches/0001-spa-plugins-alsa-acp-compat.h-fix-discarded-qualifiers.patch"
-sha256 = "SKIP"
-
 [lifecycle.prepare]
 script = '''
 cd ${BUILD_DIR}
-patch -Np1 < ${FILES_DIR}/0001-spa-plugins-alsa-acp-compat.h-fix-discarded-qualifiers.patch
 
 '''
 

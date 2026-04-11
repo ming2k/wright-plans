@@ -1,5 +1,5 @@
 name = "at-spi2-core"
-version = "2.58.3"
+version = "2.60.0"
 release = 1
 description = "Assistive Technology Service Provider Interface (includes ATK)"
 license = "LGPL-2.1-or-later"
@@ -17,7 +17,7 @@ build = [
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/at-spi2-core/2.58/at-spi2-core-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/at-spi2-core/2.60/at-spi2-core-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

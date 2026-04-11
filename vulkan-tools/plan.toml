@@ -1,0 +1,51 @@
+name = "vulkan-tools"
+version = "1.4.344"
+release = 3
+description = "Vulkan tools, including vulkaninfo"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/KhronosGroup/Vulkan-Tools"
+
+[dependencies]
+build = ["cmake", "ninja", "pkgconf", "python", "vulkan-headers"]
+link = ["vulkan-loader", "wayland"]
+runtime = ["vulkan-loader", "wayland"]
+
+[[sources]]
+uri = "https://github.com/KhronosGroup/Vulkan-Tools/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_CUBE=OFF \
+    -DBUILD_VULKANINFO=ON \
+    -DBUILD_ICD=OFF \
+    -DINSTALL_ICD=OFF \
+    -DBUILD_WSI_XCB_SUPPORT=OFF \
+    -DBUILD_WSI_XLIB_SUPPORT=OFF \
+    -DBUILD_WSI_WAYLAND_SUPPORT=ON \
+    -DVULKAN_HEADERS_INSTALL_DIR=/usr \
+    -DVULKAN_LOADER_INSTALL_DIR=/usr \
+    ${BUILD_DIR}
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+ninja -C build -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PART_DIR} ninja -C build install
+
+'''
+
+[lifecycle.fabricate]

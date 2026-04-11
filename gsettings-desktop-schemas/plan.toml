@@ -8,7 +8,6 @@ url = "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas"
 
 [dependencies]
 build = ["gobject-introspection", "meson", "ninja"]
-link = ["glib"]
 
 [[sources]]
 uri = "https://download.gnome.org/sources/gsettings-desktop-schemas/49/gsettings-desktop-schemas-${PART_VERSION}.tar.xz"

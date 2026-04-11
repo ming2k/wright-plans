@@ -1,5 +1,5 @@
 name = "gnome-keyring"
-version = "48.0"
+version = "50.0"
 release = 1
 description = "Secret storage service and key manager for GNOME"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
@@ -31,7 +31,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gnome-keyring/48/gnome-keyring-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gnome-keyring/50/gnome-keyring-${PART_VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

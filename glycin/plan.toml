@@ -1,5 +1,5 @@
 name = "glycin"
-version = "2.0.8"
+version = "2.1.1"
 release = 1
 description = "Sandboxed image decoding library (Full Format Support)"
 license = "MPL-2.0 OR LGPL-2.1-or-later"
@@ -28,15 +28,14 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/glycin/2.0/glycin-${PART_VERSION}.tar.xz"
-sha256 = "6b9aef4f626bf969dfd04b563b83d521271a30c3d6df6a6a8463fd55490891df"
+uri = "https://download.gnome.org/sources/glycin/2.1/glycin-${PART_VERSION}.tar.xz"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 dockyard = "relaxed"
 script = '''
 cd ${BUILD_DIR}
 meson setup build --prefix=/usr --buildtype=release -Dtests=false -Dvapi=false
-
 '''
 
 [lifecycle.compile]

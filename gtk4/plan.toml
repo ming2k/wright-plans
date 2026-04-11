@@ -1,5 +1,5 @@
 name = "gtk4"
-version = "4.22.0"
+version = "4.22.2"
 release = 1
 description = "GTK4 — the GIMP Toolkit (Pure Wayland)"
 license = "LGPL-2.1-or-later"

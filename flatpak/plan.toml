@@ -1,5 +1,5 @@
 name = "flatpak"
-version = "1.17.6"
+version = "1.16.6"
 release = 1
 description = "Universal app distribution framework (Pure Wayland)"
 license = "LGPL-2.1-or-later"

@@ -1,5 +1,5 @@
 name = "xdg-desktop-portal"
-version = "1.20.3"
+version = "1.20.4"
 release = 1
 description = "Portal frontend service for Flatpak and other desktop-neutral applications"
 license = "LGPL-2.1-or-later"

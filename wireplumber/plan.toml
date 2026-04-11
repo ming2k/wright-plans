@@ -1,5 +1,5 @@
 name = "wireplumber"
-version = "0.5.13"
+version = "0.5.14"
 release = 1
 description = "Session/policy manager for PipeWire"
 license = "MIT"

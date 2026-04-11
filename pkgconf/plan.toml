@@ -1,5 +1,5 @@
 name = "pkgconf"
-version = "2.3.0"
+version = "2.5.1"
 release = 1
 description = "Utility for discovering compiler and linker flags"
 license = "ISC"

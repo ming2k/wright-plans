@@ -1,5 +1,5 @@
 name = "gtk3"
-version = "3.24.51"
+version = "3.24.52"
 release = 1
 description = "GTK3 - the GIMP Toolkit (Pure Wayland)"
 license = "LGPL-2.1-or-later"
