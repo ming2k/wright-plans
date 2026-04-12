@@ -1,5 +1,5 @@
 name = "wright"
-version = "2.1.0"
+version = "2.1.4"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -37,6 +37,10 @@ install -Dm644 ${FILES_DIR}/skel-plan.toml ${PART_DIR}/usr/share/wright/skel/pla
 
 # Plans workspace — created here so permissions are managed by the package
 install -dm755 ${PART_DIR}/var/lib/wright/plans
+
+# Install man pages
+install -dm755 ${PART_DIR}/usr/share/man/man1
+install -m644 target/man/wright*.1 ${PART_DIR}/usr/share/man/man1/
 '''
 
 [hooks]

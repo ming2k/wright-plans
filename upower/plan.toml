@@ -1,5 +1,5 @@
 name = "upower"
-version = "1.91.1"
+version = "1.91.2"
 release = 1
 description = "Abstraction for enumerating power devices"
 license = "GPL-2.0-or-later"
@@ -27,12 +27,13 @@ link = [
 
 [[sources]]
 uri = "https://gitlab.freedesktop.org/upower/upower/-/archive/v${PART_VERSION}/upower-v${PART_VERSION}.tar.bz2"
-sha256 = "d568638d670a63a1886335b7b136f4888cb38a3b28f3f4bcdeaffcca0b0f6df8"
+sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
 meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
   --prefix=/usr \
+  --libexecdir=/usr/libexec \
   --buildtype=release \
   -Dos_backend=linux \
   -Dgtk-doc=false \
@@ -46,7 +47,6 @@ script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
 [lifecycle.staging]
 script = '''
 DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
-
 '''
 
 [hooks]

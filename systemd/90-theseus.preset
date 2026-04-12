@@ -7,3 +7,4 @@ enable systemd-tmpfiles-cleanup.timer
 enable systemd-udevd.service
 enable systemd-logind.service
 enable systemd-oomd.service
+enable getty@.service tty2 tty3

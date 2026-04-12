@@ -1,0 +1,65 @@
+name = "tpm2-tss"
+version = "4.1.3"
+release = 1
+description = "TCG TPM2 software stack"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/tpm2-software/tpm2-tss"
+
+[dependencies]
+runtime = ["systemd"]
+build = [
+    "gcc",
+    "make",
+    "pkgconf",
+]
+link = [
+    "curl",
+    "json-c",
+    "libtpms",
+    "libusb",
+    "openssl",
+    "util-linux",
+]
+
+[[sources]]
+uri = "https://github.com/tpm2-software/tpm2-tss/releases/download/${PART_VERSION}/tpm2-tss-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --with-udevrulesdir=/usr/lib/udev/rules.d \
+    --with-sysusersdir=/usr/lib/sysusers.d \
+    --with-tmpfilesdir=/usr/lib/tmpfiles.d \
+    --disable-static \
+    --disable-unit \
+    --disable-integration
+
+'''
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR} -j$(nproc)"
+
+[lifecycle.staging]
+script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"
+
+[hooks]
+post_install = '''
+systemd-sysusers /usr/lib/sysusers.d/tpm2-tss.conf 2>/dev/null || true
+[ -f /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf ] && \
+  systemd-tmpfiles --create /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf 2>/dev/null || true
+
+'''
+post_upgrade = '''
+systemd-sysusers /usr/lib/sysusers.d/tpm2-tss.conf 2>/dev/null || true
+[ -f /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf ] && \
+  systemd-tmpfiles --create /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf 2>/dev/null || true
+
+'''
+
+[lifecycle.fabricate]

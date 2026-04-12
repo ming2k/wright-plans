@@ -1,0 +1,42 @@
+name = "tpm2-tools"
+version = "5.7"
+release = 1
+description = "The source repository for the Trusted Platform Module (TPM2.0) tools"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/tpm2-software/tpm2-tools"
+
+[dependencies]
+runtime = ["tpm2-tss"]
+build = [
+    "gcc",
+    "make",
+    "pkgconf",
+]
+link = [
+    "curl",
+    "glibc",
+    "openssl",
+    "tpm2-tss",
+]
+
+[[sources]]
+uri = "https://github.com/tpm2-software/tpm2-tools/releases/download/${PART_VERSION}/tpm2-tools-${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure \
+    --prefix=/usr \
+    --disable-static
+
+'''
+
+[lifecycle.compile]
+script = "make -C ${BUILD_DIR} -j$(nproc)"
+
+[lifecycle.staging]
+script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"
+
+[lifecycle.fabricate]
