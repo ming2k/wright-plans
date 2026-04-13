@@ -7,7 +7,7 @@ arch = "any"
 url = "https://github.com/andreafrancia/trash-cli"
 
 [dependencies]
-runtime = ["python", "python-psutil", "python-six"]
+runtime = ["python", "python-psutil"]
 build = ["python"]
 
 [[sources]]

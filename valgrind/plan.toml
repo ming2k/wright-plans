@@ -1,0 +1,41 @@
+name = "valgrind"
+version = "3.24.0"
+release = 1
+description = "Instrumentation framework for building dynamic analysis tools"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://valgrind.org/"
+
+[dependencies]
+build = ["gcc", "make", "perl"]
+link = ["glibc"]
+runtime = ["glibc"]
+
+[[sources]]
+uri = "https://sourceware.org/pub/valgrind/valgrind-${PART_VERSION}.tar.bz2"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr \
+    --datadir=/usr/share/doc/valgrind-${PART_VERSION} \
+    --disable-werror
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''
+
+[lifecycle.fabricate]

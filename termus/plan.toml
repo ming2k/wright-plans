@@ -1,0 +1,57 @@
+name = "termus"
+version = "1.0.4"
+release = 1
+description = "Small, fast terminal music player inspired by cmus"
+license = "UNKNOWN"
+arch = "x86_64"
+url = "https://github.com/ming2k/termus"
+
+[dependencies]
+build = [
+    "autoconf",
+    "automake",
+    "gcc",
+    "make",
+    "pkgconf",
+]
+link = [
+    "ncurses",
+]
+optional = [
+    "alsa-lib",
+    "ffmpeg",
+    "flac",
+    "mpg123",
+    "opus",
+    "pipewire",
+]
+
+[[sources]]
+uri = "git+https://github.com/ming2k/termus.git#v${PART_VERSION}"
+sha256 = "SKIP"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+autoreconf --force --install --verbose
+./configure \
+    --prefix=/usr \
+    --mandir=/usr/share/man
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+
+'''
+
+[lifecycle.fabricate]

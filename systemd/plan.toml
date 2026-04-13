@@ -19,7 +19,6 @@ build = [
     "gperf",
     "llvm",
     "python-jinja2",
-    "python-pyelftools",
     "meson",
     "ninja",
     "pkgconf",

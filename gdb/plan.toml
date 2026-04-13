@@ -1,0 +1,72 @@
+name = "gdb"
+version = "15.2"
+release = 1
+description = "The GNU Debugger"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://www.gnu.org/software/gdb/"
+
+[dependencies]
+build = ["gcc", "make", "texinfo"]
+link = [
+    "expat",
+    "glibc",
+    "mpfr",
+    "ncurses",
+    "readline",
+    "xz",
+    "zlib",
+]
+runtime = [
+    "expat",
+    "ncurses",
+    "python",
+    "readline",
+    "xz",
+    "zlib",
+]
+
+[[sources]]
+uri = "https://ftp.gnu.org/gnu/gdb/gdb-${PART_VERSION}.tar.xz"
+sha256 = "SKIP"
+
+[lifecycle.prepare]
+script = '''
+cd ${BUILD_DIR}
+mkdir -v build
+
+'''
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}/build
+../configure --prefix=/usr \
+    --with-system-readline \
+    --with-python=/usr/bin/python3 \
+    --with-system-zlib \
+    --with-expat \
+    --with-lzma \
+    --enable-tui \
+    --disable-multilib \
+    --disable-werror
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}/build
+make -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}/build
+make DESTDIR=${PART_DIR} install
+
+# Remove static libraries
+rm -f ${PART_DIR}/usr/lib/libinproctrace.a
+
+'''
+
+[lifecycle.fabricate]
