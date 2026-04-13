@@ -1,5 +1,5 @@
 name = "python-requests"
-version = "2.32.3"
+version = "2.33.1"
 release = 1
 description = "Python HTTP for Humans"
 license = "Apache-2.0"

@@ -1,5 +1,5 @@
 name = "python-idna"
-version = "3.10"
+version = "3.11"
 release = 1
 description = "Internationalized Domain Names in Applications (IDNA)"
 license = "BSD-3-Clause"

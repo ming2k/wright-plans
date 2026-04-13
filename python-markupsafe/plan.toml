@@ -1,5 +1,5 @@
 name = "python-markupsafe"
-version = "3.0.2"
+version = "3.0.3"
 release = 1
 description = "Python module that implements XML/HTML/XHTML Markup safe string"
 license = "BSD-3-Clause"

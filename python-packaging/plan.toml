@@ -1,5 +1,5 @@
 name = "python-packaging"
-version = "25.0"
+version = "26.0"
 release = 1
 description = "Core utilities for Python packages"
 license = "Apache-2.0"

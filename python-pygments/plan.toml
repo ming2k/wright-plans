@@ -1,5 +1,5 @@
 name = "python-pygments"
-version = "2.19.2"
+version = "2.20.0"
 release = 1
 description = "Python syntax highlighter"
 license = "BSD-2-Clause"
