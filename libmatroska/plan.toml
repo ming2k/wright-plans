@@ -1,0 +1,34 @@
+name = "libmatroska"
+version = "1.7.1"
+release = 1
+description = "Matroska parsing library"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://www.matroska.org/"
+
+[dependencies]
+build = ["gcc", "cmake", "ninja"]
+link = ["libebml"]
+
+[[sources]]
+uri = "https://dl.matroska.org/downloads/libmatroska/libmatroska-${PART_VERSION}.tar.xz"
+sha256 = "572a3033b8d93d48a6a858e514abce4b2f7a946fe1f02cbfeca39bfd703018b3"
+
+[lifecycle.configure]
+script = '''
+cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_LIBDIR=lib \
+  -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+  -DBUILD_SHARED_LIBS=ON
+
+'''
+
+[lifecycle.compile]
+script = "cmake --build ${BUILD_DIR}/build -j$(nproc)"
+
+[lifecycle.staging]
+script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"
+
+[lifecycle.fabricate]

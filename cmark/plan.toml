@@ -1,0 +1,42 @@
+name = "cmark"
+version = "0.31.1"
+release = 1
+description = "CommonMark parsing and rendering library"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/commonmark/cmark"
+
+[dependencies]
+build = ["cmake", "gcc", "ninja"]
+
+[[sources]]
+uri = "https://github.com/commonmark/cmark/archive/refs/tags/${PART_VERSION}.tar.gz"
+sha256 = "3da93db5469c30588cfeb283d9d62edfc6ded9eb0edc10a4f5bbfb7d722ea802"
+
+[lifecycle.configure]
+script = '''
+cd ${BUILD_DIR}
+cmake -B build -G Ninja \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_LIBDIR=lib \
+  -DBUILD_SHARED_LIBS=ON \
+  -DBUILD_TESTING=OFF
+
+'''
+
+[lifecycle.compile]
+script = '''
+cd ${BUILD_DIR}
+ninja -C build -j$(nproc)
+
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+DESTDIR=${PART_DIR} ninja -C build install
+
+'''
+
+[lifecycle.fabricate]

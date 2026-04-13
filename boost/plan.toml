@@ -1,13 +1,13 @@
 name = "boost"
 version = "1.90.0"
-release = 1
+release = 2
 description = "Free peer-reviewed portable C++ source libraries"
 license = "BSL-1.0"
 arch = "x86_64"
 url = "https://www.boost.org"
 
 [dependencies]
-build = ["make"]
+build = ["gcc", "make"]
 link = [
     "bzip2",
     "icu",
@@ -38,6 +38,18 @@ script = '''
 cd ${BUILD_DIR}
 ./b2 variant=release threading=multi link=shared \
     --prefix=${PART_DIR}/usr install
+
+# Boost.System is header-only in modern Boost, but legacy autotools probes
+# still expect a libboost_system shared object to exist at link time.
+if [ ! -e ${PART_DIR}/usr/lib/libboost_system.so.1.90.0 ]; then
+    cat > ${BUILD_DIR}/boost-system-compat.c << 'EOF'
+int boost_system_compat_stub = 0;
+EOF
+    gcc -shared -fPIC ${BUILD_DIR}/boost-system-compat.c \
+        -Wl,-soname,libboost_system.so.1.90.0 \
+        -o ${PART_DIR}/usr/lib/libboost_system.so.1.90.0
+    ln -sf libboost_system.so.1.90.0 ${PART_DIR}/usr/lib/libboost_system.so
+fi
 
 '''
 
