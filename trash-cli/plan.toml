@@ -11,7 +11,7 @@ runtime = ["python", "python-psutil"]
 build = ["python"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${PART_VERSION}.tar.gz"
+uri = "https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

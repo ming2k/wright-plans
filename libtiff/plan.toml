@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["zlib", "libjpeg-turbo"]
 
 [[sources]]
-uri = "https://download.osgeo.org/libtiff/tiff-${PART_VERSION}.tar.xz"
+uri = "https://download.osgeo.org/libtiff/tiff-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

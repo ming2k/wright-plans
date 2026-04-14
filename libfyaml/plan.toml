@@ -10,7 +10,7 @@ url = "https://github.com/pantoniou/libfyaml"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -44,7 +44,7 @@ includedir=${prefix}/include
 
 Name: libfyaml
 Description: Fully feature complete YAML parser and emitter library
-Version: ${PART_VERSION}
+Version: ${VERSION}
 Libs: -L${libdir} -lfyaml
 Cflags: -I${includedir}
 PCEOF

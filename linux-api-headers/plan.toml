@@ -10,7 +10,7 @@ url = "https://www.kernel.org"
 build = ["make", "zlib"]
 
 [[sources]]
-uri = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${PART_VERSION}.tar.xz"
+uri = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

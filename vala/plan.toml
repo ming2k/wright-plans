@@ -17,7 +17,7 @@ build = [
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/vala/0.56/vala-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/vala/0.56/vala-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

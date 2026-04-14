@@ -11,7 +11,7 @@ runtime = ["systemd"]
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/sysstat/sysstat/archive/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/sysstat/sysstat/archive/v${VERSION}.tar.gz"
 sha256 = "e48fc69401135dc08d2cd4ff58dbdbfce9b7485f76fc9049d97848e313c08dda"
 
 [lifecycle.configure]

@@ -17,7 +17,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -7,7 +7,7 @@ arch = "any"
 url = "https://github.com/thesofproject/sof-bin"
 
 [[sources]]
-uri = "https://github.com/thesofproject/sof-bin/releases/download/v${PART_VERSION}/sof-bin-${PART_VERSION}.tar.gz"
+uri = "https://github.com/thesofproject/sof-bin/releases/download/v${VERSION}/sof-bin-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

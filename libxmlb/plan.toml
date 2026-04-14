@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/hughsie/libxmlb"
 
 [[sources]]
-uri = "https://github.com/hughsie/libxmlb/releases/download/${PART_VERSION}/libxmlb-${PART_VERSION}.tar.xz"
+uri = "https://github.com/hughsie/libxmlb/releases/download/${VERSION}/libxmlb-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

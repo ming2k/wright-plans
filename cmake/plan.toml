@@ -10,7 +10,7 @@ url = "https://cmake.org/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://cmake.org/files/v4.3/cmake-${PART_VERSION}.tar.gz"
+uri = "https://cmake.org/files/v4.3/cmake-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -22,7 +22,7 @@ sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
 --no-system-cppdap \
 --no-system-librhash \
 --mandir=/share/man \
---docdir=/share/doc/cmake-${PART_VERSION} \
+--docdir=/share/doc/cmake-${VERSION} \
 --parallel=$(nproc)
 
 '''

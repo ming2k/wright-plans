@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://www.nano-editor.org/dist/v8/nano-${PART_VERSION}.tar.xz"
+uri = "https://www.nano-editor.org/dist/v8/nano-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -20,7 +20,7 @@ cd ${BUILD_DIR}
 ./configure --prefix=/usr \
 --sysconfdir=/etc \
 --enable-utf8 \
---docdir=/usr/share/doc/nano-${PART_VERSION}
+--docdir=/usr/share/doc/nano-${VERSION}
 
 '''
 
@@ -35,7 +35,7 @@ make -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
-install -v -m644 doc/{nano.html,sample.nanorc} ${PART_DIR}/usr/share/doc/nano-${PART_VERSION}
+install -v -m644 doc/{nano.html,sample.nanorc} ${PART_DIR}/usr/share/doc/nano-${VERSION}
 
 '''
 

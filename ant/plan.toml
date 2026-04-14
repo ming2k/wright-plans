@@ -10,7 +10,7 @@ url = "https://ant.apache.org/"
 runtime = ["openjdk"]
 
 [[sources]]
-uri = "https://dlcdn.apache.org/ant/binaries/apache-ant-${PART_VERSION}-bin.tar.gz"
+uri = "https://dlcdn.apache.org/ant/binaries/apache-ant-${VERSION}-bin.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

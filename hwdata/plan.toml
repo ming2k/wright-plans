@@ -10,7 +10,7 @@ url = "https://github.com/vcrhonek/hwdata"
 build = ["make"]
 
 [[sources]]
-uri = "https://github.com/vcrhonek/hwdata/archive/v${PART_VERSION}/hwdata-${PART_VERSION}.tar.gz"
+uri = "https://github.com/vcrhonek/hwdata/archive/v${VERSION}/hwdata-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

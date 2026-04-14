@@ -22,7 +22,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/ostreedev/ostree/releases/download/v${PART_VERSION}/libostree-${PART_VERSION}.tar.xz"
+uri = "https://github.com/ostreedev/ostree/releases/download/v${VERSION}/libostree-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

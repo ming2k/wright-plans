@@ -22,7 +22,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/wget/wget2-${PART_VERSION}.tar.lz"
+uri = "https://ftp.gnu.org/gnu/wget/wget2-${VERSION}.tar.lz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

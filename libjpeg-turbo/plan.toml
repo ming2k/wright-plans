@@ -14,7 +14,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/${PART_VERSION}/libjpeg-turbo-${PART_VERSION}.tar.gz"
+uri = "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/${VERSION}/libjpeg-turbo-${VERSION}.tar.gz"
 sha256 = "075920b826834ac4ddf97661cc73491047855859affd671d52079c6867c1c6c0"
 
 [lifecycle.configure]

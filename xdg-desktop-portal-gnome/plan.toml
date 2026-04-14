@@ -17,7 +17,7 @@ build = [
 link = ["gtk4", "libadwaita"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/xdg-desktop-portal-gnome/49/xdg-desktop-portal-gnome-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/xdg-desktop-portal-gnome/49/xdg-desktop-portal-gnome-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

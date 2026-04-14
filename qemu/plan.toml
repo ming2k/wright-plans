@@ -27,7 +27,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.qemu.org/qemu-${PART_VERSION}.tar.xz"
+uri = "https://download.qemu.org/qemu-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [options]

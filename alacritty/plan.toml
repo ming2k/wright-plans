@@ -27,7 +27,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/alacritty/alacritty/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/alacritty/alacritty/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "b7240df4a52c004470977237a276185fc97395d59319480d67cad3c4347f395e"
 
 [lifecycle.configure]

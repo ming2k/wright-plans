@@ -10,7 +10,7 @@ url = "https://01.org/ell"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://mirrors.edge.kernel.org/pub/linux/libs/ell/ell-${PART_VERSION}.tar.xz"
+uri = "https://mirrors.edge.kernel.org/pub/linux/libs/ell/ell-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

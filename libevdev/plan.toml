@@ -10,7 +10,7 @@ url = "https://www.freedesktop.org/wiki/Software/libevdev/"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://www.freedesktop.org/software/libevdev/libevdev-${PART_VERSION}.tar.xz"
+uri = "https://www.freedesktop.org/software/libevdev/libevdev-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

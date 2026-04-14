@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["ncurses", "readline"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/bash/bash-${PART_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/bash/bash-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -20,7 +20,7 @@ cd ${BUILD_DIR}
 ./configure --prefix=/usr             \
             --without-bash-malloc     \
             --with-installed-readline \
-            --docdir=/usr/share/doc/bash-${PART_VERSION}
+            --docdir=/usr/share/doc/bash-${VERSION}
 
 '''
 

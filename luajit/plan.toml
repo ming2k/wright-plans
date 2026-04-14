@@ -40,7 +40,7 @@ includedir=\${prefix}/include/luajit-2.1
 
 Name: LuaJIT
 Description: Just-in-time compiler for Lua
-Version: ${PART_VERSION}
+Version: ${VERSION}
 Libs: -L\${libdir} -lluajit-5.1
 Cflags: -I\${includedir}
 PCEOF

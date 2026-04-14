@@ -10,7 +10,7 @@ url = "https://lz4.github.io/lz4/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/lz4/lz4/releases/download/v${PART_VERSION}/lz4-${PART_VERSION}.tar.gz"
+uri = "https://github.com/lz4/lz4/releases/download/v${VERSION}/lz4-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

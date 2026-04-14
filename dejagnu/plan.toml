@@ -11,7 +11,7 @@ runtime = ["expect"]
 build = ["expect", "make", "texinfo"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/dejagnu/dejagnu-${PART_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/dejagnu/dejagnu-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

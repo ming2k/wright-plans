@@ -11,7 +11,7 @@ build = ["gcc", "make", "libpcap"]
 link = ["libpcap"]
 
 [[sources]]
-uri = "https://www.tcpdump.org/release/tcpdump-${PART_VERSION}.tar.xz"
+uri = "https://www.tcpdump.org/release/tcpdump-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

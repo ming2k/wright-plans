@@ -12,7 +12,7 @@ build = ["go", "openssl", "pkgconf"]
 link = ["openssl"]
 
 [[sources]]
-uri = "git+https://github.com/rfjakob/gocryptfs.git#v${PART_VERSION}"
+uri = "git+https://github.com/rfjakob/gocryptfs.git#v${VERSION}"
 sha256 = "SKIP"
 
 [lifecycle.compile]

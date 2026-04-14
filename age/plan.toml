@@ -10,7 +10,7 @@ url = "https://github.com/FiloSottile/age"
 build = ["go"]
 
 [[sources]]
-uri = "https://github.com/FiloSottile/age/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/FiloSottile/age/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

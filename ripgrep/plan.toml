@@ -12,7 +12,7 @@ build = ["rust"]
 link = ["gcc", "pcre2", "glibc"]
 
 [[sources]]
-uri = "https://github.com/BurntSushi/ripgrep/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/BurntSushi/ripgrep/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

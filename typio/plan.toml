@@ -24,7 +24,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/ming2k/typio/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/ming2k/typio/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

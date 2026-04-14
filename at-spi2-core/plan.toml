@@ -17,7 +17,7 @@ build = [
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/at-spi2-core/2.60/at-spi2-core-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/at-spi2-core/2.60/at-spi2-core-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

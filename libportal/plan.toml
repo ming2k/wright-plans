@@ -16,7 +16,7 @@ build = [
 link = ["glib", "gtk4", "gtk3"]
 
 [[sources]]
-uri = "https://github.com/flatpak/libportal/releases/download/${PART_VERSION}/libportal-${PART_VERSION}.tar.xz"
+uri = "https://github.com/flatpak/libportal/releases/download/${VERSION}/libportal-${VERSION}.tar.xz"
 sha256 = "297b90b263fad22190a26b8c7e8ea938fe6b18fb936265e588927179920d3805"
 
 [lifecycle.configure]

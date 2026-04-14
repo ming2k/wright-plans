@@ -10,7 +10,7 @@ url = "https://salsa.debian.org/iso-codes-team/iso-codes"
 build = ["python"]
 
 [[sources]]
-uri = "https://salsa.debian.org/iso-codes-team/iso-codes/-/archive/v${PART_VERSION}/iso-codes-v${PART_VERSION}.tar.gz"
+uri = "https://salsa.debian.org/iso-codes-team/iso-codes/-/archive/v${VERSION}/iso-codes-v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://www.netfilter.org/pub/libmnl/libmnl-${PART_VERSION}.tar.bz2"
+uri = "https://www.netfilter.org/pub/libmnl/libmnl-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

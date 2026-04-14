@@ -25,7 +25,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://mkvtoolnix.download/sources/mkvtoolnix-${PART_VERSION}.tar.xz"
+uri = "https://mkvtoolnix.download/sources/mkvtoolnix-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

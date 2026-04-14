@@ -10,7 +10,7 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://thrysoee.dk/editline/libedit-${PART_VERSION}.tar.gz"
+uri = "https://thrysoee.dk/editline/libedit-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

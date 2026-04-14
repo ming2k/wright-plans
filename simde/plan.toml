@@ -10,7 +10,7 @@ url = "https://github.com/simd-everywhere/simde"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://github.com/simd-everywhere/simde/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/simd-everywhere/simde/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -10,7 +10,7 @@ url = "https://github.com/besser82/libxcrypt/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/besser82/libxcrypt/releases/download/v${PART_VERSION}/libxcrypt-${PART_VERSION}.tar.xz"
+uri = "https://github.com/besser82/libxcrypt/releases/download/v${VERSION}/libxcrypt-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

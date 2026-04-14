@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://duktape.org"
 
 [[sources]]
-uri = "https://duktape.org/duktape-${PART_VERSION}.tar.xz"
+uri = "https://duktape.org/duktape-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -40,7 +40,7 @@ includedir=\${prefix}/include
 
 Name: Duktape
 Description: Embeddable Javascript engine
-Version: ${PART_VERSION}
+Version: ${VERSION}
 Libs: -L\${libdir} -lduktape -lm
 Cflags: -I\${includedir}
 PCEOF

@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://pagure.io/libaio"
 
 [[sources]]
-uri = "https://pagure.io/libaio/archive/libaio-${PART_VERSION}/libaio-libaio-${PART_VERSION}.tar.gz"
+uri = "https://pagure.io/libaio/archive/libaio-${VERSION}/libaio-libaio-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

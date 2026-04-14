@@ -11,7 +11,7 @@ build = ["pkgconf"]
 link = ["util-linux", "icu", "inih"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

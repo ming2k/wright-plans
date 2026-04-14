@@ -10,7 +10,7 @@ url = "https://github.com/thom311/libnl"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/thom311/libnl/releases/download/libnl3_11_0/libnl-${PART_VERSION}.tar.gz"
+uri = "https://github.com/thom311/libnl/releases/download/libnl3_11_0/libnl-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

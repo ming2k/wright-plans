@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/libtasn1/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/libtasn1/libtasn1-${PART_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/libtasn1/libtasn1-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

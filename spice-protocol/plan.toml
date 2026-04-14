@@ -10,7 +10,7 @@ url = "https://www.spice-space.org/"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://www.spice-space.org/download/releases/spice-protocol-${PART_VERSION}.tar.xz"
+uri = "https://www.spice-space.org/download/releases/spice-protocol-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

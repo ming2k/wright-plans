@@ -11,7 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["libuuid", "zlib"]
 
 [[sources]]
-uri = "https://oligarchy.co.uk/xapian/${PART_VERSION}/xapian-core-${PART_VERSION}.tar.xz"
+uri = "https://oligarchy.co.uk/xapian/${VERSION}/xapian-core-${VERSION}.tar.xz"
 sha256 = "6cea3f49952a47224439a40bdb3608f928d121ad8721b9921cc42802d548ecf8"
 
 [lifecycle.configure]

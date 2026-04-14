@@ -11,7 +11,7 @@ build = ["gcc", "libxslt", "make"]
 link = ["glibc", "linux-pam"]
 
 [[sources]]
-uri = "https://github.com/shadow-maint/shadow/releases/download/${PART_VERSION}/shadow-${PART_VERSION}.tar.xz"
+uri = "https://github.com/shadow-maint/shadow/releases/download/${VERSION}/shadow-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]

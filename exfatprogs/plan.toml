@@ -10,7 +10,7 @@ url = "https://github.com/exfatprogs/exfatprogs"
 build = ["pkgconf"]
 
 [[sources]]
-uri = "https://github.com/exfatprogs/exfatprogs/releases/download/${PART_VERSION}/exfatprogs-${PART_VERSION}.tar.gz"
+uri = "https://github.com/exfatprogs/exfatprogs/releases/download/${VERSION}/exfatprogs-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

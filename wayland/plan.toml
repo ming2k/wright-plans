@@ -10,7 +10,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["expat", "libffi", "libxml2"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/${PART_VERSION}/downloads/wayland-${PART_VERSION}.tar.xz"
+uri = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/${VERSION}/downloads/wayland-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

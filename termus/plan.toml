@@ -27,7 +27,7 @@ optional = [
 ]
 
 [[sources]]
-uri = "git+https://github.com/ming2k/termus.git#v${PART_VERSION}"
+uri = "git+https://github.com/ming2k/termus.git#v${VERSION}"
 sha256 = "SKIP"
 
 [lifecycle.configure]

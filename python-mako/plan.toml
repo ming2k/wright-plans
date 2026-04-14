@@ -10,7 +10,7 @@ url = "https://www.makotemplates.org/"
 build = ["python"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/m/mako/mako-${PART_VERSION}.tar.gz"
+uri = "https://files.pythonhosted.org/packages/source/m/mako/mako-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

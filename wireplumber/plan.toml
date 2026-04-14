@@ -16,7 +16,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${PART_VERSION}/wireplumber-${PART_VERSION}.tar.gz"
+uri = "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${VERSION}/wireplumber-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -11,7 +11,7 @@ build = ["rust"]
 link = ["gcc", "glibc"]
 
 [[sources]]
-uri = "https://github.com/sharkdp/fd/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/sharkdp/fd/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

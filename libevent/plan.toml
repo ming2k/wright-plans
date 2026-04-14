@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["openssl"]
 
 [[sources]]
-uri = "https://github.com/libevent/libevent/releases/download/release-${PART_VERSION}/libevent-${PART_VERSION}.tar.gz"
+uri = "https://github.com/libevent/libevent/releases/download/release-${VERSION}/libevent-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

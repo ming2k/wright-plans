@@ -10,7 +10,7 @@ url = "https://fmt.dev/"
 build = ["gcc", "cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/fmtlib/fmt/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/fmtlib/fmt/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/diffutils/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/diffutils/diffutils-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/diffutils/diffutils-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

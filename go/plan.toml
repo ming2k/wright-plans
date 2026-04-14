@@ -11,7 +11,7 @@ build = ["go-bootstrap", "bash", "gcc", "glibc"]
 runtime = ["glibc"]
 
 [[sources]]
-uri = "https://go.dev/dl/go${PART_VERSION}.src.tar.gz"
+uri = "https://go.dev/dl/go${VERSION}.src.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

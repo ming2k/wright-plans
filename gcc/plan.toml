@@ -23,7 +23,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gcc/gcc-${PART_VERSION}/gcc-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-${VERSION}.tar.xz"
 sha256 = "438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e"
 
 [options]
@@ -83,7 +83,7 @@ make DESTDIR=${PART_DIR} install
 ln -sfv /usr/bin/cpp "${PART_DIR}/usr/lib/cpp"
 ln -sv gcc.1 "${PART_DIR}/usr/share/man/man1/cc.1"
 
-GCC_VER="${PART_VERSION}"
+GCC_VER="${VERSION}"
 TRIPLET=$(gcc -dumpmachine 2>/dev/null || echo x86_64-pc-linux-gnu)
 install -d "${PART_DIR}/usr/lib/bfd-plugins"
 ln -sfv "../../libexec/gcc/${TRIPLET}/${GCC_VER}/liblto_plugin.so" "${PART_DIR}/usr/lib/bfd-plugins/"
@@ -110,13 +110,13 @@ description = "GNU C++ standard library"
 script = '''
 install -d "${PART_DIR}/usr/lib"
 install -d "${PART_DIR}/usr/share/gdb/auto-load/usr/lib"
-install -d "${PART_DIR}/usr/share/gcc-${PART_VERSION}/python"
+install -d "${PART_DIR}/usr/share/gcc-${VERSION}/python"
 
 mv -v "${MAIN_PART_DIR}"/usr/lib/libstdc++.so* "${PART_DIR}/usr/lib/"
 mv -v "${MAIN_PART_DIR}"/usr/lib/libstdc++fs.so* "${PART_DIR}/usr/lib/" 2>/dev/null || true
 mv -v "${MAIN_PART_DIR}"/usr/lib/libstdc++exp.so* "${PART_DIR}/usr/lib/" 2>/dev/null || true
 mv -v "${MAIN_PART_DIR}"/usr/share/gdb/auto-load/usr/lib/libstdc++* "${PART_DIR}/usr/share/gdb/auto-load/usr/lib/" 2>/dev/null || true
-mv -v "${MAIN_PART_DIR}"/usr/share/gcc-${PART_VERSION}/python/libstdcxx "${PART_DIR}/usr/share/gcc-${PART_VERSION}/python/" 2>/dev/null || true
+mv -v "${MAIN_PART_DIR}"/usr/share/gcc-${VERSION}/python/libstdcxx "${PART_DIR}/usr/share/gcc-${VERSION}/python/" 2>/dev/null || true
 
 '''
 

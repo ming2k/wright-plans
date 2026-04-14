@@ -16,7 +16,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/libass/libass/releases/download/${PART_VERSION}/libass-${PART_VERSION}.tar.xz"
+uri = "https://github.com/libass/libass/releases/download/${VERSION}/libass-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

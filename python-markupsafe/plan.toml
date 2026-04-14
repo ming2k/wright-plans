@@ -11,7 +11,7 @@ runtime = ["python"]
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/m/markupsafe/markupsafe-${PART_VERSION}.tar.gz"
+uri = "https://files.pythonhosted.org/packages/source/m/markupsafe/markupsafe-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

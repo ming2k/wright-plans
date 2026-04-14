@@ -10,7 +10,7 @@ url = "https://sourceware.org/libffi/"
 build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/libffi/libffi/releases/download/v${PART_VERSION}/libffi-${PART_VERSION}.tar.gz"
+uri = "https://github.com/libffi/libffi/releases/download/v${VERSION}/libffi-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

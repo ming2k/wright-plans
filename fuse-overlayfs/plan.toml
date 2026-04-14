@@ -12,7 +12,7 @@ runtime = ["glibc", "libfuse3"]
 link = ["glibc", "libfuse3"]
 
 [[sources]]
-uri = "https://github.com/containers/fuse-overlayfs/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/containers/fuse-overlayfs/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "45968517603389ead067222d234bc8d8ed33e4b4f8ba16216bdd3e6aedcccea9"
 
 [lifecycle.prepare]

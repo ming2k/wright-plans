@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://www.greenwoodsoftware.com/less/less-${PART_VERSION}.tar.gz"
+uri = "https://www.greenwoodsoftware.com/less/less-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

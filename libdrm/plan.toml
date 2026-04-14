@@ -10,7 +10,7 @@ url = "https://dri.freedesktop.org/libdrm/"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://dri.freedesktop.org/libdrm/libdrm-${PART_VERSION}.tar.xz"
+uri = "https://dri.freedesktop.org/libdrm/libdrm-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

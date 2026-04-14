@@ -18,7 +18,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

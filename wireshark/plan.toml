@@ -36,7 +36,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.wireshark.org/download/src/wireshark-${PART_VERSION}.tar.xz"
+uri = "https://www.wireshark.org/download/src/wireshark-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

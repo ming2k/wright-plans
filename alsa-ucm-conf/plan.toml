@@ -10,7 +10,7 @@ url = "https://github.com/alsa-project/alsa-ucm-conf"
 runtime = ["alsa-lib"]
 
 [[sources]]
-uri = "https://github.com/alsa-project/alsa-ucm-conf/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/alsa-project/alsa-ucm-conf/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

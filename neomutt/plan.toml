@@ -23,7 +23,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/neomutt/neomutt/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/neomutt/neomutt/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "a78e55a0df62b7f98566676d0ab9041aad89b2384bb5c6f3a96302a5cf49968d"
 
 [lifecycle.configure]

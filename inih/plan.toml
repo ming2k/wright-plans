@@ -10,7 +10,7 @@ url = "https://github.com/benhoyt/inih"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://github.com/benhoyt/inih/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/benhoyt/inih/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

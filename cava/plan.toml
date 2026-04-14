@@ -13,7 +13,7 @@ runtime = ["alsa-lib", "pipewire", "ncurses", "pulseaudio"]
 optional = ["sdl2", "portaudio", "jack"]
 
 [[sources]]
-uri = "https://github.com/karlstav/cava/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/karlstav/cava/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "43f994f7e609fab843af868d8a7bc21471ac62c5a4724ef97693201eac42e70a"
 
 [lifecycle.prepare]

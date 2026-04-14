@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://go.dev"
 
 [[sources]]
-uri = "https://go.dev/dl/go${PART_VERSION}.linux-amd64.tar.gz"
+uri = "https://go.dev/dl/go${VERSION}.linux-amd64.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

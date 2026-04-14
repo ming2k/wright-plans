@@ -17,7 +17,7 @@ runtime = [
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/r/requests/requests-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/r/requests/requests-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

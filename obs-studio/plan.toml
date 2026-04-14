@@ -54,7 +54,7 @@ optional = [
 ]
 
 [[sources]]
-uri = "git+https://github.com/obsproject/obs-studio.git#${PART_VERSION}"
+uri = "git+https://github.com/obsproject/obs-studio.git#${VERSION}"
 sha256 = "SKIP"
 
 [lifecycle.configure]

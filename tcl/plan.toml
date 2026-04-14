@@ -10,7 +10,7 @@ url = "https://www.tcl.tk/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/tcl/Tcl/${PART_VERSION}/tcl${PART_VERSION}-src.tar.gz"
+uri = "https://downloads.sourceforge.net/project/tcl/Tcl/${VERSION}/tcl${VERSION}-src.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -11,7 +11,7 @@ build = ["meson", "ninja"]
 link = ["glibc", "zlib"]
 
 [[sources]]
-uri = "https://xorg.freedesktop.org/releases/individual/lib/libpciaccess-${PART_VERSION}.tar.xz"
+uri = "https://xorg.freedesktop.org/releases/individual/lib/libpciaccess-${VERSION}.tar.xz"
 sha256 = "4af43444b38adb5545d0ed1c2ce46d9608cc47b31c2387fc5181656765a6fa76"
 
 [lifecycle.configure]

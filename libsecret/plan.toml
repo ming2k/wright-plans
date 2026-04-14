@@ -17,7 +17,7 @@ build = [
 link = ["glib", "libgcrypt"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libsecret/0.21/libsecret-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libsecret/0.21/libsecret-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -16,7 +16,7 @@ build = [
 link = ["glib"]
 
 [[sources]]
-uri = "https://github.com/libproxy/libproxy/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/libproxy/libproxy/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

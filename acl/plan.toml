@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["attr"]
 
 [[sources]]
-uri = "https://download.savannah.gnu.org/releases/acl/acl-${PART_VERSION}.tar.xz"
+uri = "https://download.savannah.gnu.org/releases/acl/acl-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -19,7 +19,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
 --disable-static \
---docdir=/usr/share/doc/acl-${PART_VERSION}
+--docdir=/usr/share/doc/acl-${VERSION}
 
 '''
 

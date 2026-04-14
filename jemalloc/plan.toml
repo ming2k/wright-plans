@@ -10,7 +10,7 @@ url = "https://github.com/jemalloc/jemalloc"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/jemalloc/jemalloc/releases/download/${PART_VERSION}/jemalloc-${PART_VERSION}.tar.bz2"
+uri = "https://github.com/jemalloc/jemalloc/releases/download/${VERSION}/jemalloc-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

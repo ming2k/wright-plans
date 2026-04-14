@@ -10,7 +10,7 @@ url = "https://github.com/dosfstools/dosfstools"
 build = ["pkgconf"]
 
 [[sources]]
-uri = "https://github.com/dosfstools/dosfstools/releases/download/v${PART_VERSION}/dosfstools-${PART_VERSION}.tar.gz"
+uri = "https://github.com/dosfstools/dosfstools/releases/download/v${VERSION}/dosfstools-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

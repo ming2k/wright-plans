@@ -1,5 +1,5 @@
 name = "wright"
-version = "2.1.9"
+version = "2.2.0"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -11,7 +11,7 @@ runtime = ["ca-certificates"]
 build = ["rust", "cargo"]
 
 [[sources]]
-uri = "https://github.com/ming2k/wright/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/ming2k/wright/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]

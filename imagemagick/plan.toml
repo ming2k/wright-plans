@@ -28,7 +28,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://imagemagick.org/archive/releases/ImageMagick-${PART_VERSION}.tar.xz"
+uri = "https://imagemagick.org/archive/releases/ImageMagick-${VERSION}.tar.xz"
 sha256 = "abb85df40f06fddf17d031629c7ad2778a55d478a8bff80d55ffee75c90a3982"
 
 [lifecycle.configure]

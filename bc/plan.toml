@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["readline"]
 
 [[sources]]
-uri = "https://github.com/gavinhoward/bc/releases/download/${PART_VERSION}/bc-${PART_VERSION}.tar.xz"
+uri = "https://github.com/gavinhoward/bc/releases/download/${VERSION}/bc-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

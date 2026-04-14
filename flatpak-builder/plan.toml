@@ -29,7 +29,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/flatpak/flatpak-builder/releases/download/${PART_VERSION}/flatpak-builder-${PART_VERSION}.tar.xz"
+uri = "https://github.com/flatpak/flatpak-builder/releases/download/${VERSION}/flatpak-builder-${VERSION}.tar.xz"
 sha256 = "fd5bc36fe3b974395f782e6c920d8955cee168f513370c32cc800b69acd980d0"
 
 [lifecycle.configure]

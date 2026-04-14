@@ -12,7 +12,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/dconf/0.49/dconf-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/dconf/0.49/dconf-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

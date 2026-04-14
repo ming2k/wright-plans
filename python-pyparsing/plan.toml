@@ -10,7 +10,7 @@ url = "https://github.com/pyparsing/pyparsing"
 build = ["python", "setuptools", "wheel"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/p/pyparsing/pyparsing-${PART_VERSION}.tar.gz"
+uri = "https://files.pythonhosted.org/packages/source/p/pyparsing/pyparsing-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

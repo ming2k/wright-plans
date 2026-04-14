@@ -16,7 +16,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://www.cairographics.org/releases/pixman-${PART_VERSION}.tar.gz"
+uri = "https://www.cairographics.org/releases/pixman-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

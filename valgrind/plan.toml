@@ -12,14 +12,14 @@ link = ["glibc"]
 runtime = ["glibc"]
 
 [[sources]]
-uri = "https://sourceware.org/pub/valgrind/valgrind-${PART_VERSION}.tar.bz2"
+uri = "https://sourceware.org/pub/valgrind/valgrind-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr \
-    --datadir=/usr/share/doc/valgrind-${PART_VERSION} \
+    --datadir=/usr/share/doc/valgrind-${VERSION} \
     --disable-werror
 
 '''

@@ -12,7 +12,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["libtasn1", "libffi"]
 
 [[sources]]
-uri = "https://github.com/p11-glue/p11-kit/releases/download/${PART_VERSION}/p11-kit-${PART_VERSION}.tar.xz"
+uri = "https://github.com/p11-glue/p11-kit/releases/download/${VERSION}/p11-kit-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

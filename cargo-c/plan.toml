@@ -11,7 +11,7 @@ build = ["rust", "pkgconf"]
 link = ["openssl"]
 
 [[sources]]
-uri = "https://github.com/lu-zero/cargo-c/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/lu-zero/cargo-c/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

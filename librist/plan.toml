@@ -11,7 +11,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["mbedtls"]
 
 [[sources]]
-uri = "https://code.videolan.org/rist/librist/-/archive/v${PART_VERSION}/librist-v${PART_VERSION}.tar.bz2"
+uri = "https://code.videolan.org/rist/librist/-/archive/v${VERSION}/librist-v${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

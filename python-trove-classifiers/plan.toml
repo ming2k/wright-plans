@@ -11,7 +11,7 @@ runtime = ["python"]
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/t/trove_classifiers/trove_classifiers-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/t/trove_classifiers/trove_classifiers-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

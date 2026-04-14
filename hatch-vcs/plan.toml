@@ -11,7 +11,7 @@ runtime = ["python", "hatchling", "setuptools-scm"]
 build = ["python", "hatchling"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/h/hatch_vcs/hatch_vcs-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/h/hatch_vcs/hatch_vcs-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

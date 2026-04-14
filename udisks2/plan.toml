@@ -27,7 +27,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/storaged-project/udisks/releases/download/udisks-${PART_VERSION}/udisks-${PART_VERSION}.tar.bz2"
+uri = "https://github.com/storaged-project/udisks/releases/download/udisks-${VERSION}/udisks-${VERSION}.tar.bz2"
 sha256 = "b75734ccf602540dedb4068bec206adcb508a4c003725e117ae8f994d92d8ece"
 
 [lifecycle.configure]

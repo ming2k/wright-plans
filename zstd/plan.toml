@@ -10,7 +10,7 @@ url = "https://facebook.github.io/zstd/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/facebook/zstd/releases/download/v${PART_VERSION}/zstd-${PART_VERSION}.tar.gz"
+uri = "https://github.com/facebook/zstd/releases/download/v${VERSION}/zstd-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

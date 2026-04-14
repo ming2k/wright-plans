@@ -19,7 +19,7 @@ build = [
 link = ["libunistring"]
 
 [[sources]]
-uri = "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${PART_VERSION}.tar.xz"
+uri = "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

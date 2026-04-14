@@ -31,7 +31,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://git.sr.ht/~exec64/imv/archive/v${PART_VERSION}.tar.gz"
+uri = "https://git.sr.ht/~exec64/imv/archive/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]

@@ -10,7 +10,7 @@ url = "https://bitmath.org/code/mtdev/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://bitmath.org/code/mtdev/mtdev-${PART_VERSION}.tar.bz2"
+uri = "https://bitmath.org/code/mtdev/mtdev-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

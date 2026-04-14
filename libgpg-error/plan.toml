@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://gnupg.org/software/libgpg-error/"
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-${PART_VERSION}.tar.bz2"
+uri = "https://gnupg.org/ftp/gcrypt/libgpg-error/libgpg-error-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

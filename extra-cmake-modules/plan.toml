@@ -10,7 +10,7 @@ url = "https://community.kde.org/Frameworks"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://download.kde.org/stable/frameworks/6.23/extra-cmake-modules-${PART_VERSION}.tar.xz"
+uri = "https://download.kde.org/stable/frameworks/6.23/extra-cmake-modules-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

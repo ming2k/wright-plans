@@ -10,7 +10,7 @@ url = "https://sing-box.sagernet.org/"
 build = ["go"]
 
 [[sources]]
-uri = "https://github.com/SagerNet/sing-box/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/SagerNet/sing-box/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -27,7 +27,7 @@ export CGO_ENABLED=0
 go build -o sing-box \
 -trimpath \
 -tags "with_quic,with_dhcp,with_wireguard,with_utls,with_clash_api,with_gvisor" \
--ldflags "-s -w -X github.com/sagernet/sing-box/constant.Version=${PART_VERSION}" \
+-ldflags "-s -w -X github.com/sagernet/sing-box/constant.Version=${VERSION}" \
 ./cmd/sing-box
 
 '''

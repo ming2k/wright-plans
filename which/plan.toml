@@ -10,7 +10,7 @@ url = "https://carlowood.github.io/which/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://carlowood.github.io/which/which-${PART_VERSION}.tar.gz"
+uri = "https://carlowood.github.io/which/which-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

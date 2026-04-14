@@ -9,7 +9,7 @@ arch = "x86_64"
 build = ["cmake", "gcc", "ninja"]
 
 [[sources]]
-uri = "https://github.com/google/highway/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/google/highway/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

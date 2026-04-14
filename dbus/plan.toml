@@ -17,7 +17,7 @@ build = [
 link = ["expat", "libsystemd"]
 
 [[sources]]
-uri = "https://dbus.freedesktop.org/releases/dbus/dbus-${PART_VERSION}.tar.xz"
+uri = "https://dbus.freedesktop.org/releases/dbus/dbus-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

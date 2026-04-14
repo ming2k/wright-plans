@@ -36,7 +36,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://mesa.freedesktop.org/archive/mesa-${PART_VERSION}.tar.xz"
+uri = "https://mesa.freedesktop.org/archive/mesa-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -27,7 +27,7 @@ runtime = [
 ]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gdb/gdb-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/gdb/gdb-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]

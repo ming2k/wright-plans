@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/bazelbuild/bazelisk"
 
 [[sources]]
-uri = "https://github.com/bazelbuild/bazelisk/releases/download/v${PART_VERSION}/bazelisk-linux-amd64"
+uri = "https://github.com/bazelbuild/bazelisk/releases/download/v${VERSION}/bazelisk-linux-amd64"
 sha256 = "SKIP"
 
 [lifecycle.staging]

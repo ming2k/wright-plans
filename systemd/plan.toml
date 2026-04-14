@@ -45,7 +45,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/systemd/systemd/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/systemd/systemd/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -71,10 +71,10 @@ meson setup build \
     -D split-bin=false \
     -D dbuspolicydir=/usr/share/dbus-1/system.d \
     -D pamconfdir=/usr/lib/pam.d \
-    -D docdir=/usr/share/doc/systemd-${PART_VERSION} \
-    -D version-tag="${PART_VERSION}-theseus" \
+    -D docdir=/usr/share/doc/systemd-${VERSION} \
+    -D version-tag="${VERSION}-theseus" \
     -D vcs-tag=false \
-    -D shared-lib-tag="${PART_VERSION}" \
+    -D shared-lib-tag="${VERSION}" \
     -D mode=release \
     -D install-tests=false \
     -D ldconfig=false \

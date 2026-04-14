@@ -19,7 +19,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libnotify/0.8/libnotify-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libnotify/0.8/libnotify-${VERSION}.tar.xz"
 sha256 = "23420ef619dc2cb5aebad613f4823a2fa41c07e5a1d05628d40f6ec4b35bfddd"
 
 [lifecycle.configure]

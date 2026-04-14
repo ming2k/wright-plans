@@ -25,7 +25,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/pango/1.57/pango-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/pango/1.57/pango-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

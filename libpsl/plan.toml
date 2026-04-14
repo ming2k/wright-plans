@@ -11,7 +11,7 @@ build = ["meson", "ninja"]
 link = ["libidn2", "libunistring"]
 
 [[sources]]
-uri = "https://github.com/rockdaboot/libpsl/releases/download/${PART_VERSION}/libpsl-${PART_VERSION}.tar.gz"
+uri = "https://github.com/rockdaboot/libpsl/releases/download/${VERSION}/libpsl-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

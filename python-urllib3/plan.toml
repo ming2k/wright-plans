@@ -11,13 +11,13 @@ runtime = ["python"]
 build = ["python", "hatchling", "hatch-vcs"]
 
 [[sources]]
-uri = "https://github.com/urllib3/urllib3/archive/${PART_VERSION}/python-urllib3-${PART_VERSION}.tar.gz"
+uri = "https://github.com/urllib3/urllib3/archive/${VERSION}/python-urllib3-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''
 cd ${BUILD_DIR}
-SETUPTOOLS_SCM_PRETEND_VERSION=${PART_VERSION} pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+SETUPTOOLS_SCM_PRETEND_VERSION=${VERSION} pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
 
 '''
 

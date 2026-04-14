@@ -22,7 +22,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/libjxl/libjxl/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/libjxl/libjxl/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "ab38928f7f6248e2a98cc184956021acb927b16a0dee71b4d260dc040a4320ea"
 
 [lifecycle.prepare]

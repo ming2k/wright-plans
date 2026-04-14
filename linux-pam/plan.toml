@@ -17,7 +17,7 @@ build = [
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/linux-pam/linux-pam/releases/download/v${PART_VERSION}/Linux-PAM-${PART_VERSION}.tar.xz"
+uri = "https://github.com/linux-pam/linux-pam/releases/download/v${VERSION}/Linux-PAM-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -37,7 +37,7 @@ meson setup .. \
     -Dpwaccess=disabled \
     -Dvendordir='' \
     -Ddocs=disabled \
-    -Ddocdir=/usr/share/doc/Linux-PAM-${PART_VERSION}
+    -Ddocdir=/usr/share/doc/Linux-PAM-${VERSION}
 
 '''
 

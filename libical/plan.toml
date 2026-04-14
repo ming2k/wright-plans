@@ -16,7 +16,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/libical/libical/archive/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/libical/libical/archive/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

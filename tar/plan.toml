@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/tar/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/tar/tar-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/tar/tar-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -32,7 +32,7 @@ make -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
-make -C doc DESTDIR=${PART_DIR} install-html docdir=/usr/share/doc/tar-${PART_VERSION}
+make -C doc DESTDIR=${PART_DIR} install-html docdir=/usr/share/doc/tar-${VERSION}
 
 '''
 

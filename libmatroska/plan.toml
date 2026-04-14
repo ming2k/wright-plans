@@ -11,7 +11,7 @@ build = ["gcc", "cmake", "ninja"]
 link = ["libebml"]
 
 [[sources]]
-uri = "https://dl.matroska.org/downloads/libmatroska/libmatroska-${PART_VERSION}.tar.xz"
+uri = "https://dl.matroska.org/downloads/libmatroska/libmatroska-${VERSION}.tar.xz"
 sha256 = "572a3033b8d93d48a6a858e514abce4b2f7a946fe1f02cbfeca39bfd703018b3"
 
 [lifecycle.configure]

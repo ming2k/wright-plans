@@ -22,7 +22,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.libsdl.org/release/SDL2-${PART_VERSION}.tar.gz"
+uri = "https://www.libsdl.org/release/SDL2-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

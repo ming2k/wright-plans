@@ -16,7 +16,7 @@ build = [
 link = ["qt6-base"]
 
 [[sources]]
-uri = "https://download.qt.io/official_releases/qt/6.10/${PART_VERSION}/submodules/qt5compat-everywhere-src-${PART_VERSION}.tar.xz"
+uri = "https://download.qt.io/official_releases/qt/6.10/${VERSION}/submodules/qt5compat-everywhere-src-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/strace/strace/releases/download/v${PART_VERSION}/strace-${PART_VERSION}.tar.xz"
+uri = "https://github.com/strace/strace/releases/download/v${VERSION}/strace-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -16,7 +16,7 @@ build = [
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/glib-networking/2.80/glib-networking-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/glib-networking/2.80/glib-networking-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

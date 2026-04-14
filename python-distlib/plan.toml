@@ -11,7 +11,7 @@ runtime = ["python"]
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/d/distlib/distlib-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/d/distlib/distlib-${VERSION}.tar.gz"
 sha256 = "feec40075be03a04501a973d81f633735b4b69f98b05450592310c0f401a4e0d"
 
 [lifecycle.staging]

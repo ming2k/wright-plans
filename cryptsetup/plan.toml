@@ -18,7 +18,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/cryptsetup/v2.8/cryptsetup-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/utils/cryptsetup/v2.8/cryptsetup-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/libfuse/libfuse"
 
 [[sources]]
-uri = "https://github.com/libfuse/libfuse/releases/download/fuse-${PART_VERSION}/fuse-${PART_VERSION}.tar.gz"
+uri = "https://github.com/libfuse/libfuse/releases/download/fuse-${VERSION}/fuse-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

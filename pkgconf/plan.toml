@@ -10,7 +10,7 @@ url = "https://pkgconf.org/"
 build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://distfiles.ariadne.space/pkgconf/pkgconf-${PART_VERSION}.tar.xz"
+uri = "https://distfiles.ariadne.space/pkgconf/pkgconf-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -27,7 +27,7 @@ runtime = [
 link = ["glib", "glibc", "gpgme", "libseccomp", "sqlite", "systemd"]
 
 [[sources]]
-uri = "https://github.com/containers/podman/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/containers/podman/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "b9540ecb19cfcbcfc40e1b81d39930f688c537d8fd6f11ae56be41f2bf9e97a4"
 
 [lifecycle.compile]

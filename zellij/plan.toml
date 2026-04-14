@@ -10,7 +10,7 @@ url = "https://github.com/zellij-org/zellij"
 build = ["rust"]
 
 [[sources]]
-uri = "https://github.com/zellij-org/zellij/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/zellij-org/zellij/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

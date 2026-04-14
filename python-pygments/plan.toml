@@ -11,7 +11,7 @@ runtime = ["python"]
 build = ["python", "hatchling"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/p/pygments/pygments-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/p/pygments/pygments-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

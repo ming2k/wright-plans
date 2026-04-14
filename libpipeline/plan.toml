@@ -10,7 +10,7 @@ url = "https://libpipeline.nongnu.org/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://download.savannah.gnu.org/releases/libpipeline/libpipeline-${PART_VERSION}.tar.gz"
+uri = "https://download.savannah.gnu.org/releases/libpipeline/libpipeline-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -17,7 +17,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://download.savannah.gnu.org/releases/man-db/man-db-${PART_VERSION}.tar.xz"
+uri = "https://download.savannah.gnu.org/releases/man-db/man-db-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -25,7 +25,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr                           \
 --sbindir=/usr/bin                          \
---docdir=/usr/share/doc/man-db-${PART_VERSION} \
+--docdir=/usr/share/doc/man-db-${VERSION} \
 --sysconfdir=/etc                       \
 --disable-setuid                        \
 --enable-cache-owner=bin                \

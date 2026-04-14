@@ -12,7 +12,7 @@ link = ["gcc", "glibc", "openssl"]
 optional = ["git"]
 
 [[sources]]
-uri = "https://github.com/openai/codex/archive/refs/tags/rust-v${PART_VERSION}.tar.gz"
+uri = "https://github.com/openai/codex/archive/refs/tags/rust-v${VERSION}.tar.gz"
 sha256 = "7be18a18f604ad877b47c08d9db00018bd1dbbbd774dc6e1e7ea52dc492d7138"
 
 [lifecycle.compile]

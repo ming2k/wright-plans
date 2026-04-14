@@ -10,7 +10,7 @@ build = ["gcc", "make"]
 link = ["zlib"]
 
 [[sources]]
-uri = "https://github.com/pnggroup/libpng/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/pnggroup/libpng/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "71a2c5b1218f60c4c6d2f1954c7eb20132156cae90bdb90b566c24db002782a6"
 
 [lifecycle.configure]

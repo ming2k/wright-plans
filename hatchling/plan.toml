@@ -17,7 +17,7 @@ runtime = [
 build = ["python"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/h/hatchling/hatchling-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/h/hatchling/hatchling-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

@@ -9,13 +9,13 @@ arch = "x86_64"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://www.oberhumer.com/opensource/lzo/download/lzo-${PART_VERSION}.tar.gz"
+uri = "https://www.oberhumer.com/opensource/lzo/download/lzo-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr --enable-shared --disable-static --docdir=/usr/share/doc/lzo-${PART_VERSION}
+./configure --prefix=/usr --enable-shared --disable-static --docdir=/usr/share/doc/lzo-${VERSION}
 
 '''
 

@@ -16,7 +16,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/glslang/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/KhronosGroup/glslang/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "01985335785c97906a91afe3cb5ee015997696181ec6c125bab5555602ba08e2"
 
 [lifecycle.configure]

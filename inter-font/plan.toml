@@ -10,7 +10,7 @@ url = "https://rsms.me/inter/"
 build = ["libarchive"]
 
 [[sources]]
-uri = "https://github.com/rsms/inter/releases/download/v${PART_VERSION}/Inter-${PART_VERSION}.zip"
+uri = "https://github.com/rsms/inter/releases/download/v${VERSION}/Inter-${VERSION}.zip"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -21,7 +21,7 @@ script = '''
 cd ${BUILD_DIR}
 rm -rf inter-extracted
 mkdir -p inter-extracted
-bsdtar xf ${FILES_DIR}/Inter-${PART_VERSION}.zip -C inter-extracted
+bsdtar xf ${FILES_DIR}/Inter-${VERSION}.zip -C inter-extracted
 
 '''
 

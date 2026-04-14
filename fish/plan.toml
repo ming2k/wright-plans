@@ -19,7 +19,7 @@ build = [
 link = ["pcre2"]
 
 [[sources]]
-uri = "https://github.com/fish-shell/fish-shell/releases/download/${PART_VERSION}/fish-${PART_VERSION}.tar.xz"
+uri = "https://github.com/fish-shell/fish-shell/releases/download/${VERSION}/fish-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

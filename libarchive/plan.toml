@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://libarchive.org"
 
 [[sources]]
-uri = "https://github.com/libarchive/libarchive/releases/download/v${PART_VERSION}/libarchive-${PART_VERSION}.tar.xz"
+uri = "https://github.com/libarchive/libarchive/releases/download/v${VERSION}/libarchive-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

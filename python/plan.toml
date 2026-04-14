@@ -23,7 +23,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.python.org/ftp/python/${PART_VERSION}/Python-${PART_VERSION}.tar.xz"
+uri = "https://www.python.org/ftp/python/${VERSION}/Python-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

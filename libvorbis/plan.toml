@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["libogg"]
 
 [[sources]]
-uri = "https://downloads.xiph.org/releases/vorbis/libvorbis-${PART_VERSION}.tar.gz"
+uri = "https://downloads.xiph.org/releases/vorbis/libvorbis-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

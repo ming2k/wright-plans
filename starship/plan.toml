@@ -10,7 +10,7 @@ url = "https://starship.rs/"
 build = ["rust"]
 
 [[sources]]
-uri = "https://github.com/starship/starship/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/starship/starship/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

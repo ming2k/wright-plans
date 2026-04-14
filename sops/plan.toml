@@ -10,7 +10,7 @@ url = "https://github.com/getsops/sops"
 build = ["go"]
 
 [[sources]]
-uri = "https://github.com/getsops/sops/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/getsops/sops/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

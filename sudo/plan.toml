@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc", "linux-pam"]
 
 [[sources]]
-uri = "https://www.sudo.ws/dist/sudo-${PART_VERSION}.tar.gz"
+uri = "https://www.sudo.ws/dist/sudo-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -28,7 +28,7 @@ cd ${BUILD_DIR}
 --with-all-insults \
 --with-secure-path-value=/usr/local/sbin:/usr/local/bin:/usr/bin \
 --enable-tmpfiles.d \
---docdir=/usr/share/doc/sudo-${PART_VERSION} \
+--docdir=/usr/share/doc/sudo-${VERSION} \
 --with-passprompt="[sudo] password for %p: "
 
 '''

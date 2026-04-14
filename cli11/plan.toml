@@ -10,7 +10,7 @@ url = "https://github.com/CLIUtils/CLI11"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/CLIUtils/CLI11/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/CLIUtils/CLI11/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

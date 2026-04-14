@@ -10,7 +10,7 @@ url = "https://github.com/ming2k/prudence"
 build = ["rust"]
 
 [[sources]]
-uri = "https://github.com/ming2k/prudence/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/ming2k/prudence/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "eb16564fda7542cbc10a007f842a6ac4f4097210155a629d1757f9e1f31d58ea"
 
 [lifecycle.compile]

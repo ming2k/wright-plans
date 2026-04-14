@@ -21,7 +21,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/tpm2-software/tpm2-tools/releases/download/${PART_VERSION}/tpm2-tools-${PART_VERSION}.tar.gz"
+uri = "https://github.com/tpm2-software/tpm2-tools/releases/download/${VERSION}/tpm2-tools-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -10,7 +10,7 @@ url = "https://pyyaml.org/"
 build = ["python"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/p/pyyaml/pyyaml-${PART_VERSION}.tar.gz"
+uri = "https://files.pythonhosted.org/packages/source/p/pyyaml/pyyaml-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

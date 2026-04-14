@@ -10,7 +10,7 @@ url = "https://www.pcre.org/"
 build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${PART_VERSION}/pcre2-${PART_VERSION}.tar.bz2"
+uri = "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${VERSION}/pcre2-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

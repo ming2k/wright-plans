@@ -16,7 +16,7 @@ build = [
 link = ["acl", "ncurses", "zlib"]
 
 [[sources]]
-uri = "https://github.com/vim/vim/archive/v${PART_VERSION}/vim-${PART_VERSION}.tar.gz"
+uri = "https://github.com/vim/vim/archive/v${VERSION}/vim-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]

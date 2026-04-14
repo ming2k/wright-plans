@@ -11,7 +11,7 @@ build = ["gcc", "make", "autoconf", "automake", "bison"]
 link = ["pcre2", "zlib"]
 
 [[sources]]
-uri = "https://github.com/swig/swig/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/swig/swig/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]

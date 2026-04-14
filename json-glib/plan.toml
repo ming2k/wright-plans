@@ -16,7 +16,7 @@ build = [
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/json-glib/1.10/json-glib-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/json-glib/1.10/json-glib-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

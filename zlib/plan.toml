@@ -10,7 +10,7 @@ url = "https://zlib.net/"
 build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/madler/zlib/releases/download/v${PART_VERSION}/zlib-${PART_VERSION}.tar.gz"
+uri = "https://github.com/madler/zlib/releases/download/v${VERSION}/zlib-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

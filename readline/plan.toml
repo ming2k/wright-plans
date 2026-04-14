@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/readline/readline-${PART_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/readline/readline-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -43,7 +43,7 @@ sed -i '/{OLDSUFF}/c:' support/shlib-install
 [lifecycle.configure]
 script = '''
 cd ${BUILD_DIR}
-./configure --prefix=/usr    --disable-static --with-curses    --docdir=/usr/share/doc/readline-${PART_VERSION}
+./configure --prefix=/usr    --disable-static --with-curses    --docdir=/usr/share/doc/readline-${VERSION}
 
 '''
 
@@ -58,8 +58,8 @@ make SHLIB_LIBS="-lncursesw"
 script = '''
 cd ${BUILD_DIR}
 make SHLIB_LIBS="-lncursesw" DESTDIR=${PART_DIR} install
-install -d ${PART_DIR}/usr/share/doc/readline-${PART_VERSION}
-install -v -m644 doc/*.{ps,pdf,html,dvi} ${PART_DIR}/usr/share/doc/readline-${PART_VERSION}/ 2>/dev/null || true
+install -d ${PART_DIR}/usr/share/doc/readline-${VERSION}
+install -v -m644 doc/*.{ps,pdf,html,dvi} ${PART_DIR}/usr/share/doc/readline-${VERSION}/ 2>/dev/null || true
 
 '''
 

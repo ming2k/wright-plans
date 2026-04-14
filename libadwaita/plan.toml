@@ -10,7 +10,7 @@ build = ["meson", "ninja"]
 link = ["glib", "gtk4"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libadwaita/1.9/libadwaita-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libadwaita/1.9/libadwaita-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

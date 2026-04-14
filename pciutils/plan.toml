@@ -11,7 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["systemd", "zlib"]
 
 [[sources]]
-uri = "https://mj.ucw.cz/download/linux/pci/pciutils-${PART_VERSION}.tar.gz"
+uri = "https://mj.ucw.cz/download/linux/pci/pciutils-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

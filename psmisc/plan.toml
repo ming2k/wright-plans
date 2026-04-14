@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/psmisc/psmisc/psmisc-${PART_VERSION}.tar.xz"
+uri = "https://downloads.sourceforge.net/project/psmisc/psmisc/psmisc-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -11,7 +11,7 @@ build = ["cmake"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/intel/gmmlib/archive/intel-gmmlib-${PART_VERSION}/intel-gmmlib-${PART_VERSION}.tar.gz"
+uri = "https://github.com/intel/gmmlib/archive/intel-gmmlib-${VERSION}/intel-gmmlib-${VERSION}.tar.gz"
 sha256 = "6ae262b95540681ad5478c63affb880135f772c95410b092009a6f7dfc04a5ba"
 
 [lifecycle.configure]

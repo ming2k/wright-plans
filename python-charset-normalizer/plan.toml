@@ -11,7 +11,7 @@ runtime = ["python"]
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/c/charset_normalizer/charset_normalizer-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/c/charset_normalizer/charset_normalizer-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

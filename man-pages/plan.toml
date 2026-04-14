@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://www.kernel.org/doc/man-pages/"
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]

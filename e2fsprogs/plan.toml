@@ -10,7 +10,7 @@ url = "https://e2fsprogs.sourceforge.net"
 build = ["util-linux"]
 
 [[sources]]
-uri = "https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${PART_VERSION}/e2fsprogs-${PART_VERSION}.tar.xz"
+uri = "https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${VERSION}/e2fsprogs-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

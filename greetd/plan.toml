@@ -16,7 +16,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://git.sr.ht/~kennylevinsen/greetd/archive/${PART_VERSION}.tar.gz"
+uri = "https://git.sr.ht/~kennylevinsen/greetd/archive/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

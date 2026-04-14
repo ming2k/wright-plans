@@ -10,7 +10,7 @@ url = "https://tukaani.org/xz/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/tukaani-project/xz/releases/download/v${PART_VERSION}/xz-${PART_VERSION}.tar.xz"
+uri = "https://github.com/tukaani-project/xz/releases/download/v${VERSION}/xz-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -18,7 +18,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
 --disable-static \
---docdir=/usr/share/doc/xz-${PART_VERSION}
+--docdir=/usr/share/doc/xz-${VERSION}
 
 '''
 

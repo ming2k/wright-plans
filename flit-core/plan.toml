@@ -10,7 +10,7 @@ url = "https://flit.pypa.io/"
 build = ["python"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/f/flit_core/flit_core-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/f/flit_core/flit_core-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

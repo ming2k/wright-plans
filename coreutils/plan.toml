@@ -16,7 +16,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/coreutils/coreutils-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/coreutils/coreutils-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

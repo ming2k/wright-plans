@@ -11,7 +11,7 @@ build = ["gcc", "make", "pkg-config"]
 link = ["glibc", "libmnl", "libnfnetlink"]
 
 [[sources]]
-uri = "https://www.netfilter.org/projects/libnetfilter_conntrack/files/libnetfilter_conntrack-${PART_VERSION}.tar.xz"
+uri = "https://www.netfilter.org/projects/libnetfilter_conntrack/files/libnetfilter_conntrack-${VERSION}.tar.xz"
 sha256 = "769d3eaf57fa4fbdb05dd12873b6cb9a5be7844d8937e222b647381d44284820"
 
 [lifecycle.configure]

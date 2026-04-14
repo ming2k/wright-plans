@@ -16,7 +16,7 @@ build = [
 link = ["glib"]
 
 [[sources]]
-uri = "https://github.com/AbiWord/enchant/releases/download/v${PART_VERSION}/enchant-${PART_VERSION}.tar.gz"
+uri = "https://github.com/AbiWord/enchant/releases/download/v${VERSION}/enchant-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

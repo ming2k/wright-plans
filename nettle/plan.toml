@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["gmp"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/nettle/nettle-${PART_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/nettle/nettle-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

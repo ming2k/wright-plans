@@ -24,7 +24,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/util-linux/v2.42/util-linux-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/utils/util-linux/v2.42/util-linux-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

@@ -12,7 +12,7 @@ link = ["qt6-base"]
 runtime = ["qt6-base"]
 
 [[sources]]
-uri = "https://github.com/google/mozc/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/google/mozc/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

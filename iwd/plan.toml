@@ -17,7 +17,7 @@ build = [
 link = ["readline"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/network/wireless/iwd-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/network/wireless/iwd-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

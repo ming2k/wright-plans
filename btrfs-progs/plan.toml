@@ -19,7 +19,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

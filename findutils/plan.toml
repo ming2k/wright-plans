@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/findutils/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/findutils/findutils-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/findutils/findutils-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -10,7 +10,7 @@ url = "https://sr.ht/~kennylevinsen/seatd/"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://git.sr.ht/~kennylevinsen/seatd/archive/${PART_VERSION}.tar.gz"
+uri = "https://git.sr.ht/~kennylevinsen/seatd/archive/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

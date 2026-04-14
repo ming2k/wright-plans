@@ -22,7 +22,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://code.videolan.org/videolan/libplacebo/-/archive/v${PART_VERSION}/libplacebo-v${PART_VERSION}.tar.gz"
+uri = "https://code.videolan.org/videolan/libplacebo/-/archive/v${VERSION}/libplacebo-v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

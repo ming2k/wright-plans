@@ -11,7 +11,7 @@ build = ["go"]
 optional = ["v2fly-domain-list-community", "v2fly-geoip", "v2ray-rules-dat"]
 
 [[sources]]
-uri = "https://github.com/XTLS/Xray-core/archive/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/XTLS/Xray-core/archive/v${VERSION}.tar.gz"
 sha256 = "992a4997e6bb846d11469435d687f99ef812fcde1e0a009bb8e95189ea20331d"
 
 [lifecycle.prepare]
@@ -36,7 +36,7 @@ export GOCACHE=/tmp/go-cache/build
 export GOPROXY=off
 export GOSUMDB=off
 export GOFLAGS="-trimpath -mod=vendor"
-go build -ldflags "-X github.com/xtls/xray-core.codename=xray -X github.com/xtls/xray-core.version=${PART_VERSION} -buildid=" -o xray ./main
+go build -ldflags "-X github.com/xtls/xray-core.codename=xray -X github.com/xtls/xray-core.version=${VERSION} -buildid=" -o xray ./main
 
 '''
 

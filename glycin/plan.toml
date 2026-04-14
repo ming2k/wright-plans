@@ -28,7 +28,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/glycin/2.1/glycin-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/glycin/2.1/glycin-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

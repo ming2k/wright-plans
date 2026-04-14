@@ -24,7 +24,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.spice-space.org/download/releases/spice-server/spice-${PART_VERSION}.tar.bz2"
+uri = "https://www.spice-space.org/download/releases/spice-server/spice-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

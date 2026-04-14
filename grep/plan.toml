@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/grep/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/grep/grep-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/grep/grep-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

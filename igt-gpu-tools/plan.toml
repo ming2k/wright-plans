@@ -20,7 +20,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${PART_VERSION}/igt-gpu-tools-v${PART_VERSION}.tar.gz"
+uri = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${VERSION}/igt-gpu-tools-v${VERSION}.tar.gz"
 sha256 = "675a46af1ec7998909819a0829aec6b03c79f0b573d1588d858dd54ac3063329"
 
 [lifecycle.configure]

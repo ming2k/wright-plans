@@ -11,7 +11,7 @@ build = ["gcc", "make", "perl"]
 link = ["zlib"]
 
 [[sources]]
-uri = "https://github.com/openssl/openssl/releases/download/openssl-${PART_VERSION}/openssl-${PART_VERSION}.tar.gz"
+uri = "https://github.com/openssl/openssl/releases/download/openssl-${VERSION}/openssl-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -37,7 +37,7 @@ script = '''
 cd ${BUILD_DIR}
 sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
 make MANSUFFIX=ssl DESTDIR=${PART_DIR} install
-mv -v ${PART_DIR}/usr/share/doc/openssl ${PART_DIR}/usr/share/doc/openssl-${PART_VERSION}
+mv -v ${PART_DIR}/usr/share/doc/openssl ${PART_DIR}/usr/share/doc/openssl-${VERSION}
 
 '''
 

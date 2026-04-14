@@ -16,7 +16,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://sourceware.org/pub/lvm2/LVM2.${PART_VERSION}.tgz"
+uri = "https://sourceware.org/pub/lvm2/LVM2.${VERSION}.tgz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

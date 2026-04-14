@@ -18,7 +18,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "a5d476404ab88ac0d148211da50428178c89caef8af8042a3ca8e71e58ed9427"
 
 [options]

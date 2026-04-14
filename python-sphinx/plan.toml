@@ -26,7 +26,7 @@ runtime = [
 build = ["python", "flit-core"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/s/sphinx/sphinx-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/s/sphinx/sphinx-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

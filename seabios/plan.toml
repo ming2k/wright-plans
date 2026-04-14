@@ -15,7 +15,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://www.seabios.org/downloads/seabios-${PART_VERSION}.tar.gz"
+uri = "https://www.seabios.org/downloads/seabios-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

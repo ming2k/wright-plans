@@ -22,7 +22,7 @@ link = [
 ]
 
 [[sources]]
-uri = "git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${PART_VERSION}"
+uri = "git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${VERSION}"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -17,7 +17,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/software/utils/dtc/dtc-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/software/utils/dtc/dtc-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

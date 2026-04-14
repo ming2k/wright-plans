@@ -15,7 +15,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://bitbucket.org/multicoreware/x265_git/downloads/x265_${PART_VERSION}.tar.gz"
+uri = "https://bitbucket.org/multicoreware/x265_git/downloads/x265_${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]

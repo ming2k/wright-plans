@@ -36,7 +36,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/hpjansson/chafa/releases/download/${PART_VERSION}/chafa-${PART_VERSION}.tar.xz"
+uri = "https://github.com/hpjansson/chafa/releases/download/${VERSION}/chafa-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

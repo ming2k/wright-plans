@@ -10,7 +10,7 @@ url = "https://libexpat.github.io/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/libexpat/libexpat/releases/download/R_2_7_3/expat-${PART_VERSION}.tar.xz"
+uri = "https://github.com/libexpat/libexpat/releases/download/R_2_7_3/expat-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -18,7 +18,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
 --disable-static \
---docdir=/usr/share/doc/expat-${PART_VERSION}
+--docdir=/usr/share/doc/expat-${VERSION}
 
 '''
 
@@ -33,7 +33,7 @@ make -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
-install -v -m644 doc/*.{html,css} ${PART_DIR}/usr/share/doc/expat-${PART_VERSION}
+install -v -m644 doc/*.{html,css} ${PART_DIR}/usr/share/doc/expat-${VERSION}
 
 '''
 

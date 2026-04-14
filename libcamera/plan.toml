@@ -25,7 +25,7 @@ link = [
 ]
 
 [[sources]]
-uri = "git+https://github.com/libcamera-org/libcamera.git#v${PART_VERSION}"
+uri = "git+https://github.com/libcamera-org/libcamera.git#v${VERSION}"
 sha256 = "SKIP"
 
 [lifecycle.configure]

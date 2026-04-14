@@ -16,7 +16,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/libinput/libinput/-/archive/${PART_VERSION}/libinput-${PART_VERSION}.tar.gz"
+uri = "https://gitlab.freedesktop.org/libinput/libinput/-/archive/${VERSION}/libinput-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

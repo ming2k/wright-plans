@@ -11,7 +11,7 @@ runtime = ["python"]
 build = ["flit-core", "python"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/p/packaging/packaging-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/p/packaging/packaging-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

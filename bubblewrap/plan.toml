@@ -11,7 +11,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["libcap", "libseccomp"]
 
 [[sources]]
-uri = "https://github.com/containers/bubblewrap/releases/download/v${PART_VERSION}/bubblewrap-${PART_VERSION}.tar.xz"
+uri = "https://github.com/containers/bubblewrap/releases/download/v${VERSION}/bubblewrap-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

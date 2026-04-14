@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/JuliaStrings/utf8proc"
 
 [[sources]]
-uri = "https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

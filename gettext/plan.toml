@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/gettext/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gettext/gettext-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/gettext/gettext-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -18,7 +18,7 @@ script = '''
 cd ${BUILD_DIR}
 ./configure --prefix=/usr    \
             --disable-static \
-            --docdir=/usr/share/doc/gettext-${PART_VERSION}
+            --docdir=/usr/share/doc/gettext-${VERSION}
 
 '''
 

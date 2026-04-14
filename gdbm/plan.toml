@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/gdbm/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gdbm/gdbm-${PART_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/gdbm/gdbm-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -23,7 +23,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://github.com/dracut-ng/dracut-ng/archive/${PART_VERSION}/dracut-ng-${PART_VERSION}.tar.gz"
+uri = "https://github.com/dracut-ng/dracut-ng/archive/${VERSION}/dracut-ng-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

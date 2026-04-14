@@ -20,7 +20,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${PART_VERSION}.tar.bz2"
+uri = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

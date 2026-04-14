@@ -11,7 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["glib", "gpgme", "zlib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gmime/3.2/gmime-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gmime/3.2/gmime-${VERSION}.tar.xz"
 sha256 = "2aea96647a468ba2160a64e17c6dc6afe674ed9ac86070624a3f584c10737d44"
 
 [lifecycle.configure]

@@ -12,17 +12,17 @@ runtime = ["aardvark-dns", "glibc", "nftables"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/containers/netavark/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/containers/netavark/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "284faa7cc525b869cbac4053e0a4127ac743ca7da1457c49fffb35558ea9c78d"
 
 [[sources]]
-uri = "https://github.com/containers/netavark/releases/download/v${PART_VERSION}/netavark-v${PART_VERSION}-vendor.tar.gz"
+uri = "https://github.com/containers/netavark/releases/download/v${VERSION}/netavark-v${VERSION}-vendor.tar.gz"
 sha256 = "afa8e99a9691ef6ea485d6cb6b1897684d9f8a26719deaa3cbf37b5f17198e6f"
 
 [lifecycle.prepare]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/netavark-${PART_VERSION}
+cd ${BUILD_DIR}/netavark-${VERSION}
 ln -sfn ../vendor vendor
 install -dm755 .cargo
 cat > .cargo/config.toml << 'EOF'
@@ -37,7 +37,7 @@ EOF
 [lifecycle.compile]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/netavark-${PART_VERSION}
+cd ${BUILD_DIR}/netavark-${VERSION}
 export CARGO_HOME=${BUILD_DIR}/.cargo-home
 export CARGO_TARGET_DIR=${BUILD_DIR}/target
 
@@ -53,7 +53,7 @@ make PREFIX=/usr CARGO="cargo --locked --offline" \
 [lifecycle.staging]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/netavark-${PART_VERSION}
+cd ${BUILD_DIR}/netavark-${VERSION}
 
 # Upstream's `make install` strictly depends on building documentation via `go-md2man`.
 # Since `go-md2man` is not available in our build environment, we manually stage the

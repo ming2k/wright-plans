@@ -10,7 +10,7 @@ url = "https://github.com/zlib-ng/zlib-ng"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/zlib-ng/zlib-ng/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/zlib-ng/zlib-ng/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -16,7 +16,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-${PART_VERSION}.tar.gz"
+uri = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

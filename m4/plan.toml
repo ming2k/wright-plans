@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/m4/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/m4/m4-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/m4/m4-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

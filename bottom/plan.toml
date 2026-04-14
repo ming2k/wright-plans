@@ -10,7 +10,7 @@ url = "https://github.com/ClementTsang/bottom"
 build = ["rust"]
 
 [[sources]]
-uri = "https://github.com/ClementTsang/bottom/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/ClementTsang/bottom/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

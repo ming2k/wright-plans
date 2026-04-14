@@ -10,7 +10,7 @@ url = "https://savannah.gnu.org/projects/patch/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/patch/patch-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/patch/patch-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

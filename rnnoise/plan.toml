@@ -10,7 +10,7 @@ url = "https://github.com/xiph/rnnoise"
 build = ["gcc", "make", "autoconf", "automake", "libtool"]
 
 [[sources]]
-uri = "https://github.com/xiph/rnnoise/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/xiph/rnnoise/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]
@@ -19,7 +19,7 @@ sha256 = "SKIP"
 
 [lifecycle.prepare]
 script = '''
-cd ${SRC_DIR}/rnnoise-${PART_VERSION}
+cd ${SRC_DIR}/rnnoise-${VERSION}
 cp ${SRC_DIR}/src/rnnoise_data* src/
 autoreconf -fi
 
@@ -27,21 +27,21 @@ autoreconf -fi
 
 [lifecycle.configure]
 script = '''
-cd ${SRC_DIR}/rnnoise-${PART_VERSION}
+cd ${SRC_DIR}/rnnoise-${VERSION}
 ./configure --prefix=/usr --disable-static
 
 '''
 
 [lifecycle.compile]
 script = '''
-cd ${SRC_DIR}/rnnoise-${PART_VERSION}
+cd ${SRC_DIR}/rnnoise-${VERSION}
 make -j$(nproc)
 
 '''
 
 [lifecycle.staging]
 script = '''
-cd ${SRC_DIR}/rnnoise-${PART_VERSION}
+cd ${SRC_DIR}/rnnoise-${VERSION}
 make DESTDIR=${PART_DIR} install
 
 '''

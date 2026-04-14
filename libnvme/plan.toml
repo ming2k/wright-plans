@@ -21,7 +21,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/linux-nvme/libnvme/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/linux-nvme/libnvme/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "ce1d9d393feb84c4e82ca096db2bdb7dd4a5fd1997d711cc1904796944f2c579"
 
 [lifecycle.configure]

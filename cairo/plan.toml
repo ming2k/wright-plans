@@ -18,7 +18,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://cairographics.org/releases/cairo-${PART_VERSION}.tar.xz"
+uri = "https://cairographics.org/releases/cairo-${VERSION}.tar.xz"
 sha256 = "445ed8208a6e4823de1226a74ca319d3600e83f6369f99b14265006599c32ccb"
 
 [lifecycle.configure]

@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/gzip/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gzip/gzip-${PART_VERSION}.tar.xz"
+uri = "https://ftp.gnu.org/gnu/gzip/gzip-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

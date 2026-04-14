@@ -11,7 +11,7 @@ build = ["gcc", "cmake", "ninja", "git", "python"]
 link = ["onnxruntime"]
 
 [[sources]]
-uri = "https://github.com/k2-fsa/sherpa-onnx/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/k2-fsa/sherpa-onnx/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]

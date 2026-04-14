@@ -10,7 +10,7 @@ url = "https://github.com/NetworkConfiguration/dhcpcd"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v${PART_VERSION}/dhcpcd-${PART_VERSION}.tar.xz"
+uri = "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v${VERSION}/dhcpcd-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

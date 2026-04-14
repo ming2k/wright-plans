@@ -18,7 +18,7 @@ build = [
 link = ["wayland", "qt6-base", "qt6-declarative"]
 
 [[sources]]
-uri = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtwayland-everywhere-src-${PART_VERSION}.tar.xz"
+uri = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtwayland-everywhere-src-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

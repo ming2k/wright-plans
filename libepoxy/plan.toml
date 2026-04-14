@@ -12,7 +12,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["mesa", "libglvnd"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

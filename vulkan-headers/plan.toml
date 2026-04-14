@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/KhronosGroup/Vulkan-Headers"
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/Vulkan-Headers/archive/v${PART_VERSION}/Vulkan-Headers-${PART_VERSION}.tar.gz"
+uri = "https://github.com/KhronosGroup/Vulkan-Headers/archive/v${VERSION}/Vulkan-Headers-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

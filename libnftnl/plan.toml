@@ -16,7 +16,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://www.netfilter.org/pub/libnftnl/libnftnl-${PART_VERSION}.tar.xz"
+uri = "https://www.netfilter.org/pub/libnftnl/libnftnl-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

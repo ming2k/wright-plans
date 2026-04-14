@@ -46,7 +46,7 @@ optional = [
 ]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/software/scm/git/git-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/software/scm/git/git-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

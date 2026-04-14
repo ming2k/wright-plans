@@ -11,7 +11,7 @@ build = ["bash", "gcc", "make", "pkgconf", "python"]
 link = ["gmime", "talloc", "xapian-core", "zlib"]
 
 [[sources]]
-uri = "https://notmuchmail.org/releases/notmuch-${PART_VERSION}.tar.xz"
+uri = "https://notmuchmail.org/releases/notmuch-${VERSION}.tar.xz"
 sha256 = "4b4314bbf1c2029fdf793637e6c7bb15c1b1730d22be9aa04803c98c5bbc446f"
 
 [lifecycle.configure]

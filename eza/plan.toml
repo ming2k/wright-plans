@@ -10,7 +10,7 @@ url = "https://github.com/eza-community/eza"
 build = ["rust"]
 
 [[sources]]
-uri = "https://github.com/eza-community/eza/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/eza-community/eza/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

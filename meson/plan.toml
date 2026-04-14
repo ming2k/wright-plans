@@ -16,7 +16,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://github.com/mesonbuild/meson/releases/download/${PART_VERSION}/meson-${PART_VERSION}.tar.gz"
+uri = "https://github.com/mesonbuild/meson/releases/download/${VERSION}/meson-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

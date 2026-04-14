@@ -16,7 +16,7 @@ build = [
 link = ["glibc"]
 
 [[sources]]
-uri = "http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${PART_VERSION}.orig.tar.gz"
+uri = "http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${VERSION}.orig.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

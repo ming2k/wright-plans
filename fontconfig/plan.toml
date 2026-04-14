@@ -17,7 +17,7 @@ build = [
 link = ["freetype", "expat"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/${PART_VERSION}/fontconfig-${PART_VERSION}.tar.gz"
+uri = "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/${VERSION}/fontconfig-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

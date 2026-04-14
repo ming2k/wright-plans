@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://gnupg.org/software/npth/"
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/npth/npth-${PART_VERSION}.tar.bz2"
+uri = "https://gnupg.org/ftp/gcrypt/npth/npth-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

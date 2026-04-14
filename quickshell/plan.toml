@@ -37,7 +37,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://git.outfoxxed.me/quickshell/quickshell/archive/v${PART_VERSION}.tar.gz"
+uri = "https://git.outfoxxed.me/quickshell/quickshell/archive/v${VERSION}.tar.gz"
 sha256 = "d815c5f99f4a0a28545ffaa90464420c773b7c0ab62f713d9d8735a8e7282ca7"
 
 [lifecycle.configure]

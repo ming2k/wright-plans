@@ -33,7 +33,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gtk/4.22/gtk-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gtk/4.22/gtk-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

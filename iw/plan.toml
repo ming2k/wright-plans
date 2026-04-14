@@ -11,7 +11,7 @@ runtime = ["libnl"]
 build = ["gcc", "libnl", "make"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/software/network/iw/iw-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/software/network/iw/iw-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

@@ -11,7 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["libassuan", "libgpg-error", "gnupg"]
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/gpgme/gpgme-${PART_VERSION}.tar.bz2"
+uri = "https://gnupg.org/ftp/gcrypt/gpgme/gpgme-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

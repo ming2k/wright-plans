@@ -11,7 +11,7 @@ runtime = ["python"]
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/p/pluggy/pluggy-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/p/pluggy/pluggy-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

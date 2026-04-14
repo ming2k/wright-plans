@@ -10,7 +10,7 @@ url = "https://github.com/seccomp/libseccomp"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/seccomp/libseccomp/releases/download/v${PART_VERSION}/libseccomp-${PART_VERSION}.tar.gz"
+uri = "https://github.com/seccomp/libseccomp/releases/download/v${VERSION}/libseccomp-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

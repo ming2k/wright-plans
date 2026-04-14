@@ -11,7 +11,7 @@ build = ["make"]
 link = ["gmp", "mpfr"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/mpc/mpc-${PART_VERSION}.tar.gz"
+uri = "https://ftp.gnu.org/gnu/mpc/mpc-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

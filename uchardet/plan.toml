@@ -10,7 +10,7 @@ url = "https://www.freedesktop.org/software/uchardet/"
 build = ["gcc", "make", "cmake"]
 
 [[sources]]
-uri = "https://www.freedesktop.org/software/uchardet/releases/uchardet-${PART_VERSION}.tar.xz"
+uri = "https://www.freedesktop.org/software/uchardet/releases/uchardet-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

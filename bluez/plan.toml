@@ -21,7 +21,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/bluetooth/bluez-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/bluetooth/bluez-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.prepare]

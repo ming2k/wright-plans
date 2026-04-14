@@ -21,7 +21,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/emersion/slurp/archive/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/emersion/slurp/archive/v${VERSION}.tar.gz"
 sha256 = "0fa880d4a93e1c795e3b5929fbea47546df0955bea34fc2f7ffeb1751678f663"
 
 [lifecycle.configure]

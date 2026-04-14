@@ -11,7 +11,7 @@ runtime = ["p11-kit"]
 build = ["python"]
 
 [[sources]]
-uri = "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${PART_VERSION}.tar.gz"
+uri = "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]

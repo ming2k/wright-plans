@@ -18,7 +18,7 @@ build = [
 ]
 
 [[sources]]
-uri = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtdeclarative-everywhere-src-${PART_VERSION}.tar.xz"
+uri = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtdeclarative-everywhere-src-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

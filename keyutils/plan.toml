@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-${PART_VERSION}.tar.gz"
+uri = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

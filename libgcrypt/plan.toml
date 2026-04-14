@@ -10,7 +10,7 @@ url = "https://gnupg.org/software/libgcrypt/"
 build = ["libgpg-error"]
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-${PART_VERSION}.tar.bz2"
+uri = "https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-${VERSION}.tar.bz2"
 sha256 = "SKIP"
 
 [lifecycle.configure]

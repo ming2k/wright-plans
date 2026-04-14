@@ -11,7 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/bluetooth/sbc-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/linux/bluetooth/sbc-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

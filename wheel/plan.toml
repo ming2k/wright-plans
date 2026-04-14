@@ -10,7 +10,7 @@ url = "https://wheel.readthedocs.io/"
 build = ["flit-core", "python-packaging", "python"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/w/wheel/wheel-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/w/wheel/wheel-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

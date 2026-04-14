@@ -7,7 +7,7 @@ arch = "any"
 url = "https://wireless.wiki.kernel.org/en/developers/regulatory/wireless-regdb"
 
 [[sources]]
-uri = "https://www.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-${PART_VERSION}.tar.xz"
+uri = "https://www.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

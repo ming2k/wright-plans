@@ -10,7 +10,7 @@ url = "https://github.com/google/snappy"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/google/snappy/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/google/snappy/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

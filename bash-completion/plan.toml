@@ -10,7 +10,7 @@ url = "https://github.com/scop/bash-completion"
 build = ["make"]
 
 [[sources]]
-uri = "https://github.com/scop/bash-completion/releases/download/${PART_VERSION}/bash-completion-${PART_VERSION}.tar.xz"
+uri = "https://github.com/scop/bash-completion/releases/download/${VERSION}/bash-completion-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

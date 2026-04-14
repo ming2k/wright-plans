@@ -10,7 +10,7 @@ url = "https://icon-theme.freedesktop.org/"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-${PART_VERSION}.tar.xz"
+uri = "https://icon-theme.freedesktop.org/releases/hicolor-icon-theme-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

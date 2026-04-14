@@ -11,13 +11,13 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://passt.top/passt/snapshot/passt-${PART_VERSION}.tar.zst"
+uri = "https://passt.top/passt/snapshot/passt-${VERSION}.tar.zst"
 sha256 = "SKIP"
 
 [lifecycle.compile]
 script = '''
 cd ${BUILD_DIR}
-make VERSION="${PART_VERSION}" -j$(nproc)
+make VERSION="${VERSION}" -j$(nproc)
 
 '''
 

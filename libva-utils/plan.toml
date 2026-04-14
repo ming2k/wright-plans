@@ -12,7 +12,7 @@ link = ["libdrm", "libva", "wayland"]
 runtime = ["libdrm", "libva", "wayland"]
 
 [[sources]]
-uri = "https://github.com/intel/libva-utils/archive/refs/tags/${PART_VERSION}.tar.gz"
+uri = "https://github.com/intel/libva-utils/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -11,7 +11,7 @@ runtime = ["python", "python-sphinx"]
 build = ["python", "flit-core"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/s/sphinxcontrib-jquery/sphinxcontrib-jquery-${PART_VERSION}.tar.gz"
+uri = "https://files.pythonhosted.org/packages/source/s/sphinxcontrib-jquery/sphinxcontrib-jquery-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

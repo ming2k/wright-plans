@@ -12,7 +12,7 @@ build = ["meson", "ninja", "python"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gobject-introspection/1.86/gobject-introspection-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/gobject-introspection/1.86/gobject-introspection-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -10,7 +10,7 @@ url = "https://talloc.samba.org/"
 build = ["docbook-xml", "docbook-xsl", "gcc", "libxslt", "make", "python"]
 
 [[sources]]
-uri = "https://download.samba.org/pub/talloc/talloc-${PART_VERSION}.tar.gz"
+uri = "https://download.samba.org/pub/talloc/talloc-${VERSION}.tar.gz"
 sha256 = "55e47994018c13743485544e7206780ffbb3c8495e704a99636503e6e77abf59"
 
 [lifecycle.configure]

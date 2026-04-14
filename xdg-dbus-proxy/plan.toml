@@ -12,7 +12,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://github.com/flatpak/xdg-dbus-proxy/releases/download/${PART_VERSION}/xdg-dbus-proxy-${PART_VERSION}.tar.xz"
+uri = "https://github.com/flatpak/xdg-dbus-proxy/releases/download/${VERSION}/xdg-dbus-proxy-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -11,7 +11,7 @@ runtime = ["python"]
 build = ["python", "flit-core"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/i/idna/idna-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/i/idna/idna-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

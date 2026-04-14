@@ -11,7 +11,7 @@ runtime = ["systemd"]
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/Hummer12007/brightnessctl/archive/${PART_VERSION}/brightnessctl-${PART_VERSION}.tar.gz"
+uri = "https://github.com/Hummer12007/brightnessctl/archive/${VERSION}/brightnessctl-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]

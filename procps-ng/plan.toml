@@ -11,7 +11,7 @@ build = ["gcc", "gettext", "make"]
 link = ["ncurses", "systemd"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${PART_VERSION}.tar.xz"
+uri = "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

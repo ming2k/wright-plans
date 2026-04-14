@@ -11,7 +11,7 @@ runtime = ["podman"]
 build = ["go"]
 
 [[sources]]
-uri = "https://github.com/docker/compose/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/docker/compose/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.compile]
@@ -23,7 +23,7 @@ export GOPATH=/tmp/go-cache
 export GOCACHE=/tmp/go-cache/build
 export GOPROXY=https://proxy.golang.org,direct
 CGO_ENABLED=0 go build -trimpath \
-  -ldflags="-s -w -X github.com/docker/compose/v2/internal.Version=v${PART_VERSION}" \
+  -ldflags="-s -w -X github.com/docker/compose/v2/internal.Version=v${VERSION}" \
   -o docker-compose ./cmd
 
 '''

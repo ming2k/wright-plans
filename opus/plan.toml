@@ -10,7 +10,7 @@ url = "https://github.com/xiph/opus"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://downloads.xiph.org/releases/opus/opus-${PART_VERSION}.tar.gz"
+uri = "https://downloads.xiph.org/releases/opus/opus-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

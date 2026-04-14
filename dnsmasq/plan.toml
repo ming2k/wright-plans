@@ -11,7 +11,7 @@ link = ["glibc", "gmp", "nettle", "libidn2", "dbus", "libnetfilter_conntrack", "
 build = ["gcc", "make", "pkg-config"]
 
 [[sources]]
-uri = "https://thekelleys.org.uk/dnsmasq/dnsmasq-${PART_VERSION}.tar.xz"
+uri = "https://thekelleys.org.uk/dnsmasq/dnsmasq-${VERSION}.tar.xz"
 sha256 = "4bf50c2c1018f9fbc26037df51b90ecea0cb73d46162846763b92df0d6c3a458"
 
 [lifecycle.compile]

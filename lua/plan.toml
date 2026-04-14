@@ -10,7 +10,7 @@ url = "https://www.lua.org"
 link = ["readline"]
 
 [[sources]]
-uri = "https://www.lua.org/ftp/lua-${PART_VERSION}.tar.gz"
+uri = "https://www.lua.org/ftp/lua-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -50,7 +50,7 @@ includedir=\${prefix}/include
 
 Name: Lua
 Description: Lua language engine
-Version: ${PART_VERSION}
+Version: ${VERSION}
 Libs: -L\${libdir} -llua
 Libs.private: -lm -ldl
 Cflags: -I\${includedir}

@@ -12,7 +12,7 @@ build = ["python", "meson-python", "pkgconf"]
 link = ["cairo"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/p/pycairo/pycairo-${PART_VERSION}.tar.gz"
+uri = "https://pypi.org/packages/source/p/pycairo/pycairo-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

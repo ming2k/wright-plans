@@ -28,7 +28,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://codeberg.org/dnkl/foot/releases/download/${PART_VERSION}/foot-${PART_VERSION}.tar.gz"
+uri = "https://codeberg.org/dnkl/foot/releases/download/${VERSION}/foot-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

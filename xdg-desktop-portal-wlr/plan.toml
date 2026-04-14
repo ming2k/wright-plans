@@ -17,7 +17,7 @@ build = [
 link = ["pipewire", "wayland", "inih"]
 
 [[sources]]
-uri = "https://github.com/emersion/xdg-desktop-portal-wlr/releases/download/v${PART_VERSION}/xdg-desktop-portal-wlr-${PART_VERSION}.tar.gz"
+uri = "https://github.com/emersion/xdg-desktop-portal-wlr/releases/download/v${VERSION}/xdg-desktop-portal-wlr-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

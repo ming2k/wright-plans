@@ -11,7 +11,7 @@ build = ["gcc", "make"]
 link = ["libevent", "ncurses", "systemd"]
 
 [[sources]]
-uri = "https://github.com/tmux/tmux/releases/download/${PART_VERSION}/tmux-${PART_VERSION}.tar.gz"
+uri = "https://github.com/tmux/tmux/releases/download/${VERSION}/tmux-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

@@ -10,7 +10,7 @@ url = "https://gitlab.freedesktop.org/emersion/libdisplay-info"
 build = ["hwdata", "meson", "ninja"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/emersion/libdisplay-info/-/releases/${PART_VERSION}/downloads/libdisplay-info-${PART_VERSION}.tar.xz"
+uri = "https://gitlab.freedesktop.org/emersion/libdisplay-info/-/releases/${VERSION}/downloads/libdisplay-info-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

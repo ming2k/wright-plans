@@ -11,7 +11,7 @@ runtime = ["python-markupsafe", "python"]
 build = ["python-markupsafe", "python", "setuptools"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/j/jinja2/jinja2-${PART_VERSION}.tar.gz"
+uri = "https://files.pythonhosted.org/packages/source/j/jinja2/jinja2-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.staging]

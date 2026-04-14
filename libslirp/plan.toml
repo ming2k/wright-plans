@@ -17,7 +17,7 @@ build = [
 link = ["glib"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v${PART_VERSION}/libslirp-v${PART_VERSION}.tar.gz"
+uri = "https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v${VERSION}/libslirp-v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

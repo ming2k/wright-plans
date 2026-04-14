@@ -12,7 +12,7 @@ link = ["glibc", "libusb", "systemd"]
 runtime = ["hwdata"]
 
 [[sources]]
-uri = "https://github.com/gregkh/usbutils/archive/v${PART_VERSION}/usbutils-${PART_VERSION}.tar.gz"
+uri = "https://github.com/gregkh/usbutils/archive/v${VERSION}/usbutils-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

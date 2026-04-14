@@ -11,7 +11,7 @@ build = ["gcc", "cmake", "ninja"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/ndevilla/iniparser/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/ndevilla/iniparser/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "a0bd370713a744b1fa8ec27bba889ebf9dbd43060ec92e07fbe91fb43e3cb3ac"
 
 [lifecycle.configure]

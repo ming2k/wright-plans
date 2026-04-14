@@ -19,7 +19,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${PART_VERSION}.tar.gz"
+uri = "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [[sources]]

@@ -10,7 +10,7 @@ url = "https://github.com/rpm-software-management/popt"
 link = ["glibc"]
 
 [[sources]]
-uri = "https://ftp.osuosl.org/pub/rpm/popt/releases/popt-1.x/popt-${PART_VERSION}.tar.gz"
+uri = "https://ftp.osuosl.org/pub/rpm/popt/releases/popt-1.x/popt-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

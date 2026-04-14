@@ -11,7 +11,7 @@ build = ["gcc", "cmake", "ninja", "git", "python"]
 link = ["abseil-cpp", "protobuf"]
 
 [[sources]]
-uri = "https://github.com/microsoft/onnxruntime/archive/refs/tags/v${PART_VERSION}.tar.gz"
+uri = "https://github.com/microsoft/onnxruntime/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [options]

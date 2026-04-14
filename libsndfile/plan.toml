@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://libsndfile.github.io/libsndfile/"
 
 [[sources]]
-uri = "https://github.com/libsndfile/libsndfile/releases/download/${PART_VERSION}/libsndfile-${PART_VERSION}.tar.xz"
+uri = "https://github.com/libsndfile/libsndfile/releases/download/${VERSION}/libsndfile-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

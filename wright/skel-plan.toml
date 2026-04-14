@@ -12,7 +12,7 @@ link = []
 runtime = []
 
 [[sources]]
-uri = "https://example.com/pkgname-${PART_VERSION}.tar.gz"
+uri = "https://example.com/pkgname-${VERSION}.tar.gz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

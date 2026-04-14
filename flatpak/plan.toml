@@ -44,7 +44,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://github.com/flatpak/flatpak/releases/download/${PART_VERSION}/flatpak-${PART_VERSION}.tar.xz"
+uri = "https://github.com/flatpak/flatpak/releases/download/${VERSION}/flatpak-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]

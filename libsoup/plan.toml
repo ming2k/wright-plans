@@ -22,7 +22,7 @@ link = [
 ]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libsoup/3.6/libsoup-${PART_VERSION}.tar.xz"
+uri = "https://download.gnome.org/sources/libsoup/3.6/libsoup-${VERSION}.tar.xz"
 sha256 = "SKIP"
 
 [lifecycle.configure]
