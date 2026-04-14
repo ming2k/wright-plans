@@ -1,5 +1,5 @@
 name = "libgpg-error"
-version = "1.51"
+version = "1.59"
 release = 1
 description = "GnuPG error library"
 license = "LGPL-2.1-or-later"

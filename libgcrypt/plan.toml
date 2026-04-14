@@ -7,7 +7,8 @@ arch = "x86_64"
 url = "https://gnupg.org/software/libgcrypt/"
 
 [dependencies]
-build = ["libgpg-error"]
+build = ["pkgconf"]
+link = ["libgpg-error"]
 
 [[sources]]
 uri = "https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-${VERSION}.tar.bz2"
