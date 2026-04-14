@@ -1,0 +1,24 @@
+name = "python-evdev"
+version = "1.9.3"
+release = 1
+description = "Python bindings for the Linux input subsystem"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://python-evdev.readthedocs.io/"
+
+[dependencies]
+runtime = ["python"]
+build = ["python", "setuptools", "gcc", "linux-api-headers"]
+
+[[sources]]
+uri = "https://files.pythonhosted.org/packages/source/e/evdev/evdev-${PART_VERSION}.tar.gz"
+sha256 = "2c140e01ac8437758fa23fe5c871397412461f42d421aa20241dc8fe8cfccbc9"
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
+
+'''
+
+[lifecycle.fabricate]

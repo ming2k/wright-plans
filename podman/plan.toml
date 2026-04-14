@@ -1,66 +1,59 @@
 name = "podman"
-version = "5.8.0"
+version = "5.8.1"
 release = 1
-description = "Tool for managing OCI containers and pods"
-license = "Apache-2.0"
+description = "Daemonless OCI container engine"
+license = "Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0"
 arch = "x86_64"
-url = "https://podman.io"
+url = "https://github.com/containers/podman"
 
 [dependencies]
+build = ["go", "gcc", "make", "pkgconf"]
 runtime = [
-    "containers-common",
-    "conmon",
-    "crun",
-    "fuse-overlayfs",
-    "netavark",
-    "aardvark-dns",
-    "slirp4netns",
-    "shadow",
-    "passt",
-    "systemd",
+  "aardvark-dns >= 1.17.1",
+  "catatonit >= 0.2.1",
+  "conmon >= 2.2.1",
+  "containers-common >= 0.64.1",
+  "crun >= 1.27",
+  "fuse-overlayfs >= 1.16",
+  "glib",
+  "glibc",
+  "gpgme",
+  "libseccomp",
+  "netavark >= 1.17.2",
+  "shadow",
+  "sqlite",
+  "systemd",
 ]
-build = ["go", "pkgconf"]
-link = [
-    "gpgme",
-    "libassuan",
-    "btrfs-progs",
-]
+link = ["glib", "glibc", "gpgme", "libseccomp", "sqlite", "systemd"]
 
 [[sources]]
 uri = "https://github.com/containers/podman/archive/refs/tags/v${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "b9540ecb19cfcbcfc40e1b81d39930f688c537d8fd6f11ae56be41f2bf9e97a4"
 
 [lifecycle.compile]
-dockyard = "relaxed"
+dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-export PATH=/usr/lib/go/bin:$PATH
-export GOPATH=/tmp/go-cache
-export GOCACHE=/tmp/go-cache/build
-make BUILDTAGS="seccomp systemd btrfs exclude_graphdriver_devicemapper" \
-     CGO_ENABLED=1 \
-     binaries
-
+export GOFLAGS="-trimpath -mod=vendor"
+export BUILDTAGS="seccomp $(hack/btrfs_installed_tag.sh) $(hack/sqlite_tag.sh) $(hack/systemd_tag.sh) $(hack/libsubid_tag.sh) grpcnotrace"
+make podman podman-remote rootlessport quadlet BUILDTAGS="${BUILDTAGS}" GOFLAGS="${GOFLAGS}" PREFIX=/usr ETCDIR=/etc
+make completions
 '''
 
 [lifecycle.staging]
+dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} PREFIX=/usr install.bin
-make DESTDIR=${PART_DIR} PREFIX=/usr LIBDIR=/usr/lib install.systemd
-
-# Shell completions
-install -Dm644 completions/bash/podman \
-  ${PART_DIR}/usr/share/bash-completion/completions/podman
-install -Dm644 completions/zsh/_podman \
-  ${PART_DIR}/usr/share/zsh/site-functions/_podman
-install -Dm644 completions/fish/podman.fish \
-  ${PART_DIR}/usr/share/fish/vendor_completions.d/podman.fish
-
+export BUILDTAGS="seccomp $(hack/btrfs_installed_tag.sh) $(hack/sqlite_tag.sh) $(hack/systemd_tag.sh) $(hack/libsubid_tag.sh) grpcnotrace"
+make DESTDIR=${PART_DIR} PREFIX=/usr ETCDIR=/etc BINDIR=/usr/bin LIBEXECDIR=/usr/libexec LIBEXECPODMAN=/usr/libexec/podman TMPFILESDIR=/usr/lib/tmpfiles.d SYSTEMDDIR=/usr/lib/systemd/system USERSYSTEMDDIR=/usr/lib/systemd/user SYSTEMDGENERATORSDIR=/usr/lib/systemd/system-generators USERSYSTEMDGENERATORSDIR=/usr/lib/systemd/user-generators BUILDTAGS="${BUILDTAGS}" install.bin install.remote install.completions install.systemd
 '''
 
 [hooks]
-post_install = "systemctl daemon-reload 2>/dev/null || true"
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
-[lifecycle.fabricate]
+post_install = '''
+systemd-tmpfiles --create /usr/lib/tmpfiles.d/podman.conf 2>/dev/null || true
+systemctl daemon-reload 2>/dev/null || true
+'''
+post_upgrade = '''
+systemd-tmpfiles --create /usr/lib/tmpfiles.d/podman.conf 2>/dev/null || true
+systemctl daemon-reload 2>/dev/null || true
+'''

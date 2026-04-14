@@ -7,25 +7,24 @@ arch = "x86_64"
 url = "https://github.com/containers/conmon"
 
 [dependencies]
-build = ["meson", "ninja", "pkgconf"]
-link = ["glib", "libseccomp", "systemd"]
+build = ["gcc", "make", "pkgconf"]
+runtime = ["glib", "glibc", "libseccomp", "systemd"]
+link = ["glib", "glibc", "libseccomp", "systemd"]
 
 [[sources]]
 uri = "https://github.com/containers/conmon/archive/refs/tags/v${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
-
-[lifecycle.configure]
-script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
-  --prefix=/usr \
-  --buildtype=release
-
-'''
+sha256 = "814fb5979a3a4b8576b1f901e606b482bebb41cb7e57926e6d5765ee786b96d3"
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/conmon-${PART_VERSION}
+make -j$(nproc)
+'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/conmon-${PART_VERSION}
+make DESTDIR=${PART_DIR} PREFIX=/usr LIBEXECDIR=/usr/libexec install.podman
+'''

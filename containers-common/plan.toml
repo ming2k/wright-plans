@@ -1,71 +1,47 @@
 name = "containers-common"
 version = "0.64.1"
 release = 1
-description = "Default configuration files for container tools (podman, buildah, skopeo)"
+description = "Common configuration files for Podman and related container tools"
 license = "Apache-2.0"
-arch = "any"
+arch = "x86_64"
 url = "https://github.com/containers/common"
 
 [[sources]]
 uri = "https://github.com/containers/common/archive/refs/tags/v${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "414def665a172a4d79366dc594e5313d43d672ba19009aa2a3dd78272e277506"
 
 [lifecycle.staging]
+dockyard = "none"
 script = '''
-# Storage configuration
-install -dm755 ${PART_DIR}/etc/containers
+cd ${BUILD_DIR}/common-${PART_VERSION}
+
+install -dm755 ${PART_DIR}/etc/containers/certs.d
+install -dm755 ${PART_DIR}/etc/containers/networks
+install -dm755 ${PART_DIR}/etc/containers/oci/hooks.d
+install -dm755 ${PART_DIR}/etc/containers/registries.conf.d
+install -dm755 ${PART_DIR}/etc/containers/registries.d
+install -dm755 ${PART_DIR}/etc/containers/systemd
 install -dm755 ${PART_DIR}/usr/share/containers
+install -dm755 ${PART_DIR}/usr/share/containers/systemd
+install -dm700 ${PART_DIR}/usr/lib/containers/storage/overlay-images
+install -dm700 ${PART_DIR}/usr/lib/containers/storage/overlay-layers
+touch ${PART_DIR}/usr/lib/containers/storage/overlay-images/images.lock
+touch ${PART_DIR}/usr/lib/containers/storage/overlay-layers/layers.lock
 
-install -Dm644 ${BUILD_DIR}/pkg/config/containers.conf \
-  ${PART_DIR}/usr/share/containers/containers.conf
+install -Dm644 pkg/config/containers.conf ${PART_DIR}/usr/share/containers/containers.conf
+install -Dm644 vendor/github.com/containers/storage/storage.conf ${PART_DIR}/usr/share/containers/storage.conf
+install -Dm644 pkg/subscriptions/mounts.conf ${PART_DIR}/usr/share/containers/mounts.conf
+install -Dm644 pkg/seccomp/seccomp.json ${PART_DIR}/usr/share/containers/seccomp.json
+install -Dm644 tests/policy.json ${PART_DIR}/etc/containers/policy.json
 
-# Minimal registries config (search docker.io by default)
 cat > ${PART_DIR}/etc/containers/registries.conf << 'EOF'
-unqualified-search-registries = ["docker.io"]
-
-[[registry]]
-prefix = "docker.io"
-location = "docker.io"
+unqualified-search-registries = ["docker.io", "quay.io", "registry.fedoraproject.org"]
+short-name-mode = "permissive"
 EOF
-
-# Permissive signature policy (accept any image)
-cat > ${PART_DIR}/etc/containers/policy.json << 'EOF'
-{
-    "default": [
-        {
-            "type": "insecureAcceptAnything"
-        }
-    ],
-    "transports": {
-        "docker-daemon": {
-            "": [{"type": "insecureAcceptAnything"}]
-        }
-    }
-}
-EOF
-
-# Set netavark to use nftables firewall backend
-sed -i 's/^#firewall_driver = ""/firewall_driver = "nftables"/' \
-  ${PART_DIR}/usr/share/containers/containers.conf
-
-# Suppress "Executing external compose provider" hint
-sed -i 's/^#compose_warning_logs = true/compose_warning_logs = false/' \
-  ${PART_DIR}/usr/share/containers/containers.conf
-
-# Default storage config
-cat > ${PART_DIR}/etc/containers/storage.conf << 'EOF'
-[storage]
-driver = "overlay"
-
-[storage.options.overlay]
-mount_program = "/usr/bin/fuse-overlayfs"
-EOF
-
 '''
 
 [output]
 backup = [
-    "/etc/containers/registries.conf",
-    "/etc/containers/policy.json",
-    "/etc/containers/storage.conf",
+  "/etc/containers/policy.json",
+  "/etc/containers/registries.conf",
 ]

@@ -1,8 +1,8 @@
 name = "cairo"
 version = "1.18.4"
 release = 1
-description = "Multi-platform 2D graphics library (Pure Wayland)"
-license = "LGPL-2.1"
+description = "Multi-platform 2D graphics library (X11 backends disabled)"
+license = "LGPL-2.1-only OR MPL-1.1"
 arch = "x86_64"
 url = "https://cairographics.org/"
 
@@ -13,6 +13,7 @@ link = [
     "libpng",
     "fontconfig",
     "freetype",
+    "glib",
     "zlib",
 ]
 
@@ -24,15 +25,22 @@ sha256 = "445ed8208a6e4823de1226a74ca319d3600e83f6369f99b14265006599c32ccb"
 script = '''
 cd ${BUILD_DIR}
 meson setup build \
-    --prefix=/usr          \
-    --buildtype=release    \
-    --wrap-mode=nofallback \
-    -D xcb=disabled        \
-    -D xlib=disabled       \
-    -D tests=disabled      \
-    -D symbol-lookup=disabled \
-    -D spectre=disabled    \
-    -D lzo=disabled
+    --prefix=/usr            \
+    --buildtype=release      \
+    --wrap-mode=nofallback   \
+    -Ddefault_library=shared \
+    -Dpng=enabled            \
+    -Dzlib=enabled           \
+    -Dfontconfig=enabled     \
+    -Dfreetype=enabled       \
+    -Dglib=enabled           \
+    -Dxcb=disabled           \
+    -Dxlib=disabled          \
+    -Dxlib-xcb=disabled      \
+    -Dtests=disabled         \
+    -Dsymbol-lookup=disabled \
+    -Dspectre=disabled       \
+    -Dlzo=disabled
 
 '''
 

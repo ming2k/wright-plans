@@ -1,5 +1,5 @@
 name = "go-bootstrap"
-version = "1.25.8"
+version = "1.26.2"
 release = 1
 description = "Bootstrap Go toolchain used to build Go from source"
 license = "BSD-3-Clause"
@@ -8,7 +8,7 @@ url = "https://go.dev"
 
 [[sources]]
 uri = "https://go.dev/dl/go${PART_VERSION}.linux-amd64.tar.gz"
-sha256 = "ceb5e041bbc3893846bd1614d76cb4681c91dadee579426cf21a63f2d7e03be6"
+sha256 = "SKIP"
 
 [lifecycle.staging]
 script = '''

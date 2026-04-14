@@ -1,0 +1,32 @@
+name = "age"
+version = "1.3.1"
+release = 1
+description = "A simple, modern and secure encryption tool"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/FiloSottile/age"
+
+[dependencies]
+build = ["go"]
+
+[[sources]]
+uri = "https://github.com/FiloSottile/age/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+dockyard = "relaxed"
+env = { GOPATH = "${BUILD_DIR}/.go", GOCACHE = "${BUILD_DIR}/.cache/go-build", CGO_ENABLED = "0" }
+script = '''
+cd ${BUILD_DIR}
+go build -trimpath -ldflags="-s -w -buildid=" -o age ./cmd/age
+go build -trimpath -ldflags="-s -w -buildid=" -o age-keygen ./cmd/age-keygen
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 age ${PART_DIR}/usr/bin/age
+install -Dm755 age-keygen ${PART_DIR}/usr/bin/age-keygen
+'''
+
+[lifecycle.fabricate]

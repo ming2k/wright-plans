@@ -1,35 +1,43 @@
 name = "crun"
-version = "1.26"
+version = "1.27"
 release = 1
-description = "Fast and lightweight OCI container runtime written in C"
-license = "GPL-2.0-only"
+description = "Fast OCI container runtime"
+license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/containers/crun"
 
 [dependencies]
-build = ["pkgconf"]
-link = ["libcap", "libseccomp", "systemd"]
+build = ["gcc", "make", "pkgconf", "python"]
+runtime = ["glibc", "libcap", "libseccomp", "systemd"]
+link = ["glibc", "libcap", "libseccomp", "systemd"]
 
 [[sources]]
 uri = "https://github.com/containers/crun/releases/download/${PART_VERSION}/crun-${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "99077cc701a9f6842f70384eb05e9429da1ad338cdef3e0bac5a486cbf2ca75d"
 
 [lifecycle.configure]
+dockyard = "none"
+env = { ac_cv_path_MD2MAN = "" }
 script = '''
-cd ${BUILD_DIR}
+cd ${BUILD_DIR}/crun-${PART_VERSION}
 ./configure \
-  --prefix=/usr \
-  --disable-go \
-  --with-libseccomp \
-  --with-libcap \
-  --enable-embedded-yajl
-
+    --prefix=/usr \
+    --bindir=/usr/bin \
+    --disable-libcrun \
+    --without-python-bindings \
+    --enable-embedded-yajl
 '''
 
 [lifecycle.compile]
-script = "make -j$(nproc) -C ${BUILD_DIR}"
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/crun-${PART_VERSION}
+make -j$(nproc)
+'''
 
 [lifecycle.staging]
-script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"
-
-[lifecycle.fabricate]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/crun-${PART_VERSION}
+make DESTDIR=${PART_DIR} install
+'''

@@ -1,0 +1,47 @@
+name = "catatonit"
+version = "0.2.1"
+release = 1
+description = "Minimal container init process"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/openSUSE/catatonit"
+
+[dependencies]
+build = ["autoconf", "automake", "libtool", "gcc", "make"]
+runtime = ["glibc"]
+link = ["glibc"]
+
+[[sources]]
+uri = "https://github.com/openSUSE/catatonit/releases/download/v${PART_VERSION}/catatonit.tar.xz"
+sha256 = "9950425501af862e12f618bdc930ea755c46db6a16072a1462b4fc93b2bd59bc"
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/catatonit-${PART_VERSION}
+sed -i 's/ -all-static//' Makefile.am
+autoreconf -fi
+'''
+
+[lifecycle.configure]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/catatonit-${PART_VERSION}
+./configure --prefix=/usr --bindir=/usr/bin
+'''
+
+[lifecycle.compile]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/catatonit-${PART_VERSION}
+make -j$(nproc)
+'''
+
+[lifecycle.staging]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/catatonit-${PART_VERSION}
+make DESTDIR=${PART_DIR} install
+install -dm755 ${PART_DIR}/usr/libexec/podman
+ln -sf ../../bin/catatonit ${PART_DIR}/usr/libexec/podman/catatonit
+'''

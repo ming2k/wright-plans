@@ -1,31 +1,45 @@
 name = "fuse-overlayfs"
 version = "1.16"
 release = 1
-description = "FUSE implementation of overlay+shiftfs for rootless containers"
+description = "FUSE overlay filesystem for rootless containers"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/containers/fuse-overlayfs"
 
 [dependencies]
-build = ["autoconf", "automake", "pkgconf"]
-link = ["libfuse3"]
+build = ["autoconf", "automake", "libtool", "gcc", "make", "pkgconf"]
+runtime = ["glibc", "libfuse3"]
+link = ["glibc", "libfuse3"]
 
 [[sources]]
 uri = "https://github.com/containers/fuse-overlayfs/archive/refs/tags/v${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "45968517603389ead067222d234bc8d8ed33e4b4f8ba16216bdd3e6aedcccea9"
 
-[lifecycle.configure]
+[lifecycle.prepare]
+dockyard = "none"
 script = '''
 cd ${BUILD_DIR}
 autoreconf -fi
-./configure --prefix=/usr
+'''
 
+[lifecycle.configure]
+dockyard = "none"
+env = { ac_cv_path_MD2MAN = "" }
+script = '''
+cd ${BUILD_DIR}
+./configure --prefix=/usr --bindir=/usr/bin
 '''
 
 [lifecycle.compile]
-script = "make -j$(nproc) -C ${BUILD_DIR}"
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make -j$(nproc)
+'''
 
 [lifecycle.staging]
-script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"
-
-[lifecycle.fabricate]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}
+make DESTDIR=${PART_DIR} install
+'''

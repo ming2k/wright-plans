@@ -1,0 +1,30 @@
+name = "sops"
+version = "3.12.2"
+release = 1
+description = "Simple and flexible tool for managing secrets"
+license = "MPL-2.0"
+arch = "x86_64"
+url = "https://github.com/getsops/sops"
+
+[dependencies]
+build = ["go"]
+
+[[sources]]
+uri = "https://github.com/getsops/sops/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+dockyard = "relaxed"
+env = { GOPATH = "${BUILD_DIR}/.go", GOCACHE = "${BUILD_DIR}/.cache/go-build", CGO_ENABLED = "0" }
+script = '''
+cd ${BUILD_DIR}
+go build -trimpath -ldflags="-s -w -buildid=" -o sops ./cmd/sops
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 sops ${PART_DIR}/usr/bin/sops
+'''
+
+[lifecycle.fabricate]

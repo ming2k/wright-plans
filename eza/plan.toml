@@ -1,0 +1,30 @@
+name = "eza"
+version = "0.23.4"
+release = 1
+description = "A modern, maintained replacement for ls"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/eza-community/eza"
+
+[dependencies]
+build = ["rust"]
+
+[[sources]]
+uri = "https://github.com/eza-community/eza/archive/refs/tags/v${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+dockyard = "relaxed"
+env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+script = '''
+cd ${BUILD_DIR}
+cargo build --release --locked
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 target/release/eza ${PART_DIR}/usr/bin/eza
+'''
+
+[lifecycle.fabricate]

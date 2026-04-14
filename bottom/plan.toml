@@ -1,0 +1,30 @@
+name = "bottom"
+version = "0.12.3"
+release = 1
+description = "Yet another cross-platform graphical process/system monitor"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/ClementTsang/bottom"
+
+[dependencies]
+build = ["rust"]
+
+[[sources]]
+uri = "https://github.com/ClementTsang/bottom/archive/refs/tags/${PART_VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.compile]
+dockyard = "relaxed"
+env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+script = '''
+cd ${BUILD_DIR}
+cargo build --release --locked
+'''
+
+[lifecycle.staging]
+script = '''
+cd ${BUILD_DIR}
+install -Dm755 target/release/btm ${PART_DIR}/usr/bin/btm
+'''
+
+[lifecycle.fabricate]

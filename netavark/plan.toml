@@ -1,32 +1,77 @@
 name = "netavark"
 version = "1.17.2"
 release = 1
-description = "Container network stack for podman"
-license = "Apache-2.0"
+description = "OCI container network stack"
+license = "Apache-2.0 AND BSD-3-Clause AND MIT"
 arch = "x86_64"
 url = "https://github.com/containers/netavark"
 
 [dependencies]
-runtime = ["nftables"]
-build = ["rust", "protobuf"]
+build = ["rust", "cargo"]
+runtime = ["aardvark-dns", "glibc", "nftables"]
+link = ["glibc"]
 
 [[sources]]
 uri = "https://github.com/containers/netavark/archive/refs/tags/v${PART_VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "284faa7cc525b869cbac4053e0a4127ac743ca7da1457c49fffb35558ea9c78d"
+
+[[sources]]
+uri = "https://github.com/containers/netavark/releases/download/v${PART_VERSION}/netavark-v${PART_VERSION}-vendor.tar.gz"
+sha256 = "afa8e99a9691ef6ea485d6cb6b1897684d9f8a26719deaa3cbf37b5f17198e6f"
+
+[lifecycle.prepare]
+dockyard = "none"
+script = '''
+cd ${BUILD_DIR}/netavark-${PART_VERSION}
+ln -sfn ../vendor vendor
+install -dm755 .cargo
+cat > .cargo/config.toml << 'EOF'
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"
+EOF
+'''
 
 [lifecycle.compile]
-dockyard = "relaxed"
+dockyard = "none"
 script = '''
-cd ${BUILD_DIR}
-cargo build --release --locked
+cd ${BUILD_DIR}/netavark-${PART_VERSION}
+export CARGO_HOME=${BUILD_DIR}/.cargo-home
+export CARGO_TARGET_DIR=${BUILD_DIR}/target
 
+# Use upstream Makefile to build binaries and generate systemd units.
+# We pass CARGO args to ensure strict offline building.
+make PREFIX=/usr CARGO="cargo --locked --offline" \
+    build \
+    contrib/systemd/system/netavark-dhcp-proxy.service \
+    contrib/systemd/system/netavark-firewalld-reload.service \
+    contrib/systemd/system/netavark-nftables-reload.service
 '''
 
 [lifecycle.staging]
+dockyard = "none"
 script = '''
-cd ${BUILD_DIR}
-install -Dm755 target/release/netavark ${PART_DIR}/usr/libexec/podman/netavark
+cd ${BUILD_DIR}/netavark-${PART_VERSION}
 
+# Upstream's `make install` strictly depends on building documentation via `go-md2man`.
+# Since `go-md2man` is not available in our build environment, we manually stage the
+# binaries and generated systemd units instead of patching the Makefile.
+install -Dm755 bin/netavark ${PART_DIR}/usr/libexec/podman/netavark
+install -Dm755 bin/netavark-dhcp-proxy-client ${PART_DIR}/usr/libexec/podman/netavark-dhcp-proxy-client
+install -Dm755 bin/netavark-connection-tester ${PART_DIR}/usr/libexec/podman/netavark-connection-tester
+
+install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.socket ${PART_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.socket
+install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.service ${PART_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.service
+install -Dm644 contrib/systemd/system/netavark-firewalld-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-firewalld-reload.service
+install -Dm644 contrib/systemd/system/netavark-nftables-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-nftables-reload.service
 '''
 
-[lifecycle.fabricate]
+[hooks]
+post_install = '''
+systemctl daemon-reload 2>/dev/null || true
+'''
+post_upgrade = '''
+systemctl daemon-reload 2>/dev/null || true
+'''
