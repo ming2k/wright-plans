@@ -1,0 +1,24 @@
+name = "intel-ucode"
+version = "20260227"
+release = 1
+description = "Intel CPU microcode firmware for early microcode update"
+license = "LicenseRef-intel-microcode"
+arch = "x86_64"
+url = "https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files"
+
+[[sources]]
+uri = "https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/refs/tags/microcode-${VERSION}.tar.gz"
+sha256 = "SKIP"
+
+[lifecycle.staging]
+script = '''
+install -d "${PART_DIR}/usr/lib/firmware"
+cp -r "${BUILD_DIR}/intel-ucode" "${PART_DIR}/usr/lib/firmware/"
+cp -r "${BUILD_DIR}/intel-ucode-with-caveats" "${PART_DIR}/usr/lib/firmware/"
+
+install -Dm644 "${BUILD_DIR}/license" \
+    "${PART_DIR}/usr/share/licenses/intel-ucode/LICENSE"
+
+'''
+
+[lifecycle.fabricate]

@@ -1,6 +1,6 @@
 name = "systemd"
 version = "260.1"
-release = 4
+release = 5
 description = "System and Service Manager"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -50,6 +50,10 @@ sha256 = "SKIP"
 
 [[sources]]
 uri = "90-theseus.preset"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "network-wait-online.conf"
 sha256 = "SKIP"
 
 [lifecycle.prepare]
@@ -120,6 +124,11 @@ DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
 
 # Preset only the services we opt into.
 install -Dm644 ${FILES_DIR}/90-theseus.preset ${PART_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
+
+# wait-online: single-NIC laptop policy — any interface online is enough,
+# and cap the wait at 20s so a missing secondary link never pins boot.
+install -Dm644 ${FILES_DIR}/network-wait-online.conf \
+    ${PART_DIR}/usr/lib/systemd/system/systemd-networkd-wait-online.service.d/10-theseus.conf
 
 '''
 

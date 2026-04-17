@@ -1,6 +1,6 @@
 name = "bluez"
 version = "5.86"
-release = 2
+release = 3
 description = "Official Linux Bluetooth protocol stack"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
@@ -63,23 +63,20 @@ script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
 
-# Install main bluetoothd config
-install -Dm644 src/main.conf ${PART_DIR}/etc/bluetooth/main.conf
-chmod 0555 ${PART_DIR}/etc/bluetooth
+# Intentionally do not install src/main.conf. bluetoothd has sensible built-in
+# defaults and upstream's sample main.conf drifts across releases — shipping it
+# causes "Failed to set default system config" as bluetoothd rejects keys that
+# were removed or renamed. Users can place their own /etc/bluetooth/main.conf
+# if they need to override defaults.
 
 '''
 
 [hooks]
 post_install = '''
-chmod 555 /etc/bluetooth 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable bluetooth.service 2>/dev/null || true
 
 '''
-post_upgrade = '''
-chmod 555 /etc/bluetooth 2>/dev/null || true
-systemctl daemon-reload 2>/dev/null || true
-
-'''
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 
 [lifecycle.fabricate]

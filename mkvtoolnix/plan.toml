@@ -18,9 +18,6 @@ link = [
     "libogg",
     "libvorbis",
     "nlohmann-json",
-    "qt6-base",
-    "qt6-multimedia",
-    "qt6-svg",
     "zlib",
 ]
 
@@ -33,7 +30,8 @@ script = '''
 cd ${BUILD_DIR}
 ./configure \
   --prefix=/usr \
-  --with-boost-libdir=/usr/lib
+  --with-boost-libdir=/usr/lib \
+  --disable-gui
 '''
 
 [lifecycle.compile]
@@ -46,4 +44,7 @@ rake -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 rake DESTDIR=${PART_DIR} install
+
+# Remove icon directory as MKVToolNix Rakefile installs icons unconditionally even when GUI is disabled
+rm -rf ${PART_DIR}/usr/share/icons
 '''

@@ -1,6 +1,6 @@
 name = "pipewire"
 version = "1.6.3"
-release = 2
+release = 1
 description = "Low-latency audio/video router and processor"
 license = "MIT"
 arch = "x86_64"
@@ -53,7 +53,7 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 -D jack=disabled                     \
 -D pipewire-jack=enabled             \
 -D pipewire-alsa=enabled             \
--D libpulse=auto                     \
+-D libpulse=disabled                 \
 -D pipewire-v4l2=enabled             \
 -D rlimits-install=false             \
 -D selinux=disabled                  \

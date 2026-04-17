@@ -31,6 +31,7 @@ make -j$(nproc)
 script = '''
 cd ${BUILD_DIR}
 make DESTDIR=${PART_DIR} install
+ln -sf pkgconf ${PART_DIR}/usr/bin/pkg-config
 
 '''
 

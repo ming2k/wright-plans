@@ -1,0 +1,20 @@
+From: Theseus <https://github.com/ming2k/wright>
+Subject: [PATCH] default xwayland-satellite off for pure-Wayland systems
+
+Theseus is a pure native Wayland desktop and does not ship XWayland or
+xwayland-satellite. Flip the default for XwaylandSatellite.off to true so
+that niri does not try to spawn xwayland-satellite at startup on systems
+without a user-supplied config. Users who want X11 compatibility can
+re-enable it in their config with `xwayland-satellite { on; }`.
+
+--- a/niri-config/src/misc.rs
++++ b/niri-config/src/misc.rs
+@@ -172,7 +172,7 @@ pub struct XwaylandSatellite {
+ impl Default for XwaylandSatellite {
+     fn default() -> Self {
+         Self {
+-            off: false,
++            off: true,
+             path: String::from("xwayland-satellite"),
+         }
+     }

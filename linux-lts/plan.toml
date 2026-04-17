@@ -1,6 +1,6 @@
 name = "linux-lts"
 version = "6.18.22"
-release = 1
+release = 2
 description = "The Linux kernel (LTS)"
 license = "GPL-2.0-only"
 arch = "x86_64"
@@ -88,6 +88,16 @@ scripts/config --enable CGROUP_BPF
 
 # Disable uevent helper (systemd wants udev only)
 scripts/config --disable UEVENT_HELPER
+
+# Security: auto-sign every module during modules_install. Without this,
+# CONFIG_MODULE_SIG=y leaves unsigned modules (e.g. pkcs8_key_parser) that
+# taint the kernel on first load.
+scripts/config --enable MODULE_SIG_ALL
+
+# Pure Wayland, nl80211-only userspace: drop the WEXT compat shim so no app
+# can silently fall back to the deprecated ioctl path (also avoids the
+# Wi-Fi 7 regression warnings from cfg80211).
+scripts/config --disable CFG80211_WEXT
 
 make olddefconfig
 
