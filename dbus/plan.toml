@@ -14,7 +14,7 @@ build = [
     "ninja",
     "pkgconf",
 ]
-link = ["expat", "libsystemd"]
+link = ["expat", "systemd"]
 
 [[sources]]
 uri = "https://dbus.freedesktop.org/releases/dbus/dbus-${VERSION}.tar.xz"

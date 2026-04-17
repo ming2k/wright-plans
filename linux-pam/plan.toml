@@ -1,13 +1,13 @@
 name = "linux-pam"
 version = "1.7.2"
-release = 4
+release = 5
 description = "Pluggable Authentication Modules for Linux"
 license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/linux-pam/linux-pam"
 
 [dependencies]
-runtime = ["libsystemd"]
+runtime = ["systemd"]
 build = [
     "gcc",
     "meson",
@@ -18,6 +18,30 @@ link = ["glibc"]
 
 [[sources]]
 uri = "https://github.com/linux-pam/linux-pam/releases/download/v${VERSION}/Linux-PAM-${VERSION}.tar.xz"
+sha256 = "SKIP"
+
+# Theseus-baseline PAM service files. Kept as separate, reviewable source
+# files instead of inline heredocs so each stack can be read and diff'd on
+# its own. The main policy call is /etc/pam.d/other — a silent deny-all
+# fallback for any service without its own pam.d file.
+[[sources]]
+uri = "pam.d/system-account"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "pam.d/system-auth"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "pam.d/system-session"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "pam.d/system-password"
+sha256 = "SKIP"
+
+[[sources]]
+uri = "pam.d/other"
 sha256 = "SKIP"
 
 [lifecycle.configure]
@@ -58,43 +82,9 @@ chmod -v 4755 ${PART_DIR}/usr/bin/unix_chkpwd
 rm -rf ${PART_DIR}/usr/lib/systemd
 
 install -vdm755 ${PART_DIR}/etc/pam.d
-
-cat > ${PART_DIR}/etc/pam.d/system-account << 'PAMEOF'
-# Begin /etc/pam.d/system-account
-account   required    pam_unix.so
-# End /etc/pam.d/system-account
-PAMEOF
-
-cat > ${PART_DIR}/etc/pam.d/system-auth << 'PAMEOF'
-# Begin /etc/pam.d/system-auth
-auth      required    pam_unix.so
-# End /etc/pam.d/system-auth
-PAMEOF
-
-cat > ${PART_DIR}/etc/pam.d/system-session << 'PAMEOF'
-# Begin /etc/pam.d/system-session
-session   required    pam_unix.so
-# End /etc/pam.d/system-session
-PAMEOF
-
-cat > ${PART_DIR}/etc/pam.d/system-password << 'PAMEOF'
-# Begin /etc/pam.d/system-password
-password  required    pam_unix.so       yescrypt shadow try_first_pass
-# End /etc/pam.d/system-password
-PAMEOF
-
-cat > ${PART_DIR}/etc/pam.d/other << 'PAMEOF'
-# Begin /etc/pam.d/other
-auth        required        pam_warn.so
-auth        required        pam_deny.so
-account     required        pam_warn.so
-account     required        pam_deny.so
-password    required        pam_warn.so
-password    required        pam_deny.so
-session     required        pam_warn.so
-session     required        pam_deny.so
-# End /etc/pam.d/other
-PAMEOF
+for f in system-account system-auth system-session system-password other; do
+    install -Dm644 ${FILES_DIR}/${f} ${PART_DIR}/etc/pam.d/${f}
+done
 
 '''
 

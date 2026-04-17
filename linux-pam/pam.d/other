@@ -1,0 +1,10 @@
+# Begin /etc/pam.d/other
+# Silent deny fallback for any service without its own pam.d file.
+# pam_warn is intentionally omitted: services with an empty auth stack
+# (e.g. systemd-user) fall through here on every setcred call, and
+# pam_warn would flood the journal with no security benefit.
+auth        required        pam_deny.so
+account     required        pam_deny.so
+password    required        pam_deny.so
+session     required        pam_deny.so
+# End /etc/pam.d/other
