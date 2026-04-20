@@ -7,22 +7,20 @@ arch = "any"
 url = "https://github.com/notofonts/noto-cjk"
 
 [[sources]]
-uri = "https://github.com/notofonts/noto-cjk/releases/download/Sans${VERSION}/01_NotoSansCJK-OTF-VF.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/notofonts/noto-cjk/releases/download/Sans${VERSION}/01_NotoSansCJK-OTF-VF.tar.xz"
+extract_to = "source"
 
 [[sources]]
-uri = "https://github.com/notofonts/noto-cjk/releases/download/Serif${VERSION}/04_NotoSerifCJK-OTF-VF.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/notofonts/noto-cjk/releases/download/Serif${VERSION}/04_NotoSerifCJK-OTF-VF.tar.xz"
 
 [lifecycle.staging]
 script = '''
+cd source
 mkdir -p ${PART_DIR}/usr/share/fonts/noto-cjk
-find ${BUILD_DIR} -name '*.otf' -exec cp {} ${PART_DIR}/usr/share/fonts/noto-cjk/ \;
-
-'''
+find ${WORKDIR} -name '*.otf' -exec cp {} ${PART_DIR}/usr/share/fonts/noto-cjk/ \;'''
 
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"
 post_upgrade = "fc-cache -s 2>/dev/null || true"
-
-[lifecycle.fabricate]

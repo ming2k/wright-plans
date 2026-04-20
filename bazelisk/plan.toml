@@ -7,16 +7,13 @@ arch = "x86_64"
 url = "https://github.com/bazelbuild/bazelisk"
 
 [[sources]]
-uri = "https://github.com/bazelbuild/bazelisk/releases/download/v${VERSION}/bazelisk-linux-amd64"
 sha256 = "SKIP"
+url = "https://github.com/bazelbuild/bazelisk/releases/download/v${VERSION}/bazelisk-linux-amd64"
 
 [lifecycle.staging]
 script = '''
-install -Dm755 ${FILES_DIR}/bazelisk-linux-amd64 ${PART_DIR}/usr/bin/bazelisk
-ln -sf bazelisk ${PART_DIR}/usr/bin/bazel
-'''
+install -Dm755 ${WORKDIR}/bazelisk-linux-amd64 ${PART_DIR}/usr/bin/bazelisk
+ln -sf bazelisk ${PART_DIR}/usr/bin/bazel'''
 
 [output]
 provides = ["bazel"]
-
-[lifecycle.fabricate]

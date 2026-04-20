@@ -7,40 +7,26 @@ arch = "x86_64"
 
 [dependencies]
 build = ["gcc", "make", "pkgconf"]
-link = [
-    "gmp",
-    "libffi",
-    "libyaml",
-    "openssl",
-    "readline",
-    "zlib",
-]
+link = ["gmp", "libffi", "libyaml", "openssl", "readline", "zlib"]
 
 [[sources]]
-uri = "https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.1.tar.gz"
 sha256 = "SKIP"
+url = "https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.1.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # --enable-shared: 构建 libruby.so
 # --disable-install-doc: 跳过文档安装以节省时间和空间
-./configure --prefix=/usr --enable-shared --disable-install-doc --with-openssl-dir=/usr
-
-'''
+./configure --prefix=/usr --enable-shared --disable-install-doc --with-openssl-dir=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

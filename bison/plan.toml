@@ -10,28 +10,21 @@ url = "https://www.gnu.org/software/bison/"
 build = ["gcc", "m4", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/bison/bison-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/bison/bison-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --docdir=/usr/share/doc/bison-${VERSION}
-
-'''
+cd source
+./configure --prefix=/usr --docdir=/usr/share/doc/bison-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

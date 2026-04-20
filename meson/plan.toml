@@ -8,29 +8,19 @@ url = "https://mesonbuild.com/"
 
 [dependencies]
 runtime = ["python", "ninja"]
-build = [
-    "bash",
-    "python",
-    "python-setuptools",
-    "ninja",
-]
+build = ["bash", "python", "python-setuptools", "ninja"]
 
 [[sources]]
-uri = "https://github.com/mesonbuild/meson/releases/download/${VERSION}/meson-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/mesonbuild/meson/releases/download/${VERSION}/meson-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-python3 setup.py build
-
-'''
+cd source
+python3 setup.py build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-python3 setup.py install --root=${PART_DIR} --prefix=/usr --optimize=1
-
-'''
-
-[lifecycle.fabricate]
+cd source
+python3 setup.py install --root=${PART_DIR} --prefix=/usr --optimize=1'''

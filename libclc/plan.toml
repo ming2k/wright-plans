@@ -11,31 +11,24 @@ runtime = ["llvm"]
 build = ["cmake", "llvm", "make"]
 
 [[sources]]
-uri = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-project-${VERSION}.src.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-project-${VERSION}.src.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir build-libclc && cd build-libclc
 cmake ../libclc                              \
 -DCMAKE_INSTALL_PREFIX=/usr            \
--DCMAKE_BUILD_TYPE=Release
-
-'''
+-DCMAKE_BUILD_TYPE=Release'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build-libclc
-make -j$(nproc)
-
-'''
+cd source/build-libclc
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build-libclc
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build-libclc
+make DESTDIR=${PART_DIR} install'''

@@ -11,30 +11,25 @@ build = ["gcc", "make", "pkgconf"]
 link = ["systemd", "zlib"]
 
 [[sources]]
-uri = "https://mj.ucw.cz/download/linux/pci/pciutils-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://mj.ucw.cz/download/linux/pci/pciutils-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make PREFIX=/usr \
      SHAREDIR=/usr/share/hwdata \
      SHARED=yes \
      ZLIB=yes \
-     -j$(nproc)
-
-'''
+     -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make PREFIX=/usr \
      SBINDIR=/usr/bin \
      SHAREDIR=/usr/share/hwdata \
      SHARED=yes \
      DESTDIR=${PART_DIR} \
-     install install-lib
-
-'''
-
-[lifecycle.fabricate]
+     install install-lib'''

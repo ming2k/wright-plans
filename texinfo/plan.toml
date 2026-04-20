@@ -11,36 +11,27 @@ runtime = ["perl"]
 build = ["gcc", "make", "perl"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/texinfo/texinfo-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/texinfo/texinfo-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-sed 's/! $output_file eq/$output_file ne/' -i tp/Texinfo/Convert/*.pm
-
-'''
+cd source
+sed 's/! $output_file eq/$output_file ne/' -i tp/Texinfo/Convert/*.pm'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr
-
-'''
+cd source
+./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
-make DESTDIR=${PART_DIR} TEXMF=/usr/share/texmf install-tex
-
-'''
-
-[lifecycle.fabricate]
+make DESTDIR=${PART_DIR} TEXMF=/usr/share/texmf install-tex'''

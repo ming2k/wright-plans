@@ -11,14 +11,11 @@ runtime = ["python"]
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/d/distlib/distlib-${VERSION}.tar.gz"
 sha256 = "feec40075be03a04501a973d81f633735b4b69f98b05450592310c0f401a4e0d"
+url = "https://pypi.org/packages/source/d/distlib/distlib-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
-
-'''
-
-[lifecycle.fabricate]
+cd source
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

@@ -8,42 +8,28 @@ url = "https://rsync.samba.org/"
 
 [dependencies]
 build = ["gcc", "make"]
-link = [
-    "openssl",
-    "zlib",
-    "zstd",
-    "lz4",
-]
-optional = [
-    { name = "openssh", description = "ssh transport" },
-]
+link = ["openssl", "zlib", "zstd", "lz4"]
+optional = ["openssh"]
 
 [[sources]]
-uri = "https://www.samba.org/ftp/rsync/src/rsync-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://www.samba.org/ftp/rsync/src/rsync-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr    \
 --disable-xxhash             \
 --without-included-popt      \
---without-included-zlib
-
-'''
+--without-included-zlib'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

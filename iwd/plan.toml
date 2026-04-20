@@ -8,21 +8,17 @@ url = "https://iwd.wiki.kernel.org/"
 
 [dependencies]
 runtime = ["dbus", "ell"]
-build = [
-    "dbus",
-    "ell",
-    "gcc",
-    "make",
-]
+build = ["dbus", "ell", "gcc", "make"]
 link = ["readline"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/network/wireless/iwd-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.kernel.org/pub/linux/network/wireless/iwd-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr            \
 --sysconfdir=/etc        \
 --localstatedir=/var     \
@@ -31,23 +27,17 @@ cd ${BUILD_DIR}
 --enable-systemd-service \
 --enable-client          \
 --enable-monitor         \
---disable-static
-
-'''
+--disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
+cd source
+make DESTDIR=${PART_DIR} install'''
 
 [hooks]
 post_install = '''
@@ -57,5 +47,3 @@ systemctl enable iwd.service 2>/dev/null || true
 
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
-[lifecycle.fabricate]

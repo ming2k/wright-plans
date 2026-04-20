@@ -1,0 +1,32 @@
+name = "metee"
+version = "4.3.1"
+release = 1
+description = "Intel Management Engine Interface (MEI) Library"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/intel/metee"
+
+[dependencies]
+build = ["cmake", "ninja", "pkgconf"]
+link = ["glibc"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/intel/metee/archive/refs/tags/${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+cmake -B build -S metee-${VERSION} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=Release'''
+
+[lifecycle.compile]
+script = '''
+cd source
+ninja -C build'''
+
+[lifecycle.staging]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

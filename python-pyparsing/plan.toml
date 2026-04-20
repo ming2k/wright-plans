@@ -10,26 +10,21 @@ url = "https://github.com/pyparsing/pyparsing"
 build = ["python", "setuptools", "wheel"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/p/pyparsing/pyparsing-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://files.pythonhosted.org/packages/source/p/pyparsing/pyparsing-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-echo "python package"
-
-'''
+cd source
+echo "python package"'''
 
 [lifecycle.compile]
 script = '''
-echo "no build needed"
-
-'''
+cd source
+echo "no build needed"'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PART_DIR} .
-
-'''
-
-[lifecycle.fabricate]
+cd source
+pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PART_DIR} .'''

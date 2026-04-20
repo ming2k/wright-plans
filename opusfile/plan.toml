@@ -1,0 +1,32 @@
+name = "opusfile"
+version = "0.12"
+release = 1
+description = "Library for reading Opus files"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://xiph.org/opus/"
+
+[dependencies]
+build = ["gcc", "make", "pkgconf"]
+link = ["libogg", "opus", "openssl"]
+
+[[sources]]
+type = "http"
+url = "https://downloads.xiph.org/releases/opus/opusfile-${VERSION}.tar.gz"
+sha256 = "118d8601c12dd6a44f52423e68ca9083cc9f2bfe72da7a8c1acb22a80ae3550b"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+./configure --prefix=/usr --disable-static'''
+
+[lifecycle.compile]
+script = '''
+cd source
+make -j$(nproc)'''
+
+[lifecycle.staging]
+script = '''
+cd source
+make DESTDIR=${PART_DIR} install'''

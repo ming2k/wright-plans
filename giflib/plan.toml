@@ -11,21 +11,16 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/giflib/giflib-6.x/giflib-${VERSION}.tar.gz"
 sha256 = "2421abb54f5906b14965d28a278fb49e1ec9fe5ebbc56244dd012383a973d5c0"
+url = "https://downloads.sourceforge.net/project/giflib/giflib-6.x/giflib-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc) shared-lib static-lib gifbuild giffix giftext giftool gifclrmp PREFIX=/usr
-
-'''
+cd source
+make -j$(nproc) shared-lib static-lib gifbuild giffix giftext giftool gifclrmp PREFIX=/usr'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} PREFIX=/usr install-bin install-include install-lib
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} PREFIX=/usr install-bin install-include install-lib'''

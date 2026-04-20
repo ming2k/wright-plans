@@ -11,19 +11,18 @@ build = ["gcc", "make", "pkgconf"]
 link = ["systemd", "util-linux"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make CWFLAGS="-Wall -Werror -Wstrict-prototypes -Wextra -Wno-unused-parameter -Wformat -Wformat-security -Werror=format-security -fstack-protector-strong -fPIE -Warray-bounds -Wimplicit-fallthrough=0 -Wno-error=implicit-fallthrough -Wno-error=unterminated-string-initialization"
-
-'''
+cd source
+make CWFLAGS="-Wall -Werror -Wstrict-prototypes -Wextra -Wno-unused-parameter -Wformat -Wformat-security -Werror=format-security -fstack-protector-strong -fPIE -Warray-bounds -Wimplicit-fallthrough=0 -Wno-error=implicit-fallthrough -Wno-error=unterminated-string-initialization"'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make \
   DESTDIR=${PART_DIR} \
   BINDIR=/usr/bin \
@@ -34,8 +33,4 @@ if [ -d ${PART_DIR}/usr/etc ]; then
   mkdir -p ${PART_DIR}/etc
   cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
   rm -rf ${PART_DIR}/usr/etc
-fi
-
-'''
-
-[lifecycle.fabricate]
+fi'''

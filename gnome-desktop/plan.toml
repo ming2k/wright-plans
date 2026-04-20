@@ -9,40 +9,28 @@ url = "https://gitlab.gnome.org/GNOME/gnome-desktop"
 [dependencies]
 runtime = ["gsettings-desktop-schemas", "iso-codes"]
 build = ["gobject-introspection", "meson", "ninja"]
-link = [
-    "glib",
-    "gtk4",
-    "libseccomp",
-    "libxkbcommon",
-]
+link = ["glib", "gtk4", "libseccomp", "libxkbcommon"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dintrospection=true -Dgtk_doc=false -Ddesktop_docs=false -Ddebug_tools=false -Dlegacy_library=false
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dintrospection=true -Dgtk_doc=false -Ddesktop_docs=false -Ddebug_tools=false -Dlegacy_library=false'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''
 
 [hooks]
 post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
 post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
-
-[lifecycle.fabricate]

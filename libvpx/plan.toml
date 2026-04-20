@@ -10,34 +10,27 @@ url = "https://github.com/webmproject/libvpx"
 build = ["gcc", "make", "nasm"]
 
 [[sources]]
-uri = "https://github.com/webmproject/libvpx/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/webmproject/libvpx/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr \
             --enable-shared \
             --disable-static \
             --enable-vp8 \
             --enable-vp9 \
             --enable-runtime-cpu-detect \
-            --enable-postproc
-
-'''
+            --enable-postproc'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

@@ -8,29 +8,25 @@ url = "https://github.com/rootless-containers/slirp4netns"
 
 [dependencies]
 build = ["autoconf", "automake", "pkgconf"]
-link = [
-    "glib",
-    "libcap",
-    "libseccomp",
-    "libslirp",
-]
+link = ["glib", "libcap", "libseccomp", "libslirp"]
 
 [[sources]]
-uri = "https://github.com/rootless-containers/slirp4netns/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/rootless-containers/slirp4netns/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./autogen.sh
-./configure --prefix=/usr
-
-'''
+./configure --prefix=/usr'''
 
 [lifecycle.compile]
-script = "make -j$(nproc) -C ${BUILD_DIR}"
+script = '''
+cd source
+make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
-script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+make DESTDIR=${PART_DIR} install -C ${WORKDIR}'''

@@ -6,31 +6,27 @@ license = "Apache-2.0"
 arch = "x86_64"
 
 [dependencies]
-build = [
-    "cmake",
-    "gcc",
-    "ninja",
-    "python",
-    "spirv-headers",
-]
+build = ["cmake", "gcc", "ninja", "python", "spirv-headers"]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "35dc16cf2dc64be5b6bbbe86d210e6f4a82b070cffd751605a3365cd8bce2d7e"
+url = "https://github.com/KhronosGroup/SPIRV-Tools/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cmake -B ${BUILD_DIR}/build -G Ninja -S ${BUILD_DIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_INCLUDEDIR=include -DSPIRV_WERROR=OFF -DSPIRV-Headers_SOURCE_DIR=/usr -DSPIRV_SKIP_TESTS=ON
-
-'''
+cd source
+cmake -B ${WORKDIR}/build -G Ninja -S ${WORKDIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_INCLUDEDIR=include -DSPIRV_WERROR=OFF -DSPIRV-Headers_SOURCE_DIR=/usr -DSPIRV_SKIP_TESTS=ON'''
 
 [lifecycle.compile]
-script = "cmake --build ${BUILD_DIR}/build"
+script = '''
+cd source
+cmake --build ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"
+script = '''
+cd source
+DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''
 
 [output]
 provides = ["spirv-opt"]
-
-[lifecycle.fabricate]

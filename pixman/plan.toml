@@ -7,29 +7,24 @@ arch = "x86_64"
 url = "http://pixman.org/"
 
 [dependencies]
-build = [
-    "bash",
-    "python",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["bash", "python", "meson", "ninja", "pkgconf"]
 
 [[sources]]
-uri = "https://www.cairographics.org/releases/pixman-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://www.cairographics.org/releases/pixman-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared -Dtests=disabled
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared -Dtests=disabled'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''

@@ -8,45 +8,29 @@ url = "https://github.com/containers/podman"
 
 [dependencies]
 build = ["go", "gcc", "make", "pkgconf"]
-runtime = [
-  "aardvark-dns >= 1.17.1",
-  "catatonit >= 0.2.1",
-  "conmon >= 2.2.1",
-  "containers-common >= 0.64.1",
-  "crun >= 1.27",
-  "fuse-overlayfs >= 1.16",
-  "glib",
-  "glibc",
-  "gpgme",
-  "libseccomp",
-  "netavark >= 1.17.2",
-  "shadow",
-  "sqlite",
-  "systemd",
-]
+runtime = ["aardvark-dns >= 1.17.1", "catatonit >= 0.2.1", "conmon >= 2.2.1", "containers-common >= 0.64.1", "crun >= 1.27", "fuse-overlayfs >= 1.16", "glib", "glibc", "gpgme", "libseccomp", "netavark >= 1.17.2", "shadow", "sqlite", "systemd"]
 link = ["glib", "glibc", "gpgme", "libseccomp", "sqlite", "systemd"]
 
 [[sources]]
-uri = "https://github.com/containers/podman/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "b9540ecb19cfcbcfc40e1b81d39930f688c537d8fd6f11ae56be41f2bf9e97a4"
+url = "https://github.com/containers/podman/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}
+cd source
 export GOFLAGS="-trimpath -mod=vendor"
 export BUILDTAGS="seccomp $(hack/btrfs_installed_tag.sh) $(hack/sqlite_tag.sh) $(hack/systemd_tag.sh) $(hack/libsubid_tag.sh) grpcnotrace"
 make podman podman-remote rootlessport quadlet BUILDTAGS="${BUILDTAGS}" GOFLAGS="${GOFLAGS}" PREFIX=/usr ETCDIR=/etc
-make completions
-'''
+make completions'''
 
 [lifecycle.staging]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}
+cd source
 export BUILDTAGS="seccomp $(hack/btrfs_installed_tag.sh) $(hack/sqlite_tag.sh) $(hack/systemd_tag.sh) $(hack/libsubid_tag.sh) grpcnotrace"
-make DESTDIR=${PART_DIR} PREFIX=/usr ETCDIR=/etc BINDIR=/usr/bin LIBEXECDIR=/usr/libexec LIBEXECPODMAN=/usr/libexec/podman TMPFILESDIR=/usr/lib/tmpfiles.d SYSTEMDDIR=/usr/lib/systemd/system USERSYSTEMDDIR=/usr/lib/systemd/user SYSTEMDGENERATORSDIR=/usr/lib/systemd/system-generators USERSYSTEMDGENERATORSDIR=/usr/lib/systemd/user-generators BUILDTAGS="${BUILDTAGS}" install.bin install.remote install.completions install.systemd
-'''
+make DESTDIR=${PART_DIR} PREFIX=/usr ETCDIR=/etc BINDIR=/usr/bin LIBEXECDIR=/usr/libexec LIBEXECPODMAN=/usr/libexec/podman TMPFILESDIR=/usr/lib/tmpfiles.d SYSTEMDDIR=/usr/lib/systemd/system USERSYSTEMDDIR=/usr/lib/systemd/user SYSTEMDGENERATORSDIR=/usr/lib/systemd/system-generators USERSYSTEMDGENERATORSDIR=/usr/lib/systemd/user-generators BUILDTAGS="${BUILDTAGS}" install.bin install.remote install.completions install.systemd'''
 
 [hooks]
 post_install = '''

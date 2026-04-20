@@ -8,39 +8,17 @@ url = "https://github.com/storaged-project/libblockdev"
 
 [dependencies]
 runtime = ["mdadm"]
-build = [
-    "autoconf",
-    "autoconf-archive",
-    "automake",
-    "gcc",
-    "libtool",
-    "make",
-    "pkgconf",
-    "python",
-    "setuptools",
-]
-link = [
-    "btrfs-progs",
-    "cryptsetup",
-    "glib",
-    "json-glib",
-    "keyutils",
-    "kmod",
-    "libatasmart",
-    "libbytesize",
-    "libnvme",
-    "libyaml",
-    "lvm2",
-    "util-linux",
-]
+build = ["autoconf", "autoconf-archive", "automake", "gcc", "libtool", "make", "pkgconf", "python", "setuptools"]
+link = ["btrfs-progs", "cryptsetup", "glib", "json-glib", "keyutils", "kmod", "libatasmart", "libbytesize", "libnvme", "libyaml", "lvm2", "util-linux"]
 
 [[sources]]
-uri = "https://github.com/storaged-project/libblockdev/releases/download/${VERSION}/libblockdev-${VERSION}.tar.gz"
 sha256 = "65ef9a37babd44b85b8ff9b273f90f9f7d5f8ff7b0c76a8edb69240325fd83f4"
+url = "https://github.com/storaged-project/libblockdev/releases/download/${VERSION}/libblockdev-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 autoreconf -fi
 ./configure --prefix=/usr \
   --with-gtk-doc=no \
@@ -49,28 +27,20 @@ autoreconf -fi
   --with-tools=no \
   --with-nvdimm=no \
   --with-nvme=yes \
-  --with-smartmontools=no
-
-'''
+  --with-smartmontools=no'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 
 if [ -d ${PART_DIR}/usr/etc ]; then
   mkdir -p ${PART_DIR}/etc
   cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
   rm -rf ${PART_DIR}/usr/etc
-fi
-
-'''
-
-[lifecycle.fabricate]
+fi'''

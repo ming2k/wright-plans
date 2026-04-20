@@ -7,32 +7,17 @@ arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/udisks/"
 
 [dependencies]
-build = [
-    "gcc",
-    "make",
-    "pkgconf",
-    "gettext",
-    "glib",
-    "docbook-xsl",
-    "libxslt",
-    "polkit",
-]
-link = [
-    "acl",
-    "libatasmart",
-    "libblockdev",
-    "libgudev",
-    "polkit",
-    "systemd",
-]
+build = ["gcc", "make", "pkgconf", "gettext", "glib", "docbook-xsl", "libxslt", "polkit"]
+link = ["acl", "libatasmart", "libblockdev", "libgudev", "polkit", "systemd"]
 
 [[sources]]
-uri = "https://github.com/storaged-project/udisks/releases/download/udisks-${VERSION}/udisks-${VERSION}.tar.bz2"
 sha256 = "b75734ccf602540dedb4068bec206adcb508a4c003725e117ae8f994d92d8ece"
+url = "https://github.com/storaged-project/udisks/releases/download/udisks-${VERSION}/udisks-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
   --prefix=/usr \
   --sbindir=/usr/bin \
@@ -40,24 +25,15 @@ cd ${BUILD_DIR}
   --disable-static \
   --with-udevdir=/usr/lib/udev \
   --enable-lvm2 \
-  --enable-btrfs
-
-'''
+  --enable-btrfs'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
-install -dm750 ${PART_DIR}/var/lib/udisks2
-
-
-'''
-
-[lifecycle.fabricate]
+install -dm750 ${PART_DIR}/var/lib/udisks2'''

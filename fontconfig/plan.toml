@@ -7,38 +7,34 @@ arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/fontconfig/"
 
 [dependencies]
-build = [
-    "freetype",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "gperf",
-]
+build = ["freetype", "meson", "ninja", "pkgconf", "gperf"]
 link = ["freetype", "expat"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/${VERSION}/fontconfig-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/${VERSION}/fontconfig-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
     --prefix=/usr                        \
     --buildtype=release                  \
     --wrap-mode=nofallback               \
     -D doc=disabled                      \
-    -D tests=disabled
-
-'''
+    -D tests=disabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
 
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"
 post_upgrade = "fc-cache -s 2>/dev/null || true"
-
-[lifecycle.fabricate]

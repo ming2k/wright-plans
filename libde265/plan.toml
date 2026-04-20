@@ -9,16 +9,19 @@ arch = "x86_64"
 build = ["gcc", "make", "cmake"]
 
 [[sources]]
-uri = "https://github.com/strukturag/libde265/releases/download/v${VERSION}/libde265-${VERSION}.tar.gz"
 sha256 = "b92beb6b53c346db9a8fae968d686ab706240099cdd5aff87777362d668b0de7"
+url = "https://github.com/strukturag/libde265/releases/download/v${VERSION}/libde265-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
-script = "cd ${BUILD_DIR} && cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_SHARED=ON -DENABLE_STATIC=OFF"
+script = "cd source && cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_SHARED=ON -DENABLE_STATIC=OFF"
 
 [lifecycle.compile]
-script = "make -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+make -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR}/build DESTDIR=${PART_DIR} install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+make -C ${WORKDIR}/build DESTDIR=${PART_DIR} install'''

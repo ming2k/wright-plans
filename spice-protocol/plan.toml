@@ -10,28 +10,21 @@ url = "https://www.spice-space.org/"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://www.spice-space.org/download/releases/spice-protocol-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.spice-space.org/download/releases/spice-protocol-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr
-
-'''
+cd source
+meson setup build --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

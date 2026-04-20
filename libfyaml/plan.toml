@@ -10,31 +10,30 @@ url = "https://github.com/pantoniou/libfyaml"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -S . -B build \
     -G Ninja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-    -DENABLE_ASAN=OFF
-
-'''
+    -DENABLE_ASAN=OFF'''
 
 [lifecycle.compile]
 script = '''
-cmake --build ${BUILD_DIR}/build -j$(nproc)
-
-'''
+cd source
+cmake --build ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build
+cd source
+DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build
 install -d ${PART_DIR}/usr/lib/pkgconfig
 cat > ${PART_DIR}/usr/lib/pkgconfig/libfyaml.pc << 'PCEOF'
 prefix=/usr
@@ -47,8 +46,4 @@ Description: Fully feature complete YAML parser and emitter library
 Version: ${VERSION}
 Libs: -L${libdir} -lfyaml
 Cflags: -I${includedir}
-PCEOF
-
-'''
-
-[lifecycle.fabricate]
+PCEOF'''

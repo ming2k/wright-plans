@@ -11,14 +11,11 @@ runtime = ["python", "python-sphinx"]
 build = ["python", "flit-core"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/s/sphinxcontrib-jquery/sphinxcontrib-jquery-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://files.pythonhosted.org/packages/source/s/sphinxcontrib-jquery/sphinxcontrib-jquery-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
-
-'''
-
-[lifecycle.fabricate]
+cd source
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

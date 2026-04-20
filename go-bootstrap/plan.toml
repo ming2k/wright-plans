@@ -7,17 +7,14 @@ arch = "x86_64"
 url = "https://go.dev"
 
 [[sources]]
-uri = "https://go.dev/dl/go${VERSION}.linux-amd64.tar.gz"
 sha256 = "SKIP"
+url = "https://go.dev/dl/go${VERSION}.linux-amd64.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -d ${PART_DIR}/usr/lib
-cp -a ${BUILD_DIR} ${PART_DIR}/usr/lib/go-bootstrap
+cp -a ${WORKDIR} ${PART_DIR}/usr/lib/go-bootstrap
 install -d ${PART_DIR}/usr/bin
-ln -sf ../lib/go-bootstrap/bin/go ${PART_DIR}/usr/bin/go-bootstrap
-
-'''
-
-[lifecycle.fabricate]
+ln -sf ../lib/go-bootstrap/bin/go ${PART_DIR}/usr/bin/go-bootstrap'''

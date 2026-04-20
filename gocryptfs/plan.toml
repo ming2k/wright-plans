@@ -12,22 +12,17 @@ build = ["go", "openssl", "pkgconf"]
 link = ["openssl"]
 
 [[sources]]
-uri = "git+https://github.com/rfjakob/gocryptfs.git#v${VERSION}"
 sha256 = "SKIP"
+url = "git+https://github.com/rfjakob/gocryptfs.git#v${VERSION}"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}/gocryptfs-*/
-CGO_ENABLED=1 ./build.bash
-
-'''
+cd source/gocryptfs-*/
+CGO_ENABLED=1 ./build.bash'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/gocryptfs-*/
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source/gocryptfs-*/
+make DESTDIR=${PART_DIR} install'''

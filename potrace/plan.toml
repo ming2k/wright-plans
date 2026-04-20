@@ -12,37 +12,32 @@ runtime = ["zlib"]
 link = ["zlib"]
 
 [[sources]]
-uri = "https://potrace.sourceforge.net/download/1.16/potrace-1.16.tar.gz"
 sha256 = "be8248a17dedd6ccbaab2fcc45835bb0502d062e40fbded3bc56028ce5eb7acc"
+url = "https://potrace.sourceforge.net/download/1.16/potrace-1.16.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "lto.patch"
 sha256 = "SKIP"
+type = "local"
+path = "lto.patch"
 
 [lifecycle.prepare]
-script = """
-cd ${BUILD_DIR}
-patch -Np1 < ${FILES_DIR}/lto.patch
-autoreconf -fiv
-"""
+script = '''
+cd source
+patch -Np1 < ${WORKDIR}/lto.patch
+autoreconf -fiv'''
 
 [lifecycle.configure]
-script = """
-cd ${BUILD_DIR}
-./configure \
-  --prefix=/usr \
-  --mandir=/usr/share/man \
-  --with-libpotrace
-"""
+script = '''
+cd source
+./configure --prefix=/usr --mandir=/usr/share/man --with-libpotrace'''
 
 [lifecycle.compile]
-script = """
-cd ${BUILD_DIR}
-make -j$(nproc)
-"""
+script = '''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
-script = """
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-"""
+script = '''
+cd source
+make DESTDIR=${PART_DIR} install'''

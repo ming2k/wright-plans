@@ -12,12 +12,13 @@ link = ["vulkan-loader", "wayland"]
 runtime = ["vulkan-loader", "wayland"]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/Vulkan-Tools/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/KhronosGroup/Vulkan-Tools/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
@@ -30,22 +31,14 @@ cmake -B build -G Ninja \
     -DBUILD_WSI_WAYLAND_SUPPORT=ON \
     -DVULKAN_HEADERS_INSTALL_DIR=/usr \
     -DVULKAN_LOADER_INSTALL_DIR=/usr \
-    ${BUILD_DIR}
-
-'''
+    ${WORKDIR}'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build -j$(nproc)
-
-'''
+cd source
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

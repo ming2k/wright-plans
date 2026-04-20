@@ -11,21 +11,22 @@ build = ["cmake", "ninja"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://s3.amazonaws.com/json-c_releases/releases/json-c-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://s3.amazonaws.com/json-c_releases/releases/json-c-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p build && cd build
-cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_STATIC_LIBS=OFF -DENABLE_RDRAND=OFF -DENABLE_THREADING=ON
-
-'''
+cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_STATIC_LIBS=OFF -DENABLE_RDRAND=OFF -DENABLE_THREADING=ON'''
 
 [lifecycle.compile]
-script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
+script = '''
+cd source
+ninja -j$(nproc) -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja install -C ${BUILD_DIR}/build"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja install -C ${WORKDIR}/build'''

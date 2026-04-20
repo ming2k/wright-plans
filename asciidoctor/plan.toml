@@ -11,23 +11,22 @@ runtime = ["ruby"]
 build = ["ruby"]
 
 [[sources]]
-uri = "https://github.com/asciidoctor/asciidoctor/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/asciidoctor/asciidoctor/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 # Allow newer dependency versions
 sed --in-place --regexp-extended \
   --expression 's|~>|>=|g' \
-  asciidoctor.gemspec
-
-'''
+  asciidoctor.gemspec'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 _gemdir=$(gem env gemdir)
 
@@ -66,13 +65,11 @@ find "tmp_install${_gemdir}/extensions/" \
     -iname "mkmf.log" -o \
     -iname "gem_make.out" \
   \) \
-  -delete
-
-'''
+  -delete'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 _gemdir=$(gem env gemdir)
 
@@ -85,8 +82,4 @@ cp --archive --verbose tmp_install/* "${PART_DIR}"
 install --verbose -D --mode=0644 LICENSE* \
   --target-directory "${PART_DIR}/usr/share/licenses/asciidoctor"
 install --verbose -D --mode=0644 *.adoc \
-  --target-directory "${PART_DIR}/usr/share/doc/asciidoctor"
-
-'''
-
-[lifecycle.fabricate]
+  --target-directory "${PART_DIR}/usr/share/doc/asciidoctor"'''

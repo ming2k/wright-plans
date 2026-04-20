@@ -7,43 +7,26 @@ arch = "x86_64"
 url = "https://github.com/stefanberger/libtpms"
 
 [dependencies]
-build = [
-    "autoconf",
-    "automake",
-    "bash",
-    "gcc",
-    "libtool",
-    "make",
-    "pkgconf",
-]
-link = [
-    "openssl",
-]
+build = ["autoconf", "automake", "bash", "gcc", "libtool", "make", "pkgconf"]
+link = ["openssl"]
 
 [[sources]]
-uri = "https://github.com/stefanberger/libtpms/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/stefanberger/libtpms/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./autogen.sh
-./configure --prefix=/usr --disable-static --with-openssl CFLAGS="${CFLAGS:--O2} -Wno-error=discarded-qualifiers"
-
-'''
+./configure --prefix=/usr --disable-static --with-openssl CFLAGS="${CFLAGS:--O2} -Wno-error=discarded-qualifiers"'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

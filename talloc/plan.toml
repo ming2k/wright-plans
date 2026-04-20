@@ -10,28 +10,21 @@ url = "https://talloc.samba.org/"
 build = ["docbook-xml", "docbook-xsl", "gcc", "libxslt", "make", "python"]
 
 [[sources]]
-uri = "https://download.samba.org/pub/talloc/talloc-${VERSION}.tar.gz"
 sha256 = "55e47994018c13743485544e7206780ffbb3c8495e704a99636503e6e77abf59"
+url = "https://download.samba.org/pub/talloc/talloc-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-python
-
-'''
+cd source
+./configure --prefix=/usr --disable-python'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

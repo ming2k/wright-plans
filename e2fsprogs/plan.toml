@@ -10,12 +10,13 @@ url = "https://e2fsprogs.sourceforge.net"
 build = ["util-linux"]
 
 [[sources]]
-uri = "https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${VERSION}/e2fsprogs-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${VERSION}/e2fsprogs-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p build && cd build
 ../configure --prefix=/usr          \
 --with-root-prefix=''   \
@@ -26,26 +27,18 @@ mkdir -p build && cd build
 --disable-libblkid      \
 --disable-libuuid       \
 --disable-uuidd         \
---disable-fsck
-
-'''
+--disable-fsck'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-make -j$(nproc)
-
-'''
+cd source/build
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
+cd source/build
 DESTDIR=${PART_DIR} make install
 DESTDIR=${PART_DIR} make install-libs
 
 # Remove static libraries
-rm -f ${PART_DIR}/usr/lib/lib{com_err,e2p,ext2fs,ss}.a
-
-'''
-
-[lifecycle.fabricate]
+rm -f ${PART_DIR}/usr/lib/lib{com_err,e2p,ext2fs,ss}.a'''

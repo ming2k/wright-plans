@@ -6,16 +6,19 @@ license = "MIT"
 arch = "x86_64"
 
 [[sources]]
-uri = "os-release"
 sha256 = "SKIP"
+type = "local"
+path = "os-release"
 
 [[sources]]
-uri = "shells"
 sha256 = "SKIP"
+type = "local"
+path = "shells"
 
 [[sources]]
-uri = "profile"
 sha256 = "SKIP"
+type = "local"
+path = "profile"
 
 [options]
 skip_fhs_check = true
@@ -48,12 +51,10 @@ ln -s /run/lock     ${PART_DIR}/var/lock
 ln -s ../proc/self/mounts ${PART_DIR}/etc/mtab
 
 # --- /etc files ---
-install -m 0644 ${FILES_DIR}/os-release ${PART_DIR}/etc/os-release
-install -m 0644 ${FILES_DIR}/shells     ${PART_DIR}/etc/shells
-install -m 0644 ${FILES_DIR}/profile    ${PART_DIR}/etc/profile
-install -d -m 0755 ${PART_DIR}/etc/profile.d
-
-'''
+install -m 0644 ${WORKDIR}/os-release ${PART_DIR}/etc/os-release
+install -m 0644 ${WORKDIR}/shells     ${PART_DIR}/etc/shells
+install -m 0644 ${WORKDIR}/profile    ${PART_DIR}/etc/profile
+install -d -m 0755 ${PART_DIR}/etc/profile.d'''
 
 [output]
 backup = ["/etc/shells", "/etc/profile"]

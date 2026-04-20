@@ -7,28 +7,21 @@ arch = "x86_64"
 url = "https://libsndfile.github.io/libsndfile/"
 
 [[sources]]
-uri = "https://github.com/libsndfile/libsndfile/releases/download/${VERSION}/libsndfile-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/libsndfile/libsndfile/releases/download/${VERSION}/libsndfile-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-CFLAGS="-std=gnu17" ./configure --prefix=/usr --disable-static
-
-'''
+cd source
+CFLAGS="-std=gnu17" ./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} make install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} make install'''

@@ -10,31 +10,24 @@ url = "https://nghttp2.org/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/nghttp2/nghttp2/releases/download/v${VERSION}/nghttp2-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/nghttp2/nghttp2/releases/download/v${VERSION}/nghttp2-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr     \
 --disable-static  \
 --enable-lib-only \
---docdir=/usr/share/doc/nghttp2-${VERSION}
-
-'''
+--docdir=/usr/share/doc/nghttp2-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

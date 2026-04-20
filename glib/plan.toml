@@ -7,30 +7,25 @@ arch = "x86_64"
 url = "https://www.gtk.org/"
 
 [dependencies]
-build = [
-    "bash",
-    "python",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["bash", "python", "meson", "ninja", "pkgconf"]
 link = ["libffi", "pcre2"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/glib/2.86/glib-${VERSION}.tar.xz"
 sha256 = "ce85a947bb8b3c0204dbeff79aec39bcb46371c6fafb64ba5b8726c71e038d5f"
+url = "https://download.gnome.org/sources/glib/2.86/glib-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared -Dtests=false -Dinstalled_tests=false
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared -Dtests=false -Dinstalled_tests=false'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''

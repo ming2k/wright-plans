@@ -12,24 +12,22 @@ link = ["glibc", "libusb", "systemd"]
 runtime = ["hwdata"]
 
 [[sources]]
-uri = "https://github.com/gregkh/usbutils/archive/v${VERSION}/usbutils-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/gregkh/usbutils/archive/v${VERSION}/usbutils-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
-    --prefix=/usr
-
-'''
+    --prefix=/usr'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''

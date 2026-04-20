@@ -10,28 +10,21 @@ url = "https://www.pcre.org/"
 build = ["bash", "gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${VERSION}/pcre2-${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${VERSION}/pcre2-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static --enable-unicode --enable-pcre2-16 --enable-pcre2-32
-
-'''
+cd source
+./configure --prefix=/usr --disable-static --enable-unicode --enable-pcre2-16 --enable-pcre2-32'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

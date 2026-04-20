@@ -10,21 +10,18 @@ build = ["gcc", "make"]
 link = ["readline", "zlib"]
 
 [[sources]]
-uri = "https://www.sqlite.org/2026/sqlite-autoconf-3510300.tar.gz"
 sha256 = "81f5be397049b0cae1b167f2225af7646fc0f82e4a9b3c48c9ea3a533e21d77a"
+url = "https://www.sqlite.org/2026/sqlite-autoconf-3510300.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
-env = { CFLAGS = "-O2 -pipe -march=x86-64 -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_UNLOCK_NOTIFY -DSQLITE_ENABLE_DBSTAT_VTAB -DSQLITE_DEFAULT_WAL_SYNCHRONOUS=1" }
+env = {'CFLAGS': '-O2 -pipe -march=x86-64 -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_UNLOCK_NOTIFY -DSQLITE_ENABLE_DBSTAT_VTAB -DSQLITE_DEFAULT_WAL_SYNCHRONOUS=1'}
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static --enable-fts5 --enable-readline --enable-threadsafe
-
-'''
+cd source
+./configure --prefix=/usr --disable-static --enable-fts5 --enable-readline --enable-threadsafe'''
 
 [lifecycle.compile]
-script = "cd ${BUILD_DIR} && make -j$(nproc)"
+script = "cd source && make -j$(nproc)"
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && make DESTDIR=${PART_DIR} install"
-
-[lifecycle.fabricate]
+script = "cd source && make DESTDIR=${PART_DIR} install"

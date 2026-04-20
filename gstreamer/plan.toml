@@ -7,35 +7,22 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["libunwind"]
-build = [
-    "bison",
-    "flex",
-    "gobject-introspection",
-    "libunwind",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["bison", "flex", "gobject-introspection", "libunwind", "meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.28.0.tar.xz"
 sha256 = "SKIP"
+url = "https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.28.0.tar.xz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # 移除 --libdir=lib，让 meson 自动决定是 lib 还是 lib64
 meson setup build --prefix=/usr -Dtests=disabled -Dbenchmarks=disabled -Dintrospection=enabled
-ninja -C build -j$(nproc)
-
-'''
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

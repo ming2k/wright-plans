@@ -11,12 +11,13 @@ build = ["gcc", "make"]
 link = ["glibc", "linux-pam"]
 
 [[sources]]
-uri = "https://www.sudo.ws/dist/sudo-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://www.sudo.ws/dist/sudo-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr \
 --libexecdir=/usr/lib \
 --sbindir=/usr/bin \
@@ -29,20 +30,16 @@ cd ${BUILD_DIR}
 --with-secure-path-value=/usr/local/sbin:/usr/local/bin:/usr/bin \
 --enable-tmpfiles.d \
 --docdir=/usr/share/doc/sudo-${VERSION} \
---with-passprompt="[sudo] password for %p: "
-
-'''
+--with-passprompt="[sudo] password for %p: "'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 mkdir -p ${PART_DIR}/etc/sudoers.d
 install -vdm755 ${PART_DIR}/etc/pam.d
@@ -61,9 +58,7 @@ auth      include     sudo
 account   include     sudo
 session   include     sudo
 # End /etc/pam.d/sudo-i
-PAMEOF
-
-'''
+PAMEOF'''
 
 [output]
 backup = ["/etc/sudoers", "/etc/pam.d/sudo", "/etc/pam.d/sudo-i"]

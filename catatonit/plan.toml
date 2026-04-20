@@ -12,36 +12,33 @@ runtime = ["glibc"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/openSUSE/catatonit/releases/download/v${VERSION}/catatonit.tar.xz"
 sha256 = "9950425501af862e12f618bdc930ea755c46db6a16072a1462b4fc93b2bd59bc"
+url = "https://github.com/openSUSE/catatonit/releases/download/v${VERSION}/catatonit.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/catatonit-${VERSION}
+cd source/catatonit-${VERSION}
 sed -i 's/ -all-static//' Makefile.am
-autoreconf -fi
-'''
+autoreconf -fi'''
 
 [lifecycle.configure]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/catatonit-${VERSION}
-./configure --prefix=/usr --bindir=/usr/bin
-'''
+cd source/catatonit-${VERSION}
+./configure --prefix=/usr --bindir=/usr/bin'''
 
 [lifecycle.compile]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/catatonit-${VERSION}
-make -j$(nproc)
-'''
+cd source/catatonit-${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/catatonit-${VERSION}
+cd source/catatonit-${VERSION}
 make DESTDIR=${PART_DIR} install
 install -dm755 ${PART_DIR}/usr/libexec/podman
-ln -sf ../../bin/catatonit ${PART_DIR}/usr/libexec/podman/catatonit
-'''
+ln -sf ../../bin/catatonit ${PART_DIR}/usr/libexec/podman/catatonit'''

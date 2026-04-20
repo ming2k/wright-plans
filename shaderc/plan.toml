@@ -7,26 +7,18 @@ arch = "x86_64"
 url = "https://github.com/google/shaderc"
 
 [dependencies]
-build = [
-    "asciidoctor",
-    "cmake",
-    "gcc",
-    "ninja",
-    "python",
-    "spirv-headers",
-    "spirv-tools",
-    "glslang",
-]
+build = ["asciidoctor", "cmake", "gcc", "ninja", "python", "spirv-headers", "spirv-tools", "glslang"]
 runtime = ["glslang"]
 link = ["spirv-tools", "glslang"]
 
 [[sources]]
-uri = "https://github.com/google/shaderc/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "245002feccbe7f8361b223545a5654cea69780745886872d7efff50a38d96c66"
+url = "https://github.com/google/shaderc/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 # De-vendor libs and disable git versioning like Arch's PKGBUILD
 sed '/examples/d;/third_party/d' -i CMakeLists.txt
@@ -39,40 +31,32 @@ cat <<- BUILDVER_EOF > glslc/src/build-version.inc
 "${VERSION}\\n"
 "${spirv_tools_ver}\\n"
 "${glslang_ver}\\n"
-BUILDVER_EOF
-
-'''
+BUILDVER_EOF'''
 
 [lifecycle.configure]
 script = '''
-cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja \
+cd source
+cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_CXX_FLAGS="${CXXFLAGS} -ffat-lto-objects" \
   -DSHADERC_SKIP_TESTS=ON \
   -DPYTHON_EXECUTABLE=python \
-  -Dglslang_SOURCE_DIR=/usr/include/glslang
-
-'''
+  -Dglslang_SOURCE_DIR=/usr/include/glslang'''
 
 [lifecycle.compile]
 script = '''
-cmake --build ${BUILD_DIR}/build
+cmake --build ${WORKDIR}/build
 
-cd ${BUILD_DIR}/glslc
-asciidoctor -b manpage README.asciidoc -o glslc.1
-
-'''
+cd source/glslc
+asciidoctor -b manpage README.asciidoc -o glslc.1'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build
-install -Dm 644 ${BUILD_DIR}/glslc/glslc.1 ${PART_DIR}/usr/share/man/man1/glslc.1
-rm -f ${PART_DIR}/usr/lib/pkgconfig/shaderc_static.pc
-
-'''
+cd source
+DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build
+install -Dm 644 ${WORKDIR}/glslc/glslc.1 ${PART_DIR}/usr/share/man/man1/glslc.1
+rm -f ${PART_DIR}/usr/lib/pkgconfig/shaderc_static.pc'''
 
 [output]
 provides = ["glslc"]
-
-[lifecycle.fabricate]

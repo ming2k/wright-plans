@@ -7,42 +7,29 @@ arch = "x86_64"
 url = "https://github.com/KhronosGroup/glslang"
 
 [dependencies]
-build = [
-    "cmake",
-    "gcc",
-    "make",
-    "spirv-headers",
-    "spirv-tools",
-]
+build = ["cmake", "gcc", "make", "spirv-headers", "spirv-tools"]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/glslang/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "01985335785c97906a91afe3cb5ee015997696181ec6c125bab5555602ba08e2"
+url = "https://github.com/KhronosGroup/glslang/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir build && cd build
 cmake ..                                \
 -DCMAKE_INSTALL_PREFIX=/usr       \
 -DCMAKE_BUILD_TYPE=Release        \
 -DALLOW_EXTERNAL_SPIRV_TOOLS=ON   \
--DBUILD_SHARED_LIBS=ON
-
-'''
+-DBUILD_SHARED_LIBS=ON'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-make -j$(nproc)
-
-'''
+cd source/build
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+make DESTDIR=${PART_DIR} install'''

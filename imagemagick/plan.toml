@@ -7,33 +7,17 @@ arch = "x86_64"
 url = "https://imagemagick.org"
 
 [dependencies]
-build = [
-    "gcc",
-    "make",
-    "pkgconf",
-]
-link = [
-    "bzip2",
-    "fontconfig",
-    "freetype",
-    "lcms2",
-    "libjpeg-turbo",
-    "libpng",
-    "libtiff",
-    "libwebp",
-    "libxml2",
-    "openjpeg",
-    "xz",
-    "zlib",
-]
+build = ["gcc", "make", "pkgconf"]
+link = ["bzip2", "fontconfig", "freetype", "lcms2", "libjpeg-turbo", "libpng", "libtiff", "libwebp", "libxml2", "openjpeg", "xz", "zlib"]
 
 [[sources]]
-uri = "https://imagemagick.org/archive/releases/ImageMagick-${VERSION}.tar.xz"
 sha256 = "abb85df40f06fddf17d031629c7ad2778a55d478a8bff80d55ffee75c90a3982"
+url = "https://imagemagick.org/archive/releases/ImageMagick-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -52,24 +36,16 @@ cd ${BUILD_DIR}
     --without-raqm \
     --without-raw \
     --without-zip \
-    --without-zstd
-
-'''
+    --without-zstd'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 
-test -x ${PART_DIR}/usr/bin/magick
-
-'''
-
-[lifecycle.fabricate]
+test -x ${PART_DIR}/usr/bin/magick'''

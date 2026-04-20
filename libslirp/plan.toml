@@ -7,30 +7,25 @@ arch = "x86_64"
 url = "https://gitlab.freedesktop.org/slirp/libslirp"
 
 [dependencies]
-build = [
-    "bash",
-    "python",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["bash", "python", "meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v${VERSION}/libslirp-v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v${VERSION}/libslirp-v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''

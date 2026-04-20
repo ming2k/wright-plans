@@ -6,38 +6,19 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
 
-
 [dependencies]
 runtime = ["dbus", "double-conversion", "mesa", "pcre2"]
-build = [
-    "cmake",
-    "gcc",
-    "ninja",
-    "perl",
-    "pkgconf",
-    "python",
-]
-link = [
-    "fontconfig",
-    "freetype",
-    "glib",
-    "harfbuzz",
-    "libdrm",
-    "libpng",
-    "libxkbcommon",
-    "openssl",
-    "pcre2",
-    "vulkan-headers",
-    "zlib",
-]
+build = ["cmake", "gcc", "ninja", "perl", "pkgconf", "python"]
+link = ["fontconfig", "freetype", "glib", "harfbuzz", "libdrm", "libpng", "libxkbcommon", "openssl", "pcre2", "vulkan-headers", "zlib"]
 
 [[sources]]
-uri = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtbase-everywhere-src-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtbase-everywhere-src-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
@@ -56,14 +37,14 @@ cmake -B build -G Ninja \
     -DQT_FEATURE_system_zlib=ON \
     -DQT_FEATURE_system_freetype=ON \
     -DQT_FEATURE_vulkan=ON \
-    -DQT_FEATURE_sql=OFF
-
-'''
+    -DQT_FEATURE_sql=OFF'''
 
 [lifecycle.compile]
-script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
+script = '''
+cd source
+ninja -j$(nproc) -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

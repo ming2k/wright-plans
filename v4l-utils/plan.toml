@@ -11,33 +11,32 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["systemd", "elfutils", "json-c"]
 
 [[sources]]
-uri = "https://linuxtv.org/downloads/v4l-utils/v4l-utils-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://linuxtv.org/downloads/v4l-utils/v4l-utils-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr                        \
 --buildtype=release                  \
 -D gconv=disabled                    \
 -D v4l2-tracer=disabled              \
 -D qv4l2=disabled                    \
 -D qvidcap=disabled                  \
--D bpf=disabled
-
-'''
+-D bpf=disabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
 if [ -d ${PART_DIR}/usr/sbin ]; then
     mv ${PART_DIR}/usr/sbin/* ${PART_DIR}/usr/bin/
     rmdir ${PART_DIR}/usr/sbin
-fi
-
-'''
-
-[lifecycle.fabricate]
+fi'''

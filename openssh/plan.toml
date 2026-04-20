@@ -9,42 +9,41 @@ url = "https://www.openssh.com/portable.html"
 [dependencies]
 runtime = ["shadow"]
 build = ["gcc", "make", "pkgconf"]
-link = [
-    "glibc",
-    "libedit",
-    "linux-pam",
-    "openssl",
-    "zlib",
-    "libxcrypt",
-]
+link = ["glibc", "libedit", "linux-pam", "openssl", "zlib", "libxcrypt"]
 
 [[sources]]
-uri = "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "sshd.service"
 sha256 = "SKIP"
+type = "local"
+path = "sshd.service"
 
 [[sources]]
-uri = "ssh-agent.service"
 sha256 = "SKIP"
+type = "local"
+path = "ssh-agent.service"
 
 [[sources]]
-uri = "ssh-agent.socket"
 sha256 = "SKIP"
+type = "local"
+path = "ssh-agent.socket"
 
 [[sources]]
-uri = "sshd.pam"
 sha256 = "SKIP"
+type = "local"
+path = "sshd.pam"
 
 [[sources]]
-uri = "openssh.tmpfiles"
 sha256 = "SKIP"
+type = "local"
+path = "openssh.tmpfiles"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # --with-privsep-user=nobody: no dedicated sshd user needed
 # --with-security-key-builtin omitted: requires libfido2 (not yet packaged)
 # --with-xauth omitted: pure Wayland system, no X11
@@ -59,46 +58,43 @@ cd ${BUILD_DIR}
   --with-libedit \
   --with-ssl-engine \
   --disable-lastlog \
-  --with-default-path=/usr/bin
-
-'''
+  --with-default-path=/usr/bin'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 
 # ── Systemd system units ──────────────────────────────────────────────────────
-install -Dm644 ${FILES_DIR}/sshd.service         ${PART_DIR}/usr/lib/systemd/system/sshd.service
+install -Dm644 ${WORKDIR}/sshd.service         ${PART_DIR}/usr/lib/systemd/system/sshd.service
 
 # ── Systemd user units (ssh-agent) ────────────────────────────────────────────
-install -Dm644 ${FILES_DIR}/ssh-agent.service    ${PART_DIR}/usr/lib/systemd/user/ssh-agent.service
-install -Dm644 ${FILES_DIR}/ssh-agent.socket     ${PART_DIR}/usr/lib/systemd/user/ssh-agent.socket
+install -Dm644 ${WORKDIR}/ssh-agent.service    ${PART_DIR}/usr/lib/systemd/user/ssh-agent.service
+install -Dm644 ${WORKDIR}/ssh-agent.socket     ${PART_DIR}/usr/lib/systemd/user/ssh-agent.socket
 
 # ── tmpfiles (privilege separation chroot) ────────────────────────────────────
-install -Dm644 ${FILES_DIR}/openssh.tmpfiles     ${PART_DIR}/usr/lib/tmpfiles.d/openssh.conf
+install -Dm644 ${WORKDIR}/openssh.tmpfiles     ${PART_DIR}/usr/lib/tmpfiles.d/openssh.conf
 
 # ── Factory defaults (pristine upstream configs for reference) ────────────────
 install -Dm644 ${PART_DIR}/etc/ssh/ssh_config     ${PART_DIR}/usr/share/factory/etc/ssh/ssh_config
 install -Dm644 ${PART_DIR}/etc/ssh/sshd_config    ${PART_DIR}/usr/share/factory/etc/ssh/sshd_config
 
 # ── PAM configuration ─────────────────────────────────────────────────────────
-install -Dm644 ${FILES_DIR}/sshd.pam             ${PART_DIR}/etc/pam.d/sshd
+install -Dm644 ${WORKDIR}/sshd.pam             ${PART_DIR}/etc/pam.d/sshd
 
 # ── Permissions ───────────────────────────────────────────────────────────────
 # ssh-keysign needs setuid for host-based authentication
 if [ -e ${PART_DIR}/usr/lib/ssh/ssh-keysign ]; then
   chmod 4755 ${PART_DIR}/usr/lib/ssh/ssh-keysign
-fi
+fi'''
 
-'''
+[output]
+backup = ["/etc/ssh/ssh_config", "/etc/ssh/sshd_config", "/etc/pam.d/sshd"]
 
 [hooks]
 post_install = '''
@@ -111,6 +107,3 @@ systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
-
-[output]
-backup = ["/etc/ssh/ssh_config", "/etc/ssh/sshd_config", "/etc/pam.d/sshd"]

@@ -7,45 +7,25 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["dbus", "systemd"]
-build = [
-    "gobject-introspection",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
-link = [
-    "glib",
-    "gstreamer",
-    "gst-plugins-base",
-    "json-glib",
-    "gdk-pixbuf",
-    "libfuse3",
-    "pipewire",
-]
+build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
+link = ["glib", "gstreamer", "gst-plugins-base", "json-glib", "gdk-pixbuf", "libfuse3", "pipewire"]
 
 [[sources]]
-uri = "https://github.com/flatpak/xdg-desktop-portal/releases/download/${VERSION}/xdg-desktop-portal-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/flatpak/xdg-desktop-portal/releases/download/${VERSION}/xdg-desktop-portal-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --sysconfdir=/etc --localstatedir=/var --buildtype=release -Dsystemd=enabled -Dgeoclue=disabled -Dman-pages=disabled -Dtests=disabled
-
-'''
+cd source
+meson setup build --prefix=/usr --sysconfdir=/etc --localstatedir=/var --buildtype=release -Dsystemd=enabled -Dgeoclue=disabled -Dman-pages=disabled -Dtests=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

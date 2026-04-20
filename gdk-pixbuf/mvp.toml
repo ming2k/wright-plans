@@ -1,22 +1,9 @@
 [dependencies]
 runtime = []
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "gobject-introspection",
-]
-link = [
-    "glib",
-    "libjpeg-turbo",
-    "libpng",
-    "libtiff",
-    "shared-mime-info",
-]
+build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
+link = ["glib", "libjpeg-turbo", "libpng", "libtiff", "shared-mime-info"]
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dman=false -Dgtk_doc=false -Dtests=false -Dintrospection=enabled -Dglycin=disabled
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dman=false -Dgtk_doc=false -Dtests=false -Dintrospection=enabled -Dglycin=disabled'''

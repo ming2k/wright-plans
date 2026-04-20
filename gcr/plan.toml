@@ -8,38 +8,25 @@ url = "https://gitlab.gnome.org/GNOME/gcr"
 
 [dependencies]
 runtime = ["libsecret", "p11-kit"]
-build = [
-    "gobject-introspection",
-    "libxslt",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["gobject-introspection", "libxslt", "meson", "ninja", "pkgconf"]
 link = ["glib", "gtk4", "libgcrypt"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gcr/4.4/gcr-${VERSION}.tar.xz"
 sha256 = "0c3c341e49f9f4f2532a4884509804190a0c2663e6120360bb298c5d174a8098"
+url = "https://download.gnome.org/sources/gcr/4.4/gcr-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dintrospection=true -Dssh_agent=false -Dvapi=false
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dintrospection=true -Dssh_agent=false -Dvapi=false'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-meson compile -C build
-
-'''
+cd source
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-meson install -C build --destdir ${PART_DIR}
-
-'''
-
-[lifecycle.fabricate]
+cd source
+meson install -C build --destdir ${PART_DIR}'''

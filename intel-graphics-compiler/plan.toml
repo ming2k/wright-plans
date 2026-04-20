@@ -1,0 +1,133 @@
+name = "intel-graphics-compiler"
+version = "2.30.1"
+release = 1
+epoch = 1
+description = "Intel Graphics Compiler for OpenCL"
+license = "MIT, Apache-2.0 WITH LLVM-exception"
+arch = "x86_64"
+url = "https://github.com/intel/intel-graphics-compiler"
+
+[dependencies]
+build = ["cmake", "git", "python", "python-mako", "python-yaml", "ninja"]
+link = ["glibc", "libgcc", "libstdc++", "zlib", "zstd"]
+runtime = ["glibc", "libgcc", "libstdc++", "zlib", "zstd"]
+
+# 主源码：intel-graphics-compiler-2.30.1
+[[sources]]
+type = "http"
+url = "https://github.com/intel/intel-graphics-compiler/archive/v${VERSION}/intel-graphics-compiler-${VERSION}.tar.gz"
+sha256 = "4e5f46b20ec5c055f3cbfed16cfa9739b67f0d05786d736f3d10b09b11b171a3"
+
+[[sources]]
+type = "git"
+url = "https://github.com/intel/vc-intrinsics.git"
+ref = "v0.25.0"
+extract_to = "vc-intrinsics"
+
+[[sources]]
+type = "git"
+url = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator.git"
+ref = "de396f26ade6b0ac1f0f367b741dd5c78a76a2d9"
+extract_to = "SPIRV-LLVM-Translator-IGC-LLVM"
+
+[[sources]]
+type = "git"
+url = "https://github.com/KhronosGroup/SPIRV-Tools.git"
+ref = "28a883ba4c67f58a9540fb0651c647bb02883622"
+extract_to = "SPIRV-Tools"
+
+[[sources]]
+type = "git"
+url = "https://github.com/KhronosGroup/SPIRV-Headers.git"
+ref = "9268f3057354a2cb65991ba5f38b16d81e803692"
+extract_to = "SPIRV-Headers"
+
+[[sources]]
+type = "git"
+url = "https://github.com/intel/opencl-clang.git"
+ref = "7161d7c6d97da80f12739cebad9bf508555bbfd9"
+extract_to = "opencl-clang"
+
+[[sources]]
+type = "git"
+url = "https://github.com/llvm/llvm-project.git"
+ref = "llvmorg-16.0.6"
+extract_to = "llvm-project"
+
+[[sources]]
+type = "local"
+path = "patches/010-intel-graphics-compiler-disable-werror.patch"
+
+[options]
+ccache = true
+# 必须提供 Git 身份，否则 IGC 内部脚本在应用 LLVM 补丁时会失败
+env = { GIT_COMMITTER_NAME = "builduser", GIT_COMMITTER_EMAIL = "builduser@archlinux.org", GIT_AUTHOR_NAME = "builduser", GIT_AUTHOR_EMAIL = "builduser@archlinux.org" }
+
+[lifecycle.prepare]
+script = '''
+# 建立 LLVM 组件链接（模仿 Arch 的 prepare）
+ln -sf ${WORKDIR}/SPIRV-LLVM-Translator-IGC-LLVM ${WORKDIR}/llvm-project/llvm/projects/llvm-spirv
+ln -sf ${WORKDIR}/opencl-clang ${WORKDIR}/llvm-project/llvm/projects/opencl-clang
+
+# 应用 werror 补丁
+patch -d "intel-graphics-compiler-${VERSION}" -Np1 -i ${WORKDIR}/${MAIN_PART_NAME}-010-intel-graphics-compiler-disable-werror.patch
+'''
+
+[lifecycle.configure]
+isolation = "relaxed"
+script = '''
+# 限制符号可见性，防止符号重叠冲突（Arch 核心参数）
+export CFLAGS="${CFLAGS} -fno-semantic-interposition"
+export CXXFLAGS="${CXXFLAGS} -fno-semantic-interposition"
+export LDFLAGS="${LDFLAGS} -Wl,-Bsymbolic"
+
+# 修正 _FORTIFY_SOURCE 重定义警告
+export CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=?/}"
+export CXXFLAGS="${CXXFLAGS/-Wp,-D_FORTIFY_SOURCE=?/}"
+
+# 注意：S 指向解压出的目录，这确保了 CMake 能在 ../llvm-project 找到依赖
+cmake -B build -S "intel-graphics-compiler-${VERSION}" \
+    -GNinja \
+    -DCCLANG_FROM_SYSTEM=OFF \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_POLICY_VERSION_MINIMUM=3.5.0 \
+    -DCMAKE_SKIP_RPATH=YES \
+    -DIGC_OPTION__CLANG_MODE=Source \
+    -DIGC_OPTION__LINK_KHRONOS_SPIRV_TRANSLATOR=ON \
+    -DIGC_OPTION__LLD_MODE=Source \
+    -DIGC_OPTION__LLVM_MODE=Source \
+    -DIGC_OPTION__LLVM_PREFERRED_VERSION="16.0.6" \
+    -DIGC_OPTION__SPIRV_TOOLS_MODE=Source \
+    -DIGC_OPTION__USE_PREINSTALLED_SPIRV_HEADERS=OFF \
+    -DIGC_OPTION__VC_INTRINSICS_MODE=Source \
+    -Wno-dev
+'''
+
+[lifecycle.compile]
+script = "cmake --build build -j$(nproc)"
+
+[lifecycle.staging]
+script = '''
+DESTDIR=${PART_DIR} cmake --install build
+install -D -m644 "intel-graphics-compiler-${VERSION}/LICENSE.md" -t "${PART_DIR}/usr/share/licenses/${NAME}"
+
+# 按照 Arch 规范移动头文件
+mkdir -p ${PART_DIR}/usr/include/igc
+mv ${PART_DIR}/usr/include/opencl-c.h ${PART_DIR}/usr/include/igc/
+mv ${PART_DIR}/usr/include/opencl-c-base.h ${PART_DIR}/usr/include/igc/
+
+# 移动 NOTICES.txt 到许可证目录（igc* 可能包含主版本号，如 igc2）
+mv ${PART_DIR}/usr/lib/igc*/NOTICES.txt ${PART_DIR}/usr/share/licenses/${NAME}/ || true
+
+# opencl-clang 兼容性文件
+install -D -m644 opencl-clang/opencl_clang.h -t "${PART_DIR}/usr/include/cclang"
+install -D -m644 opencl-clang/LICENSE "${PART_DIR}/usr/share/licenses/${NAME}/LICENSE-opencl-clang"
+ln -sf libopencl-clang.so.16 "${PART_DIR}/usr/lib/libopencl-clang.so"
+'''
+
+[output]
+provides = ["intel-opencl-clang=16"]
+conflicts = ["intel-opencl-clang"]
+replaces = ["intel-opencl-clang"]

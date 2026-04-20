@@ -10,28 +10,21 @@ url = "https://github.com/CLIUtils/CLI11"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/CLIUtils/CLI11/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/CLIUtils/CLI11/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF
-
-'''
+cd source
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

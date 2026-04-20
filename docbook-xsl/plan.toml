@@ -10,13 +10,15 @@ url = "https://github.com/docbook/xslt10-stylesheets"
 runtime = ["libxml2"]
 
 [[sources]]
-uri = "https://github.com/docbook/xslt10-stylesheets/releases/download/release/${VERSION}/docbook-xsl-nons-${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://github.com/docbook/xslt10-stylesheets/releases/download/release/${VERSION}/docbook-xsl-nons-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
+cd source
 install -dm755 "${PART_DIR}/usr/share/xml/docbook"
-cp -r "${BUILD_DIR}/." "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-${VERSION}/"
+cp -r "${WORKDIR}/." "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-${VERSION}/"
 ln -sfn "xsl-stylesheets-${VERSION}" "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets"
 ln -sfn "xsl-stylesheets-${VERSION}" "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-nons"
 
@@ -31,9 +33,7 @@ cat > "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-${VERSION}/catalog.xml"
   <rewriteURI uriStartString="http://docbook.sourceforge.net/release/xsl/current/"  rewritePrefix="./"/>
   <rewriteURI uriStartString="http://docbook.sourceforge.net/release/xsl-nons/current/" rewritePrefix="./"/>
 </catalog>
-EOF
-
-'''
+EOF'''
 
 [hooks]
 post_install = '''
@@ -63,5 +63,3 @@ xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl/current/"  
 xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl-nons/current/" /etc/xml/catalog 2>/dev/null || true
 
 '''
-
-[lifecycle.fabricate]

@@ -7,24 +7,26 @@ arch = "x86_64"
 url = "https://github.com/hughsie/libxmlb"
 
 [[sources]]
-uri = "https://github.com/hughsie/libxmlb/releases/download/${VERSION}/libxmlb-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/hughsie/libxmlb/releases/download/${VERSION}/libxmlb-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr          \
 --buildtype=release    \
 -D tests=false         \
 -D introspection=false \
--D gtkdoc=false
-
-'''
+-D gtkdoc=false'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

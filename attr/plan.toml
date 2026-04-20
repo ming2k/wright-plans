@@ -10,38 +10,29 @@ url = "https://savannah.nongnu.org/projects/attr"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://download.savannah.gnu.org/releases/attr/attr-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://download.savannah.gnu.org/releases/attr/attr-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr     \
 --disable-static  \
 --sysconfdir=/etc \
---docdir=/usr/share/doc/attr-2.5.2
-
-'''
+--docdir=/usr/share/doc/attr-2.5.2'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}
-make check
-
-'''
+cd source
+make check'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

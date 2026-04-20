@@ -10,25 +10,21 @@ build = ["gcc", "make"]
 link = ["libogg"]
 
 [[sources]]
-uri = "https://downloads.xiph.org/releases/speex/speex-1.2.1.tar.gz"
 sha256 = "4b44d4f2b38a370a2d98a78329fefc56a0cf93d1c1be70029217baae6628feea"
+url = "https://downloads.xiph.org/releases/speex/speex-1.2.1.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --enable-shared --disable-static
-'''
+cd source
+./configure --prefix=/usr --enable-shared --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

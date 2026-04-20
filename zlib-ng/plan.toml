@@ -10,29 +10,28 @@ url = "https://github.com/zlib-ng/zlib-ng"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/zlib-ng/zlib-ng/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/zlib-ng/zlib-ng/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja \
+cd source
+cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja \
   -DCMAKE_BUILD_TYPE=None \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_INSTALL_LIBDIR=lib \
   -DWITH_GTEST=OFF \
-  -DBUILD_SHARED_LIBS=ON
-
-'''
+  -DBUILD_SHARED_LIBS=ON'''
 
 [lifecycle.compile]
-script = "cmake --build ${BUILD_DIR}/build"
+script = '''
+cd source
+cmake --build ${WORKDIR}/build'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build
-install -Dm 644 ${BUILD_DIR}/LICENSE.md ${PART_DIR}/usr/share/licenses/zlib-ng/LICENSE.md
-install -Dm 644 ${BUILD_DIR}/README.md ${PART_DIR}/usr/share/doc/zlib-ng/README.md
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build
+install -Dm 644 ${WORKDIR}/LICENSE.md ${PART_DIR}/usr/share/licenses/zlib-ng/LICENSE.md
+install -Dm 644 ${WORKDIR}/README.md ${PART_DIR}/usr/share/doc/zlib-ng/README.md'''

@@ -11,22 +11,17 @@ build = ["gcc", "rust"]
 link = ["gcc", "glibc"]
 
 [[sources]]
-uri = "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "e6826b7533ec3a885aba598377a6d20b5a6321ff3db76968e960c2352d3a5077"
+url = "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
-cargo build --release --locked -p tree-sitter-cli
-
-'''
+cd source
+cargo build --release --locked -p tree-sitter-cli'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-install -Dm755 target/release/tree-sitter ${PART_DIR}/usr/bin/tree-sitter
-
-'''
-
-[lifecycle.fabricate]
+cd source
+install -Dm755 target/release/tree-sitter ${PART_DIR}/usr/bin/tree-sitter'''

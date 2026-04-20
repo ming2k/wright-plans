@@ -7,42 +7,28 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["gstreamer", "libglvnd", "libgudev"]
-build = [
-    "gstreamer",
-    "libglvnd",
-    "libgudev",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["gstreamer", "libglvnd", "libgudev", "meson", "ninja", "pkgconf"]
 link = ["glib", "wayland"]
 
 [[sources]]
-uri = "https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.28.0.tar.xz"
 sha256 = "SKIP"
+url = "https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.28.0.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # 确保能找到 gstreamer-1.0.pc
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
 
-meson setup build --prefix=/usr -Dtests=disabled -Ddoc=disabled -Dintrospection=disabled -Dgl=enabled
-
-'''
+meson setup build --prefix=/usr -Dtests=disabled -Ddoc=disabled -Dintrospection=disabled -Dgl=enabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-ninja -j$(nproc)
-
-'''
+cd source/build
+ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-DESTDIR=${PART_DIR} ninja install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+DESTDIR=${PART_DIR} ninja install'''

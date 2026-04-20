@@ -7,28 +7,21 @@ arch = "x86_64"
 url = "https://pyyaml.org/wiki/LibYAML"
 
 [[sources]]
-uri = "https://github.com/yaml/libyaml/releases/download/${VERSION}/yaml-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/yaml/libyaml/releases/download/${VERSION}/yaml-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static
-
-'''
+cd source
+./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} make install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} make install'''

@@ -7,42 +7,21 @@ arch = "x86_64"
 url = "https://pipewire.org"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "rtkit",
-    "python-docutils",
-]
-link = [
-    "alsa-lib",
-    "bluez",
-    "dbus",
-    "glib",
-    "gstreamer",
-    "libcamera",
-    "libsndfile",
-    "ncurses",
-    "opus",
-    "readline",
-    "sbc",
-    "systemd",
-    "v4l-utils",
-]
+build = ["meson", "ninja", "pkgconf", "rtkit", "python-docutils"]
+link = ["alsa-lib", "bluez", "dbus", "glib", "gstreamer", "libcamera", "libsndfile", "ncurses", "opus", "readline", "sbc", "systemd", "v4l-utils"]
 
 [[sources]]
-uri = "https://github.com/PipeWire/pipewire/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/PipeWire/pipewire/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
-script = '''
-cd ${BUILD_DIR}
-
-'''
+script = "cd source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr                        \
 --buildtype=release                  \
 -D docs=disabled                     \
@@ -60,15 +39,17 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 -D udevrulesdir=/usr/lib/udev/rules.d \
 -D bluez5=enabled                    \
 -D libcamera=enabled                \
--D session-managers=
-
-'''
+-D session-managers='''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
 
 [hooks]
 post_install = '''
@@ -77,5 +58,3 @@ systemd-tmpfiles --create /usr/lib/tmpfiles.d/pipewire.conf 2>/dev/null || true
 
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
-[lifecycle.fabricate]

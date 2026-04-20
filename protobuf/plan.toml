@@ -11,26 +11,28 @@ build = ["cmake", "ninja"]
 link = ["abseil-cpp"]
 
 [[sources]]
-uri = "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cmake -B ${BUILD_DIR}/build -S ${BUILD_DIR} -G Ninja \
+cd source
+cmake -B ${WORKDIR}/build -S ${WORKDIR} -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_INSTALL_LIBDIR=lib \
   -DBUILD_SHARED_LIBS=ON \
   -Dprotobuf_BUILD_TESTS=OFF \
   -Dprotobuf_ABSL_PROVIDER=package \
-  -Dprotobuf_BUILD_PROTOC_BINARIES=ON
-
-'''
+  -Dprotobuf_BUILD_PROTOC_BINARIES=ON'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

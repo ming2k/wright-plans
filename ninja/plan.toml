@@ -8,30 +8,20 @@ url = "https://ninja-build.org/"
 
 [dependencies]
 runtime = ["python"]
-build = [
-    "bash",
-    "gcc",
-    "make",
-    "python",
-]
+build = ["bash", "gcc", "make", "python"]
 
 [[sources]]
-uri = "https://github.com/ninja-build/ninja/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/ninja-build/ninja/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-python3 configure.py --bootstrap
-
-'''
+cd source
+python3 configure.py --bootstrap'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm755 ninja ${PART_DIR}/usr/bin/ninja
-install -Dm644 misc/bash-completion ${PART_DIR}/usr/share/bash-completion/completions/ninja
-
-'''
-
-[lifecycle.fabricate]
+install -Dm644 misc/bash-completion ${PART_DIR}/usr/share/bash-completion/completions/ninja'''

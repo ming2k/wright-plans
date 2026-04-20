@@ -6,39 +6,27 @@ license = "MIT"
 arch = "x86_64"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "python",
-]
+build = ["meson", "ninja", "pkgconf", "python"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.gz"
 sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # 纯 Wayland 环境配置：
 # -Dglx=disabled: 禁用 GLX (依赖 X11)
 # -Dx11=disabled: 禁用 X11 支持
-meson setup build --prefix=/usr --libdir=lib -Dglx=disabled -Dx11=disabled -Dheaders=true
-
-'''
+meson setup build --prefix=/usr --libdir=lib -Dglx=disabled -Dx11=disabled -Dheaders=true'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-ninja -j$(nproc)
-
-'''
+cd source/build
+ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-DESTDIR=${PART_DIR} ninja install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+DESTDIR=${PART_DIR} ninja install'''

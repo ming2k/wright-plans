@@ -9,19 +9,14 @@ url = "https://www.passwordstore.org/"
 [dependencies]
 runtime = ["bash", "gnupg", "git"]
 build = ["make"]
-optional = [
-    { name = "wl-clipboard", description = "copy generated passwords to Wayland clipboard" },
-]
+optional = ["wl-clipboard"]
 
 [[sources]]
-uri = "https://git.zx2c4.com/password-store/snapshot/password-store-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://git.zx2c4.com/password-store/snapshot/password-store-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make PREFIX=/usr DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make PREFIX=/usr DESTDIR=${PART_DIR} install'''

@@ -12,17 +12,18 @@ runtime = ["aardvark-dns", "glibc", "nftables"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/containers/netavark/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "284faa7cc525b869cbac4053e0a4127ac743ca7da1457c49fffb35558ea9c78d"
+url = "https://github.com/containers/netavark/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "https://github.com/containers/netavark/releases/download/v${VERSION}/netavark-v${VERSION}-vendor.tar.gz"
 sha256 = "afa8e99a9691ef6ea485d6cb6b1897684d9f8a26719deaa3cbf37b5f17198e6f"
+url = "https://github.com/containers/netavark/releases/download/v${VERSION}/netavark-v${VERSION}-vendor.tar.gz"
 
 [lifecycle.prepare]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/netavark-${VERSION}
+cd source/netavark-${VERSION}
 ln -sfn ../vendor vendor
 install -dm755 .cargo
 cat > .cargo/config.toml << 'EOF'
@@ -31,15 +32,14 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
-EOF
-'''
+EOF'''
 
 [lifecycle.compile]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/netavark-${VERSION}
-export CARGO_HOME=${BUILD_DIR}/.cargo-home
-export CARGO_TARGET_DIR=${BUILD_DIR}/target
+cd source/netavark-${VERSION}
+export CARGO_HOME=${WORKDIR}/.cargo-home
+export CARGO_TARGET_DIR=${WORKDIR}/target
 
 # Use upstream Makefile to build binaries and generate systemd units.
 # We pass CARGO args to ensure strict offline building.
@@ -47,13 +47,12 @@ make PREFIX=/usr CARGO="cargo --locked --offline" \
     build \
     contrib/systemd/system/netavark-dhcp-proxy.service \
     contrib/systemd/system/netavark-firewalld-reload.service \
-    contrib/systemd/system/netavark-nftables-reload.service
-'''
+    contrib/systemd/system/netavark-nftables-reload.service'''
 
 [lifecycle.staging]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/netavark-${VERSION}
+cd source/netavark-${VERSION}
 
 # Upstream's `make install` strictly depends on building documentation via `go-md2man`.
 # Since `go-md2man` is not available in our build environment, we manually stage the
@@ -65,8 +64,7 @@ install -Dm755 bin/netavark-connection-tester ${PART_DIR}/usr/libexec/podman/net
 install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.socket ${PART_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.socket
 install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.service ${PART_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.service
 install -Dm644 contrib/systemd/system/netavark-firewalld-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-firewalld-reload.service
-install -Dm644 contrib/systemd/system/netavark-nftables-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-nftables-reload.service
-'''
+install -Dm644 contrib/systemd/system/netavark-nftables-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-nftables-reload.service'''
 
 [hooks]
 post_install = '''

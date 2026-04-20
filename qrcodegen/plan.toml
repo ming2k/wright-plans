@@ -10,29 +10,25 @@ url = "https://www.nayuki.io/page/qr-code-generator-library"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/nayuki/QR-Code-generator/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/nayuki/QR-Code-generator/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/c
+cd source/c
 gcc -c -O2 -fPIC -o qrcodegen.o qrcodegen.c
 gcc -shared -o libqrcodegen.so qrcodegen.o
 
-cd ${BUILD_DIR}/cpp
+cd source/cpp
 g++ -c -O2 -fPIC -std=c++17 -o qrcodegen.o qrcodegen.cpp
-g++ -shared -o libqrcodegencpp.so qrcodegen.o
-
-'''
+g++ -shared -o libqrcodegencpp.so qrcodegen.o'''
 
 [lifecycle.staging]
 script = '''
-install -Dm755 ${BUILD_DIR}/c/libqrcodegen.so ${PART_DIR}/usr/lib/libqrcodegen.so
-install -Dm644 ${BUILD_DIR}/c/qrcodegen.h ${PART_DIR}/usr/include/qrcodegen.h
+cd source
+install -Dm755 ${WORKDIR}/c/libqrcodegen.so ${PART_DIR}/usr/lib/libqrcodegen.so
+install -Dm644 ${WORKDIR}/c/qrcodegen.h ${PART_DIR}/usr/include/qrcodegen.h
 
-install -Dm755 ${BUILD_DIR}/cpp/libqrcodegencpp.so ${PART_DIR}/usr/lib/libqrcodegencpp.so
-install -Dm644 ${BUILD_DIR}/cpp/qrcodegen.hpp ${PART_DIR}/usr/include/qrcodegen.hpp
-
-'''
-
-[lifecycle.fabricate]
+install -Dm755 ${WORKDIR}/cpp/libqrcodegencpp.so ${PART_DIR}/usr/lib/libqrcodegencpp.so
+install -Dm644 ${WORKDIR}/cpp/qrcodegen.hpp ${PART_DIR}/usr/include/qrcodegen.hpp'''

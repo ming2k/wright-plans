@@ -11,21 +11,16 @@ runtime = ["systemd"]
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/Hummer12007/brightnessctl/archive/${VERSION}/brightnessctl-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/Hummer12007/brightnessctl/archive/${VERSION}/brightnessctl-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make ENABLE_SYSTEMD=1
-
-'''
+cd source
+make ENABLE_SYSTEMD=1'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make install DESTDIR=${PART_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make install DESTDIR=${PART_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0'''

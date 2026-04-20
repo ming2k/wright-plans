@@ -7,32 +7,19 @@ arch = "x86_64"
 url = "https://www.glfw.org/"
 
 [dependencies]
-build = [
-    "cmake",
-    "gcc",
-    "make",
-    "pkgconf",
-    "wayland-protocols",
-]
-link = [
-    "wayland",
-    "libxkbcommon",
-]
-runtime = [
-    "wayland",
-    "libxkbcommon",
-]
-optional = [
-    "libdecor",
-]
+build = ["cmake", "gcc", "make", "pkgconf", "wayland-protocols"]
+link = ["wayland", "libxkbcommon"]
+runtime = ["wayland", "libxkbcommon"]
+optional = ["libdecor"]
 
 [[sources]]
-uri = "https://github.com/glfw/glfw/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "c038d34200234d071fae9345bc455e4a8f2f544ab60150765d7704e08f3dac01"
+url = "https://github.com/glfw/glfw/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=Release \
@@ -41,20 +28,17 @@ cmake -B build \
   -DGLFW_LIBRARY_TYPE=SHARED \
   -DGLFW_BUILD_EXAMPLES=OFF \
   -DGLFW_BUILD_TESTS=OFF \
-  -DGLFW_BUILD_DOCS=OFF
-'''
+  -DGLFW_BUILD_DOCS=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-cmake --build build -j$(nproc)
-'''
+cd source
+cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} cmake --install build
-'''
+cd source
+DESTDIR=${PART_DIR} cmake --install build'''
 
 [output]
 provides = ["libglfw"]

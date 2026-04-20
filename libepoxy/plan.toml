@@ -12,29 +12,24 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["mesa", "libglvnd"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
 --prefix=/usr       \
 --buildtype=release \
--D x11=false
-
-'''
+-D x11=false'''
 
 [lifecycle.compile]
 script = '''
-meson compile -C ${BUILD_DIR}/build
-
-'''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
-
-'''
-
-[lifecycle.fabricate]
+cd source
+meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''

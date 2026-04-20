@@ -8,41 +8,27 @@ url = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator"
 
 [dependencies]
 runtime = ["llvm"]
-build = [
-    "cmake",
-    "gcc",
-    "llvm",
-    "make",
-    "spirv-headers",
-    "spirv-tools",
-]
+build = ["cmake", "gcc", "llvm", "make", "spirv-headers", "spirv-tools"]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "a5d476404ab88ac0d148211da50428178c89caef8af8042a3ca8e71e58ed9427"
+url = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [options]
 ccache = true
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR=/usr -DLLVM_SPIRV_INCLUDE_TESTS=OFF
-
-'''
+cd source
+cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR=/usr -DLLVM_SPIRV_INCLUDE_TESTS=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-cmake --build build -j$(nproc)
-
-'''
+cd source
+cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} cmake --install build
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} cmake --install build'''

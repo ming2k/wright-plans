@@ -8,20 +8,16 @@ url = "https://lynx.invisible-island.net/"
 
 [dependencies]
 build = ["gcc", "make"]
-link = [
-    "bzip2",
-    "ncurses",
-    "openssl",
-    "zlib",
-]
+link = ["bzip2", "ncurses", "openssl", "zlib"]
 
 [[sources]]
-uri = "https://invisible-mirror.net/archives/lynx/tarballs/lynx${VERSION}.tar.bz2"
 sha256 = "7374b89936d991669e101f4e97f2c9592036e1e8cdaa7bafc259a77ab6fb07ce"
+url = "https://invisible-mirror.net/archives/lynx/tarballs/lynx${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 sed -i configure \
   -e '/LDFLAGS="-L$cf_add_libdir $LDFLAGS"/d' \
   -e 's;,$BUILD_CC;,$CC_FOR_BUILD;' \
@@ -36,28 +32,20 @@ sed -i configure \
   --with-bzlib \
   --with-ssl \
   --enable-ipv6 \
-  cf_cv_header_path_ssl=/usr/include/openssl
-
-'''
+  cf_cv_header_path_ssl=/usr/include/openssl'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc) BUILD_CC=gcc BUILD_CPP='gcc -E'
-
-'''
+cd source
+make -j$(nproc) BUILD_CC=gcc BUILD_CPP='gcc -E''''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 
 if [ -d ${PART_DIR}/usr/etc ]; then
   mkdir -p ${PART_DIR}/etc
   cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
   rm -rf ${PART_DIR}/usr/etc
-fi
-
-'''
-
-[lifecycle.fabricate]
+fi'''

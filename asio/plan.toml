@@ -7,15 +7,13 @@ arch = "x86_64"
 url = "https://think-async.com/Asio/"
 
 [[sources]]
-uri = "https://github.com/chriskohlhoff/asio/archive/refs/tags/asio-1-38-0.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/chriskohlhoff/asio/archive/refs/tags/asio-1-38-0.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
+cd source
 install -d ${PART_DIR}/usr/include
-cp -r ${BUILD_DIR}/asio/include/asio.hpp ${PART_DIR}/usr/include/
-cp -r ${BUILD_DIR}/asio/include/asio ${PART_DIR}/usr/include/
-
-'''
-
-[lifecycle.fabricate]
+cp -r ${WORKDIR}/asio/include/asio.hpp ${PART_DIR}/usr/include/
+cp -r ${WORKDIR}/asio/include/asio ${PART_DIR}/usr/include/'''

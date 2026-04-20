@@ -8,29 +8,17 @@ url = "https://mpv.io"
 
 [dependencies]
 build = ["meson", "ninja", "pkgconf"]
-link = [
-    "alsa-lib",
-    "ffmpeg",
-    "lcms2",
-    "libass",
-    "libdrm",
-    "libplacebo",
-    "libva",
-    "luajit",
-    "mesa",
-    "pipewire",
-    "vulkan-loader",
-    "wayland",
-    "libxkbcommon",
-]
+link = ["alsa-lib", "ffmpeg", "lcms2", "libass", "libdrm", "libplacebo", "libva", "luajit", "mesa", "pipewire", "vulkan-loader", "wayland", "libxkbcommon"]
 
 [[sources]]
-uri = "https://github.com/mpv-player/mpv/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/mpv-player/mpv/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr \
 --buildtype=release \
 -D libmpv=true \
@@ -46,14 +34,14 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 -D pipewire=enabled \
 -D vulkan=enabled \
 -D wayland=enabled \
--D gl=enabled
-
-'''
+-D gl=enabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

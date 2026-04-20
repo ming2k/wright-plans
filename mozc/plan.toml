@@ -12,30 +12,27 @@ link = ["qt6-base"]
 runtime = ["qt6-base"]
 
 [[sources]]
-uri = "https://github.com/google/mozc/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/google/mozc/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/src
+cd source/src
 bazel --batch build server:mozc_server gui/tool:mozc_tool \
   --config=oss_linux \
   --config=release_build \
   --host_cxxopt=-O2 \
   --host_cxxopt=-pipe \
   --cxxopt=-O2 \
-  --cxxopt=-pipe
-'''
+  --cxxopt=-pipe'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/src
+cd source/src
 
 install -Dm755 bazel-bin/server/mozc_server ${PART_DIR}/usr/lib/mozc/mozc_server
 install -Dm755 bazel-bin/gui/tool/mozc_tool ${PART_DIR}/usr/lib/mozc/mozc_tool
 
-install -Dm644 ${BUILD_DIR}/LICENSE ${PART_DIR}/usr/share/licenses/mozc/LICENSE
-'''
-
-[lifecycle.fabricate]
+install -Dm644 ${WORKDIR}/LICENSE ${PART_DIR}/usr/share/licenses/mozc/LICENSE'''

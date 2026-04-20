@@ -7,42 +7,28 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["libevdev", "libgudev"]
-build = [
-    "gobject-introspection",
-    "libevdev",
-    "libgudev",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["gobject-introspection", "libevdev", "libgudev", "meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libmanette/0.2/libmanette-0.2.7.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/libmanette/0.2/libmanette-0.2.7.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # 修复：
 # 1. 将 -Dexamples=false 改为 -Ddemos=false (这是 libmanette 正确的选项名)
 # 2. 确保 introspection 和 vapi 选项格式正确
-meson setup build --prefix=/usr --libdir=lib -Dintrospection=true -Dvapi=false -Ddemos=false
-
-'''
+meson setup build --prefix=/usr --libdir=lib -Dintrospection=true -Dvapi=false -Ddemos=false'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-ninja -j$(nproc)
-
-'''
+cd source/build
+ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-DESTDIR=${PART_DIR} ninja install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+DESTDIR=${PART_DIR} ninja install'''

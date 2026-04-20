@@ -7,67 +7,35 @@ arch = "x86_64"
 url = "https://github.com/systemd/systemd"
 
 [dependencies]
-runtime = [
-    "bash",
-    "dbus",
-    "hwdata",
-    "kbd",
-    "kmod",
-]
-build = [
-    "gcc",
-    "gperf",
-    "llvm",
-    "python-jinja2",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "python",
-]
-link = [
-    "acl",
-    "cryptsetup",
-    "glibc",
-    "libcap",
-    "libgcrypt",
-    "libidn2",
-    "libseccomp",
-    "libxcrypt",
-    "linux-pam",
-    "lz4",
-    "openssl",
-    "p11-kit",
-    "pcre2",
-    "tpm2-tss",
-    "util-linux",
-    "xz",
-    "zstd",
-]
+runtime = ["bash", "dbus", "hwdata", "kbd", "kmod"]
+build = ["gcc", "gperf", "llvm", "python-jinja2", "meson", "ninja", "pkgconf", "python"]
+link = ["acl", "cryptsetup", "glibc", "libcap", "libgcrypt", "libidn2", "libseccomp", "libxcrypt", "linux-pam", "lz4", "openssl", "p11-kit", "pcre2", "tpm2-tss", "util-linux", "xz", "zstd"]
 
 [[sources]]
-uri = "https://github.com/systemd/systemd/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/systemd/systemd/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "90-theseus.preset"
 sha256 = "SKIP"
+type = "local"
+path = "90-theseus.preset"
 
 [[sources]]
-uri = "network-wait-online.conf"
 sha256 = "SKIP"
+type = "local"
+path = "network-wait-online.conf"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 sed -i -e 's/GROUP="render"/GROUP="video"/' \
        -e 's/GROUP="sgx", //' \
-       rules.d/50-udev-default.rules.in
-
-'''
+       rules.d/50-udev-default.rules.in'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
     --prefix=/usr \
     --buildtype=release \
@@ -111,26 +79,28 @@ meson setup build \
     -D nobody-group=nogroup \
     -D sbat-distro=theseus \
     -D sbat-distro-pkgname=systemd \
-    -D sbat-distro-url=https://github.com/ming2k/wright
-
-'''
+    -D sbat-distro-url=https://github.com/ming2k/wright'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
 
 # Preset only the services we opt into.
-install -Dm644 ${FILES_DIR}/90-theseus.preset ${PART_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
+install -Dm644 ${WORKDIR}/90-theseus.preset ${PART_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
 
 # wait-online: single-NIC laptop policy — any interface online is enough,
 # and cap the wait at 20s so a missing secondary link never pins boot.
-install -Dm644 ${FILES_DIR}/network-wait-online.conf \
-    ${PART_DIR}/usr/lib/systemd/system/systemd-networkd-wait-online.service.d/10-theseus.conf
+install -Dm644 ${WORKDIR}/network-wait-online.conf \
+    ${PART_DIR}/usr/lib/systemd/system/systemd-networkd-wait-online.service.d/10-theseus.conf'''
 
-'''
+[output]
+backup = ["/etc/issue", "/etc/locale.conf", "/etc/nsswitch.conf", "/etc/vconsole.conf", "/etc/systemd/coredump.conf", "/etc/systemd/journald.conf", "/etc/systemd/logind.conf", "/etc/systemd/networkd.conf", "/etc/systemd/oomd.conf", "/etc/systemd/resolved.conf", "/etc/systemd/sleep.conf", "/etc/systemd/system.conf", "/etc/systemd/timesyncd.conf", "/etc/systemd/user.conf", "/etc/udev/iocost.conf", "/etc/udev/udev.conf"]
 
 [hooks]
 post_install = '''
@@ -145,23 +115,3 @@ ldconfig 2>/dev/null || true
 systemctl daemon-reexec 2>/dev/null || true
 
 '''
-
-[output]
-backup = [
-    "/etc/issue",
-    "/etc/locale.conf",
-    "/etc/nsswitch.conf",
-    "/etc/vconsole.conf",
-    "/etc/systemd/coredump.conf",
-    "/etc/systemd/journald.conf",
-    "/etc/systemd/logind.conf",
-    "/etc/systemd/networkd.conf",
-    "/etc/systemd/oomd.conf",
-    "/etc/systemd/resolved.conf",
-    "/etc/systemd/sleep.conf",
-    "/etc/systemd/system.conf",
-    "/etc/systemd/timesyncd.conf",
-    "/etc/systemd/user.conf",
-    "/etc/udev/iocost.conf",
-    "/etc/udev/udev.conf",
-]

@@ -10,29 +10,27 @@ url = "https://www.jetbrains.com/lp/mono/"
 build = ["libarchive"]
 
 [[sources]]
-uri = "https://github.com/JetBrains/JetBrainsMono/releases/download/v${VERSION}/JetBrainsMono-${VERSION}.zip"
 sha256 = "SKIP"
+url = "https://github.com/JetBrains/JetBrainsMono/releases/download/v${VERSION}/JetBrainsMono-${VERSION}.zip"
+extract_to = "source"
 
 [lifecycle.configure]
-script = "echo preparing jetbrains-mono"
+script = '''
+cd source
+echo preparing jetbrains-mono'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 rm -rf jbmono
-bsdtar xf ${FILES_DIR}/JetBrainsMono-${VERSION}.zip -C jbmono
-
-'''
+bsdtar xf ${WORKDIR}/JetBrainsMono-${VERSION}.zip -C jbmono'''
 
 [lifecycle.staging]
 script = '''
+cd source
 mkdir -p ${PART_DIR}/usr/share/fonts/jetbrains-mono
-find ${BUILD_DIR}/jbmono -name '*.ttf' -not -name '*NL*' -exec cp {} ${PART_DIR}/usr/share/fonts/jetbrains-mono/ \;
-
-'''
+find ${WORKDIR}/jbmono -name '*.ttf' -not -name '*NL*' -exec cp {} ${PART_DIR}/usr/share/fonts/jetbrains-mono/ \;'''
 
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"
 post_upgrade = "fc-cache -s 2>/dev/null || true"
-
-[lifecycle.fabricate]

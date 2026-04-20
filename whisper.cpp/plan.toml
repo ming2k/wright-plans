@@ -8,44 +8,40 @@ url = "https://github.com/ggml-org/whisper.cpp"
 
 [dependencies]
 build = ["gcc", "cmake", "ninja"]
-optional = [
-    { name = "sdl2", description = "Real-time microphone input support" },
-]
+optional = ["sdl2"]
 
 [[sources]]
-uri = "https://github.com/ggml-org/whisper.cpp/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/ggml-org/whisper.cpp/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr/lib/whisper.cpp \
   -DBUILD_SHARED_LIBS=OFF \
   -DGGML_NATIVE=OFF \
-  -DWHISPER_SDL2=OFF
-'''
+  -DWHISPER_SDL2=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build -j$(nproc)
-'''
+cd source
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-'''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''
 
 [lifecycle.fabricate]
 script = '''
+cd source
 mkdir -p ${PART_DIR}/usr/bin
 for bin in ${PART_DIR}/usr/lib/whisper.cpp/bin/*; do
   ln -sf /usr/lib/whisper.cpp/bin/$(basename "$bin") ${PART_DIR}/usr/bin/$(basename "$bin")
 done
 
 mkdir -p ${PART_DIR}/usr/lib/pkgconfig
-ln -sf /usr/lib/whisper.cpp/lib/pkgconfig/whisper.pc ${PART_DIR}/usr/lib/pkgconfig/whisper.pc
-'''
+ln -sf /usr/lib/whisper.cpp/lib/pkgconfig/whisper.pc ${PART_DIR}/usr/lib/pkgconfig/whisper.pc'''

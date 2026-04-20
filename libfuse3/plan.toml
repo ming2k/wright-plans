@@ -7,35 +7,36 @@ arch = "x86_64"
 url = "https://github.com/libfuse/libfuse"
 
 [[sources]]
-uri = "https://github.com/libfuse/libfuse/releases/download/fuse-${VERSION}/fuse-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/libfuse/libfuse/releases/download/fuse-${VERSION}/fuse-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
   --prefix=/usr          \
   --sbindir=/usr/bin     \
   --buildtype=release    \
   -D tests=false         \
   -D examples=false      \
-  -D useroot=false
-
-'''
+  -D useroot=false'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
 
 # Remove legacy init scripts and static device nodes (handled by udev)
 rm -rf ${PART_DIR}/etc/init.d ${PART_DIR}/dev 2>/dev/null || true
 
 # Allow non-root users to mount FUSE filesystems via fusermount3
-chmod u+s ${PART_DIR}/usr/bin/fusermount3
-
-'''
+chmod u+s ${PART_DIR}/usr/bin/fusermount3'''
 
 [output]
 backup = ["/etc/fuse.conf"]

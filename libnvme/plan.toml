@@ -7,45 +7,28 @@ arch = "x86_64"
 url = "https://github.com/linux-nvme/libnvme"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "gcc",
-]
-link = [
-    "dbus",
-    "json-c",
-    "keyutils",
-    "openssl",
-]
+build = ["meson", "ninja", "pkgconf", "gcc"]
+link = ["dbus", "json-c", "keyutils", "openssl"]
 
 [[sources]]
-uri = "https://github.com/linux-nvme/libnvme/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "ce1d9d393feb84c4e82ca096db2bdb7dd4a5fd1997d711cc1904796944f2c579"
+url = "https://github.com/linux-nvme/libnvme/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
   --prefix=/usr \
   -Ddocs=false \
-  -Dpython=disabled
-
-'''
+  -Dpython=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

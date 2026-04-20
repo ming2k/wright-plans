@@ -12,32 +12,29 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/dconf/0.49/dconf-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/dconf/0.49/dconf-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dvapi=false -Dman=false
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dvapi=false -Dman=false'''
 
 [lifecycle.compile]
 script = '''
-meson compile -C ${BUILD_DIR}/build
-
-'''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
+cd source
+meson install -C ${WORKDIR}/build --destdir ${PART_DIR}
 
 # /etc/dconf/db  — root-only: dconf-update writes compiled .db files here
 # /etc/dconf/profile — group-writable: users in the 'dconf' group can add profiles
 install -dm755  "${PART_DIR}/etc/dconf/db"
-install -dm2775 "${PART_DIR}/etc/dconf/profile"
-
-'''
+install -dm2775 "${PART_DIR}/etc/dconf/profile"'''
 
 [hooks]
 post_install = '''
@@ -45,5 +42,3 @@ groupadd -r dconf 2>/dev/null || true
 chgrp dconf /etc/dconf/profile
 
 '''
-
-[lifecycle.fabricate]

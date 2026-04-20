@@ -8,50 +8,28 @@ url = "https://www.qemu.org/"
 
 [dependencies]
 runtime = ["seabios"]
-build = [
-    "bash",
-    "python",
-    "python-distlib",
-    "perl",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
-link = [
-    "glib",
-    "pixman",
-    "zlib",
-    "libslirp",
-    "dtc",
-    "spice",
-]
+build = ["bash", "python", "python-distlib", "perl", "meson", "ninja", "pkgconf"]
+link = ["glib", "pixman", "zlib", "libslirp", "dtc", "spice"]
 
 [[sources]]
-uri = "https://download.qemu.org/qemu-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.qemu.org/qemu-${VERSION}.tar.xz"
+extract_to = "source"
 
 [options]
 timeout = 14400
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --target-list=x86_64-softmmu --python=/usr/bin/python3 --disable-download --enable-fdt=system --audio-drv-list= --enable-slirp --enable-spice --disable-docs --disable-werror
-
-'''
+cd source
+./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --target-list=x86_64-softmmu --python=/usr/bin/python3 --disable-download --enable-fdt=system --audio-drv-list= --enable-slirp --enable-spice --disable-docs --disable-werror'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

@@ -9,37 +9,26 @@ url = "https://www.gnu.org/software/wget/"
 [dependencies]
 runtime = ["ca-certificates"]
 build = ["gcc", "make"]
-link = [
-    "openssl",
-    "libidn2",
-    "libpsl",
-    "pcre2",
-    "zlib",
-]
+link = ["openssl", "libidn2", "libpsl", "pcre2", "zlib"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/wget/wget-${VERSION}.tar.lz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/wget/wget-${VERSION}.tar.lz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr      \
     --sysconfdir=/etc          \
-    --with-ssl=openssl
-
-'''
+    --with-ssl=openssl'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
+cd source
+make DESTDIR=${PART_DIR} install'''

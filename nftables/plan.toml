@@ -7,51 +7,35 @@ arch = "x86_64"
 url = "https://www.netfilter.org/projects/nftables/"
 
 [dependencies]
-build = [
-    "autoconf",
-    "automake",
-    "bison",
-    "flex",
-    "gcc",
-    "libmnl",
-    "libnftnl",
-    "make",
-    "pkgconf",
-]
-link = [
-    "gmp",
-    "jansson",
-    "libmnl",
-    "libnftnl",
-    "ncurses",
-    "readline",
-]
+build = ["autoconf", "automake", "bison", "flex", "gcc", "libmnl", "libnftnl", "make", "pkgconf"]
+link = ["gmp", "jansson", "libmnl", "libnftnl", "ncurses", "readline"]
 
 [[sources]]
-uri = "https://www.netfilter.org/pub/nftables/nftables-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.netfilter.org/pub/nftables/nftables-${VERSION}.tar.xz"
+extract_to = "source"
 
 [[sources]]
-uri = "nftables.service"
 sha256 = "SKIP"
+type = "local"
+path = "nftables.service"
 
 [[sources]]
-uri = "nftables.conf"
 sha256 = "SKIP"
+type = "local"
+path = "nftables.conf"
 
 [options]
 ccache = true
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-autoreconf -fiv
-
-'''
+cd source
+autoreconf -fiv'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr       \
   --sbindir=/usr/bin  \
   --sysconfdir=/etc   \
@@ -60,31 +44,25 @@ cd ${BUILD_DIR}
   --disable-debug     \
   --disable-man-doc   \
   --disable-python    \
-  --with-mini-gmp=no
-
-'''
+  --with-mini-gmp=no'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 
-install -Dm644 ${FILES_DIR}/nftables.conf ${PART_DIR}/etc/nftables.conf
-install -Dm644 ${FILES_DIR}/nftables.service ${PART_DIR}/usr/lib/systemd/system/nftables.service
+install -Dm644 ${WORKDIR}/nftables.conf ${PART_DIR}/etc/nftables.conf
+install -Dm644 ${WORKDIR}/nftables.service ${PART_DIR}/usr/lib/systemd/system/nftables.service'''
 
-'''
+[output]
+backup = ["/etc/nftables.conf"]
 
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
 pre_remove = "nft flush ruleset 2>/dev/null || true"
-
-[output]
-backup = ["/etc/nftables.conf"]

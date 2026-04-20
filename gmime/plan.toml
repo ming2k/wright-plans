@@ -11,32 +11,25 @@ build = ["gcc", "make", "pkgconf"]
 link = ["glib", "gpgme", "zlib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gmime/3.2/gmime-${VERSION}.tar.xz"
 sha256 = "2aea96647a468ba2160a64e17c6dc6afe674ed9ac86070624a3f584c10737d44"
+url = "https://download.gnome.org/sources/gmime/3.2/gmime-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr \
     --disable-static \
     --disable-maintainer-mode \
     --disable-gtk-doc \
-    --enable-introspection=no
-
-'''
+    --enable-introspection=no'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

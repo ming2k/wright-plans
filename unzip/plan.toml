@@ -11,29 +11,28 @@ build = ["bash", "bzip2", "gcc", "make"]
 runtime = ["bash", "bzip2"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/infozip/UnZip%206.x%20%28latest%29/UnZip%206.0/unzip60.tar.gz"
 sha256 = "036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37"
+url = "https://downloads.sourceforge.net/project/infozip/UnZip%206.x%20%28latest%29/UnZip%206.0/unzip60.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "https://www.linuxfromscratch.org/patches/blfs/12.2/unzip-6.0-consolidated_fixes-1.patch"
 sha256 = "02cfd942875ca492c8fd27dff773e633a4f0b9bb47af2c3ad2697e8df8aa79f8"
+url = "https://www.linuxfromscratch.org/patches/blfs/12.2/unzip-6.0-consolidated_fixes-1.patch"
 
 [[sources]]
-uri = "https://www.linuxfromscratch.org/patches/blfs/12.2/unzip-6.0-gcc14-1.patch"
 sha256 = "ea5c012b75512ab1a17ab70dcd379cff2ba19c6bb4c045e5cfab45c6c5d5d924"
+url = "https://www.linuxfromscratch.org/patches/blfs/12.2/unzip-6.0-gcc14-1.patch"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-patch -Np1 < ${FILES_DIR}/unzip-6.0-consolidated_fixes-1.patch
-patch -Np1 < ${FILES_DIR}/unzip-6.0-gcc14-1.patch
-sed -i '/struct tm \\*gmtime(), \\*localtime();/d' unix/unxcfg.h
-
-'''
+cd source
+patch -Np1 < ${WORKDIR}/unzip-6.0-consolidated_fixes-1.patch
+patch -Np1 < ${WORKDIR}/unzip-6.0-gcc14-1.patch
+sed -i '/struct tm \\*gmtime(), \\*localtime();/d' unix/unxcfg.h'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 DEFINES='-DACORN_FTYPE_NFS -DWILD_STOP_AT_DIR -DLARGE_FILE_SUPPORT \
   -DUNICODE_SUPPORT -DUNICODE_WCHAR -DUTF8_MAYBE_NATIVE -DNO_LCHMOD \
   -DDATE_FORMAT=DF_YMD -DUSE_BZIP2 -DNOMEMCPY -DNO_WORKING_ISPRINT'
@@ -41,17 +40,11 @@ make -f unix/Makefile prefix=/usr \
   D_USE_BZ2=-DUSE_BZIP2 L_BZ2=-lbz2 \
   LF2="${LDFLAGS}" \
   CF="${CFLAGS} ${CPPFLAGS} -I. ${DEFINES} -std=gnu17" \
-  unzips
-
-'''
+  unzips'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make prefix=${PART_DIR}/usr \
   MANDIR=${PART_DIR}/usr/share/man/man1 \
-  -f unix/Makefile install
-
-'''
-
-[lifecycle.fabricate]
+  -f unix/Makefile install'''

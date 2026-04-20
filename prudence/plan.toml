@@ -10,29 +10,25 @@ url = "https://github.com/ming2k/prudence"
 build = ["rust"]
 
 [[sources]]
-uri = "https://github.com/ming2k/prudence/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "eb16564fda7542cbc10a007f842a6ac4f4097210155a629d1757f9e1f31d58ea"
+url = "https://github.com/ming2k/prudence/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+env = {'CARGO_HOME': '${BUILD_DIR}/.cargo', 'CARGO_TARGET_DIR': '${BUILD_DIR}/target'}
 script = '''
-cd ${BUILD_DIR}
-cargo build --release --locked
-
-'''
+cd source
+cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm755 target/release/prudence ${PART_DIR}/usr/bin/prudence
-install -Dm644 man/man1/prudence.1 ${PART_DIR}/usr/share/man/man1/prudence.1
-
-'''
+install -Dm644 man/man1/prudence.1 ${PART_DIR}/usr/share/man/man1/prudence.1'''
 
 [lifecycle.fabricate]
 script = '''
+cd source
 ln -sf prudence ${PART_DIR}/usr/bin/trash
-ln -sf prudence.1 ${PART_DIR}/usr/share/man/man1/trash.1
-
-'''
+ln -sf prudence.1 ${PART_DIR}/usr/share/man/man1/trash.1'''

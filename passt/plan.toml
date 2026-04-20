@@ -11,21 +11,16 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://passt.top/passt/snapshot/passt-${VERSION}.tar.zst"
 sha256 = "SKIP"
+url = "https://passt.top/passt/snapshot/passt-${VERSION}.tar.zst"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make VERSION="${VERSION}" -j$(nproc)
-
-'''
+cd source
+make VERSION="${VERSION}" -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} prefix=/usr install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} prefix=/usr install'''

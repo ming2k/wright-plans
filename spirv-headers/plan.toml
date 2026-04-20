@@ -10,28 +10,21 @@ url = "https://github.com/KhronosGroup/SPIRV-Headers"
 build = ["cmake", "gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
 sha256 = "cab0a654c4917e16367483296b44cdb1d614e3120c721beafcd37e3a8580486c"
+url = "https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
-
-'''
+cd source
+cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-cmake --build build -j$(nproc)
-
-'''
+cd source
+cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} cmake --install build
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} cmake --install build'''

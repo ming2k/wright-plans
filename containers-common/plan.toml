@@ -7,13 +7,14 @@ arch = "x86_64"
 url = "https://github.com/containers/common"
 
 [[sources]]
-uri = "https://github.com/containers/common/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "414def665a172a4d79366dc594e5313d43d672ba19009aa2a3dd78272e277506"
+url = "https://github.com/containers/common/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/common-${VERSION}
+cd source/common-${VERSION}
 
 install -dm755 ${PART_DIR}/etc/containers/certs.d
 install -dm755 ${PART_DIR}/etc/containers/networks
@@ -37,11 +38,7 @@ install -Dm644 tests/policy.json ${PART_DIR}/etc/containers/policy.json
 cat > ${PART_DIR}/etc/containers/registries.conf << 'EOF'
 unqualified-search-registries = ["docker.io", "quay.io", "registry.fedoraproject.org"]
 short-name-mode = "permissive"
-EOF
-'''
+EOF'''
 
 [output]
-backup = [
-  "/etc/containers/policy.json",
-  "/etc/containers/registries.conf",
-]
+backup = ["/etc/containers/policy.json", "/etc/containers/registries.conf"]

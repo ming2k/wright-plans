@@ -10,28 +10,21 @@ url = "https://lz4.github.io/lz4/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/lz4/lz4/releases/download/v${VERSION}/lz4-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/lz4/lz4/releases/download/v${VERSION}/lz4-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make BUILD_STATIC=no PREFIX=/usr -j$(nproc)
-
-'''
+cd source
+make BUILD_STATIC=no PREFIX=/usr -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}
-make -j1 check
-
-'''
+cd source
+make -j1 check'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PART_DIR} install'''

@@ -10,12 +10,13 @@ url = "https://cmake.org/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://cmake.org/files/v4.3/cmake-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://cmake.org/files/v4.3/cmake-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
 ./bootstrap --prefix=/usr \
 --no-system-jsoncpp \
@@ -23,22 +24,14 @@ sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
 --no-system-librhash \
 --mandir=/share/man \
 --docdir=/share/doc/cmake-${VERSION} \
---parallel=$(nproc)
-
-'''
+--parallel=$(nproc)'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

@@ -10,27 +10,22 @@ url = "https://github.com/alsa-project/alsa-ucm-conf"
 runtime = ["alsa-lib"]
 
 [[sources]]
-uri = "https://github.com/alsa-project/alsa-ucm-conf/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/alsa-project/alsa-ucm-conf/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-echo "data-only package"
-
-'''
+cd source
+echo "data-only package"'''
 
 [lifecycle.compile]
 script = '''
-echo "no build needed"
-
-'''
+cd source
+echo "no build needed"'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p ${PART_DIR}/usr/share/alsa
-cp -a ucm2 ${PART_DIR}/usr/share/alsa/ucm2
-
-'''
-
-[lifecycle.fabricate]
+cp -a ucm2 ${PART_DIR}/usr/share/alsa/ucm2'''

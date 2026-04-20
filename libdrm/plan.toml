@@ -10,23 +10,25 @@ url = "https://dri.freedesktop.org/libdrm/"
 build = ["meson", "ninja"]
 
 [[sources]]
-uri = "https://dri.freedesktop.org/libdrm/libdrm-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://dri.freedesktop.org/libdrm/libdrm-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr          \
 --buildtype=release    \
 -D udev=true           \
--D valgrind=disabled
-
-'''
+-D valgrind=disabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

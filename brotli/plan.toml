@@ -9,20 +9,21 @@ arch = "x86_64"
 build = ["cmake", "gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/google/brotli/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/google/brotli/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib
-
-'''
+cd source
+cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib'''
 
 [lifecycle.compile]
-script = "cmake --build ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+cmake --build ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''

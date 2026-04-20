@@ -9,26 +9,16 @@ url = "https://neomutt.org/"
 [dependencies]
 runtime = ["ca-certificates", "gnupg"]
 build = ["gcc", "gettext", "make", "pkgconf"]
-link = [
-    "cyrus-sasl",
-    "gdbm",
-    "gnutls",
-    "gpgme",
-    "krb5",
-    "libidn2",
-    "lua",
-    "ncurses",
-    "pcre2",
-    "sqlite",
-]
+link = ["cyrus-sasl", "gdbm", "gnutls", "gpgme", "krb5", "libidn2", "lua", "ncurses", "pcre2", "sqlite"]
 
 [[sources]]
-uri = "https://github.com/neomutt/neomutt/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "a78e55a0df62b7f98566676d0ab9041aad89b2384bb5c6f3a96302a5cf49968d"
+url = "https://github.com/neomutt/neomutt/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr \
     --disable-doc \
     --with-lock=fcntl \
@@ -39,22 +29,14 @@ cd ${BUILD_DIR}
     --lua \
     --pcre2 \
     --gdbm \
-    --sqlite
-
-'''
+    --sqlite'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

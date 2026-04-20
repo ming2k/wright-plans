@@ -11,39 +11,38 @@ runtime = ["p11-kit"]
 build = ["python"]
 
 [[sources]]
-uri = "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "certdata2pem.py"
 sha256 = "SKIP"
+type = "local"
+path = "certdata2pem.py"
 
 [[sources]]
-uri = "bundle.sh"
 sha256 = "SKIP"
+type = "local"
+path = "bundle.sh"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p certs
-ln -sf ${BUILD_DIR}/nss/lib/ckfw/builtins/certdata.txt certs/certdata.txt
-ln -sf ${BUILD_DIR}/nss/lib/ckfw/builtins/nssckbi.h certs/nssckbi.h
+ln -sf ${WORKDIR}/nss/lib/ckfw/builtins/certdata.txt certs/certdata.txt
+ln -sf ${WORKDIR}/nss/lib/ckfw/builtins/nssckbi.h certs/nssckbi.h
 
 cd certs
-python3 ${FILES_DIR}/certdata2pem.py
+python3 ${WORKDIR}/certdata2pem.py
 
-cd ${BUILD_DIR}
-sh ${FILES_DIR}/bundle.sh
-
-'''
+cd source
+sh ${WORKDIR}/bundle.sh'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm644 ca-bundle.trust.p11-kit \
-  ${PART_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit
-
-'''
+  ${PART_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit'''
 
 [hooks]
 post_install = '''
@@ -54,5 +53,3 @@ post_upgrade = '''
 update-ca-trust
 
 '''
-
-[lifecycle.fabricate]

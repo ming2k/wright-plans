@@ -7,28 +7,21 @@ arch = "x86_64"
 url = "https://gnupg.org/software/npth/"
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/npth/npth-${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://gnupg.org/ftp/gcrypt/npth/npth-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static
-
-'''
+cd source
+./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} make install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} make install'''

@@ -7,59 +7,19 @@ arch = "x86_64"
 url = "https://obsproject.com"
 
 [dependencies]
-build = [
-    "cmake >= 3.28",
-    "ninja",
-    "pkgconf",
-    "simde",
-    "swig",
-    "uthash",
-]
-link = [
-    "alsa-lib",
-    "curl",
-    "ffmpeg",
-    "fontconfig",
-    "freetype",
-    "jansson",
-    "libdrm",
-    "libglvnd",
-    "libva",
-    "libxkbcommon",
-    "mbedtls",
-    "mesa",
-    "nlohmann-json",
-    "pciutils",
-    "pipewire",
-    "qt6-base",
-    "qt6-svg",
-    "qt6-wayland",
-    "rnnoise",
-    "speexdsp",
-    "v4l-utils",
-    "vulkan-loader",
-    "wayland",
-    "x264",
-    "zlib",
-]
-runtime = [
-    "xdg-desktop-portal",
-]
-optional = [
-    { name = "srt", description = "SRT streaming protocol support" },
-    { name = "librist", description = "RIST streaming protocol support" },
-    { name = "qrcodegen", description = "QR code generation" },
-    { name = "luajit", description = "Lua scripting support" },
-    { name = "python", description = "Python scripting support" },
-]
+build = ["cmake >= 3.28", "ninja", "pkgconf", "simde", "swig", "uthash"]
+link = ["alsa-lib", "curl", "ffmpeg", "fontconfig", "freetype", "jansson", "libdrm", "libglvnd", "libva", "libxkbcommon", "mbedtls", "mesa", "nlohmann-json", "pciutils", "pipewire", "qt6-base", "qt6-svg", "qt6-wayland", "rnnoise", "speexdsp", "v4l-utils", "vulkan-loader", "wayland", "x264", "zlib"]
+runtime = ["xdg-desktop-portal"]
+optional = ["srt", "librist", "qrcodegen", "luajit", "python"]
 
 [[sources]]
-uri = "git+https://github.com/obsproject/obs-studio.git#${VERSION}"
 sha256 = "SKIP"
+url = "git+https://github.com/obsproject/obs-studio.git#${VERSION}"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
@@ -86,14 +46,14 @@ cmake -B build -G Ninja \
     -DENABLE_VIRTUALCAM=OFF \
     -DENABLE_PLUGINS=ON \
     -DENABLE_FFMPEG_LOGGING=OFF \
-    -DENABLE_NEW_MPEGTS_OUTPUT=ON
-
-'''
+    -DENABLE_NEW_MPEGTS_OUTPUT=ON'''
 
 [lifecycle.compile]
-script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
+script = '''
+cd source
+ninja -j$(nproc) -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

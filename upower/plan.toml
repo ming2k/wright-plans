@@ -8,46 +8,34 @@ url = "https://gitlab.freedesktop.org/upower/upower"
 
 [dependencies]
 runtime = ["systemd"]
-build = [
-    "gettext",
-    "gobject-introspection",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "polkit",
-    "docbook-xsl",
-    "libxslt",
-]
-link = [
-    "glib",
-    "libgudev",
-    "libusb",
-    "polkit",
-]
+build = ["gettext", "gobject-introspection", "meson", "ninja", "pkgconf", "polkit", "docbook-xsl", "libxslt"]
+link = ["glib", "libgudev", "libusb", "polkit"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/upower/upower/-/archive/v${VERSION}/upower-v${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/upower/upower/-/archive/v${VERSION}/upower-v${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
   --prefix=/usr \
   --libexecdir=/usr/libexec \
   --buildtype=release \
   -Dos_backend=linux \
   -Dgtk-doc=false \
-  -Dsystemdsystemunitdir=/usr/lib/systemd/system
-
-'''
+  -Dsystemdsystemunitdir=/usr/lib/systemd/system'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
-'''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
 
 [hooks]
 post_install = '''
@@ -56,5 +44,3 @@ systemctl enable upower.service 2>/dev/null || true
 
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
-[lifecycle.fabricate]

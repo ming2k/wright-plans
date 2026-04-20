@@ -10,30 +10,28 @@ url = "https://rsms.me/inter/"
 build = ["libarchive"]
 
 [[sources]]
-uri = "https://github.com/rsms/inter/releases/download/v${VERSION}/Inter-${VERSION}.zip"
 sha256 = "SKIP"
+url = "https://github.com/rsms/inter/releases/download/v${VERSION}/Inter-${VERSION}.zip"
+extract_to = "source"
 
 [lifecycle.configure]
-script = "echo preparing inter-font"
+script = '''
+cd source
+echo preparing inter-font'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 rm -rf inter-extracted
 mkdir -p inter-extracted
-bsdtar xf ${FILES_DIR}/Inter-${VERSION}.zip -C inter-extracted
-
-'''
+bsdtar xf ${WORKDIR}/Inter-${VERSION}.zip -C inter-extracted'''
 
 [lifecycle.staging]
 script = '''
+cd source
 mkdir -p ${PART_DIR}/usr/share/fonts/inter
-find ${BUILD_DIR}/inter-extracted -name '*.ttf' -exec cp {} ${PART_DIR}/usr/share/fonts/inter/ \;
-
-'''
+find ${WORKDIR}/inter-extracted -name '*.ttf' -exec cp {} ${PART_DIR}/usr/share/fonts/inter/ \;'''
 
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"
 post_upgrade = "fc-cache -s 2>/dev/null || true"
-
-[lifecycle.fabricate]

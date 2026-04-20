@@ -11,24 +11,25 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["mbedtls"]
 
 [[sources]]
-uri = "https://code.videolan.org/rist/librist/-/archive/v${VERSION}/librist-v${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://code.videolan.org/rist/librist/-/archive/v${VERSION}/librist-v${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
     --prefix=/usr \
     --buildtype=release \
     -D built_tools=false \
-    -D test=false
-
-'''
+    -D test=false'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

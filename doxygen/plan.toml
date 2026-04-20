@@ -7,41 +7,29 @@ arch = "x86_64"
 url = "http://www.doxygen.nl"
 
 [dependencies]
-build = [
-    "cmake",
-    "gcc",
-    "flex",
-    "python",
-]
+build = ["cmake", "gcc", "flex", "python"]
 
 [[sources]]
-uri = "https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_16_1.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_16_1.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build \
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -Dbuild_doc=OFF \
     -Dbuild_wizard=OFF \
-    -Duse_libclang=OFF
-
-'''
+    -Duse_libclang=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-cmake --build build -j$(nproc)
-
-'''
+cd source
+cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} cmake --install build
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} cmake --install build'''

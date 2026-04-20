@@ -7,50 +7,31 @@ arch = "x86_64"
 url = "https://github.com/dracut-ng/dracut-ng"
 
 [dependencies]
-runtime = [
-    "bash",
-    "coreutils",
-    "cpio",
-    "kmod",
-    "systemd",
-    "util-linux",
-]
-build = [
-    "gcc",
-    "make",
-    "pkgconf",
-    "kmod",
-]
+runtime = ["bash", "coreutils", "cpio", "kmod", "systemd", "util-linux"]
+build = ["gcc", "make", "pkgconf", "kmod"]
 
 [[sources]]
-uri = "https://github.com/dracut-ng/dracut-ng/archive/${VERSION}/dracut-ng-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/dracut-ng/dracut-ng/archive/${VERSION}/dracut-ng-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib \
   --sysconfdir=/etc \
   --sbindir=/usr/bin \
   --systemdsystemunitdir=/usr/lib/systemd/system \
-  --disable-documentation
-
-'''
+  --disable-documentation'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

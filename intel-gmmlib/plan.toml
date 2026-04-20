@@ -11,23 +11,29 @@ build = ["cmake"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/intel/gmmlib/archive/intel-gmmlib-${VERSION}/intel-gmmlib-${VERSION}.tar.gz"
 sha256 = "6ae262b95540681ad5478c63affb880135f772c95410b092009a6f7dfc04a5ba"
+url = "https://github.com/intel/gmmlib/archive/intel-gmmlib-${VERSION}/intel-gmmlib-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cmake -B ${BUILD_DIR}/build -S ${BUILD_DIR} \
+cd source
+cmake -B ${WORKDIR}/build -S ${WORKDIR} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
-    -DBUILD_TESTING=ON
-
-'''
+    -DBUILD_TESTING=ON'''
 
 [lifecycle.compile]
-script = "make -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+make -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR}/build DESTDIR=${PART_DIR} install"
+script = '''
+cd source
+make -C ${WORKDIR}/build DESTDIR=${PART_DIR} install'''
 
 [lifecycle.fabricate]
-script = "install -Dm644 ${BUILD_DIR}/LICENSE.md ${PART_DIR}/usr/share/licenses/intel-gmmlib/LICENSE.md"
+script = '''
+cd source
+install -Dm644 ${WORKDIR}/LICENSE.md ${PART_DIR}/usr/share/licenses/intel-gmmlib/LICENSE.md'''

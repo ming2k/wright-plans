@@ -8,46 +8,25 @@ url = "https://github.com/stefanberger/swtpm"
 
 [dependencies]
 runtime = ["libtpms"]
-build = [
-    "autoconf",
-    "automake",
-    "bash",
-    "gcc",
-    "libtool",
-    "make",
-    "pkgconf",
-]
-link = [
-    "glib",
-    "gmp",
-    "json-glib",
-    "libtpms",
-    "openssl",
-]
+build = ["autoconf", "automake", "bash", "gcc", "libtool", "make", "pkgconf"]
+link = ["glib", "gmp", "json-glib", "libtpms", "openssl"]
 
 [[sources]]
-uri = "https://github.com/stefanberger/swtpm/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/stefanberger/swtpm/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./autogen.sh --prefix=/usr --disable-static --without-cuse --without-selinux --without-seccomp --disable-tests
-
-'''
+cd source
+./autogen.sh --prefix=/usr --disable-static --without-cuse --without-selinux --without-seccomp --disable-tests'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

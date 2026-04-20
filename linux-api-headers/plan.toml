@@ -10,18 +10,23 @@ url = "https://www.kernel.org"
 build = ["make", "zlib"]
 
 [[sources]]
-uri = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
-script = "echo preparing linux-api-headers"
+script = '''
+cd source
+echo preparing linux-api-headers'''
 
 [lifecycle.compile]
-script = "echo no compile stage for linux-api-headers"
+script = '''
+cd source
+echo no compile stage for linux-api-headers'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make mrproper
 make headers
 find usr/include -name '.*' -delete
@@ -29,8 +34,4 @@ rm -f usr/include/Makefile
 install -d ${PART_DIR}/usr
 cp -a usr/include ${PART_DIR}/usr/
 # Remove any stray files that leak into ${PART_DIR}
-find ${PART_DIR} -maxdepth 2 -name '*.pl' -delete
-
-'''
-
-[lifecycle.fabricate]
+find ${PART_DIR} -maxdepth 2 -name '*.pl' -delete'''

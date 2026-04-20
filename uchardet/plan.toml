@@ -10,32 +10,25 @@ url = "https://www.freedesktop.org/software/uchardet/"
 build = ["gcc", "make", "cmake"]
 
 [[sources]]
-uri = "https://www.freedesktop.org/software/uchardet/releases/uchardet-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.freedesktop.org/software/uchardet/releases/uchardet-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-mkdir -p ${BUILD_DIR}/build && cd ${BUILD_DIR}/build
+mkdir -p ${WORKDIR}/build && cd source/build
 cmake -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_BUILD_TYPE=Release \
       -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
       -DBUILD_STATIC=OFF \
-      ..
-
-'''
+      ..'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-make -j$(nproc)
-
-'''
+cd source/build
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+make DESTDIR=${PART_DIR} install'''

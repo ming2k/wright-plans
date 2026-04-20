@@ -8,40 +8,28 @@ url = "https://www.gtk.org"
 
 [dependencies]
 runtime = ["adwaita-icon-theme", "shared-mime-info", "iso-codes"]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "gobject-introspection",
-    "wayland-protocols",
-]
-link = [
-    "at-spi2-core",
-    "glib",
-    "pango",
-    "cairo",
-    "gdk-pixbuf",
-    "libepoxy",
-    "libxkbcommon",
-    "wayland",
-]
+build = ["meson", "ninja", "pkgconf", "gobject-introspection", "wayland-protocols"]
+link = ["at-spi2-core", "glib", "pango", "cairo", "gdk-pixbuf", "libepoxy", "libxkbcommon", "wayland"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gtk/3.24/gtk-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/gtk/3.24/gtk-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dwayland_backend=true -Dx11_backend=false -Dbroadway_backend=false -Dintrospection=true -Dgtk_doc=false -Dman=false
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dwayland_backend=true -Dx11_backend=false -Dbroadway_backend=false -Dintrospection=true -Dgtk_doc=false -Dman=false'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"
+script = '''
+cd source
+meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
 
 [hooks]
 post_install = '''
@@ -56,5 +44,3 @@ gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
 gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 
 '''
-
-[lifecycle.fabricate]

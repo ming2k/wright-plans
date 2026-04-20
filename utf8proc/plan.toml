@@ -7,29 +7,23 @@ arch = "x86_64"
 url = "https://github.com/JuliaStrings/utf8proc"
 
 [[sources]]
-uri = "https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-echo "cmake project"
-
-'''
+cd source
+echo "cmake project"'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
-make -j$(nproc)
-
-'''
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-DESTDIR=${PART_DIR} make install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+DESTDIR=${PART_DIR} make install'''

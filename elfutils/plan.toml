@@ -11,32 +11,25 @@ build = ["gcc", "make"]
 link = ["zlib"]
 
 [[sources]]
-uri = "https://sourceware.org/ftp/elfutils/${VERSION}/elfutils-${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://sourceware.org/ftp/elfutils/${VERSION}/elfutils-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr        \
             --disable-debuginfod \
-            --enable-libdebuginfod=dummy
-
-'''
+            --enable-libdebuginfod=dummy'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 rm -f ${PART_DIR}/usr/lib/lib*.a
-rm -rf ${PART_DIR}/usr/etc
-
-'''
-
-[lifecycle.fabricate]
+rm -rf ${PART_DIR}/usr/etc'''

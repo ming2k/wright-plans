@@ -1,0 +1,37 @@
+name = "libzip"
+version = "1.11.2"
+release = 1
+description = "C library for reading, creating, and modifying zip archives"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://libzip.org/"
+
+[dependencies]
+build = ["cmake", "ninja"]
+link = ["zlib", "openssl", "bzip2", "xz", "zstd"]
+runtime = ["zlib", "openssl", "bzip2", "xz", "zstd"]
+
+[[sources]]
+type = "http"
+url = "https://libzip.org/download/libzip-${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+cmake -B build -S ${WORKDIR} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DENABLE_BZIP2=ON -DENABLE_LZMA=ON -DENABLE_ZSTD=ON -DENABLE_OPENSSL=ON -DBUILD_EXAMPLES=OFF -DBUILD_REGRESS=OFF -DBUILD_DOC=OFF'''
+
+[lifecycle.compile]
+script = '''
+cd source
+ninja -C build'''
+
+[lifecycle.staging]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''
+
+[hooks]
+post_install = "ldconfig"
+post_upgrade = "ldconfig"

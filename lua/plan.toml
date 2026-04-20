@@ -10,31 +10,28 @@ url = "https://www.lua.org"
 link = ["readline"]
 
 [[sources]]
-uri = "https://www.lua.org/ftp/lua-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://www.lua.org/ftp/lua-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-sed -i 's/^CFLAGS=.*/CFLAGS= -O2 -Wall -Wextra -DLUA_COMPAT_5_3 -fPIC $(SYSCFLAGS) $(MYCFLAGS)/' src/Makefile
-
-'''
+cd source
+sed -i 's/^CFLAGS=.*/CFLAGS= -O2 -Wall -Wextra -DLUA_COMPAT_5_3 -fPIC $(SYSCFLAGS) $(MYCFLAGS)/' src/Makefile'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make -j$(nproc) linux-readline
 # Build shared library from the PIC-compiled archive objects
-cd ${BUILD_DIR}/src
+cd source/src
 ${CC:-gcc} -shared -fPIC -Wl,-soname,liblua.so.5.4 \
     $(ar t liblua.a | tr '\n' ' ') \
-    -lm -ldl -o liblua.so.5.4
-
-'''
+    -lm -ldl -o liblua.so.5.4'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make INSTALL_TOP=${PART_DIR}/usr INSTALL_MAN=${PART_DIR}/usr/share/man/man1 install
 
 # Install shared library
@@ -56,12 +53,8 @@ Libs.private: -lm -ldl
 Cflags: -I\${includedir}
 PCEOF
 cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua-5.4.pc
-cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua.pc
-
-'''
+cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua.pc'''
 
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
-
-[lifecycle.fabricate]

@@ -11,21 +11,23 @@ build = ["meson", "ninja"]
 link = ["glibc", "zlib"]
 
 [[sources]]
-uri = "https://xorg.freedesktop.org/releases/individual/lib/libpciaccess-${VERSION}.tar.xz"
 sha256 = "4af43444b38adb5545d0ed1c2ce46d9608cc47b31c2387fc5181656765a6fa76"
+url = "https://xorg.freedesktop.org/releases/individual/lib/libpciaccess-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
     --prefix=/usr \
-    --buildtype=release
-
-'''
+    --buildtype=release'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

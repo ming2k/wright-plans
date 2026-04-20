@@ -11,29 +11,22 @@ build = ["gcc", "make"]
 link = ["gmp"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/nettle/nettle-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/nettle/nettle-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static
-
-'''
+cd source
+./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
-chmod -v 755 ${PART_DIR}/usr/lib/lib{hogweed,nettle}.so
-
-'''
-
-[lifecycle.fabricate]
+chmod -v 755 ${PART_DIR}/usr/lib/lib{hogweed,nettle}.so'''

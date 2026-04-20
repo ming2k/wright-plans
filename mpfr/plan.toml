@@ -11,40 +11,31 @@ build = ["make"]
 link = ["gmp"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/mpfr/mpfr-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/mpfr/mpfr-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr        \
 --disable-static     \
 --enable-thread-safe \
---docdir=/usr/share/doc/mpfr-4.2.2
-
-'''
+--docdir=/usr/share/doc/mpfr-4.2.2'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make -j$(nproc)
-make html
-
-'''
+make html'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}
-make check
-
-'''
+cd source
+make check'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
-make DESTDIR=${PART_DIR} install-html
-
-'''
-
-[lifecycle.fabricate]
+make DESTDIR=${PART_DIR} install-html'''

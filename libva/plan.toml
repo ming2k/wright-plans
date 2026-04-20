@@ -11,25 +11,27 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["libdrm", "mesa", "wayland"]
 
 [[sources]]
-uri = "https://github.com/intel/libva/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "b10aceb30e93ddf13b2030eb70079574ba437be9b3b76065caf28a72c07e23e7"
+url = "https://github.com/intel/libva/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr \
 --buildtype=release \
 -D with_x11=no \
 -D with_glx=no \
 -D with_wayland=yes \
--D with_win32=no
-
-'''
+-D with_win32=no'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

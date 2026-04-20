@@ -11,31 +11,24 @@ build = ["gcc", "make"]
 link = ["ncurses", "readline"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/bash/bash-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/bash/bash-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr             \
             --without-bash-malloc     \
             --with-installed-readline \
-            --docdir=/usr/share/doc/bash-${VERSION}
-
-'''
+            --docdir=/usr/share/doc/bash-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

@@ -13,33 +13,29 @@ runtime = ["alsa-lib", "pipewire", "ncurses", "pulseaudio"]
 optional = ["sdl2", "portaudio", "jack"]
 
 [[sources]]
-uri = "https://github.com/karlstav/cava/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "43f994f7e609fab843af868d8a7bc21471ac62c5a4724ef97693201eac42e70a"
+url = "https://github.com/karlstav/cava/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
-script = """
-cd ${BUILD_DIR}
-autoreconf -vfi
-"""
+script = '''
+cd source
+autoreconf -vfi'''
 
 [lifecycle.configure]
-script = """
-cd ${BUILD_DIR}
-./configure \
-  --prefix=/usr
-"""
+script = '''
+cd source
+./configure --prefix=/usr'''
 
 [lifecycle.compile]
-script = """
-cd ${BUILD_DIR}
-make -j$(nproc)
-"""
+script = '''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
-script = """
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-"""
+script = '''
+cd source
+make DESTDIR=${PART_DIR} install'''
 
 [output]
 backup = ["/etc/cava/config"]

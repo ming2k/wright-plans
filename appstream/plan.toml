@@ -8,38 +8,17 @@ url = "https://www.freedesktop.org/wiki/Distributions/AppStream/"
 
 [dependencies]
 runtime = ["systemd"]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "gettext",
-    "gobject-introspection",
-    "itstool",
-    "gperf",
-    "docbook-xsl",
-]
-link = [
-    "glib",
-    "libxml2",
-    "libxmlb",
-    "curl",
-    "libfyaml",
-    "zstd",
-    "cairo",
-    "gdk-pixbuf",
-    "freetype",
-    "pango",
-    "fontconfig",
-    "librsvg",
-]
+build = ["meson", "ninja", "pkgconf", "gettext", "gobject-introspection", "itstool", "gperf", "docbook-xsl"]
+link = ["glib", "libxml2", "libxmlb", "curl", "libfyaml", "zstd", "cairo", "gdk-pixbuf", "freetype", "pango", "fontconfig", "librsvg"]
 
 [[sources]]
-uri = "https://github.com/ximion/appstream/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/ximion/appstream/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 sanitize_flags() {
     printf "%s" "$1" | sed -E "s/(^|[[:space:]])-I([[:space:]]|$)/ /g; s/[[:space:]]+/ /g; s/^ //; s/ $//"
 }
@@ -57,26 +36,20 @@ meson setup build              \
     -Dgir=true                 \
     -Dinstall-docs=false       \
     -Dman=true                 \
-    -Dbash-completion=false
-
-'''
+    -Dbash-completion=false'''
 
 [lifecycle.compile]
 script = '''
+cd source
 sanitize_flags() {
     printf "%s" "$1" | sed -E "s/(^|[[:space:]])-I([[:space:]]|$)/ /g; s/[[:space:]]+/ /g; s/^ //; s/ $//"
 }
 export CPPFLAGS="$(sanitize_flags "${CPPFLAGS:-}")"
 export CFLAGS="$(sanitize_flags "${CFLAGS:-}")"
 export CXXFLAGS="$(sanitize_flags "${CXXFLAGS:-}")"
-meson compile -C ${BUILD_DIR}/build
-
-'''
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
-
-'''
-
-[lifecycle.fabricate]
+cd source
+meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''

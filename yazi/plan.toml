@@ -12,21 +12,20 @@ link = ["gcc", "glibc"]
 optional = []
 
 [[sources]]
-uri = "https://github.com/sxyazi/yazi/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/sxyazi/yazi/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = { YAZI_GEN_COMPLETIONS = "true" }
+env = {'YAZI_GEN_COMPLETIONS': 'true'}
 script = '''
-cd ${BUILD_DIR}
-cargo build --release --locked
-
-'''
+cd source
+cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm755 target/release/yazi ${PART_DIR}/usr/bin/yazi
 install -Dm755 target/release/ya   ${PART_DIR}/usr/bin/ya
 
@@ -42,8 +41,4 @@ install -Dm644 yazi-cli/completions/ya.fish ${PART_DIR}/usr/share/fish/vendor_co
 
 # Desktop integration
 install -Dm644 assets/yazi.desktop ${PART_DIR}/usr/share/applications/yazi.desktop || true
-install -Dm644 assets/yazi.svg     ${PART_DIR}/usr/share/icons/hicolor/scalable/apps/yazi.svg || true
-
-'''
-
-[lifecycle.fabricate]
+install -Dm644 assets/yazi.svg     ${PART_DIR}/usr/share/icons/hicolor/scalable/apps/yazi.svg || true'''

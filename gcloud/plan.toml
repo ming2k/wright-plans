@@ -1,0 +1,38 @@
+name = "gcloud"
+version = "565.0.0"
+release = 1
+description = "Google Cloud SDK command-line tools (gcloud, gsutil, bq)"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://cloud.google.com/sdk"
+
+[dependencies]
+runtime = ["python"]
+
+[[sources]]
+type = "http"
+url = "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-${VERSION}-linux-x86_64.tar.gz"
+sha256 = "0972674c86b8ee87609263dcd3e3dc88efa0875e1d8c9ac499c52d43322b2a5f"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+cd source
+install -d ${PART_DIR}/usr/lib
+cp -a ${WORKDIR} ${PART_DIR}/usr/lib/google-cloud-sdk
+
+# Disable the built-in auto-updater; version management is handled by wright.
+printf '[core]
+disable_updater = true
+' > ${PART_DIR}/usr/lib/google-cloud-sdk/properties
+
+install -d ${PART_DIR}/usr/bin
+for bin in gcloud gsutil bq; do
+    ln -sf ../lib/google-cloud-sdk/bin/${bin} ${PART_DIR}/usr/bin/${bin}
+done
+
+# Bash completion
+install -Dm644 ${WORKDIR}/completion.bash.inc ${PART_DIR}/usr/share/bash-completion/completions/gcloud
+
+# Zsh completion
+install -Dm644 ${WORKDIR}/completion.zsh.inc ${PART_DIR}/usr/share/zsh/site-functions/_gcloud'''

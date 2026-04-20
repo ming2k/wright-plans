@@ -7,53 +7,30 @@ arch = "x86_64"
 url = "https://hpjansson.org/chafa/"
 
 [dependencies]
-runtime = [
-    "glib",
-    "freetype",
-    "libjpeg-turbo",
-    "librsvg",
-    "libtiff",
-    "libwebp",
-    "libavif",
-    "libheif",
-    "libjxl",
-]
-build = [
-    "gcc",
-    "make",
-    "pkgconf",
-]
-link = [
-    "glib",
-    "freetype",
-    "libjpeg-turbo",
-    "librsvg",
-    "libtiff",
-    "libwebp",
-    "libavif",
-    "libheif",
-    "libjxl",
-]
+runtime = ["glib", "freetype", "libjpeg-turbo", "librsvg", "libtiff", "libwebp", "libavif", "libheif", "libjxl"]
+build = ["gcc", "make", "pkgconf"]
+link = ["glib", "freetype", "libjpeg-turbo", "librsvg", "libtiff", "libwebp", "libavif", "libheif", "libjxl"]
 
 [[sources]]
-uri = "https://github.com/hpjansson/chafa/releases/download/${VERSION}/chafa-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/hpjansson/chafa/releases/download/${VERSION}/chafa-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
   --prefix=/usr \
   --disable-static \
   --disable-gtk-doc \
-  --disable-man
-
-'''
+  --disable-man'''
 
 [lifecycle.compile]
-script = "make -C ${BUILD_DIR} -j$(nproc)"
+script = '''
+cd source
+make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''

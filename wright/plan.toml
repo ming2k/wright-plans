@@ -11,37 +11,36 @@ runtime = ["ca-certificates"]
 build = ["rust", "cargo"]
 
 [[sources]]
-uri = "https://github.com/ming2k/wright/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/ming2k/wright/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "skel-plan.toml"
 sha256 = "SKIP"
+type = "local"
+path = "skel-plan.toml"
 
 [lifecycle.compile]
 dockyard = "relaxed"
-# dockyard = "native"
 script = '''
-cd ${BUILD_DIR}
-export CARGO_HOME=${BUILD_DIR}/.cargo
-cargo build --release
-'''
+cd source
+export CARGO_HOME=${WORKDIR}/.cargo
+cargo build --release'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm755 target/release/wright ${PART_DIR}/usr/bin/wright
 
 # Skeleton plan for new packages
-install -Dm644 ${FILES_DIR}/skel-plan.toml ${PART_DIR}/usr/share/wright/skel/plan.toml
+install -Dm644 ${WORKDIR}/skel-plan.toml ${PART_DIR}/usr/share/wright/skel/plan.toml
 
 # Plans workspace — created here so permissions are managed by the package
 install -dm755 ${PART_DIR}/var/lib/wright/plans
 
 # Install man pages
 install -dm755 ${PART_DIR}/usr/share/man/man1
-install -m644 target/man/wright*.1 ${PART_DIR}/usr/share/man/man1/
-'''
+install -m644 target/man/wright*.1 ${PART_DIR}/usr/share/man/man1/'''
 
 [hooks]
 post_install = '''
@@ -64,5 +63,3 @@ chgrp wright /var/lib/wright/plans
 chmod 2775 /var/lib/wright/plans
 chmod -R o-w /var/lib/wright/plans/
 '''
-
-[lifecycle.fabricate]

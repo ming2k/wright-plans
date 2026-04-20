@@ -11,12 +11,13 @@ link = ["glibc", "gmp", "nettle", "libidn2", "dbus", "libnetfilter_conntrack", "
 build = ["gcc", "make", "pkg-config"]
 
 [[sources]]
-uri = "https://thekelleys.org.uk/dnsmasq/dnsmasq-${VERSION}.tar.xz"
 sha256 = "4bf50c2c1018f9fbc26037df51b90ecea0cb73d46162846763b92df0d6c3a458"
+url = "https://thekelleys.org.uk/dnsmasq/dnsmasq-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make \
     CFLAGS="${CFLAGS}" \
     LDFLAGS="${LDFLAGS}" \
@@ -26,12 +27,11 @@ make \
     all-i18n -j$(nproc)
 
 cd contrib/lease-tools
-make all -j$(nproc)
-'''
+make all -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make \
     COPTS="-DHAVE_DNSSEC -DHAVE_DBUS -DHAVE_LIBIDN2 -DHAVE_CONNTRACK -DHAVE_NFTSET" \
     PREFIX=/usr \
@@ -48,13 +48,12 @@ install -Dm644 dbus/dnsmasq.conf ${PART_DIR}/usr/share/dbus-1/system.d/dnsmasq.c
 install -Dm644 dnsmasq.conf.example ${PART_DIR}/etc/dnsmasq.conf
 install -Dm644 trust-anchors.conf ${PART_DIR}/usr/share/dnsmasq/trust-anchors.conf
 
-sed -i 's,%%PREFIX%%,/usr,' ${PART_DIR}/etc/dnsmasq.conf
-'''
+sed -i 's,%%PREFIX%%,/usr,' ${PART_DIR}/etc/dnsmasq.conf'''
+
+[output]
+backup = ["/etc/dnsmasq.conf"]
 
 [hooks]
 post_install = "systemctl daemon-reload 2>/dev/null || true"
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 pre_remove = "systemctl stop dnsmasq 2>/dev/null || true"
-
-[output]
-backup = ["/etc/dnsmasq.conf"]

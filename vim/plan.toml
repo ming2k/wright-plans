@@ -7,30 +7,24 @@ arch = "x86_64"
 url = "https://www.vim.org"
 
 [dependencies]
-build = [
-    "gcc",
-    "autoconf",
-    "make",
-    "pkgconf",
-]
+build = ["gcc", "autoconf", "make", "pkgconf"]
 link = ["acl", "ncurses", "zlib"]
 
 [[sources]]
-uri = "https://github.com/vim/vim/archive/v${VERSION}/vim-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/vim/vim/archive/v${VERSION}/vim-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
 # Allow VIMRCLOC to override the compiled-in vimrc paths at install time
-sed -E 's|^.*(#define SYS_.*VIMRC_FILE.*").*$|\1|g' -i ${BUILD_DIR}/src/feature.h
-sed -E 's|^.*(#define VIMRC_FILE.*").*$|\1|g' -i ${BUILD_DIR}/src/feature.h
-(cd ${BUILD_DIR}/src && autoconf)
-
-'''
+sed -E 's|^.*(#define SYS_.*VIMRC_FILE.*").*$|\1|g' -i ${WORKDIR}/src/feature.h
+sed -E 's|^.*(#define VIMRC_FILE.*").*$|\1|g' -i ${WORKDIR}/src/feature.h
+(cd source/src && autoconf)'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
   --prefix=/usr \
   --localstatedir=/var/lib/vim \
@@ -46,25 +40,22 @@ cd ${BUILD_DIR}
   --enable-perlinterp=dynamic \
   --enable-rubyinterp=dynamic \
   --enable-tclinterp=dynamic \
-  --disable-canberra
-
-'''
+  --disable-canberra'''
 
 [lifecycle.compile]
-script = "make -j$(nproc) -C ${BUILD_DIR}"
+script = '''
+cd source
+make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
 script = '''
-make -j1 -C ${BUILD_DIR} VIMRCLOC=/etc DESTDIR=${PART_DIR} install
+cd source
+make -j1 -C ${WORKDIR} VIMRCLOC=/etc DESTDIR=${PART_DIR} install
 
 # Remove files traditionally provided by (n)vi
 rm -f ${PART_DIR}/usr/bin/{ex,view}
 find ${PART_DIR}/usr/share/man -name 'ex.1' -o -name 'view.1' -o -name 'evim.1' \
   -delete
 
-install -Dm644 ${BUILD_DIR}/runtime/doc/uganda.txt \
-  ${PART_DIR}/usr/share/licenses/vim/license.txt
-
-'''
-
-[lifecycle.fabricate]
+install -Dm644 ${WORKDIR}/runtime/doc/uganda.txt \
+  ${PART_DIR}/usr/share/licenses/vim/license.txt'''

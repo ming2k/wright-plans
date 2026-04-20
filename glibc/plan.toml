@@ -8,28 +8,23 @@ url = "https://www.gnu.org/software/libc/"
 
 [dependencies]
 runtime = ["linux-api-headers >= 4.10", "tzdata >= 2025c"]
-build = [
-    "bison",
-    "gawk",
-    "gcc",
-    "make",
-    "python",
-    "sed",
-]
+build = ["bison", "gawk", "gcc", "make", "python", "sed"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/glibc/glibc-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/glibc/glibc-${VERSION}.tar.xz"
+extract_to = "source"
 
 [[sources]]
-uri = "locale.gen"
 sha256 = "SKIP"
+type = "local"
+path = "locale.gen"
 
 [lifecycle.configure]
 script = '''
 # Glibc requires an out-of-tree build
-mkdir -pv ${BUILD_DIR}/build
-cd ${BUILD_DIR}/build
+mkdir -pv ${WORKDIR}/build
+cd source/build
 
 # _FORTIFY_SOURCE=3 conflicts with --enable-fortify-source
 CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=3/}"
@@ -54,28 +49,22 @@ EOF
   --enable-stack-protector=strong     \
   --disable-nscd                      \
   --disable-profile                   \
-  --disable-werror
-
-'''
+  --disable-werror'''
 
 [lifecycle.compile]
 dockyard = "strict"
 script = '''
-cd ${BUILD_DIR}/build
-make -O -j$(nproc)
-
-'''
+cd source/build
+make -O -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}/build
-make -O check || true
-
-'''
+cd source/build
+make -O check || true'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
+cd source/build
 
 mkdir -p ${PART_DIR}/etc
 
@@ -92,7 +81,7 @@ rm -f ${PART_DIR}/usr/share/man/man8/{tzselect,zdump,zic}.8
 # Fix hardcoded /usr prefix in ldd so it resolves via /lib symlink
 sed '/RTLDLIST=/s@/usr@@g' -i ${PART_DIR}/usr/bin/ldd
 
-install -Dm644 ${FILES_DIR}/locale.gen ${PART_DIR}/etc/locale.gen
+install -Dm644 ${WORKDIR}/locale.gen ${PART_DIR}/etc/locale.gen
 
 # Default system locale
 echo 'LANG=en_US.UTF-8' > ${PART_DIR}/etc/locale.conf
@@ -125,9 +114,10 @@ cat > ${PART_DIR}/etc/ld.so.conf << "LDEOF"
 include /etc/ld.so.conf.d/*.conf
 
 LDEOF
-mkdir -pv ${PART_DIR}/etc/ld.so.conf.d
+mkdir -pv ${PART_DIR}/etc/ld.so.conf.d'''
 
-'''
+[output]
+backup = ["/etc/nsswitch.conf", "/etc/ld.so.conf", "/etc/locale.gen", "/etc/locale.conf"]
 
 [hooks]
 post_install = '''
@@ -144,11 +134,3 @@ localedef -i C -f UTF-8 C.UTF-8
 localedef -i en_US -f UTF-8 en_US.UTF-8
 
 '''
-
-[output]
-backup = [
-    "/etc/nsswitch.conf",
-    "/etc/ld.so.conf",
-    "/etc/locale.gen",
-    "/etc/locale.conf",
-]

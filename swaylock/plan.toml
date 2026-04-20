@@ -9,36 +9,24 @@ url = "https://github.com/swaywm/swaylock"
 [dependencies]
 runtime = ["cairo", "gdk-pixbuf"]
 build = ["meson", "ninja"]
-link = [
-    "libxkbcommon",
-    "linux-pam",
-    "wayland",
-    "wayland-protocols",
-]
+link = ["libxkbcommon", "linux-pam", "wayland", "wayland-protocols"]
 
 [[sources]]
-uri = "https://github.com/swaywm/swaylock/releases/download/v${VERSION}/swaylock-${VERSION}.tar.gz"
 sha256 = "aa251d5a8f335fe2ac9ec3cc2a6ac8772aa4dba2ec710ccd415956c6e89b11d3"
+url = "https://github.com/swaywm/swaylock/releases/download/v${VERSION}/swaylock-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dpam=enabled -Dgdk-pixbuf=enabled -Dman-pages=disabled
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dpam=enabled -Dgdk-pixbuf=enabled -Dman-pages=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

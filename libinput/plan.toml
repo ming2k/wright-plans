@@ -8,33 +8,30 @@ url = "https://www.freedesktop.org/wiki/Software/libinput/"
 
 [dependencies]
 runtime = ["libevdev", "mtdev"]
-build = [
-    "libevdev",
-    "meson",
-    "mtdev",
-    "ninja",
-]
+build = ["libevdev", "meson", "mtdev", "ninja"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/libinput/libinput/-/archive/${VERSION}/libinput-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/libinput/libinput/-/archive/${VERSION}/libinput-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr           \
 --buildtype=release     \
 -D documentation=false  \
 -D tests=false          \
 -D debug-gui=false      \
--D libwacom=false
-
-'''
+-D libwacom=false'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

@@ -9,32 +9,22 @@ url = "https://www.bluez.org/"
 [dependencies]
 runtime = ["dbus", "systemd"]
 build = ["gcc", "make"]
-link = [
-    "glibc",
-    "glib",
-    "dbus",
-    "ell",
-    "alsa-lib",
-    "json-c",
-    "libical",
-    "readline",
-]
+link = ["glibc", "glib", "dbus", "ell", "alsa-lib", "json-c", "libical", "readline"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/bluetooth/bluez-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.kernel.org/pub/linux/bluetooth/bluez-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # Remove bundled ell to ensure external ell is used exclusively
-rm -rf ell
-
-'''
+rm -rf ell'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
@@ -51,25 +41,23 @@ cd ${BUILD_DIR}
     --enable-external-ell \
     --enable-deprecated \
     --disable-manpages \
-    --disable-static
-
-'''
+    --disable-static'''
 
 [lifecycle.compile]
-script = "make -j$(nproc) -C ${BUILD_DIR}"
+script = '''
+cd source
+make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 
 # Intentionally do not install src/main.conf. bluetoothd has sensible built-in
 # defaults and upstream's sample main.conf drifts across releases — shipping it
 # causes "Failed to set default system config" as bluetoothd rejects keys that
 # were removed or renamed. Users can place their own /etc/bluetooth/main.conf
-# if they need to override defaults.
-
-'''
+# if they need to override defaults.'''
 
 [hooks]
 post_install = '''
@@ -78,5 +66,3 @@ systemctl enable bluetooth.service 2>/dev/null || true
 
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
-[lifecycle.fabricate]

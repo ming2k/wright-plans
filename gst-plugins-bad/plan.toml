@@ -7,44 +7,31 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["gst-plugins-base", "gstreamer"]
-build = [
-    "gst-plugins-base",
-    "gstreamer",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["gst-plugins-base", "gstreamer", "meson", "ninja", "pkgconf"]
 link = ["openssl"]
 
 [[sources]]
-uri = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.28.0.tar.xz"
 sha256 = "SKIP"
+url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.28.0.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
 
 # 最终配置：
 # -Dsctp=disabled: 修复 GCC 15 编译错误
 # -Dintrospection=disabled: 修复缺少依赖 GIR 的错误
 # -Dgpl=enabled: 启用必要的 GPL 插件
-meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Ddoc=disabled -Dgpl=enabled -Dsctp=disabled -Dintrospection=disabled
-
-'''
+meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Ddoc=disabled -Dgpl=enabled -Dsctp=disabled -Dintrospection=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-ninja -j$(nproc)
-
-'''
+cd source/build
+ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-DESTDIR=${PART_DIR} ninja install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+DESTDIR=${PART_DIR} ninja install'''

@@ -7,21 +7,16 @@ arch = "x86_64"
 url = "https://git.sr.ht/~sircmpwn/scdoc"
 
 [[sources]]
-uri = "https://git.sr.ht/~sircmpwn/scdoc/archive/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://git.sr.ht/~sircmpwn/scdoc/archive/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make PREFIX=/usr -j$(nproc)
-
-'''
+cd source
+make PREFIX=/usr -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make PREFIX=/usr DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make PREFIX=/usr DESTDIR=${PART_DIR} install'''

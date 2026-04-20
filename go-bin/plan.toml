@@ -7,23 +7,20 @@ arch = "x86_64"
 url = "https://go.dev"
 
 [[sources]]
-uri = "https://go.dev/dl/go${VERSION}.linux-amd64.tar.gz"
 sha256 = "031f088e5d955bab8657ede27ad4e3bc5b7c1ba281f05f245bcc304f327c987a"
+url = "https://go.dev/dl/go${VERSION}.linux-amd64.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -d ${PART_DIR}/usr/lib
-cp -a ${BUILD_DIR} ${PART_DIR}/usr/lib/go
+cp -a ${WORKDIR} ${PART_DIR}/usr/lib/go
 install -d ${PART_DIR}/usr/bin
 ln -sf ../lib/go/bin/go ${PART_DIR}/usr/bin/go
-ln -sf ../lib/go/bin/gofmt ${PART_DIR}/usr/bin/gofmt
-
-'''
+ln -sf ../lib/go/bin/gofmt ${PART_DIR}/usr/bin/gofmt'''
 
 [output]
 replaces = ["go"]
 conflicts = ["go"]
 provides = ["go"]
-
-[lifecycle.fabricate]

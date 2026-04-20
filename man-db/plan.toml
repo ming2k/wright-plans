@@ -8,21 +8,16 @@ url = "https://man-db.nongnu.org/"
 
 [dependencies]
 runtime = ["gdbm", "groff", "libpipeline"]
-build = [
-    "gcc",
-    "gdbm",
-    "groff",
-    "libpipeline",
-    "make",
-]
+build = ["gcc", "gdbm", "groff", "libpipeline", "make"]
 
 [[sources]]
-uri = "https://download.savannah.gnu.org/releases/man-db/man-db-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.savannah.gnu.org/releases/man-db/man-db-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr                           \
 --sbindir=/usr/bin                          \
 --docdir=/usr/share/doc/man-db-${VERSION} \
@@ -31,29 +26,19 @@ cd ${BUILD_DIR}
 --enable-cache-owner=bin                \
 --with-browser=/usr/bin/lynx            \
 --with-vgrind=/usr/bin/vgrind           \
---with-grap=/usr/bin/grap
-
-'''
+--with-grap=/usr/bin/grap'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}
-make check
-
-'''
+cd source
+make check'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

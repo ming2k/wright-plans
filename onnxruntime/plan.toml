@@ -11,8 +11,9 @@ build = ["gcc", "cmake", "ninja", "git", "python"]
 link = ["abseil-cpp", "protobuf"]
 
 [[sources]]
-uri = "https://github.com/microsoft/onnxruntime/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/microsoft/onnxruntime/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [options]
 timeout = 3600
@@ -20,7 +21,7 @@ timeout = 3600
 [lifecycle.configure]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake --compile-no-warning-as-error \
   -S cmake -B build -G Ninja \
   -Wno-dev \
@@ -35,19 +36,14 @@ cmake --compile-no-warning-as-error \
   -Donnxruntime_USE_DML=OFF \
   -Donnxruntime_USE_FULL_PROTOBUF=OFF \
   -DCMAKE_CXX_STANDARD=17 \
-  -DFETCHCONTENT_QUIET=ON
-'''
+  -DFETCHCONTENT_QUIET=ON'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build -j$(nproc)
-'''
+cd source
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

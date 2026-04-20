@@ -7,26 +7,24 @@ arch = "x86_64"
 url = "https://duktape.org"
 
 [[sources]]
-uri = "https://duktape.org/duktape-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://duktape.org/duktape-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-echo "makefile project"
-
-'''
+cd source
+echo "makefile project"'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 sed -i 's/-Wall -Wextra/-Wall -Wextra -fPIC/' Makefile.sharedlibrary
-make -f Makefile.sharedlibrary -j$(nproc)
-
-'''
+make -f Makefile.sharedlibrary -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p ${PART_DIR}/usr/lib ${PART_DIR}/usr/include ${PART_DIR}/usr/lib/pkgconfig
 install -m755 libduktape.so.207.20700 ${PART_DIR}/usr/lib/
 ln -sf libduktape.so.207.20700 ${PART_DIR}/usr/lib/libduktape.so.207
@@ -43,8 +41,4 @@ Description: Embeddable Javascript engine
 Version: ${VERSION}
 Libs: -L\${libdir} -lduktape -lm
 Cflags: -I\${includedir}
-PCEOF
-
-'''
-
-[lifecycle.fabricate]
+PCEOF'''

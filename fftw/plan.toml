@@ -11,28 +11,26 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
-uri = "http://www.fftw.org/fftw-${VERSION}.tar.gz"
 sha256 = "56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467"
+url = "http://www.fftw.org/fftw-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
     --prefix=/usr \
     --enable-shared \
     --enable-threads \
     --enable-sse2 \
-    --enable-avx
-'''
+    --enable-avx'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-'''
+cd source
+make DESTDIR=${PART_DIR} install'''

@@ -7,64 +7,28 @@ arch = "x86_64"
 url = "https://www.gnu.org/software/emacs/"
 
 [dependencies]
-runtime = [
-    "giflib",
-    "glib",
-    "gnutls",
-    "gtk3",
-    "harfbuzz",
-    "libjpeg-turbo",
-    "libpng",
-    "librsvg",
-    "libtiff",
-    "libwebp",
-    "ncurses",
-    "pango",
-    "tree-sitter",
-]
-build = [
-    "gcc",
-    "gnutls",
-    "make",
-    "patch",
-    "pkgconf",
-    "tree-sitter",
-]
-link = [
-    "giflib",
-    "glib",
-    "glibc",
-    "gnutls",
-    "gtk3",
-    "harfbuzz",
-    "libjpeg-turbo",
-    "libpng",
-    "librsvg",
-    "libtiff",
-    "libwebp",
-    "ncurses",
-    "pango",
-    "tree-sitter",
-]
+runtime = ["giflib", "glib", "gnutls", "gtk3", "harfbuzz", "libjpeg-turbo", "libpng", "librsvg", "libtiff", "libwebp", "ncurses", "pango", "tree-sitter"]
+build = ["gcc", "gnutls", "make", "patch", "pkgconf", "tree-sitter"]
+link = ["giflib", "glib", "glibc", "gnutls", "gtk3", "harfbuzz", "libjpeg-turbo", "libpng", "librsvg", "libtiff", "libwebp", "ncurses", "pango", "tree-sitter"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/emacs/emacs-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/emacs/emacs-${VERSION}.tar.xz"
+extract_to = "source"
 
 [[sources]]
-uri = "patches/emacs-30.2-tree-sitter-abi-version-r2.patch"
 sha256 = "54737e4f1b6624cf37b54b73b61cc89f5c149745793f29be8b4378cb1083e697"
+type = "local"
+path = "patches/emacs-30.2-tree-sitter-abi-version-r2.patch"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-patch -Np1 < ${FILES_DIR}/emacs-30.2-tree-sitter-abi-version-r2.patch
-
-'''
+cd source
+patch -Np1 < ${WORKDIR}/emacs-30.2-tree-sitter-abi-version-r2.patch'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr                 \
 --with-json                               \
 --with-tree-sitter                        \
@@ -79,22 +43,14 @@ cd ${BUILD_DIR}
 --without-imagemagick                     \
 --without-gconf                           \
 --without-gsettings                       \
---with-gnutls
-
-'''
+--with-gnutls'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

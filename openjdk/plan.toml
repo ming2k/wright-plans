@@ -8,21 +8,13 @@ url = "https://openjdk.org"
 
 [dependencies]
 runtime = ["alsa-lib", "freetype", "giflib", "lcms2", "libjpeg-turbo", "libpng", "zlib"]
-build = [
-    "autoconf",
-    "make",
-    "gcc",
-    "bash",
-    "zip",
-    "unzip",
-    "fontconfig",
-    "temurin25",
-]
+build = ["autoconf", "make", "gcc", "bash", "zip", "unzip", "fontconfig", "temurin25"]
 link = ["alsa-lib", "freetype", "giflib", "lcms2", "libjpeg-turbo", "libpng", "zlib"]
 
 [[sources]]
-uri = "git+https://github.com/openjdk/jdk.git#jdk-26-ga"
 sha256 = "SKIP"
+url = "git+https://github.com/openjdk/jdk.git#jdk-26-ga"
+extract_to = "source"
 
 [options]
 ccache = true
@@ -30,7 +22,7 @@ timeout = 7200
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 BOOT_JDK="${BOOT_JDK_PATH:-}"
 if [ -z "${BOOT_JDK}" ]; then
@@ -65,18 +57,16 @@ bash configure \
     --with-zlib=system \
     --with-freetype=system \
     --enable-headless-only \
-    --disable-warnings-as-errors
-'''
+    --disable-warnings-as-errors'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make images JOBS=$(nproc)
-'''
+cd source
+make images JOBS=$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 JDK_IMAGE=build/linux-x86_64-server-release/images/jdk
 
@@ -91,8 +81,7 @@ done
 install -dm755 ${PART_DIR}/etc/profile.d
 cat > ${PART_DIR}/etc/profile.d/jdk.sh << 'PROF'
 export JAVA_HOME=/usr/lib/jvm/java-26-openjdk
-PROF
-'''
+PROF'''
 
 [output]
 provides = ["java", "jdk"]

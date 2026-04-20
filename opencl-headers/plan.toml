@@ -1,0 +1,26 @@
+name = "opencl-headers"
+version = "2025.07.22"
+release = 1
+description = "OpenCL header files and API registry"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/KhronosGroup/OpenCL-Headers"
+
+[dependencies]
+build = ["cmake", "ninja"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/KhronosGroup/OpenCL-Headers/archive/refs/tags/v${VERSION}/OpenCL-Headers-${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+cmake -B build -S ${WORKDIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -GNinja -DOPENCL_HEADERS_BUILD_TESTING=OFF'''
+
+[lifecycle.staging]
+script = '''
+cd source
+DESTDIR=${PART_DIR} cmake --install build'''

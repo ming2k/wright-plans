@@ -8,40 +8,28 @@ url = "https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome"
 
 [dependencies]
 runtime = ["gnome-desktop", "gsettings-desktop-schemas", "xdg-desktop-portal"]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "xdg-desktop-portal",
-]
+build = ["meson", "ninja", "pkgconf", "xdg-desktop-portal"]
 link = ["gtk4", "libadwaita"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/xdg-desktop-portal-gnome/49/xdg-desktop-portal-gnome-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/xdg-desktop-portal-gnome/49/xdg-desktop-portal-gnome-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dsystemduserunitdir=/usr/lib/systemd/user
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dsystemduserunitdir=/usr/lib/systemd/user'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''
 
 [hooks]
 post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
-
-[lifecycle.fabricate]

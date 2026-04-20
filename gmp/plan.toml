@@ -10,50 +10,39 @@ url = "https://gmplib.org/"
 build = ["gcc", "m4", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gmp/gmp-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/gmp/gmp-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-sed -i '/long long t1;/,+1s/()/(...)/' configure
-
-'''
+cd source
+sed -i '/long long t1;/,+1s/()/(...)/' configure'''
 
 [lifecycle.configure]
 script = '''
 unset CFLAGS CXXFLAGS
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr    \
 --enable-cxx     \
 --disable-static \
---docdir=/usr/share/doc/gmp-6.3.0
-
-'''
+--docdir=/usr/share/doc/gmp-6.3.0'''
 
 [lifecycle.compile]
 script = '''
 unset CFLAGS CXXFLAGS
-cd ${BUILD_DIR}
+cd source
 make -j$(nproc)
-make html
-
-'''
+make html'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make check 2>&1 | tee gmp-check-log
-awk '/# PASS:/{total+=$3} END{print total}' gmp-check-log
-
-'''
+awk '/# PASS:/{total+=$3} END{print total}' gmp-check-log'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
-make DESTDIR=${PART_DIR} install-html
-
-'''
-
-[lifecycle.fabricate]
+make DESTDIR=${PART_DIR} install-html'''

@@ -8,35 +8,27 @@ url = "https://github.com/tpm2-software/tpm2-tools"
 
 [dependencies]
 runtime = ["tpm2-tss"]
-build = [
-    "gcc",
-    "make",
-    "pkgconf",
-]
-link = [
-    "curl",
-    "glibc",
-    "openssl",
-    "tpm2-tss",
-]
+build = ["gcc", "make", "pkgconf"]
+link = ["curl", "glibc", "openssl", "tpm2-tss"]
 
 [[sources]]
-uri = "https://github.com/tpm2-software/tpm2-tools/releases/download/${VERSION}/tpm2-tools-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/tpm2-software/tpm2-tools/releases/download/${VERSION}/tpm2-tools-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
     --prefix=/usr \
-    --disable-static
-
-'''
+    --disable-static'''
 
 [lifecycle.compile]
-script = "make -C ${BUILD_DIR} -j$(nproc)"
+script = '''
+cd source
+make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''

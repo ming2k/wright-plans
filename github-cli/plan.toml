@@ -10,22 +10,21 @@ url = "https://github.com/cli/cli"
 build = ["go", "make"]
 
 [[sources]]
-uri = "https://github.com/cli/cli/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/cli/cli/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
+cd source
 export PATH=/usr/lib/go/bin:$PATH
 export CGO_ENABLED=0
-make bin/gh manpages
-
-'''
+make bin/gh manpages'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm755 bin/gh ${PART_DIR}/usr/bin/gh
 install -dm755 ${PART_DIR}/usr/share/bash-completion/completions
 install -dm755 ${PART_DIR}/usr/share/fish/vendor_completions.d
@@ -37,8 +36,4 @@ install -dm755 ${PART_DIR}/usr/share/zsh/site-functions
 ./bin/gh completion -s zsh > ${PART_DIR}/usr/share/zsh/site-functions/_gh
 install -Dm644 share/man/man1/gh.1 ${PART_DIR}/usr/share/man/man1/gh.1
 install -Dm644 share/man/man1/gh-*.1 -t ${PART_DIR}/usr/share/man/man1
-install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/github-cli/LICENSE
-
-'''
-
-[lifecycle.fabricate]
+install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/github-cli/LICENSE'''

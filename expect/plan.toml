@@ -11,52 +11,41 @@ runtime = ["tcl"]
 build = ["gcc", "make", "tcl"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/expect/Expect/${VERSION}/expect${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://downloads.sourceforge.net/project/expect/Expect/${VERSION}/expect${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "https://www.linuxfromscratch.org/patches/lfs/12.4/expect-${VERSION}-gcc15-1.patch"
 sha256 = "SKIP"
+url = "https://www.linuxfromscratch.org/patches/lfs/12.4/expect-${VERSION}-gcc15-1.patch"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-patch -Np1 < ${FILES_DIR}/expect-${VERSION}-gcc15-1.patch
-
-'''
+cd source
+patch -Np1 < ${WORKDIR}/expect-${VERSION}-gcc15-1.patch'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr           \
 --with-tcl=/usr/lib     \
 --enable-shared         \
 --disable-rpath         \
 --mandir=/usr/share/man \
---with-tclinclude=/usr/include
-
-'''
+--with-tclinclude=/usr/include'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}
-make test
-
-'''
+cd source
+make test'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
-ln -svf expect${VERSION}/libexpect${VERSION}.so ${PART_DIR}/usr/lib
-
-'''
-
-[lifecycle.fabricate]
+ln -svf expect${VERSION}/libexpect${VERSION}.so ${PART_DIR}/usr/lib'''

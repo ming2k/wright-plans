@@ -10,20 +10,19 @@ url = "https://ant.apache.org/"
 runtime = ["openjdk"]
 
 [[sources]]
-uri = "https://dlcdn.apache.org/ant/binaries/apache-ant-${VERSION}-bin.tar.gz"
 sha256 = "SKIP"
+url = "https://dlcdn.apache.org/ant/binaries/apache-ant-${VERSION}-bin.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 install -dm755 ${PART_DIR}/usr/share/ant
 cp -a bin lib etc ${PART_DIR}/usr/share/ant/
 
 install -dm755 ${PART_DIR}/usr/bin
-ln -sf ../share/ant/bin/ant ${PART_DIR}/usr/bin/ant
-
-'''
+ln -sf ../share/ant/bin/ant ${PART_DIR}/usr/bin/ant'''
 
 [output]
 provides = ["apache-ant"]

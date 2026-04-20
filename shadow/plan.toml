@@ -11,12 +11,13 @@ build = ["gcc", "libxslt", "make"]
 link = ["glibc", "linux-pam"]
 
 [[sources]]
-uri = "https://github.com/shadow-maint/shadow/releases/download/${VERSION}/shadow-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/shadow-maint/shadow/releases/download/${VERSION}/shadow-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # groups(1) is provided by coreutils
 sed -i 's/groups$(EXEEXT) //' src/Makefile.in
 find man -name Makefile.in -exec sed -i 's/groups\.1 / /'   {} \;
@@ -29,13 +30,11 @@ sed -e 's:#ENCRYPT_METHOD DES:ENCRYPT_METHOD YESCRYPT:' \
 -e '/PATH=/{s@/sbin:@@;s@/bin:@@}'                   \
 -i etc/login.defs
 
-touch ${BUILD_DIR}/passwd_dummy
-
-'''
+touch ${WORKDIR}/passwd_dummy'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # --disable-account-tools-setuid: use fcaps (--with-fcaps) instead of setuid bits
 #   for account management tools (useradd, groupadd, etc.)
 # --with-yescrypt/bcrypt: yescrypt is the modern default; bcrypt for compatibility
@@ -55,20 +54,16 @@ cd ${BUILD_DIR}
 --with-libpam              \
 --without-libbsd           \
 --without-selinux          \
---with-group-name-max-length=32
-
-'''
+--with-group-name-max-length=32'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 make -C man DESTDIR=${PART_DIR} install
 
@@ -138,9 +133,10 @@ password  include     system-password
 session   include     system-session
 # End /etc/pam.d/${PROGRAM}
 PAMEOF
-done
+done'''
 
-'''
+[output]
+backup = ["/etc/login.defs", "/etc/default/useradd", "/etc/pam.d/login", "/etc/pam.d/passwd", "/etc/pam.d/su", "/etc/subuid", "/etc/subgid"]
 
 [hooks]
 post_install = '''
@@ -213,14 +209,3 @@ awk -F: '$3 >= 1000 && $3 < 65534 { print $1 }' /etc/passwd | while read -r user
 done
 
 '''
-
-[output]
-backup = [
-    "/etc/login.defs",
-    "/etc/default/useradd",
-    "/etc/pam.d/login",
-    "/etc/pam.d/passwd",
-    "/etc/pam.d/su",
-    "/etc/subuid",
-    "/etc/subgid",
-]

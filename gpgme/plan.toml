@@ -11,31 +11,24 @@ build = ["gcc", "make", "pkgconf"]
 link = ["libassuan", "libgpg-error", "gnupg"]
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/gpgme/gpgme-${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://gnupg.org/ftp/gcrypt/gpgme/gpgme-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
     --prefix=/usr \
     --disable-static \
-    --disable-gpg-test
-
-'''
+    --disable-gpg-test'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} make install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} make install'''

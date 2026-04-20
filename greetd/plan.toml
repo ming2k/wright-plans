@@ -9,27 +9,22 @@ url = "https://sr.ht/~kennylevinsen/greetd"
 [dependencies]
 runtime = ["seatd", "systemd"]
 build = ["rust"]
-link = [
-    "glibc",
-    "linux-pam",
-    "seatd",
-]
+link = ["glibc", "linux-pam", "seatd"]
 
 [[sources]]
-uri = "https://git.sr.ht/~kennylevinsen/greetd/archive/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://git.sr.ht/~kennylevinsen/greetd/archive/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
-cargo build --release --locked
-
-'''
+cd source
+cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 install -Dm755 target/release/greetd ${PART_DIR}/usr/bin/greetd
 install -Dm755 target/release/agreety ${PART_DIR}/usr/bin/agreety
@@ -83,9 +78,10 @@ install -dm750 ${PART_DIR}/var/lib/greetd
 install -Dm644 /dev/stdin ${PART_DIR}/usr/lib/sysusers.d/greetd.conf << 'SYSUSERS'
 u greeter - "Greeter user" /var/lib/greetd
 m greeter video
-SYSUSERS
+SYSUSERS'''
 
-'''
+[output]
+backup = ["/etc/greetd/config.toml", "/etc/pam.d/greetd"]
 
 [hooks]
 post_install = '''
@@ -100,6 +96,3 @@ chown greeter:greeter /var/lib/greetd 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
-
-[output]
-backup = ["/etc/greetd/config.toml", "/etc/pam.d/greetd"]

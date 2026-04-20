@@ -8,20 +8,16 @@ url = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git"
 
 [dependencies]
 build = ["gcc", "meson", "ninja"]
-link = [
-    "openssl",
-    "xz",
-    "zlib",
-    "zstd",
-]
+link = ["openssl", "xz", "zlib", "zstd"]
 
 [[sources]]
-uri = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build          \
   --prefix=/usr            \
   --sbindir=/usr/bin       \
@@ -30,23 +26,20 @@ meson setup build          \
   -D openssl=enabled       \
   -D xz=enabled            \
   -D zlib=enabled          \
-  -D zstd=enabled
-
-'''
+  -D zstd=enabled'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build
+cd source
+DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build
 
 # Create standard module configuration directories
 install -dm755 ${PART_DIR}/etc/depmod.d
 install -dm755 ${PART_DIR}/etc/modprobe.d
 install -dm755 ${PART_DIR}/usr/lib/depmod.d
-install -dm755 ${PART_DIR}/usr/lib/modprobe.d
-
-'''
-
-[lifecycle.fabricate]
+install -dm755 ${PART_DIR}/usr/lib/modprobe.d'''

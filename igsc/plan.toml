@@ -1,0 +1,32 @@
+name = "igsc"
+version = "0.9.5"
+release = 1
+description = "Intel Graphics System Firmware Update Library"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/intel/igsc"
+
+[dependencies]
+build = ["cmake", "ninja", "pkgconf", "metee"]
+link = ["glibc", "metee"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/intel/igsc/archive/refs/tags/V${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+cmake -B build -S igsc-${VERSION} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=Release -DMETEE_DIR=/usr/lib/cmake/metee'''
+
+[lifecycle.compile]
+script = '''
+cd source
+ninja -C build'''
+
+[lifecycle.staging]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

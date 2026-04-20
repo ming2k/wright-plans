@@ -10,31 +10,24 @@ url = "https://www.gnu.org/software/sed/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/sed/sed-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/sed/sed-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr
-
-'''
+cd source
+./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make -j$(nproc)
-make html
-
-'''
+make html'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 install -d -m755           ${PART_DIR}/usr/share/doc/sed-4.9
-install -m644 doc/sed.html ${PART_DIR}/usr/share/doc/sed-4.9
-
-'''
-
-[lifecycle.fabricate]
+install -m644 doc/sed.html ${PART_DIR}/usr/share/doc/sed-4.9'''

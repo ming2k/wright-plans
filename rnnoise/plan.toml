@@ -10,40 +10,35 @@ url = "https://github.com/xiph/rnnoise"
 build = ["gcc", "make", "autoconf", "automake", "libtool"]
 
 [[sources]]
-uri = "https://github.com/xiph/rnnoise/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/xiph/rnnoise/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "https://media.xiph.org/rnnoise/models/rnnoise_data-0b50c45.tar.gz"
 sha256 = "SKIP"
+url = "https://media.xiph.org/rnnoise/models/rnnoise_data-0b50c45.tar.gz"
 
 [lifecycle.prepare]
 script = '''
+cd source
 cd ${SRC_DIR}/rnnoise-${VERSION}
 cp ${SRC_DIR}/src/rnnoise_data* src/
-autoreconf -fi
-
-'''
+autoreconf -fi'''
 
 [lifecycle.configure]
 script = '''
+cd source
 cd ${SRC_DIR}/rnnoise-${VERSION}
-./configure --prefix=/usr --disable-static
-
-'''
+./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
+cd source
 cd ${SRC_DIR}/rnnoise-${VERSION}
-make -j$(nproc)
-
-'''
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
+cd source
 cd ${SRC_DIR}/rnnoise-${VERSION}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+make DESTDIR=${PART_DIR} install'''

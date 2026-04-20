@@ -8,38 +8,35 @@ url = "https://pipewire.pages.freedesktop.org/wireplumber/"
 
 [dependencies]
 build = ["meson", "ninja", "pkgconf"]
-link = [
-    "glib",
-    "lua",
-    "pipewire",
-    "systemd",
-]
+link = ["glib", "lua", "pipewire", "systemd"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${VERSION}/wireplumber-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${VERSION}/wireplumber-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr                \
 --buildtype=release          \
 -D doc=disabled              \
 -D tests=false               \
 -D system-lua=true           \
 -D elogind=disabled          \
--D systemd=enabled
-
-'''
+-D systemd=enabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
 
 [hooks]
 post_install = "systemctl daemon-reload 2>/dev/null || true"
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
-[lifecycle.fabricate]

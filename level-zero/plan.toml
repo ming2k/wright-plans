@@ -1,0 +1,32 @@
+name = "level-zero"
+version = "1.28.0"
+release = 1
+description = "oneAPI Level Zero Specification Headers and Loader"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/oneapi-src/level-zero"
+
+[dependencies]
+build = ["cmake", "ninja", "pkgconf"]
+link = ["glibc", "libgcc", "libstdc++"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/oneapi-src/level-zero/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+cmake -B build -S level-zero-${VERSION} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=Release'''
+
+[lifecycle.compile]
+script = '''
+cd source
+ninja -C build'''
+
+[lifecycle.staging]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

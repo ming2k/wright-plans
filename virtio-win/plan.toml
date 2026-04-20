@@ -7,13 +7,8 @@ arch = "x86_64"
 url = "https://fedorapeople.org/groups/virt/virtio-win/"
 
 [[sources]]
-uri = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.285-1/virtio-win.iso"
 sha256 = "SKIP"
+url = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.285-1/virtio-win.iso"
 
 [lifecycle.staging]
-script = '''
-install -Dm644 ${FILES_DIR}/virtio-win.iso ${PART_DIR}/usr/share/virtio-win/virtio-win.iso
-
-'''
-
-[lifecycle.fabricate]
+script = "install -Dm644 ${WORKDIR}/virtio-win.iso ${PART_DIR}/usr/share/virtio-win/virtio-win.iso"

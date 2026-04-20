@@ -7,36 +7,24 @@ arch = "x86_64"
 url = "https://gitlab.freedesktop.org/xdg/xdg-user-dirs"
 
 [dependencies]
-build = [
-    "gcc",
-    "gettext",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "docbook-xsl",
-    "libxslt",
-]
+build = ["gcc", "gettext", "meson", "ninja", "pkgconf", "docbook-xsl", "libxslt"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/xdg/xdg-user-dirs/-/archive/v${VERSION}/xdg-user-dirs-v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/xdg/xdg-user-dirs/-/archive/v${VERSION}/xdg-user-dirs-v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-meson compile -C build
-'''
+cd source
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-meson install -C build --destdir ${PART_DIR}
-'''
-
-[lifecycle.fabricate]
+cd source
+meson install -C build --destdir ${PART_DIR}'''

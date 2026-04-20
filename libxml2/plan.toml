@@ -8,43 +8,29 @@ url = "https://gitlab.gnome.org/GNOME/libxml2"
 
 [dependencies]
 runtime = ["icu", "python"]
-build = [
-    "doxygen",
-    "gcc",
-    "icu",
-    "meson",
-    "ninja",
-    "python",
-]
+build = ["doxygen", "gcc", "icu", "meson", "ninja", "python"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p build && cd build
 meson setup .. --prefix=/usr \
     -D history=enabled \
     -D icu=enabled \
     -D python=enabled \
-    -D docs=disabled
-
-'''
+    -D docs=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-ninja -j$(nproc)
-
-'''
+cd source/build
+ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-DESTDIR=${PART_DIR} ninja install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+DESTDIR=${PART_DIR} ninja install'''

@@ -7,54 +7,32 @@ arch = "x86_64"
 url = "https://github.com/flatpak/flatpak-builder"
 
 [dependencies]
-runtime = [
-    "flatpak",
-    "appstream",
-]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "appstream",
-    "elfutils",
-]
-link = [
-    "glib",
-    "json-glib",
-    "curl",
-    "elfutils",
-    "libxml2",
-    "ostree",
-    "libyaml",
-]
+runtime = ["flatpak", "appstream"]
+build = ["meson", "ninja", "pkgconf", "appstream", "elfutils"]
+link = ["glib", "json-glib", "curl", "elfutils", "libxml2", "ostree", "libyaml"]
 
 [[sources]]
-uri = "https://github.com/flatpak/flatpak-builder/releases/download/${VERSION}/flatpak-builder-${VERSION}.tar.xz"
 sha256 = "fd5bc36fe3b974395f782e6c920d8955cee168f513370c32cc800b69acd980d0"
+url = "https://github.com/flatpak/flatpak-builder/releases/download/${VERSION}/flatpak-builder-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build              \
     --prefix=/usr              \
     --buildtype=release        \
     -Ddocs=disabled            \
     -Dtests=false              \
     -Dinstalled_tests=false    \
-    -Dyaml=enabled
-
-'''
+    -Dyaml=enabled'''
 
 [lifecycle.compile]
 script = '''
-meson compile -C ${BUILD_DIR}/build
-
-'''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
-
-'''
-
-[lifecycle.fabricate]
+cd source
+meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''

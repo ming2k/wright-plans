@@ -10,29 +10,25 @@ build = ["gcc", "make", "nasm"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz"
 sha256 = "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e"
+url = "https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
     --prefix=/usr \
     --enable-shared \
     --enable-nasm \
-    --disable-static
-'''
+    --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

@@ -11,12 +11,13 @@ build = ["gcc", "make"]
 link = ["krb5", "openssl"]
 
 [[sources]]
-uri = "https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-${VERSION}/cyrus-sasl-${VERSION}.tar.gz"
 sha256 = "7ccfc6abd01ed67c1a0924b353e526f1b766b21f42d4562ee635a8ebfc5bb38c"
+url = "https://github.com/cyrusimap/cyrus-sasl/releases/download/cyrus-sasl-${VERSION}/cyrus-sasl-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 export CFLAGS="${CFLAGS} -std=gnu89"
 export CPPFLAGS="${CPPFLAGS} -DHAVE_TIME_H=1"
 ./configure --prefix=/usr \
@@ -25,22 +26,14 @@ export CPPFLAGS="${CPPFLAGS} -DHAVE_TIME_H=1"
     --disable-static \
     --enable-gssapi=/usr \
     --with-openssl=/usr \
-    --with-dblib=none
-
-'''
+    --with-dblib=none'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

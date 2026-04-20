@@ -7,14 +7,12 @@ arch = "x86_64"
 url = "https://github.com/adoptium/temurin25-binaries"
 
 [[sources]]
-uri = "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_x64_linux_hotspot_25.0.2_10.tar.gz"
 sha256 = "987387933b64b9833846dee373b640440d3e1fd48a04804ec01a6dbf718e8ab8"
+url = "https://github.com/adoptium/temurin25-binaries/releases/download/jdk-25.0.2%2B10/OpenJDK25U-jdk_x64_linux_hotspot_25.0.2_10.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
+cd source
 install -dm755 ${PART_DIR}/usr/lib/jvm
-cp -a ${BUILD_DIR} ${PART_DIR}/usr/lib/jvm/java-25-temurin
-
-'''
-
-[lifecycle.fabricate]
+cp -a ${WORKDIR} ${PART_DIR}/usr/lib/jvm/java-25-temurin'''

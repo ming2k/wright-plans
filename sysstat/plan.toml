@@ -11,12 +11,13 @@ runtime = ["systemd"]
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/sysstat/sysstat/archive/v${VERSION}.tar.gz"
 sha256 = "e48fc69401135dc08d2cd4ff58dbdbfce9b7485f76fc9049d97848e313c08dda"
+url = "https://github.com/sysstat/sysstat/archive/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 sa_lib_dir=/usr/lib/sa \
 sa_dir=/var/log/sa \
 conf_dir=/etc/default \
@@ -28,33 +29,27 @@ conf_dir=/etc/default \
   --sysconfdir=/etc \
   --disable-file-attr \
   --enable-install-cron \
-  --enable-copy-only
-
-'''
+  --enable-copy-only'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 
 if [ -d ${PART_DIR}/usr/sbin ]; then
   cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
   rm -rf ${PART_DIR}/usr/sbin
-fi
+fi'''
 
-'''
+[output]
+backup = ["/etc/default/sysstat"]
 
 [hooks]
 post_install = "systemctl enable --now sysstat 2>/dev/null || true"
 post_upgrade = "systemctl try-restart sysstat 2>/dev/null || true"
 pre_remove = "systemctl disable --now sysstat 2>/dev/null || true"
-
-[output]
-backup = ["/etc/default/sysstat"]

@@ -8,24 +8,17 @@ url = "https://gitlab.freedesktop.org/drm/igt-gpu-tools"
 
 [dependencies]
 build = ["meson", "ninja", "pkgconf", "python-docutils"]
-link = [
-    "cairo",
-    "glibc",
-    "kmod",
-    "libdrm",
-    "libpciaccess",
-    "libunwind",
-    "procps-ng",
-    "systemd",
-]
+link = ["cairo", "glibc", "kmod", "libdrm", "libpciaccess", "libunwind", "procps-ng", "systemd"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${VERSION}/igt-gpu-tools-v${VERSION}.tar.gz"
 sha256 = "675a46af1ec7998909819a0829aec6b03c79f0b573d1588d858dd54ac3063329"
+url = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${VERSION}/igt-gpu-tools-v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
     --prefix=/usr \
     --buildtype=release \
     -D chamelium=disabled \
@@ -36,18 +29,18 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
     -D testplan=disabled \
     -D tests=disabled \
     -D valgrind=disabled \
-    -D oping=disabled
-
-'''
+    -D oping=disabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
 
 [hooks]
 post_install = "setcap cap_perfmon=+ep /usr/bin/intel_gpu_top"
 post_upgrade = "setcap cap_perfmon=+ep /usr/bin/intel_gpu_top"
-
-[lifecycle.fabricate]

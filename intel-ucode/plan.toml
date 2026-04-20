@@ -7,18 +7,16 @@ arch = "x86_64"
 url = "https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files"
 
 [[sources]]
-uri = "https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/refs/tags/microcode-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/refs/tags/microcode-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
+cd source
 install -d "${PART_DIR}/usr/lib/firmware"
-cp -r "${BUILD_DIR}/intel-ucode" "${PART_DIR}/usr/lib/firmware/"
-cp -r "${BUILD_DIR}/intel-ucode-with-caveats" "${PART_DIR}/usr/lib/firmware/"
+cp -r "${WORKDIR}/intel-ucode" "${PART_DIR}/usr/lib/firmware/"
+cp -r "${WORKDIR}/intel-ucode-with-caveats" "${PART_DIR}/usr/lib/firmware/"
 
-install -Dm644 "${BUILD_DIR}/license" \
-    "${PART_DIR}/usr/share/licenses/intel-ucode/LICENSE"
-
-'''
-
-[lifecycle.fabricate]
+install -Dm644 "${WORKDIR}/license" \
+    "${PART_DIR}/usr/share/licenses/intel-ucode/LICENSE"'''

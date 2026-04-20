@@ -10,18 +10,23 @@ build = ["meson", "ninja"]
 link = ["glib", "gtk4"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libadwaita/1.9/libadwaita-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/libadwaita/1.9/libadwaita-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 dockyard = "relaxed"
-ENV="PATH=/usr/bin:/bin"
-script = "meson setup build ${BUILD_DIR} --prefix=/usr --buildtype=release -Dintrospection=enabled -Dvapi=false -Dtests=false -Ddocumentation=false "
+ENV = "PATH=/usr/bin:/bin"
+script = '''
+cd source
+meson setup build ${WORKDIR} --prefix=/usr --buildtype=release -Dintrospection=enabled -Dvapi=false -Dtests=false -Ddocumentation=false'''
 
 [lifecycle.compile]
-script = "ninja -C build"
+script = '''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

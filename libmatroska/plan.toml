@@ -11,24 +11,26 @@ build = ["gcc", "cmake", "ninja"]
 link = ["libebml"]
 
 [[sources]]
-uri = "https://dl.matroska.org/downloads/libmatroska/libmatroska-${VERSION}.tar.xz"
 sha256 = "572a3033b8d93d48a6a858e514abce4b2f7a946fe1f02cbfeca39bfd703018b3"
+url = "https://dl.matroska.org/downloads/libmatroska/libmatroska-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja \
+cd source
+cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_LIBDIR=lib \
   -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-  -DBUILD_SHARED_LIBS=ON
-
-'''
+  -DBUILD_SHARED_LIBS=ON'''
 
 [lifecycle.compile]
-script = "cmake --build ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+cmake --build ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''

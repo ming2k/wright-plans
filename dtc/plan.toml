@@ -7,31 +7,19 @@ arch = "x86_64"
 url = "https://www.kernel.org/pub/software/utils/dtc/"
 
 [dependencies]
-build = [
-    "bash",
-    "gcc",
-    "make",
-    "pkgconf",
-    "flex",
-    "bison",
-]
+build = ["bash", "gcc", "make", "pkgconf", "flex", "bison"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/software/utils/dtc/dtc-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.kernel.org/pub/software/utils/dtc/dtc-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc) NO_PYTHON=1 PREFIX=/usr CFLAGS="${CFLAGS} -std=gnu17"
-
-'''
+cd source
+make -j$(nproc) NO_PYTHON=1 PREFIX=/usr CFLAGS="${CFLAGS} -std=gnu17"'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} NO_PYTHON=1 PREFIX=/usr CFLAGS="${CFLAGS} -std=gnu17" install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} NO_PYTHON=1 PREFIX=/usr CFLAGS="${CFLAGS} -std=gnu17" install'''

@@ -11,28 +11,21 @@ build = ["gcc", "make", "pkgconf"]
 link = ["libuuid", "zlib"]
 
 [[sources]]
-uri = "https://oligarchy.co.uk/xapian/${VERSION}/xapian-core-${VERSION}.tar.xz"
 sha256 = "6cea3f49952a47224439a40bdb3608f928d121ad8721b9921cc42802d548ecf8"
+url = "https://oligarchy.co.uk/xapian/${VERSION}/xapian-core-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static
-
-'''
+cd source
+./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

@@ -7,24 +7,17 @@ arch = "x86_64"
 url = "https://fishshell.com/"
 
 [dependencies]
-build = [
-    "cmake",
-    "make",
-    "pkgconf",
-    "rust",
-    "git",
-    "jq",
-    "gettext",
-]
+build = ["cmake", "make", "pkgconf", "rust", "git", "jq", "gettext"]
 link = ["pcre2"]
 
 [[sources]]
-uri = "https://github.com/fish-shell/fish-shell/releases/download/${VERSION}/fish-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/fish-shell/fish-shell/releases/download/${VERSION}/fish-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc \
@@ -32,23 +25,15 @@ cmake -B build \
     -DFISH_USE_SYSTEM_PCRE2=ON \
     -DWITH_MESSAGE_LOCALIZATION=ON \
     -DWITH_DOCS=OFF \
-    -W no-dev
-
-'''
+    -W no-dev'''
 
 [lifecycle.compile]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
-make -C build -j$(nproc) VERBOSE=1
-
-'''
+cd source
+make -C build -j$(nproc) VERBOSE=1'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} cmake --install build
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} cmake --install build'''

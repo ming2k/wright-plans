@@ -1,0 +1,32 @@
+name = "libdecor"
+version = "0.2.5"
+release = 1
+description = "A client-side decorations library for Wayland clients"
+license = "MIT"
+arch = "x86_64"
+url = "https://gitlab.freedesktop.org/libdecor/libdecor"
+
+[dependencies]
+build = ["meson", "ninja", "pkgconf", "wayland-protocols"]
+link = ["cairo", "pango", "wayland", "libxkbcommon"]
+
+[[sources]]
+type = "http"
+url = "https://gitlab.freedesktop.org/libdecor/libdecor/-/archive/${VERSION}/libdecor-${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Ddemo=false'''
+
+[lifecycle.compile]
+script = '''
+cd source
+ninja -j$(nproc) -C ${WORKDIR}/build'''
+
+[lifecycle.staging]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

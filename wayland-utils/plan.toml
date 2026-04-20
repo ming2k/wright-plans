@@ -8,34 +8,28 @@ url = "https://gitlab.freedesktop.org/wayland/wayland-utils"
 
 [dependencies]
 runtime = ["wayland"]
-build = [
-    "gcc",
-    "libdrm",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "wayland",
-]
+build = ["gcc", "libdrm", "meson", "ninja", "pkgconf", "wayland"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/wayland/wayland-utils/-/archive/${VERSION}/wayland-utils-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/wayland/wayland-utils/-/archive/${VERSION}/wayland-utils-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
     --prefix=/usr \
     --buildtype=release \
-    -D drm=enabled
-
-'''
+    -D drm=enabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

@@ -12,30 +12,23 @@ link = ["glibc"]
 runtime = ["glibc"]
 
 [[sources]]
-uri = "https://sourceware.org/pub/valgrind/valgrind-${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://sourceware.org/pub/valgrind/valgrind-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr \
     --datadir=/usr/share/doc/valgrind-${VERSION} \
-    --disable-werror
-
-'''
+    --disable-werror'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

@@ -8,26 +8,17 @@ url = "https://ostreedev.github.io/ostree/"
 
 [dependencies]
 runtime = ["systemd"]
-build = [
-    "gcc",
-    "make",
-    "pkgconf",
-    "gettext",
-]
-link = [
-    "glib",
-    "libarchive",
-    "curl",
-    "gpgme",
-]
+build = ["gcc", "make", "pkgconf", "gettext"]
+link = ["glib", "libarchive", "curl", "gpgme"]
 
 [[sources]]
-uri = "https://github.com/ostreedev/ostree/releases/download/v${VERSION}/libostree-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/ostreedev/ostree/releases/download/v${VERSION}/libostree-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr       \
     --disable-static            \
     --with-curl                 \
@@ -38,22 +29,14 @@ cd ${BUILD_DIR}
     --with-gpgme                \
     --sysconfdir=/etc            \
     --disable-otmpfile          \
-    --with-builtin-grub2-mkconfig
-
-'''
+    --with-builtin-grub2-mkconfig'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} make install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} make install'''

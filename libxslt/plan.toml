@@ -11,30 +11,23 @@ build = ["gcc", "make"]
 link = ["libxml2"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libxslt/1.1/libxslt-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/libxslt/1.1/libxslt-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr                 \
 --disable-static              \
---docdir=/usr/share/doc/libxslt-${VERSION}
-
-'''
+--docdir=/usr/share/doc/libxslt-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

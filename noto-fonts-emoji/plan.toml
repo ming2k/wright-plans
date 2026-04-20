@@ -7,18 +7,14 @@ arch = "any"
 url = "https://github.com/googlefonts/noto-emoji"
 
 [[sources]]
-uri = "https://github.com/googlefonts/noto-emoji/raw/v${VERSION}/fonts/NotoColorEmoji.ttf"
 sha256 = "SKIP"
+url = "https://github.com/googlefonts/noto-emoji/raw/v${VERSION}/fonts/NotoColorEmoji.ttf"
 
 [lifecycle.staging]
 script = '''
 mkdir -p ${PART_DIR}/usr/share/fonts/noto-emoji
-cp ${FILES_DIR}/NotoColorEmoji.ttf ${PART_DIR}/usr/share/fonts/noto-emoji/
-
-'''
+cp ${WORKDIR}/NotoColorEmoji.ttf ${PART_DIR}/usr/share/fonts/noto-emoji/'''
 
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"
 post_upgrade = "fc-cache -s 2>/dev/null || true"
-
-[lifecycle.fabricate]

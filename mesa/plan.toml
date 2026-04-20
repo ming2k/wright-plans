@@ -7,41 +7,17 @@ arch = "x86_64"
 url = "https://mesa3d.org"
 
 [dependencies]
-build = [
-    "elfutils",
-    "glslang",
-    "libclc",
-    "llvm",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "python-mako",
-    "python-pyyaml",
-    "spirv-llvm-translator",
-    "spirv-tools",
-    "wayland-protocols",
-]
-link = [
-    "elfutils",
-    "expat",
-    "libdisplay-info",
-    "libdrm",
-    "libglvnd",
-    "libunwind",
-    "llvm",
-    "vulkan-headers",
-    "wayland",
-    "zlib",
-    "zstd",
-]
+build = ["elfutils", "glslang", "libclc", "llvm", "meson", "ninja", "pkgconf", "python-mako", "python-pyyaml", "spirv-llvm-translator", "spirv-tools", "wayland-protocols"]
+link = ["elfutils", "expat", "libdisplay-info", "libdrm", "libglvnd", "libunwind", "llvm", "vulkan-headers", "wayland", "zlib", "zstd"]
 
 [[sources]]
-uri = "https://mesa.freedesktop.org/archive/mesa-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://mesa.freedesktop.org/archive/mesa-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # Pure Wayland build:
 # -Dplatforms=wayland keeps the EGL/GBM Wayland platform and intentionally
 #   drops X11. This does not disable Wayland EGL support.
@@ -53,14 +29,14 @@ cd ${BUILD_DIR}
 # being disabled in this build plan.
 # The separate GL_INVALID_VALUE/glTexSubImage2D error is a renderer/runtime bug
 # path and should be investigated independently from this packaging choice.
-meson setup build --prefix=/usr --buildtype=release -D platforms=wayland -D gallium-drivers=iris,crocus,llvmpipe -D vulkan-drivers=intel,intel_hasvk,swrast -D egl=enabled -D gbm=enabled -D gles1=disabled -D gles2=enabled -D glx=disabled -D llvm=enabled -D shared-llvm=enabled -D gallium-va=disabled -D vulkan-layers=device-select,overlay -D video-codecs=all -D valgrind=disabled -D libunwind=enabled
-
-'''
+meson setup build --prefix=/usr --buildtype=release -D platforms=wayland -D gallium-drivers=iris,crocus,llvmpipe -D vulkan-drivers=intel,intel_hasvk,swrast -D egl=enabled -D gbm=enabled -D gles1=disabled -D gles2=enabled -D glx=disabled -D llvm=enabled -D shared-llvm=enabled -D gallium-va=disabled -D vulkan-layers=device-select,overlay -D video-codecs=all -D valgrind=disabled -D libunwind=enabled'''
 
 [lifecycle.compile]
-script = "ninja -j$(nproc) -C ${BUILD_DIR}/build"
+script = '''
+cd source
+ninja -j$(nproc) -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

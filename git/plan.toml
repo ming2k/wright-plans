@@ -7,51 +7,19 @@ arch = "x86_64"
 url = "https://git-scm.com/"
 
 [dependencies]
-runtime = [
-    "ca-certificates",
-    "curl",
-    "expat",
-    "perl",
-    "openssl",
-    "pcre2",
-    "grep",
-    "shadow",
-    "zlib-ng",
-    "openssh",
-]
+runtime = ["ca-certificates", "curl", "expat", "perl", "openssl", "pcre2", "grep", "shadow", "zlib-ng", "openssh"]
 build = ["python", "rust", "libsecret"]
-link = [
-    "curl",
-    "expat",
-    "openssl",
-    "pcre2",
-    "zlib-ng",
-    "libsecret",
-]
-optional = [
-    { name = "zsh", description = "upstream zsh completion" },
-    { name = "tk", description = "gitk and git gui" },
-    { name = "man", description = "show help with `git command --help`" },
-    { name = "perl-libwww", description = "git svn" },
-    { name = "perl-term-readkey", description = "git svn and interactive.singlekey" },
-    { name = "perl-io-socket-ssl", description = "git send-email TLS support" },
-    { name = "perl-authen-sasl", description = "git send-email TLS support" },
-    { name = "perl-cgi", description = "gitweb support" },
-    { name = "perl-error", description = "extended Perl error handling" },
-    { name = "perl-mailtools", description = "git send-email support" },
-    { name = "python", description = "git svn & git p4" },
-    { name = "subversion", description = "git svn" },
-    { name = "libsecret", description = "libsecret credential helper" },
-    { name = "less", description = "default pager" },
-]
+link = ["curl", "expat", "openssl", "pcre2", "zlib-ng", "libsecret"]
+optional = ["zsh", "tk", "man", "perl-libwww", "perl-term-readkey", "perl-io-socket-ssl", "perl-authen-sasl", "perl-cgi", "perl-error", "perl-mailtools", "python", "subversion", "libsecret", "less"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/software/scm/git/git-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.kernel.org/pub/software/scm/git/git-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 _perllibdir=$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')
 
@@ -117,13 +85,11 @@ make \
   WITH_RUST=1 \
   NO_ASCIIDOC=1 \
   NO_MAN=1 \
-  -C contrib/diff-highlight
-
-'''
+  -C contrib/diff-highlight'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 _perllibdir=$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')
 
@@ -198,8 +164,4 @@ cp -a ./contrib/* ${PART_DIR}/usr/share/git/
 # zsh completion (merged into main package)
 install -d ${PART_DIR}/usr/share/zsh/site-functions/
 ln -s ../../git/completion/git-completion.zsh \
-  ${PART_DIR}/usr/share/zsh/site-functions/_git
-
-'''
-
-[lifecycle.fabricate]
+  ${PART_DIR}/usr/share/zsh/site-functions/_git'''

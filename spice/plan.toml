@@ -7,45 +7,25 @@ arch = "x86_64"
 url = "https://www.spice-space.org/"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "python",
-]
-link = [
-    "glib",
-    "pixman",
-    "openssl",
-    "libjpeg-turbo",
-    "opus",
-    "zlib",
-    "spice-protocol",
-]
+build = ["meson", "ninja", "pkgconf", "python"]
+link = ["glib", "pixman", "openssl", "libjpeg-turbo", "opus", "zlib", "spice-protocol"]
 
 [[sources]]
-uri = "https://www.spice-space.org/download/releases/spice-server/spice-${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://www.spice-space.org/download/releases/spice-server/spice-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr -Dgstreamer=no -Dsasl=false -Dlz4=false -Dtests=false
-
-'''
+cd source
+meson setup build --prefix=/usr -Dgstreamer=no -Dsasl=false -Dlz4=false -Dtests=false'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

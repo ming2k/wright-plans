@@ -7,35 +7,25 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["brotli", "glib-networking"]
-build = [
-    "gobject-introspection",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
-link = [
-    "glib",
-    "libpsl",
-    "libxml2",
-    "nghttp2",
-    "sqlite",
-]
+build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
+link = ["glib", "libpsl", "libxml2", "nghttp2", "sqlite"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libsoup/3.6/libsoup-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/libsoup/3.6/libsoup-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dvapi=disabled -Dsysprof=disabled -Dtests=false -Ddocs=disabled
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dvapi=disabled -Dsysprof=disabled -Dtests=false -Ddocs=disabled'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''

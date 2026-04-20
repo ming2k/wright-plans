@@ -10,20 +10,17 @@ build = ["gcc", "make"]
 link = ["libpng"]
 
 [[sources]]
-uri = "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${VERSION}.tar.gz"
 sha256 = "7d6fab70cf844bf6769077bd5d7a74893f8ffd4dfb42861745750c63c2a5c92c"
+url = "https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static --enable-libwebpmux --enable-libwebpdemux --enable-libwebpextras --enable-swap-16bit-csp
-
-'''
+cd source
+./configure --prefix=/usr --disable-static --enable-libwebpmux --enable-libwebpdemux --enable-libwebpextras --enable-swap-16bit-csp'''
 
 [lifecycle.compile]
-script = "cd ${BUILD_DIR} && make -j$(nproc)"
+script = "cd source && make -j$(nproc)"
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && make DESTDIR=${PART_DIR} install"
-
-[lifecycle.fabricate]
+script = "cd source && make DESTDIR=${PART_DIR} install"

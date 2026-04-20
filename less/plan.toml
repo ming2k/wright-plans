@@ -11,28 +11,21 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://www.greenwoodsoftware.com/less/less-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://www.greenwoodsoftware.com/less/less-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --sysconfdir=/etc
-
-'''
+cd source
+./configure --prefix=/usr --sysconfdir=/etc'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

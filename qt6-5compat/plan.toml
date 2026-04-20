@@ -7,42 +7,30 @@ arch = "x86_64"
 url = "https://www.qt.io"
 
 [dependencies]
-build = [
-    "cmake",
-    "gcc",
-    "ninja",
-    "qt6-base",
-]
+build = ["cmake", "gcc", "ninja", "qt6-base"]
 link = ["qt6-base"]
 
 [[sources]]
-uri = "https://download.qt.io/official_releases/qt/6.10/${VERSION}/submodules/qt5compat-everywhere-src-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.qt.io/official_releases/qt/6.10/${VERSION}/submodules/qt5compat-everywhere-src-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_TESTING=OFF \
     -DQT_BUILD_EXAMPLES=OFF \
-    -DQT_BUILD_TESTS=OFF
-
-'''
+    -DQT_BUILD_TESTS=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -j$(nproc) -C build
-
-'''
+cd source
+ninja -j$(nproc) -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

@@ -8,36 +8,24 @@ url = "https://github.com/libass/libass"
 
 [dependencies]
 build = ["gcc", "make", "pkgconf"]
-link = [
-    "freetype",
-    "fribidi",
-    "harfbuzz",
-    "fontconfig",
-]
+link = ["freetype", "fribidi", "harfbuzz", "fontconfig"]
 
 [[sources]]
-uri = "https://github.com/libass/libass/releases/download/${VERSION}/libass-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/libass/libass/releases/download/${VERSION}/libass-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static
-
-'''
+cd source
+./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

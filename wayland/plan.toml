@@ -10,20 +10,17 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["expat", "libffi", "libxml2"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/${VERSION}/downloads/wayland-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/${VERSION}/downloads/wayland-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr -Ddocumentation=false -Dtests=false
-
-'''
+cd source
+meson setup build --prefix=/usr -Ddocumentation=false -Dtests=false'''
 
 [lifecycle.compile]
-script = "cd ${BUILD_DIR} && meson compile -C build"
+script = "cd source && meson compile -C build"
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && meson install -C build --destdir ${PART_DIR}"
-
-[lifecycle.fabricate]
+script = "cd source && meson install -C build --destdir ${PART_DIR}"

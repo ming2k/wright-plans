@@ -1,19 +1,8 @@
 [dependencies]
-link = [
-    "cairo",
-    "gdk-pixbuf",
-    "pango",
-    "glib",
-    "libxml2",
-    "harfbuzz",
-    "freetype",
-    "fribidi",
-]
+link = ["cairo", "gdk-pixbuf", "pango", "glib", "libxml2", "harfbuzz", "freetype", "fribidi"]
 
 [lifecycle.configure]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --libdir=lib --buildtype=release -Dintrospection=enabled -Ddocs=disabled -Dtests=false -Dvala=disabled
-
-'''
+cd source
+meson setup build --prefix=/usr --libdir=lib --buildtype=release -Dintrospection=enabled -Ddocs=disabled -Dtests=false -Dvala=disabled'''

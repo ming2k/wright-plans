@@ -8,24 +8,16 @@ url = "https://gnupg.org"
 
 [dependencies]
 runtime = ["pinentry"]
-link = [
-    "libgcrypt",
-    "libgpg-error",
-    "libassuan",
-    "libksba",
-    "npth",
-    "readline",
-    "gnutls",
-    "sqlite",
-]
+link = ["libgcrypt", "libgpg-error", "libassuan", "libksba", "npth", "readline", "gnutls", "sqlite"]
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr              \
 --libexecdir=/usr/lib/gnupg \
 --sbindir=/usr/bin          \
@@ -33,24 +25,16 @@ cd ${BUILD_DIR}
 --enable-keyboxd            \
 --enable-large-secmem       \
 --disable-ldap              \
---disable-doc
-
-'''
+--disable-doc'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc) LDFLAGS="${LDFLAGS} -lreadline -lhistory"
-
-'''
+cd source
+make -j$(nproc) LDFLAGS="${LDFLAGS} -lreadline -lhistory"'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 DESTDIR=${PART_DIR} make install
 ln -sf gpg  ${PART_DIR}/usr/bin/gpg2
-ln -sf gpgv ${PART_DIR}/usr/bin/gpgv2
-
-'''
-
-[lifecycle.fabricate]
+ln -sf gpgv ${PART_DIR}/usr/bin/gpgv2'''

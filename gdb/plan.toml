@@ -8,38 +8,22 @@ url = "https://www.gnu.org/software/gdb/"
 
 [dependencies]
 build = ["gcc", "make", "texinfo"]
-link = [
-    "expat",
-    "glibc",
-    "mpfr",
-    "ncurses",
-    "readline",
-    "xz",
-    "zlib",
-]
-runtime = [
-    "expat",
-    "ncurses",
-    "python",
-    "readline",
-    "xz",
-    "zlib",
-]
+link = ["expat", "glibc", "mpfr", "ncurses", "readline", "xz", "zlib"]
+runtime = ["expat", "ncurses", "python", "readline", "xz", "zlib"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/gdb/gdb-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/gdb/gdb-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-mkdir -v build
-
-'''
+cd source
+mkdir -v build'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}/build
+cd source/build
 ../configure --prefix=/usr \
     --with-system-readline \
     --with-python=/usr/bin/python3 \
@@ -48,25 +32,17 @@ cd ${BUILD_DIR}/build
     --with-lzma \
     --enable-tui \
     --disable-multilib \
-    --disable-werror
-
-'''
+    --disable-werror'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-make -j$(nproc)
-
-'''
+cd source/build
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
+cd source/build
 make DESTDIR=${PART_DIR} install
 
 # Remove static libraries
-rm -f ${PART_DIR}/usr/lib/libinproctrace.a
-
-'''
-
-[lifecycle.fabricate]
+rm -f ${PART_DIR}/usr/lib/libinproctrace.a'''

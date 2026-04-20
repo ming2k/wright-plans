@@ -11,32 +11,27 @@ runtime = ["podman"]
 build = ["go"]
 
 [[sources]]
-uri = "https://github.com/docker/compose/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/docker/compose/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
+cd source
 export PATH=/usr/lib/go/bin:$PATH
 export GOPATH=/tmp/go-cache
 export GOCACHE=/tmp/go-cache/build
 export GOPROXY=https://proxy.golang.org,direct
 CGO_ENABLED=0 go build -trimpath \
   -ldflags="-s -w -X github.com/docker/compose/v2/internal.Version=v${VERSION}" \
-  -o docker-compose ./cmd
-
-'''
+  -o docker-compose ./cmd'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm755 docker-compose ${PART_DIR}/usr/bin/docker-compose
 
 # Install as docker CLI plugin
 install -dm755 ${PART_DIR}/usr/lib/docker/cli-plugins
-ln -s /usr/bin/docker-compose ${PART_DIR}/usr/lib/docker/cli-plugins/docker-compose
-
-'''
-
-[lifecycle.fabricate]
+ln -s /usr/bin/docker-compose ${PART_DIR}/usr/lib/docker/cli-plugins/docker-compose'''

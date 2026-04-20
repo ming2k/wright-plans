@@ -11,19 +11,19 @@ build = ["gcc", "cmake", "ninja", "git", "python"]
 link = ["onnxruntime"]
 
 [[sources]]
-uri = "https://github.com/k2-fsa/sherpa-onnx/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/k2-fsa/sherpa-onnx/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-sed -i "s|    ./|    lib/pkgconfig|" CMakeLists.txt
-'''
+cd source
+sed -i "s|    ./|    lib/pkgconfig|" CMakeLists.txt'''
 
 [lifecycle.configure]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
@@ -38,23 +38,20 @@ cmake -B build -G Ninja \
   -DSHERPA_ONNX_ENABLE_TTS=ON \
   -DSHERPA_ONNX_ENABLE_SPEAKER_DIARIZATION=ON \
   -DSHERPA_ONNX_ENABLE_BINARY=ON \
-  -DSHERPA_ONNX_LINK_LIBSTDCPP_STATICALLY=OFF
-'''
+  -DSHERPA_ONNX_LINK_LIBSTDCPP_STATICALLY=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build -j$(nproc)
-'''
+cd source
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-'''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''
 
 [lifecycle.fabricate]
 script = '''
+cd source
 rm -f ${PART_DIR}/usr/lib/pkgconfig/espeak-ng.pc
-rm -rf ${PART_DIR}/usr/share/vim
-'''
+rm -rf ${PART_DIR}/usr/share/vim'''

@@ -7,51 +7,29 @@ arch = "x86_64"
 url = "https://github.com/ming2k/termus"
 
 [dependencies]
-build = [
-    "autoconf",
-    "automake",
-    "gcc",
-    "make",
-    "pkgconf",
-]
-link = [
-    "ncurses",
-]
-optional = [
-    "alsa-lib",
-    "ffmpeg",
-    "flac",
-    "mpg123",
-    "opus",
-    "pipewire",
-]
+build = ["autoconf", "automake", "gcc", "make", "pkgconf"]
+link = ["ncurses"]
+optional = ["alsa-lib", "ffmpeg", "flac", "mpg123", "opus", "pipewire"]
 
 [[sources]]
-uri = "git+https://github.com/ming2k/termus.git#v${VERSION}"
 sha256 = "SKIP"
+url = "git+https://github.com/ming2k/termus.git#v${VERSION}"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 autoreconf --force --install --verbose
 ./configure \
     --prefix=/usr \
-    --mandir=/usr/share/man
-
-'''
+    --mandir=/usr/share/man'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

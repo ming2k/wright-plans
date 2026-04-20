@@ -7,37 +7,25 @@ arch = "x86_64"
 url = "http://hunspell.sourceforge.net/"
 
 [dependencies]
-build = [
-    "gawk",
-    "gcc",
-    "make",
-    "patch",
-]
+build = ["gawk", "gcc", "make", "patch"]
 link = ["glibc"]
 
 [[sources]]
-uri = "http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${VERSION}.orig.tar.gz"
 sha256 = "SKIP"
+url = "http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${VERSION}.orig.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr
-
-'''
+cd source
+./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make
-
-'''
+cd source
+make'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

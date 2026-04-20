@@ -10,26 +10,28 @@ url = "https://github.com/abseil/abseil-cpp"
 build = ["cmake", "ninja"]
 
 [[sources]]
-uri = "https://github.com/abseil/abseil-cpp/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/abseil/abseil-cpp/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cmake -B ${BUILD_DIR}/build -S ${BUILD_DIR} -G Ninja \
+cd source
+cmake -B ${WORKDIR}/build -S ${WORKDIR} -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_INSTALL_LIBDIR=lib \
   -DCMAKE_CXX_STANDARD=17 \
   -DABSL_PROPAGATE_CXX_STD=ON \
   -DABSL_BUILD_TESTING=OFF \
-  -DBUILD_SHARED_LIBS=ON
-
-'''
+  -DBUILD_SHARED_LIBS=ON'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

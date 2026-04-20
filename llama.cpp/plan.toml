@@ -11,41 +11,38 @@ build = ["gcc", "cmake", "ninja", "pkgconf", "shaderc", "vulkan-headers"]
 link = ["openssl", "vulkan-loader"]
 
 [[sources]]
-uri = "patches/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch"
+type = "local"
+path = "patches/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch"
 
 [[sources]]
-uri = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${VERSION}.tar.gz"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-patch -Np1 < ${FILES_DIR}/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch || true
-'''
+cd source
+patch -Np1 < ${WORKDIR}/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch || true'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr/lib/llama.cpp \
   -DBUILD_SHARED_LIBS=OFF \
   -DGGML_NATIVE=OFF \
   -DGGML_VULKAN=ON \
-  -DLLAMA_OPENSSL=ON
-'''
+  -DLLAMA_OPENSSL=ON'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build -j$(nproc)
-'''
+cd source
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-'''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''
 
 [lifecycle.fabricate]
 script = '''
@@ -55,5 +52,4 @@ for bin in ${PART_DIR}/usr/lib/llama.cpp/bin/*; do
 done
 
 mkdir -p ${PART_DIR}/usr/lib/pkgconfig
-ln -sf /usr/lib/llama.cpp/lib/pkgconfig/llama.pc ${PART_DIR}/usr/lib/pkgconfig/llama.pc
-'''
+ln -sf /usr/lib/llama.cpp/lib/pkgconfig/llama.pc ${PART_DIR}/usr/lib/pkgconfig/llama.pc'''

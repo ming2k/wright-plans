@@ -10,29 +10,22 @@ url = "https://wiki.linuxfoundation.org/networking/iproute2"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 sed -i /ARPD/d Makefile
-rm -fv man/man8/arpd.8
-
-'''
+rm -fv man/man8/arpd.8'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make NETNS_RUN_DIR=/run/netns -j$(nproc)
-
-'''
+cd source
+make NETNS_RUN_DIR=/run/netns -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make SBINDIR=/usr/bin DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make SBINDIR=/usr/bin DESTDIR=${PART_DIR} install'''

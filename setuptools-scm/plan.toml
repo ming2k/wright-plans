@@ -11,14 +11,11 @@ runtime = ["python", "setuptools", "python-packaging"]
 build = ["python", "setuptools"]
 
 [[sources]]
-uri = "https://pypi.org/packages/source/s/setuptools_scm/setuptools_scm-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://pypi.org/packages/source/s/setuptools_scm/setuptools_scm-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-SETUPTOOLS_SCM_PRETEND_VERSION=${VERSION} pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
-
-'''
-
-[lifecycle.fabricate]
+cd source
+SETUPTOOLS_SCM_PRETEND_VERSION=${VERSION} pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

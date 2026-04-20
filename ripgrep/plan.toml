@@ -12,20 +12,19 @@ build = ["rust"]
 link = ["gcc", "pcre2", "glibc"]
 
 [[sources]]
-uri = "https://github.com/BurntSushi/ripgrep/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/BurntSushi/ripgrep/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
-cargo build --release --locked --features pcre2
-
-'''
+cd source
+cargo build --release --locked --features pcre2'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm755 target/release/rg ${PART_DIR}/usr/bin/rg
 
 if [ -f doc/rg.1 ]; then
@@ -35,13 +34,9 @@ if [ -d complete ]; then
   install -Dm644 complete/rg.bash ${PART_DIR}/usr/share/bash-completion/completions/rg || true
   install -Dm644 complete/_rg ${PART_DIR}/usr/share/zsh/site-functions/_rg || true
   install -Dm644 complete/rg.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/rg.fish || true
-fi
-
-'''
+fi'''
 
 [output]
 replaces = ["rg"]
 conflicts = ["rg"]
 provides = ["rg"]
-
-[lifecycle.fabricate]

@@ -8,46 +8,27 @@ url = "https://git.sr.ht/~exec64/imv"
 
 [dependencies]
 runtime = ["wayland"]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "wayland-protocols",
-]
-link = [
-    "pango",
-    "libxkbcommon",
-    "inih",
-    "wayland",
-    "mesa",
-    "libpng",
-    "libjpeg-turbo",
-    "libtiff",
-    "librsvg",
-    "libheif",
-    "libjxl",
-    "libwebp",
-    "icu",
-]
+build = ["meson", "ninja", "pkgconf", "wayland-protocols"]
+link = ["pango", "libxkbcommon", "inih", "wayland", "mesa", "libpng", "libjpeg-turbo", "libtiff", "librsvg", "libheif", "libjxl", "libwebp", "icu"]
 
 [[sources]]
-uri = "https://git.sr.ht/~exec64/imv/archive/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://git.sr.ht/~exec64/imv/archive/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "patches/fix-missing-stdio.patch"
 sha256 = "SKIP"
+type = "local"
+path = "patches/fix-missing-stdio.patch"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-patch -Np1 < ${FILES_DIR}/fix-missing-stdio.patch
-
-'''
+cd source
+patch -Np1 < ${WORKDIR}/fix-missing-stdio.patch'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
     --prefix=/usr \
     -Dwindows=wayland \
@@ -55,22 +36,14 @@ meson setup build \
     -Dlibnsgif=disabled \
     -Dlibnsbmp=disabled \
     -Dtest=disabled \
-    -Dman=disabled
-
-'''
+    -Dman=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

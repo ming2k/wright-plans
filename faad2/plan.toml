@@ -1,0 +1,33 @@
+name = "faad2"
+version = "2.11.2"
+release = 1
+description = "ISO AAC audio decoder"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/knik0/faad2"
+
+[dependencies]
+build = ["gcc", "make", "cmake", "pkgconf"]
+link = ["libsndfile"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/knik0/faad2/archive/refs/tags/${VERSION}.tar.gz"
+sha256 = "3fcbd305e4abd34768c62050e18ca0986f7d9c5eca343fb98275418013065c0e"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+mkdir -p ${WORKDIR}/build
+cd source/build
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON'''
+
+[lifecycle.compile]
+script = '''
+cd source/build
+make -j$(nproc)'''
+
+[lifecycle.staging]
+script = '''
+cd source/build
+make DESTDIR=${PART_DIR} install'''

@@ -12,42 +12,33 @@ runtime = ["curl", "gettext", "gmp", "icu", "libxml2", "mpfr", "readline"]
 link = ["curl", "gettext", "gmp", "icu", "libxml2", "mpfr", "readline"]
 
 [[sources]]
-uri = "https://github.com/Qalculate/libqalculate/releases/download/v${VERSION}/libqalculate-${VERSION}.tar.gz"
 sha256 = "904592d33a98ed4a26a59fa34c855578e096144fb91965b8afc90e06797dba8e"
+url = "https://github.com/Qalculate/libqalculate/releases/download/v${VERSION}/libqalculate-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr \
     --disable-static \
     --with-readline \
-    --docdir=/usr/share/doc/qalc-${VERSION}
-
-'''
+    --docdir=/usr/share/doc/qalc-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}
-make check
-
-'''
+cd source
+make check'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
+cd source
+make DESTDIR=${PART_DIR} install'''
 
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
-
-[lifecycle.fabricate]

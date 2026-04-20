@@ -12,32 +12,30 @@ runtime = ["glibc", "libcap", "libseccomp", "systemd"]
 link = ["glibc", "libcap", "libseccomp", "systemd"]
 
 [[sources]]
-uri = "https://github.com/containers/crun/releases/download/${VERSION}/crun-${VERSION}.tar.gz"
 sha256 = "99077cc701a9f6842f70384eb05e9429da1ad338cdef3e0bac5a486cbf2ca75d"
+url = "https://github.com/containers/crun/releases/download/${VERSION}/crun-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 dockyard = "none"
-env = { ac_cv_path_MD2MAN = "" }
+env = {'ac_cv_path_MD2MAN': ''}
 script = '''
-cd ${BUILD_DIR}/crun-${VERSION}
+cd source/crun-${VERSION}
 ./configure \
     --prefix=/usr \
     --bindir=/usr/bin \
     --disable-libcrun \
     --without-python-bindings \
-    --enable-embedded-yajl
-'''
+    --enable-embedded-yajl'''
 
 [lifecycle.compile]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/crun-${VERSION}
-make -j$(nproc)
-'''
+cd source/crun-${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/crun-${VERSION}
-make DESTDIR=${PART_DIR} install
-'''
+cd source/crun-${VERSION}
+make DESTDIR=${PART_DIR} install'''

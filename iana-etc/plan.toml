@@ -10,21 +10,21 @@ url = "https://www.iana.org/protocols"
 build = ["python"]
 
 [[sources]]
-uri = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv"
 sha256 = "7c799c0ac86672b1e3573333b0485b04b3e5fdb4a7a3232f85ee7d8df207f795"
+url = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv"
 
 [[sources]]
-uri = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers-1.csv"
 sha256 = "e704ee14e69347681b3a6271af02195a9741236074fc311449ebb032101bdf2c"
+url = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers-1.csv"
 
 [[sources]]
-uri = "generate_iana_etc.py"
 sha256 = "SKIP"
+type = "local"
+path = "generate_iana_etc.py"
 
 [lifecycle.staging]
 script = '''
-python3 ${FILES_DIR}/generate_iana_etc.py \
-  ${FILES_DIR}/service-names-port-numbers.csv \
-  ${FILES_DIR}/protocol-numbers-1.csv \
-  ${PART_DIR}
-'''
+python3 ${WORKDIR}/generate_iana_etc.py \
+  ${WORKDIR}/service-names-port-numbers.csv \
+  ${WORKDIR}/protocol-numbers-1.csv \
+  ${PART_DIR}'''

@@ -6,35 +6,25 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 
 [dependencies]
-build = [
-    "cmake",
-    "ninja",
-    "gcc",
-    "pkgconf",
-]
-link = [
-    "libde265",
-    "dav1d",
-    "aom",
-    "libjpeg-turbo",
-    "libpng",
-]
+build = ["cmake", "ninja", "gcc", "pkgconf"]
+link = ["libde265", "dav1d", "aom", "libjpeg-turbo", "libpng"]
 
 [[sources]]
-uri = "https://github.com/strukturag/libheif/releases/download/v${VERSION}/libheif-${VERSION}.tar.gz"
 sha256 = "75f530b7154bc93e7ecf846edfc0416bf5f490612de8c45983c36385aa742b42"
+url = "https://github.com/strukturag/libheif/releases/download/v${VERSION}/libheif-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_LIBDE265=ON -DENABLE_DAV1D=ON -DENABLE_AOM=ON -DWITH_EXAMPLES=OFF -DWITH_GDK_PIXBUF=OFF
-
-'''
+cd source
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_LIBDE265=ON -DENABLE_DAV1D=ON -DENABLE_AOM=ON -DWITH_EXAMPLES=OFF -DWITH_GDK_PIXBUF=OFF'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

@@ -5,30 +5,18 @@ description = "OpenType text shaping engine"
 license = "MIT"
 arch = "x86_64"
 
-
 [dependencies]
-build = [
-    "gobject-introspection",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "graphite2",
-]
-link = [
-    "cairo",
-    "freetype",
-    "glib",
-    "icu",
-    "graphite2",
-]
+build = ["gobject-introspection", "meson", "ninja", "pkgconf", "graphite2"]
+link = ["cairo", "freetype", "glib", "icu", "graphite2"]
 
 [[sources]]
-uri = "https://github.com/harfbuzz/harfbuzz/releases/download/12.3.2/harfbuzz-12.3.2.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/harfbuzz/harfbuzz/releases/download/12.3.2/harfbuzz-12.3.2.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
     --prefix=/usr          \
     --buildtype=release    \
@@ -39,22 +27,14 @@ meson setup build \
     -D gobject=enabled     \
     -D graphite2=enabled   \
     -D tests=disabled      \
-    -D docs=disabled
-
-'''
+    -D docs=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-ninja -j$(nproc)
-
-'''
+cd source/build
+ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-DESTDIR=${PART_DIR} ninja install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+DESTDIR=${PART_DIR} ninja install'''

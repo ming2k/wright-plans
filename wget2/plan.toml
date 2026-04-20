@@ -9,44 +9,29 @@ url = "https://www.gnu.org/software/wget/"
 [dependencies]
 runtime = ["ca-certificates"]
 build = ["gcc", "make"]
-link = [
-    "gnutls",
-    "libidn2",
-    "libpsl",
-    "nghttp2",
-    "brotli",
-    "zstd",
-    "zlib",
-    "pcre2",
-    "gpgme",
-]
+link = ["gnutls", "libidn2", "libpsl", "nghttp2", "brotli", "zstd", "zlib", "pcre2", "gpgme"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/wget/wget2-${VERSION}.tar.lz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/wget/wget2-${VERSION}.tar.lz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr      \
     --sysconfdir=/etc          \
     --with-ssl=gnutls          \
     --with-brotlidec           \
     --with-zstd                \
-    --with-nghttp2
-
-'''
+    --with-nghttp2'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
+cd source
+make DESTDIR=${PART_DIR} install'''

@@ -11,20 +11,21 @@ build = ["pkgconf"]
 link = ["util-linux", "icu", "inih"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --sbindir=/usr/bin --disable-static
-
-'''
+cd source
+./configure --prefix=/usr --sbindir=/usr/bin --disable-static'''
 
 [lifecycle.compile]
-script = "make -j$(nproc) -C ${BUILD_DIR}"
+script = '''
+cd source
+make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
-script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+make DESTDIR=${PART_DIR} install -C ${WORKDIR}'''

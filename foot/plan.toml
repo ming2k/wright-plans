@@ -8,48 +8,25 @@ url = "https://codeberg.org/dnkl/foot"
 
 [dependencies]
 runtime = ["fcft", "pixman"]
-build = [
-    "fcft",
-    "gcc",
-    "meson",
-    "ninja",
-    "pixman",
-    "tllist",
-]
-link = [
-    "fontconfig",
-    "freetype",
-    "harfbuzz",
-    "libxkbcommon",
-    "ncurses",
-    "utf8proc",
-    "wayland",
-    "wayland-protocols",
-]
+build = ["fcft", "gcc", "meson", "ninja", "pixman", "tllist"]
+link = ["fontconfig", "freetype", "harfbuzz", "libxkbcommon", "ncurses", "utf8proc", "wayland", "wayland-protocols"]
 
 [[sources]]
-uri = "https://codeberg.org/dnkl/foot/releases/download/${VERSION}/foot-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://codeberg.org/dnkl/foot/releases/download/${VERSION}/foot-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dime=true -Dthemes=true -Dwerror=false
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dime=true -Dthemes=true -Dwerror=false'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

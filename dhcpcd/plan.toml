@@ -10,34 +10,27 @@ url = "https://github.com/NetworkConfiguration/dhcpcd"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v${VERSION}/dhcpcd-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/NetworkConfiguration/dhcpcd/releases/download/v${VERSION}/dhcpcd-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr       \
 --sbindir=/usr/bin  \
 --sysconfdir=/etc   \
 --libexecdir=/usr/lib/dhcpcd \
 --dbdir=/var/lib/dhcpcd      \
 --runstatedir=/run           \
---disable-privsep
-
-'''
+--disable-privsep'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

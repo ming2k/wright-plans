@@ -8,27 +8,17 @@ url = "https://github.com/tpm2-software/tpm2-tss"
 
 [dependencies]
 runtime = ["systemd"]
-build = [
-    "gcc",
-    "make",
-    "pkgconf",
-]
-link = [
-    "curl",
-    "json-c",
-    "libtpms",
-    "libusb",
-    "openssl",
-    "util-linux",
-]
+build = ["gcc", "make", "pkgconf"]
+link = ["curl", "json-c", "libtpms", "libusb", "openssl", "util-linux"]
 
 [[sources]]
-uri = "https://github.com/tpm2-software/tpm2-tss/releases/download/${VERSION}/tpm2-tss-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/tpm2-software/tpm2-tss/releases/download/${VERSION}/tpm2-tss-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -38,15 +28,17 @@ cd ${BUILD_DIR}
     --with-tmpfilesdir=/usr/lib/tmpfiles.d \
     --disable-static \
     --disable-unit \
-    --disable-integration
-
-'''
+    --disable-integration'''
 
 [lifecycle.compile]
-script = "make -C ${BUILD_DIR} -j$(nproc)"
+script = '''
+cd source
+make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"
+script = '''
+cd source
+make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''
 
 [hooks]
 post_install = '''
@@ -61,5 +53,3 @@ systemd-sysusers /usr/lib/sysusers.d/tpm2-tss.conf 2>/dev/null || true
   systemd-tmpfiles --create /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf 2>/dev/null || true
 
 '''
-
-[lifecycle.fabricate]

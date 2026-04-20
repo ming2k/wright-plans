@@ -11,36 +11,27 @@ build = ["gcc", "make"]
 link = ["readline"]
 
 [[sources]]
-uri = "https://github.com/gavinhoward/bc/releases/download/${VERSION}/bc-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/gavinhoward/bc/releases/download/${VERSION}/bc-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-CC='gcc -std=c99' ./configure --prefix=/usr -G -O3 -r
-
-'''
+cd source
+CC='gcc -std=c99' ./configure --prefix=/usr -G -O3 -r'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}
-make test
-
-'''
+cd source
+make test'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
-rm -f ${PART_DIR}/usr/share/info/dir
-
-'''
-
-[lifecycle.fabricate]
+rm -f ${PART_DIR}/usr/share/info/dir'''

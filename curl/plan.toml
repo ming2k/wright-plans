@@ -9,40 +9,28 @@ url = "https://curl.se/"
 [dependencies]
 runtime = ["ca-certificates"]
 build = ["gcc", "make"]
-link = [
-    "libidn2",
-    "libpsl",
-    "nghttp2",
-    "openssl",
-]
+link = ["libidn2", "libpsl", "nghttp2", "openssl"]
 
 [[sources]]
-uri = "https://curl.se/download/curl-${VERSION}.tar.xz"
 sha256 = "4eb41489790d19e190d7ac7e18e82857cdd68af8f4e66b292ced562d333f11df"
+url = "https://curl.se/download/curl-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr                    \
 --disable-static                 \
 --with-openssl                   \
 --enable-threaded-resolver       \
---with-ca-path=/etc/ssl/certs
-
-'''
+--with-ca-path=/etc/ssl/certs'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

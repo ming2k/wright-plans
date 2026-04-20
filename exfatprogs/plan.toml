@@ -10,20 +10,21 @@ url = "https://github.com/exfatprogs/exfatprogs"
 build = ["pkgconf"]
 
 [[sources]]
-uri = "https://github.com/exfatprogs/exfatprogs/releases/download/${VERSION}/exfatprogs-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/exfatprogs/exfatprogs/releases/download/${VERSION}/exfatprogs-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --sbindir=/usr/bin --disable-static
-
-'''
+cd source
+./configure --prefix=/usr --sbindir=/usr/bin --disable-static'''
 
 [lifecycle.compile]
-script = "make -j$(nproc) -C ${BUILD_DIR}"
+script = '''
+cd source
+make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
-script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+make DESTDIR=${PART_DIR} install -C ${WORKDIR}'''

@@ -1,0 +1,42 @@
+name = "godot"
+version = "4.6.2"
+release = 1
+description = "Multi-platform 2D and 3D game engine (Pure Wayland)"
+license = "MIT"
+arch = "x86_64"
+url = "https://godotengine.org"
+
+[dependencies]
+build = ["scons", "pkgconf", "wayland-protocols", "nasm"]
+link = ["alsa-lib", "dbus", "fontconfig", "libdecor", "libxkbcommon", "mesa", "openssl", "pipewire", "systemd", "vulkan-loader", "wayland"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/godotengine/godot/archive/refs/tags/${VERSION}-stable.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.prepare]
+script = '''
+cd source
+patch -p1 < ${PLAN_DIR}/null-compose.patch'''
+
+[lifecycle.compile]
+script = '''
+cd source
+# Pure Wayland build:
+# - wayland=yes x11=no: Forces native Wayland and removes X11 dependency.
+# - libdecor=yes builtin_libdecor=no: Uses system libdecor for window decorations.
+# - alsa=yes: Fallback audio.
+# - pipewire=yes: Native PipeWire audio support.
+# - target=editor: Builds the Godot Editor.
+scons platform=linuxbsd target=editor wayland=yes x11=no libdecor=yes builtin_libdecor=no dbus=yes alsa=yes pipewire=yes udev=yes -j$(nproc)'''
+
+[lifecycle.staging]
+script = '''
+cd source
+mkdir -p ${PART_DIR}/usr/bin
+# Binary name depends on target and arch. 
+# Godot 4.x linuxbsd editor binary is typically named godot.linuxbsd.editor.x86_64
+cp ${WORKDIR}/bin/godot.linuxbsd.editor.x86_64 ${PART_DIR}/usr/bin/godot
+chmod +x ${PART_DIR}/usr/bin/godot'''

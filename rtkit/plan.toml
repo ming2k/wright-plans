@@ -7,51 +7,37 @@ arch = "x86_64"
 url = "https://gitlab.freedesktop.org/pipewire/rtkit"
 
 [dependencies]
-build = [
-    "gcc",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "vim",
-]
-link = [
-    "dbus",
-    "libcap",
-    "polkit",
-    "systemd",
-]
+build = ["gcc", "meson", "ninja", "pkgconf", "vim"]
+link = ["dbus", "libcap", "polkit", "systemd"]
 
 [[sources]]
-uri = "git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${VERSION}"
 sha256 = "SKIP"
+type = "local"
+path = "git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${VERSION}"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+meson setup ${WORKDIR}/build ${WORKDIR} \
   --prefix=/usr \
   --sbindir=/usr/bin \
   --buildtype=release \
-  -D installed_tests=false
-
-'''
+  -D installed_tests=false'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
+script = "meson compile -C ${WORKDIR}/build -j$(nproc)"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build
+DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build
 
-install -Dm644 ${BUILD_DIR}/LICENSE -t ${PART_DIR}/usr/share/licenses/rtkit/
-sed -n '4,25p' ${BUILD_DIR}/rtkit.c |
+install -Dm644 ${WORKDIR}/LICENSE -t ${PART_DIR}/usr/share/licenses/rtkit/
+sed -n '4,25p' ${WORKDIR}/rtkit.c |
   install -Dm644 /dev/stdin ${PART_DIR}/usr/share/licenses/rtkit/LICENSE.MIT
 
 if [ -d ${PART_DIR}/usr/sbin ]; then
   cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
   rm -rf ${PART_DIR}/usr/sbin
-fi
-
-'''
+fi'''
 
 [hooks]
 post_install = '''
@@ -66,5 +52,3 @@ systemctl daemon-reload
 systemctl restart rtkit-daemon.service
 
 '''
-
-[lifecycle.fabricate]

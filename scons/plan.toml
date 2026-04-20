@@ -1,0 +1,21 @@
+name = "scons"
+version = "4.10.1"
+release = 1
+description = "Open Source software construction tool"
+license = "MIT"
+arch = "x86_64"
+url = "https://scons.org"
+
+[dependencies]
+build = ["python"]
+
+[[sources]]
+type = "http"
+url = "https://files.pythonhosted.org/packages/source/s/scons/scons-${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+cd source
+pip3 install --break-system-packages --no-deps --root=${PART_DIR} --no-build-isolation .'''

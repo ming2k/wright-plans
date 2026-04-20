@@ -12,32 +12,25 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://github.com/flatpak/xdg-dbus-proxy/releases/download/${VERSION}/xdg-dbus-proxy-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/flatpak/xdg-dbus-proxy/releases/download/${VERSION}/xdg-dbus-proxy-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build      \
 --prefix=/usr          \
 --buildtype=release    \
 -D tests=false         \
--D man=disabled
-
-'''
+-D man=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build -j$(nproc)
-
-'''
+cd source
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

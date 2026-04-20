@@ -6,24 +6,22 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "nasm",
-    "gcc",
-]
+build = ["meson", "ninja", "nasm", "gcc"]
 
 [[sources]]
-uri = "https://code.videolan.org/videolan/dav1d/-/archive/${VERSION}/dav1d-${VERSION}.tar.gz"
 sha256 = "cbe212b02faf8c6eed5b6d55ef8a6e363aaab83f15112e960701a9c3df813686"
+url = "https://code.videolan.org/videolan/dav1d/-/archive/${VERSION}/dav1d-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
-script = "cd ${BUILD_DIR} && meson setup build --prefix=/usr --buildtype=release"
+script = "cd source && meson setup build --prefix=/usr --buildtype=release"
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''

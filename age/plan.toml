@@ -10,23 +10,20 @@ url = "https://github.com/FiloSottile/age"
 build = ["go"]
 
 [[sources]]
-uri = "https://github.com/FiloSottile/age/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/FiloSottile/age/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = { GOPATH = "${BUILD_DIR}/.go", GOCACHE = "${BUILD_DIR}/.cache/go-build", CGO_ENABLED = "0" }
+env = {'GOPATH': '${BUILD_DIR}/.go', 'GOCACHE': '${BUILD_DIR}/.cache/go-build', 'CGO_ENABLED': '0'}
 script = '''
-cd ${BUILD_DIR}
+cd source
 go build -trimpath -ldflags="-s -w -buildid=" -o age ./cmd/age
-go build -trimpath -ldflags="-s -w -buildid=" -o age-keygen ./cmd/age-keygen
-'''
+go build -trimpath -ldflags="-s -w -buildid=" -o age-keygen ./cmd/age-keygen'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm755 age ${PART_DIR}/usr/bin/age
-install -Dm755 age-keygen ${PART_DIR}/usr/bin/age-keygen
-'''
-
-[lifecycle.fabricate]
+install -Dm755 age-keygen ${PART_DIR}/usr/bin/age-keygen'''

@@ -11,12 +11,13 @@ build = ["bash", "gcc", "make", "pkgconf", "python"]
 link = ["gmime", "talloc", "xapian-core", "zlib"]
 
 [[sources]]
-uri = "https://notmuchmail.org/releases/notmuch-${VERSION}.tar.xz"
 sha256 = "4b4314bbf1c2029fdf793637e6c7bb15c1b1730d22be9aa04803c98c5bbc446f"
+url = "https://notmuchmail.org/releases/notmuch-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 set +e
 ./configure --prefix=/usr \
     --without-docs \
@@ -36,22 +37,14 @@ if [ $status -ne 0 ]; then
         -e 's/^NOTMUCH_GMIME_X509_CERT_VALIDITY=.*/NOTMUCH_GMIME_X509_CERT_VALIDITY=0/' \
         -e 's/^NOTMUCH_GMIME_VERIFY_WITH_SESSION_KEY=.*/NOTMUCH_GMIME_VERIFY_WITH_SESSION_KEY=0/' \
         Makefile.config
-fi
-
-'''
+fi'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} prefix=/usr install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} prefix=/usr install'''

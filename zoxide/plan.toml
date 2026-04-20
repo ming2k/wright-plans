@@ -10,27 +10,22 @@ url = "https://github.com/ajeetdsouza/zoxide"
 build = ["rust"]
 
 [[sources]]
-uri = "https://github.com/ajeetdsouza/zoxide/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/ajeetdsouza/zoxide/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+env = {'CARGO_HOME': '${BUILD_DIR}/.cargo', 'CARGO_TARGET_DIR': '${BUILD_DIR}/target'}
 script = '''
-cd ${BUILD_DIR}
-cargo build --release --locked
-
-'''
+cd source
+cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -Dm755 target/release/zoxide ${PART_DIR}/usr/bin/zoxide
 install -Dm644 contrib/completions/zoxide.bash ${PART_DIR}/usr/share/bash-completion/completions/zoxide
 install -Dm644 contrib/completions/_zoxide     ${PART_DIR}/usr/share/zsh/site-functions/_zoxide
 install -Dm644 contrib/completions/zoxide.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/zoxide.fish
-install -Dm644 man/man1/*.1 -t ${PART_DIR}/usr/share/man/man1/
-
-'''
-
-[lifecycle.fabricate]
+install -Dm644 man/man1/*.1 -t ${PART_DIR}/usr/share/man/man1/'''

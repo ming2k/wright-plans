@@ -10,28 +10,24 @@ build = ["gcc", "make", "cmake"]
 link = []
 
 [[sources]]
-uri = "https://github.com/georgmartius/vid.stab/archive/refs/tags/v1.1.1.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/georgmartius/vid.stab/archive/refs/tags/v1.1.1.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=ON
-'''
+    -DBUILD_SHARED_LIBS=ON'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-cmake --build build -j$(nproc)
-'''
+cd source
+cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} cmake --install build
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} cmake --install build'''

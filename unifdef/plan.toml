@@ -9,31 +9,24 @@ arch = "x86_64"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz"
 sha256 = "SKIP"
+url = "https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # 修复 GCC 15 (C23) 编译错误：
 # 将变量名 'constexpr' 重命名为 'const_expr'，避免与 C23 关键字冲突
-sed -i 's/constexpr/const_expr/g' unifdef.c
-
-'''
+sed -i 's/constexpr/const_expr/g' unifdef.c'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 # prefix 定义安装路径
-make prefix=${PART_DIR}/usr install
-
-'''
-
-[lifecycle.fabricate]
+make prefix=${PART_DIR}/usr install'''

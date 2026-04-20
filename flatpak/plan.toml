@@ -7,49 +7,18 @@ arch = "x86_64"
 url = "https://flatpak.org"
 
 [dependencies]
-runtime = [
-    "ca-certificates",
-    "dbus",
-    "systemd",
-    "xdg-desktop-portal",
-    "xdg-desktop-portal-gtk",
-    "shared-mime-info",
-    "desktop-file-utils",
-]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "libxslt",
-    "gettext",
-    "gobject-introspection",
-    "python-pyparsing",
-    "bubblewrap",
-    "xdg-dbus-proxy",
-]
-link = [
-    "glib",
-    "libarchive",
-    "libxml2",
-    "ostree",
-    "polkit",
-    "json-glib",
-    "curl",
-    "appstream",
-    "gdk-pixbuf",
-    "libjpeg-turbo",
-    "libfuse3",
-    "gpgme",
-    "libseccomp",
-]
+runtime = ["ca-certificates", "dbus", "systemd", "xdg-desktop-portal", "xdg-desktop-portal-gtk", "shared-mime-info", "desktop-file-utils"]
+build = ["meson", "ninja", "pkgconf", "libxslt", "gettext", "gobject-introspection", "python-pyparsing", "bubblewrap", "xdg-dbus-proxy"]
+link = ["glib", "libarchive", "libxml2", "ostree", "polkit", "json-glib", "curl", "appstream", "gdk-pixbuf", "libjpeg-turbo", "libfuse3", "gpgme", "libseccomp"]
 
 [[sources]]
-uri = "https://github.com/flatpak/flatpak/releases/download/${VERSION}/flatpak-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/flatpak/flatpak/releases/download/${VERSION}/flatpak-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -64,19 +33,18 @@ meson setup build \
     -Dxauth=disabled \
     -Dgtkdoc=disabled \
     -Dtests=false \
-    -Dinstalled_tests=false
-
-'''
+    -Dinstalled_tests=false'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
 script = '''
-meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}
-mkdir -p ${PART_DIR}/var/lib/flatpak
-
-'''
+cd source
+meson install -C ${WORKDIR}/build --destdir ${PART_DIR}
+mkdir -p ${PART_DIR}/var/lib/flatpak'''
 
 [hooks]
 post_install = '''
@@ -94,5 +62,3 @@ update-mime-database /usr/share/mime 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
-
-[lifecycle.fabricate]

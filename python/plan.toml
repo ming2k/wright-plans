@@ -8,27 +8,16 @@ url = "https://www.python.org/"
 
 [dependencies]
 build = ["gcc", "make", "pkgconf"]
-link = [
-    "expat",
-    "libffi",
-    "ncurses",
-    "openssl",
-    "readline",
-    "zlib",
-    "bzip2",
-    "xz",
-    "sqlite",
-    "gdbm",
-    "libxcrypt",
-]
+link = ["expat", "libffi", "ncurses", "openssl", "readline", "zlib", "bzip2", "xz", "sqlite", "gdbm", "libxcrypt"]
 
 [[sources]]
-uri = "https://www.python.org/ftp/python/${VERSION}/Python-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.python.org/ftp/python/${VERSION}/Python-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr        \
             --enable-shared      \
             --with-system-expat  \
@@ -36,16 +25,16 @@ cd ${BUILD_DIR}
             --enable-optimizations \
             --with-lto           \
             --with-computed-gotos \
-            --without-static-libpython
-
-'''
+            --without-static-libpython'''
 
 [lifecycle.compile]
-script = "make -C ${BUILD_DIR} -j$(nproc)"
+script = '''
+cd source
+make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 rm -rf ${PART_DIR}/usr/lib/python3.14/test
 rm -rf ${PART_DIR}/usr/lib/python3.14/*/test
@@ -53,8 +42,4 @@ mkdir -p ${PART_DIR}/usr/lib/python3.14
 cat > ${PART_DIR}/usr/lib/python3.14/EXTERNALLY-MANAGED << EOF
 [externally-managed]
 Error=Please use 'wright install python-<package>' to install system-level Python packages.
-EOF
-
-'''
-
-[lifecycle.fabricate]
+EOF'''

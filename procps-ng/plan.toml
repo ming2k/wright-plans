@@ -11,12 +11,13 @@ build = ["gcc", "gettext", "make"]
 link = ["ncurses", "systemd"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
   --prefix=/usr \
   --sbindir=/usr/bin \
@@ -27,27 +28,19 @@ cd ${BUILD_DIR}
   --disable-kill \
   --disable-modern-top \
   --enable-watch8bit \
-  --with-systemd
-
-'''
+  --with-systemd'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 
 if [ -d ${PART_DIR}/usr/sbin ]; then
   cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
   rm -rf ${PART_DIR}/usr/sbin
-fi
-
-'''
-
-[lifecycle.fabricate]
+fi'''

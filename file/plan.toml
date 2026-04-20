@@ -10,35 +10,26 @@ url = "https://www.darwinsys.com/file/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://astron.com/pub/file/file-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://astron.com/pub/file/file-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr
-
-'''
+cd source
+./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd ${BUILD_DIR}
-make check
-
-'''
+cd source
+make check'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

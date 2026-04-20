@@ -9,19 +9,21 @@ arch = "x86_64"
 build = ["cmake", "gcc", "ninja"]
 
 [[sources]]
-uri = "https://github.com/google/highway/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/google/highway/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cmake -S ${BUILD_DIR} -B ${BUILD_DIR}/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON -DHWY_ENABLE_EXAMPLES=OFF -DHWY_ENABLE_TESTS=OFF
-
-'''
+cd source
+cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON -DHWY_ENABLE_EXAMPLES=OFF -DHWY_ENABLE_TESTS=OFF'''
 
 [lifecycle.compile]
-script = "cmake --build ${BUILD_DIR}/build"
+script = '''
+cd source
+cmake --build ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} cmake --install ${BUILD_DIR}/build"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''

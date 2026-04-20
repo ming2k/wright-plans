@@ -8,36 +8,29 @@ url = "https://github.com/rime/librime"
 
 [dependencies]
 build = ["cmake", "ninja", "pkgconf"]
-link = [
-    "boost",
-    "google-glog",
-    "leveldb",
-    "lua",
-    "marisa",
-    "opencc",
-    "yaml-cpp",
-]
+link = ["boost", "google-glog", "leveldb", "lua", "marisa", "opencc", "yaml-cpp"]
 
 [[sources]]
-uri = "https://github.com/rime/librime/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/rime/librime/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_CXX_FLAGS="-DNDEBUG -DGLOG_USE_GLOG_EXPORT" \
     -DBUILD_TEST=OFF \
-    -DENABLE_EXTERNAL_PLUGINS=OFF
-
-'''
+    -DENABLE_EXTERNAL_PLUGINS=OFF'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

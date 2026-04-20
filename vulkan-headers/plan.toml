@@ -7,19 +7,16 @@ arch = "x86_64"
 url = "https://github.com/KhronosGroup/Vulkan-Headers"
 
 [[sources]]
-uri = "https://github.com/KhronosGroup/Vulkan-Headers/archive/v${VERSION}/Vulkan-Headers-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/KhronosGroup/Vulkan-Headers/archive/v${VERSION}/Vulkan-Headers-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cmake -B build -S ${BUILD_DIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -GNinja -DCMAKE_CXX_SCAN_FOR_MODULES=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5
-
-'''
+cd source
+cmake -B build -S ${WORKDIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -GNinja -DCMAKE_CXX_SCAN_FOR_MODULES=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} cmake --install build
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} cmake --install build'''

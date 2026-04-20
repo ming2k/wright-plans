@@ -7,48 +7,36 @@ arch = "x86_64"
 url = "https://github.com/libjxl/libjxl"
 
 [dependencies]
-build = [
-    "cmake",
-    "ninja",
-    "pkgconf",
-    "gcc",
-]
-link = [
-    "brotli",
-    "hwy",
-    "lcms2",
-    "libjpeg-turbo",
-    "libpng",
-]
+build = ["cmake", "ninja", "pkgconf", "gcc"]
+link = ["brotli", "hwy", "lcms2", "libjpeg-turbo", "libpng"]
 
 [[sources]]
-uri = "https://github.com/libjxl/libjxl/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "ab38928f7f6248e2a98cc184956021acb927b16a0dee71b4d260dc040a4320ea"
+url = "https://github.com/libjxl/libjxl/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 # Patch deps.sh to use GitHub mirror for skcms instead of skia.googlesource.com
 sed -i 's|"https://skia.googlesource.com/skcms/+archive/"|google/skcms|' deps.sh
 
 # skcms now uses GitHub like the others, so it needs strip-components=1
 # Fix the download function: when project is not a URL, it uses GitHub with strip_components=1
-./deps.sh
-
-'''
+./deps.sh'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-cmake -B build -G Ninja -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DJPEGXL_ENABLE_BENCHMARK=OFF -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_TESTS=OFF -DJPEGXL_FORCE_SYSTEM_BROTLI=ON -DJPEGXL_FORCE_SYSTEM_HWY=ON -DJPEGXL_FORCE_SYSTEM_LCMS2=ON
-
-'''
+cd source
+cmake -B build -G Ninja -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DJPEGXL_ENABLE_BENCHMARK=OFF -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_TESTS=OFF -DJPEGXL_FORCE_SYSTEM_BROTLI=ON -DJPEGXL_FORCE_SYSTEM_HWY=ON -DJPEGXL_FORCE_SYSTEM_LCMS2=ON'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

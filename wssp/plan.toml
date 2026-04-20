@@ -1,0 +1,40 @@
+name = "wssp"
+version = "1.1.1"
+release = 1
+description = "Wayland Secret Service Provider (WSSP) Daemon"
+license = "GPL-3.0-only"
+arch = "x86_64"
+url = "https://github.com/ming2k/wssp"
+
+[dependencies]
+runtime = ["libadwaita", "gtk4", "linux-pam"]
+build = ["rust", "cargo", "pkg-config", "libadwaita", "gtk4", "linux-pam"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/ming2k/wssp/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.compile]
+isolation = "relaxed"
+script = '''
+cd source
+cargo build --release'''
+
+[lifecycle.staging]
+script = '''
+cd source
+# Install binaries
+install -Dm755 target/release/wssp-daemon ${PART_DIR}/usr/bin/wssp-daemon
+install -Dm755 target/release/wssp-prompter ${PART_DIR}/usr/bin/wssp-prompter
+install -Dm755 target/release/wssp-cli ${PART_DIR}/usr/bin/wssp-cli
+
+# Install PAM module
+install -Dm755 target/release/libpam_wssp.so ${PART_DIR}/usr/lib/security/pam_wssp.so
+
+# Install systemd unit (user)
+install -Dm644 systemd/user/wssp-daemon.service ${PART_DIR}/usr/lib/systemd/user/wssp-daemon.service
+
+# Install portal file
+install -Dm644 systemd/portals/wssp.portal ${PART_DIR}/usr/share/xdg-desktop-portal/portals/wssp.portal'''

@@ -10,14 +10,12 @@ url = "https://github.com/rime/rime-luna-pinyin"
 runtime = ["rime-prelude"]
 
 [[sources]]
-uri = "git+https://github.com/rime/rime-luna-pinyin.git#master"
 sha256 = "SKIP"
+url = "git+https://github.com/rime/rime-luna-pinyin.git#master"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
+cd source
 install -d ${PART_DIR}/usr/share/rime-data
-install -Dm644 ${BUILD_DIR}/*.yaml -t ${PART_DIR}/usr/share/rime-data/
-
-'''
-
-[lifecycle.fabricate]
+install -Dm644 ${WORKDIR}/*.yaml -t ${PART_DIR}/usr/share/rime-data/'''

@@ -1,0 +1,40 @@
+name = "ocl-icd"
+version = "2025.07.22"
+release = 2
+description = "OpenCL ICD Loader (official Khronos implementation)"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/KhronosGroup/OpenCL-ICD-Loader"
+
+[dependencies]
+build = ["cmake", "ninja", "opencl-headers"]
+link = ["glibc"]
+runtime = ["glibc"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/KhronosGroup/OpenCL-ICD-Loader/archive/refs/tags/v${VERSION}/OpenCL-ICD-Loader-${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+cmake -B build -G Ninja -S OpenCL-ICD-Loader-* -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DOPENCL_ICD_LOADER_HEADERS_DIR=/usr/include'''
+
+[lifecycle.compile]
+script = '''
+cd source
+ninja -C build'''
+
+[lifecycle.staging]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''
+
+[output]
+provides = ["libOpenCL", "opencl-loader"]
+
+[hooks]
+post_install = "ldconfig"
+post_upgrade = "ldconfig"

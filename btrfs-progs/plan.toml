@@ -8,32 +8,27 @@ url = "https://btrfs.readthedocs.io"
 
 [dependencies]
 build = ["pkgconf"]
-link = [
-    "util-linux",
-    "zlib",
-    "lzo",
-    "zstd",
-    "e2fsprogs",
-    "libgcrypt",
-    "systemd",
-]
+link = ["util-linux", "zlib", "lzo", "zstd", "e2fsprogs", "libgcrypt", "systemd"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --sbindir=/usr/bin --disable-static --disable-documentation --with-crypto=libgcrypt
-
-'''
+cd source
+./configure --prefix=/usr --sbindir=/usr/bin --disable-static --disable-documentation --with-crypto=libgcrypt'''
 
 [lifecycle.compile]
-script = "make -j$(nproc) -C ${BUILD_DIR}"
+script = '''
+cd source
+make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
-script = "make DESTDIR=${PART_DIR} install -C ${BUILD_DIR}"
+script = '''
+cd source
+make DESTDIR=${PART_DIR} install -C ${WORKDIR}'''
 
 [hooks]
 post_install = '''
@@ -41,5 +36,3 @@ systemctl daemon-reload 2>/dev/null || true
 systemctl enable btrfs-scrub@-.timer 2>/dev/null || true
 
 '''
-
-[lifecycle.fabricate]

@@ -7,14 +7,12 @@ arch = "any"
 url = "https://github.com/rime/rime-prelude"
 
 [[sources]]
-uri = "https://github.com/rime/rime-prelude/archive/db691d2.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/rime/rime-prelude/archive/db691d2.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
+cd source
 install -d ${PART_DIR}/usr/share/rime-data
-install -Dm644 ${BUILD_DIR}/*.yaml -t ${PART_DIR}/usr/share/rime-data/
-
-'''
-
-[lifecycle.fabricate]
+install -Dm644 ${WORKDIR}/*.yaml -t ${PART_DIR}/usr/share/rime-data/'''

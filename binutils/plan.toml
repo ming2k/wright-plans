@@ -10,12 +10,13 @@ url = "https://www.gnu.org/software/binutils/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/binutils/binutils-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/binutils/binutils-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -v build
 cd       build
 ../configure --prefix=/usr       \
@@ -29,26 +30,20 @@ cd       build
 --enable-new-dtags  \
 --without-zlib      \
 --without-zstd      \
---enable-default-hash-style=gnu
-
-'''
+--enable-default-hash-style=gnu'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-make tooldir=/usr
-
-'''
+cd source/build
+make tooldir=/usr'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
+cd source/build
 make DESTDIR=${PART_DIR} tooldir=/usr install
 
 # Remove static libraries
-rm -fv ${PART_DIR}/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a
-
-'''
+rm -fv ${PART_DIR}/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a'''
 
 [hooks]
 post_install = '''
@@ -59,5 +54,3 @@ ldconfig
 
 '''
 post_upgrade = "ldconfig"
-
-[lifecycle.fabricate]

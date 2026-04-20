@@ -8,19 +8,14 @@ url = "https://neovim.io"
 maintainer = "Neovim contributors <neovim@neovim.io>"
 
 [dependencies]
-build = [
-    "cmake",
-    "curl",
-    "gcc",
-    "gettext",
-    "make",
-]
+build = ["cmake", "curl", "gcc", "gettext", "make"]
 link = ["glibc"]
-optional = [ "python", "xclip" ]
+optional = ["python", "xclip"]
 
 [[sources]]
-uri = "https://github.com/neovim/neovim/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/neovim/neovim/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [options]
 ccache = true
@@ -28,24 +23,18 @@ ccache = true
 [lifecycle.configure]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
-make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr deps
-
-'''
+cd source
+make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr deps'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr
-
-'''
+cd source
+make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${PART_DIR} install
-
-'''
+cd source
+make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${PART_DIR} install'''
 
 [hooks]
 post_install = '''
@@ -56,5 +45,3 @@ post_upgrade = '''
 update-desktop-database -q 2>/dev/null || true
 
 '''
-
-[lifecycle.fabricate]

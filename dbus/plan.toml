@@ -8,21 +8,17 @@ url = "https://www.freedesktop.org/wiki/Software/dbus/"
 
 [dependencies]
 runtime = ["systemd"]
-build = [
-    "gcc",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["gcc", "meson", "ninja", "pkgconf"]
 link = ["expat", "systemd"]
 
 [[sources]]
-uri = "https://dbus.freedesktop.org/releases/dbus/dbus-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://dbus.freedesktop.org/releases/dbus/dbus-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p build
 cd build
 meson setup --prefix=/usr \
@@ -39,20 +35,16 @@ meson setup --prefix=/usr \
     -Dx11_autolaunch=disabled \
     -Druntime_dir=/run \
     -Dmodular_tests=disabled \
-    ..
-
-'''
+    ..'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-ninja
-
-'''
+cd source/build
+ninja'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
+cd source/build
 DESTDIR=${PART_DIR} ninja install
 
 # Symlink so D-Bus and systemd share machine-id
@@ -62,9 +54,19 @@ ln -sfv /etc/machine-id ${PART_DIR}/var/lib/dbus
 # Use GID 18 directly so this works even when the messagebus group
 # doesn't exist in the build environment.
 chown 0:18 ${PART_DIR}/usr/libexec/dbus-daemon-launch-helper
-chmod 4750 ${PART_DIR}/usr/libexec/dbus-daemon-launch-helper
+chmod 4750 ${PART_DIR}/usr/libexec/dbus-daemon-launch-helper'''
+
+[output]
+
+[output."libdbus"]
+description = "D-Bus low-level shared library"
+script = '''
+install -d ${PART_DIR}/usr/lib
+mv -v ${MAIN_PART_DIR}/usr/lib/libdbus-1.so* ${PART_DIR}/usr/lib/
 
 '''
+[output."libdbus".dependencies]
+link = ["glibc"]
 
 [hooks]
 post_install = '''
@@ -81,14 +83,3 @@ if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
 fi
 
 '''
-
-[output.libdbus]
-description = "D-Bus low-level shared library"
-script = '''
-install -d ${PART_DIR}/usr/lib
-mv -v ${MAIN_PART_DIR}/usr/lib/libdbus-1.so* ${PART_DIR}/usr/lib/
-
-'''
-
-[output.libdbus.dependencies]
-link = ["glibc"]

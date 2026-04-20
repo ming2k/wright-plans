@@ -10,43 +10,34 @@ url = "https://kbd-project.org/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://www.kernel.org/pub/linux/utils/kbd/kbd-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.kernel.org/pub/linux/utils/kbd/kbd-${VERSION}.tar.xz"
+extract_to = "source"
 
 [[sources]]
-uri = "https://www.linuxfromscratch.org/patches/lfs/12.4/kbd-${VERSION}-backspace-1.patch"
 sha256 = "SKIP"
+url = "https://www.linuxfromscratch.org/patches/lfs/12.4/kbd-${VERSION}-backspace-1.patch"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-patch -Np1 < ${FILES_DIR}/kbd-${VERSION}-backspace-1.patch
+cd source
+patch -Np1 < ${WORKDIR}/kbd-${VERSION}-backspace-1.patch
 sed -i '/RESIZECONS_PROGS=/s/yes/no/' configure
-sed -i 's/resizecons.8 //' docs/man/man8/Makefile.in
-
-'''
+sed -i 's/resizecons.8 //' docs/man/man8/Makefile.in'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-vlock
-
-'''
+cd source
+./configure --prefix=/usr --disable-vlock'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 mkdir -p ${PART_DIR}/usr/share/doc/kbd-${VERSION}
-cp -R -v docs/doc/* ${PART_DIR}/usr/share/doc/kbd-${VERSION}
-
-'''
-
-[lifecycle.fabricate]
+cp -R -v docs/doc/* ${PART_DIR}/usr/share/doc/kbd-${VERSION}'''

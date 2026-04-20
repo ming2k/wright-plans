@@ -7,48 +7,30 @@ arch = "x86_64"
 url = "https://alacritty.org"
 
 [dependencies]
-build = [
-    "cargo",
-    "cmake",
-    "gzip",
-    "ncurses",
-    "pkgconf",
-    "python",
-    "rust",
-    "scdoc",
-]
-link = [
-    "fontconfig",
-    "freetype",
-    "libglvnd",
-    "libxkbcommon",
-    "mesa",
-    "wayland",
-]
+build = ["cargo", "cmake", "gzip", "ncurses", "pkgconf", "python", "rust", "scdoc"]
+link = ["fontconfig", "freetype", "libglvnd", "libxkbcommon", "mesa", "wayland"]
 
 [[sources]]
-uri = "https://github.com/alacritty/alacritty/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "b7240df4a52c004470977237a276185fc97395d59319480d67cad3c4347f395e"
+url = "https://github.com/alacritty/alacritty/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-echo "cargo project, no configure step"
-
-'''
+cd source
+echo "cargo project, no configure step"'''
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+env = {'CARGO_HOME': '${BUILD_DIR}/.cargo', 'CARGO_TARGET_DIR': '${BUILD_DIR}/target'}
 script = '''
-cd ${BUILD_DIR}
+cd source
 # Wright currently ships a Wayland-only graphics stack, so avoid the default X11 feature.
-cargo build --release --no-default-features --features wayland --locked
-
-'''
+cargo build --release --no-default-features --features wayland --locked'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 install -Dm755 target/release/alacritty ${PART_DIR}/usr/bin/alacritty
 install -Dm644 extra/logo/alacritty-term.svg ${PART_DIR}/usr/share/pixmaps/Alacritty.svg
@@ -66,9 +48,7 @@ install -Dm644 extra/completions/_alacritty ${PART_DIR}/usr/share/zsh/site-funct
 install -Dm644 extra/completions/alacritty.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/alacritty.fish
 
 install -dm755 ${PART_DIR}/usr/share/terminfo
-tic -xe alacritty,alacritty-direct -o ${PART_DIR}/usr/share/terminfo extra/alacritty.info
-
-'''
+tic -xe alacritty,alacritty-direct -o ${PART_DIR}/usr/share/terminfo extra/alacritty.info'''
 
 [hooks]
 post_install = '''
@@ -79,5 +59,3 @@ post_upgrade = '''
 update-desktop-database -q /usr/share/applications 2>/dev/null || true
 
 '''
-
-[lifecycle.fabricate]

@@ -1,50 +1,37 @@
 name = "mkvtoolnix"
 version = "98.0"
 release = 2
-arch = "x86_64"
 description = "Tools for Matroska files"
 license = "GPL-2.0-or-later"
+arch = "x86_64"
 url = "https://mkvtoolnix.download/"
 
 [dependencies]
 build = ["gcc", "make", "ruby", "pkgconf", "libxslt", "docbook-xsl"]
-link = [
-    "boost",
-    "cmark",
-    "flac",
-    "fmt",
-    "libebml",
-    "libmatroska",
-    "libogg",
-    "libvorbis",
-    "nlohmann-json",
-    "zlib",
-]
+link = ["boost", "cmark", "flac", "fmt", "libebml", "libmatroska", "libogg", "libvorbis", "nlohmann-json", "zlib"]
 
 [[sources]]
-uri = "https://mkvtoolnix.download/sources/mkvtoolnix-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://mkvtoolnix.download/sources/mkvtoolnix-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
   --prefix=/usr \
   --with-boost-libdir=/usr/lib \
-  --disable-gui
-'''
+  --disable-gui'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-rake -j$(nproc)
-'''
+cd source
+rake -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 rake DESTDIR=${PART_DIR} install
 
 # Remove icon directory as MKVToolNix Rakefile installs icons unconditionally even when GUI is disabled
-rm -rf ${PART_DIR}/usr/share/icons
-'''
+rm -rf ${PART_DIR}/usr/share/icons'''

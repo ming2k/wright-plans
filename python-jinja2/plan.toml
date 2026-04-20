@@ -11,14 +11,11 @@ runtime = ["python-markupsafe", "python"]
 build = ["python-markupsafe", "python", "setuptools"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/j/jinja2/jinja2-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://files.pythonhosted.org/packages/source/j/jinja2/jinja2-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .
-
-'''
-
-[lifecycle.fabricate]
+cd source
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

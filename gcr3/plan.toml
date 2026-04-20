@@ -8,46 +8,25 @@ url = "https://gitlab.gnome.org/GNOME/gcr"
 
 [dependencies]
 runtime = ["libsecret", "p11-kit"]
-build = [
-    "gettext",
-    "gobject-introspection",
-    "libxslt",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "vala",
-]
-link = [
-    "dbus",
-    "glib",
-    "gtk3",
-    "libgcrypt",
-    "p11-kit",
-]
+build = ["gettext", "gobject-introspection", "libxslt", "meson", "ninja", "pkgconf", "vala"]
+link = ["dbus", "glib", "gtk3", "libgcrypt", "p11-kit"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/gcr/3.41/gcr-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/gcr/3.41/gcr-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dintrospection=true
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dintrospection=true'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-meson compile -C build
-
-'''
+cd source
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-meson install -C build --destdir ${PART_DIR}
-
-'''
-
-[lifecycle.fabricate]
+cd source
+meson install -C build --destdir ${PART_DIR}'''

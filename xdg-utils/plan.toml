@@ -7,39 +7,26 @@ arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/xdg-utils/"
 
 [dependencies]
-build = [
-    "gcc",
-    "make",
-    "lynx",
-    "xmlto",
-    "docbook-xml",
-]
+build = ["gcc", "make", "lynx", "xmlto", "docbook-xml"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/xdg/xdg-utils/-/archive/v${VERSION}/xdg-utils-v${VERSION}.tar.bz2"
 sha256 = "93d510dccf328378f012fe195b4574c2fac1cd65a74d0852d6eaa72e5a2065a7"
+url = "https://gitlab.freedesktop.org/xdg/xdg-utils/-/archive/v${VERSION}/xdg-utils-v${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr
-
-'''
+cd source
+./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 sed -i 's#^XMLTO[[:space:]]*=.*#XMLTO           = /usr/bin/xmlto --skip-validation#' scripts/Makefile
 export LYNX_CFG=/etc/lynx.cfg
-make -j$(nproc)
-
-'''
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

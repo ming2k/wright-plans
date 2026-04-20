@@ -12,17 +12,18 @@ runtime = ["glibc"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://github.com/containers/aardvark-dns/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "25b39bfad079a03862825b2f9db8b71b82fc80aad5552a9c76ea912edc9b889e"
+url = "https://github.com/containers/aardvark-dns/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "https://github.com/containers/aardvark-dns/releases/download/v${VERSION}/aardvark-dns-v${VERSION}-vendor.tar.gz"
 sha256 = "009198f042f150d42025c8a0456bb7a98293c9deeb012d37b2d364f44e52288f"
+url = "https://github.com/containers/aardvark-dns/releases/download/v${VERSION}/aardvark-dns-v${VERSION}-vendor.tar.gz"
 
 [lifecycle.prepare]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/aardvark-dns-${VERSION}
+cd source/aardvark-dns-${VERSION}
 ln -sfn ../vendor vendor
 install -dm755 .cargo
 cat > .cargo/config.toml << 'EOF'
@@ -31,23 +32,20 @@ replace-with = "vendored-sources"
 
 [source.vendored-sources]
 directory = "vendor"
-EOF
-'''
+EOF'''
 
 [lifecycle.compile]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/aardvark-dns-${VERSION}
-export CARGO_HOME=${BUILD_DIR}/.cargo-home
-export CARGO_TARGET_DIR=${BUILD_DIR}/target
+cd source/aardvark-dns-${VERSION}
+export CARGO_HOME=${WORKDIR}/.cargo-home
+export CARGO_TARGET_DIR=${WORKDIR}/target
 
 # Use upstream Makefile
-make PREFIX=/usr CARGO="cargo --locked --offline" build
-'''
+make PREFIX=/usr CARGO="cargo --locked --offline" build'''
 
 [lifecycle.staging]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}/aardvark-dns-${VERSION}
-make DESTDIR=${PART_DIR} PREFIX=/usr install
-'''
+cd source/aardvark-dns-${VERSION}
+make DESTDIR=${PART_DIR} PREFIX=/usr install'''

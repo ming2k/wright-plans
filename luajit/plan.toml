@@ -10,25 +10,23 @@ url = "https://luajit.org"
 build = ["make"]
 
 [[sources]]
-uri = "https://github.com/LuaJIT/LuaJIT/archive/707c12b.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/LuaJIT/LuaJIT/archive/707c12b.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-echo "LuaJIT uses the upstream make-based build"
-
-'''
+cd source
+echo "LuaJIT uses the upstream make-based build"'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc) PREFIX=/usr XCFLAGS='-fPIC'
-
-'''
+cd source
+make -j$(nproc) PREFIX=/usr XCFLAGS='-fPIC''''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make PREFIX=/usr DESTDIR=${PART_DIR} install
 
 mkdir -p ${PART_DIR}/usr/lib/pkgconfig
@@ -43,12 +41,8 @@ Description: Just-in-time compiler for Lua
 Version: ${VERSION}
 Libs: -L\${libdir} -lluajit-5.1
 Cflags: -I\${includedir}
-PCEOF
-
-'''
+PCEOF'''
 
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
-
-[lifecycle.fabricate]

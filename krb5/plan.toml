@@ -11,31 +11,24 @@ build = ["gcc", "make", "pkgconf"]
 link = ["keyutils", "openssl"]
 
 [[sources]]
-uri = "https://web.mit.edu/Kerberos/dist/krb5/1.22/krb5-${VERSION}.tar.gz"
 sha256 = "3243ffbc8ea4d4ac22ddc7dd2a1dc54c57874c40648b60ff97009763554eaf13"
+url = "https://web.mit.edu/Kerberos/dist/krb5/1.22/krb5-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}/src
+cd source/src
 ./configure --prefix=/usr \
     --sbindir=/usr/bin \
     --disable-static \
-    --without-ldap
-
-'''
+    --without-ldap'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/src
-make WARN_CFLAGS= -j$(nproc)
-
-'''
+cd source/src
+make WARN_CFLAGS= -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/src
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source/src
+make DESTDIR=${PART_DIR} install'''

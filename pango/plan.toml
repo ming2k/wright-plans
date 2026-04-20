@@ -6,43 +6,31 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://pango.gnome.org"
 
-
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "gobject-introspection",
-    "python",
-]
-link = [
-    "glib",
-    "cairo",
-    "harfbuzz",
-    "fontconfig",
-    "fribidi",
-    "freetype",
-]
+build = ["meson", "ninja", "pkgconf", "gobject-introspection", "python"]
+link = ["glib", "cairo", "harfbuzz", "fontconfig", "fribidi", "freetype"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/pango/1.57/pango-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/pango/1.57/pango-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr               \
 --buildtype=release         \
 --wrap-mode=nofallback      \
 -D xft=disabled             \
--D introspection=enabled
-
-'''
+-D introspection=enabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

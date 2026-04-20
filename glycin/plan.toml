@@ -8,41 +8,27 @@ url = "https://gitlab.gnome.org/GNOME/glycin"
 
 [dependencies]
 runtime = ["bubblewrap"]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "rust",
-    "libseccomp",
-]
-link = [
-    "glib",
-    "gtk4",
-    "lcms2",
-    "fontconfig",
-    "libjpeg-turbo",
-    "libpng",
-    "libheif",
-    "libjxl",
-    "librsvg",
-]
+build = ["meson", "ninja", "pkgconf", "rust", "libseccomp"]
+link = ["glib", "gtk4", "lcms2", "fontconfig", "libjpeg-turbo", "libpng", "libheif", "libjxl", "librsvg"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/glycin/2.1/glycin-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/glycin/2.1/glycin-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 dockyard = "relaxed"
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dtests=false -Dvapi=false
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dtests=false -Dvapi=false'''
 
 [lifecycle.compile]
 dockyard = "relaxed"
-script = "meson compile -C ${BUILD_DIR}/build"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
-script = "meson install -C ${BUILD_DIR}/build --destdir ${PART_DIR}"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''

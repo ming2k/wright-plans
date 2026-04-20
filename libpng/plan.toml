@@ -10,20 +10,21 @@ build = ["gcc", "make"]
 link = ["zlib"]
 
 [[sources]]
-uri = "https://github.com/pnggroup/libpng/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "71a2c5b1218f60c4c6d2f1954c7eb20132156cae90bdb90b566c24db002782a6"
+url = "https://github.com/pnggroup/libpng/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --disable-static
-
-'''
+cd source
+./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
-script = "make -C ${BUILD_DIR} -j$(nproc)"
+script = '''
+cd source
+make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''

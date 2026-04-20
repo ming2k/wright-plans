@@ -11,27 +11,22 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
-uri = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make
-
-'''
+cd source
+make'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make \
   DESTDIR=${PART_DIR} \
   NO_ARLIB=1 \
   LIBDIR=/usr/lib \
   BINDIR=/usr/bin \
   SBINDIR=/usr/bin \
-  install
-
-'''
-
-[lifecycle.fabricate]
+  install'''

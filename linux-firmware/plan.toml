@@ -7,14 +7,12 @@ arch = "any"
 url = "https://gitlab.com/kernel-firmware/linux-firmware"
 
 [[sources]]
-uri = "https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p ${PART_DIR}/usr/lib/firmware
-./copy-firmware.sh ${PART_DIR}/usr/lib/firmware
-'''
-
-[lifecycle.fabricate]
+./copy-firmware.sh ${PART_DIR}/usr/lib/firmware'''

@@ -11,12 +11,13 @@ build = ["gcc", "make", "pkgconf"]
 link = ["libassuan", "libgpg-error", "ncurses"]
 
 [[sources]]
-uri = "https://gnupg.org/ftp/gcrypt/pinentry/pinentry-${VERSION}.tar.bz2"
 sha256 = "SKIP"
+url = "https://gnupg.org/ftp/gcrypt/pinentry/pinentry-${VERSION}.tar.bz2"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
   --prefix=/usr \
   --disable-static \
@@ -27,27 +28,19 @@ cd ${BUILD_DIR}
   --disable-pinentry-gtk2 \
   --disable-pinentry-qt \
   --disable-pinentry-qt5 \
-  --disable-pinentry-qt6
-
-'''
+  --disable-pinentry-qt6'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 DESTDIR=${PART_DIR} make install
 
 # Ensure a generic pinentry binary exists for gpg-agent defaults.
 if [ ! -e ${PART_DIR}/usr/bin/pinentry ] && [ -e ${PART_DIR}/usr/bin/pinentry-curses ]; then
   ln -sf pinentry-curses ${PART_DIR}/usr/bin/pinentry
-fi
-
-'''
-
-[lifecycle.fabricate]
+fi'''

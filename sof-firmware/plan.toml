@@ -7,32 +7,27 @@ arch = "any"
 url = "https://github.com/thesofproject/sof-bin"
 
 [[sources]]
-uri = "https://github.com/thesofproject/sof-bin/releases/download/v${VERSION}/sof-bin-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/thesofproject/sof-bin/releases/download/v${VERSION}/sof-bin-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-echo "firmware package"
-
-'''
+cd source
+echo "firmware package"'''
 
 [lifecycle.compile]
 script = '''
-echo "no build needed"
-
-'''
+cd source
+echo "no build needed"'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 mkdir -p ${PART_DIR}/usr/lib/firmware/intel
 cp -a sof ${PART_DIR}/usr/lib/firmware/intel/sof
 cp -a sof-ipc4 ${PART_DIR}/usr/lib/firmware/intel/sof-ipc4
 cp -a sof-ipc4-lib ${PART_DIR}/usr/lib/firmware/intel/sof-ipc4-lib
 cp -a sof-tplg ${PART_DIR}/usr/lib/firmware/intel/sof-tplg
 cp -a sof-ace-tplg ${PART_DIR}/usr/lib/firmware/intel/sof-ace-tplg
-cp -a sof-ipc4-tplg ${PART_DIR}/usr/lib/firmware/intel/sof-ipc4-tplg
-
-'''
-
-[lifecycle.fabricate]
+cp -a sof-ipc4-tplg ${PART_DIR}/usr/lib/firmware/intel/sof-ipc4-tplg'''

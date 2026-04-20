@@ -1,6 +1,6 @@
 name = "linux"
-version = "6.19.12"
-release = 2
+version = "6.19.13"
+release = 1
 description = "The Linux kernel"
 license = "GPL-2.0-only"
 arch = "x86_64"
@@ -11,26 +11,28 @@ runtime = ["kmod", "dracut-ng"]
 build = ["bc", "gcc", "make"]
 
 [[sources]]
-uri = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VERSION}.tar.xz"
+extract_to = "source"
 
 [[sources]]
-uri = "config"
 sha256 = "SKIP"
+type = "local"
+path = "config"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 # Configuration policy:
-# - ${FILES_DIR}/config is the primary kernel config source and should reflect
+# - ${WORKDIR}/config is the primary kernel config source and should reflect
 #   the baseline that users can inspect and edit directly.
 # - Prefer changing config for normal feature choices so the resulting policy is
 #   visible in one place.
 # - Keep scripts/config usage minimal and limited to a small set of
 #   strategy-critical assertions or version-drift guardrails that cannot be
 #   expressed cleanly as the maintained config baseline.
-cp ${FILES_DIR}/config .config
+cp ${WORKDIR}/config .config
 make olddefconfig
 
 # Branding
@@ -99,29 +101,21 @@ scripts/config --enable MODULE_SIG_ALL
 # Wi-Fi 7 regression warnings from cfg80211).
 scripts/config --disable CFG80211_WEXT
 
-make olddefconfig
-
-'''
+make olddefconfig'''
 
 [lifecycle.compile]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 dockyard = "none"
 script = '''
-cd ${BUILD_DIR}
+cd source
 make INSTALL_MOD_PATH=${PART_DIR}/usr modules_install
 rm -f ${PART_DIR}/usr/lib/modules/*/build
 install -d ${PART_DIR}/boot
 cp -v arch/x86/boot/bzImage ${PART_DIR}/boot/vmlinuz-theseus
 cp -v System.map ${PART_DIR}/boot/System.map-theseus
-cp -v .config ${PART_DIR}/boot/config-theseus
-
-'''
-
-[lifecycle.fabricate]
+cp -v .config ${PART_DIR}/boot/config-theseus'''

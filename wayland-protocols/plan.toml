@@ -6,25 +6,19 @@ license = "MIT"
 arch = "any"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "wayland",
-]
+build = ["meson", "ninja", "pkgconf", "wayland"]
 link = ["wayland"]
 
 [[sources]]
-uri = "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/${VERSION}/downloads/wayland-protocols-${VERSION}.tar.xz"
 sha256 = "5fd4349bcbc9bab9a46f8cf77d1f434296a7a052c87440a094f63fcf62a58e20"
+url = "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/${VERSION}/downloads/wayland-protocols-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
-script = "cd ${BUILD_DIR} && meson setup build --prefix=/usr -Dtests=false"
+script = "cd source && meson setup build --prefix=/usr -Dtests=false"
 
 [lifecycle.compile]
-script = "cd ${BUILD_DIR} && meson compile -C build"
+script = "cd source && meson compile -C build"
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && meson install -C build --destdir ${PART_DIR}"
-
-[lifecycle.fabricate]
+script = "cd source && meson install -C build --destdir ${PART_DIR}"

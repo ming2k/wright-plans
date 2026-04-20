@@ -10,22 +10,24 @@ url = "https://godotengine.org"
 build = ["libarchive"]
 
 [[sources]]
-uri = "https://godot-releases.nbg1.your-objectstorage.com/${VERSION}-stable/Godot_v${VERSION}-stable_linux.x86_64.zip"
 sha256 = "30e6b6d141f0cd5bebd629ad1d0ef1324e60091bb20662d026b402ba58c59937"
+url = "https://godot-releases.nbg1.your-objectstorage.com/${VERSION}-stable/Godot_v${VERSION}-stable_linux.x86_64.zip"
+extract_to = "source"
 
 [lifecycle.configure]
-script = "echo preparing godot-bin"
+script = '''
+cd source
+echo preparing godot-bin'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-chmod 755 Godot_v${VERSION}-stable_linux.x86_64
-
-'''
+cd source
+chmod 755 Godot_v${VERSION}-stable_linux.x86_64'''
 
 [lifecycle.staging]
 script = '''
-install -Dm755 ${BUILD_DIR}/Godot_v${VERSION}-stable_linux.x86_64 ${PART_DIR}/usr/lib/godot-bin/godot
+cd source
+install -Dm755 ${WORKDIR}/Godot_v${VERSION}-stable_linux.x86_64 ${PART_DIR}/usr/lib/godot-bin/godot
 
 install -Dm755 /dev/stdin ${PART_DIR}/usr/bin/godot <<'EOF'
 #!/bin/sh
@@ -65,9 +67,7 @@ Categories=Development;IDE;Graphics;
 Keywords=Godot;Game;Engine;Editor;
 Icon=applications-development
 StartupNotify=true
-EOF
-
-'''
+EOF'''
 
 [output]
 replaces = ["godot"]
@@ -83,5 +83,3 @@ post_upgrade = '''
 update-desktop-database -q /usr/share/applications 2>/dev/null || true
 
 '''
-
-[lifecycle.fabricate]

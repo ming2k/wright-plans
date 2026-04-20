@@ -11,34 +11,27 @@ build = ["gcc", "make", "perl"]
 link = ["zlib"]
 
 [[sources]]
-uri = "https://github.com/openssl/openssl/releases/download/openssl-${VERSION}/openssl-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/openssl/openssl/releases/download/openssl-${VERSION}/openssl-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./config --prefix=/usr         \
          --openssldir=/etc/ssl \
          --libdir=lib          \
          shared                \
-         zlib-dynamic
-
-'''
+         zlib-dynamic'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
 make MANSUFFIX=ssl DESTDIR=${PART_DIR} install
-mv -v ${PART_DIR}/usr/share/doc/openssl ${PART_DIR}/usr/share/doc/openssl-${VERSION}
-
-'''
-
-[lifecycle.fabricate]
+mv -v ${PART_DIR}/usr/share/doc/openssl ${PART_DIR}/usr/share/doc/openssl-${VERSION}'''

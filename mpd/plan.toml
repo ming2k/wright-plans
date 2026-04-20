@@ -7,30 +7,17 @@ arch = "x86_64"
 url = "https://www.musicpd.org/"
 
 [dependencies]
-build = [
-    "gcc",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
-link = [
-    "alsa-lib",
-    "pipewire",
-    "ffmpeg",
-    "sqlite",
-    "curl",
-    "dbus",
-    "libsndfile",
-    "fmt",
-]
+build = ["gcc", "meson", "ninja", "pkgconf"]
+link = ["alsa-lib", "pipewire", "ffmpeg", "sqlite", "curl", "dbus", "libsndfile", "fmt"]
 
 [[sources]]
-uri = "https://github.com/MusicPlayerDaemon/MPD/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/MusicPlayerDaemon/MPD/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build       \
   --prefix=/usr         \
   --buildtype=plain     \
@@ -61,29 +48,21 @@ meson setup build       \
   -Dudisks=disabled     \
   -Dupnp=disabled       \
   -Dwildmidi=disabled   \
-  -Dyajl=disabled
-
-'''
+  -Dyajl=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build -j$(nproc)
-
-'''
+cd source
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 DESTDIR=${PART_DIR} ninja -C build install
 
 install -vDm644 doc/mpdconf.example \
-  ${PART_DIR}/usr/share/doc/mpd/mpdconf.example
-
-'''
+  ${PART_DIR}/usr/share/doc/mpd/mpdconf.example'''
 
 [hooks]
 post_install = "systemctl daemon-reload 2>/dev/null || true"
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
-[lifecycle.fabricate]

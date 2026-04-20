@@ -7,41 +7,28 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["systemd"]
-build = [
-    "gobject-introspection",
-    "meson",
-    "ninja",
-    "pkgconf",
-    "systemd",
-]
+build = ["gobject-introspection", "meson", "ninja", "pkgconf", "systemd"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/libgudev/238/libgudev-238.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/libgudev/238/libgudev-238.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
 # 修复：必须先进入源码目录
-cd ${BUILD_DIR}
+cd source
 
 # 修正 meson 调用方式：指定构建目录为 'build'
-meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Dintrospection=enabled -Dvapi=disabled
-
-'''
+meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Dintrospection=enabled -Dvapi=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-ninja -j$(nproc)
-
-'''
+cd source/build
+ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-DESTDIR=${PART_DIR} ninja install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+DESTDIR=${PART_DIR} ninja install'''

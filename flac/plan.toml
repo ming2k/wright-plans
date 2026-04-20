@@ -11,12 +11,13 @@ build = ["gcc", "make", "pkgconf"]
 link = ["libogg"]
 
 [[sources]]
-uri = "https://downloads.xiph.org/releases/flac/flac-${VERSION}.tar.xz"
 sha256 = "f2c1c76592a82ffff8413ba3c4a1299b6c7ab06c734dee03fd88630485c2b920"
+url = "https://downloads.xiph.org/releases/flac/flac-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
   --prefix=/usr \
   --disable-static \
@@ -24,22 +25,14 @@ cd ${BUILD_DIR}
   --disable-doxygen-docs \
   --disable-examples \
   --disable-thorough-tests \
-  --with-ogg=/usr
-
-'''
+  --with-ogg=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+make DESTDIR=${PART_DIR} install'''

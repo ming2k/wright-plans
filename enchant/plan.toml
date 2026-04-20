@@ -7,38 +7,26 @@ arch = "x86_64"
 url = "https://github.com/AbiWord/enchant"
 
 [dependencies]
-build = [
-    "gcc",
-    "groff",
-    "make",
-    "pkgconf",
-]
+build = ["gcc", "groff", "make", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://github.com/AbiWord/enchant/releases/download/v${VERSION}/enchant-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/AbiWord/enchant/releases/download/v${VERSION}/enchant-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr --sysconfdir=/etc --disable-static --with-groff
-
-'''
+cd source
+./configure --prefix=/usr --sysconfdir=/etc --disable-static --with-groff'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make
-
-'''
+cd source
+make'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 install -dm755 ${PART_DIR}/usr/lib/enchant-2
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+make DESTDIR=${PART_DIR} install'''

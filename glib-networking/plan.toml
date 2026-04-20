@@ -7,39 +7,32 @@ arch = "x86_64"
 
 [dependencies]
 runtime = ["gnutls", "gsettings-desktop-schemas", "libproxy"]
-build = [
-    "gettext",
-    "meson",
-    "ninja",
-    "pkgconf",
-]
+build = ["gettext", "meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/glib-networking/2.80/glib-networking-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/glib-networking/2.80/glib-networking-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
-env = { GIO_MODULE_DIR = "/usr/lib/gio/modules" }
+env = {'GIO_MODULE_DIR': '/usr/lib/gio/modules'}
 script = '''
-cd ${BUILD_DIR}
-meson setup build --prefix=/usr --buildtype=release -Dgnutls=enabled -Dlibproxy=enabled -Dopenssl=disabled
-
-'''
+cd source
+meson setup build --prefix=/usr --buildtype=release -Dgnutls=enabled -Dlibproxy=enabled -Dopenssl=disabled'''
 
 [lifecycle.compile]
-script = "meson compile -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+meson compile -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} meson install -C ${BUILD_DIR}/build
-rm -f ${PART_DIR}/usr/lib/gio/modules/giomodule.cache
-
-'''
+cd source
+DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build
+rm -f ${PART_DIR}/usr/lib/gio/modules/giomodule.cache'''
 
 [hooks]
 post_install = "gio-querymodules /usr/lib/gio/modules"
 post_upgrade = "gio-querymodules /usr/lib/gio/modules"
 pre_remove = "gio-querymodules /usr/lib/gio/modules"
-
-[lifecycle.fabricate]

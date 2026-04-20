@@ -7,124 +7,21 @@ arch = "x86_64"
 url = "https://ffmpeg.org"
 
 [dependencies]
-build = [
-    "gcc",
-    "make",
-    "nasm",
-    "pkgconf",
-    "sdl2",
-    "cmake",
-    "alsa-lib",
-    "aom",
-    "dav1d",
-    "freetype",
-    "gnutls",
-    "lame",
-    "libass",
-    "libdrm",
-    "libglvnd",
-    "libplacebo",
-    "libsndfile",
-    "libtheora",
-    "libva",
-    "libvorbis",
-    "libvpx",
-    "libwebp",
-    "libxml2",
-    "mesa",
-    "openjpeg",
-    "opus",
-    "pipewire",
-    "srt",
-    "svt-av1",
-    "vulkan-loader",
-    "x264",
-    "x265",
-    "zlib",
-    "bzip2",
-    "lz4",
-    "zstd",
-]
-link = [
-    "alsa-lib",
-    "aom",
-    "dav1d",
-    "freetype",
-    "gnutls",
-    "lame",
-    "libass",
-    "libdrm",
-    "libglvnd",
-    "libplacebo",
-    "libsndfile",
-    "libtheora",
-    "libva",
-    "libvorbis",
-    "libvpx",
-    "libwebp",
-    "libxml2",
-    "mesa",
-    "openjpeg",
-    "opus",
-    "pipewire",
-    "sdl2",
-    "srt",
-    "svt-av1",
-    "vulkan-loader",
-    "x264",
-    "x265",
-    "zlib",
-    "bzip2",
-    "lz4",
-    "zstd",
-]
-runtime = [
-    "alsa-lib",
-    "aom",
-    "dav1d",
-    "freetype",
-    "gnutls",
-    "lame",
-    "libass",
-    "libdrm",
-    "libglvnd",
-    "libplacebo",
-    "libsndfile",
-    "libtheora",
-    "libva",
-    "libvorbis",
-    "libvpx",
-    "libwebp",
-    "libxml2",
-    "mesa",
-    "openjpeg",
-    "opus",
-    "pipewire",
-    "sdl2",
-    "srt",
-    "svt-av1",
-    "vulkan-loader",
-    "x264",
-    "x265",
-    "zlib",
-    "bzip2",
-    "lz4",
-    "zstd",
-]
+build = ["gcc", "make", "nasm", "pkgconf", "sdl2", "cmake", "alsa-lib", "aom", "dav1d", "freetype", "gnutls", "lame", "libass", "libdrm", "libglvnd", "libplacebo", "libsndfile", "libtheora", "libva", "libvorbis", "libvpx", "libwebp", "libxml2", "mesa", "openjpeg", "opus", "pipewire", "srt", "svt-av1", "vulkan-loader", "x264", "x265", "zlib", "bzip2", "lz4", "zstd"]
+link = ["alsa-lib", "aom", "dav1d", "freetype", "gnutls", "lame", "libass", "libdrm", "libglvnd", "libplacebo", "libsndfile", "libtheora", "libva", "libvorbis", "libvpx", "libwebp", "libxml2", "mesa", "openjpeg", "opus", "pipewire", "sdl2", "srt", "svt-av1", "vulkan-loader", "x264", "x265", "zlib", "bzip2", "lz4", "zstd"]
+runtime = ["alsa-lib", "aom", "dav1d", "freetype", "gnutls", "lame", "libass", "libdrm", "libglvnd", "libplacebo", "libsndfile", "libtheora", "libva", "libvorbis", "libvpx", "libwebp", "libxml2", "mesa", "openjpeg", "opus", "pipewire", "sdl2", "srt", "svt-av1", "vulkan-loader", "x264", "x265", "zlib", "bzip2", "lz4", "zstd"]
 
 [[sources]]
-uri = "https://ffmpeg.org/releases/ffmpeg-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://ffmpeg.org/releases/ffmpeg-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
-script = '''
-cd ${BUILD_DIR}
-
-'''
+script = "cd source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 pkg-config --exists sdl2 || {
   echo "ffplay requested but SDL2 pkg-config metadata is missing"
@@ -168,24 +65,16 @@ command -v sdl2-config >/dev/null 2>&1 || {
   --enable-vaapi \
   --enable-libdrm \
   --enable-lto \
-  --enable-pic
-
-'''
+  --enable-pic'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make -j$(nproc)
-
-'''
+cd source
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 
-test -x ${PART_DIR}/usr/bin/ffplay
-
-'''
-
-[lifecycle.fabricate]
+test -x ${PART_DIR}/usr/bin/ffplay'''

@@ -7,13 +7,16 @@ arch = "x86_64"
 url = "https://pagure.io/libaio"
 
 [[sources]]
-uri = "https://pagure.io/libaio/archive/libaio-${VERSION}/libaio-libaio-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://pagure.io/libaio/archive/libaio-${VERSION}/libaio-libaio-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
-script = "make -j$(nproc) -C ${BUILD_DIR} prefix=/usr"
+script = '''
+cd source
+make -j$(nproc) -C ${WORKDIR} prefix=/usr'''
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR} prefix=/usr DESTDIR=${PART_DIR} install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+make -C ${WORKDIR} prefix=/usr DESTDIR=${PART_DIR} install'''

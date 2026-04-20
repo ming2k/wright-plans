@@ -8,42 +8,30 @@ url = "https://github.com/emersion/xdg-desktop-portal-wlr"
 
 [dependencies]
 runtime = ["xdg-desktop-portal", "pipewire"]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "scdoc",
-]
+build = ["meson", "ninja", "pkgconf", "scdoc"]
 link = ["pipewire", "wayland", "inih"]
 
 [[sources]]
-uri = "https://github.com/emersion/xdg-desktop-portal-wlr/releases/download/v${VERSION}/xdg-desktop-portal-wlr-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/emersion/xdg-desktop-portal-wlr/releases/download/v${VERSION}/xdg-desktop-portal-wlr-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
   --prefix=/usr \
   --sysconfdir=/etc \
   --buildtype=release \
   -Dsd-bus-provider=libsystemd \
-  -Dman-pages=enabled
-
-'''
+  -Dman-pages=enabled'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -C build
-
-'''
+cd source
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''

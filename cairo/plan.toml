@@ -8,22 +8,16 @@ url = "https://cairographics.org/"
 
 [dependencies]
 build = ["meson", "ninja", "pkgconf"]
-link = [
-    "pixman",
-    "libpng",
-    "fontconfig",
-    "freetype",
-    "glib",
-    "zlib",
-]
+link = ["pixman", "libpng", "fontconfig", "freetype", "glib", "zlib"]
 
 [[sources]]
-uri = "https://cairographics.org/releases/cairo-${VERSION}.tar.xz"
 sha256 = "445ed8208a6e4823de1226a74ca319d3600e83f6369f99b14265006599c32ccb"
+url = "https://cairographics.org/releases/cairo-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 meson setup build \
     --prefix=/usr            \
     --buildtype=release      \
@@ -40,14 +34,10 @@ meson setup build \
     -Dtests=disabled         \
     -Dsymbol-lookup=disabled \
     -Dspectre=disabled       \
-    -Dlzo=disabled
-
-'''
+    -Dlzo=disabled'''
 
 [lifecycle.compile]
-script = "cd ${BUILD_DIR} && meson compile -C build"
+script = "cd source && meson compile -C build"
 
 [lifecycle.staging]
-script = "cd ${BUILD_DIR} && meson install -C build --destdir ${PART_DIR}"
-
-[lifecycle.fabricate]
+script = "cd source && meson install -C build --destdir ${PART_DIR}"

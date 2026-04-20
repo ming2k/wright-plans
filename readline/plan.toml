@@ -11,61 +11,54 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/readline/readline-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/readline/readline-${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-001"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-001"
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-002"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-002"
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-003"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-003"
 
 [options]
 ccache = true
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-patch -Np0 < ${FILES_DIR}/readline83-001
-patch -Np0 < ${FILES_DIR}/readline83-002
-patch -Np0 < ${FILES_DIR}/readline83-003
+cd source
+patch -Np0 < ${WORKDIR}/readline83-001
+patch -Np0 < ${WORKDIR}/readline83-002
+patch -Np0 < ${WORKDIR}/readline83-003
 sed -i '/MV.*old/d' Makefile.in
-sed -i '/{OLDSUFF}/c:' support/shlib-install
-
-'''
+sed -i '/{OLDSUFF}/c:' support/shlib-install'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
-./configure --prefix=/usr    --disable-static --with-curses    --docdir=/usr/share/doc/readline-${VERSION}
-
-'''
+cd source
+./configure --prefix=/usr    --disable-static --with-curses    --docdir=/usr/share/doc/readline-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make SHLIB_LIBS="-lncursesw"
-
-'''
+cd source
+make SHLIB_LIBS="-lncursesw"'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 make SHLIB_LIBS="-lncursesw" DESTDIR=${PART_DIR} install
 install -d ${PART_DIR}/usr/share/doc/readline-${VERSION}
-install -v -m644 doc/*.{ps,pdf,html,dvi} ${PART_DIR}/usr/share/doc/readline-${VERSION}/ 2>/dev/null || true
+install -v -m644 doc/*.{ps,pdf,html,dvi} ${PART_DIR}/usr/share/doc/readline-${VERSION}/ 2>/dev/null || true'''
 
-'''
+[output]
+backup = ["/etc/inputrc"]
 
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
-
-[output]
-backup = ["/etc/inputrc"]

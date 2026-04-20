@@ -7,33 +7,30 @@ arch = "x86_64"
 url = "https://wiki.gnome.org/Projects/JsonGlib"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "gobject-introspection",
-]
+build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
 link = ["glib"]
 
 [[sources]]
-uri = "https://download.gnome.org/sources/json-glib/1.10/json-glib-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://download.gnome.org/sources/json-glib/1.10/json-glib-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
     --prefix=/usr             \
     --buildtype=release       \
     -Dtests=false             \
     -Dintrospection=enabled   \
-    -Dman=false
-
-'''
+    -Dman=false'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

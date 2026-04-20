@@ -11,14 +11,11 @@ runtime = ["python", "python-psutil"]
 build = ["python"]
 
 [[sources]]
-uri = "https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PART_DIR} .
-
-'''
-
-[lifecycle.fabricate]
+cd source
+pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${PART_DIR} .'''

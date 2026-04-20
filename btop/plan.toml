@@ -7,34 +7,24 @@ arch = "x86_64"
 url = "https://github.com/aristocratos/btop"
 
 [dependencies]
-build = [
-    "gcc",
-    "make",
-    "libcap",
-    "libdrm",
-]
+build = ["gcc", "make", "libcap", "libdrm"]
 link = ["libdrm"]
 
 [[sources]]
-uri = "https://github.com/aristocratos/btop/archive/refs/tags/v${VERSION}/btop-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/aristocratos/btop/archive/refs/tags/v${VERSION}/btop-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make all -j$(nproc)
-
-'''
+cd source
+make all -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-make DESTDIR=${PART_DIR} PREFIX=/usr install
-
-'''
+cd source
+make DESTDIR=${PART_DIR} PREFIX=/usr install'''
 
 [hooks]
 post_install = "setcap 'cap_perfmon=+ep' /usr/bin/btop"
 post_upgrade = "setcap 'cap_perfmon=+ep' /usr/bin/btop"
-
-[lifecycle.fabricate]

@@ -7,38 +7,27 @@ arch = "x86_64"
 url = "https://wayland.emersion.fr/slurp/"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "scdoc",
-]
-link = [
-    "cairo",
-    "libxkbcommon",
-    "wayland",
-    "wayland-protocols",
-]
+build = ["meson", "ninja", "pkgconf", "scdoc"]
+link = ["cairo", "libxkbcommon", "wayland", "wayland-protocols"]
 
 [[sources]]
-uri = "https://github.com/emersion/slurp/archive/v${VERSION}.tar.gz"
 sha256 = "0fa880d4a93e1c795e3b5929fbea47546df0955bea34fc2f7ffeb1751678f663"
+url = "https://github.com/emersion/slurp/archive/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
   --prefix=/usr \
-  --buildtype=release
-
-'''
+  --buildtype=release'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install
-
-'''
-
-[lifecycle.fabricate]
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

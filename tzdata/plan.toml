@@ -10,30 +10,27 @@ url = "https://www.iana.org/time-zones"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://data.iana.org/time-zones/releases/tzcode${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://data.iana.org/time-zones/releases/tzcode${VERSION}.tar.gz"
+extract_to = "source"
 
 [[sources]]
-uri = "https://data.iana.org/time-zones/releases/tzdata${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://data.iana.org/time-zones/releases/tzdata${VERSION}.tar.gz"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-sed -i "s:sbin:bin:g" Makefile
-
-'''
+cd source
+sed -i "s:sbin:bin:g" Makefile'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-make CC=gcc LFLAGS="${LDFLAGS}" -j$(nproc)
-
-'''
+cd source
+make CC=gcc LFLAGS="${LDFLAGS}" -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 # Install tzcode tools (zic, zdump, tzselect)
 make CC=gcc DESTDIR=${PART_DIR} install
@@ -55,8 +52,4 @@ install -m644 iso3166.tab leap-seconds.list zone1970.tab zone.tab SECURITY ${PAR
 rm -f ${PART_DIR}/etc/localtime
 
 # License
-install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/tzdata/LICENSE
-
-'''
-
-[lifecycle.fabricate]
+install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/tzdata/LICENSE'''

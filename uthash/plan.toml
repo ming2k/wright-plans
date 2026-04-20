@@ -7,14 +7,12 @@ arch = "x86_64"
 url = "https://troydhanson.github.io/uthash/"
 
 [[sources]]
-uri = "https://github.com/troydhanson/uthash/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/troydhanson/uthash/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.staging]
 script = '''
+cd source
 install -d ${PART_DIR}/usr/include
-install -m644 ${BUILD_DIR}/src/*.h ${PART_DIR}/usr/include/
-
-'''
-
-[lifecycle.fabricate]
+install -m644 ${WORKDIR}/src/*.h ${PART_DIR}/usr/include/'''

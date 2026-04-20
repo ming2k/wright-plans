@@ -10,34 +10,27 @@ url = "https://www.tcl.tk/"
 build = ["gcc", "make"]
 
 [[sources]]
-uri = "https://downloads.sourceforge.net/project/tcl/Tcl/${VERSION}/tcl${VERSION}-src.tar.gz"
 sha256 = "SKIP"
+url = "https://downloads.sourceforge.net/project/tcl/Tcl/${VERSION}/tcl${VERSION}-src.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}/unix
+cd source/unix
 ./configure --prefix=/usr           \
             --mandir=/usr/share/man \
-            --disable-rpath
-
-'''
+            --disable-rpath'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/unix
-make -j$(nproc)
-
-'''
+cd source/unix
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/unix
+cd source/unix
 make DESTDIR=${PART_DIR} install
 make DESTDIR=${PART_DIR} install-private-headers
 
 ln -sfv tclsh8.6 ${PART_DIR}/usr/bin/tclsh
-mv ${PART_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3
-
-'''
-
-[lifecycle.fabricate]
+mv ${PART_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3'''

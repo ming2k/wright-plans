@@ -6,53 +6,37 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 
 [dependencies]
-build = [
-    "cmake",
-    "gcc",
-    "make",
-    "nasm",
-    "perl",
-    "python",
-]
+build = ["cmake", "gcc", "make", "nasm", "perl", "python"]
 
 [[sources]]
-uri = "https://storage.googleapis.com/aom-releases/libaom-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://storage.googleapis.com/aom-releases/libaom-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 # 修复: GCC 15 需要显式包含 <cstdint> 才能使用 uint32_t/uint64_t
 # 问题出在捆绑的第三方库 libwebm 中
 sed -i '/#include <cassert>/a #include <cstdint>' third_party/libwebm/mkvparser/mkvparser.cc
 
 # 可选: 消除 CMake 版本过低的警告 (虽然不是致命错误，但修一下更好)
-find . -name "*.cmake" -exec sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/cmake_minimum_required(VERSION 3.10)/' {} +
-
-'''
+find . -name "*.cmake" -exec sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/cmake_minimum_required(VERSION 3.10)/' {} +'''
 
 [lifecycle.configure]
 script = '''
-mkdir -p ${BUILD_DIR}/build
-cd ${BUILD_DIR}/build
+mkdir -p ${WORKDIR}/build
+cd source/build
 
-cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DENABLE_NASM=ON -DENABLE_TESTS=OFF -DENABLE_DOCS=OFF
-
-'''
+cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DENABLE_NASM=ON -DENABLE_TESTS=OFF -DENABLE_DOCS=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/build
-make -j$(nproc)
-
-'''
+cd source/build
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}/build
-make DESTDIR=${PART_DIR} install
-
-'''
-
-[lifecycle.fabricate]
+cd source/build
+make DESTDIR=${PART_DIR} install'''

@@ -7,31 +7,19 @@ arch = "x86_64"
 url = "https://libcamera.org"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-    "python-yaml",
-    "python-jinja2",
-    "python-ply",
-]
-link = [
-    "gnutls",
-    "libevent",
-    "libyaml",
-    "systemd",
-    "gstreamer",
-    "v4l-utils",
-]
+build = ["meson", "ninja", "pkgconf", "python-yaml", "python-jinja2", "python-ply"]
+link = ["gnutls", "libevent", "libyaml", "systemd", "gstreamer", "v4l-utils"]
 
 [[sources]]
-uri = "git+https://github.com/libcamera-org/libcamera.git#v${VERSION}"
 sha256 = "SKIP"
+url = "git+https://github.com/libcamera-org/libcamera.git#v${VERSION}"
+extract_to = "source"
 
 [lifecycle.configure]
 dockyard = "relaxed"
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr                        \
 --buildtype=release                  \
 -D documentation=disabled            \
@@ -41,14 +29,14 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 -D gstreamer=enabled                 \
 -D v4l2=enabled                      \
 -D udev=enabled                      \
--D cam=enabled
-
-'''
+-D cam=enabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

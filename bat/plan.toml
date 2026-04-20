@@ -12,21 +12,20 @@ link = ["gcc", "glibc"]
 optional = ["git"]
 
 [[sources]]
-uri = "https://github.com/sharkdp/bat/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://github.com/sharkdp/bat/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.compile]
 dockyard = "relaxed"
-env = { CARGO_HOME = "${BUILD_DIR}/.cargo", CARGO_TARGET_DIR = "${BUILD_DIR}/target" }
+env = {'CARGO_HOME': '${BUILD_DIR}/.cargo', 'CARGO_TARGET_DIR': '${BUILD_DIR}/target'}
 script = '''
-cd ${BUILD_DIR}
-cargo build --release --locked
-
-'''
+cd source
+cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 install -Dm755 target/release/bat ${PART_DIR}/usr/bin/bat
 
@@ -42,8 +41,4 @@ install -dm755 ${PART_DIR}/usr/share/man/man1
 sed \
   -e 's/{{PROJECT_EXECUTABLE_UPPERCASE}}/BAT/g' \
   -e 's/{{PROJECT_EXECUTABLE}}/bat/g' \
-  assets/manual/bat.1.in > ${PART_DIR}/usr/share/man/man1/bat.1
-
-'''
-
-[lifecycle.fabricate]
+  assets/manual/bat.1.in > ${PART_DIR}/usr/share/man/man1/bat.1'''

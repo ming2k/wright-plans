@@ -7,41 +7,17 @@ arch = "x86_64"
 url = "https://www.wireshark.org/"
 
 [dependencies]
-build = [
-    "cmake",
-    "flex",
-    "gcc",
-    "ninja",
-    "perl",
-    "pkgconf",
-    "python",
-    "qt6-5compat",
-    "qt6-base",
-    "qt6-svg",
-    "speexdsp",
-]
-link = [
-    "c-ares",
-    "glib",
-    "libcap",
-    "libgcrypt",
-    "libpcap",
-    "libxml2",
-    "pcre2",
-    "qt6-5compat",
-    "qt6-base",
-    "qt6-svg",
-    "speexdsp",
-    "zlib",
-]
+build = ["cmake", "flex", "gcc", "ninja", "perl", "pkgconf", "python", "qt6-5compat", "qt6-base", "qt6-svg", "speexdsp"]
+link = ["c-ares", "glib", "libcap", "libgcrypt", "libpcap", "libxml2", "pcre2", "qt6-5compat", "qt6-base", "qt6-svg", "speexdsp", "zlib"]
 
 [[sources]]
-uri = "https://www.wireshark.org/download/src/wireshark-${VERSION}.tar.xz"
 sha256 = "SKIP"
+url = "https://www.wireshark.org/download/src/wireshark-${VERSION}.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
@@ -49,26 +25,18 @@ cmake -B build -G Ninja \
     -DBUILD_stratoshark=OFF \
     -DBUILD_tshark=ON \
     -DBUILD_wireshark=ON \
-    -DENABLE_KERBEROS=OFF
-
-'''
+    -DENABLE_KERBEROS=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
-ninja -j$(nproc) -C build
-
-'''
+cd source
+ninja -j$(nproc) -C build'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
-DESTDIR=${PART_DIR} ninja -C build install
-
-'''
+cd source
+DESTDIR=${PART_DIR} ninja -C build install'''
 
 [hooks]
 post_install = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
 post_upgrade = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
-
-[lifecycle.fabricate]

@@ -7,37 +7,22 @@ arch = "x86_64"
 url = "https://codeberg.org/sox_ng/sox_ng"
 
 [dependencies]
-build = [
-    "autoconf",
-    "automake",
-    "libtool",
-    "make",
-    "pkgconf",
-]
-link = [
-    "alsa-lib",
-    "ffmpeg",
-    "libpng",
-    "libsndfile",
-    "libvorbis",
-    "libogg",
-    "zlib",
-]
+build = ["autoconf", "automake", "libtool", "make", "pkgconf"]
+link = ["alsa-lib", "ffmpeg", "libpng", "libsndfile", "libvorbis", "libogg", "zlib"]
 
 [[sources]]
-uri = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-autoreconf -fi
-
-'''
+cd source
+autoreconf -fi'''
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}
+cd source
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -48,14 +33,14 @@ cd ${BUILD_DIR}
     --without-mad \
     --without-twolame \
     --without-wavpack \
-    --without-opus
-
-'''
+    --without-opus'''
 
 [lifecycle.compile]
-script = "make -C ${BUILD_DIR} -j$(nproc)"
+script = '''
+cd source
+make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
-script = "make -C ${BUILD_DIR} DESTDIR=${PART_DIR} install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''

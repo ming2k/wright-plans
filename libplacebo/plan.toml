@@ -7,27 +7,18 @@ arch = "x86_64"
 url = "https://github.com/haasn/libplacebo"
 
 [dependencies]
-build = [
-    "meson",
-    "ninja",
-    "pkgconf",
-]
-link = [
-    "glslang",
-    "lcms2",
-    "shaderc",
-    "spirv-cross",
-    "vulkan-loader",
-    "vulkan-headers",
-]
+build = ["meson", "ninja", "pkgconf"]
+link = ["glslang", "lcms2", "shaderc", "spirv-cross", "vulkan-loader", "vulkan-headers"]
 
 [[sources]]
-uri = "https://code.videolan.org/videolan/libplacebo/-/archive/v${VERSION}/libplacebo-v${VERSION}.tar.gz"
 sha256 = "SKIP"
+url = "https://code.videolan.org/videolan/libplacebo/-/archive/v${VERSION}/libplacebo-v${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
+cd source
+meson setup ${WORKDIR}/build ${WORKDIR} \
 --prefix=/usr \
 --buildtype=release \
 -D demos=false \
@@ -36,14 +27,14 @@ meson setup ${BUILD_DIR}/build ${BUILD_DIR} \
 -D shaderc=enabled \
 -D vulkan=enabled \
 -D lcms=enabled \
--D opengl=disabled
-
-'''
+-D opengl=disabled'''
 
 [lifecycle.compile]
-script = "ninja -C ${BUILD_DIR}/build -j$(nproc)"
+script = '''
+cd source
+ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
-script = "DESTDIR=${PART_DIR} ninja -C ${BUILD_DIR}/build install"
-
-[lifecycle.fabricate]
+script = '''
+cd source
+DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''

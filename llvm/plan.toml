@@ -8,51 +8,36 @@ url = "https://llvm.org"
 
 [dependencies]
 runtime = ["llvm-libs"]
-build = [
-    "cmake",
-    "gcc",
-    "ninja",
-    "pkgconf",
-    "python",
-]
-link = [
-    "libedit",
-    "libffi",
-    "libxml2",
-    "zlib",
-    "zstd",
-]
+build = ["cmake", "gcc", "ninja", "pkgconf", "python"]
+link = ["libedit", "libffi", "libxml2", "zlib", "zstd"]
 
 [[sources]]
-uri = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-project-${VERSION}.src.tar.xz"
 sha256 = "SKIP"
+url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-project-${VERSION}.src.tar.xz"
+extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd ${BUILD_DIR}/llvm
-cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_INSTALL_RPATH=ON -DLLVM_ENABLE_PROJECTS="clang;lld" -DLLVM_ENABLE_RUNTIMES="compiler-rt" -DLLVM_TARGETS_TO_BUILD="X86;AMDGPU" -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_LINK_LLVM_DYLIB=ON -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_FFI=ON -DLLVM_ENABLE_ZLIB=ON -DLLVM_ENABLE_ZSTD=ON -DLLVM_ENABLE_LIBEDIT=ON -DLLVM_BINUTILS_INCDIR=/usr/include -DCLANG_DEFAULT_PIE_ON_LINUX=ON -DCLANG_LINK_CLANG_DYLIB=ON
-
-'''
+cd source/llvm
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_INSTALL_RPATH=ON -DLLVM_ENABLE_PROJECTS="clang;lld" -DLLVM_ENABLE_RUNTIMES="compiler-rt" -DLLVM_TARGETS_TO_BUILD="X86;AMDGPU" -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_LINK_LLVM_DYLIB=ON -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_FFI=ON -DLLVM_ENABLE_ZLIB=ON -DLLVM_ENABLE_ZSTD=ON -DLLVM_ENABLE_LIBEDIT=ON -DLLVM_BINUTILS_INCDIR=/usr/include -DCLANG_DEFAULT_PIE_ON_LINUX=ON -DCLANG_LINK_CLANG_DYLIB=ON'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}/llvm
-ninja -C build -j$(nproc)
-
-'''
+cd source/llvm
+ninja -C build -j$(nproc)'''
 
 [lifecycle.fabricate]
 script = '''
-cd ${BUILD_DIR}/llvm
+cd source/llvm
 DESTDIR=${PART_DIR} ninja -C build install
 
 if [ ! -f ${PART_DIR}/usr/bin/llvm-config ]; then
   ln -sf llvm-config-${PKG_VERSION%%.*} ${PART_DIR}/usr/bin/llvm-config
-fi
+fi'''
 
-'''
+[output]
 
-[output.llvm-libs]
+[output."llvm-libs"]
 description = "LLVM shared libraries"
 script = '''
 install -d ${PART_DIR}/usr/lib
@@ -62,18 +47,10 @@ mv -v ${MAIN_PART_DIR}/usr/lib/libLTO.so* ${PART_DIR}/usr/lib/
 mv -v ${MAIN_PART_DIR}/usr/lib/libRemarks.so* ${PART_DIR}/usr/lib/
 
 '''
+[output."llvm-libs".dependencies]
+link = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
 
-[output.llvm-libs.dependencies]
-link = [
-    "glibc",
-    "libffi",
-    "libedit",
-    "ncurses",
-    "zlib",
-    "zstd",
-]
-
-[output.clang]
+[output."clang"]
 description = "C/C++/ObjC compiler frontend for LLVM"
 script = '''
 install -d ${PART_DIR}/usr/bin
@@ -89,12 +66,11 @@ mv -v ${MAIN_PART_DIR}/usr/include/clang* ${PART_DIR}/usr/include/ 2>/dev/null |
 mv -v ${MAIN_PART_DIR}/usr/share/clang ${PART_DIR}/usr/share/ 2>/dev/null || true
 
 '''
-
-[output.clang.dependencies]
+[output."clang".dependencies]
 runtime = ["llvm-libs"]
 link = ["glibc"]
 
-[output.lld]
+[output."lld"]
 description = "LLVM linker"
 script = '''
 install -d ${PART_DIR}/usr/bin
@@ -103,7 +79,6 @@ mv -v ${MAIN_PART_DIR}/usr/bin/ld.lld* ${PART_DIR}/usr/bin/
 mv -v ${MAIN_PART_DIR}/usr/bin/wasm-ld ${PART_DIR}/usr/bin/ 2>/dev/null || true
 
 '''
-
-[output.lld.dependencies]
+[output."lld".dependencies]
 runtime = ["llvm-libs"]
 link = ["glibc"]

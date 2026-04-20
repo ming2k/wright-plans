@@ -8,36 +8,28 @@ url = "https://www.gnu.org/software/grub/"
 
 [dependencies]
 runtime = ["dosfstools"]
-build = [
-    "bison",
-    "flex",
-    "gcc",
-    "make",
-    "freetype",
-]
+build = ["bison", "flex", "gcc", "make", "freetype"]
 
 [[sources]]
-uri = "https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz"
 sha256 = "SKIP"
+url = "https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd ${BUILD_DIR}
-echo depends bli part_gpt > grub-core/extra_deps.lst
-
-'''
+cd source
+echo depends bli part_gpt > grub-core/extra_deps.lst'''
 
 [lifecycle.configure]
 script = '''
+cd source
 # Configure and compile are combined — GRUB requires two separate
 # configure/make cycles for BIOS and EFI platforms.
-echo "Skipping standalone configure — handled in compile stage."
-
-'''
+echo "Skipping standalone configure — handled in compile stage."'''
 
 [lifecycle.compile]
 script = '''
-cd ${BUILD_DIR}
+cd source
 unset {C,CPP,CXX,LD}FLAGS
 
 # ── Build 1: BIOS (i386-pc) ──────────────────────────────────────────────────
@@ -52,7 +44,7 @@ cd build-bios
 make -j$(nproc)
 
 # ── Build 2: UEFI (x86_64-efi) ───────────────────────────────────────────────
-cd ${BUILD_DIR}
+cd source
 mkdir -p build-efi
 cd build-efi
 ../configure --prefix=/usr          \
@@ -61,27 +53,21 @@ cd build-efi
     --target=x86_64                 \
     --disable-efiemu                \
     --disable-werror
-make -j$(nproc)
-
-'''
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd ${BUILD_DIR}
+cd source
 
 # Install BIOS build first, then EFI on top (shared tools are identical)
 cd build-bios
 make DESTDIR=${PART_DIR} install
 
-cd ${BUILD_DIR}/build-efi
+cd source/build-efi
 make DESTDIR=${PART_DIR} install
 
 # Relocate bash completion
 mkdir -p ${PART_DIR}/usr/share/bash-completion/completions
 mv -v ${PART_DIR}/etc/bash_completion.d/grub \
     ${PART_DIR}/usr/share/bash-completion/completions/ 2>/dev/null || true
-rmdir ${PART_DIR}/etc/bash_completion.d 2>/dev/null || true
-
-'''
-
-[lifecycle.fabricate]
+rmdir ${PART_DIR}/etc/bash_completion.d 2>/dev/null || true'''
