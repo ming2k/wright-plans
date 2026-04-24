@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://passt.top/passt/snapshot/passt-${VERSION}.tar.zst"
 extract_to = "source"

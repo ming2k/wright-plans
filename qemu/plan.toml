@@ -12,6 +12,7 @@ build = ["bash", "python", "python-distlib", "perl", "meson", "ninja", "pkgconf"
 link = ["glib", "pixman", "zlib", "libslirp", "dtc", "spice"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.qemu.org/qemu-${VERSION}.tar.xz"
 extract_to = "source"

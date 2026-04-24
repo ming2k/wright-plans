@@ -11,6 +11,7 @@ build = ["bash", "python", "meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v${VERSION}/libslirp-v${VERSION}.tar.gz"
 extract_to = "source"

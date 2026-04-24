@@ -12,16 +12,18 @@ runtime = ["glibc"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "25b39bfad079a03862825b2f9db8b71b82fc80aad5552a9c76ea912edc9b889e"
 url = "https://github.com/containers/aardvark-dns/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
+type = "http"
 sha256 = "009198f042f150d42025c8a0456bb7a98293c9deeb012d37b2d364f44e52288f"
 url = "https://github.com/containers/aardvark-dns/releases/download/v${VERSION}/aardvark-dns-v${VERSION}-vendor.tar.gz"
 
 [lifecycle.prepare]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/aardvark-dns-${VERSION}
 ln -sfn ../vendor vendor
@@ -35,7 +37,7 @@ directory = "vendor"
 EOF'''
 
 [lifecycle.compile]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/aardvark-dns-${VERSION}
 export CARGO_HOME=${WORKDIR}/.cargo-home
@@ -45,7 +47,7 @@ export CARGO_TARGET_DIR=${WORKDIR}/target
 make PREFIX=/usr CARGO="cargo --locked --offline" build'''
 
 [lifecycle.staging]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/aardvark-dns-${VERSION}
 make DESTDIR=${PART_DIR} PREFIX=/usr install'''

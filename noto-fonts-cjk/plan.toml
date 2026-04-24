@@ -7,11 +7,13 @@ arch = "any"
 url = "https://github.com/notofonts/noto-cjk"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/notofonts/noto-cjk/releases/download/Sans${VERSION}/01_NotoSansCJK-OTF-VF.tar.xz"
 extract_to = "source"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/notofonts/noto-cjk/releases/download/Serif${VERSION}/04_NotoSerifCJK-OTF-VF.tar.xz"
 

@@ -10,6 +10,7 @@ url = "https://setuptools.pypa.io/"
 build = ["python", "wheel"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/s/setuptools/setuptools-${VERSION}.tar.gz"
 extract_to = "source"

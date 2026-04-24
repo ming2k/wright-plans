@@ -10,6 +10,7 @@ url = "https://github.com/google/double-conversion"
 build = ["cmake", "gcc", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/google/double-conversion/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

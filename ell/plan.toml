@@ -10,6 +10,7 @@ url = "https://01.org/ell"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://mirrors.edge.kernel.org/pub/linux/libs/ell/ell-${VERSION}.tar.xz"
 extract_to = "source"

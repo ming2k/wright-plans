@@ -12,12 +12,13 @@ build = ["go", "openssl", "pkgconf"]
 link = ["openssl"]
 
 [[sources]]
-sha256 = "SKIP"
-url = "git+https://github.com/rfjakob/gocryptfs.git#v${VERSION}"
+type = "git"
+url = "https://github.com/rfjakob/gocryptfs.git"
+ref = "v${VERSION}"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source/gocryptfs-*/
 CGO_ENABLED=1 ./build.bash'''

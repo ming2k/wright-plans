@@ -12,6 +12,7 @@ build = ["gcc", "make"]
 link = ["glibc", "glib", "dbus", "ell", "alsa-lib", "json-c", "libical", "readline"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/bluetooth/bluez-${VERSION}.tar.xz"
 extract_to = "source"

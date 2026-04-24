@@ -10,6 +10,7 @@ url = "https://www.gnu.org/software/diffutils/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/diffutils/diffutils-${VERSION}.tar.xz"
 extract_to = "source"

@@ -10,6 +10,7 @@ url = "https://www.speex.org/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://downloads.xiph.org/releases/speex/speexdsp-${VERSION}.tar.gz"
 extract_to = "source"

@@ -11,6 +11,7 @@ build = ["gcc", "make", "pkgconf", "gettext", "glib", "docbook-xsl", "libxslt", 
 link = ["acl", "libatasmart", "libblockdev", "libgudev", "polkit", "systemd"]
 
 [[sources]]
+type = "http"
 sha256 = "b75734ccf602540dedb4068bec206adcb508a4c003725e117ae8f994d92d8ece"
 url = "https://github.com/storaged-project/udisks/releases/download/udisks-${VERSION}/udisks-${VERSION}.tar.bz2"
 extract_to = "source"

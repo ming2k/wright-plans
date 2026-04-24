@@ -10,6 +10,7 @@ url = "https://github.com/s-yata/marisa-trie"
 build = ["autoconf", "automake", "libtool", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/s-yata/marisa-trie/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

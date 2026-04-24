@@ -12,6 +12,7 @@ runtime = ["curl", "gettext", "gmp", "icu", "libxml2", "mpfr", "readline"]
 link = ["curl", "gettext", "gmp", "icu", "libxml2", "mpfr", "readline"]
 
 [[sources]]
+type = "http"
 sha256 = "904592d33a98ed4a26a59fa34c855578e096144fb91965b8afc90e06797dba8e"
 url = "https://github.com/Qalculate/libqalculate/releases/download/v${VERSION}/libqalculate-${VERSION}.tar.gz"
 extract_to = "source"

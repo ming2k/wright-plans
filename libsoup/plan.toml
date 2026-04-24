@@ -11,6 +11,7 @@ build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
 link = ["glib", "libpsl", "libxml2", "nghttp2", "sqlite"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libsoup/3.6/libsoup-${VERSION}.tar.xz"
 extract_to = "source"

@@ -11,6 +11,7 @@ build = ["meson", "ninja"]
 link = ["glibc", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "4af43444b38adb5545d0ed1c2ce46d9608cc47b31c2387fc5181656765a6fa76"
 url = "https://xorg.freedesktop.org/releases/individual/lib/libpciaccess-${VERSION}.tar.xz"
 extract_to = "source"

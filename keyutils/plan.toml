@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-${VERSION}.tar.gz"
 extract_to = "source"

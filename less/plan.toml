@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.greenwoodsoftware.com/less/less-${VERSION}.tar.gz"
 extract_to = "source"

@@ -11,6 +11,7 @@ build = ["gobject-introspection", "libevdev", "libgudev", "meson", "ninja", "pkg
 link = ["glib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libmanette/0.2/libmanette-0.2.7.tar.xz"
 extract_to = "source"

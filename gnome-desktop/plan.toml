@@ -12,6 +12,7 @@ build = ["gobject-introspection", "meson", "ninja"]
 link = ["glib", "gtk4", "libseccomp", "libxkbcommon"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${VERSION}.tar.xz"
 extract_to = "source"

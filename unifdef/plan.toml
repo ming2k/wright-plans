@@ -9,6 +9,7 @@ arch = "x86_64"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz"
 extract_to = "source"

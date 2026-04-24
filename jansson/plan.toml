@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/akheron/jansson/releases/download/v${VERSION}/jansson-${VERSION}.tar.bz2"
 extract_to = "source"

@@ -10,6 +10,7 @@ url = "https://fmt.dev/"
 build = ["gcc", "cmake", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/fmtlib/fmt/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"

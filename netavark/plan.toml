@@ -12,16 +12,18 @@ runtime = ["aardvark-dns", "glibc", "nftables"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "284faa7cc525b869cbac4053e0a4127ac743ca7da1457c49fffb35558ea9c78d"
 url = "https://github.com/containers/netavark/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
+type = "http"
 sha256 = "afa8e99a9691ef6ea485d6cb6b1897684d9f8a26719deaa3cbf37b5f17198e6f"
 url = "https://github.com/containers/netavark/releases/download/v${VERSION}/netavark-v${VERSION}-vendor.tar.gz"
 
 [lifecycle.prepare]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/netavark-${VERSION}
 ln -sfn ../vendor vendor
@@ -35,7 +37,7 @@ directory = "vendor"
 EOF'''
 
 [lifecycle.compile]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/netavark-${VERSION}
 export CARGO_HOME=${WORKDIR}/.cargo-home
@@ -50,7 +52,7 @@ make PREFIX=/usr CARGO="cargo --locked --offline" \
     contrib/systemd/system/netavark-nftables-reload.service'''
 
 [lifecycle.staging]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/netavark-${VERSION}
 

@@ -12,8 +12,9 @@ build = ["autoconf", "make", "gcc", "bash", "zip", "unzip", "fontconfig", "temur
 link = ["alsa-lib", "freetype", "giflib", "lcms2", "libjpeg-turbo", "libpng", "zlib"]
 
 [[sources]]
-sha256 = "SKIP"
-url = "git+https://github.com/openjdk/jdk.git#jdk-26-ga"
+type = "git"
+url = "https://github.com/openjdk/jdk.git"
+ref = "jdk-26-ga"
 extract_to = "source"
 
 [options]

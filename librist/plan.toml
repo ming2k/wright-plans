@@ -11,6 +11,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["mbedtls"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://code.videolan.org/rist/librist/-/archive/v${VERSION}/librist-v${VERSION}.tar.bz2"
 extract_to = "source"

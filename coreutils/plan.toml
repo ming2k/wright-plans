@@ -11,6 +11,7 @@ build = ["gcc", "gettext", "make"]
 link = ["acl", "attr", "libcap", "openssl"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/coreutils/coreutils-${VERSION}.tar.xz"
 extract_to = "source"

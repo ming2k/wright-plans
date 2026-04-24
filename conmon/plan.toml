@@ -12,18 +12,19 @@ runtime = ["glib", "glibc", "libseccomp", "systemd"]
 link = ["glib", "glibc", "libseccomp", "systemd"]
 
 [[sources]]
+type = "http"
 sha256 = "814fb5979a3a4b8576b1f901e606b482bebb41cb7e57926e6d5765ee786b96d3"
 url = "https://github.com/containers/conmon/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/conmon-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/conmon-${VERSION}
 make DESTDIR=${PART_DIR} PREFIX=/usr LIBEXECDIR=/usr/libexec install.podman'''

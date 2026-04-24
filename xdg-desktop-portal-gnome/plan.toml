@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf", "xdg-desktop-portal"]
 link = ["gtk4", "libadwaita"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/xdg-desktop-portal-gnome/49/xdg-desktop-portal-gnome-${VERSION}.tar.xz"
 extract_to = "source"

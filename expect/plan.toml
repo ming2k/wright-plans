@@ -11,11 +11,13 @@ runtime = ["tcl"]
 build = ["gcc", "make", "tcl"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://downloads.sourceforge.net/project/expect/Expect/${VERSION}/expect${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.linuxfromscratch.org/patches/lfs/12.4/expect-${VERSION}-gcc15-1.patch"
 

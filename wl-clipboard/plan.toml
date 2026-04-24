@@ -11,6 +11,7 @@ build = ["meson", "ninja"]
 link = ["wayland", "wayland-protocols"]
 
 [[sources]]
+type = "http"
 sha256 = "6eb8081207fb5581d1d82c4bcd9587205a31a3d47bea3ebeb7f41aa1143783eb"
 url = "https://github.com/bugaevc/wl-clipboard/archive/v${VERSION}/wl-clipboard-${VERSION}.tar.gz"
 extract_to = "source"

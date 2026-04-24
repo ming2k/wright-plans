@@ -1,5 +1,5 @@
 name = "typio"
-version = "3.0.1"
+version = "3.0.3"
 release = 1
 description = "Native Wayland input method daemon with optional GTK4 control panel"
 license = "NOASSERTION"
@@ -8,54 +8,18 @@ url = "https://github.com/ming2k/typio"
 
 [dependencies]
 runtime = ["rime-prelude"]
-build = ["cmake", "ninja", "pkgconf", "python3"]
-link = ["dbus", "gtk4", "librime", "libxkbcommon", "wayland"]
+build = ["cmake", "glslang", "ninja", "pkgconf", "vulkan-headers"]
+link = ["dbus", "freetype", "gtk4", "harfbuzz", "librime", "libxkbcommon", "pipewire", "vulkan-loader", "wayland"]
 
 [[sources]]
-sha256 = "SKIP"
-url = "git+https://github.com/ming2k/typio.git#v${VERSION}"
+type = "git"
+url = "https://github.com/ming2k/typio.git"
+ref = "v3.0.3"
 extract_to = "source"
-
-[[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "git+https://skia.googlesource.com/skia.git#e7c90ecca9444fe09598f1630ab7cee2c0ee027a"
-
-[lifecycle.prepare]
-dockyard = "relaxed"
-script = '''
-# Find the fetched directories
-TYPIO_DIR=$(find ${SRC_DIR} -maxdepth 1 -type d -name "typio-*" | head -n1)
-SKIA_EXTRACTED_DIR=$(find ${SRC_DIR} -maxdepth 2 -type d -name "skia-*" | head -n1)
-
-# Move typio contents to the root of BUILD_DIR (/build)
-cp -a ${TYPIO_DIR}/. ${WORKDIR}/
-rm -rf ${TYPIO_DIR}
-
-# Move the fetched skia repo to the expected location
-mkdir -p ${WORKDIR}/external/skia
-cp -a ${SKIA_EXTRACTED_DIR}/. ${WORKDIR}/external/skia/
-rm -rf ${SKIA_EXTRACTED_DIR}
-
-# Sync skia dependencies using its own script
-cd source/external/skia
-for i in {1..5}; do
-  python3 tools/git-sync-deps && break || sleep 10
-done
-./bin/fetch-gn'''
 
 [lifecycle.configure]
 script = '''
-# 1. Configure and build Skia (GN)
-cd source/external/skia
-./bin/gn gen out/Release --args='is_official_build=true is_debug=false skia_use_system_libjpeg_turbo=false skia_use_system_libpng=false skia_use_system_zlib=false skia_use_system_harfbuzz=false skia_use_system_icu=false skia_use_libwebp_encode=false skia_use_libwebp_decode=false skia_enable_skottie=true skia_use_expat=true skia_use_system_expat=false skia_use_vulkan=true skia_use_metal=false skia_use_gl=true skia_use_directx=false skia_use_x11=false skia_use_egl=true extra_cflags=["-fPIC", "-mavx"] extra_cxxflags=["-fPIC", "-mavx"]'
-
-# 2. Compile Skia
-ninja -C out/Release skia skshaper skparagraph skunicode_core skunicode_icu
-
-# 3. Configure Typio (CMake)
-cd source
-cmake -S . -B build -G Ninja \
+cmake -S source -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_BUILD_TYPE=Release \
@@ -69,10 +33,8 @@ cmake -S . -B build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
-cmake --build ${WORKDIR}/build -j$(nproc)'''
+cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''
+DESTDIR=${PART_DIR} cmake --install build'''

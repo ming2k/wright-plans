@@ -11,6 +11,7 @@ build = ["gcc", "cmake", "ninja"]
 optional = ["sdl2"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/ggml-org/whisper.cpp/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
@@ -35,13 +36,3 @@ script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
 
-[lifecycle.fabricate]
-script = '''
-cd source
-mkdir -p ${PART_DIR}/usr/bin
-for bin in ${PART_DIR}/usr/lib/whisper.cpp/bin/*; do
-  ln -sf /usr/lib/whisper.cpp/bin/$(basename "$bin") ${PART_DIR}/usr/bin/$(basename "$bin")
-done
-
-mkdir -p ${PART_DIR}/usr/lib/pkgconfig
-ln -sf /usr/lib/whisper.cpp/lib/pkgconfig/whisper.pc ${PART_DIR}/usr/lib/pkgconfig/whisper.pc'''

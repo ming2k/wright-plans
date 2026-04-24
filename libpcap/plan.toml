@@ -10,6 +10,7 @@ url = "https://www.tcpdump.org/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.tcpdump.org/release/libpcap-${VERSION}.tar.xz"
 extract_to = "source"

@@ -11,6 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["bzip2", "fontconfig", "freetype", "lcms2", "libjpeg-turbo", "libpng", "libtiff", "libwebp", "libxml2", "openjpeg", "xz", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "abb85df40f06fddf17d031629c7ad2778a55d478a8bff80d55ffee75c90a3982"
 url = "https://imagemagick.org/archive/releases/ImageMagick-${VERSION}.tar.xz"
 extract_to = "source"

@@ -1,5 +1,5 @@
 name = "mesa"
-version = "26.0.4"
+version = "26.0.5"
 release = 1
 description = "Open-source OpenGL and Vulkan drivers"
 license = "MIT"
@@ -7,17 +7,19 @@ arch = "x86_64"
 url = "https://mesa3d.org"
 
 [dependencies]
-build = ["elfutils", "glslang", "libclc", "llvm", "meson", "ninja", "pkgconf", "python-mako", "python-pyyaml", "spirv-llvm-translator", "spirv-tools", "wayland-protocols"]
-link = ["elfutils", "expat", "libdisplay-info", "libdrm", "libglvnd", "libunwind", "llvm", "vulkan-headers", "wayland", "zlib", "zstd"]
+build = ["elfutils", "glslang", "libclc", "llvm", "meson", "ninja", "pkgconf", "python-mako", "python-pyyaml", "spirv-llvm-translator", "spirv-tools", "vulkan-headers", "wayland-protocols"]
+link = ["elfutils", "expat", "libdisplay-info", "libdrm", "libglvnd", "libunwind", "llvm", "wayland", "zlib", "zstd"]
+runtime = ["elfutils", "expat", "libdisplay-info", "libdrm", "libglvnd", "libunwind", "llvm", "wayland", "zlib", "zstd"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://mesa.freedesktop.org/archive/mesa-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/mesa-${VERSION}
 # Pure Wayland build:
 # -Dplatforms=wayland keeps the EGL/GBM Wayland platform and intentionally
 #   drops X11. This does not disable Wayland EGL support.
@@ -33,10 +35,10 @@ meson setup build --prefix=/usr --buildtype=release -D platforms=wayland -D gall
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -j$(nproc) -C ${WORKDIR}/build'''
+cd source/mesa-${VERSION}
+ninja -j$(nproc) -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/mesa-${VERSION}
+DESTDIR=${PART_DIR} ninja -C build install'''

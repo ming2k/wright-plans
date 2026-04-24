@@ -11,6 +11,7 @@ build = ["gcc", "make", "pkgconf", "wayland-protocols"]
 link = ["alsa-lib", "dbus", "libxkbcommon", "pipewire", "wayland"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.libsdl.org/release/SDL2-${VERSION}.tar.gz"
 extract_to = "source"

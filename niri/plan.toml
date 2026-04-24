@@ -1,17 +1,18 @@
 name = "niri"
 version = "25.11"
-release = 3
+release = 4
 description = "Scrollable-tiling Wayland compositor"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://github.com/YaLTeR/niri"
 
 [dependencies]
-runtime = ["seatd", "pipewire", "xdg-desktop-portal", "xdg-desktop-portal-gtk", "xdg-desktop-portal-wlr"]
+runtime = ["seatd", "pipewire", "xdg-desktop-portal", "xdg-desktop-portal-gtk"]
 build = ["cargo", "pkgconf", "rust"]
 link = ["cairo", "glib", "libinput", "mesa", "pango", "pipewire", "seatd", "systemd", "wayland", "libxkbcommon"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/YaLTeR/niri/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
@@ -23,32 +24,30 @@ path = "patches/0001-default-xwayland-satellite-off.patch"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/*
 # Pure Wayland system policy: default xwayland-satellite to off so niri never
 # tries to spawn it when the user has no config override. Opt-in stays one-line
 # for users who still want X11: `xwayland-satellite { on; }`.
-patch -Np1 < ${WORKDIR}/0001-default-xwayland-satellite-off.patch'''
+patch -Np1 < ${WORKDIR}/${NAME}-0001-default-xwayland-satellite-off.patch'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/*
 echo "cargo project, no configure step"'''
 
 [lifecycle.compile]
-dockyard = "relaxed"
-env = {'CARGO_HOME': '${BUILD_DIR}/.cargo', 'CARGO_TARGET_DIR': '${BUILD_DIR}/target'}
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
-cd source
-cargo build --release --no-default-features --features systemd --locked'''
+cd source/*
+cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd source
-mkdir -p ${PART_DIR}/usr/bin
-cp target/release/niri ${PART_DIR}/usr/bin/
-mkdir -p ${PART_DIR}/usr/share/wayland-sessions
-cp resources/niri.desktop ${PART_DIR}/usr/share/wayland-sessions/
-mkdir -p ${PART_DIR}/usr/lib/systemd/user
-cp resources/niri.service ${PART_DIR}/usr/lib/systemd/user/
-cp resources/niri-shutdown.target ${PART_DIR}/usr/lib/systemd/user/
-install -Dm755 resources/niri-session ${PART_DIR}/usr/bin/niri-session'''
+cd source/*
+install -Dm755 ${WORKDIR}/target/release/niri ${PART_DIR}/usr/bin/niri
+install -Dm755 resources/niri-session ${PART_DIR}/usr/bin/niri-session
+install -Dm644 resources/niri.desktop ${PART_DIR}/usr/share/wayland-sessions/niri.desktop
+install -Dm644 resources/niri-portals.conf ${PART_DIR}/usr/share/xdg-desktop-portal/niri-portals.conf
+install -Dm644 resources/niri.service ${PART_DIR}/usr/lib/systemd/user/niri.service
+install -Dm644 resources/niri-shutdown.target ${PART_DIR}/usr/lib/systemd/user/niri-shutdown.target'''

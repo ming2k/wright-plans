@@ -10,6 +10,7 @@ url = "https://www.freedesktop.org/wiki/Software/xdg-utils/"
 build = ["gcc", "make", "lynx", "xmlto", "docbook-xml"]
 
 [[sources]]
+type = "http"
 sha256 = "93d510dccf328378f012fe195b4574c2fac1cd65a74d0852d6eaa72e5a2065a7"
 url = "https://gitlab.freedesktop.org/xdg/xdg-utils/-/archive/v${VERSION}/xdg-utils-v${VERSION}.tar.bz2"
 extract_to = "source"

@@ -11,13 +11,14 @@ build = ["rust"]
 link = ["lz4", "wayland", "wayland-protocols"]
 
 [[sources]]
+type = "http"
 sha256 = "0bd1d3a7461b1bc0b99f49aa64ce01d3e84412c5afd6534a1221c4aa3341ccd6"
 url = "https://codeberg.org/LGFae/awww/archive/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "relaxed"
-env = {'CARGO_HOME': '${BUILD_DIR}/.cargo', 'CARGO_TARGET_DIR': '${BUILD_DIR}/target'}
+isolation = "relaxed"
+env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
 script = '''
 cd source
 cargo build --release --locked'''

@@ -11,6 +11,7 @@ build = ["cmake", "gcc", "ninja", "pkgconf", "qt6-base", "qt6-svg", "qt6-tools"]
 link = ["qt6-base", "qt6-svg"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.opencode.net/trialuser/qt6ct/-/archive/${VERSION}/qt6ct-${VERSION}.tar.gz"
 extract_to = "source"

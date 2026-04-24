@@ -11,6 +11,7 @@ runtime = ["python", "python-packaging", "python-pathspec", "python-pluggy", "py
 build = ["python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/h/hatchling/hatchling-${VERSION}.tar.gz"
 extract_to = "source"

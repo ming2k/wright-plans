@@ -10,6 +10,7 @@ url = "https://savannah.nongnu.org/projects/attr"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.savannah.gnu.org/releases/attr/attr-${VERSION}.tar.gz"
 extract_to = "source"

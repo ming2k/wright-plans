@@ -10,6 +10,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["expat", "libffi", "libxml2"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/${VERSION}/downloads/wayland-${VERSION}.tar.xz"
 extract_to = "source"

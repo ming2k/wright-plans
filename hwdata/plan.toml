@@ -10,6 +10,7 @@ url = "https://github.com/vcrhonek/hwdata"
 build = ["make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/vcrhonek/hwdata/archive/v${VERSION}/hwdata-${VERSION}.tar.gz"
 extract_to = "source"

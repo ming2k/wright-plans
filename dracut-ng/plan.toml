@@ -11,6 +11,7 @@ runtime = ["bash", "coreutils", "cpio", "kmod", "systemd", "util-linux"]
 build = ["gcc", "make", "pkgconf", "kmod"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/dracut-ng/dracut-ng/archive/${VERSION}/dracut-ng-${VERSION}.tar.gz"
 extract_to = "source"

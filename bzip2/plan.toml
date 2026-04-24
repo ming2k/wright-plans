@@ -10,6 +10,7 @@ url = "https://www.sourceware.org/bzip2/"
 build = ["gcc", "make", "diffutils"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.sourceware.org/pub/bzip2/bzip2-${VERSION}.tar.gz"
 extract_to = "source"

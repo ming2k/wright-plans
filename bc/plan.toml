@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["readline"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/gavinhoward/bc/releases/download/${VERSION}/bc-${VERSION}.tar.xz"
 extract_to = "source"

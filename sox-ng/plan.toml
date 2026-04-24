@@ -11,6 +11,7 @@ build = ["autoconf", "automake", "libtool", "make", "pkgconf"]
 link = ["alsa-lib", "ffmpeg", "libpng", "libsndfile", "libvorbis", "libogg", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${VERSION}.tar.gz"
 extract_to = "source"

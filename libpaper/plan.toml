@@ -10,6 +10,7 @@ url = "https://github.com/rrthomas/libpaper"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "3925401edf1eda596277bc2485e050b704fd7f364f257c874b0c40ac5aa627c0"
 url = "https://github.com/rrthomas/libpaper/releases/download/v2.2.7/libpaper-2.2.7.tar.gz"
 extract_to = "source"

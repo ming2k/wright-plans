@@ -12,13 +12,14 @@ link = ["gcc", "glibc"]
 optional = []
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/sxyazi/yazi/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "relaxed"
-env = {'YAZI_GEN_COMPLETIONS': 'true'}
+isolation = "relaxed"
+env = { YAZI_GEN_COMPLETIONS = 'true' }
 script = '''
 cd source
 cargo build --release --locked'''

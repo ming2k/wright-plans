@@ -10,6 +10,7 @@ url = "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas"
 build = ["gobject-introspection", "meson", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gsettings-desktop-schemas/49/gsettings-desktop-schemas-${VERSION}.tar.xz"
 extract_to = "source"

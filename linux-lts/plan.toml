@@ -1,5 +1,5 @@
 name = "linux-lts"
-version = "6.18.22"
+version = "6.18.23"
 release = 2
 description = "The Linux kernel (LTS)"
 license = "GPL-2.0-only"
@@ -11,6 +11,7 @@ runtime = ["kmod", "dracut-ng"]
 build = ["bc", "gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VERSION}.tar.xz"
 extract_to = "source"
@@ -22,17 +23,17 @@ path = "config"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/linux-${VERSION}
 
 # Configuration policy:
-# - ${WORKDIR}/config is the primary kernel config source and should reflect
+# - ${WORKDIR}/linux-lts-config is the primary kernel config source and should reflect
 #   the baseline that users can inspect and edit directly.
 # - Prefer changing config for normal feature choices so the resulting policy is
 #   visible in one place.
 # - Keep scripts/config usage minimal and limited to a small set of
 #   strategy-critical assertions or version-drift guardrails that cannot be
 #   expressed cleanly as the maintained config baseline.
-cp ${WORKDIR}/config .config
+cp ${WORKDIR}/linux-lts-config .config
 make olddefconfig
 
 # Branding
@@ -104,15 +105,15 @@ scripts/config --disable CFG80211_WEXT
 make olddefconfig'''
 
 [lifecycle.compile]
-dockyard = "none"
+isolation = "none"
 script = '''
-cd source
+cd source/linux-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
-dockyard = "none"
+isolation = "none"
 script = '''
-cd source
+cd source/linux-${VERSION}
 make INSTALL_MOD_PATH=${PART_DIR}/usr modules_install
 rm -f ${PART_DIR}/usr/lib/modules/*/build
 install -d ${PART_DIR}/boot

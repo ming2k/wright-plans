@@ -10,6 +10,7 @@ url = "https://gitlab.freedesktop.org/xdg/xdg-user-dirs"
 build = ["gcc", "gettext", "meson", "ninja", "pkgconf", "docbook-xsl", "libxslt"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/xdg/xdg-user-dirs/-/archive/v${VERSION}/xdg-user-dirs-v${VERSION}.tar.gz"
 extract_to = "source"

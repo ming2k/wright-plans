@@ -10,6 +10,7 @@ url = "https://tukaani.org/xz/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/tukaani-project/xz/releases/download/v${VERSION}/xz-${VERSION}.tar.xz"
 extract_to = "source"

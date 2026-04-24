@@ -10,6 +10,7 @@ url = "https://wheel.readthedocs.io/"
 build = ["flit-core", "python-packaging", "python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/w/wheel/wheel-${VERSION}.tar.gz"
 extract_to = "source"

@@ -9,6 +9,7 @@ arch = "x86_64"
 build = ["cmake", "gcc", "make", "nasm", "perl", "python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://storage.googleapis.com/aom-releases/libaom-${VERSION}.tar.gz"
 extract_to = "source"

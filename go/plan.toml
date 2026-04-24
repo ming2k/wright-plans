@@ -11,19 +11,20 @@ build = ["go-bootstrap", "bash", "gcc", "glibc"]
 runtime = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://go.dev/dl/go${VERSION}.src.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "none"
-env = {'GOROOT_BOOTSTRAP': '/usr/lib/go-bootstrap', 'GOOS': 'linux', 'GOARCH': 'amd64', 'CGO_ENABLED': '1'}
+isolation = "none"
+env = { GOROOT_BOOTSTRAP = '/usr/lib/go-bootstrap', GOOS = 'linux', GOARCH = 'amd64', CGO_ENABLED = '1' }
 script = '''
 cd source/src
 ./make.bash'''
 
 [lifecycle.staging]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source
 mkdir -p ${PART_DIR}/usr/lib

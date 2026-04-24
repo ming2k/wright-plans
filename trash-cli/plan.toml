@@ -11,6 +11,7 @@ runtime = ["python", "python-psutil"]
 build = ["python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${VERSION}.tar.gz"
 extract_to = "source"

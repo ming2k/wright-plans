@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["ncurses", "readline"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/bash/bash-${VERSION}.tar.gz"
 extract_to = "source"

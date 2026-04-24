@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["bzip2", "ncurses", "openssl", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "7374b89936d991669e101f4e97f2c9592036e1e8cdaa7bafc259a77ab6fb07ce"
 url = "https://invisible-mirror.net/archives/lynx/tarballs/lynx${VERSION}.tar.bz2"
 extract_to = "source"

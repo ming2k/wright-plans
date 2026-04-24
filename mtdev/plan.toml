@@ -10,6 +10,7 @@ url = "https://bitmath.org/code/mtdev/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://bitmath.org/code/mtdev/mtdev-${VERSION}.tar.bz2"
 extract_to = "source"

@@ -11,19 +11,23 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/readline/readline-${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-001"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-002"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-003"
 

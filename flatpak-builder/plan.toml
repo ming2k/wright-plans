@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf", "appstream", "elfutils"]
 link = ["glib", "json-glib", "curl", "elfutils", "libxml2", "ostree", "libyaml"]
 
 [[sources]]
+type = "http"
 sha256 = "fd5bc36fe3b974395f782e6c920d8955cee168f513370c32cc800b69acd980d0"
 url = "https://github.com/flatpak/flatpak-builder/releases/download/${VERSION}/flatpak-builder-${VERSION}.tar.xz"
 extract_to = "source"

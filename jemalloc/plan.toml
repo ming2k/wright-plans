@@ -10,6 +10,7 @@ url = "https://github.com/jemalloc/jemalloc"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/jemalloc/jemalloc/releases/download/${VERSION}/jemalloc-${VERSION}.tar.bz2"
 extract_to = "source"

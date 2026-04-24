@@ -11,6 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["keyutils", "openssl"]
 
 [[sources]]
+type = "http"
 sha256 = "3243ffbc8ea4d4ac22ddc7dd2a1dc54c57874c40648b60ff97009763554eaf13"
 url = "https://web.mit.edu/Kerberos/dist/krb5/1.22/krb5-${VERSION}.tar.gz"
 extract_to = "source"

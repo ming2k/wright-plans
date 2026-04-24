@@ -10,6 +10,7 @@ url = "https://zlib.net/"
 build = ["bash", "gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/madler/zlib/releases/download/v${VERSION}/zlib-${VERSION}.tar.gz"
 extract_to = "source"

@@ -10,6 +10,7 @@ url = "https://github.com/acpica/acpica"
 build = ["bash", "bison", "flex", "gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/acpica/acpica/releases/download/20251212/acpica-unix2-20251212.tar.gz"
 extract_to = "source"

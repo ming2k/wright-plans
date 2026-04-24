@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467"
 url = "http://www.fftw.org/fftw-${VERSION}.tar.gz"
 extract_to = "source"

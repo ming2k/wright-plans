@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf", "gobject-introspection", "wayland-protocol
 link = ["at-spi2-core", "glib", "pango", "cairo", "gdk-pixbuf", "libepoxy", "libxkbcommon", "wayland"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gtk/3.24/gtk-${VERSION}.tar.xz"
 extract_to = "source"

@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["bzip2", "icu", "zlib", "zstd"]
 
 [[sources]]
+type = "http"
 sha256 = "49551aff3b22cbc5c5a9ed3dbc92f0e23ea50a0f7325b0d198b705e8ee3fc305"
 url = "https://archives.boost.io/release/${VERSION}/source/boost_1_90_0.tar.bz2"
 extract_to = "source"

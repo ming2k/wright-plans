@@ -6,6 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.nasm.us/pub/nasm/releasebuilds/2.16.03/nasm-2.16.03.tar.xz"
 extract_to = "source"

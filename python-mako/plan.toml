@@ -10,6 +10,7 @@ url = "https://www.makotemplates.org/"
 build = ["python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://files.pythonhosted.org/packages/source/m/mako/mako-${VERSION}.tar.gz"
 extract_to = "source"

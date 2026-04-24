@@ -10,6 +10,7 @@ url = "https://github.com/espeak-ng/espeak-ng"
 build = ["gcc", "cmake", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/espeak-ng/espeak-ng/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"

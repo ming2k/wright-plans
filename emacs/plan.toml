@@ -12,6 +12,7 @@ build = ["gcc", "gnutls", "make", "patch", "pkgconf", "tree-sitter"]
 link = ["giflib", "glib", "glibc", "gnutls", "gtk3", "harfbuzz", "libjpeg-turbo", "libpng", "librsvg", "libtiff", "libwebp", "ncurses", "pango", "tree-sitter"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/emacs/emacs-${VERSION}.tar.xz"
 extract_to = "source"

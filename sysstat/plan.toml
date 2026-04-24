@@ -11,6 +11,7 @@ runtime = ["systemd"]
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "e48fc69401135dc08d2cd4ff58dbdbfce9b7485f76fc9049d97848e313c08dda"
 url = "https://github.com/sysstat/sysstat/archive/v${VERSION}.tar.gz"
 extract_to = "source"

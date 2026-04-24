@@ -11,6 +11,7 @@ build = ["make"]
 link = ["gmp"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/mpfr/mpfr-${VERSION}.tar.xz"
 extract_to = "source"

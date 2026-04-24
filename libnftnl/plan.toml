@@ -11,6 +11,7 @@ runtime = ["libmnl >= 1.0.4"]
 build = ["gcc", "libmnl", "make", "pkgconf"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.netfilter.org/pub/libnftnl/libnftnl-${VERSION}.tar.xz"
 extract_to = "source"

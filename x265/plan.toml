@@ -10,6 +10,7 @@ url = "https://bitbucket.org/multicoreware/x265_git"
 build = ["gcc", "make", "cmake", "nasm"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://bitbucket.org/multicoreware/x265_git/downloads/x265_${VERSION}.tar.gz"
 extract_to = "source"

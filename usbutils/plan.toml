@@ -12,6 +12,7 @@ link = ["glibc", "libusb", "systemd"]
 runtime = ["hwdata"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/gregkh/usbutils/archive/v${VERSION}/usbutils-${VERSION}.tar.gz"
 extract_to = "source"

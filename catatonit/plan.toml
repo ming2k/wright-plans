@@ -12,31 +12,32 @@ runtime = ["glibc"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "9950425501af862e12f618bdc930ea755c46db6a16072a1462b4fc93b2bd59bc"
 url = "https://github.com/openSUSE/catatonit/releases/download/v${VERSION}/catatonit.tar.xz"
 extract_to = "source"
 
 [lifecycle.prepare]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/catatonit-${VERSION}
 sed -i 's/ -all-static//' Makefile.am
 autoreconf -fi'''
 
 [lifecycle.configure]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/catatonit-${VERSION}
 ./configure --prefix=/usr --bindir=/usr/bin'''
 
 [lifecycle.compile]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/catatonit-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/catatonit-${VERSION}
 make DESTDIR=${PART_DIR} install

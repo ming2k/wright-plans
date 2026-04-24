@@ -11,6 +11,7 @@ runtime = ["python"]
 build = ["python", "hatchling"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/p/pygments/pygments-${VERSION}.tar.gz"
 extract_to = "source"

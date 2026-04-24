@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["ncurses"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.nano-editor.org/dist/v8/nano-${VERSION}.tar.xz"
 extract_to = "source"

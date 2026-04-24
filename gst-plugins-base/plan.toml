@@ -11,6 +11,7 @@ build = ["gstreamer", "libglvnd", "libgudev", "meson", "ninja", "pkgconf"]
 link = ["glib", "wayland"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.28.0.tar.xz"
 extract_to = "source"

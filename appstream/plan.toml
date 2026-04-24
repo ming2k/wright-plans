@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf", "gettext", "gobject-introspection", "itsto
 link = ["glib", "libxml2", "libxmlb", "curl", "libfyaml", "zstd", "cairo", "gdk-pixbuf", "freetype", "pango", "fontconfig", "librsvg"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/ximion/appstream/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

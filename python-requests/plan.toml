@@ -11,6 +11,7 @@ runtime = ["python", "python-charset-normalizer", "python-idna", "python-urllib3
 build = ["python", "setuptools"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/r/requests/requests-${VERSION}.tar.gz"
 extract_to = "source"

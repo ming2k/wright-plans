@@ -11,6 +11,7 @@ build = ["cmake", "ninja", "pkgconf", "gcc"]
 link = ["brotli", "hwy", "lcms2", "libjpeg-turbo", "libpng"]
 
 [[sources]]
+type = "http"
 sha256 = "ab38928f7f6248e2a98cc184956021acb927b16a0dee71b4d260dc040a4320ea"
 url = "https://github.com/libjxl/libjxl/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

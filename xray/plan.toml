@@ -11,12 +11,13 @@ build = ["go"]
 optional = ["v2fly-domain-list-community", "v2fly-geoip", "v2ray-rules-dat"]
 
 [[sources]]
+type = "http"
 sha256 = "992a4997e6bb846d11469435d687f99ef812fcde1e0a009bb8e95189ea20331d"
 url = "https://github.com/XTLS/Xray-core/archive/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.prepare]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source
 export PATH=/usr/lib/go/bin:$PATH
@@ -26,7 +27,7 @@ rm -rf vendor
 go mod vendor'''
 
 [lifecycle.compile]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 export PATH=/usr/lib/go/bin:$PATH

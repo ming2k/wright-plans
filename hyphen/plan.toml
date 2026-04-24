@@ -11,6 +11,7 @@ build = ["gawk", "gcc", "make", "patch"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${VERSION}.orig.tar.gz"
 extract_to = "source"

@@ -10,6 +10,7 @@ url = "https://github.com/xiph/opus"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://downloads.xiph.org/releases/opus/opus-${VERSION}.tar.gz"
 extract_to = "source"

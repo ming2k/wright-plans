@@ -11,6 +11,7 @@ build = ["gcc", "cmake", "ninja"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "a0bd370713a744b1fa8ec27bba889ebf9dbd43060ec92e07fbe91fb43e3cb3ac"
 url = "https://github.com/ndevilla/iniparser/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

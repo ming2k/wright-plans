@@ -12,6 +12,7 @@ build = ["meson", "ninja"]
 link = ["libxkbcommon", "linux-pam", "wayland", "wayland-protocols"]
 
 [[sources]]
+type = "http"
 sha256 = "aa251d5a8f335fe2ac9ec3cc2a6ac8772aa4dba2ec710ccd415956c6e89b11d3"
 url = "https://github.com/swaywm/swaylock/releases/download/v${VERSION}/swaylock-${VERSION}.tar.gz"
 extract_to = "source"

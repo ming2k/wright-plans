@@ -7,14 +7,17 @@ arch = "x86_64"
 url = "https://github.com/SagerNet/sing-geoip"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/SagerNet/sing-geoip/raw/rule-set/geoip-cn.srs"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-cn.srs"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-google.srs"
 

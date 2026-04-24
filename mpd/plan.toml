@@ -11,6 +11,7 @@ build = ["gcc", "meson", "ninja", "pkgconf"]
 link = ["alsa-lib", "pipewire", "ffmpeg", "sqlite", "curl", "dbus", "libsndfile", "fmt"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/MusicPlayerDaemon/MPD/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

@@ -10,6 +10,7 @@ url = "https://github.com/scop/bash-completion"
 build = ["make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/scop/bash-completion/releases/download/${VERSION}/bash-completion-${VERSION}.tar.xz"
 extract_to = "source"

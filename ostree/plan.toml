@@ -12,6 +12,7 @@ build = ["gcc", "make", "pkgconf", "gettext"]
 link = ["glib", "libarchive", "curl", "gpgme"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/ostreedev/ostree/releases/download/v${VERSION}/libostree-${VERSION}.tar.xz"
 extract_to = "source"

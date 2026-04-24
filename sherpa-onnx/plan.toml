@@ -11,6 +11,7 @@ build = ["gcc", "cmake", "ninja", "git", "python"]
 link = ["onnxruntime"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/k2-fsa/sherpa-onnx/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
@@ -21,7 +22,7 @@ cd source
 sed -i "s|    ./|    lib/pkgconfig|" CMakeLists.txt'''
 
 [lifecycle.configure]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 cmake -B build -G Ninja \
@@ -50,8 +51,3 @@ script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
 
-[lifecycle.fabricate]
-script = '''
-cd source
-rm -f ${PART_DIR}/usr/lib/pkgconfig/espeak-ng.pc
-rm -rf ${PART_DIR}/usr/share/vim'''

@@ -10,12 +10,13 @@ build = ["meson", "ninja"]
 link = ["glib", "gtk4"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libadwaita/1.9/libadwaita-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
-dockyard = "relaxed"
+isolation = "relaxed"
 ENV = "PATH=/usr/bin:/bin"
 script = '''
 cd source

@@ -13,6 +13,7 @@ link = ["glibc"]
 optional = ["python", "xclip"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/neovim/neovim/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
@@ -21,7 +22,7 @@ extract_to = "source"
 ccache = true
 
 [lifecycle.configure]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr deps'''

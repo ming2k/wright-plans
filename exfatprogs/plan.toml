@@ -10,6 +10,7 @@ url = "https://github.com/exfatprogs/exfatprogs"
 build = ["pkgconf"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/exfatprogs/exfatprogs/releases/download/${VERSION}/exfatprogs-${VERSION}.tar.gz"
 extract_to = "source"

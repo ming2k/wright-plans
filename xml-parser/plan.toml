@@ -11,6 +11,7 @@ build = ["make", "perl"]
 link = ["expat"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-${VERSION}.tar.gz"
 extract_to = "source"

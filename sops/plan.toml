@@ -10,13 +10,14 @@ url = "https://github.com/getsops/sops"
 build = ["go"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/getsops/sops/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "relaxed"
-env = {'GOPATH': '${BUILD_DIR}/.go', 'GOCACHE': '${BUILD_DIR}/.cache/go-build', 'CGO_ENABLED': '0'}
+isolation = "relaxed"
+env = { GOPATH = '${BUILD_DIR}/.go', GOCACHE = '${BUILD_DIR}/.cache/go-build', CGO_ENABLED = '0' }
 script = '''
 cd source
 go build -trimpath -ldflags="-s -w -buildid=" -o sops ./cmd/sops'''

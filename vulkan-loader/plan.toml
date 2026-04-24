@@ -10,6 +10,7 @@ build = ["cmake", "ninja", "vulkan-headers", "python"]
 link = ["glibc", "wayland"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

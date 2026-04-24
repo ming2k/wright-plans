@@ -12,12 +12,13 @@ link = ["qt6-base"]
 runtime = ["qt6-base"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/google/mozc/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source/src
 bazel --batch build server:mozc_server gui/tool:mozc_tool \

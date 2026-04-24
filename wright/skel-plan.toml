@@ -12,23 +12,25 @@ link = []
 runtime = []
 
 [[sources]]
-uri = "https://example.com/pkgname-${VERSION}.tar.gz"
+type = "http"
+url = "https://example.com/pkgname-${VERSION}.tar.gz"
 sha256 = "SKIP"
+extract_to = "source"
 
 [lifecycle.configure]
 script = """
-cd ${BUILD_DIR}
+cd source
 ./configure --prefix=/usr
 """
 
 [lifecycle.compile]
 script = """
-cd ${BUILD_DIR}
+cd source
 make -j$(nproc)
 """
 
 [lifecycle.staging]
 script = """
-cd ${BUILD_DIR}
+cd source
 make DESTDIR=${PART_DIR} install
 """

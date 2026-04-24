@@ -15,6 +15,7 @@ type = "local"
 path = "patches/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${VERSION}.tar.gz"
 
@@ -44,12 +45,3 @@ script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
 
-[lifecycle.fabricate]
-script = '''
-mkdir -p ${PART_DIR}/usr/bin
-for bin in ${PART_DIR}/usr/lib/llama.cpp/bin/*; do
-  ln -sf /usr/lib/llama.cpp/bin/$(basename "$bin") ${PART_DIR}/usr/bin/$(basename "$bin")
-done
-
-mkdir -p ${PART_DIR}/usr/lib/pkgconfig
-ln -sf /usr/lib/llama.cpp/lib/pkgconfig/llama.pc ${PART_DIR}/usr/lib/pkgconfig/llama.pc'''

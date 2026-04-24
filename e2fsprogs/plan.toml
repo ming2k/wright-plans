@@ -10,6 +10,7 @@ url = "https://e2fsprogs.sourceforge.net"
 build = ["util-linux"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${VERSION}/e2fsprogs-${VERSION}.tar.xz"
 extract_to = "source"

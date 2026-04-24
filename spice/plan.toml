@@ -11,6 +11,7 @@ build = ["meson", "ninja", "pkgconf", "python"]
 link = ["glib", "pixman", "openssl", "libjpeg-turbo", "opus", "zlib", "spice-protocol"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.spice-space.org/download/releases/spice-server/spice-${VERSION}.tar.bz2"
 extract_to = "source"

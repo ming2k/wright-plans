@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf", "scdoc"]
 link = ["pipewire", "wayland", "inih"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/emersion/xdg-desktop-portal-wlr/releases/download/v${VERSION}/xdg-desktop-portal-wlr-${VERSION}.tar.gz"
 extract_to = "source"

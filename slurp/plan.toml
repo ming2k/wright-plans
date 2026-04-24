@@ -11,6 +11,7 @@ build = ["meson", "ninja", "pkgconf", "scdoc"]
 link = ["cairo", "libxkbcommon", "wayland", "wayland-protocols"]
 
 [[sources]]
+type = "http"
 sha256 = "0fa880d4a93e1c795e3b5929fbea47546df0955bea34fc2f7ffeb1751678f663"
 url = "https://github.com/emersion/slurp/archive/v${VERSION}.tar.gz"
 extract_to = "source"

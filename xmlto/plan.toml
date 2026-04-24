@@ -11,6 +11,7 @@ runtime = ["bash", "docbook-xsl", "libxslt"]
 build = ["autoconf", "automake", "gcc", "make", "docbook-xsl", "libxslt"]
 
 [[sources]]
+type = "http"
 sha256 = "6000d8e8f0f9040426c4f85d7ad86789bc88d4aeaef585c4d4110adb0b214f21"
 url = "https://releases.pagure.org/xmlto/xmlto-${VERSION}.tar.bz2"
 extract_to = "source"

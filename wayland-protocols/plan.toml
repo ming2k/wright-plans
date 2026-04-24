@@ -10,6 +10,7 @@ build = ["meson", "ninja", "pkgconf", "wayland"]
 link = ["wayland"]
 
 [[sources]]
+type = "http"
 sha256 = "5fd4349bcbc9bab9a46f8cf77d1f434296a7a052c87440a094f63fcf62a58e20"
 url = "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/${VERSION}/downloads/wayland-protocols-${VERSION}.tar.xz"
 extract_to = "source"

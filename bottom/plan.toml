@@ -10,13 +10,14 @@ url = "https://github.com/ClementTsang/bottom"
 build = ["rust"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/ClementTsang/bottom/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "relaxed"
-env = {'CARGO_HOME': '${BUILD_DIR}/.cargo', 'CARGO_TARGET_DIR': '${BUILD_DIR}/target'}
+isolation = "relaxed"
+env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
 script = '''
 cd source
 cargo build --release --locked'''

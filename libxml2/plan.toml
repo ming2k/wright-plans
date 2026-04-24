@@ -11,6 +11,7 @@ runtime = ["icu", "python"]
 build = ["doxygen", "gcc", "icu", "meson", "ninja", "python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${VERSION}.tar.xz"
 extract_to = "source"

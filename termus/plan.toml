@@ -12,8 +12,9 @@ link = ["ncurses"]
 optional = ["alsa-lib", "ffmpeg", "flac", "mpg123", "opus", "pipewire"]
 
 [[sources]]
-sha256 = "SKIP"
-url = "git+https://github.com/ming2k/termus.git#v${VERSION}"
+type = "git"
+url = "https://github.com/ming2k/termus.git"
+ref = "v${VERSION}"
 extract_to = "source"
 
 [lifecycle.configure]

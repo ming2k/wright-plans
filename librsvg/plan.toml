@@ -10,19 +10,20 @@ build = ["pkgconf", "meson", "ninja", "rust", "cargo-c", "python", "gobject-intr
 link = ["cairo", "gdk-pixbuf", "pango", "glib", "libxml2", "harfbuzz", "freetype", "fribidi"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/librsvg/2.62/librsvg-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 meson setup build --prefix=/usr --libdir=lib --buildtype=release -Dintrospection=enabled -Ddocs=disabled -Dtests=false -Dvala=disabled'''
 
 [lifecycle.compile]
-dockyard = "relaxed"
-env = {'LD_LIBRARY_PATH': '${BUILD_DIR}/build/librsvg'}
+isolation = "relaxed"
+env = { LD_LIBRARY_PATH = '${BUILD_DIR}/build/librsvg' }
 script = '''
 cd source
 meson compile -C ${WORKDIR}/build -j$(nproc)'''

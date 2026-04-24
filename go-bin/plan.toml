@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://go.dev"
 
 [[sources]]
+type = "http"
 sha256 = "031f088e5d955bab8657ede27ad4e3bc5b7c1ba281f05f245bcc304f327c987a"
 url = "https://go.dev/dl/go${VERSION}.linux-amd64.tar.gz"
 extract_to = "source"

@@ -10,6 +10,7 @@ url = "https://rsms.me/inter/"
 build = ["libarchive"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/rsms/inter/releases/download/v${VERSION}/Inter-${VERSION}.zip"
 extract_to = "source"

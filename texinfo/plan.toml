@@ -11,6 +11,7 @@ runtime = ["perl"]
 build = ["gcc", "make", "perl"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/texinfo/texinfo-${VERSION}.tar.xz"
 extract_to = "source"

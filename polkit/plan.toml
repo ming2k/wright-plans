@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["glib", "duktape", "linux-pam"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/polkit-org/polkit/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"

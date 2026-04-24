@@ -11,6 +11,7 @@ build = ["meson", "ninja", "pkgconf", "rtkit", "python-docutils"]
 link = ["alsa-lib", "bluez", "dbus", "glib", "gstreamer", "libcamera", "libsndfile", "ncurses", "opus", "readline", "sbc", "systemd", "v4l-utils"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/PipeWire/pipewire/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"

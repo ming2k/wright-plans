@@ -10,11 +10,13 @@ url = "https://github.com/xiph/rnnoise"
 build = ["gcc", "make", "autoconf", "automake", "libtool"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/xiph/rnnoise/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://media.xiph.org/rnnoise/models/rnnoise_data-0b50c45.tar.gz"
 

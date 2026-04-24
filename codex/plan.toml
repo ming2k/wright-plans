@@ -12,13 +12,14 @@ link = ["gcc", "glibc", "openssl"]
 optional = ["git"]
 
 [[sources]]
+type = "http"
 sha256 = "7be18a18f604ad877b47c08d9db00018bd1dbbbd774dc6e1e7ea52dc492d7138"
 url = "https://github.com/openai/codex/archive/refs/tags/rust-v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "relaxed"
-env = {'CARGO_HOME': '${BUILD_DIR}/.cargo', 'CARGO_TARGET_DIR': '${BUILD_DIR}/target'}
+isolation = "relaxed"
+env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
 script = '''
 cd source/codex-rs
 cargo build --release --locked -p codex-cli'''

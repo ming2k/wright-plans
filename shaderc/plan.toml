@@ -12,6 +12,7 @@ runtime = ["glslang"]
 link = ["spirv-tools", "glslang"]
 
 [[sources]]
+type = "http"
 sha256 = "245002feccbe7f8361b223545a5654cea69780745886872d7efff50a38d96c66"
 url = "https://github.com/google/shaderc/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

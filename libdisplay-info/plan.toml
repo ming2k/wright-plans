@@ -10,6 +10,7 @@ url = "https://gitlab.freedesktop.org/emersion/libdisplay-info"
 build = ["hwdata", "meson", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/emersion/libdisplay-info/-/releases/${VERSION}/downloads/libdisplay-info-${VERSION}.tar.xz"
 extract_to = "source"

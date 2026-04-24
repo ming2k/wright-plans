@@ -11,12 +11,13 @@ build = ["meson", "ninja", "pkgconf", "python-yaml", "python-jinja2", "python-pl
 link = ["gnutls", "libevent", "libyaml", "systemd", "gstreamer", "v4l-utils"]
 
 [[sources]]
-sha256 = "SKIP"
-url = "git+https://github.com/libcamera-org/libcamera.git#v${VERSION}"
+type = "git"
+url = "https://github.com/libcamera-org/libcamera.git"
+ref = "v${VERSION}"
 extract_to = "source"
 
 [lifecycle.configure]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 meson setup ${WORKDIR}/build ${WORKDIR} \

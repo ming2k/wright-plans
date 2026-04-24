@@ -12,12 +12,13 @@ build = ["rust"]
 link = ["gcc", "pcre2", "glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/BurntSushi/ripgrep/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 cargo build --release --locked --features pcre2'''

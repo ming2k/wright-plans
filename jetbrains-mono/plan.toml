@@ -10,6 +10,7 @@ url = "https://www.jetbrains.com/lp/mono/"
 build = ["libarchive"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/JetBrains/JetBrainsMono/releases/download/v${VERSION}/JetBrainsMono-${VERSION}.zip"
 extract_to = "source"

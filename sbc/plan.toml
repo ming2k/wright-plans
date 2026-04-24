@@ -11,6 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/bluetooth/sbc-${VERSION}.tar.xz"
 extract_to = "source"

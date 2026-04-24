@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://freetype.org"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.xz"
 extract_to = "source"

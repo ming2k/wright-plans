@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf", "wayland-protocols"]
 link = ["pango", "libxkbcommon", "inih", "wayland", "mesa", "libpng", "libjpeg-turbo", "libtiff", "librsvg", "libheif", "libjxl", "libwebp", "icu"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://git.sr.ht/~exec64/imv/archive/v${VERSION}.tar.gz"
 extract_to = "source"
@@ -23,12 +24,12 @@ path = "patches/fix-missing-stdio.patch"
 
 [lifecycle.prepare]
 script = '''
-cd source
-patch -Np1 < ${WORKDIR}/fix-missing-stdio.patch'''
+cd source/*
+patch -Np1 < ${WORKDIR}/${NAME}-fix-missing-stdio.patch'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/*
 meson setup build \
     --prefix=/usr \
     -Dwindows=wayland \
@@ -40,10 +41,10 @@ meson setup build \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/*
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/*
 DESTDIR=${PART_DIR} ninja -C build install'''

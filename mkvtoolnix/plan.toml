@@ -11,6 +11,7 @@ build = ["gcc", "make", "ruby", "pkgconf", "libxslt", "docbook-xsl"]
 link = ["boost", "cmark", "flac", "fmt", "libebml", "libmatroska", "libogg", "libvorbis", "nlohmann-json", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://mkvtoolnix.download/sources/mkvtoolnix-${VERSION}.tar.xz"
 extract_to = "source"

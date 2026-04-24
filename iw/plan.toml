@@ -11,6 +11,7 @@ runtime = ["libnl"]
 build = ["gcc", "libnl", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/software/network/iw/iw-${VERSION}.tar.xz"
 extract_to = "source"

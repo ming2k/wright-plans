@@ -10,6 +10,7 @@ build = ["meson", "ninja", "pkgconf", "bison"]
 link = ["wayland", "wayland-protocols", "xkeyboard-config"]
 
 [[sources]]
+type = "http"
 sha256 = "aeb951964c2f7ecc08174cb5517962d157595e9e3f38fc4a130b91dc2f9fec18"
 url = "https://github.com/xkbcommon/libxkbcommon/archive/refs/tags/xkbcommon-${VERSION}.tar.gz"
 extract_to = "source"

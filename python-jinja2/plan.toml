@@ -11,6 +11,7 @@ runtime = ["python-markupsafe", "python"]
 build = ["python-markupsafe", "python", "setuptools"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://files.pythonhosted.org/packages/source/j/jinja2/jinja2-${VERSION}.tar.gz"
 extract_to = "source"

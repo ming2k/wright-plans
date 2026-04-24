@@ -11,6 +11,7 @@ build = ["cmake", "gcc", "ninja", "pkgconf", "python", "qt6-base", "qt6-declarat
 link = ["qt6-base", "qt6-declarative"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qttools-everywhere-src-${VERSION}.tar.xz"
 extract_to = "source"

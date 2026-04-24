@@ -12,12 +12,13 @@ runtime = ["aardvark-dns >= 1.17.1", "catatonit >= 0.2.1", "conmon >= 2.2.1", "c
 link = ["glib", "glibc", "gpgme", "libseccomp", "sqlite", "systemd"]
 
 [[sources]]
+type = "http"
 sha256 = "b9540ecb19cfcbcfc40e1b81d39930f688c537d8fd6f11ae56be41f2bf9e97a4"
 url = "https://github.com/containers/podman/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source
 export GOFLAGS="-trimpath -mod=vendor"
@@ -26,7 +27,7 @@ make podman podman-remote rootlessport quadlet BUILDTAGS="${BUILDTAGS}" GOFLAGS=
 make completions'''
 
 [lifecycle.staging]
-dockyard = "none"
+isolation = "none"
 script = '''
 cd source
 export BUILDTAGS="seccomp $(hack/btrfs_installed_tag.sh) $(hack/sqlite_tag.sh) $(hack/systemd_tag.sh) $(hack/libsubid_tag.sh) grpcnotrace"

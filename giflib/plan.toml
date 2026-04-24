@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "2421abb54f5906b14965d28a278fb49e1ec9fe5ebbc56244dd012383a973d5c0"
 url = "https://downloads.sourceforge.net/project/giflib/giflib-6.x/giflib-${VERSION}.tar.gz"
 extract_to = "source"

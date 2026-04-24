@@ -11,6 +11,7 @@ runtime = ["python"]
 build = ["python", "flit-core"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/s/sphinxcontrib_applehelp/sphinxcontrib_applehelp-${VERSION}.tar.gz"
 extract_to = "source"

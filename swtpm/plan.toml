@@ -12,6 +12,7 @@ build = ["autoconf", "automake", "bash", "gcc", "libtool", "make", "pkgconf"]
 link = ["glib", "gmp", "json-glib", "libtpms", "openssl"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/stefanberger/swtpm/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

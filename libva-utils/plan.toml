@@ -12,6 +12,7 @@ link = ["libdrm", "libva", "wayland"]
 runtime = ["libdrm", "libva", "wayland"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/intel/libva-utils/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"

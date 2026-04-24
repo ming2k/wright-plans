@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf", "gobject-introspection", "vulkan-headers",
 link = ["glib", "pango", "cairo", "gdk-pixbuf", "libpng", "libjpeg-turbo", "libtiff", "graphene", "libepoxy", "libxkbcommon", "wayland", "vulkan-loader"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gtk/4.22/gtk-${VERSION}.tar.xz"
 extract_to = "source"

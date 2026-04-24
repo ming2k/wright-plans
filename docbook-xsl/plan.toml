@@ -10,6 +10,7 @@ url = "https://github.com/docbook/xslt10-stylesheets"
 runtime = ["libxml2"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/docbook/xslt10-stylesheets/releases/download/release/${VERSION}/docbook-xsl-nons-${VERSION}.tar.bz2"
 extract_to = "source"

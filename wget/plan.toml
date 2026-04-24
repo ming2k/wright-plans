@@ -12,6 +12,7 @@ build = ["gcc", "make"]
 link = ["openssl", "libidn2", "libpsl", "pcre2", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/wget/wget-${VERSION}.tar.lz"
 extract_to = "source"

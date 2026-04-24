@@ -11,6 +11,7 @@ build = ["bison", "flex", "gobject-introspection", "libunwind", "meson", "ninja"
 link = ["glib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.28.0.tar.xz"
 extract_to = "source"

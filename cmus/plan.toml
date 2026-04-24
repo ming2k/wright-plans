@@ -12,6 +12,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["alsa-lib", "flac", "libvorbis", "mpg123", "ncurses", "pipewire"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/ming2k/cmus/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

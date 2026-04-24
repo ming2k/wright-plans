@@ -10,10 +10,12 @@ url = "https://www.iana.org/protocols"
 build = ["python"]
 
 [[sources]]
+type = "http"
 sha256 = "7c799c0ac86672b1e3573333b0485b04b3e5fdb4a7a3232f85ee7d8df207f795"
 url = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv"
 
 [[sources]]
+type = "http"
 sha256 = "e704ee14e69347681b3a6271af02195a9741236074fc311449ebb032101bdf2c"
 url = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers-1.csv"
 

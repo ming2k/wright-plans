@@ -10,6 +10,7 @@ url = "https://www.gnu.org/software/cpio/"
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/cpio/cpio-${VERSION}.tar.gz"
 extract_to = "source"

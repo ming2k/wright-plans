@@ -9,6 +9,7 @@ arch = "x86_64"
 build = ["cmake", "ninja", "gcc", "nasm"]
 
 [[sources]]
+type = "http"
 sha256 = "075920b826834ac4ddf97661cc73491047855859affd671d52079c6867c1c6c0"
 url = "https://github.com/libjpeg-turbo/libjpeg-turbo/releases/download/${VERSION}/libjpeg-turbo-${VERSION}.tar.gz"
 extract_to = "source"

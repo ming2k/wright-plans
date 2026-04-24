@@ -11,6 +11,7 @@ build = ["gcc", "libxslt", "make"]
 link = ["glibc", "linux-pam"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/shadow-maint/shadow/releases/download/${VERSION}/shadow-${VERSION}.tar.xz"
 extract_to = "source"

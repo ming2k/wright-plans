@@ -11,6 +11,7 @@ runtime = ["python"]
 build = ["python", "setuptools", "gcc", "linux-api-headers"]
 
 [[sources]]
+type = "http"
 sha256 = "2c140e01ac8437758fa23fe5c871397412461f42d421aa20241dc8fe8cfccbc9"
 url = "https://files.pythonhosted.org/packages/source/e/evdev/evdev-${VERSION}.tar.gz"
 extract_to = "source"

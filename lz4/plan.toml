@@ -10,6 +10,7 @@ url = "https://lz4.github.io/lz4/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/lz4/lz4/releases/download/v${VERSION}/lz4-${VERSION}.tar.gz"
 extract_to = "source"

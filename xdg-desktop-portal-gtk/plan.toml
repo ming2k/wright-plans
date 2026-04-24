@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["gtk3", "gsettings-desktop-schemas"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/flatpak/xdg-desktop-portal-gtk/releases/download/${VERSION}/xdg-desktop-portal-gtk-${VERSION}.tar.xz"
 extract_to = "source"

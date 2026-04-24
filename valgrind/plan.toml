@@ -12,6 +12,7 @@ link = ["glibc"]
 runtime = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://sourceware.org/pub/valgrind/valgrind-${VERSION}.tar.bz2"
 extract_to = "source"

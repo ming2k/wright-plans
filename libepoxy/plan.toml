@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["mesa", "libglvnd"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libepoxy/1.5/libepoxy-${VERSION}.tar.xz"
 extract_to = "source"

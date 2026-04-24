@@ -11,6 +11,7 @@ runtime = ["libxml2", "python"]
 build = ["libxml2", "python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/itstool/itstool/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"

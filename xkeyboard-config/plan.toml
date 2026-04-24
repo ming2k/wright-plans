@@ -10,6 +10,7 @@ url = "https://www.freedesktop.org/wiki/Software/XKeyboardConfig/"
 build = ["meson", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "10c58218fb60d08fb1f7b30304deb3ba47613195aa8a08a81f1972775ccc3640"
 url = "https://www.x.org/pub/individual/data/xkeyboard-config/xkeyboard-config-${VERSION}.tar.xz"
 extract_to = "source"

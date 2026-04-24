@@ -11,6 +11,7 @@ build = ["cmake"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "6ae262b95540681ad5478c63affb880135f772c95410b092009a6f7dfc04a5ba"
 url = "https://github.com/intel/gmmlib/archive/intel-gmmlib-${VERSION}/intel-gmmlib-${VERSION}.tar.gz"
 extract_to = "source"
@@ -33,7 +34,3 @@ script = '''
 cd source
 make -C ${WORKDIR}/build DESTDIR=${PART_DIR} install'''
 
-[lifecycle.fabricate]
-script = '''
-cd source
-install -Dm644 ${WORKDIR}/LICENSE.md ${PART_DIR}/usr/share/licenses/intel-gmmlib/LICENSE.md'''

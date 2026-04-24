@@ -11,6 +11,7 @@ build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
 link = ["glib", "gtk4", "gtk3"]
 
 [[sources]]
+type = "http"
 sha256 = "297b90b263fad22190a26b8c7e8ea938fe6b18fb936265e588927179920d3805"
 url = "https://github.com/flatpak/libportal/releases/download/${VERSION}/libportal-${VERSION}.tar.xz"
 extract_to = "source"

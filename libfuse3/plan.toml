@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://github.com/libfuse/libfuse"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/libfuse/libfuse/releases/download/fuse-${VERSION}/fuse-${VERSION}.tar.gz"
 extract_to = "source"

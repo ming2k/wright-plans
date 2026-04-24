@@ -11,6 +11,7 @@ build = ["bison", "flex", "meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/vala/0.56/vala-${VERSION}.tar.xz"
 extract_to = "source"

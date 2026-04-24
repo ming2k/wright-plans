@@ -12,6 +12,7 @@ build = ["cmake", "gcc", "ninja", "perl", "pkgconf", "python"]
 link = ["fontconfig", "freetype", "glib", "harfbuzz", "libdrm", "libpng", "libxkbcommon", "openssl", "pcre2", "vulkan-headers", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtbase-everywhere-src-${VERSION}.tar.xz"
 extract_to = "source"

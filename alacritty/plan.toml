@@ -11,6 +11,7 @@ build = ["cargo", "cmake", "gzip", "ncurses", "pkgconf", "python", "rust", "scdo
 link = ["fontconfig", "freetype", "libglvnd", "libxkbcommon", "mesa", "wayland"]
 
 [[sources]]
+type = "http"
 sha256 = "b7240df4a52c004470977237a276185fc97395d59319480d67cad3c4347f395e"
 url = "https://github.com/alacritty/alacritty/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
@@ -21,8 +22,8 @@ cd source
 echo "cargo project, no configure step"'''
 
 [lifecycle.compile]
-dockyard = "relaxed"
-env = {'CARGO_HOME': '${BUILD_DIR}/.cargo', 'CARGO_TARGET_DIR': '${BUILD_DIR}/target'}
+isolation = "relaxed"
+env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
 script = '''
 cd source
 # Wright currently ships a Wayland-only graphics stack, so avoid the default X11 feature.

@@ -11,6 +11,7 @@ build = ["cmake"]
 link = ["glibc", "intel-gmmlib", "libva"]
 
 [[sources]]
+type = "http"
 sha256 = "e5cf57c66e22359d1ec07d766b04e5da43677b9330999ce0dbf686aac60cf6bb"
 url = "https://github.com/intel/media-driver/archive/intel-media-${VERSION}/intel-media-driver-${VERSION}.tar.gz"
 extract_to = "source"
@@ -35,7 +36,3 @@ script = '''
 cd source
 make -C ${WORKDIR}/build DESTDIR=${PART_DIR} install'''
 
-[lifecycle.fabricate]
-script = '''
-cd source
-install -Dm644 ${WORKDIR}/LICENSE.md ${PART_DIR}/usr/share/licenses/intel-media-driver/LICENSE.md'''

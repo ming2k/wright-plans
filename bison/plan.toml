@@ -10,6 +10,7 @@ url = "https://www.gnu.org/software/bison/"
 build = ["gcc", "m4", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/bison/bison-${VERSION}.tar.xz"
 extract_to = "source"

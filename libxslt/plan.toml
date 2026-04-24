@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["libxml2"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libxslt/1.1/libxslt-${VERSION}.tar.xz"
 extract_to = "source"

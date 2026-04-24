@@ -11,6 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["expat", "libffi", "ncurses", "openssl", "readline", "zlib", "bzip2", "xz", "sqlite", "gdbm", "libxcrypt"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.python.org/ftp/python/${VERSION}/Python-${VERSION}.tar.xz"
 extract_to = "source"

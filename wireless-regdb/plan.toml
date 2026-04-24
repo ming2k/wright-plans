@@ -7,6 +7,7 @@ arch = "any"
 url = "https://wireless.wiki.kernel.org/en/developers/regulatory/wireless-regdb"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/software/network/wireless-regdb/wireless-regdb-${VERSION}.tar.xz"
 extract_to = "source"

@@ -10,6 +10,7 @@ url = "https://flit.pypa.io/"
 build = ["python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/f/flit_core/flit_core-${VERSION}.tar.gz"
 extract_to = "source"

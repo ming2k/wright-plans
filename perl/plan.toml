@@ -11,6 +11,7 @@ build = ["bzip2", "gcc", "gdbm", "make"]
 link = ["zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "73cf6cc1ea2b2b1c110a18c14bbbc73a362073003893ffcedc26d22ebdbdd0c3"
 url = "https://www.cpan.org/src/5.0/perl-5.42.0.tar.xz"
 extract_to = "source"

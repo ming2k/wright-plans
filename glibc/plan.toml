@@ -11,6 +11,7 @@ runtime = ["linux-api-headers >= 4.10", "tzdata >= 2025c"]
 build = ["bison", "gawk", "gcc", "make", "python", "sed"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/glibc/glibc-${VERSION}.tar.xz"
 extract_to = "source"
@@ -52,7 +53,7 @@ EOF
   --disable-werror'''
 
 [lifecycle.compile]
-dockyard = "strict"
+isolation = "strict"
 script = '''
 cd source/build
 make -O -j$(nproc)'''

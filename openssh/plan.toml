@@ -12,6 +12,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["glibc", "libedit", "linux-pam", "openssl", "zlib", "libxcrypt"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${VERSION}.tar.gz"
 extract_to = "source"

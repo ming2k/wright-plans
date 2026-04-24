@@ -10,6 +10,7 @@ url = "https://www.freedesktop.org/software/uchardet/"
 build = ["gcc", "make", "cmake"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.freedesktop.org/software/uchardet/releases/uchardet-${VERSION}.tar.xz"
 extract_to = "source"

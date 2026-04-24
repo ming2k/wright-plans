@@ -11,6 +11,7 @@ build = ["pkgconf"]
 link = ["libgpg-error"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gnupg.org/ftp/gcrypt/libgcrypt/libgcrypt-${VERSION}.tar.bz2"
 extract_to = "source"

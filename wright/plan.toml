@@ -1,5 +1,5 @@
 name = "wright"
-version = "2.3.3"
+version = "3.0.4"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -11,6 +11,7 @@ runtime = ["ca-certificates"]
 build = ["rust", "cargo"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/ming2k/wright/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
@@ -21,19 +22,19 @@ type = "local"
 path = "skel-plan.toml"
 
 [lifecycle.compile]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
-cd source
+cd source/wright-${VERSION}
 export CARGO_HOME=${WORKDIR}/.cargo
 cargo build --release'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/wright-${VERSION}
 install -Dm755 target/release/wright ${PART_DIR}/usr/bin/wright
 
 # Skeleton plan for new packages
-install -Dm644 ${WORKDIR}/skel-plan.toml ${PART_DIR}/usr/share/wright/skel/plan.toml
+install -Dm644 ${WORKDIR}/wright-skel-plan.toml ${PART_DIR}/usr/share/wright/skel/plan.toml
 
 # Plans workspace — created here so permissions are managed by the package
 install -dm755 ${PART_DIR}/var/lib/wright/plans

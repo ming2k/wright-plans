@@ -13,6 +13,7 @@ link = ["curl", "expat", "openssl", "pcre2", "zlib-ng", "libsecret"]
 optional = ["zsh", "tk", "man", "perl-libwww", "perl-term-readkey", "perl-io-socket-ssl", "perl-authen-sasl", "perl-cgi", "perl-error", "perl-mailtools", "python", "subversion", "libsecret", "less"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/software/scm/git/git-${VERSION}.tar.xz"
 extract_to = "source"

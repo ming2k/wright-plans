@@ -11,6 +11,7 @@ build = ["pkgconf"]
 link = ["util-linux", "icu", "inih"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${VERSION}.tar.xz"
 extract_to = "source"

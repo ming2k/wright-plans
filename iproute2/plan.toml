@@ -10,6 +10,7 @@ url = "https://wiki.linuxfoundation.org/networking/iproute2"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${VERSION}.tar.xz"
 extract_to = "source"

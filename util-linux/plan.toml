@@ -11,6 +11,7 @@ build = ["gcc", "meson", "ninja", "pkgconf", "python"]
 link = ["glibc", "ncurses", "zlib", "libcap", "linux-pam", "readline"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/utils/util-linux/v2.42/util-linux-${VERSION}.tar.xz"
 extract_to = "source"
@@ -54,11 +55,3 @@ script = '''
 cd source
 meson compile -C ${WORKDIR}/build -j$(nproc)'''
 
-[lifecycle.fabricate]
-script = '''
-cd source
-# Remove static libraries
-rm -f ${PART_DIR}/usr/lib/lib*.a*
-
-# Drop Python bindings (not needed)
-rm -rf ${PART_DIR}/usr/lib/python*'''

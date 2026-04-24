@@ -11,6 +11,7 @@ build = ["freetype", "meson", "ninja", "pkgconf", "gperf"]
 link = ["freetype", "expat"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/fontconfig/fontconfig/-/archive/${VERSION}/fontconfig-${VERSION}.tar.gz"
 extract_to = "source"

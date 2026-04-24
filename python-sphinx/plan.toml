@@ -11,6 +11,7 @@ runtime = ["python", "python-jinja2", "python-pygments", "python-docutils", "pyt
 build = ["python", "flit-core"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/s/sphinx/sphinx-${VERSION}.tar.gz"
 extract_to = "source"

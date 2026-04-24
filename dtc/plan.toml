@@ -10,6 +10,7 @@ url = "https://www.kernel.org/pub/software/utils/dtc/"
 build = ["bash", "gcc", "make", "pkgconf", "flex", "bison"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/software/utils/dtc/dtc-${VERSION}.tar.xz"
 extract_to = "source"

@@ -10,6 +10,7 @@ build = ["gettext", "glib", "gobject-introspection", "meson", "ninja", "pkgconf"
 link = ["glib", "libgcrypt"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libsecret/0.21/libsecret-${VERSION}.tar.xz"
 extract_to = "source"

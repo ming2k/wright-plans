@@ -11,6 +11,7 @@ build = ["autoconf", "automake", "bison", "flex", "gcc", "libmnl", "libnftnl", "
 link = ["gmp", "jansson", "libmnl", "libnftnl", "ncurses", "readline"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.netfilter.org/pub/nftables/nftables-${VERSION}.tar.xz"
 extract_to = "source"

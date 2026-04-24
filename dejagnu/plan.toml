@@ -11,6 +11,7 @@ runtime = ["expect"]
 build = ["expect", "make", "texinfo"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/dejagnu/dejagnu-${VERSION}.tar.gz"
 extract_to = "source"

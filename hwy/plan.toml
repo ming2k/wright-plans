@@ -9,6 +9,7 @@ arch = "x86_64"
 build = ["cmake", "gcc", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/google/highway/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"

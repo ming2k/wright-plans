@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://github.com/hughsie/libxmlb"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/hughsie/libxmlb/releases/download/${VERSION}/libxmlb-${VERSION}.tar.xz"
 extract_to = "source"

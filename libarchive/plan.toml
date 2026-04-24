@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://libarchive.org"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/libarchive/libarchive/releases/download/v${VERSION}/libarchive-${VERSION}.tar.xz"
 extract_to = "source"

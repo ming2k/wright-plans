@@ -11,15 +11,18 @@ build = ["bash", "bzip2", "gcc", "make"]
 runtime = ["bash", "bzip2"]
 
 [[sources]]
+type = "http"
 sha256 = "036d96991646d0449ed0aa952e4fbe21b476ce994abc276e49d30e686708bd37"
 url = "https://downloads.sourceforge.net/project/infozip/UnZip%206.x%20%28latest%29/UnZip%206.0/unzip60.tar.gz"
 extract_to = "source"
 
 [[sources]]
+type = "http"
 sha256 = "02cfd942875ca492c8fd27dff773e633a4f0b9bb47af2c3ad2697e8df8aa79f8"
 url = "https://www.linuxfromscratch.org/patches/blfs/12.2/unzip-6.0-consolidated_fixes-1.patch"
 
 [[sources]]
+type = "http"
 sha256 = "ea5c012b75512ab1a17ab70dcd379cff2ba19c6bb4c045e5cfab45c6c5d5d924"
 url = "https://www.linuxfromscratch.org/patches/blfs/12.2/unzip-6.0-gcc14-1.patch"
 

@@ -9,6 +9,7 @@ arch = "x86_64"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.oberhumer.com/opensource/lzo/download/lzo-${VERSION}.tar.gz"
 extract_to = "source"

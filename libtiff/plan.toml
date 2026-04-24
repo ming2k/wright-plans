@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["zlib", "libjpeg-turbo"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.osgeo.org/libtiff/tiff-${VERSION}.tar.xz"
 extract_to = "source"

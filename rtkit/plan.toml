@@ -11,9 +11,9 @@ build = ["gcc", "meson", "ninja", "pkgconf", "vim"]
 link = ["dbus", "libcap", "polkit", "systemd"]
 
 [[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "git+https://gitlab.freedesktop.org/pipewire/rtkit.git#tag=v${VERSION}"
+type = "git"
+url = "https://gitlab.freedesktop.org/pipewire/rtkit.git"
+ref = "v${VERSION}"
 
 [lifecycle.configure]
 script = '''

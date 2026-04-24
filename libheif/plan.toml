@@ -10,6 +10,7 @@ build = ["cmake", "ninja", "gcc", "pkgconf"]
 link = ["libde265", "dav1d", "aom", "libjpeg-turbo", "libpng"]
 
 [[sources]]
+type = "http"
 sha256 = "75f530b7154bc93e7ecf846edfc0416bf5f490612de8c45983c36385aa742b42"
 url = "https://github.com/strukturag/libheif/releases/download/v${VERSION}/libheif-${VERSION}.tar.gz"
 extract_to = "source"

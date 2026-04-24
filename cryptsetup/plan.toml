@@ -12,6 +12,7 @@ build = ["pkgconf", "util-linux"]
 link = ["glibc", "json-c", "openssl", "popt", "util-linux"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/utils/cryptsetup/v2.8/cryptsetup-${VERSION}.tar.xz"
 extract_to = "source"

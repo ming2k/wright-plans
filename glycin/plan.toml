@@ -12,18 +12,19 @@ build = ["meson", "ninja", "pkgconf", "rust", "libseccomp"]
 link = ["glib", "gtk4", "lcms2", "fontconfig", "libjpeg-turbo", "libpng", "libheif", "libjxl", "librsvg"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/glycin/2.1/glycin-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 meson setup build --prefix=/usr --buildtype=release -Dtests=false -Dvapi=false'''
 
 [lifecycle.compile]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 meson compile -C ${WORKDIR}/build'''

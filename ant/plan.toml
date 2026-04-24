@@ -10,6 +10,7 @@ url = "https://ant.apache.org/"
 runtime = ["openjdk"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://dlcdn.apache.org/ant/binaries/apache-ant-${VERSION}-bin.tar.gz"
 extract_to = "source"

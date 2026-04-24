@@ -12,6 +12,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["glib", "freetype", "libjpeg-turbo", "librsvg", "libtiff", "libwebp", "libavif", "libheif", "libjxl"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/hpjansson/chafa/releases/download/${VERSION}/chafa-${VERSION}.tar.xz"
 extract_to = "source"

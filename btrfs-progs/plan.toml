@@ -11,6 +11,7 @@ build = ["pkgconf"]
 link = ["util-linux", "zlib", "lzo", "zstd", "e2fsprogs", "libgcrypt", "systemd"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${VERSION}.tar.xz"
 extract_to = "source"

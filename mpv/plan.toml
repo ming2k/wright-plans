@@ -11,6 +11,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["alsa-lib", "ffmpeg", "lcms2", "libass", "libdrm", "libplacebo", "libva", "luajit", "mesa", "pipewire", "vulkan-loader", "wayland", "libxkbcommon"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/mpv-player/mpv/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

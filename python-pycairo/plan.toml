@@ -12,6 +12,7 @@ build = ["python", "meson-python", "pkgconf"]
 link = ["cairo"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/p/pycairo/pycairo-${VERSION}.tar.gz"
 extract_to = "source"

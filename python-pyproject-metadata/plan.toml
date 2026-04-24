@@ -11,6 +11,7 @@ runtime = ["python", "python-packaging"]
 build = ["flit-core", "python", "python-packaging"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/p/pyproject_metadata/pyproject_metadata-${VERSION}.tar.gz"
 extract_to = "source"

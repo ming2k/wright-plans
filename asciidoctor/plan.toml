@@ -11,6 +11,7 @@ runtime = ["ruby"]
 build = ["ruby"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/asciidoctor/asciidoctor/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

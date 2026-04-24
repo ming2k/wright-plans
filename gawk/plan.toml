@@ -10,6 +10,7 @@ url = "https://www.gnu.org/software/gawk/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gawk/gawk-${VERSION}.tar.xz"
 extract_to = "source"

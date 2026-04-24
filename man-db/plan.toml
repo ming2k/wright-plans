@@ -11,6 +11,7 @@ runtime = ["gdbm", "groff", "libpipeline"]
 build = ["gcc", "gdbm", "groff", "libpipeline", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.savannah.gnu.org/releases/man-db/man-db-${VERSION}.tar.xz"
 extract_to = "source"

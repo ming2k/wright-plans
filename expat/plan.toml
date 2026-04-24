@@ -10,6 +10,7 @@ url = "https://libexpat.github.io/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/libexpat/libexpat/releases/download/R_2_7_3/expat-${VERSION}.tar.xz"
 extract_to = "source"

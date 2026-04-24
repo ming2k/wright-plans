@@ -11,6 +11,7 @@ build = ["cmake", "ninja"]
 link = ["snappy"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/google/leveldb/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"

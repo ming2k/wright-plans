@@ -10,6 +10,7 @@ build = ["gobject-introspection", "meson", "ninja", "pkgconf", "graphite2"]
 link = ["cairo", "freetype", "glib", "icu", "graphite2"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/harfbuzz/harfbuzz/releases/download/12.3.2/harfbuzz-12.3.2.tar.xz"
 extract_to = "source"

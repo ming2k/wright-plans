@@ -11,6 +11,7 @@ build = ["bash", "gcc", "make", "pkgconf", "python"]
 link = ["gmime", "talloc", "xapian-core", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "4b4314bbf1c2029fdf793637e6c7bb15c1b1730d22be9aa04803c98c5bbc446f"
 url = "https://notmuchmail.org/releases/notmuch-${VERSION}.tar.xz"
 extract_to = "source"

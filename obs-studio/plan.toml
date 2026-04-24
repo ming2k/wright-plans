@@ -13,8 +13,9 @@ runtime = ["xdg-desktop-portal"]
 optional = ["srt", "librist", "qrcodegen", "luajit", "python"]
 
 [[sources]]
-sha256 = "SKIP"
-url = "git+https://github.com/obsproject/obs-studio.git#${VERSION}"
+type = "git"
+url = "https://github.com/obsproject/obs-studio.git"
+ref = "${VERSION}"
 extract_to = "source"
 
 [lifecycle.configure]

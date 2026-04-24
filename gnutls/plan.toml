@@ -12,6 +12,7 @@ build = ["gcc", "libtasn1", "make", "nettle", "p11-kit", "pkgconf"]
 link = ["libunistring"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${VERSION}.tar.xz"
 extract_to = "source"

@@ -11,6 +11,7 @@ build = ["meson", "ninja", "pkgconf", "python-docutils"]
 link = ["cairo", "glibc", "kmod", "libdrm", "libpciaccess", "libunwind", "procps-ng", "systemd"]
 
 [[sources]]
+type = "http"
 sha256 = "675a46af1ec7998909819a0829aec6b03c79f0b573d1588d858dd54ac3063329"
 url = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${VERSION}/igt-gpu-tools-v${VERSION}.tar.gz"
 extract_to = "source"

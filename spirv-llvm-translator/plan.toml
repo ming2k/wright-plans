@@ -7,10 +7,12 @@ arch = "x86_64"
 url = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator"
 
 [dependencies]
-runtime = ["llvm"]
 build = ["cmake", "gcc", "llvm", "make", "spirv-headers", "spirv-tools"]
+link = ["glibc", "libgcc", "libstdc++", "llvm"]
+runtime = ["glibc", "libgcc", "libstdc++", "llvm"]
 
 [[sources]]
+type = "http"
 sha256 = "a5d476404ab88ac0d148211da50428178c89caef8af8042a3ca8e71e58ed9427"
 url = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

@@ -12,6 +12,7 @@ build = ["gcc", "make"]
 link = ["gnutls", "libidn2", "libpsl", "nghttp2", "brotli", "zstd", "zlib", "pcre2", "gpgme"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/wget/wget2-${VERSION}.tar.lz"
 extract_to = "source"

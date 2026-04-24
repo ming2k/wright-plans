@@ -10,6 +10,7 @@ url = "https://godotengine.org"
 build = ["libarchive"]
 
 [[sources]]
+type = "http"
 sha256 = "30e6b6d141f0cd5bebd629ad1d0ef1324e60091bb20662d026b402ba58c59937"
 url = "https://godot-releases.nbg1.your-objectstorage.com/${VERSION}-stable/Godot_v${VERSION}-stable_linux.x86_64.zip"
 extract_to = "source"

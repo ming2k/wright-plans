@@ -10,6 +10,7 @@ url = "http://pixman.org/"
 build = ["bash", "python", "meson", "ninja", "pkgconf"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.cairographics.org/releases/pixman-${VERSION}.tar.gz"
 extract_to = "source"

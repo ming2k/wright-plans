@@ -9,9 +9,9 @@ arch = "x86_64"
 build = ["cmake", "ninja", "gcc", "git"]
 
 [[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "git+https://chromium.googlesource.com/libyuv/libyuv.git#branch=stable"
+type = "git"
+url = "https://chromium.googlesource.com/libyuv/libyuv.git"
+ref = "stable"
 
 [lifecycle.configure]
 script = '''

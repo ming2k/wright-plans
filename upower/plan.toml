@@ -12,6 +12,7 @@ build = ["gettext", "gobject-introspection", "meson", "ninja", "pkgconf", "polki
 link = ["glib", "libgudev", "libusb", "polkit"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/upower/upower/-/archive/v${VERSION}/upower-v${VERSION}.tar.bz2"
 extract_to = "source"

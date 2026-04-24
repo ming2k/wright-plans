@@ -10,6 +10,7 @@ url = "https://www.lua.org"
 link = ["readline"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.lua.org/ftp/lua-${VERSION}.tar.gz"
 extract_to = "source"

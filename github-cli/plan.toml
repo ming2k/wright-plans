@@ -10,12 +10,13 @@ url = "https://github.com/cli/cli"
 build = ["go", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/cli/cli/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 export PATH=/usr/lib/go/bin:$PATH

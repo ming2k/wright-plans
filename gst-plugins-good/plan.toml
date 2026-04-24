@@ -11,6 +11,7 @@ build = ["cairo", "gdk-pixbuf", "gst-plugins-base", "gstreamer", "meson", "ninja
 link = ["libsoup"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.28.0.tar.xz"
 extract_to = "source"

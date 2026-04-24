@@ -11,6 +11,7 @@ runtime = ["python"]
 build = ["python", "hatchling", "hatch-vcs"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/urllib3/urllib3/archive/${VERSION}/python-urllib3-${VERSION}.tar.gz"
 extract_to = "source"

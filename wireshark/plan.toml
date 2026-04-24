@@ -11,6 +11,7 @@ build = ["cmake", "flex", "gcc", "ninja", "perl", "pkgconf", "python", "qt6-5com
 link = ["c-ares", "glib", "libcap", "libgcrypt", "libpcap", "libxml2", "pcre2", "qt6-5compat", "qt6-base", "qt6-svg", "speexdsp", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.wireshark.org/download/src/wireshark-${VERSION}.tar.xz"
 extract_to = "source"

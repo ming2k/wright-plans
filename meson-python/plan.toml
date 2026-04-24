@@ -11,6 +11,7 @@ runtime = ["python", "meson", "python-packaging", "python-pyproject-metadata"]
 build = ["python", "meson", "python-packaging", "python-pyproject-metadata"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/m/meson_python/meson_python-${VERSION}.tar.gz"
 extract_to = "source"

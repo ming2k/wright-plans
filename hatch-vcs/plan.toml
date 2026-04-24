@@ -11,6 +11,7 @@ runtime = ["python", "hatchling", "setuptools-scm"]
 build = ["python", "hatchling"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/h/hatch_vcs/hatch_vcs-${VERSION}.tar.gz"
 extract_to = "source"

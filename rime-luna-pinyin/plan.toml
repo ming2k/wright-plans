@@ -10,8 +10,9 @@ url = "https://github.com/rime/rime-luna-pinyin"
 runtime = ["rime-prelude"]
 
 [[sources]]
-sha256 = "SKIP"
-url = "git+https://github.com/rime/rime-luna-pinyin.git#master"
+type = "git"
+url = "https://github.com/rime/rime-luna-pinyin.git"
+ref = "master"
 extract_to = "source"
 
 [lifecycle.staging]

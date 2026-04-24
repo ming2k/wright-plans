@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/strace/strace/releases/download/v${VERSION}/strace-${VERSION}.tar.xz"
 extract_to = "source"

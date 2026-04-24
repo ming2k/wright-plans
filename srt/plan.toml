@@ -11,6 +11,7 @@ build = ["cmake", "ninja", "pkgconf"]
 link = ["openssl"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/Haivision/srt/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

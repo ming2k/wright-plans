@@ -11,6 +11,7 @@ build = ["pkgconf"]
 link = ["systemd", "readline", "util-linux", "libaio"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://sourceware.org/pub/lvm2/LVM2.${VERSION}.tgz"
 extract_to = "source"

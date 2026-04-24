@@ -10,6 +10,7 @@ url = "https://www.nayuki.io/page/qr-code-generator-library"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/nayuki/QR-Code-generator/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

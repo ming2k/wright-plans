@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://github.com/v2fly/geoip"
 
 [[sources]]
+type = "http"
 sha256 = "16dbd19ff8dddb69960f313a3b0c0623cae82dc9725687110c28740226d3b285"
 url = "https://github.com/v2fly/geoip/releases/download/${VERSION}/geoip.dat"
 

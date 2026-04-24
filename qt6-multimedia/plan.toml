@@ -12,6 +12,7 @@ build = ["cmake", "gcc", "ninja", "pkgconf", "qt6-base", "ffmpeg", "pipewire"]
 link = ["ffmpeg", "pipewire", "qt6-base"]
 
 [[sources]]
+type = "http"
 sha256 = "90c4cac0a7a983b68d1b0873d0714e7873b9a493403fa8593e8a4eea3ea26040"
 url = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtmultimedia-everywhere-src-${VERSION}.tar.xz"
 extract_to = "source"

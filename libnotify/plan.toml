@@ -11,6 +11,7 @@ build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
 link = ["glib", "gdk-pixbuf"]
 
 [[sources]]
+type = "http"
 sha256 = "23420ef619dc2cb5aebad613f4823a2fa41c07e5a1d05628d40f6ec4b35bfddd"
 url = "https://download.gnome.org/sources/libnotify/0.8/libnotify-${VERSION}.tar.xz"
 extract_to = "source"

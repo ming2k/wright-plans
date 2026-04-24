@@ -11,6 +11,7 @@ runtime = ["qt6-base", "qt6-shadertools"]
 build = ["cmake", "gcc", "ninja", "qt6-base", "qt6-shadertools"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtdeclarative-everywhere-src-${VERSION}.tar.xz"
 extract_to = "source"

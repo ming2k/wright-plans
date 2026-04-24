@@ -11,6 +11,7 @@ build = ["cmake", "gcc", "ninja", "qt6-base"]
 link = ["qt6-base"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.qt.io/official_releases/qt/6.10/${VERSION}/submodules/qt5compat-everywhere-src-${VERSION}.tar.xz"
 extract_to = "source"

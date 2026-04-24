@@ -11,6 +11,7 @@ runtime = ["dosfstools"]
 build = ["bison", "flex", "gcc", "make", "freetype"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/grub/grub-2.12.tar.xz"
 extract_to = "source"

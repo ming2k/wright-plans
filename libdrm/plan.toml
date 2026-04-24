@@ -10,6 +10,7 @@ url = "https://dri.freedesktop.org/libdrm/"
 build = ["meson", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://dri.freedesktop.org/libdrm/libdrm-${VERSION}.tar.xz"
 extract_to = "source"

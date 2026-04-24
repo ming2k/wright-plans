@@ -11,6 +11,7 @@ runtime = ["python"]
 build = ["bash", "gcc", "make", "python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/ninja-build/ninja/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

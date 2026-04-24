@@ -11,6 +11,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["glib", "lua", "pipewire", "systemd"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/pipewire/wireplumber/-/archive/${VERSION}/wireplumber-${VERSION}.tar.gz"
 extract_to = "source"

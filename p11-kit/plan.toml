@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["libtasn1", "libffi"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/p11-glue/p11-kit/releases/download/${VERSION}/p11-kit-${VERSION}.tar.xz"
 extract_to = "source"

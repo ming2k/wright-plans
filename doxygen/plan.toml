@@ -10,6 +10,7 @@ url = "http://www.doxygen.nl"
 build = ["cmake", "gcc", "flex", "python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_16_1.tar.gz"
 extract_to = "source"

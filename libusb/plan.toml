@@ -11,6 +11,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["systemd"]
 
 [[sources]]
+type = "http"
 sha256 = "5977fc950f8d1395ccea9bd48c06b3f808fd3c2c961b44b0c2e6e29fc3a70a85"
 url = "https://github.com/libusb/libusb/releases/download/v${VERSION}/libusb-${VERSION}.tar.bz2"
 extract_to = "source"

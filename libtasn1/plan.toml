@@ -10,6 +10,7 @@ url = "https://www.gnu.org/software/libtasn1/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/libtasn1/libtasn1-${VERSION}.tar.gz"
 extract_to = "source"

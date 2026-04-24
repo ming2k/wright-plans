@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://libsndfile.github.io/libsndfile/"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/libsndfile/libsndfile/releases/download/${VERSION}/libsndfile-${VERSION}.tar.xz"
 extract_to = "source"

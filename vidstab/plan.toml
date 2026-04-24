@@ -10,6 +10,7 @@ build = ["gcc", "make", "cmake"]
 link = []
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/georgmartius/vid.stab/archive/refs/tags/v1.1.1.tar.gz"
 extract_to = "source"

@@ -12,6 +12,7 @@ build = ["gcc", "libdrm", "meson", "ninja", "pkgconf", "wayland"]
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/wayland/wayland-utils/-/archive/${VERSION}/wayland-utils-${VERSION}.tar.gz"
 extract_to = "source"

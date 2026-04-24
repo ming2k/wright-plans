@@ -10,6 +10,7 @@ url = "https://www.kernel.org"
 build = ["make", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VERSION}.tar.xz"
 extract_to = "source"

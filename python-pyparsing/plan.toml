@@ -10,6 +10,7 @@ url = "https://github.com/pyparsing/pyparsing"
 build = ["python", "setuptools", "wheel"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://files.pythonhosted.org/packages/source/p/pyparsing/pyparsing-${VERSION}.tar.gz"
 extract_to = "source"

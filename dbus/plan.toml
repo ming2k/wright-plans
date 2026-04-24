@@ -12,6 +12,7 @@ build = ["gcc", "meson", "ninja", "pkgconf"]
 link = ["expat", "systemd"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://dbus.freedesktop.org/releases/dbus/dbus-${VERSION}.tar.xz"
 extract_to = "source"
@@ -59,12 +60,8 @@ chmod 4750 ${PART_DIR}/usr/libexec/dbus-daemon-launch-helper'''
 [output]
 
 [output."libdbus"]
+include = ["/.*"]
 description = "D-Bus low-level shared library"
-script = '''
-install -d ${PART_DIR}/usr/lib
-mv -v ${MAIN_PART_DIR}/usr/lib/libdbus-1.so* ${PART_DIR}/usr/lib/
-
-'''
 [output."libdbus".dependencies]
 link = ["glibc"]
 

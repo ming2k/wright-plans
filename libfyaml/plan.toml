@@ -10,6 +10,7 @@ url = "https://github.com/pantoniou/libfyaml"
 build = ["cmake", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

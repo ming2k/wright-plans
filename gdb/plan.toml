@@ -12,6 +12,7 @@ link = ["expat", "glibc", "mpfr", "ncurses", "readline", "xz", "zlib"]
 runtime = ["expat", "ncurses", "python", "readline", "xz", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gdb/gdb-${VERSION}.tar.xz"
 extract_to = "source"

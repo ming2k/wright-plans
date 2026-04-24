@@ -10,6 +10,7 @@ url = "https://www.seabios.org/"
 build = ["bash", "gcc", "make", "python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://www.seabios.org/downloads/seabios-${VERSION}.tar.gz"
 extract_to = "source"

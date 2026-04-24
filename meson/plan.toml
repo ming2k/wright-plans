@@ -11,6 +11,7 @@ runtime = ["python", "ninja"]
 build = ["bash", "python", "python-setuptools", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/mesonbuild/meson/releases/download/${VERSION}/meson-${VERSION}.tar.gz"
 extract_to = "source"

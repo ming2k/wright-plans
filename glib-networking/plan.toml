@@ -11,12 +11,13 @@ build = ["gettext", "meson", "ninja", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/glib-networking/2.80/glib-networking-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
-env = {'GIO_MODULE_DIR': '/usr/lib/gio/modules'}
+env = { GIO_MODULE_DIR = '/usr/lib/gio/modules' }
 script = '''
 cd source
 meson setup build --prefix=/usr --buildtype=release -Dgnutls=enabled -Dlibproxy=enabled -Dopenssl=disabled'''

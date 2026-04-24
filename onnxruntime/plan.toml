@@ -11,6 +11,7 @@ build = ["gcc", "cmake", "ninja", "git", "python"]
 link = ["abseil-cpp", "protobuf"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/microsoft/onnxruntime/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
@@ -19,7 +20,7 @@ extract_to = "source"
 timeout = 3600
 
 [lifecycle.configure]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 cmake --compile-no-warning-as-error \

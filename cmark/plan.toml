@@ -10,6 +10,7 @@ url = "https://github.com/commonmark/cmark"
 build = ["cmake", "gcc", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "3da93db5469c30588cfeb283d9d62edfc6ded9eb0edc10a4f5bbfb7d722ea802"
 url = "https://github.com/commonmark/cmark/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"

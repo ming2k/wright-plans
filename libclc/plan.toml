@@ -7,10 +7,11 @@ arch = "x86_64"
 url = "https://libclc.llvm.org/"
 
 [dependencies]
-runtime = ["llvm"]
 build = ["cmake", "llvm", "make"]
+runtime = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-project-${VERSION}.src.tar.xz"
 extract_to = "source"

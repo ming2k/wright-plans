@@ -10,6 +10,7 @@ url = "https://github.com/KhronosGroup/SPIRV-Cross"
 build = ["gcc", "make", "cmake"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/KhronosGroup/SPIRV-Cross/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
 extract_to = "source"

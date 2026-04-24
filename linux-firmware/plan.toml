@@ -7,6 +7,7 @@ arch = "any"
 url = "https://gitlab.com/kernel-firmware/linux-firmware"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-${VERSION}.tar.gz"
 extract_to = "source"

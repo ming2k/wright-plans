@@ -10,6 +10,7 @@ url = "https://github.com/westes/flex"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/westes/flex/releases/download/v${VERSION}/flex-${VERSION}.tar.gz"
 extract_to = "source"

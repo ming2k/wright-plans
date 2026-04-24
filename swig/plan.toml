@@ -11,6 +11,7 @@ build = ["gcc", "make", "autoconf", "automake", "bison"]
 link = ["pcre2", "zlib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/swig/swig/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

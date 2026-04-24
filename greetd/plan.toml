@@ -12,12 +12,13 @@ build = ["rust"]
 link = ["glibc", "linux-pam", "seatd"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://git.sr.ht/~kennylevinsen/greetd/archive/${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 cargo build --release --locked'''

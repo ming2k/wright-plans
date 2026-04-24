@@ -10,6 +10,7 @@ url = "https://github.com/xiph/ogg"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://downloads.xiph.org/releases/ogg/libogg-${VERSION}.tar.gz"
 extract_to = "source"

@@ -10,6 +10,7 @@ url = "https://facebook.github.io/zstd/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/facebook/zstd/releases/download/v${VERSION}/zstd-${VERSION}.tar.gz"
 extract_to = "source"

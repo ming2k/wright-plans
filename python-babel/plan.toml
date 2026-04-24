@@ -11,6 +11,7 @@ runtime = ["python"]
 build = ["python", "setuptools"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pypi.org/packages/source/b/babel/babel-${VERSION}.tar.gz"
 extract_to = "source"

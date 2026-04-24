@@ -12,6 +12,7 @@ build = ["meson", "ninja", "pkgconf", "libxslt", "gettext", "gobject-introspecti
 link = ["glib", "libarchive", "libxml2", "ostree", "polkit", "json-glib", "curl", "appstream", "gdk-pixbuf", "libjpeg-turbo", "libfuse3", "gpgme", "libseccomp"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/flatpak/flatpak/releases/download/${VERSION}/flatpak-${VERSION}.tar.xz"
 extract_to = "source"

@@ -12,6 +12,7 @@ build = ["gcc", "make", "pkgconf"]
 link = ["curl", "json-c", "libtpms", "libusb", "openssl", "util-linux"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/tpm2-software/tpm2-tss/releases/download/${VERSION}/tpm2-tss-${VERSION}.tar.gz"
 extract_to = "source"

@@ -7,11 +7,12 @@ arch = "x86_64"
 url = "https://github.com/systemd/systemd"
 
 [dependencies]
-runtime = ["bash", "dbus", "hwdata", "kbd", "kmod"]
 build = ["gcc", "gperf", "llvm", "python-jinja2", "meson", "ninja", "pkgconf", "python"]
 link = ["acl", "cryptsetup", "glibc", "libcap", "libgcrypt", "libidn2", "libseccomp", "libxcrypt", "linux-pam", "lz4", "openssl", "p11-kit", "pcre2", "tpm2-tss", "util-linux", "xz", "zstd"]
+runtime = ["acl", "bash", "cryptsetup", "dbus", "glibc", "hwdata", "kbd", "kmod", "libcap", "libgcrypt", "libidn2", "libseccomp", "libxcrypt", "linux-pam", "lz4", "openssl", "p11-kit", "pcre2", "tpm2-tss", "util-linux", "xz", "zstd"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/systemd/systemd/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

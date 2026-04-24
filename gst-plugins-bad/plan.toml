@@ -11,6 +11,7 @@ build = ["gst-plugins-base", "gstreamer", "meson", "ninja", "pkgconf"]
 link = ["openssl"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.28.0.tar.xz"
 extract_to = "source"

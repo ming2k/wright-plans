@@ -10,6 +10,7 @@ url = "https://sing-box.sagernet.org/"
 build = ["go"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/SagerNet/sing-box/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
@@ -19,7 +20,7 @@ type = "local"
 path = "sing-box.service"
 
 [lifecycle.compile]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 export PATH=/usr/lib/go/bin:$PATH

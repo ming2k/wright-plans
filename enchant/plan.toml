@@ -11,6 +11,7 @@ build = ["gcc", "groff", "make", "pkgconf"]
 link = ["glib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/AbiWord/enchant/releases/download/v${VERSION}/enchant-${VERSION}.tar.gz"
 extract_to = "source"

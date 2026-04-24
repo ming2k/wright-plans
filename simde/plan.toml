@@ -10,6 +10,7 @@ url = "https://github.com/simd-everywhere/simde"
 build = ["meson", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/simd-everywhere/simde/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

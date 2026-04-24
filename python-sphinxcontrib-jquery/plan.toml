@@ -11,6 +11,7 @@ runtime = ["python", "python-sphinx"]
 build = ["python", "flit-core"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://files.pythonhosted.org/packages/source/s/sphinxcontrib-jquery/sphinxcontrib-jquery-${VERSION}.tar.gz"
 extract_to = "source"

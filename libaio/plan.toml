@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://pagure.io/libaio"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://pagure.io/libaio/archive/libaio-${VERSION}/libaio-libaio-${VERSION}.tar.gz"
 extract_to = "source"

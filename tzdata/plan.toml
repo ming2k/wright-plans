@@ -10,11 +10,13 @@ url = "https://www.iana.org/time-zones"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://data.iana.org/time-zones/releases/tzcode${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://data.iana.org/time-zones/releases/tzdata${VERSION}.tar.gz"
 

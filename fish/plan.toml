@@ -11,6 +11,7 @@ build = ["cmake", "make", "pkgconf", "rust", "git", "jq", "gettext"]
 link = ["pcre2"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/fish-shell/fish-shell/releases/download/${VERSION}/fish-${VERSION}.tar.xz"
 extract_to = "source"
@@ -28,7 +29,7 @@ cmake -B build \
     -W no-dev'''
 
 [lifecycle.compile]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
 cd source
 make -C build -j$(nproc) VERBOSE=1'''

@@ -11,6 +11,7 @@ build = ["cmake", "ninja"]
 link = ["glibc", "glib", "icu", "libxml2"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/libical/libical/archive/v${VERSION}.tar.gz"
 extract_to = "source"

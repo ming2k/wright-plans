@@ -11,6 +11,7 @@ runtime = ["hicolor-icon-theme"]
 build = ["meson", "ninja", "pkgconf"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/adwaita-icon-theme/50/adwaita-icon-theme-${VERSION}.tar.xz"
 extract_to = "source"

@@ -12,6 +12,7 @@ build = ["gettext", "gobject-introspection", "libxslt", "meson", "ninja", "pkgco
 link = ["dbus", "glib", "gtk3", "libgcrypt", "p11-kit"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gcr/3.41/gcr-${VERSION}.tar.xz"
 extract_to = "source"

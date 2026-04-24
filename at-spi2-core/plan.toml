@@ -12,6 +12,7 @@ build = ["dbus", "gobject-introspection", "meson", "ninja"]
 link = ["glib"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.gnome.org/sources/at-spi2-core/2.60/at-spi2-core-${VERSION}.tar.xz"
 extract_to = "source"

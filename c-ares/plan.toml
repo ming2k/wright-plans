@@ -10,6 +10,7 @@ url = "https://c-ares.org/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/c-ares/c-ares/releases/download/v${VERSION}/c-ares-${VERSION}.tar.gz"
 extract_to = "source"

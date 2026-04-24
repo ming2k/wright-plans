@@ -10,6 +10,7 @@ url = "https://gmplib.org/"
 build = ["gcc", "m4", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gmp/gmp-${VERSION}.tar.xz"
 extract_to = "source"

@@ -9,6 +9,7 @@ arch = "x86_64"
 build = ["meson", "ninja", "nasm", "gcc"]
 
 [[sources]]
+type = "http"
 sha256 = "cbe212b02faf8c6eed5b6d55ef8a6e363aaab83f15112e960701a9c3df813686"
 url = "https://code.videolan.org/videolan/dav1d/-/archive/${VERSION}/dav1d-${VERSION}.tar.gz"
 extract_to = "source"

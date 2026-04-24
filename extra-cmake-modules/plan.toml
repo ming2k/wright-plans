@@ -10,6 +10,7 @@ url = "https://community.kde.org/Frameworks"
 build = ["cmake", "ninja"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://download.kde.org/stable/frameworks/6.23/extra-cmake-modules-${VERSION}.tar.xz"
 extract_to = "source"

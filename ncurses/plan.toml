@@ -10,6 +10,7 @@ url = "https://www.gnu.org/software/ncurses/"
 build = ["gcc", "make"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/ncurses/ncurses-6.6.tar.gz"
 extract_to = "source"

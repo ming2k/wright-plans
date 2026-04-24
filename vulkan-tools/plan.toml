@@ -12,6 +12,7 @@ link = ["vulkan-loader", "wayland"]
 runtime = ["vulkan-loader", "wayland"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/KhronosGroup/Vulkan-Tools/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"

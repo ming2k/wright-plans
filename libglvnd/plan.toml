@@ -9,6 +9,7 @@ arch = "x86_64"
 build = ["meson", "ninja", "pkgconf", "python"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.gz"
 extract_to = "source"

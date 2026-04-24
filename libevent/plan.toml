@@ -11,6 +11,7 @@ build = ["gcc", "make"]
 link = ["openssl"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://github.com/libevent/libevent/releases/download/release-${VERSION}/libevent-${VERSION}.tar.gz"
 extract_to = "source"

@@ -12,6 +12,7 @@ build = ["fcft", "gcc", "meson", "ninja", "pixman", "tllist"]
 link = ["fontconfig", "freetype", "harfbuzz", "libxkbcommon", "ncurses", "utf8proc", "wayland", "wayland-protocols"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://codeberg.org/dnkl/foot/releases/download/${VERSION}/foot-${VERSION}.tar.gz"
 extract_to = "source"

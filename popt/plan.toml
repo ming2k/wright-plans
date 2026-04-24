@@ -10,6 +10,7 @@ url = "https://github.com/rpm-software-management/popt"
 link = ["glibc"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://ftp.osuosl.org/pub/rpm/popt/releases/popt-1.x/popt-${VERSION}.tar.gz"
 extract_to = "source"

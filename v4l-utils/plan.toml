@@ -11,6 +11,7 @@ build = ["meson", "ninja", "pkgconf"]
 link = ["systemd", "elfutils", "json-c"]
 
 [[sources]]
+type = "http"
 sha256 = "SKIP"
 url = "https://linuxtv.org/downloads/v4l-utils/v4l-utils-${VERSION}.tar.xz"
 extract_to = "source"
