@@ -1,6 +1,6 @@
 name = "coreutils"
-version = "9.10"
-release = 3
+version = "9.11"
+release = 1
 description = "Basic utility programs needed by every operating system"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -18,7 +18,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/coreutils-${VERSION}
 FORCE_UNSAFE_CONFIGURE=1 ./configure \
 --prefix=/usr            \
 --sbindir=/usr/bin       \
@@ -28,12 +28,12 @@ FORCE_UNSAFE_CONFIGURE=1 ./configure \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/coreutils-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/coreutils-${VERSION}
 make DESTDIR=${PART_DIR} install
 mkdir -p ${PART_DIR}/usr/share/man/man8
 mv -v ${PART_DIR}/usr/share/man/man1/chroot.1 ${PART_DIR}/usr/share/man/man8/chroot.8

@@ -1,5 +1,5 @@
 name = "typio"
-version = "3.0.3"
+version = "3.2.0"
 release = 1
 description = "Native Wayland input method daemon with optional GTK4 control panel"
 license = "NOASSERTION"
@@ -7,14 +7,14 @@ arch = "x86_64"
 url = "https://github.com/ming2k/typio"
 
 [dependencies]
-runtime = ["rime-prelude"]
+runtime = []
 build = ["cmake", "glslang", "ninja", "pkgconf", "vulkan-headers"]
-link = ["dbus", "freetype", "gtk4", "harfbuzz", "librime", "libxkbcommon", "pipewire", "vulkan-loader", "wayland"]
+link = ["dbus", "fontconfig", "freetype", "gtk4", "harfbuzz", "librime", "libxkbcommon", "pipewire", "vulkan-loader", "wayland"]
 
 [[sources]]
 type = "git"
 url = "https://github.com/ming2k/typio.git"
-ref = "v3.0.3"
+ref = "v3.1.0"
 extract_to = "source"
 
 [lifecycle.configure]
@@ -29,12 +29,15 @@ cmake -S source -B build -G Ninja \
     -DBUILD_WHISPER=ON \
     -DBUILD_SHERPA_ONNX=ON \
     -DBUILD_MOZC_ENGINE=ON \
-    -DENABLE_SYSTRAY=OFF'''
+    -DENABLE_SYSTRAY=OFF
+'''
 
 [lifecycle.compile]
 script = '''
-cmake --build build -j$(nproc)'''
+cmake --build build -j$(nproc)
+'''
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} cmake --install build'''
+DESTDIR=${PART_DIR} cmake --install build
+'''

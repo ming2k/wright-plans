@@ -1,10 +1,12 @@
 name = "linux"
-version = "6.19.13"
+version = "7.0.3"
 release = 1
 description = "The Linux kernel"
 license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://www.kernel.org/"
+
+# See README.md for hardware support policy, Arch/CachyOS comparison, and PGO usage
 
 [dependencies]
 runtime = ["kmod", "dracut-ng"]
@@ -13,7 +15,7 @@ build = ["bc", "gcc", "make"]
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${VERSION}.tar.xz"
+url = "https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-${VERSION}.tar.xz"
 extract_to = "source"
 
 [[sources]]
@@ -33,32 +35,56 @@ cd source/linux-${VERSION}
 # - Keep scripts/config usage minimal and limited to a small set of
 #   strategy-critical assertions or version-drift guardrails that cannot be
 #   expressed cleanly as the maintained config baseline.
+# - "Guardrail" means a build-time assertion that intentionally runs every build
+#   to prevent silent breakage when config or upstream Kconfig symbols drift.
+# - "Baseline sync" means a temporary migration aid. Once a final build .config
+#   has been copied back to linux/config and verified, these entries can be
+#   removed from plan.toml because the maintained baseline carries the policy.
 cp ${WORKDIR}/linux-config .config
 make olddefconfig
 
-# Branding
+# ---------------------------------------------------------------------------
+# Guardrails: build-time assertions that run every build to prevent silent
+# breakage when config baselines or upstream Kconfig symbols drift.
+# Each block below documents: (1) the commands, (2) why they are needed,
+# and (3) the runtime scenario they protect.
+# ---------------------------------------------------------------------------
+
+# --- Package identity ---
+# Commands: force LOCALVERSION and DEFAULT_HOSTNAME.
+# Principle: package identity must not depend on whatever happens to be in the
+# copied baseline .config. These values identify this distro kernel.
+# Scenario: every build.
 scripts/config --set-str LOCALVERSION "-theseus"
 scripts/config --set-str DEFAULT_HOSTNAME "theseus"
 
-# Boot-critical: filesystem (no initramfs, must be built-in)
+# --- Boot-critical support (no initramfs, must be built-in) ---
+# Commands: enable root filesystem, EFI System Partition filesystem, and the
+# NVMe block driver as built-in (y, not m).
+# Principle: without an initramfs the kernel must mount root and access the
+# boot partition entirely on its own. If any of these are modules the system
+# will fail to boot.
+# Scenario: every boot path.
 scripts/config --enable EXT4_FS
 scripts/config --enable VFAT_FS
 scripts/config --enable NLS_CODEPAGE_437
 scripts/config --enable NLS_ISO8859_1
 scripts/config --enable NLS_UTF8
-
-# Boot-critical: NVMe storage
 scripts/config --enable BLK_DEV_NVME
 scripts/config --enable NVME_CORE
-
-# UEFI boot
 scripts/config --enable EFI
 scripts/config --enable EFI_STUB
 scripts/config --enable EFI_MIXED
 scripts/config --enable EFIVAR_FS
 scripts/config --enable EFI_RUNTIME_MAP
 
-# systemd hard requirements
+# --- systemd hard requirements ---
+# Commands: enable cgroups, tmpfs, devtmpfs, autofs, epoll, signalfd, timerfd,
+# inotify, and seccomp.
+# Principle: systemd documents these as mandatory. Missing any one causes
+# startup failure or feature degradation (e.g. missing SECCOMP breaks service
+# sandboxing, missing CGROUPS breaks the entire init model).
+# Scenario: any system using systemd as PID 1.
 scripts/config --enable DEVTMPFS
 scripts/config --enable DEVTMPFS_MOUNT
 scripts/config --enable CGROUPS
@@ -73,14 +99,23 @@ scripts/config --enable TMPFS_XATTR
 scripts/config --enable SECCOMP
 scripts/config --enable SECCOMP_FILTER
 
-# Flatpak/bwrap hard requirements
+# --- Container / sandbox support ---
+# Commands: enable user namespaces, including unprivileged creation.
+# Principle: Flatpak, bwrap, rootless Docker, Chrome sandbox, and modern
+# container tooling all require unprivileged user namespaces. The upstream
+# Kconfig already provides strong security defaults around this feature.
+# Scenario: any desktop or developer workflow that uses sandboxed apps or
+# containers.
 scripts/config --enable NAMESPACES
 scripts/config --enable USER_NS
-if grep -q '^CONFIG_USER_NS_UNPRIVILEGED=' .config || grep -q '^# CONFIG_USER_NS_UNPRIVILEGED is not set' .config; then
-    scripts/config --enable USER_NS_UNPRIVILEGED
-fi
+scripts/config --enable USER_NS_UNPRIVILEGED
 
-# systemd recommended
+# --- systemd integration expectations ---
+# Commands: enable DMIID, NET, SYSFS, PROC_FS, FHANDLE, BPF_SYSCALL,
+# CGROUP_BPF.
+# Principle: systemd uses these for hardware identification, network
+# management, service supervision, and cgroup-based resource control.
+# Scenario: full systemd feature set on a workstation.
 scripts/config --enable DMIID
 scripts/config --enable NET
 scripts/config --enable SYSFS
@@ -89,20 +124,92 @@ scripts/config --enable FHANDLE
 scripts/config --enable BPF_SYSCALL
 scripts/config --enable CGROUP_BPF
 
-# Disable uevent helper (systemd wants udev only)
+# --- Module and network policy ---
+# Commands: disable uevent helper, force module signing, disable WEXT.
+# Principle:
+#   - UEVENT_HELPER conflicts with systemd-udev which is the only supported
+#     hotplug manager on this system.
+#   - MODULE_SIG_ALL ensures every module is signed at install time; without
+#     it, in-tree modules such as pkcs8_key_parser remain unsigned and taint
+#     the kernel on first load.
+#   - CFG80211_WEXT is the legacy wireless-extensions compat shim. Disabling
+#     it prevents applications from silently falling back to the deprecated
+#     ioctl path and avoids Wi-Fi 7 regression warnings from cfg80211.
+# Scenario: clean systemd + Wayland + modern nl80211-only wireless stack.
 scripts/config --disable UEVENT_HELPER
-
-# Security: auto-sign every module during modules_install. Without this,
-# CONFIG_MODULE_SIG=y leaves unsigned modules (e.g. pkcs8_key_parser) that
-# taint the kernel on first load.
 scripts/config --enable MODULE_SIG_ALL
-
-# Pure Wayland, nl80211-only userspace: drop the WEXT compat shim so no app
-# can silently fall back to the deprecated ioctl path (also avoids the
-# Wi-Fi 7 regression warnings from cfg80211).
 scripts/config --disable CFG80211_WEXT
 
-make olddefconfig'''
+# --- Intel laptop audio (SOF/DMIC) ---
+# Commands: force-enable the entire SOF (Sound Open Firmware) and DMIC
+# topology path, both built-in and as modules.
+# Principle: upstream Kconfig symbols around SOF change frequently between
+# kernel versions. olddefconfig can silently drop symbols and fall back to
+# plain HDA, which loses the internal digital microphone array on modern
+# Intel laptops.
+# Scenario: any Intel-based laptop that uses the SOF audio firmware.
+scripts/config --module SND_HDA_INTEL
+scripts/config --enable SND_INTEL_NHLT
+scripts/config --module SND_INTEL_DSP_CONFIG
+scripts/config --module SND_INTEL_SOUNDWIRE_ACPI
+scripts/config --module SND_SOC
+scripts/config --module SND_SOC_ACPI
+scripts/config --module SND_SOC_ACPI_INTEL_MATCH
+scripts/config --module SND_SOC_INTEL_AVS
+scripts/config --module SND_SOC_INTEL_AVS_MACH_DMIC
+scripts/config --module SND_SOC_INTEL_SKL_HDA_DSP_GENERIC_MACH
+scripts/config --enable SND_SOC_SOF_TOPLEVEL
+scripts/config --module SND_SOC_SOF
+scripts/config --module SND_SOC_SOF_PCI_DEV
+scripts/config --module SND_SOC_SOF_PCI
+scripts/config --module SND_SOC_SOF_ACPI
+scripts/config --module SND_SOC_SOF_CLIENT
+scripts/config --enable SND_SOC_SOF_INTEL_TOPLEVEL
+scripts/config --module SND_SOC_SOF_INTEL_COMMON
+scripts/config --module SND_SOC_SOF_INTEL_MTL
+scripts/config --module SND_SOC_SOF_METEORLAKE
+scripts/config --module SND_SOC_SOF_INTEL_LNL
+scripts/config --module SND_SOC_SOF_LUNARLAKE
+scripts/config --module SND_SOC_SOF_HDA_COMMON
+scripts/config --module SND_SOC_SOF_HDA_GENERIC
+scripts/config --module SND_SOC_SOF_HDA_MLINK
+scripts/config --enable SND_SOC_SOF_HDA_LINK
+scripts/config --enable SND_SOC_SOF_HDA_AUDIO_CODEC
+scripts/config --module SND_SOC_SOF_HDA_LINK_BASELINE
+scripts/config --module SND_SOC_SOF_HDA
+scripts/config --module SND_SOC_SOF_HDA_PROBES
+scripts/config --module SND_SOC_SOF_INTEL_SOUNDWIRE
+scripts/config --module SND_SOC_SOF_INTEL_SOUNDWIRE_LINK_BASELINE
+scripts/config --module SND_SOC_SOF_XTENSA
+
+# ---------------------------------------------------------------------------
+# Baseline sync: temporary migration aids. Once the final build .config has
+# been copied back to linux/config and verified, these blocks can be removed
+# because the maintained baseline will carry the policy forward.
+# ---------------------------------------------------------------------------
+
+# HID support for keyboards, mice, gamepads, and tablets.
+scripts/config --enable HID
+scripts/config --enable HID_GENERIC
+scripts/config --enable USB_HID
+scripts/config --enable HID_PID
+scripts/config --module HID_WACOM
+scripts/config --module HID_LOGITECH
+scripts/config --module HID_LOGITECH_DJ
+scripts/config --module HID_MICROSOFT
+scripts/config --module HID_SONY
+scripts/config --module HID_NINTENDO
+scripts/config --module HID_STEAM
+scripts/config --module HID_APPLE
+scripts/config --module HID_LENOVO
+
+# Gaming input (Xbox and compatible gamepads).
+scripts/config --module JOYSTICK_XPAD
+scripts/config --enable JOYSTICK_XPAD_FF
+scripts/config --enable JOYSTICK_XPAD_LEDS
+
+make olddefconfig
+'''
 
 [lifecycle.compile]
 isolation = "none"

@@ -1,0 +1,78 @@
+name = "warp-terminal"
+version = "0.2026.04.27.15.32.stable_02"
+release = 1
+description = "Warp, the Rust-based terminal for developers and teams"
+license = "custom"
+arch = "x86_64"
+url = "https://github.com/warpdotdev/warp"
+
+[dependencies]
+runtime = [
+  "alsa-lib",
+  "bash",
+  "curl",
+  "fontconfig",
+  "hicolor-icon-theme",
+  "libglvnd",
+  "libxkbcommon",
+  "mesa",
+  "wayland",
+  "xdg-utils",
+  "xz",
+  "zlib",
+]
+build = ["zstd"]
+link = ["alsa-lib", "glibc", "xz", "zlib"]
+optional = ["desktop-file-utils", "libsecret"]
+
+[[sources]]
+type = "http"
+sha256 = "9a2db9dcaa0f328e24164b28c76e93d4fa72c5769f784185041bd228e097d4d4"
+url = "https://releases.warp.dev/linux/pacman/warpdotdev/x86_64/warp-terminal-v${VERSION}-1-x86_64.pkg.tar.zst"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+echo "using upstream stable Linux binary package"
+'''
+
+[lifecycle.compile]
+script = '''
+cd source
+chmod 755 opt/warpdotdev/warp-terminal/warp usr/bin/warp-terminal
+'''
+
+[lifecycle.staging]
+script = '''
+cd source
+
+install -dm755 ${PART_DIR}/opt
+cp -a opt/warpdotdev ${PART_DIR}/opt/
+
+install -Dm755 usr/bin/warp-terminal ${PART_DIR}/usr/bin/warp-terminal
+install -Dm644 usr/share/applications/dev.warp.Warp.desktop ${PART_DIR}/usr/share/applications/dev.warp.Warp.desktop
+
+for size in 16 32 64 128 256 512; do
+  install -Dm644 usr/share/icons/hicolor/${size}x${size}/apps/dev.warp.Warp.png \
+    ${PART_DIR}/usr/share/icons/hicolor/${size}x${size}/apps/dev.warp.Warp.png
+done
+
+install -Dm644 opt/warpdotdev/warp-terminal/resources/THIRD_PARTY_LICENSES.txt \
+  ${PART_DIR}/usr/share/licenses/warp-terminal/THIRD_PARTY_LICENSES.txt
+
+# The official package includes pacman debug/source metadata; Wright does not need it.
+rm -rf ${PART_DIR}/usr/src
+'''
+
+[output]
+provides = ["warp"]
+conflicts = ["warp"]
+
+[hooks]
+post_install = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+'''
+post_upgrade = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+'''

@@ -66,7 +66,16 @@ install -Dm755 bin/netavark-connection-tester ${PART_DIR}/usr/libexec/podman/net
 install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.socket ${PART_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.socket
 install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.service ${PART_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.service
 install -Dm644 contrib/systemd/system/netavark-firewalld-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-firewalld-reload.service
-install -Dm644 contrib/systemd/system/netavark-nftables-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-nftables-reload.service'''
+install -Dm644 contrib/systemd/system/netavark-nftables-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-nftables-reload.service
+
+install -Dm644 /dev/null ${PART_DIR}/etc/containers/netavark.conf
+cat > ${PART_DIR}/etc/containers/netavark.conf << 'EOF'
+[default]
+firewall_driver = "nftables"
+EOF'''
+
+[output]
+backup = ["/etc/containers/netavark.conf"]
 
 [hooks]
 post_install = '''

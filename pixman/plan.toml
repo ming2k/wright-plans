@@ -1,5 +1,5 @@
 name = "pixman"
-version = "0.44.2"
+version = "0.46.4"
 release = 1
 description = "Low-level pixel manipulation library"
 license = "MIT"
@@ -17,15 +17,15 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/pixman-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared -Dtests=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/pixman-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''
+cd source/pixman-${VERSION}
+DESTDIR=${PART_DIR} meson install -C build'''

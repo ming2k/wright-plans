@@ -1,20 +1,20 @@
 name = "niri"
-version = "25.11"
-release = 4
+version = "26.04"
+release = 1
 description = "Scrollable-tiling Wayland compositor"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
-url = "https://github.com/YaLTeR/niri"
+url = "https://github.com/niri-wm/niri"
 
 [dependencies]
 runtime = ["seatd", "pipewire", "xdg-desktop-portal", "xdg-desktop-portal-gtk"]
 build = ["cargo", "pkgconf", "rust"]
-link = ["cairo", "glib", "libinput", "mesa", "pango", "pipewire", "seatd", "systemd", "wayland", "libxkbcommon"]
+link = ["cairo", "glib", "libdisplay-info", "libinput", "mesa", "pango", "pipewire", "seatd", "systemd", "wayland", "libxkbcommon"]
 
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://github.com/YaLTeR/niri/archive/refs/tags/v${VERSION}.tar.gz"
+url = "https://github.com/niri-wm/niri/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]

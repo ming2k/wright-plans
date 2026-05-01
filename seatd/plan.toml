@@ -17,27 +17,33 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
---prefix=/usr          \
---buildtype=release    \
--D libseat-logind=systemd \
--D libseat-builtin=enabled'''
+cd source/seatd-${VERSION}
+meson setup build \
+  --prefix=/usr \
+  --buildtype=release \
+  -Dlibseat-logind=systemd \
+  -Dlibseat-builtin=enabled
+'''
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/seatd-${VERSION}
+ninja -C build
+'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/seatd-${VERSION}
+DESTDIR=${PART_DIR} ninja -C build install
+'''
+
+[output]
+provides = ["seatd", "libseat"]
+conflicts = ["seatd", "libseat"]
 
 [hooks]
 post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/seatd.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
-
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

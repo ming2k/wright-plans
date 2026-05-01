@@ -1,0 +1,38 @@
+name = "inotify-tools"
+version = "4.25.9.0"
+release = 1
+description = "Command-line utilities for Linux inotify"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/inotify-tools/inotify-tools"
+
+[dependencies]
+build = ["autoconf", "automake", "gcc", "libtool", "make"]
+link = ["glibc"]
+runtime = ["glibc"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/inotify-tools/inotify-tools/archive/refs/tags/${VERSION}.tar.gz"
+sha256 = "d33a4fd24c72c2d08893f129d724adf725b93dae96c359e4f4e9f32573cc853b"
+extract_to = "source"
+
+[lifecycle.prepare]
+script = '''
+cd source/inotify-tools-${VERSION}
+autoreconf -fi'''
+
+[lifecycle.configure]
+script = '''
+cd source/inotify-tools-${VERSION}
+./configure --prefix=/usr --disable-static --enable-doxygen=no'''
+
+[lifecycle.compile]
+script = '''
+cd source/inotify-tools-${VERSION}
+make -j$(nproc)'''
+
+[lifecycle.staging]
+script = '''
+cd source/inotify-tools-${VERSION}
+make DESTDIR=${PART_DIR} install'''
