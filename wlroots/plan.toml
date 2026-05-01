@@ -1,0 +1,66 @@
+name = "wlroots"
+version = "0.20.0"
+release = 1
+description = "Modular Wayland compositor library"
+license = "MIT"
+arch = "x86_64"
+url = "https://gitlab.freedesktop.org/wlroots/wlroots"
+
+[dependencies]
+runtime = [
+  "wayland",
+  "wayland-protocols",
+  "libdrm",
+  "mesa",
+  "libxkbcommon",
+  "pixman",
+  "libinput",
+  "libseat",
+  "hwdata",
+  "libdisplay-info",
+]
+build = [
+  "meson",
+  "pkg-config",
+]
+link = [
+  "wayland",
+  "libdrm",
+  "mesa",
+  "libxkbcommon",
+  "pixman",
+  "libinput",
+  "libseat",
+]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${VERSION}/wlroots-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source/wlroots-${VERSION}
+meson setup build \
+  --prefix=/usr \
+  --buildtype=release \
+  -Dexamples=false \
+  -Dxwayland=disabled
+'''
+
+[lifecycle.compile]
+script = '''
+cd source/wlroots-${VERSION}
+ninja -C build
+'''
+
+[lifecycle.staging]
+script = '''
+cd source/wlroots-${VERSION}
+DESTDIR=${PART_DIR} ninja -C build install
+'''
+
+[output]
+provides = ["wlroots"]
+conflicts = ["wlroots"]

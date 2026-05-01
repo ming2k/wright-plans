@@ -1,0 +1,22 @@
+name = "python-colorama"
+version = "0.4.6"
+release = 1
+description = "Cross-platform colored terminal text"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "https://github.com/tartley/colorama"
+
+[dependencies]
+runtime = ["python"]
+build = ["python", "setuptools"]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://pypi.org/packages/source/c/colorama/colorama-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+cd source/colorama-${VERSION}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

@@ -1,0 +1,22 @@
+name = "python-ruamel-yaml"
+version = "0.19.1"
+release = 1
+description = "YAML 1.2 loader/dumper package for Python"
+license = "MIT"
+arch = "x86_64"
+url = "https://sourceforge.net/projects/ruamel-yaml/"
+
+[dependencies]
+runtime = ["python", "python-ruamel-yaml-clib"]
+build = ["python", "setuptools"]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://pypi.org/packages/source/r/ruamel-yaml/ruamel_yaml-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+cd source/ruamel.yaml-${VERSION}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

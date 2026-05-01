@@ -1,0 +1,22 @@
+name = "python-ruamel-yaml-clib"
+version = "0.2.15"
+release = 1
+description = "C version of reader, parser and emitter for ruamel.yaml derived from libyaml"
+license = "MIT"
+arch = "x86_64"
+url = "https://sourceforge.net/projects/ruamel-yaml-clib/"
+
+[dependencies]
+runtime = ["python"]
+build = ["python", "setuptools"]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://pypi.org/packages/source/r/ruamel-yaml-clib/ruamel_yaml_clib-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+cd source/ruamel.yaml.clib-${VERSION}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

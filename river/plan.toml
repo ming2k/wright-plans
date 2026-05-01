@@ -1,0 +1,145 @@
+name = "river"
+version = "0.4.5"
+release = 1
+description = "Dynamic tiling Wayland compositor"
+license = "GPL-3.0-only"
+arch = "x86_64"
+url = "https://codeberg.org/river/river"
+
+[dependencies]
+runtime = [
+  "wayland",
+  "wayland-protocols",
+  "wlroots",
+  "libxkbcommon",
+  "libevdev",
+  "pixman",
+]
+build = [
+  "zig",
+  "pkg-config",
+  "scdoc",
+]
+link = [
+  "wayland",
+  "wlroots",
+  "libxkbcommon",
+  "libevdev",
+  "pixman",
+]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://codeberg.org/river/river/releases/download/v${VERSION}/river-${VERSION}.tar.gz"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://codeberg.org/ifreund/zig-pixman/archive/v0.3.0.tar.gz"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://codeberg.org/ifreund/zig-wayland/archive/v0.6.0.tar.gz"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://codeberg.org/ifreund/zig-wlroots/archive/v0.20.1.tar.gz"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://codeberg.org/ifreund/zig-xkbcommon/archive/v0.4.0.tar.gz"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://codeberg.org/ziglang/translate-c/archive/57c559cf581b1fcad90494eda219f98abeb155ce.tar.gz"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/Vexu/arocc/archive/5f5a050569a95ecc40a426f0c3666ae7ef987ede.tar.gz"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source/river-${VERSION}
+
+# Vendor zig dependencies to avoid network fetch in strict isolation
+cat > build.zig.zon << 'ZON'
+.{
+    .name = .river,
+    .version = "${VERSION}",
+    .paths = .{""},
+    .dependencies = .{
+        .pixman = .{
+            .path = "../zig-pixman",
+        },
+        .wayland = .{
+            .path = "../zig-wayland",
+        },
+        .wlroots = .{
+            .path = "../zig-wlroots",
+        },
+        .xkbcommon = .{
+            .path = "../zig-xkbcommon",
+        },
+        .translate_c = .{
+            .path = "../translate-c",
+        },
+    },
+    .fingerprint = 0xf5e3672b8e8d6efc,
+}
+ZON
+
+# Also patch translate-c to vendor its aro dependency
+cd ../translate-c
+cat > build.zig.zon << 'ZON'
+.{
+    .name = .translate_c,
+    .version = "0.0.0",
+    .fingerprint = 0x1c84f6455a54f043,
+    .minimum_zig_version = "0.16.0-dev.3006+94355f192",
+    .dependencies = .{
+        .aro = .{
+            .path = "../arocc",
+        },
+    },
+    .paths = .{
+        "build",
+        "build.zig",
+        "build.zig.zon",
+        "src",
+        "lib",
+        "test/cases.zig",
+        "LICENSE",
+        "README.md",
+    },
+}
+ZON
+'''
+
+[lifecycle.compile]
+script = '''
+cd source/river-${VERSION}
+zig build -Doptimize=ReleaseSafe
+'''
+
+[lifecycle.staging]
+script = '''
+cd source/river-${VERSION}
+zig build -Doptimize=ReleaseSafe --prefix ${PART_DIR}/usr install
+'''
+
+[output]
+provides = ["river"]
+conflicts = ["river"]

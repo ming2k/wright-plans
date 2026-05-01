@@ -1,0 +1,22 @@
+name = "python-awscrt"
+version = "0.32.2"
+release = 1
+description = "A common runtime for AWS Python projects"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/awslabs/aws-crt-python"
+
+[dependencies]
+runtime = ["python"]
+build = ["python", "setuptools", "cmake"]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://pypi.org/packages/source/a/awscrt/awscrt-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+cd source/awscrt-${VERSION}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

@@ -13,10 +13,10 @@ build = ["python", "hatchling", "hatch-vcs"]
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://github.com/urllib3/urllib3/archive/${VERSION}/python-urllib3-${VERSION}.tar.gz"
+url = "https://github.com/urllib3/urllib3/archive/${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/urllib3-${VERSION}
 SETUPTOOLS_SCM_PRETEND_VERSION=${VERSION} pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

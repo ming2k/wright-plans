@@ -1,0 +1,35 @@
+name = "tinyrwm"
+version = "0.1"
+release = 1
+description = "Tiny example window manager for river"
+license = "0BSD"
+arch = "x86_64"
+url = "https://codeberg.org/river/tinyrwm"
+
+[dependencies]
+build = ["meson", "ninja", "wayland"]
+link = ["wayland", "libxkbcommon"]
+
+[[sources]]
+type = "git"
+url = "https://codeberg.org/river/tinyrwm.git"
+ref = "a3fc724da4650da015676869e4e5cfc8130fe5b8"
+extract_to = "source"
+
+[lifecycle.configure]
+script = """
+cd source/c
+meson setup build --prefix=/usr --buildtype=release
+"""
+
+[lifecycle.compile]
+script = """
+cd source/c
+ninja -C build
+"""
+
+[lifecycle.staging]
+script = """
+cd source/c
+DESTDIR=${PART_DIR} ninja -C build install
+"""

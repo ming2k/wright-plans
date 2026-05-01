@@ -1,0 +1,22 @@
+name = "python-jmespath"
+version = "1.1.0"
+release = 1
+description = "JSON Matching Expressions"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/jmespath/jmespath.py"
+
+[dependencies]
+runtime = ["python"]
+build = ["python", "setuptools"]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://pypi.org/packages/source/j/jmespath/jmespath-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+cd source/jmespath-${VERSION}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

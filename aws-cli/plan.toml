@@ -1,0 +1,36 @@
+name = "aws-cli"
+version = "2.34.40"
+release = 1
+description = "Universal Command Line Interface for Amazon Web Services"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://aws.amazon.com/cli/"
+
+[dependencies]
+runtime = []
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${VERSION}.zip"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+# Install AWS CLI dist files
+mkdir -p ${PART_DIR}/usr/lib/aws-cli
+rsync -a source/aws/dist/ ${PART_DIR}/usr/lib/aws-cli/
+
+# Create wrapper scripts in /usr/bin
+mkdir -p ${PART_DIR}/usr/bin
+cat > ${PART_DIR}/usr/bin/aws << 'EOF'
+#!/bin/sh
+exec /usr/lib/aws-cli/aws "$@"
+EOF
+chmod +x ${PART_DIR}/usr/bin/aws
+
+cat > ${PART_DIR}/usr/bin/aws_completer << 'EOF'
+#!/bin/sh
+exec /usr/lib/aws-cli/aws_completer "$@"
+EOF
+chmod +x ${PART_DIR}/usr/bin/aws_completer'''

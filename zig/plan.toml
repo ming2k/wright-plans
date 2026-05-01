@@ -1,0 +1,49 @@
+name = "zig"
+version = "0.16.0"
+release = 1
+description = "General-purpose programming language and build system"
+license = "MIT"
+arch = "x86_64"
+url = "https://ziglang.org"
+
+[dependencies]
+runtime = []
+build = []
+link = []
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://ziglang.org/download/${VERSION}/zig-x86_64-linux-${VERSION}.tar.xz"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source
+'''
+
+[lifecycle.compile]
+script = '''
+cd source
+'''
+
+[lifecycle.staging]
+script = '''
+cd source
+install -dm755 ${PART_DIR}/usr/lib/zig
+
+# The tarball extracts to a single directory like zig-x86_64-linux-0.16.0/
+for dir in zig-x86_64-linux-*; do
+  if [ -d "$dir" ]; then
+    cp -a "$dir"/* ${PART_DIR}/usr/lib/zig/
+    break
+  fi
+done
+
+install -dm755 ${PART_DIR}/usr/bin
+ln -sf /usr/lib/zig/zig ${PART_DIR}/usr/bin/zig
+'''
+
+[output]
+provides = ["zig"]
+conflicts = ["zig"]

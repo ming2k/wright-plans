@@ -1,0 +1,22 @@
+name = "python-six"
+version = "1.17.0"
+release = 1
+description = "Python 2 and 3 compatibility utilities"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/benjaminp/six"
+
+[dependencies]
+runtime = ["python"]
+build = ["python", "setuptools"]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://pypi.org/packages/source/s/six/six-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+cd source/six-${VERSION}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''

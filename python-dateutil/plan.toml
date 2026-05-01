@@ -1,0 +1,22 @@
+name = "python-dateutil"
+version = "2.9.0"
+release = 1
+description = "Extensions to the standard Python datetime module"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/dateutil/dateutil"
+
+[dependencies]
+runtime = ["python", "python-six"]
+build = ["python", "setuptools"]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://pypi.org/packages/source/p/python-dateutil/python-dateutil-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+cd source/python-dateutil-${VERSION}
+pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
