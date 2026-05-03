@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://fmt.dev/"
 
-[dependencies]
-build = ["gcc", "cmake", "ninja"]
+build = ['gcc', 'cmake', 'ninja']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ ninja -C build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

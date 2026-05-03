@@ -6,9 +6,7 @@ license = "MIT"
 arch = "any"
 url = "https://asciidoctor.org"
 
-[dependencies]
-runtime = ["ruby"]
-build = ["ruby"]
+build = ['ruby']
 
 [[sources]]
 type = "http"
@@ -84,3 +82,7 @@ install --verbose -D --mode=0644 LICENSE* \
   --target-directory "${PART_DIR}/usr/share/licenses/asciidoctor"
 install --verbose -D --mode=0644 *.adoc \
   --target-directory "${PART_DIR}/usr/share/doc/asciidoctor"'''
+
+[[output]]
+name = "asciidoctor"
+runtime_deps = ['ruby']

@@ -6,10 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/wget/"
 
-[dependencies]
-runtime = ["ca-certificates"]
-build = ["gcc", "make"]
-link = ["gnutls", "libidn2", "libpsl", "nghttp2", "brotli", "zstd", "zlib", "pcre2", "gpgme"]
+build = ['gcc', 'make']
+link = ['gnutls', 'libidn2', 'libpsl', 'nghttp2', 'brotli', 'zstd', 'zlib', 'pcre2', 'gpgme']
 
 [[sources]]
 type = "http"
@@ -36,3 +34,7 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "wget2"
+runtime_deps = ['ca-certificates']

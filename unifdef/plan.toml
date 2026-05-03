@@ -5,8 +5,7 @@ description = "Tool for selectively removing ifdef from C/C++ sources"
 license = "BSD-2-Clause"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ script = '''
 cd source
 # prefix 定义安装路径
 make prefix=${PART_DIR}/usr install'''
+

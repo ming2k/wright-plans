@@ -6,10 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/flatpak/xdg-dbus-proxy"
 
-[dependencies]
-runtime = ["dbus"]
-build = ["meson", "ninja", "pkgconf"]
-link = ["glib"]
+build = ['meson', 'ninja', 'pkgconf']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -35,3 +33,7 @@ ninja -C build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "xdg-dbus-proxy"
+runtime_deps = ['dbus']

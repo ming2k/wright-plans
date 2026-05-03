@@ -6,10 +6,8 @@ license = "MIT OR Unlicense"
 arch = "x86_64"
 url = "https://github.com/BurntSushi/ripgrep"
 
-[dependencies]
-runtime = ["pcre2"]
-build = ["rust"]
-link = ["gcc", "pcre2", "glibc"]
+build = ['rust']
+link = ['gcc', 'pcre2', 'glibc']
 
 [[sources]]
 type = "http"
@@ -37,3 +35,7 @@ if [ -d complete ]; then
   install -Dm644 complete/_rg ${PART_DIR}/usr/share/zsh/site-functions/_rg || true
   install -Dm644 complete/rg.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/rg.fish || true
 fi'''
+
+[[output]]
+name = "rg"
+runtime_deps = ['pcre2']

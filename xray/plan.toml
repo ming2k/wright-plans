@@ -6,9 +6,7 @@ license = "MPL-2.0"
 arch = "x86_64"
 url = "https://github.com/XTLS/Xray-core"
 
-[dependencies]
-build = ["go"]
-optional = ["v2fly-domain-list-community", "v2fly-geoip", "v2ray-rules-dat"]
+build = ['go']
 
 [[sources]]
 type = "http"
@@ -56,3 +54,4 @@ echo ":: Optional geodata can be installed via v2fly-domain-list-community, v2fl
 echo ":: Those plans install to their own /usr/share/<plan-name>/ directories"
 
 '''
+

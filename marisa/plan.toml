@@ -6,8 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/s-yata/marisa-trie"
 
-[dependencies]
-build = ["autoconf", "automake", "libtool", "make"]
+build = ['autoconf', 'automake', 'libtool', 'make']
 
 [[sources]]
 type = "http"
@@ -37,3 +36,4 @@ make -C ${WORKDIR} -j$(nproc)'''
 script = '''
 cd source
 make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''
+

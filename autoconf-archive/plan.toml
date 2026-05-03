@@ -6,9 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/autoconf-archive/"
 
-[dependencies]
-build = ["make"]
-runtime = ["m4"]
+build = ['make']
 
 [[sources]]
 type = "http"
@@ -30,3 +28,7 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "autoconf-archive"
+runtime_deps = ['m4']

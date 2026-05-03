@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.com/procps-ng/procps"
 
-[dependencies]
-build = ["gcc", "gettext", "make"]
-link = ["ncurses", "systemd"]
+build = ['gcc', 'gettext', 'make']
+link = ['ncurses', 'systemd']
 
 [[sources]]
 type = "http"
@@ -45,3 +44,4 @@ if [ -d ${PART_DIR}/usr/sbin ]; then
   cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
   rm -rf ${PART_DIR}/usr/sbin
 fi'''
+

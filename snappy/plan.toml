@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/google/snappy"
 
-[dependencies]
-build = ["cmake", "ninja"]
+build = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

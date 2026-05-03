@@ -6,9 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://notmuchmail.org/"
 
-[dependencies]
-build = ["bash", "gcc", "make", "pkgconf", "python"]
-link = ["gmime", "talloc", "xapian-core", "zlib"]
+build = ['bash', 'gcc', 'make', 'pkgconf', 'python']
+link = ['gmime', 'talloc', 'xapian-core', 'zlib']
 
 [[sources]]
 type = "http"
@@ -49,3 +48,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} prefix=/usr install'''
+

@@ -6,8 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://e2fsprogs.sourceforge.net"
 
-[dependencies]
-build = ["util-linux"]
+build = ['util-linux']
 
 [[sources]]
 type = "http"
@@ -43,3 +42,4 @@ DESTDIR=${PART_DIR} make install-libs
 
 # Remove static libraries
 rm -f ${PART_DIR}/usr/lib/lib{com_err,e2p,ext2fs,ss}.a'''
+

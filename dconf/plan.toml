@@ -6,10 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/dconf"
 
-[dependencies]
-runtime = ["dbus"]
-build = ["meson", "ninja", "pkgconf"]
-link = ["glib"]
+build = ['meson', 'ninja', 'pkgconf']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -43,3 +41,7 @@ groupadd -r dconf 2>/dev/null || true
 chgrp dconf /etc/dconf/profile
 
 '''
+
+[[output]]
+name = "dconf"
+runtime_deps = ['dbus']

@@ -6,10 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://rsync.samba.org/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["openssl", "zlib", "zstd", "lz4"]
-optional = ["openssh"]
+build = ['gcc', 'make']
+link = ['openssl', 'zlib', 'zstd', 'lz4']
 
 [[sources]]
 type = "http"
@@ -34,3 +32,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

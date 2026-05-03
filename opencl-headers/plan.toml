@@ -6,8 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/OpenCL-Headers"
 
-[dependencies]
-build = ["cmake", "ninja"]
+build = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
@@ -24,3 +23,4 @@ cmake -B build -S ${WORKDIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Rele
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install build'''
+

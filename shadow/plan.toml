@@ -6,9 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/shadow-maint/shadow"
 
-[dependencies]
-build = ["gcc", "libxslt", "make"]
-link = ["glibc", "linux-pam"]
+build = ['gcc', 'libxslt', 'make']
+link = ['glibc', 'linux-pam']
 
 [[sources]]
 type = "http"
@@ -210,3 +209,4 @@ awk -F: '$3 >= 1000 && $3 < 65534 { print $1 }' /etc/passwd | while read -r user
 done
 
 '''
+

@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/mesonbuild/meson-python"
 
-[dependencies]
-runtime = ["python", "meson", "python-packaging", "python-pyproject-metadata"]
-build = ["python", "meson", "python-packaging", "python-pyproject-metadata"]
+build = ['python', 'meson', 'python-packaging', 'python-pyproject-metadata']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "meson-python"
+runtime_deps = ['python', 'meson', 'python-packaging', 'python-pyproject-metadata']

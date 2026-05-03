@@ -5,9 +5,7 @@ description = "Video stabilization library"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make", "cmake"]
-link = []
+build = ['gcc', 'make', 'cmake']
 
 [[sources]]
 type = "http"
@@ -32,3 +30,4 @@ cmake --build build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install build'''
+

@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/fontconfig/"
 
-[dependencies]
-build = ["freetype", "meson", "ninja", "pkgconf", "gperf"]
-link = ["freetype", "expat"]
+build = ['freetype', 'meson', 'ninja', 'pkgconf', 'gperf']
+link = ['freetype', 'expat']
 
 [[sources]]
 type = "http"
@@ -39,3 +38,4 @@ DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"
 post_upgrade = "fc-cache -s 2>/dev/null || true"
+

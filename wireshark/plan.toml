@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.wireshark.org/"
 
-[dependencies]
-build = ["cmake", "flex", "gcc", "ninja", "perl", "pkgconf", "python", "qt6-5compat", "qt6-base", "qt6-svg", "speexdsp"]
-link = ["c-ares", "glib", "libcap", "libgcrypt", "libpcap", "libxml2", "pcre2", "qt6-5compat", "qt6-base", "qt6-svg", "speexdsp", "zlib"]
+build = ['cmake', 'flex', 'gcc', 'ninja', 'perl', 'pkgconf', 'python', 'qt6-5compat', 'qt6-base', 'qt6-svg', 'speexdsp']
+link = ['c-ares', 'glib', 'libcap', 'libgcrypt', 'libpcap', 'libxml2', 'pcre2', 'qt6-5compat', 'qt6-base', 'qt6-svg', 'speexdsp', 'zlib']
 
 [[sources]]
 type = "http"
@@ -41,3 +40,4 @@ DESTDIR=${PART_DIR} ninja -C build install'''
 [hooks]
 post_install = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
 post_upgrade = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
+

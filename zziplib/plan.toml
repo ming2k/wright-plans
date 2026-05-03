@@ -6,10 +6,8 @@ license = "LGPL-2.0-or-later OR MPL-1.1"
 arch = "x86_64"
 url = "https://github.com/gdraheim/zziplib"
 
-[dependencies]
-build = ["gcc", "cmake", "ninja", "zlib"]
-runtime = ["zlib"]
-link = ["zlib"]
+build = ['gcc', 'cmake', 'ninja', 'zlib']
+link = ['zlib']
 
 [[sources]]
 type = "http"
@@ -31,3 +29,7 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "zziplib"
+runtime_deps = ['zlib']

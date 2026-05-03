@@ -6,9 +6,7 @@ license = "BSD-2-Clause AND GPL-3.0-or-later AND PSF-2.0"
 arch = "x86_64"
 url = "https://docutils.sourceforge.io/"
 
-[dependencies]
-runtime = ["python"]
-build = ["python", "flit-core"]
+build = ['python', 'flit-core']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-docutils"
+runtime_deps = ['python']

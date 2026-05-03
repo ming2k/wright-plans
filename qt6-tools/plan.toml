@@ -6,9 +6,8 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
 
-[dependencies]
-build = ["cmake", "gcc", "ninja", "pkgconf", "python", "qt6-base", "qt6-declarative"]
-link = ["qt6-base", "qt6-declarative"]
+build = ['cmake', 'gcc', 'ninja', 'pkgconf', 'python', 'qt6-base', 'qt6-declarative']
+link = ['qt6-base', 'qt6-declarative']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ ninja -j$(nproc) -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

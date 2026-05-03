@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://hatch.pypa.io/"
 
-[dependencies]
-runtime = ["python", "python-packaging", "python-pathspec", "python-pluggy", "python-trove-classifiers"]
-build = ["python"]
+build = ['python']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "hatchling"
+runtime_deps = ['python', 'python-packaging', 'python-pathspec', 'python-pluggy', 'python-trove-classifiers']

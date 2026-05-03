@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.com/psmisc/psmisc"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["ncurses"]
+build = ['gcc', 'make']
+link = ['ncurses']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

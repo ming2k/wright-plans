@@ -6,10 +6,8 @@ license = "NOASSERTION"
 arch = "x86_64"
 url = "https://github.com/ming2k/typio"
 
-[dependencies]
-runtime = []
-build = ["cmake", "glslang", "ninja", "pkgconf", "vulkan-headers"]
-link = ["dbus", "fontconfig", "freetype", "gtk4", "harfbuzz", "librime", "libxkbcommon", "pipewire", "vulkan-loader", "wayland"]
+build = ['cmake', 'glslang', 'ninja', 'pkgconf', 'vulkan-headers']
+link = ['dbus', 'fontconfig', 'freetype', 'gtk4', 'harfbuzz', 'librime', 'libxkbcommon', 'pipewire', 'vulkan-loader', 'wayland']
 
 [[sources]]
 type = "git"
@@ -41,3 +39,4 @@ cmake --build build -j$(nproc)
 script = '''
 DESTDIR=${PART_DIR} cmake --install build
 '''
+

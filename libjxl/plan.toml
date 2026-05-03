@@ -6,9 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/libjxl/libjxl"
 
-[dependencies]
-build = ["cmake", "ninja", "pkgconf", "gcc"]
-link = ["brotli", "hwy", "lcms2", "libjpeg-turbo", "libpng"]
+build = ['cmake', 'ninja', 'pkgconf', 'gcc']
+link = ['brotli', 'hwy', 'lcms2', 'libjpeg-turbo', 'libpng']
 
 [[sources]]
 type = "http"
@@ -41,3 +40,4 @@ ninja -C ${WORKDIR}/build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

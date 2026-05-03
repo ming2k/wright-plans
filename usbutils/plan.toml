@@ -6,10 +6,8 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://github.com/gregkh/usbutils"
 
-[dependencies]
-build = ["gcc", "meson", "ninja", "pkgconf"]
-link = ["glibc", "libusb", "systemd"]
-runtime = ["hwdata"]
+build = ['gcc', 'meson', 'ninja', 'pkgconf']
+link = ['glibc', 'libusb', 'systemd']
 
 [[sources]]
 type = "http"
@@ -32,3 +30,7 @@ meson compile -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''
+
+[[output]]
+name = "usbutils"
+runtime_deps = ['hwdata']

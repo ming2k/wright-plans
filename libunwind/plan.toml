@@ -5,8 +5,7 @@ description = "Portable and efficient C programming interface (API) to determine
 license = "MIT"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
+build = ['gcc', 'make', 'pkgconf']
 
 [[sources]]
 type = "http"
@@ -37,3 +36,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

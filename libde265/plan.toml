@@ -5,8 +5,7 @@ description = "Open H.265 video codec implementation"
 license = "LGPL-3.0-or-later"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make", "cmake"]
+build = ['gcc', 'make', 'cmake']
 
 [[sources]]
 type = "http"
@@ -26,3 +25,4 @@ make -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 make -C ${WORKDIR}/build DESTDIR=${PART_DIR} install'''
+

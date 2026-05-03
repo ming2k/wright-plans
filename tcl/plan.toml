@@ -6,8 +6,7 @@ license = "TCL"
 arch = "x86_64"
 url = "https://www.tcl.tk/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ make DESTDIR=${PART_DIR} install-private-headers
 
 ln -sfv tclsh8.6 ${PART_DIR}/usr/bin/tclsh
 mv ${PART_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3'''
+

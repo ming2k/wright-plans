@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://web.mit.edu/kerberos/"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["keyutils", "openssl"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['keyutils', 'openssl']
 
 [[sources]]
 type = "http"
@@ -33,3 +32,4 @@ make WARN_CFLAGS= -j$(nproc)'''
 script = '''
 cd source/src
 make DESTDIR=${PART_DIR} install'''
+

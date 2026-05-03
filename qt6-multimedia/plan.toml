@@ -6,10 +6,8 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
 
-[dependencies]
-runtime = ["qt6-base", "ffmpeg", "pipewire"]
-build = ["cmake", "gcc", "ninja", "pkgconf", "qt6-base", "ffmpeg", "pipewire"]
-link = ["ffmpeg", "pipewire", "qt6-base"]
+build = ['cmake', 'gcc', 'ninja', 'pkgconf', 'qt6-base', 'ffmpeg', 'pipewire']
+link = ['ffmpeg', 'pipewire', 'qt6-base']
 
 [[sources]]
 type = "http"
@@ -37,3 +35,7 @@ ninja -j$(nproc) -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "qt6-multimedia"
+runtime_deps = ['qt6-base', 'ffmpeg', 'pipewire']

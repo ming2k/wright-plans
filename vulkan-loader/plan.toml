@@ -5,9 +5,8 @@ description = "Vulkan Loader (Wayland Only)"
 license = "Apache-2.0"
 arch = "x86_64"
 
-[dependencies]
-build = ["cmake", "ninja", "vulkan-headers", "python"]
-link = ["glibc", "wayland"]
+build = ['cmake', 'ninja', 'vulkan-headers', 'python']
+link = ['glibc', 'wayland']
 
 [[sources]]
 type = "http"
@@ -32,3 +31,4 @@ DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
 
 [output]
 provides = ["vulkan-icd-loader"]
+

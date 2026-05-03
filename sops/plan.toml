@@ -6,8 +6,7 @@ license = "MPL-2.0"
 arch = "x86_64"
 url = "https://github.com/getsops/sops"
 
-[dependencies]
-build = ["go"]
+build = ['go']
 
 [[sources]]
 type = "http"
@@ -26,3 +25,4 @@ go build -trimpath -ldflags="-s -w -buildid=" -o sops ./cmd/sops'''
 script = '''
 cd source
 install -Dm755 sops ${PART_DIR}/usr/bin/sops'''
+

@@ -6,8 +6,7 @@ license = "MPL-1.1"
 arch = "x86_64"
 url = "https://www.freedesktop.org/software/uchardet/"
 
-[dependencies]
-build = ["gcc", "make", "cmake"]
+build = ['gcc', 'make', 'cmake']
 
 [[sources]]
 type = "http"
@@ -33,3 +32,4 @@ make -j$(nproc)'''
 script = '''
 cd source/build
 make DESTDIR=${PART_DIR} install'''
+

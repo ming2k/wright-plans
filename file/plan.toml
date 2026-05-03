@@ -6,8 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://www.darwinsys.com/file/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ make check'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

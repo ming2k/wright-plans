@@ -6,9 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://www.openssl.org/"
 
-[dependencies]
-build = ["gcc", "make", "perl"]
-link = ["zlib"]
+build = ['gcc', 'make', 'perl']
+link = ['zlib']
 
 [[sources]]
 type = "http"
@@ -36,3 +35,4 @@ cd source
 sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
 make MANSUFFIX=ssl DESTDIR=${PART_DIR} install
 mv -v ${PART_DIR}/usr/share/doc/openssl ${PART_DIR}/usr/share/doc/openssl-${VERSION}'''
+

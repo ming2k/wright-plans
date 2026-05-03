@@ -6,8 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/SPIRV-Cross"
 
-[dependencies]
-build = ["gcc", "make", "cmake"]
+build = ['gcc', 'make', 'cmake']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ make -j$(nproc)'''
 script = '''
 cd source/build
 make DESTDIR=${PART_DIR} install'''
+

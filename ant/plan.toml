@@ -6,9 +6,6 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://ant.apache.org/"
 
-[dependencies]
-runtime = ["openjdk"]
-
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -27,3 +24,7 @@ ln -sf ../share/ant/bin/ant ${PART_DIR}/usr/bin/ant'''
 
 [output]
 provides = ["apache-ant"]
+
+[[output]]
+name = "ant"
+runtime_deps = ['openjdk']

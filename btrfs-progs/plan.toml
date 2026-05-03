@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://btrfs.readthedocs.io"
 
-[dependencies]
-build = ["pkgconf"]
-link = ["util-linux", "zlib", "lzo", "zstd", "e2fsprogs", "libgcrypt", "systemd"]
+build = ['pkgconf']
+link = ['util-linux', 'zlib', 'lzo', 'zstd', 'e2fsprogs', 'libgcrypt', 'systemd']
 
 [[sources]]
 type = "http"
@@ -37,3 +36,4 @@ systemctl daemon-reload 2>/dev/null || true
 systemctl enable btrfs-scrub@-.timer 2>/dev/null || true
 
 '''
+

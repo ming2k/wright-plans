@@ -5,8 +5,7 @@ description = "International Components for Unicode"
 license = "ICU"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make", "python"]
+build = ['gcc', 'make', 'python']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ make -j$(nproc)'''
 script = '''
 cd source/source
 make DESTDIR=${PART_DIR} install'''
+

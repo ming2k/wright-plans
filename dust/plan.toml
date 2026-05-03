@@ -6,8 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/bootandy/dust"
 
-[dependencies]
-build = ["rust"]
+build = ['rust']
 
 [[sources]]
 type = "http"
@@ -26,3 +25,4 @@ cargo build --release --locked'''
 script = '''
 cd source
 install -Dm755 target/release/dust ${PART_DIR}/usr/bin/dust'''
+

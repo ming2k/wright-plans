@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://sourceforge.net/projects/giflib/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["glibc"]
+build = ['gcc', 'make']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -25,3 +24,4 @@ make -j$(nproc) shared-lib static-lib gifbuild giffix giftext giftool gifclrmp P
 script = '''
 cd source
 make DESTDIR=${PART_DIR} PREFIX=/usr install-bin install-include install-lib'''
+

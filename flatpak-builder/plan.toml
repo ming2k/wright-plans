@@ -6,10 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/flatpak/flatpak-builder"
 
-[dependencies]
-runtime = ["flatpak", "appstream"]
-build = ["meson", "ninja", "pkgconf", "appstream", "elfutils"]
-link = ["glib", "json-glib", "curl", "elfutils", "libxml2", "ostree", "libyaml"]
+build = ['meson', 'ninja', 'pkgconf', 'appstream', 'elfutils']
+link = ['glib', 'json-glib', 'curl', 'elfutils', 'libxml2', 'ostree', 'libyaml']
 
 [[sources]]
 type = "http"
@@ -37,3 +35,7 @@ meson compile -C ${WORKDIR}/build'''
 script = '''
 cd source
 meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
+
+[[output]]
+name = "flatpak-builder"
+runtime_deps = ['flatpak', 'appstream']

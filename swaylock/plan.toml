@@ -6,10 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/swaywm/swaylock"
 
-[dependencies]
-runtime = ["cairo", "gdk-pixbuf"]
-build = ["meson", "ninja"]
-link = ["libxkbcommon", "linux-pam", "wayland", "wayland-protocols"]
+build = ['meson', 'ninja']
+link = ['libxkbcommon', 'linux-pam', 'wayland', 'wayland-protocols']
 
 [[sources]]
 type = "http"
@@ -31,3 +29,7 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "swaylock"
+runtime_deps = ['cairo', 'gdk-pixbuf']

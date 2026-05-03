@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://bitbucket.org/multicoreware/x265_git"
 
-[dependencies]
-build = ["gcc", "make", "cmake", "nasm"]
+build = ['gcc', 'make', 'cmake', 'nasm']
 
 [[sources]]
 type = "http"
@@ -65,3 +64,4 @@ cmake --build build -- -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install build'''
+

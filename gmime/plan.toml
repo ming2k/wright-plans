@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/jstedfast/gmime"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["glib", "gpgme", "zlib"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['glib', 'gpgme', 'zlib']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

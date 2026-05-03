@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.nayuki.io/page/qr-code-generator-library"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -33,3 +32,4 @@ install -Dm644 ${WORKDIR}/c/qrcodegen.h ${PART_DIR}/usr/include/qrcodegen.h
 
 install -Dm755 ${WORKDIR}/cpp/libqrcodegencpp.so ${PART_DIR}/usr/lib/libqrcodegencpp.so
 install -Dm644 ${WORKDIR}/cpp/qrcodegen.hpp ${PART_DIR}/usr/include/qrcodegen.hpp'''
+

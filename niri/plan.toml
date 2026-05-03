@@ -6,10 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://github.com/niri-wm/niri"
 
-[dependencies]
-runtime = ["seatd", "pipewire", "xdg-desktop-portal", "xdg-desktop-portal-gtk"]
-build = ["cargo", "pkgconf", "rust"]
-link = ["cairo", "glib", "libdisplay-info", "libinput", "mesa", "pango", "pipewire", "seatd", "systemd", "wayland", "libxkbcommon"]
+build = ['cargo', 'pkgconf', 'rust']
+link = ['cairo', 'glib', 'libdisplay-info', 'libinput', 'mesa', 'pango', 'pipewire', 'seatd', 'systemd', 'wayland', 'libxkbcommon']
 
 [[sources]]
 type = "http"
@@ -51,3 +49,7 @@ install -Dm644 resources/niri.desktop ${PART_DIR}/usr/share/wayland-sessions/nir
 install -Dm644 resources/niri-portals.conf ${PART_DIR}/usr/share/xdg-desktop-portal/niri-portals.conf
 install -Dm644 resources/niri.service ${PART_DIR}/usr/lib/systemd/user/niri.service
 install -Dm644 resources/niri-shutdown.target ${PART_DIR}/usr/lib/systemd/user/niri-shutdown.target'''
+
+[[output]]
+name = "niri"
+runtime_deps = ['seatd', 'pipewire', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk']

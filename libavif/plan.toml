@@ -5,9 +5,8 @@ description = "Library for encoding and decoding .avif files"
 license = "BSD-2-Clause"
 arch = "x86_64"
 
-[dependencies]
-build = ["cmake", "ninja", "pkgconf", "gcc"]
-link = ["aom", "dav1d", "libpng", "libjpeg-turbo", "libyuv"]
+build = ['cmake', 'ninja', 'pkgconf', 'gcc']
+link = ['aom', 'dav1d', 'libpng', 'libjpeg-turbo', 'libyuv']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ ninja -C ${WORKDIR}/build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

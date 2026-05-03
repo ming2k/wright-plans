@@ -5,9 +5,8 @@ description = "Library for the WebP graphics format"
 license = "BSD-3-Clause"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["libpng"]
+build = ['gcc', 'make']
+link = ['libpng']
 
 [[sources]]
 type = "http"
@@ -25,3 +24,4 @@ script = "cd source && make -j$(nproc)"
 
 [lifecycle.staging]
 script = "cd source && make DESTDIR=${PART_DIR} install"
+

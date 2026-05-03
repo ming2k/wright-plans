@@ -6,10 +6,8 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://neomutt.org/"
 
-[dependencies]
-runtime = ["ca-certificates", "gnupg"]
-build = ["gcc", "gettext", "make", "pkgconf"]
-link = ["cyrus-sasl", "gdbm", "gnutls", "gpgme", "krb5", "libidn2", "lua", "ncurses", "pcre2", "sqlite"]
+build = ['gcc', 'gettext', 'make', 'pkgconf']
+link = ['cyrus-sasl', 'gdbm', 'gnutls', 'gpgme', 'krb5', 'libidn2', 'lua', 'ncurses', 'pcre2', 'sqlite']
 
 [[sources]]
 type = "http"
@@ -41,3 +39,7 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "neomutt"
+runtime_deps = ['ca-certificates', 'gnupg']

@@ -1,4 +1,3 @@
-[dependencies]
 link = ["cairo", "gdk-pixbuf", "pango", "glib", "libxml2", "harfbuzz", "freetype", "fribidi"]
 
 [lifecycle.configure]
@@ -6,3 +5,4 @@ dockyard = "relaxed"
 script = '''
 cd source
 meson setup build --prefix=/usr --libdir=lib --buildtype=release -Dintrospection=enabled -Ddocs=disabled -Dtests=false -Dvala=disabled'''
+

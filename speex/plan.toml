@@ -5,9 +5,8 @@ description = "Speex is an Open Source/Free Software patent-free audio compressi
 license = "BSD-3-Clause"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["libogg"]
+build = ['gcc', 'make']
+link = ['libogg']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

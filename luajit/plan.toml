@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://luajit.org"
 
-[dependencies]
-build = ["make"]
+build = ['make']
 
 [[sources]]
 type = "http"
@@ -47,3 +46,4 @@ PCEOF'''
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
+

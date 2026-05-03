@@ -6,9 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/dejagnu/"
 
-[dependencies]
-runtime = ["expect"]
-build = ["expect", "make", "texinfo"]
+build = ['expect', 'make', 'texinfo']
 
 [[sources]]
 type = "http"
@@ -40,3 +38,7 @@ cd source/build
 make DESTDIR=${PART_DIR} install
 install -v -dm755  ${PART_DIR}/usr/share/doc/dejagnu-1.6.3
 install -v -m644   doc/dejagnu.{html,txt} ${PART_DIR}/usr/share/doc/dejagnu-1.6.3'''
+
+[[output]]
+name = "dejagnu"
+runtime_deps = ['expect']

@@ -6,10 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.gtk.org"
 
-[dependencies]
-runtime = ["adwaita-icon-theme", "shared-mime-info", "iso-codes"]
-build = ["meson", "ninja", "pkgconf", "gobject-introspection", "wayland-protocols"]
-link = ["at-spi2-core", "glib", "pango", "cairo", "gdk-pixbuf", "libepoxy", "libxkbcommon", "wayland"]
+build = ['meson', 'ninja', 'pkgconf', 'gobject-introspection', 'wayland-protocols']
+link = ['at-spi2-core', 'glib', 'pango', 'cairo', 'gdk-pixbuf', 'libepoxy', 'libxkbcommon', 'wayland']
 
 [[sources]]
 type = "http"
@@ -45,3 +43,7 @@ gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
 gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 
 '''
+
+[[output]]
+name = "gtk3"
+runtime_deps = ['adwaita-icon-theme', 'shared-mime-info', 'iso-codes']

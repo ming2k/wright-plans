@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "http://www.doxygen.nl"
 
-[dependencies]
-build = ["cmake", "gcc", "flex", "python"]
+build = ['cmake', 'gcc', 'flex', 'python']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ cmake --build build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install build'''
+

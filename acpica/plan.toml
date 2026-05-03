@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/acpica/acpica"
 
-[dependencies]
-build = ["bash", "bison", "flex", "gcc", "make"]
+build = ['bash', 'bison', 'flex', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ install -Dm755 generate/unix/bin/acpiexec ${PART_DIR}/usr/bin/acpiexec
 install -Dm755 generate/unix/bin/acpihelp ${PART_DIR}/usr/bin/acpihelp
 install -Dm755 generate/unix/bin/acpisrc ${PART_DIR}/usr/bin/acpisrc
 install -Dm644 changes.txt ${PART_DIR}/usr/share/doc/acpica/changes.txt'''
+

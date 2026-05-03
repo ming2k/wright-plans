@@ -6,9 +6,8 @@ license = "BSL-1.0"
 arch = "x86_64"
 url = "https://www.boost.org"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["bzip2", "icu", "zlib", "zstd"]
+build = ['gcc', 'make']
+link = ['bzip2', 'icu', 'zlib', 'zstd']
 
 [[sources]]
 type = "http"
@@ -43,3 +42,4 @@ EOF
         -o ${PART_DIR}/usr/lib/libboost_system.so.1.90.0
     ln -sf libboost_system.so.1.90.0 ${PART_DIR}/usr/lib/libboost_system.so
 fi'''
+

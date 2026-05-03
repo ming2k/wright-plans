@@ -1,4 +1,3 @@
-[dependencies]
 link = ["acl", "glibc", "libcap", "libgcrypt", "libidn2", "libseccomp", "libxcrypt", "linux-pam", "lz4", "openssl", "p11-kit", "pcre2", "util-linux", "xz", "zstd"]
 
 [lifecycle.configure]
@@ -53,3 +52,4 @@ meson setup .. \
     -D sbat-distro-version=${VERSION} \
     -D sbat-distro-url=https://github.com/anthropic \
     -D docdir=/usr/share/doc/systemd-${VERSION}'''
+

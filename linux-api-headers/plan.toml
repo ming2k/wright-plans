@@ -6,8 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://www.kernel.org"
 
-[dependencies]
-build = ["make", "zlib"]
+build = ['make', 'zlib']
 
 [[sources]]
 type = "http"
@@ -36,3 +35,4 @@ install -d ${PART_DIR}/usr
 cp -a usr/include ${PART_DIR}/usr/
 # Remove any stray files that leak into ${PART_DIR}
 find ${PART_DIR} -maxdepth 2 -name '*.pl' -delete'''
+

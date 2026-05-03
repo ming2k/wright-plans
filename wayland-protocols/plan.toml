@@ -5,9 +5,8 @@ description = "Specifications of extended Wayland protocols"
 license = "MIT"
 arch = "any"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf", "wayland"]
-link = ["wayland"]
+build = ['meson', 'ninja', 'pkgconf', 'wayland']
+link = ['wayland']
 
 [[sources]]
 type = "http"
@@ -23,3 +22,4 @@ script = "cd source && meson compile -C build"
 
 [lifecycle.staging]
 script = "cd source && meson install -C build --destdir ${PART_DIR}"
+

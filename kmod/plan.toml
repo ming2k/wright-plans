@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git"
 
-[dependencies]
-build = ["gcc", "meson", "ninja"]
-link = ["openssl", "xz", "zlib", "zstd"]
+build = ['gcc', 'meson', 'ninja']
+link = ['openssl', 'xz', 'zlib', 'zstd']
 
 [[sources]]
 type = "http"
@@ -44,3 +43,4 @@ install -dm755 ${PART_DIR}/etc/depmod.d
 install -dm755 ${PART_DIR}/etc/modprobe.d
 install -dm755 ${PART_DIR}/usr/lib/depmod.d
 install -dm755 ${PART_DIR}/usr/lib/modprobe.d'''
+

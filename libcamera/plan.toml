@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://libcamera.org"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf", "python-yaml", "python-jinja2", "python-ply"]
-link = ["gnutls", "libevent", "libyaml", "systemd", "gstreamer", "v4l-utils"]
+build = ['meson', 'ninja', 'pkgconf', 'python-yaml', 'python-jinja2', 'python-ply']
+link = ['gnutls', 'libevent', 'libyaml', 'systemd', 'gstreamer', 'v4l-utils']
 
 [[sources]]
 type = "git"
@@ -41,3 +40,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

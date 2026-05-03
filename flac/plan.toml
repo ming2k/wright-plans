@@ -6,9 +6,8 @@ license = "BSD-3-Clause, GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://xiph.org/flac/"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["libogg"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['libogg']
 
 [[sources]]
 type = "http"
@@ -37,3 +36,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

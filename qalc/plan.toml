@@ -6,10 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://qalculate.github.io/"
 
-[dependencies]
-build = ["gcc", "gettext", "make", "pkgconf"]
-runtime = ["curl", "gettext", "gmp", "icu", "libxml2", "mpfr", "readline"]
-link = ["curl", "gettext", "gmp", "icu", "libxml2", "mpfr", "readline"]
+build = ['gcc', 'gettext', 'make', 'pkgconf']
+link = ['curl', 'gettext', 'gmp', 'icu', 'libxml2', 'mpfr', 'readline']
 
 [[sources]]
 type = "http"
@@ -43,3 +41,7 @@ make DESTDIR=${PART_DIR} install'''
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
+
+[[output]]
+name = "qalc"
+runtime_deps = ['curl', 'gettext', 'gmp', 'icu', 'libxml2', 'mpfr', 'readline']

@@ -5,9 +5,8 @@ description = "High quality MP3 encoder"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make", "nasm"]
-link = ["ncurses"]
+build = ['gcc', 'make', 'nasm']
+link = ['ncurses']
 
 [[sources]]
 type = "http"
@@ -33,3 +32,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

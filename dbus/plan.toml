@@ -6,9 +6,8 @@ license = "AFL-2.1 OR GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/dbus/"
 
-[dependencies]
-build = ["gcc", "meson", "ninja", "pkgconf"]
-link = ["expat", "systemd", "glibc"]
+build = ['gcc', 'meson', 'ninja', 'pkgconf']
+link = ['expat', 'systemd', 'glibc']
 
 [[sources]]
 type = "http"
@@ -81,3 +80,4 @@ if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
 fi
 
 '''
+

@@ -6,11 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/karlstav/cava"
 
-[dependencies]
-build = ["gcc", "make", "automake", "autoconf", "libtool", "pkgconf", "fftw", "iniparser"]
-link = ["fftw", "iniparser", "alsa-lib", "pipewire", "ncurses", "pulseaudio"]
-runtime = ["alsa-lib", "pipewire", "ncurses", "pulseaudio"]
-optional = ["sdl2", "portaudio", "jack"]
+build = ['gcc', 'make', 'automake', 'autoconf', 'libtool', 'pkgconf', 'fftw', 'iniparser']
+link = ['fftw', 'iniparser', 'alsa-lib', 'pipewire', 'ncurses', 'pulseaudio']
 
 [[sources]]
 type = "http"
@@ -40,3 +37,7 @@ make DESTDIR=${PART_DIR} install'''
 
 [output]
 backup = ["/etc/cava/config"]
+
+[[output]]
+name = "cava"
+runtime_deps = ['alsa-lib', 'pipewire', 'ncurses', 'pulseaudio']

@@ -6,9 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/docker/compose"
 
-[dependencies]
-runtime = ["podman"]
-build = ["go"]
+build = ['go']
 
 [[sources]]
 type = "http"
@@ -36,3 +34,7 @@ install -Dm755 docker-compose ${PART_DIR}/usr/bin/docker-compose
 # Install as docker CLI plugin
 install -dm755 ${PART_DIR}/usr/lib/docker/cli-plugins
 ln -s /usr/bin/docker-compose ${PART_DIR}/usr/lib/docker/cli-plugins/docker-compose'''
+
+[[output]]
+name = "docker-compose"
+runtime_deps = ['podman']

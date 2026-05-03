@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/Hummer12007/brightnessctl"
 
-[dependencies]
-runtime = ["systemd"]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -25,3 +23,7 @@ make ENABLE_SYSTEMD=1'''
 script = '''
 cd source
 make install DESTDIR=${PART_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0'''
+
+[[output]]
+name = "brightnessctl"
+runtime_deps = ['systemd']

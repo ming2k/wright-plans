@@ -6,9 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://python-evdev.readthedocs.io/"
 
-[dependencies]
-runtime = ["python"]
-build = ["python", "setuptools", "gcc", "linux-api-headers"]
+build = ['python', 'setuptools', 'gcc', 'linux-api-headers']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-evdev"
+runtime_deps = ['python']

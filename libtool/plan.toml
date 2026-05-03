@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/libtool/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ script = '''
 cd source
 make DESTDIR=${PART_DIR} install
 rm -fv ${PART_DIR}/usr/lib/libltdl.a'''
+

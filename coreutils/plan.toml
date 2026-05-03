@@ -6,9 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/coreutils/"
 
-[dependencies]
-build = ["gcc", "gettext", "make"]
-link = ["acl", "attr", "libcap", "openssl"]
+build = ['gcc', 'gettext', 'make']
+link = ['acl', 'attr', 'libcap', 'openssl']
 
 [[sources]]
 type = "http"
@@ -38,3 +37,4 @@ make DESTDIR=${PART_DIR} install
 mkdir -p ${PART_DIR}/usr/share/man/man8
 mv -v ${PART_DIR}/usr/share/man/man1/chroot.1 ${PART_DIR}/usr/share/man/man8/chroot.8
 sed -i 's/"1"/"8"/' ${PART_DIR}/usr/share/man/man8/chroot.8'''
+

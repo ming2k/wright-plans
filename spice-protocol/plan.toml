@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://www.spice-space.org/"
 
-[dependencies]
-build = ["meson", "ninja"]
+build = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.netfilter.org/projects/libnetfilter_conntrack/"
 
-[dependencies]
-build = ["gcc", "make", "pkg-config"]
-link = ["glibc", "libmnl", "libnfnetlink"]
+build = ['gcc', 'make', 'pkg-config']
+link = ['glibc', 'libmnl', 'libnfnetlink']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

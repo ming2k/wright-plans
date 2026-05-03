@@ -5,10 +5,8 @@ description = "Portal frontend service for Flatpak and other desktop-neutral app
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["dbus", "systemd"]
-build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
-link = ["glib", "gstreamer", "gst-plugins-base", "json-glib", "gdk-pixbuf", "libfuse3", "pipewire"]
+build = ['gobject-introspection', 'meson', 'ninja', 'pkgconf']
+link = ['glib', 'gstreamer', 'gst-plugins-base', 'json-glib', 'gdk-pixbuf', 'libfuse3', 'pipewire']
 
 [[sources]]
 type = "http"
@@ -30,3 +28,7 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "xdg-desktop-portal"
+runtime_deps = ['dbus', 'systemd']

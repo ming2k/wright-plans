@@ -6,10 +6,8 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/containers/crun"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf", "python"]
-runtime = ["glibc", "libcap", "libseccomp", "systemd"]
-link = ["glibc", "libcap", "libseccomp", "systemd"]
+build = ['gcc', 'make', 'pkgconf', 'python']
+link = ['glibc', 'libcap', 'libseccomp', 'systemd']
 
 [[sources]]
 type = "http"
@@ -40,3 +38,7 @@ isolation = "none"
 script = '''
 cd source/crun-${VERSION}
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "crun"
+runtime_deps = ['glibc', 'libcap', 'libseccomp', 'systemd']

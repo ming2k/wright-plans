@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://tree-sitter.github.io/tree-sitter/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["glibc"]
+build = ['gcc', 'make']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -25,3 +24,4 @@ make -j$(nproc) PREFIX=/usr'''
 script = '''
 cd source
 make PREFIX=/usr DESTDIR=${PART_DIR} install'''
+

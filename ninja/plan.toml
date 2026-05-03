@@ -6,9 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://ninja-build.org/"
 
-[dependencies]
-runtime = ["python"]
-build = ["bash", "gcc", "make", "python"]
+build = ['bash', 'gcc', 'make', 'python']
 
 [[sources]]
 type = "http"
@@ -26,3 +24,7 @@ script = '''
 cd source
 install -Dm755 ninja ${PART_DIR}/usr/bin/ninja
 install -Dm644 misc/bash-completion ${PART_DIR}/usr/share/bash-completion/completions/ninja'''
+
+[[output]]
+name = "ninja"
+runtime_deps = ['python']

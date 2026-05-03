@@ -5,9 +5,8 @@ description = "Library for storing and retrieving passwords and other secrets"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-[dependencies]
-build = ["gettext", "glib", "gobject-introspection", "meson", "ninja", "pkgconf"]
-link = ["glib", "libgcrypt"]
+build = ['gettext', 'glib', 'gobject-introspection', 'meson', 'ninja', 'pkgconf']
+link = ['glib', 'libgcrypt']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ meson compile -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''
+

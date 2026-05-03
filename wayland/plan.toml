@@ -5,9 +5,8 @@ description = "Core Wayland window system code and protocol"
 license = "MIT"
 arch = "x86_64"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf"]
-link = ["expat", "libffi", "libxml2"]
+build = ['meson', 'ninja', 'pkgconf']
+link = ['expat', 'libffi', 'libxml2']
 
 [[sources]]
 type = "http"
@@ -25,3 +24,4 @@ script = "cd source && meson compile -C build"
 
 [lifecycle.staging]
 script = "cd source && meson install -C build --destdir ${PART_DIR}"
+

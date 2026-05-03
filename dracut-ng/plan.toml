@@ -6,9 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/dracut-ng/dracut-ng"
 
-[dependencies]
-runtime = ["bash", "coreutils", "cpio", "kmod", "systemd", "util-linux"]
-build = ["gcc", "make", "pkgconf", "kmod"]
+build = ['gcc', 'make', 'pkgconf', 'kmod']
 
 [[sources]]
 type = "http"
@@ -36,3 +34,7 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "dracut-ng"
+runtime_deps = ['bash', 'coreutils', 'cpio', 'kmod', 'systemd', 'util-linux']

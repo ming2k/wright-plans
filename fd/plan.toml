@@ -6,9 +6,8 @@ license = "Apache-2.0 OR MIT"
 arch = "x86_64"
 url = "https://github.com/sharkdp/fd"
 
-[dependencies]
-build = ["rust"]
-link = ["gcc", "glibc"]
+build = ['rust']
+link = ['gcc', 'glibc']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ if [ -d completions ]; then
   install -Dm644 completions/_fd ${PART_DIR}/usr/share/zsh/site-functions/_fd || true
   install -Dm644 completions/fd.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/fd.fish || true
 fi'''
+

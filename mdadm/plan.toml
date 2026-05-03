@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.kernel.org/pub/linux/utils/raid/mdadm/"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["systemd", "util-linux"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['systemd', 'util-linux']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ if [ -d ${PART_DIR}/usr/etc ]; then
   cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
   rm -rf ${PART_DIR}/usr/etc
 fi'''
+

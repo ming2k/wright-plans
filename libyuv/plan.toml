@@ -5,8 +5,7 @@ description = "YUV scaling and conversion library (Git Source)"
 license = "BSD-3-Clause"
 arch = "x86_64"
 
-[dependencies]
-build = ["cmake", "ninja", "gcc", "git"]
+build = ['cmake', 'ninja', 'gcc', 'git']
 
 [[sources]]
 type = "git"
@@ -42,3 +41,4 @@ Version: 1893
 Libs: -L${libdir} -lyuv
 Cflags: -I${includedir}
 PCEOF'''
+

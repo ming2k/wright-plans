@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/pytest-dev/pluggy"
 
-[dependencies]
-runtime = ["python"]
-build = ["python", "setuptools"]
+build = ['python', 'setuptools']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-pluggy"
+runtime_deps = ['python']

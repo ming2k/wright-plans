@@ -5,9 +5,8 @@ description = "BSD-style command line editing library"
 license = "BSD-3-Clause"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["ncurses"]
+build = ['gcc', 'make']
+link = ['ncurses']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

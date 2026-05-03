@@ -5,8 +5,7 @@ description = "Performance-portable, length-agnostic SIMD with runtime dispatch"
 license = "Apache-2.0"
 arch = "x86_64"
 
-[dependencies]
-build = ["cmake", "gcc", "ninja"]
+build = ['cmake', 'gcc', 'ninja']
 
 [[sources]]
 type = "http"
@@ -28,3 +27,4 @@ cmake --build ${WORKDIR}/build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''
+

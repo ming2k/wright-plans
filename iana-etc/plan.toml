@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.iana.org/protocols"
 
-[dependencies]
-build = ["python"]
+build = ['python']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ python3 ${WORKDIR}/generate_iana_etc.py \
   ${WORKDIR}/service-names-port-numbers.csv \
   ${WORKDIR}/protocol-numbers-1.csv \
   ${PART_DIR}'''
+

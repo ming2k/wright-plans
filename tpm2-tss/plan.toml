@@ -6,10 +6,8 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/tpm2-software/tpm2-tss"
 
-[dependencies]
-runtime = ["systemd"]
-build = ["gcc", "make", "pkgconf"]
-link = ["curl", "json-c", "libtpms", "libusb", "openssl", "util-linux"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['curl', 'json-c', 'libtpms', 'libusb', 'openssl', 'util-linux']
 
 [[sources]]
 type = "http"
@@ -54,3 +52,7 @@ systemd-sysusers /usr/lib/sysusers.d/tpm2-tss.conf 2>/dev/null || true
   systemd-tmpfiles --create /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf 2>/dev/null || true
 
 '''
+
+[[output]]
+name = "tpm2-tss"
+runtime_deps = ['systemd']

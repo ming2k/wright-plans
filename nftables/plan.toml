@@ -6,9 +6,8 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://www.netfilter.org/projects/nftables/"
 
-[dependencies]
-build = ["autoconf", "automake", "bison", "flex", "gcc", "libmnl", "libnftnl", "make", "pkgconf"]
-link = ["gmp", "jansson", "libmnl", "libnftnl", "ncurses", "readline"]
+build = ['autoconf', 'automake', 'bison', 'flex', 'gcc', 'libmnl', 'libnftnl', 'make', 'pkgconf']
+link = ['gmp', 'jansson', 'libmnl', 'libnftnl', 'ncurses', 'readline']
 
 [[sources]]
 type = "http"
@@ -67,3 +66,4 @@ backup = ["/etc/nftables.conf"]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
 pre_remove = "nft flush ruleset 2>/dev/null || true"
+

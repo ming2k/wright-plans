@@ -6,10 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/wget/"
 
-[dependencies]
-runtime = ["ca-certificates"]
-build = ["gcc", "make"]
-link = ["openssl", "libidn2", "libpsl", "pcre2", "zlib"]
+build = ['gcc', 'make']
+link = ['openssl', 'libidn2', 'libpsl', 'pcre2', 'zlib']
 
 [[sources]]
 type = "http"
@@ -33,3 +31,7 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "wget"
+runtime_deps = ['ca-certificates']

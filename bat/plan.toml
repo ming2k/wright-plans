@@ -6,10 +6,8 @@ license = "Apache-2.0 OR MIT"
 arch = "x86_64"
 url = "https://github.com/sharkdp/bat"
 
-[dependencies]
-build = ["rust"]
-link = ["gcc", "glibc"]
-optional = ["git"]
+build = ['rust']
+link = ['gcc', 'glibc']
 
 [[sources]]
 type = "http"
@@ -43,3 +41,4 @@ sed \
   -e 's/{{PROJECT_EXECUTABLE_UPPERCASE}}/BAT/g' \
   -e 's/{{PROJECT_EXECUTABLE}}/bat/g' \
   assets/manual/bat.1.in > ${PART_DIR}/usr/share/man/man1/bat.1'''
+

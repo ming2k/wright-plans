@@ -6,9 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/k2-fsa/sherpa-onnx"
 
-[dependencies]
-build = ["gcc", "cmake", "ninja", "git", "python"]
-link = ["onnxruntime"]
+build = ['gcc', 'cmake', 'ninja', 'git', 'python']
+link = ['onnxruntime']
 
 [[sources]]
 type = "http"

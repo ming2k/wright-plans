@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/xdg/xdg-user-dirs"
 
-[dependencies]
-build = ["gcc", "gettext", "meson", "ninja", "pkgconf", "docbook-xsl", "libxslt"]
+build = ['gcc', 'gettext', 'meson', 'ninja', 'pkgconf', 'docbook-xsl', 'libxslt']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ meson compile -C build'''
 script = '''
 cd source
 meson install -C build --destdir ${PART_DIR}'''
+

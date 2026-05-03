@@ -6,9 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/protocolbuffers/protobuf"
 
-[dependencies]
-build = ["cmake", "ninja"]
-link = ["abseil-cpp"]
+build = ['cmake', 'ninja']
+link = ['abseil-cpp']
 
 [[sources]]
 type = "http"
@@ -37,3 +36,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

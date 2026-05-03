@@ -6,10 +6,8 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://www.openssh.com/portable.html"
 
-[dependencies]
-runtime = ["shadow"]
-build = ["gcc", "make", "pkgconf"]
-link = ["glibc", "libedit", "linux-pam", "openssl", "zlib", "libxcrypt"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['glibc', 'libedit', 'linux-pam', 'openssl', 'zlib', 'libxcrypt']
 
 [[sources]]
 type = "http"
@@ -108,3 +106,7 @@ systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
+
+[[output]]
+name = "openssh"
+runtime_deps = ['shadow']

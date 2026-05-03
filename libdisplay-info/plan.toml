@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/emersion/libdisplay-info"
 
-[dependencies]
-build = ["hwdata", "meson", "ninja"]
+build = ['hwdata', 'meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

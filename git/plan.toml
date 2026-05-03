@@ -6,11 +6,8 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://git-scm.com/"
 
-[dependencies]
-runtime = ["ca-certificates", "curl", "expat", "perl", "openssl", "pcre2", "grep", "shadow", "zlib-ng", "openssh"]
-build = ["python", "rust", "libsecret"]
-link = ["curl", "expat", "openssl", "pcre2", "zlib-ng", "libsecret"]
-optional = ["zsh", "tk", "man", "perl-libwww", "perl-term-readkey", "perl-io-socket-ssl", "perl-authen-sasl", "perl-cgi", "perl-error", "perl-mailtools", "python", "subversion", "libsecret", "less"]
+build = ['python', 'rust', 'libsecret']
+link = ['curl', 'expat', 'openssl', 'pcre2', 'zlib-ng', 'libsecret']
 
 [[sources]]
 type = "http"
@@ -166,3 +163,7 @@ cp -a ./contrib/* ${PART_DIR}/usr/share/git/
 install -d ${PART_DIR}/usr/share/zsh/site-functions/
 ln -s ../../git/completion/git-completion.zsh \
   ${PART_DIR}/usr/share/zsh/site-functions/_git'''
+
+[[output]]
+name = "git"
+runtime_deps = ['ca-certificates', 'curl', 'expat', 'perl', 'openssl', 'pcre2', 'grep', 'shadow', 'zlib-ng', 'openssh']

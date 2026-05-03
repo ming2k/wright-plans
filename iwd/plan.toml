@@ -6,10 +6,8 @@ license = "LGPL-2.1-only"
 arch = "x86_64"
 url = "https://iwd.wiki.kernel.org/"
 
-[dependencies]
-runtime = ["dbus", "ell"]
-build = ["dbus", "ell", "gcc", "make"]
-link = ["readline"]
+build = ['dbus', 'ell', 'gcc', 'make']
+link = ['readline']
 
 [[sources]]
 type = "http"
@@ -48,3 +46,7 @@ systemctl enable iwd.service 2>/dev/null || true
 
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+
+[[output]]
+name = "iwd"
+runtime_deps = ['dbus', 'ell']

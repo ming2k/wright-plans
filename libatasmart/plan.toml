@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "http://0pointer.de/blog/projects/being-smart.html"
 
-[dependencies]
-build = ["autoconf", "automake", "gcc", "libtool", "make", "pkgconf"]
-link = ["systemd"]
+build = ['autoconf', 'automake', 'gcc', 'libtool', 'make', 'pkgconf']
+link = ['systemd']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

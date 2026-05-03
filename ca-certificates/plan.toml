@@ -6,9 +6,7 @@ license = "MPL-2.0"
 arch = "any"
 url = "https://firefox-source-docs.mozilla.org/security/nss/index.html"
 
-[dependencies]
-runtime = ["p11-kit"]
-build = ["python"]
+build = ['python']
 
 [[sources]]
 type = "http"
@@ -54,3 +52,7 @@ post_upgrade = '''
 update-ca-trust
 
 '''
+
+[[output]]
+name = "ca-certificates"
+runtime_deps = ['p11-kit']

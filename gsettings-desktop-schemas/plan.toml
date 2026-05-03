@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas"
 
-[dependencies]
-build = ["gobject-introspection", "meson", "ninja"]
+build = ['gobject-introspection', 'meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -33,3 +32,4 @@ DESTDIR=${PART_DIR} ninja -C build install'''
 [hooks]
 post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
 post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
+

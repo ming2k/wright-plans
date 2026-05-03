@@ -6,10 +6,8 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
 
-[dependencies]
-runtime = ["dbus", "double-conversion", "mesa", "pcre2"]
-build = ["cmake", "gcc", "ninja", "perl", "pkgconf", "python"]
-link = ["fontconfig", "freetype", "glib", "harfbuzz", "libdrm", "libpng", "libxkbcommon", "openssl", "pcre2", "vulkan-headers", "zlib"]
+build = ['cmake', 'gcc', 'ninja', 'perl', 'pkgconf', 'python']
+link = ['fontconfig', 'freetype', 'glib', 'harfbuzz', 'libdrm', 'libpng', 'libxkbcommon', 'openssl', 'pcre2', 'vulkan-headers', 'zlib']
 
 [[sources]]
 type = "http"
@@ -49,3 +47,7 @@ ninja -j$(nproc) -C ${WORKDIR}/build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+
+[[output]]
+name = "qt6-base"
+runtime_deps = ['dbus', 'double-conversion', 'mesa', 'pcre2']

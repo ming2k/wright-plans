@@ -6,9 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://www.kernel.org/"
 
-[dependencies]
-runtime = ["kmod", "dracut-ng"]
-build = ["bc", "gcc", "make"]
+build = ['bc', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -120,3 +118,7 @@ install -d ${PART_DIR}/boot
 cp -v arch/x86/boot/bzImage ${PART_DIR}/boot/vmlinuz-theseus-lts
 cp -v System.map ${PART_DIR}/boot/System.map-theseus-lts
 cp -v .config ${PART_DIR}/boot/config-theseus-lts'''
+
+[[output]]
+name = "linux-lts"
+runtime_deps = ['kmod', 'dracut-ng']

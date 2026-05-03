@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/libxml2"
 
-[dependencies]
-runtime = ["icu", "python"]
-build = ["doxygen", "gcc", "icu", "meson", "ninja", "python"]
+build = ['doxygen', 'gcc', 'icu', 'meson', 'ninja', 'python']
 
 [[sources]]
 type = "http"
@@ -35,3 +33,7 @@ ninja -j$(nproc)'''
 script = '''
 cd source/build
 DESTDIR=${PART_DIR} ninja install'''
+
+[[output]]
+name = "libxml2"
+runtime_deps = ['icu', 'python']

@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.lua.org"
 
-[dependencies]
-link = ["readline"]
+link = ['readline']
 
 [[sources]]
 type = "http"
@@ -59,3 +58,4 @@ cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua.pc'
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
+

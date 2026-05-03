@@ -6,11 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = ""
 
-[dependencies]
-build = []
-link = []
-runtime = []
-
 [[sources]]
 type = "http"
 url = "https://example.com/pkgname-${VERSION}.tar.gz"
@@ -34,3 +29,4 @@ script = """
 cd source
 make DESTDIR=${PART_DIR} install
 """
+

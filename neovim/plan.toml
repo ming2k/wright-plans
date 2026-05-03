@@ -7,10 +7,8 @@ arch = "x86_64"
 url = "https://neovim.io"
 maintainer = "Neovim contributors <neovim@neovim.io>"
 
-[dependencies]
-build = ["cmake", "curl", "gcc", "gettext", "make"]
-link = ["glibc"]
-optional = ["python", "xclip"]
+build = ['cmake', 'curl', 'gcc', 'gettext', 'make']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -46,3 +44,4 @@ post_upgrade = '''
 update-desktop-database -q 2>/dev/null || true
 
 '''
+

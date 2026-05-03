@@ -6,9 +6,8 @@ license = "Apache-2.0-with-LLVM-exception"
 arch = "x86_64"
 url = "https://llvm.org"
 
-[dependencies]
-build = ["cmake", "gcc", "ninja", "pkgconf", "python"]
-link = ["libedit", "libffi", "libxml2", "zlib", "zstd", "glibc"]
+build = ['cmake', 'gcc', 'ninja', 'pkgconf', 'python']
+link = ['libedit', 'libffi', 'libxml2', 'zlib', 'zstd', 'glibc']
 
 [[sources]]
 type = "http"
@@ -48,3 +47,4 @@ name = "lld"
 description = "LLVM linker"
 include = ["/.*"]
 runtime_deps = ["llvm-libs"]
+

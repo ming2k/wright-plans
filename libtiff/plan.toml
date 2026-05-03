@@ -6,9 +6,8 @@ license = "libtiff"
 arch = "x86_64"
 url = "https://libtiff.gitlab.io/libtiff/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["zlib", "libjpeg-turbo"]
+build = ['gcc', 'make']
+link = ['zlib', 'libjpeg-turbo']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ make -C ${WORKDIR} -j$(nproc)'''
 script = '''
 cd source
 make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''
+

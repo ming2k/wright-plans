@@ -5,9 +5,7 @@ description = "SVT-AV1 is an AV1-compliant software encoder/decoder library"
 license = "BSD-3-Clause"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make", "cmake", "nasm"]
-link = []
+build = ['gcc', 'make', 'cmake', 'nasm']
 
 [[sources]]
 type = "http"
@@ -34,3 +32,4 @@ cmake --build build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install build'''
+

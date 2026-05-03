@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/pypa/setuptools-scm"
 
-[dependencies]
-runtime = ["python", "setuptools", "python-packaging"]
-build = ["python", "setuptools"]
+build = ['python', 'setuptools']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 SETUPTOOLS_SCM_PRETEND_VERSION=${VERSION} pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "setuptools-scm"
+runtime_deps = ['python', 'setuptools', 'python-packaging']

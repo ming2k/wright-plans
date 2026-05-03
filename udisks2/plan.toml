@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/udisks/"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf", "gettext", "glib", "docbook-xsl", "libxslt", "polkit"]
-link = ["acl", "libatasmart", "libblockdev", "libgudev", "polkit", "systemd"]
+build = ['gcc', 'make', 'pkgconf', 'gettext', 'glib', 'docbook-xsl', 'libxslt', 'polkit']
+link = ['acl', 'libatasmart', 'libblockdev', 'libgudev', 'polkit', 'systemd']
 
 [[sources]]
 type = "http"
@@ -38,3 +37,4 @@ script = '''
 cd source
 make DESTDIR=${PART_DIR} install
 install -dm750 ${PART_DIR}/var/lib/udisks2'''
+

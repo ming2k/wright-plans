@@ -6,9 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/grub/"
 
-[dependencies]
-runtime = ["dosfstools"]
-build = ["bison", "flex", "gcc", "make", "freetype"]
+build = ['bison', 'flex', 'gcc', 'make', 'freetype']
 
 [[sources]]
 type = "http"
@@ -72,3 +70,7 @@ mkdir -p ${PART_DIR}/usr/share/bash-completion/completions
 mv -v ${PART_DIR}/etc/bash_completion.d/grub \
     ${PART_DIR}/usr/share/bash-completion/completions/ 2>/dev/null || true
 rmdir ${PART_DIR}/etc/bash_completion.d 2>/dev/null || true'''
+
+[[output]]
+name = "grub"
+runtime_deps = ['dosfstools']

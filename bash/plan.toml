@@ -6,9 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/bash/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["ncurses", "readline"]
+build = ['gcc', 'make']
+link = ['ncurses', 'readline']
 
 [[sources]]
 type = "http"
@@ -33,3 +32,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

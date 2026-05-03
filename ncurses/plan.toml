@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.gnu.org/software/ncurses/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -51,3 +50,4 @@ ln -sfv libncursesw.so ${PART_DIR}/usr/lib/libcurses.so
 
 mkdir -p ${PART_DIR}/usr/share/doc/ncurses-6.6
 cp -v -R doc/* ${PART_DIR}/usr/share/doc/ncurses-6.6/'''
+

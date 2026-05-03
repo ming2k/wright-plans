@@ -5,8 +5,7 @@ description = "Fastest AV1 decoder on all platforms"
 license = "BSD-2-Clause"
 arch = "x86_64"
 
-[dependencies]
-build = ["meson", "ninja", "nasm", "gcc"]
+build = ['meson', 'ninja', 'nasm', 'gcc']
 
 [[sources]]
 type = "http"
@@ -26,3 +25,4 @@ meson compile -C ${WORKDIR}/build'''
 script = '''
 cd source
 meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
+

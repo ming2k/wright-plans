@@ -6,9 +6,8 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://code.videolan.org/rist/librist"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf"]
-link = ["mbedtls"]
+build = ['meson', 'ninja', 'pkgconf']
+link = ['mbedtls']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

@@ -5,8 +5,7 @@ description = "The GL Vendor-Neutral Dispatch library"
 license = "MIT"
 arch = "x86_64"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf", "python"]
+build = ['meson', 'ninja', 'pkgconf', 'python']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ ninja -j$(nproc)'''
 script = '''
 cd source/build
 DESTDIR=${PART_DIR} ninja install'''
+

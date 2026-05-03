@@ -6,8 +6,7 @@ license = "bzip2-1.0.6"
 arch = "x86_64"
 url = "https://www.sourceware.org/bzip2/"
 
-[dependencies]
-build = ["gcc", "make", "diffutils"]
+build = ['gcc', 'make', 'diffutils']
 
 [[sources]]
 type = "http"
@@ -63,3 +62,4 @@ done
 
 # Remove useless static library
 rm -fv ${PART_DIR}/usr/lib/libbz2.a'''
+

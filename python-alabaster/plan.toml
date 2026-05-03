@@ -6,9 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://alabaster.readthedocs.io/"
 
-[dependencies]
-runtime = ["python"]
-build = ["python", "flit-core"]
+build = ['python', 'flit-core']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-alabaster"
+runtime_deps = ['python']

@@ -6,10 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.passwordstore.org/"
 
-[dependencies]
-runtime = ["bash", "gnupg", "git"]
-build = ["make"]
-optional = ["wl-clipboard"]
+build = ['make']
 
 [[sources]]
 type = "http"
@@ -21,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 make PREFIX=/usr DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "pass"
+runtime_deps = ['bash', 'gnupg', 'git']

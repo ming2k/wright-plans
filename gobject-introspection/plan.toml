@@ -6,10 +6,8 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gi.readthedocs.io/"
 
-[dependencies]
-runtime = ["python"]
-build = ["meson", "ninja", "python"]
-link = ["glib"]
+build = ['meson', 'ninja', 'python']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -33,3 +31,7 @@ meson compile -C ${WORKDIR}/build'''
 script = '''
 cd source
 meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
+
+[[output]]
+name = "gobject-introspection"
+runtime_deps = ['python']

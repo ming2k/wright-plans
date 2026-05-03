@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://thekelleys.org.uk/dnsmasq/doc.html"
 
-[dependencies]
-link = ["glibc", "gmp", "nettle", "libidn2", "dbus", "libnetfilter_conntrack", "nftables"]
-build = ["gcc", "make", "pkg-config"]
+build = ['gcc', 'make', 'pkg-config']
+link = ['glibc', 'gmp', 'nettle', 'libidn2', 'dbus', 'libnetfilter_conntrack', 'nftables']
 
 [[sources]]
 type = "http"
@@ -58,3 +57,4 @@ backup = ["/etc/dnsmasq.conf"]
 post_install = "systemctl daemon-reload 2>/dev/null || true"
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 pre_remove = "systemctl stop dnsmasq 2>/dev/null || true"
+

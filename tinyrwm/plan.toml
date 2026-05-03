@@ -6,9 +6,8 @@ license = "0BSD"
 arch = "x86_64"
 url = "https://codeberg.org/river/tinyrwm"
 
-[dependencies]
-build = ["meson", "ninja", "wayland"]
-link = ["wayland", "libxkbcommon"]
+build = ['meson', 'ninja', 'wayland']
+link = ['wayland', 'libxkbcommon']
 
 [[sources]]
 type = "git"
@@ -33,3 +32,4 @@ script = """
 cd source/c
 DESTDIR=${PART_DIR} ninja -C build install
 """
+

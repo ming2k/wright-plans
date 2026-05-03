@@ -6,10 +6,8 @@ license = "Apache-2.0 AND BSD-3-Clause AND MIT"
 arch = "x86_64"
 url = "https://github.com/containers/netavark"
 
-[dependencies]
-build = ["rust", "cargo"]
-runtime = ["aardvark-dns", "glibc", "nftables"]
-link = ["glibc"]
+build = ['rust', 'cargo']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -84,3 +82,7 @@ systemctl daemon-reload 2>/dev/null || true
 post_upgrade = '''
 systemctl daemon-reload 2>/dev/null || true
 '''
+
+[[output]]
+name = "netavark"
+runtime_deps = ['aardvark-dns', 'glibc', 'nftables']

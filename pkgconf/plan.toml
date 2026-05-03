@@ -6,8 +6,7 @@ license = "ISC"
 arch = "x86_64"
 url = "https://pkgconf.org/"
 
-[dependencies]
-build = ["bash", "gcc", "make"]
+build = ['bash', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ ln -sf pkgconf ${PART_DIR}/usr/bin/pkg-config'''
 [output]
 provides = ["pkg-config"]
 conflicts = ["pkg-config"]
+

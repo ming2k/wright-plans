@@ -6,9 +6,6 @@ license = "DocBook-DTD"
 arch = "any"
 url = "https://www.oasis-open.org/docbook/"
 
-[dependencies]
-runtime = ["libxml2"]
-
 [[sources]]
 type = "http"
 sha256 = "4e4e037a2b83c98c6c94818390d4bdd3f6e10f6ec62dd79188594e26190dc7b4"
@@ -76,3 +73,7 @@ xmlcatalog --noout --add nextCatalog "file:///usr/share/xml/docbook/4.5/catalog"
 xmlcatalog --noout --add nextCatalog "file:///usr/share/xml/docbook/4.2/catalog-4.1.2" /etc/xml/catalog
 
 '''
+
+[[output]]
+name = "docbook-xml"
+runtime_deps = ['libxml2']

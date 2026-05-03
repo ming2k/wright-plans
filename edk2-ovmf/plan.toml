@@ -6,8 +6,7 @@ license = "BSD-2-Clause-Patent"
 arch = "x86_64"
 url = "https://github.com/tianocore/edk2"
 
-[dependencies]
-build = ["acpica", "bash", "gcc", "make", "nasm", "python", "util-linux"]
+build = ['acpica', 'bash', 'gcc', 'make', 'nasm', 'python', 'util-linux']
 
 [[sources]]
 type = "http"
@@ -117,3 +116,4 @@ install -Dm644 OVMF_CODE.fd ${PART_DIR}/usr/share/edk2/x64/OVMF_CODE.fd
 install -Dm644 OVMF_VARS.fd ${PART_DIR}/usr/share/edk2/x64/OVMF_VARS.fd
 install -Dm644 OVMF_CODE.secboot.4m.fd ${PART_DIR}/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd
 install -Dm644 OVMF_VARS.4m.fd ${PART_DIR}/usr/share/edk2/x64/OVMF_VARS.4m.fd'''
+

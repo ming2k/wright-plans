@@ -5,10 +5,8 @@ description = "GStreamer Good Plugins"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["cairo", "gdk-pixbuf", "gst-plugins-base", "gstreamer"]
-build = ["cairo", "gdk-pixbuf", "gst-plugins-base", "gstreamer", "meson", "ninja", "pkgconf"]
-link = ["libsoup"]
+build = ['cairo', 'gdk-pixbuf', 'gst-plugins-base', 'gstreamer', 'meson', 'ninja', 'pkgconf']
+link = ['libsoup']
 
 [[sources]]
 type = "http"
@@ -31,3 +29,7 @@ ninja -j$(nproc)'''
 script = '''
 cd source/build
 DESTDIR=${PART_DIR} ninja install'''
+
+[[output]]
+name = "gst-plugins-good"
+runtime_deps = ['cairo', 'gdk-pixbuf', 'gst-plugins-base', 'gstreamer']

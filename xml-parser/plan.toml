@@ -6,9 +6,8 @@ license = "Artistic-1.0-Perl OR GPL-1.0-or-later"
 arch = "x86_64"
 url = "https://github.com/toddr/XML-Parser"
 
-[dependencies]
-build = ["make", "perl"]
-link = ["expat"]
+build = ['make', 'perl']
+link = ['expat']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

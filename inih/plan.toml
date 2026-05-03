@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/benhoyt/inih"
 
-[dependencies]
-build = ["meson", "ninja"]
+build = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ meson compile -C ${WORKDIR}/build'''
 script = '''
 cd source
 meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
+

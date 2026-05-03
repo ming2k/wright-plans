@@ -6,9 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://go.dev"
 
-[dependencies]
-build = ["go-bootstrap", "bash", "gcc", "glibc"]
-runtime = ["glibc"]
+build = ['go-bootstrap', 'bash', 'gcc', 'glibc']
 
 [[sources]]
 type = "http"
@@ -39,3 +37,7 @@ rm -rf ${PART_DIR}/usr/lib/go/pkg/linux_amd64/cmd
 mkdir -p ${PART_DIR}/usr/bin
 ln -sf ../lib/go/bin/go ${PART_DIR}/usr/bin/go
 ln -sf ../lib/go/bin/gofmt ${PART_DIR}/usr/bin/gofmt'''
+
+[[output]]
+name = "go"
+runtime_deps = ['glibc']

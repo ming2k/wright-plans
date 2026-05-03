@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://urllib3.readthedocs.io/"
 
-[dependencies]
-runtime = ["python"]
-build = ["python", "hatchling", "hatch-vcs"]
+build = ['python', 'hatchling', 'hatch-vcs']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source/urllib3-${VERSION}
 SETUPTOOLS_SCM_PRETEND_VERSION=${VERSION} pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-urllib3"
+runtime_deps = ['python']

@@ -6,9 +6,7 @@ license = "GPL-3.0-only"
 arch = "x86_64"
 url = "https://github.com/ming2k/wssp"
 
-[dependencies]
-runtime = ["libadwaita", "gtk4", "linux-pam"]
-build = ["rust", "cargo", "pkg-config", "libadwaita", "gtk4", "linux-pam"]
+build = ['rust', 'cargo', 'pkg-config', 'libadwaita', 'gtk4', 'linux-pam']
 
 [[sources]]
 type = "http"
@@ -38,3 +36,7 @@ install -Dm644 systemd/user/wssp-daemon.service ${PART_DIR}/usr/lib/systemd/user
 
 # Install portal file
 install -Dm644 systemd/portals/wssp.portal ${PART_DIR}/usr/share/xdg-desktop-portal/portals/wssp.portal'''
+
+[[output]]
+name = "wssp"
+runtime_deps = ['libadwaita', 'gtk4', 'linux-pam']

@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ndevilla/iniparser"
 
-[dependencies]
-build = ["gcc", "cmake", "ninja"]
-link = ["glibc"]
+build = ['gcc', 'cmake', 'ninja']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -36,3 +35,4 @@ ninja'''
 script = '''
 cd source/build
 DESTDIR=${PART_DIR} ninja install'''
+

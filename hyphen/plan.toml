@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "http://hunspell.sourceforge.net/"
 
-[dependencies]
-build = ["gawk", "gcc", "make", "patch"]
-link = ["glibc"]
+build = ['gawk', 'gcc', 'make', 'patch']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ make'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

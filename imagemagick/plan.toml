@@ -6,9 +6,8 @@ license = "ImageMagick"
 arch = "x86_64"
 url = "https://imagemagick.org"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["bzip2", "fontconfig", "freetype", "lcms2", "libjpeg-turbo", "libpng", "libtiff", "libwebp", "libxml2", "openjpeg", "xz", "zlib"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['bzip2', 'fontconfig', 'freetype', 'lcms2', 'libjpeg-turbo', 'libpng', 'libtiff', 'libwebp', 'libxml2', 'openjpeg', 'xz', 'zlib']
 
 [[sources]]
 type = "http"
@@ -50,3 +49,4 @@ cd source
 make DESTDIR=${PART_DIR} install
 
 test -x ${PART_DIR}/usr/bin/magick'''
+

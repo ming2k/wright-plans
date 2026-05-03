@@ -6,24 +6,8 @@ license = "custom"
 arch = "x86_64"
 url = "https://github.com/warpdotdev/warp"
 
-[dependencies]
-runtime = [
-  "alsa-lib",
-  "bash",
-  "curl",
-  "fontconfig",
-  "hicolor-icon-theme",
-  "libglvnd",
-  "libxkbcommon",
-  "mesa",
-  "wayland",
-  "xdg-utils",
-  "xz",
-  "zlib",
-]
-build = ["zstd"]
-link = ["alsa-lib", "glibc", "xz", "zlib"]
-optional = ["desktop-file-utils", "libsecret"]
+build = ['zstd']
+link = ['alsa-lib', 'glibc', 'xz', 'zlib']
 
 [[sources]]
 type = "http"
@@ -76,3 +60,4 @@ update-desktop-database -q /usr/share/applications 2>/dev/null || true
 post_upgrade = '''
 update-desktop-database -q /usr/share/applications 2>/dev/null || true
 '''
+

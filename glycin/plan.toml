@@ -6,10 +6,8 @@ license = "MPL-2.0 OR LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/glycin"
 
-[dependencies]
-runtime = ["bubblewrap"]
-build = ["meson", "ninja", "pkgconf", "rust", "libseccomp"]
-link = ["glib", "gtk4", "lcms2", "fontconfig", "libjpeg-turbo", "libpng", "libheif", "libjxl", "librsvg"]
+build = ['meson', 'ninja', 'pkgconf', 'rust', 'libseccomp']
+link = ['glib', 'gtk4', 'lcms2', 'fontconfig', 'libjpeg-turbo', 'libpng', 'libheif', 'libjxl', 'librsvg']
 
 [[sources]]
 type = "http"
@@ -33,3 +31,7 @@ meson compile -C ${WORKDIR}/build'''
 script = '''
 cd source
 meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
+
+[[output]]
+name = "glycin"
+runtime_deps = ['bubblewrap']

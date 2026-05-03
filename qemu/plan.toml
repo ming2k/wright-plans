@@ -6,10 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.qemu.org/"
 
-[dependencies]
-runtime = ["seabios"]
-build = ["bash", "python", "python-distlib", "perl", "meson", "ninja", "pkgconf"]
-link = ["glib", "pixman", "zlib", "libslirp", "dtc", "spice"]
+build = ['bash', 'python', 'python-distlib', 'perl', 'meson', 'ninja', 'pkgconf']
+link = ['glib', 'pixman', 'zlib', 'libslirp', 'dtc', 'spice']
 
 [[sources]]
 type = "http"
@@ -34,3 +32,7 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "qemu"
+runtime_deps = ['seabios']

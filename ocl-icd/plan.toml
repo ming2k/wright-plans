@@ -6,10 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/OpenCL-ICD-Loader"
 
-[dependencies]
-build = ["cmake", "ninja", "opencl-headers"]
-link = ["glibc"]
-runtime = ["glibc"]
+build = ['cmake', 'ninja', 'opencl-headers']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -38,3 +36,7 @@ provides = ["libOpenCL", "opencl-loader"]
 [hooks]
 post_install = "ldconfig"
 post_upgrade = "ldconfig"
+
+[[output]]
+name = "ocl-icd"
+runtime_deps = ['glibc']

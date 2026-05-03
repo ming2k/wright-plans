@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.matroska.org/"
 
-[dependencies]
-build = ["gcc", "cmake", "ninja"]
-link = ["libebml"]
+build = ['gcc', 'cmake', 'ninja']
+link = ['libebml']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ cmake --build ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''
+

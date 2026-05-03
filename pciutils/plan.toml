@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://mj.ucw.cz/sw/pciutils/"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["systemd", "zlib"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['systemd', 'zlib']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ make PREFIX=/usr \
      SHARED=yes \
      DESTDIR=${PART_DIR} \
      install install-lib'''
+

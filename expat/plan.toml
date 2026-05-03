@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://libexpat.github.io/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -32,3 +31,4 @@ script = '''
 cd source
 make DESTDIR=${PART_DIR} install
 install -v -m644 doc/*.{html,css} ${PART_DIR}/usr/share/doc/expat-${VERSION}'''
+

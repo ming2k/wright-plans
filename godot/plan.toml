@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://godotengine.org"
 
-[dependencies]
-build = ["scons", "pkgconf", "wayland-protocols", "nasm"]
-link = ["alsa-lib", "dbus", "fontconfig", "libdecor", "libxkbcommon", "mesa", "openssl", "pipewire", "systemd", "vulkan-loader", "wayland"]
+build = ['scons', 'pkgconf', 'wayland-protocols', 'nasm']
+link = ['alsa-lib', 'dbus', 'fontconfig', 'libdecor', 'libxkbcommon', 'mesa', 'openssl', 'pipewire', 'systemd', 'vulkan-loader', 'wayland']
 
 [[sources]]
 type = "http"
@@ -40,3 +39,4 @@ mkdir -p ${PART_DIR}/usr/bin
 # Godot 4.x linuxbsd editor binary is typically named godot.linuxbsd.editor.x86_64
 cp ${WORKDIR}/bin/godot.linuxbsd.editor.x86_64 ${PART_DIR}/usr/bin/godot
 chmod +x ${PART_DIR}/usr/bin/godot'''
+

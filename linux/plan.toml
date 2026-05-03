@@ -8,9 +8,7 @@ url = "https://www.kernel.org/"
 
 # See README.md for hardware support policy, Arch/CachyOS comparison, and PGO usage
 
-[dependencies]
-runtime = ["kmod", "dracut-ng"]
-build = ["bc", "gcc", "make"]
+build = ['bc', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -210,3 +208,7 @@ install -d ${PART_DIR}/boot
 cp -v arch/x86/boot/bzImage ${PART_DIR}/boot/vmlinuz-theseus
 cp -v System.map ${PART_DIR}/boot/System.map-theseus
 cp -v .config ${PART_DIR}/boot/config-theseus'''
+
+[[output]]
+name = "linux"
+runtime_deps = ['kmod', 'dracut-ng']

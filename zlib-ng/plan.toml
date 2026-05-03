@@ -6,8 +6,7 @@ license = "Zlib"
 arch = "x86_64"
 url = "https://github.com/zlib-ng/zlib-ng"
 
-[dependencies]
-build = ["cmake", "ninja"]
+build = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
@@ -36,3 +35,4 @@ cd source
 DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build
 install -Dm 644 ${WORKDIR}/LICENSE.md ${PART_DIR}/usr/share/licenses/zlib-ng/LICENSE.md
 install -Dm 644 ${WORKDIR}/README.md ${PART_DIR}/usr/share/doc/zlib-ng/README.md'''
+

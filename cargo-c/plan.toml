@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/lu-zero/cargo-c"
 
-[dependencies]
-build = ["rust", "pkgconf"]
-link = ["openssl"]
+build = ['rust', 'pkgconf']
+link = ['openssl']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ install -Dm755 target/release/cargo-cbuild   ${PART_DIR}/usr/bin/cargo-cbuild
 install -Dm755 target/release/cargo-cinstall ${PART_DIR}/usr/bin/cargo-cinstall
 install -Dm755 target/release/cargo-capi     ${PART_DIR}/usr/bin/cargo-capi
 install -Dm755 target/release/cargo-ctest    ${PART_DIR}/usr/bin/cargo-ctest'''
+

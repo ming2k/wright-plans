@@ -6,9 +6,8 @@ license = "GPL-2.0-only AND BSD-3-Clause AND ISC AND MIT AND PSF-2.0"
 arch = "x86_64"
 url = "https://fishshell.com/"
 
-[dependencies]
-build = ["cmake", "make", "pkgconf", "rust", "git", "jq", "gettext"]
-link = ["pcre2"]
+build = ['cmake', 'make', 'pkgconf', 'rust', 'git', 'jq', 'gettext']
+link = ['pcre2']
 
 [[sources]]
 type = "http"
@@ -38,3 +37,4 @@ make -C build -j$(nproc) VERBOSE=1'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install build'''
+

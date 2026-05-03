@@ -6,9 +6,8 @@ license = "Artistic-1.0-Perl OR GPL-1.0-or-later"
 arch = "x86_64"
 url = "https://www.perl.org/"
 
-[dependencies]
-build = ["bzip2", "gcc", "gdbm", "make"]
-link = ["zlib"]
+build = ['bzip2', 'gcc', 'gdbm', 'make']
+link = ['zlib']
 
 [[sources]]
 type = "http"
@@ -46,3 +45,4 @@ script = '''
 cd source
 make DESTDIR=${PART_DIR} install
 unset BUILD_ZLIB BUILD_BZIP2'''
+

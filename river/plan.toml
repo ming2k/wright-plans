@@ -6,28 +6,6 @@ license = "GPL-3.0-only"
 arch = "x86_64"
 url = "https://codeberg.org/river/river"
 
-[dependencies]
-runtime = [
-  "wayland",
-  "wayland-protocols",
-  "wlroots",
-  "libxkbcommon",
-  "libevdev",
-  "pixman",
-]
-build = [
-  "zig",
-  "pkg-config",
-  "scdoc",
-]
-link = [
-  "wayland",
-  "wlroots",
-  "libxkbcommon",
-  "libevdev",
-  "pixman",
-]
-
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -143,3 +121,4 @@ zig build -Doptimize=ReleaseSafe --prefix ${PART_DIR}/usr install
 [output]
 provides = ["river"]
 conflicts = ["river"]
+

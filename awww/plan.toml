@@ -6,9 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://codeberg.org/LGFae/awww"
 
-[dependencies]
-build = ["rust"]
-link = ["lz4", "wayland", "wayland-protocols"]
+build = ['rust']
+link = ['lz4', 'wayland', 'wayland-protocols']
 
 [[sources]]
 type = "http"
@@ -32,3 +31,4 @@ install -Dm755 target/release/swww-daemon ${PART_DIR}/usr/bin/swww-daemon
 install -Dm644 completions/swww.bash ${PART_DIR}/usr/share/bash-completion/completions/swww
 install -Dm644 completions/swww.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/swww.fish
 install -Dm644 completions/_swww ${PART_DIR}/usr/share/zsh/site-functions/_swww'''
+

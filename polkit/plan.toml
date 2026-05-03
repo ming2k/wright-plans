@@ -6,10 +6,8 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/polkit-org/polkit"
 
-[dependencies]
-runtime = ["dbus", "systemd"]
-build = ["meson", "ninja", "pkgconf"]
-link = ["glib", "duktape", "linux-pam"]
+build = ['meson', 'ninja', 'pkgconf']
+link = ['glib', 'duktape', 'linux-pam']
 
 [[sources]]
 type = "http"
@@ -49,3 +47,7 @@ useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
     -c "PolicyKit Daemon Owner" polkitd 2>/dev/null || true
 
 '''
+
+[[output]]
+name = "polkit"
+runtime_deps = ['dbus', 'systemd']

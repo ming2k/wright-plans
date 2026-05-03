@@ -6,10 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://flatpak.org"
 
-[dependencies]
-runtime = ["ca-certificates", "dbus", "systemd", "xdg-desktop-portal", "xdg-desktop-portal-gtk", "shared-mime-info", "desktop-file-utils"]
-build = ["meson", "ninja", "pkgconf", "libxslt", "gettext", "gobject-introspection", "python-pyparsing", "bubblewrap", "xdg-dbus-proxy"]
-link = ["glib", "libarchive", "libxml2", "ostree", "polkit", "json-glib", "curl", "appstream", "gdk-pixbuf", "libjpeg-turbo", "libfuse3", "gpgme", "libseccomp"]
+build = ['meson', 'ninja', 'pkgconf', 'libxslt', 'gettext', 'gobject-introspection', 'python-pyparsing', 'bubblewrap', 'xdg-dbus-proxy']
+link = ['glib', 'libarchive', 'libxml2', 'ostree', 'polkit', 'json-glib', 'curl', 'appstream', 'gdk-pixbuf', 'libjpeg-turbo', 'libfuse3', 'gpgme', 'libseccomp']
 
 [[sources]]
 type = "http"
@@ -63,3 +61,7 @@ update-mime-database /usr/share/mime 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
+
+[[output]]
+name = "flatpak"
+runtime_deps = ['ca-certificates', 'dbus', 'systemd', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'shared-mime-info', 'desktop-file-utils']

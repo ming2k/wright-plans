@@ -6,9 +6,8 @@ license = "GPL-2.0-only AND LGPL-2.1-only"
 arch = "x86_64"
 url = "https://sourceware.org/lvm2"
 
-[dependencies]
-build = ["pkgconf"]
-link = ["systemd", "readline", "util-linux", "libaio"]
+build = ['pkgconf']
+link = ['systemd', 'readline', 'util-linux', 'libaio']
 
 [[sources]]
 type = "http"
@@ -38,3 +37,4 @@ systemctl enable lvm2-monitor.service 2>/dev/null || true
 
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+

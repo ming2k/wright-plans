@@ -6,9 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://github.com/sysstat/sysstat"
 
-[dependencies]
-runtime = ["systemd"]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -54,3 +52,7 @@ backup = ["/etc/default/sysstat"]
 post_install = "systemctl enable --now sysstat 2>/dev/null || true"
 post_upgrade = "systemctl try-restart sysstat 2>/dev/null || true"
 pre_remove = "systemctl disable --now sysstat 2>/dev/null || true"
+
+[[output]]
+name = "sysstat"
+runtime_deps = ['systemd']

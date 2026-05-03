@@ -6,10 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/Vulkan-Tools"
 
-[dependencies]
-build = ["cmake", "ninja", "pkgconf", "python", "vulkan-headers"]
-link = ["vulkan-loader", "wayland"]
-runtime = ["vulkan-loader", "wayland"]
+build = ['cmake', 'ninja', 'pkgconf', 'python', 'vulkan-headers']
+link = ['vulkan-loader', 'wayland']
 
 [[sources]]
 type = "http"
@@ -43,3 +41,7 @@ ninja -C build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "vulkan-tools"
+runtime_deps = ['vulkan-loader', 'wayland']

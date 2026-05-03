@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://godotengine.org"
 
-[dependencies]
-build = ["libarchive"]
+build = ['libarchive']
 
 [[sources]]
 type = "http"
@@ -84,3 +83,4 @@ post_upgrade = '''
 update-desktop-database -q /usr/share/applications 2>/dev/null || true
 
 '''
+

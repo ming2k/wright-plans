@@ -6,9 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/google/glog"
 
-[dependencies]
-build = ["cmake", "ninja"]
-link = ["gflags"]
+build = ['cmake', 'ninja']
+link = ['gflags']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

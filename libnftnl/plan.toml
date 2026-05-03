@@ -6,9 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.netfilter.org/projects/libnftnl/"
 
-[dependencies]
-runtime = ["libmnl >= 1.0.4"]
-build = ["gcc", "libmnl", "make", "pkgconf"]
+build = ['gcc', 'libmnl', 'make', 'pkgconf']
 
 [[sources]]
 type = "http"
@@ -30,3 +28,7 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "libnftnl"
+runtime_deps = ['libmnl >= 1.0.4']

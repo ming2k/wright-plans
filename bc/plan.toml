@@ -6,9 +6,8 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/gavinhoward/bc"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["readline"]
+build = ['gcc', 'make']
+link = ['readline']
 
 [[sources]]
 type = "http"
@@ -36,3 +35,4 @@ script = '''
 cd source
 make DESTDIR=${PART_DIR} install
 rm -f ${PART_DIR}/usr/share/info/dir'''
+

@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/intel/libva"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf"]
-link = ["libdrm", "mesa", "wayland"]
+build = ['meson', 'ninja', 'pkgconf']
+link = ['libdrm', 'mesa', 'wayland']
 
 [[sources]]
 type = "http"
@@ -36,3 +35,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

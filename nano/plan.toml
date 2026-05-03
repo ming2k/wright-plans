@@ -6,9 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.nano-editor.org/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["ncurses"]
+build = ['gcc', 'make']
+link = ['ncurses']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ script = '''
 cd source
 make DESTDIR=${PART_DIR} install
 install -v -m644 doc/{nano.html,sample.nanorc} ${PART_DIR}/usr/share/doc/nano-${VERSION}'''
+

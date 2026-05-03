@@ -1,14 +1,12 @@
 name = "wright"
-version = "3.1.0"
+version = "3.1.2"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ming2k/wright"
 
-[dependencies]
-runtime = ["ca-certificates"]
-build = ["rust", "cargo"]
+build = ['rust', 'cargo']
 
 [[sources]]
 type = "http"
@@ -51,8 +49,10 @@ install -m644 target/completions/wright.fish ${PART_DIR}/usr/share/fish/vendor_c
 install -dm755 ${PART_DIR}/usr/share/man/man1
 install -m644 target/man/wright*.1 ${PART_DIR}/usr/share/man/man1/'''
 
-[hooks]
-post_install = '''
+[[output]]
+name = "wright"
+runtime_deps = ['ca-certificates']
+hooks.post_install = '''
 # Group for plan authors — members can edit plans without root
 groupadd -r wright 2>/dev/null || true
 
@@ -65,7 +65,7 @@ chmod -R o-w /var/lib/wright/plans/
 echo "Add yourself to the wright group to edit plans without sudo:"
 echo "  usermod -aG wright \$USER"
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 # Re-apply in case a manual chmod/chown drifted the state
 groupadd -r wright 2>/dev/null || true
 chgrp wright /var/lib/wright/plans

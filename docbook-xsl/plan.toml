@@ -6,9 +6,6 @@ license = "MIT"
 arch = "any"
 url = "https://github.com/docbook/xslt10-stylesheets"
 
-[dependencies]
-runtime = ["libxml2"]
-
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -64,3 +61,7 @@ xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl/current/"  
 xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl-nons/current/" /etc/xml/catalog 2>/dev/null || true
 
 '''
+
+[[output]]
+name = "docbook-xsl"
+runtime_deps = ['libxml2']

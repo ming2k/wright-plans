@@ -6,10 +6,8 @@ license = "LGPL-2.1-only OR MPL-1.1"
 arch = "x86_64"
 url = "https://pycairo.readthedocs.io/"
 
-[dependencies]
-runtime = ["python", "cairo"]
-build = ["python", "meson-python", "pkgconf"]
-link = ["cairo"]
+build = ['python', 'meson-python', 'pkgconf']
+link = ['cairo']
 
 [[sources]]
 type = "http"
@@ -21,3 +19,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-pycairo"
+runtime_deps = ['python', 'cairo']

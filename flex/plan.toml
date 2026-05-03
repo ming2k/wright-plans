@@ -6,8 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/westes/flex"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -42,3 +41,4 @@ ln -sv flex   ${PART_DIR}/usr/bin/lex
 ln -sv flex.1 ${PART_DIR}/usr/share/man/man1/lex.1
 
 rm -f ${PART_DIR}/usr/share/info/dir'''
+

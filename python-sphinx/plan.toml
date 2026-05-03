@@ -6,9 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://www.sphinx-doc.org/"
 
-[dependencies]
-runtime = ["python", "python-jinja2", "python-pygments", "python-docutils", "python-babel", "python-alabaster", "python-requests", "python-packaging", "sphinxcontrib-applehelp", "sphinxcontrib-devhelp", "sphinxcontrib-htmlhelp", "sphinxcontrib-jsmath", "sphinxcontrib-qthelp", "sphinxcontrib-serializinghtml"]
-build = ["python", "flit-core"]
+build = ['python', 'flit-core']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-sphinx"
+runtime_deps = ['python', 'python-jinja2', 'python-pygments', 'python-docutils', 'python-babel', 'python-alabaster', 'python-requests', 'python-packaging', 'sphinxcontrib-applehelp', 'sphinxcontrib-devhelp', 'sphinxcontrib-htmlhelp', 'sphinxcontrib-jsmath', 'sphinxcontrib-qthelp', 'sphinxcontrib-serializinghtml']

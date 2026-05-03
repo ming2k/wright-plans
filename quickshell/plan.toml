@@ -6,10 +6,8 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://quickshell.outfoxxed.me"
 
-[dependencies]
-runtime = ["jemalloc", "polkit", "qt6-base", "qt6-declarative", "qt6-svg", "qt6-wayland"]
-build = ["cli11", "cmake", "gcc", "jemalloc", "ninja", "pkgconf", "polkit", "qt6-base", "qt6-declarative", "qt6-shadertools", "qt6-svg", "qt6-wayland"]
-link = ["libdrm", "pipewire", "wayland", "wayland-protocols"]
+build = ['cli11', 'cmake', 'gcc', 'jemalloc', 'ninja', 'pkgconf', 'polkit', 'qt6-base', 'qt6-declarative', 'qt6-shadertools', 'qt6-svg', 'qt6-wayland']
+link = ['libdrm', 'pipewire', 'wayland', 'wayland-protocols']
 
 [[sources]]
 type = "http"
@@ -31,3 +29,7 @@ cmake --build build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install build'''
+
+[[output]]
+name = "quickshell"
+runtime_deps = ['jemalloc', 'polkit', 'qt6-base', 'qt6-declarative', 'qt6-svg', 'qt6-wayland']

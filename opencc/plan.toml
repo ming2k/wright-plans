@@ -6,9 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/BYVoid/OpenCC"
 
-[dependencies]
-build = ["cmake", "ninja", "pkgconf"]
-link = ["marisa"]
+build = ['cmake', 'ninja', 'pkgconf']
+link = ['marisa']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

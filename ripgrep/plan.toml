@@ -6,10 +6,8 @@ license = "MIT OR Unlicense"
 arch = "x86_64"
 url = "https://github.com/BurntSushi/ripgrep"
 
-[dependencies]
-runtime = ["pcre2"]
-build = ["rust"]
-link = ["gcc", "pcre2", "glibc"]
+build = ['rust']
+link = ['gcc', 'pcre2', 'glibc']
 
 [[sources]]
 type = "http"
@@ -41,3 +39,7 @@ fi'''
 replaces = ["rg"]
 conflicts = ["rg"]
 provides = ["rg"]
+
+[[output]]
+name = "ripgrep"
+runtime_deps = ['pcre2']

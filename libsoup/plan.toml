@@ -5,10 +5,8 @@ description = "HTTP client/server library for GNOME"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["brotli", "glib-networking"]
-build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
-link = ["glib", "libpsl", "libxml2", "nghttp2", "sqlite"]
+build = ['gobject-introspection', 'meson', 'ninja', 'pkgconf']
+link = ['glib', 'libpsl', 'libxml2', 'nghttp2', 'sqlite']
 
 [[sources]]
 type = "http"
@@ -30,3 +28,7 @@ meson compile -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''
+
+[[output]]
+name = "libsoup"
+runtime_deps = ['brotli', 'glib-networking']

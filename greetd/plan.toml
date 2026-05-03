@@ -6,10 +6,8 @@ license = "GPL-3.0-only"
 arch = "x86_64"
 url = "https://sr.ht/~kennylevinsen/greetd"
 
-[dependencies]
-runtime = ["seatd", "systemd"]
-build = ["rust"]
-link = ["glibc", "linux-pam", "seatd"]
+build = ['rust']
+link = ['glibc', 'linux-pam', 'seatd']
 
 [[sources]]
 type = "http"
@@ -97,3 +95,7 @@ chown greeter:greeter /var/lib/greetd 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
+
+[[output]]
+name = "greetd"
+runtime_deps = ['seatd', 'systemd']

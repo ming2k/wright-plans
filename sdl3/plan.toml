@@ -6,10 +6,8 @@ license = "Zlib"
 arch = "x86_64"
 url = "https://www.libsdl.org/"
 
-[dependencies]
-build = ["cmake", "gcc", "ninja", "pkgconf", "wayland-protocols"]
-link = ["alsa-lib", "dbus", "libxkbcommon", "pipewire", "wayland"]
-runtime = ["alsa-lib", "dbus", "libxkbcommon", "pipewire", "wayland"]
+build = ['cmake', 'gcc', 'ninja', 'pkgconf', 'wayland-protocols']
+link = ['alsa-lib', 'dbus', 'libxkbcommon', 'pipewire', 'wayland']
 
 [[sources]]
 type = "http"
@@ -31,3 +29,7 @@ ninja -C build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "sdl3"
+runtime_deps = ['alsa-lib', 'dbus', 'libxkbcommon', 'pipewire', 'wayland']

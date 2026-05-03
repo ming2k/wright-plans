@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ajeetdsouza/zoxide"
 
-[dependencies]
-build = ["rust"]
+build = ['rust']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ install -Dm644 contrib/completions/zoxide.bash ${PART_DIR}/usr/share/bash-comple
 install -Dm644 contrib/completions/_zoxide     ${PART_DIR}/usr/share/zsh/site-functions/_zoxide
 install -Dm644 contrib/completions/zoxide.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/zoxide.fish
 install -Dm644 man/man1/*.1 -t ${PART_DIR}/usr/share/man/man1/'''
+

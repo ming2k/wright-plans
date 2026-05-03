@@ -6,9 +6,8 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://pango.gnome.org"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf", "gobject-introspection", "python"]
-link = ["glib", "cairo", "harfbuzz", "fontconfig", "fribidi", "freetype"]
+build = ['meson', 'ninja', 'pkgconf', 'gobject-introspection', 'python']
+link = ['glib', 'cairo', 'harfbuzz', 'fontconfig', 'fribidi', 'freetype']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

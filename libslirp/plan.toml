@@ -6,9 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/slirp/libslirp"
 
-[dependencies]
-build = ["bash", "python", "meson", "ninja", "pkgconf"]
-link = ["glib"]
+build = ['bash', 'python', 'meson', 'ninja', 'pkgconf']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ meson compile -C ${WORKDIR}/build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''
+

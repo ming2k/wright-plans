@@ -6,9 +6,8 @@ license = "LGPL-2.1-only"
 arch = "x86_64"
 url = "https://www.mpg123.org/"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["alsa-lib"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['alsa-lib']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

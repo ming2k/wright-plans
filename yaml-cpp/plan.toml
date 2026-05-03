@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/jbeder/yaml-cpp"
 
-[dependencies]
-build = ["cmake", "ninja"]
+build = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

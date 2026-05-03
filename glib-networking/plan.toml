@@ -5,10 +5,8 @@ description = "Network extensions for GLib"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["gnutls", "gsettings-desktop-schemas", "libproxy"]
-build = ["gettext", "meson", "ninja", "pkgconf"]
-link = ["glib"]
+build = ['gettext', 'meson', 'ninja', 'pkgconf']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -37,3 +35,7 @@ rm -f ${PART_DIR}/usr/lib/gio/modules/giomodule.cache'''
 post_install = "gio-querymodules /usr/lib/gio/modules"
 post_upgrade = "gio-querymodules /usr/lib/gio/modules"
 pre_remove = "gio-querymodules /usr/lib/gio/modules"
+
+[[output]]
+name = "glib-networking"
+runtime_deps = ['gnutls', 'gsettings-desktop-schemas', 'libproxy']

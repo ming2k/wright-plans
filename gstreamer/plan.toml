@@ -5,10 +5,8 @@ description = "Streaming media framework"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["libunwind"]
-build = ["bison", "flex", "gobject-introspection", "libunwind", "meson", "ninja", "pkgconf"]
-link = ["glib"]
+build = ['bison', 'flex', 'gobject-introspection', 'libunwind', 'meson', 'ninja', 'pkgconf']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -27,3 +25,7 @@ ninja -C build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "gstreamer"
+runtime_deps = ['libunwind']

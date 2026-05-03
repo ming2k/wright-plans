@@ -6,9 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://pygments.org/"
 
-[dependencies]
-runtime = ["python"]
-build = ["python", "hatchling"]
+build = ['python', 'hatchling']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-pygments"
+runtime_deps = ['python']

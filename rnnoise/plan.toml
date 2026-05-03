@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/xiph/rnnoise"
 
-[dependencies]
-build = ["gcc", "make", "autoconf", "automake", "libtool"]
+build = ['gcc', 'make', 'autoconf', 'automake', 'libtool']
 
 [[sources]]
 type = "http"
@@ -44,3 +43,4 @@ script = '''
 cd source
 cd ${SRC_DIR}/rnnoise-${VERSION}
 make DESTDIR=${PART_DIR} install'''
+

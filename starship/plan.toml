@@ -6,8 +6,7 @@ license = "ISC"
 arch = "x86_64"
 url = "https://starship.rs/"
 
-[dependencies]
-build = ["rust"]
+build = ['rust']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ install -dm755 ${PART_DIR}/usr/share/fish/vendor_completions.d
 ${WORKDIR}/target/release/starship completions bash > ${PART_DIR}/usr/share/bash-completion/completions/starship
 ${WORKDIR}/target/release/starship completions zsh  > ${PART_DIR}/usr/share/zsh/site-functions/_starship
 ${WORKDIR}/target/release/starship completions fish > ${PART_DIR}/usr/share/fish/vendor_completions.d/starship.fish'''
+

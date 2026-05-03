@@ -6,9 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "any"
 url = "https://itstool.org"
 
-[dependencies]
-runtime = ["libxml2", "python"]
-build = ["libxml2", "python"]
+build = ['libxml2', 'python']
 
 [[sources]]
 type = "http"
@@ -31,3 +29,7 @@ make -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} make install'''
+
+[[output]]
+name = "itstool"
+runtime_deps = ['libxml2', 'python']

@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gnome.pages.gitlab.gnome.org/libnotify/"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
-link = ["glib", "gdk-pixbuf"]
+build = ['meson', 'ninja', 'pkgconf', 'gobject-introspection']
+link = ['glib', 'gdk-pixbuf']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ meson compile -C ${WORKDIR}/build'''
 script = '''
 cd source
 meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
+

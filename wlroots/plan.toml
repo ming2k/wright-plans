@@ -6,33 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/wlroots/wlroots"
 
-[dependencies]
-runtime = [
-  "wayland",
-  "wayland-protocols",
-  "libdrm",
-  "mesa",
-  "libxkbcommon",
-  "pixman",
-  "libinput",
-  "libseat",
-  "hwdata",
-  "libdisplay-info",
-]
-build = [
-  "meson",
-  "pkg-config",
-]
-link = [
-  "wayland",
-  "libdrm",
-  "mesa",
-  "libxkbcommon",
-  "pixman",
-  "libinput",
-  "libseat",
-]
-
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -64,3 +37,4 @@ DESTDIR=${PART_DIR} ninja -C build install
 [output]
 provides = ["wlroots"]
 conflicts = ["wlroots"]
+

@@ -6,9 +6,7 @@ license = "Info-ZIP"
 arch = "x86_64"
 url = "https://infozip.sourceforge.net/UnZip.html"
 
-[dependencies]
-build = ["bash", "bzip2", "gcc", "make"]
-runtime = ["bash", "bzip2"]
+build = ['bash', 'bzip2', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -51,3 +49,7 @@ cd source
 make prefix=${PART_DIR}/usr \
   MANDIR=${PART_DIR}/usr/share/man/man1 \
   -f unix/Makefile install'''
+
+[[output]]
+name = "unzip"
+runtime_deps = ['bash', 'bzip2']

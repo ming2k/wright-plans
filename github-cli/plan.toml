@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/cli/cli"
 
-[dependencies]
-build = ["go", "make"]
+build = ['go', 'make']
 
 [[sources]]
 type = "http"
@@ -38,3 +37,4 @@ install -dm755 ${PART_DIR}/usr/share/zsh/site-functions
 install -Dm644 share/man/man1/gh.1 ${PART_DIR}/usr/share/man/man1/gh.1
 install -Dm644 share/man/man1/gh-*.1 -t ${PART_DIR}/usr/share/man/man1
 install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/github-cli/LICENSE'''
+

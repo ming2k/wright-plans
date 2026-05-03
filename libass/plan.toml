@@ -6,9 +6,8 @@ license = "ISC"
 arch = "x86_64"
 url = "https://github.com/libass/libass"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["freetype", "fribidi", "harfbuzz", "fontconfig"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['freetype', 'fribidi', 'harfbuzz', 'fontconfig']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/libinput/"
 
-[dependencies]
-runtime = ["libevdev", "mtdev"]
-build = ["libevdev", "meson", "mtdev", "ninja"]
+build = ['libevdev', 'meson', 'mtdev', 'ninja']
 
 [[sources]]
 type = "http"
@@ -36,3 +34,7 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+
+[[output]]
+name = "libinput"
+runtime_deps = ['libevdev', 'mtdev']

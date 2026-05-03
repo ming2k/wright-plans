@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://wiki.gnome.org/Projects/JsonGlib"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
-link = ["glib"]
+build = ['meson', 'ninja', 'pkgconf', 'gobject-introspection']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/FiloSottile/age"
 
-[dependencies]
-build = ["go"]
+build = ['go']
 
 [[sources]]
 type = "http"
@@ -28,3 +27,4 @@ script = '''
 cd source
 install -Dm755 age ${PART_DIR}/usr/bin/age
 install -Dm755 age-keygen ${PART_DIR}/usr/bin/age-keygen'''
+

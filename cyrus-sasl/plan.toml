@@ -6,9 +6,8 @@ license = "BSD-4-Clause-UC"
 arch = "x86_64"
 url = "https://www.cyrusimap.org/sasl/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["krb5", "openssl"]
+build = ['gcc', 'make']
+link = ['krb5', 'openssl']
 
 [[sources]]
 type = "http"
@@ -38,3 +37,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

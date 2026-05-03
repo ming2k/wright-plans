@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/json-c/json-c"
 
-[dependencies]
-build = ["cmake", "ninja"]
-link = ["glibc"]
+build = ['cmake', 'ninja']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ ninja -j$(nproc) -C ${WORKDIR}/build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja install -C ${WORKDIR}/build'''
+

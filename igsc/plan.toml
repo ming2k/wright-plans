@@ -6,9 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/intel/igsc"
 
-[dependencies]
-build = ["cmake", "ninja", "pkgconf", "metee"]
-link = ["glibc", "metee"]
+build = ['cmake', 'ninja', 'pkgconf', 'metee']
+link = ['glibc', 'metee']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

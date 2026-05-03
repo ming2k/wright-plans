@@ -5,10 +5,8 @@ description = "GStreamer Base Plugins"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["gstreamer", "libglvnd", "libgudev"]
-build = ["gstreamer", "libglvnd", "libgudev", "meson", "ninja", "pkgconf"]
-link = ["glib", "wayland"]
+build = ['gstreamer', 'libglvnd', 'libgudev', 'meson', 'ninja', 'pkgconf']
+link = ['glib', 'wayland']
 
 [[sources]]
 type = "http"
@@ -33,3 +31,7 @@ ninja -j$(nproc)'''
 script = '''
 cd source/build
 DESTDIR=${PART_DIR} ninja install'''
+
+[[output]]
+name = "gst-plugins-base"
+runtime_deps = ['gstreamer', 'libglvnd', 'libgudev']

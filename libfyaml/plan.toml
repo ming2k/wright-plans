@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/pantoniou/libfyaml"
 
-[dependencies]
-build = ["cmake", "ninja"]
+build = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
@@ -48,3 +47,4 @@ Version: ${VERSION}
 Libs: -L${libdir} -lfyaml
 Cflags: -I${includedir}
 PCEOF'''
+

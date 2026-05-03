@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ggml-org/whisper.cpp"
 
-[dependencies]
-build = ["gcc", "cmake", "ninja"]
-optional = ["sdl2"]
+build = ['gcc', 'cmake', 'ninja']
 
 [[sources]]
 type = "http"

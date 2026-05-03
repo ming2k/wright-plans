@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/rpm-software-management/popt"
 
-[dependencies]
-link = ["glibc"]
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ make -j$(nproc) -C ${WORKDIR}'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install -C ${WORKDIR}'''
+

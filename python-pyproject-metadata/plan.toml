@@ -6,9 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/pypa/pyproject-metadata"
 
-[dependencies]
-runtime = ["python", "python-packaging"]
-build = ["flit-core", "python", "python-packaging"]
+build = ['flit-core', 'python', 'python-packaging']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-pyproject-metadata"
+runtime_deps = ['python', 'python-packaging']

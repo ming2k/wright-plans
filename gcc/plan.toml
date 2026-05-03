@@ -6,9 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://gcc.gnu.org/"
 
-[dependencies]
-build = ["binutils", "make", "perl", "texinfo"]
-link = ["gcc-libs", "gmp", "mpc", "mpfr", "zlib", "glibc"]
+build = ['binutils', 'make', 'perl', 'texinfo']
+link = ['gcc-libs', 'gmp', 'mpc', 'mpfr', 'zlib', 'glibc']
 
 [[sources]]
 type = "http"
@@ -117,3 +116,4 @@ runtime_deps = ["glibc", "gcc-libs"]
 [output.hooks]
 post_install = "ldconfig"
 post_upgrade = "ldconfig"
+

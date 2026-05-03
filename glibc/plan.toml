@@ -6,9 +6,7 @@ license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/libc/"
 
-[dependencies]
-runtime = ["linux-api-headers >= 4.10", "tzdata >= 2025c"]
-build = ["bison", "gawk", "gcc", "make", "python", "sed"]
+build = ['bison', 'gawk', 'gcc', 'make', 'python', 'sed']
 
 [[sources]]
 type = "http"
@@ -135,3 +133,7 @@ localedef -i C -f UTF-8 C.UTF-8
 localedef -i en_US -f UTF-8 en_US.UTF-8
 
 '''
+
+[[output]]
+name = "glibc"
+runtime_deps = ['linux-api-headers >= 4.10', 'tzdata >= 2025c']

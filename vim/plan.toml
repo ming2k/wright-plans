@@ -6,9 +6,8 @@ license = "custom:vim"
 arch = "x86_64"
 url = "https://www.vim.org"
 
-[dependencies]
-build = ["gcc", "autoconf", "make", "pkgconf"]
-link = ["acl", "ncurses", "zlib"]
+build = ['gcc', 'autoconf', 'make', 'pkgconf']
+link = ['acl', 'ncurses', 'zlib']
 
 [[sources]]
 type = "http"
@@ -60,3 +59,4 @@ find ${PART_DIR}/usr/share/man -name 'ex.1' -o -name 'view.1' -o -name 'evim.1' 
 
 install -Dm644 ${WORKDIR}/runtime/doc/uganda.txt \
   ${PART_DIR}/usr/share/licenses/vim/license.txt'''
+

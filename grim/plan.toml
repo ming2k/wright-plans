@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/emersion/grim"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf", "scdoc"]
-link = ["libjpeg-turbo", "libpng", "pixman", "wayland", "wayland-protocols"]
+build = ['meson', 'ninja', 'pkgconf', 'scdoc']
+link = ['libjpeg-turbo', 'libpng', 'pixman', 'wayland', 'wayland-protocols']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

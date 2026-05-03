@@ -5,9 +5,7 @@ description = "Xvid is an open-source MPEG-4 video codec"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make", "nasm"]
-link = []
+build = ['gcc', 'make', 'nasm']
 
 [[sources]]
 type = "http"
@@ -29,3 +27,4 @@ make -j$(nproc)'''
 script = '''
 cd source/build/generic
 make DESTDIR=${PART_DIR} install'''
+

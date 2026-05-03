@@ -6,10 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/google/shaderc"
 
-[dependencies]
-build = ["asciidoctor", "cmake", "gcc", "ninja", "python", "spirv-headers", "spirv-tools", "glslang"]
-runtime = ["glslang"]
-link = ["spirv-tools", "glslang"]
+build = ['asciidoctor', 'cmake', 'gcc', 'ninja', 'python', 'spirv-headers', 'spirv-tools', 'glslang']
+link = ['spirv-tools', 'glslang']
 
 [[sources]]
 type = "http"
@@ -61,3 +59,7 @@ rm -f ${PART_DIR}/usr/lib/pkgconfig/shaderc_static.pc'''
 
 [output]
 provides = ["glslc"]
+
+[[output]]
+name = "shaderc"
+runtime_deps = ['glslang']

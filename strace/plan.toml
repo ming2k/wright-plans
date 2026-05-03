@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://strace.io"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["glibc"]
+build = ['gcc', 'make']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ make -j$(nproc) -C ${WORKDIR}'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

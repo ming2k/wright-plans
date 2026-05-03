@@ -6,8 +6,7 @@ license = "BSD-3-Clause AND GPL-2.0-only"
 arch = "x86_64"
 url = "https://facebook.github.io/zstd/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -25,3 +24,4 @@ script = '''
 cd source
 make prefix=/usr DESTDIR=${PART_DIR} install
 rm -v ${PART_DIR}/usr/lib/libzstd.a'''
+

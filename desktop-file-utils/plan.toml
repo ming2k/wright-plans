@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/desktop-file-utils/"
 
-[dependencies]
-link = ["glib"]
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -39,3 +38,4 @@ post_upgrade = '''
 update-desktop-database -q /usr/share/applications 2>/dev/null || true
 [ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
 '''
+

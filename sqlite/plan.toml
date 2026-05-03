@@ -5,9 +5,8 @@ description = "Self-contained, serverless, zero-configuration, transactional SQL
 license = "Blessing"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["readline", "zlib"]
+build = ['gcc', 'make']
+link = ['readline', 'zlib']
 
 [[sources]]
 type = "http"
@@ -26,3 +25,4 @@ script = "cd source && make -j$(nproc)"
 
 [lifecycle.staging]
 script = "cd source && make DESTDIR=${PART_DIR} install"
+

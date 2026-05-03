@@ -5,8 +5,7 @@ description = "Alliance for Open Media AV1 Codec SDK"
 license = "BSD-2-Clause"
 arch = "x86_64"
 
-[dependencies]
-build = ["cmake", "gcc", "make", "nasm", "perl", "python"]
+build = ['cmake', 'gcc', 'make', 'nasm', 'perl', 'python']
 
 [[sources]]
 type = "http"
@@ -41,3 +40,4 @@ make -j$(nproc)'''
 script = '''
 cd source/build
 make DESTDIR=${PART_DIR} install'''
+

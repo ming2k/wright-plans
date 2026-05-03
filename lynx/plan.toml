@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://lynx.invisible-island.net/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["bzip2", "ncurses", "openssl", "zlib"]
+build = ['gcc', 'make']
+link = ['bzip2', 'ncurses', 'openssl', 'zlib']
 
 [[sources]]
 type = "http"
@@ -50,3 +49,4 @@ if [ -d ${PART_DIR}/usr/etc ]; then
   cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
   rm -rf ${PART_DIR}/usr/etc
 fi'''
+

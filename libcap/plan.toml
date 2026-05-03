@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://sites.google.com/site/fullycapable/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ make test'''
 script = '''
 cd source
 make prefix=/usr lib=lib SBINDIR=/usr/bin DESTDIR=${PART_DIR} install'''
+

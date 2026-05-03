@@ -6,10 +6,8 @@ license = "UNKNOWN"
 arch = "x86_64"
 url = "https://github.com/ming2k/termus"
 
-[dependencies]
-build = ["autoconf", "automake", "gcc", "make", "pkgconf"]
-link = ["ncurses"]
-optional = ["alsa-lib", "ffmpeg", "flac", "mpg123", "opus", "pipewire"]
+build = ['autoconf', 'automake', 'gcc', 'make', 'pkgconf']
+link = ['ncurses']
 
 [[sources]]
 type = "git"
@@ -34,3 +32,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

@@ -5,10 +5,8 @@ description = "GObject bindings for libudev"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["systemd"]
-build = ["gobject-introspection", "meson", "ninja", "pkgconf", "systemd"]
-link = ["glib"]
+build = ['gobject-introspection', 'meson', 'ninja', 'pkgconf', 'systemd']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -33,3 +31,7 @@ ninja -j$(nproc)'''
 script = '''
 cd source/build
 DESTDIR=${PART_DIR} ninja install'''
+
+[[output]]
+name = "libgudev"
+runtime_deps = ['systemd']

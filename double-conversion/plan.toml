@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/google/double-conversion"
 
-[dependencies]
-build = ["cmake", "gcc", "ninja"]
+build = ['cmake', 'gcc', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

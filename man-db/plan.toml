@@ -6,9 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://man-db.nongnu.org/"
 
-[dependencies]
-runtime = ["gdbm", "groff", "libpipeline"]
-build = ["gcc", "gdbm", "groff", "libpipeline", "make"]
+build = ['gcc', 'gdbm', 'groff', 'libpipeline', 'make']
 
 [[sources]]
 type = "http"
@@ -43,3 +41,7 @@ make check'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "man-db"
+runtime_deps = ['gdbm', 'groff', 'libpipeline']

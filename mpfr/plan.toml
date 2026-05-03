@@ -6,9 +6,8 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.mpfr.org/"
 
-[dependencies]
-build = ["make"]
-link = ["gmp"]
+build = ['make']
+link = ['gmp']
 
 [[sources]]
 type = "http"
@@ -40,3 +39,4 @@ script = '''
 cd source
 make DESTDIR=${PART_DIR} install
 make DESTDIR=${PART_DIR} install-html'''
+

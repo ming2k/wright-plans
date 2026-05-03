@@ -5,9 +5,8 @@ description = "OpenType text shaping engine"
 license = "MIT"
 arch = "x86_64"
 
-[dependencies]
-build = ["gobject-introspection", "meson", "ninja", "pkgconf", "graphite2"]
-link = ["cairo", "freetype", "glib", "icu", "graphite2"]
+build = ['gobject-introspection', 'meson', 'ninja', 'pkgconf', 'graphite2']
+link = ['cairo', 'freetype', 'glib', 'icu', 'graphite2']
 
 [[sources]]
 type = "http"
@@ -39,3 +38,4 @@ ninja -j$(nproc)'''
 script = '''
 cd source/build
 DESTDIR=${PART_DIR} ninja install'''
+

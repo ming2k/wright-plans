@@ -6,8 +6,7 @@ license = "LicenseRef-tz"
 arch = "any"
 url = "https://www.iana.org/time-zones"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -55,3 +54,4 @@ rm -f ${PART_DIR}/etc/localtime
 
 # License
 install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/tzdata/LICENSE'''
+

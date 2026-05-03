@@ -6,10 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/systemd/systemd"
 
-[dependencies]
-build = ["gcc", "gperf", "llvm", "python-jinja2", "meson", "ninja", "pkgconf", "python"]
-link = ["acl", "cryptsetup", "glibc", "libcap", "libgcrypt", "libidn2", "libseccomp", "libxcrypt", "linux-pam", "lz4", "openssl", "p11-kit", "pcre2", "tpm2-tss", "util-linux", "xz", "zstd"]
-runtime = ["acl", "bash", "cryptsetup", "dbus", "glibc", "hwdata", "kbd", "kmod", "libcap", "libgcrypt", "libidn2", "libseccomp", "libxcrypt", "linux-pam", "lz4", "openssl", "p11-kit", "pcre2", "tpm2-tss", "util-linux", "xz", "zstd"]
+build = ['gcc', 'gperf', 'llvm', 'python-jinja2', 'meson', 'ninja', 'pkgconf', 'python']
+link = ['acl', 'cryptsetup', 'glibc', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']
 
 [[sources]]
 type = "http"
@@ -116,3 +114,7 @@ ldconfig 2>/dev/null || true
 systemctl daemon-reexec 2>/dev/null || true
 
 '''
+
+[[output]]
+name = "systemd"
+runtime_deps = ['acl', 'bash', 'cryptsetup', 'dbus', 'glibc', 'hwdata', 'kbd', 'kmod', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']

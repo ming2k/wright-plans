@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/microsoft/onnxruntime"
 
-[dependencies]
-build = ["gcc", "cmake", "ninja", "git", "python"]
-link = ["abseil-cpp", "protobuf"]
+build = ['gcc', 'cmake', 'ninja', 'git', 'python']
+link = ['abseil-cpp', 'protobuf']
 
 [[sources]]
 type = "http"
@@ -48,3 +47,4 @@ ninja -C build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

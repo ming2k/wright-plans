@@ -6,10 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://mesa3d.org"
 
-[dependencies]
-build = ["elfutils", "glslang", "libclc", "llvm", "meson", "ninja", "pkgconf", "python-mako", "python-pyyaml", "spirv-llvm-translator", "spirv-tools", "vulkan-headers", "wayland-protocols"]
-link = ["elfutils", "expat", "libdisplay-info", "libdrm", "libglvnd", "libunwind", "llvm", "wayland", "zlib", "zstd"]
-runtime = ["elfutils", "expat", "libdisplay-info", "libdrm", "libglvnd", "libunwind", "llvm", "wayland", "zlib", "zstd"]
+build = ['elfutils', 'glslang', 'libclc', 'llvm', 'meson', 'ninja', 'pkgconf', 'python-mako', 'python-pyyaml', 'spirv-llvm-translator', 'spirv-tools', 'vulkan-headers', 'wayland-protocols']
+link = ['elfutils', 'expat', 'libdisplay-info', 'libdrm', 'libglvnd', 'libunwind', 'llvm', 'wayland', 'zlib', 'zstd']
 
 [[sources]]
 type = "http"
@@ -42,3 +40,7 @@ ninja -j$(nproc) -C build'''
 script = '''
 cd source/mesa-${VERSION}
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "mesa"
+runtime_deps = ['elfutils', 'expat', 'libdisplay-info', 'libdrm', 'libglvnd', 'libunwind', 'llvm', 'wayland', 'zlib', 'zstd']

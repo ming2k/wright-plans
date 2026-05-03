@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/tree-sitter/tree-sitter"
 
-[dependencies]
-build = ["gcc", "rust"]
-link = ["gcc", "glibc"]
+build = ['gcc', 'rust']
+link = ['gcc', 'glibc']
 
 [[sources]]
 type = "http"
@@ -26,3 +25,4 @@ cargo build --release --locked -p tree-sitter-cli'''
 script = '''
 cd source
 install -Dm755 target/release/tree-sitter ${PART_DIR}/usr/bin/tree-sitter'''
+

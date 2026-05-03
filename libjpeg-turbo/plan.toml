@@ -5,8 +5,7 @@ description = "SIMD-accelerated JPEG codec (libjpeg v8 compatible)"
 license = "IJG"
 arch = "x86_64"
 
-[dependencies]
-build = ["cmake", "ninja", "gcc", "nasm"]
+build = ['cmake', 'ninja', 'gcc', 'nasm']
 
 [[sources]]
 type = "http"
@@ -32,3 +31,4 @@ DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
 if [ ! -f ${PART_DIR}/usr/lib/pkgconfig/libjpeg.pc ]; then
     ln -sv libjpeg-turbo.pc ${PART_DIR}/usr/lib/pkgconfig/libjpeg.pc
 fi'''
+

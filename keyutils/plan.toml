@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["glibc"]
+build = ['gcc', 'make']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ make \
   BINDIR=/usr/bin \
   SBINDIR=/usr/bin \
   install'''
+

@@ -6,8 +6,7 @@ license = "BSD-2-Clause AND GPL-2.0-only"
 arch = "x86_64"
 url = "https://lz4.github.io/lz4/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ make -j1 check'''
 script = '''
 cd source
 make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PART_DIR} install'''
+

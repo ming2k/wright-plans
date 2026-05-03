@@ -6,9 +6,8 @@ license = "PSF-2.0"
 arch = "x86_64"
 url = "https://www.python.org/"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["expat", "libffi", "ncurses", "openssl", "readline", "zlib", "bzip2", "xz", "sqlite", "gdbm", "libxcrypt"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['expat', 'libffi', 'ncurses', 'openssl', 'readline', 'zlib', 'bzip2', 'xz', 'sqlite', 'gdbm', 'libxcrypt']
 
 [[sources]]
 type = "http"
@@ -44,3 +43,4 @@ cat > ${PART_DIR}/usr/lib/python3.14/EXTERNALLY-MANAGED << EOF
 [externally-managed]
 Error=Please use 'wright install python-<package>' to install system-level Python packages.
 EOF'''
+

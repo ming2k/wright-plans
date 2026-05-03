@@ -6,11 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://ziglang.org"
 
-[dependencies]
-runtime = []
-build = []
-link = []
-
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -47,3 +42,4 @@ ln -sf /usr/lib/zig/zig ${PART_DIR}/usr/bin/zig
 [output]
 provides = ["zig"]
 conflicts = ["zig"]
+

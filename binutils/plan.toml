@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/binutils/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -55,3 +54,4 @@ ldconfig
 
 '''
 post_upgrade = "ldconfig"
+

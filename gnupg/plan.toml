@@ -6,9 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://gnupg.org"
 
-[dependencies]
-runtime = ["pinentry"]
-link = ["libgcrypt", "libgpg-error", "libassuan", "libksba", "npth", "readline", "gnutls", "sqlite"]
+link = ['libgcrypt', 'libgpg-error', 'libassuan', 'libksba', 'npth', 'readline', 'gnutls', 'sqlite']
 
 [[sources]]
 type = "http"
@@ -39,3 +37,7 @@ cd source
 DESTDIR=${PART_DIR} make install
 ln -sf gpg  ${PART_DIR}/usr/bin/gpg2
 ln -sf gpgv ${PART_DIR}/usr/bin/gpgv2'''
+
+[[output]]
+name = "gnupg"
+runtime_deps = ['pinentry']

@@ -5,10 +5,8 @@ description = "Simple GObject game controller library"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["libevdev", "libgudev"]
-build = ["gobject-introspection", "libevdev", "libgudev", "meson", "ninja", "pkgconf"]
-link = ["glib"]
+build = ['gobject-introspection', 'libevdev', 'libgudev', 'meson', 'ninja', 'pkgconf']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -33,3 +31,7 @@ ninja -j$(nproc)'''
 script = '''
 cd source/build
 DESTDIR=${PART_DIR} ninja install'''
+
+[[output]]
+name = "libmanette"
+runtime_deps = ['libevdev', 'libgudev']

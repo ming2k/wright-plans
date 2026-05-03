@@ -6,8 +6,7 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.seabios.org/"
 
-[dependencies]
-build = ["bash", "gcc", "make", "python"]
+build = ['bash', 'gcc', 'make', 'python']
 
 [[sources]]
 type = "http"
@@ -28,3 +27,4 @@ if [ -f out/vgabios.bin ]; then
   install -Dm644 out/vgabios.bin ${PART_DIR}/usr/share/qemu/vgabios.bin
 fi
 install -Dm644 COPYING ${PART_DIR}/usr/share/doc/seabios/COPYING'''
+

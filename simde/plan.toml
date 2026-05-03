@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/simd-everywhere/simde"
 
-[dependencies]
-build = ["meson", "ninja"]
+build = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -32,3 +31,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

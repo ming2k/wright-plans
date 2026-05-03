@@ -6,8 +6,7 @@ license = "Apache-2.0 AND MIT"
 arch = "x86_64"
 url = "https://www.rust-lang.org"
 
-[dependencies]
-link = ["glibc"]
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -37,3 +36,4 @@ name = "cargo"
 description = "Cargo package manager for Rust"
 include = ["/.*"]
 runtime_deps = ["rust"]
+

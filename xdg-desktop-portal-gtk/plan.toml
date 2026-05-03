@@ -6,10 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/flatpak/xdg-desktop-portal-gtk"
 
-[dependencies]
-runtime = ["dbus", "xdg-desktop-portal"]
-build = ["meson", "ninja", "pkgconf"]
-link = ["gtk3", "gsettings-desktop-schemas"]
+build = ['meson', 'ninja', 'pkgconf']
+link = ['gtk3', 'gsettings-desktop-schemas']
 
 [[sources]]
 type = "http"
@@ -31,3 +29,7 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+
+[[output]]
+name = "xdg-desktop-portal-gtk"
+runtime_deps = ['dbus', 'xdg-desktop-portal']

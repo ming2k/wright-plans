@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://nghttp2.org/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -32,3 +31,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

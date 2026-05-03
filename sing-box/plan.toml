@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://sing-box.sagernet.org/"
 
-[dependencies]
-build = ["go"]
+build = ['go']
 
 [[sources]]
 type = "http"
@@ -57,3 +56,4 @@ systemctl stop sing-box 2>/dev/null || true
 systemctl disable sing-box 2>/dev/null || true
 
 '''
+

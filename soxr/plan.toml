@@ -5,9 +5,7 @@ description = "High quality SoX-based resampler library"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make", "cmake"]
-link = []
+build = ['gcc', 'make', 'cmake']
 
 [[sources]]
 type = "http"
@@ -32,3 +30,4 @@ cmake --build build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install build'''
+

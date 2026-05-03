@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later AND GPL-3.0-or-later AND FSFAP"
 arch = "x86_64"
 url = "https://github.com/rrthomas/libpaper"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -48,3 +47,4 @@ install -dm755 ${PART_DIR}/etc/libpaper.d'''
 
 [output]
 backup = ["/etc/papersize"]
+

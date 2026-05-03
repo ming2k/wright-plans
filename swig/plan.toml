@@ -6,9 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://swig.org"
 
-[dependencies]
-build = ["gcc", "make", "autoconf", "automake", "bison"]
-link = ["pcre2", "zlib"]
+build = ['gcc', 'make', 'autoconf', 'automake', 'bison']
+link = ['pcre2', 'zlib']
 
 [[sources]]
 type = "http"
@@ -36,3 +35,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

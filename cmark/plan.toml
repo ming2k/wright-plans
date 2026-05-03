@@ -6,8 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/commonmark/cmark"
 
-[dependencies]
-build = ["cmake", "gcc", "ninja"]
+build = ['cmake', 'gcc', 'ninja']
 
 [[sources]]
 type = "http"
@@ -34,3 +33,4 @@ ninja -C build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

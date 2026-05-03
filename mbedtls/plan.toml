@@ -6,8 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://www.trustedfirmware.org/projects/mbed-tls/"
 
-[dependencies]
-build = ["cmake", "ninja", "pkgconf", "python"]
+build = ['cmake', 'ninja', 'pkgconf', 'python']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ ninja -j$(nproc) -C ${WORKDIR}/build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

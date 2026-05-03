@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/knik0/faad2"
 
-[dependencies]
-build = ["gcc", "make", "cmake", "pkgconf"]
-link = ["libsndfile"]
+build = ['gcc', 'make', 'cmake', 'pkgconf']
+link = ['libsndfile']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ make -j$(nproc)'''
 script = '''
 cd source/build
 make DESTDIR=${PART_DIR} install'''
+

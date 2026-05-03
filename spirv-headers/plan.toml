@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/SPIRV-Headers"
 
-[dependencies]
-build = ["cmake", "gcc", "make"]
+build = ['cmake', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ cmake --build build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} cmake --install build'''
+

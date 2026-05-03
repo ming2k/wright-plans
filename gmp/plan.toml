@@ -6,8 +6,7 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://gmplib.org/"
 
-[dependencies]
-build = ["gcc", "m4", "make"]
+build = ['gcc', 'm4', 'make']
 
 [[sources]]
 type = "http"
@@ -47,3 +46,4 @@ script = '''
 cd source
 make DESTDIR=${PART_DIR} install
 make DESTDIR=${PART_DIR} install-html'''
+

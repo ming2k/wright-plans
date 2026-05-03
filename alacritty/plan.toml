@@ -6,9 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://alacritty.org"
 
-[dependencies]
-build = ["cargo", "cmake", "gzip", "ncurses", "pkgconf", "python", "rust", "scdoc"]
-link = ["fontconfig", "freetype", "libglvnd", "libxkbcommon", "mesa", "wayland"]
+build = ['cargo', 'cmake', 'gzip', 'ncurses', 'pkgconf', 'python', 'rust', 'scdoc']
+link = ['fontconfig', 'freetype', 'libglvnd', 'libxkbcommon', 'mesa', 'wayland']
 
 [[sources]]
 type = "http"
@@ -60,3 +59,4 @@ post_upgrade = '''
 update-desktop-database -q /usr/share/applications 2>/dev/null || true
 
 '''
+

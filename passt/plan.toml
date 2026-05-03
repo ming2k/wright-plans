@@ -6,9 +6,8 @@ license = "GPL-2.0-or-later AND BSD-3-Clause"
 arch = "x86_64"
 url = "https://passt.top/passt/about/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["glibc"]
+build = ['gcc', 'make']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -25,3 +24,4 @@ make VERSION="${VERSION}" -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} prefix=/usr install'''
+

@@ -6,10 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/gdb/"
 
-[dependencies]
-build = ["gcc", "make", "texinfo"]
-link = ["expat", "glibc", "mpfr", "ncurses", "readline", "xz", "zlib"]
-runtime = ["expat", "ncurses", "python", "readline", "xz", "zlib"]
+build = ['gcc', 'make', 'texinfo']
+link = ['expat', 'glibc', 'mpfr', 'ncurses', 'readline', 'xz', 'zlib']
 
 [[sources]]
 type = "http"
@@ -47,3 +45,7 @@ make DESTDIR=${PART_DIR} install
 
 # Remove static libraries
 rm -f ${PART_DIR}/usr/lib/libinproctrace.a'''
+
+[[output]]
+name = "gdb"
+runtime_deps = ['expat', 'ncurses', 'python', 'readline', 'xz', 'zlib']

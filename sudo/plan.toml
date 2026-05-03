@@ -6,9 +6,8 @@ license = "ISC"
 arch = "x86_64"
 url = "https://www.sudo.ws"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["glibc", "linux-pam"]
+build = ['gcc', 'make']
+link = ['glibc', 'linux-pam']
 
 [[sources]]
 type = "http"
@@ -63,3 +62,4 @@ PAMEOF'''
 
 [output]
 backup = ["/etc/sudoers", "/etc/pam.d/sudo", "/etc/pam.d/sudo-i"]
+

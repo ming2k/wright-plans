@@ -6,8 +6,7 @@ license = "OFL-1.1"
 arch = "any"
 url = "https://www.jetbrains.com/lp/mono/"
 
-[dependencies]
-build = ["libarchive"]
+build = ['libarchive']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ find ${WORKDIR}/jbmono -name '*.ttf' -not -name '*NL*' -exec cp {} ${PART_DIR}/u
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"
 post_upgrade = "fc-cache -s 2>/dev/null || true"
+

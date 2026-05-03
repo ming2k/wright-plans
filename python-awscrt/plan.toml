@@ -6,9 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/awslabs/aws-crt-python"
 
-[dependencies]
-runtime = ["python"]
-build = ["python", "setuptools", "cmake"]
+build = ['python', 'setuptools', 'cmake']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source/awscrt-${VERSION}
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-awscrt"
+runtime_deps = ['python']

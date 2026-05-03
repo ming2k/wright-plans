@@ -5,9 +5,7 @@ description = "Web Open Font Format 2 reference implementation"
 license = "MIT"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["brotli"]
-build = ["cmake", "gcc", "make"]
+build = ['cmake', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -84,3 +82,7 @@ Requires: libwoff2common
 Libs: -L${libdir} -lwoff2enc
 Cflags: -I${includedir}
 PC'''
+
+[[output]]
+name = "woff2"
+runtime_deps = ['brotli']

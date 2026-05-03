@@ -1,5 +1,3 @@
-[dependencies]
-runtime = []
 build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
 link = ["glib", "libjpeg-turbo", "libpng", "libtiff", "shared-mime-info"]
 
@@ -7,3 +5,4 @@ link = ["glib", "libjpeg-turbo", "libpng", "libtiff", "shared-mime-info"]
 script = '''
 cd source
 meson setup build --prefix=/usr --buildtype=release -Dman=false -Dgtk_doc=false -Dtests=false -Dintrospection=enabled -Dglycin=disabled'''
+

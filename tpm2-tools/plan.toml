@@ -6,10 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/tpm2-software/tpm2-tools"
 
-[dependencies]
-runtime = ["tpm2-tss"]
-build = ["gcc", "make", "pkgconf"]
-link = ["curl", "glibc", "openssl", "tpm2-tss"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['curl', 'glibc', 'openssl', 'tpm2-tss']
 
 [[sources]]
 type = "http"
@@ -33,3 +31,7 @@ make -C ${WORKDIR} -j$(nproc)'''
 script = '''
 cd source
 make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "tpm2-tools"
+runtime_deps = ['tpm2-tss']

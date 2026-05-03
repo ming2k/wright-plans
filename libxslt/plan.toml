@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/libxslt"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["libxml2"]
+build = ['gcc', 'make']
+link = ['libxml2']
 
 [[sources]]
 type = "http"
@@ -32,3 +31,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

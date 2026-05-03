@@ -6,9 +6,7 @@ license = "ISC"
 arch = "x86_64"
 url = "https://wireless.wiki.kernel.org/en/users/documentation/iw"
 
-[dependencies]
-runtime = ["libnl"]
-build = ["gcc", "libnl", "make"]
+build = ['gcc', 'libnl', 'make']
 
 [[sources]]
 type = "http"
@@ -25,3 +23,7 @@ make PREFIX=/usr -j$(nproc)'''
 script = '''
 cd source
 make PREFIX=/usr DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "iw"
+runtime_deps = ['libnl']

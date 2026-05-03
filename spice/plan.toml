@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.spice-space.org/"
 
-[dependencies]
-build = ["meson", "ninja", "pkgconf", "python"]
-link = ["glib", "pixman", "openssl", "libjpeg-turbo", "opus", "zlib", "spice-protocol"]
+build = ['meson', 'ninja', 'pkgconf', 'python']
+link = ['glib', 'pixman', 'openssl', 'libjpeg-turbo', 'opus', 'zlib', 'spice-protocol']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/groff/"
 
-[dependencies]
-build = ["gcc", "make", "perl"]
+build = ['gcc', 'make', 'perl']
 
 [[sources]]
 type = "http"
@@ -29,3 +28,4 @@ make -j1'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

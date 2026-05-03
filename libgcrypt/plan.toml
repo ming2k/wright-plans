@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gnupg.org/software/libgcrypt/"
 
-[dependencies]
-build = ["pkgconf"]
-link = ["libgpg-error"]
+build = ['pkgconf']
+link = ['libgpg-error']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} make install'''
+

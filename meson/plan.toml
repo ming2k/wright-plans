@@ -6,9 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://mesonbuild.com/"
 
-[dependencies]
-runtime = ["python", "ninja"]
-build = ["bash", "python", "python-setuptools", "ninja"]
+build = ['bash', 'python', 'python-setuptools', 'ninja']
 
 [[sources]]
 type = "http"
@@ -25,3 +23,7 @@ python3 setup.py build'''
 script = '''
 cd source
 python3 setup.py install --root=${PART_DIR} --prefix=/usr --optimize=1'''
+
+[[output]]
+name = "meson"
+runtime_deps = ['python', 'ninja']

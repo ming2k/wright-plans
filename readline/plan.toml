@@ -6,9 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://tiswww.case.edu/php/chet/readline/rltop.html"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["ncurses"]
+build = ['gcc', 'make']
+link = ['ncurses']
 
 [[sources]]
 type = "http"
@@ -66,3 +65,4 @@ backup = ["/etc/inputrc"]
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
+

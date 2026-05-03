@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://wiki.linuxfoundation.org/networking/iproute2"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ make NETNS_RUN_DIR=/run/netns -j$(nproc)'''
 script = '''
 cd source
 make SBINDIR=/usr/bin DESTDIR=${PART_DIR} install'''
+

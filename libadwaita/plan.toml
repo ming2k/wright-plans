@@ -5,9 +5,8 @@ description = "Library with common API for Wayland GNOME applications"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-[dependencies]
-build = ["meson", "ninja"]
-link = ["glib", "gtk4"]
+build = ['meson', 'ninja']
+link = ['glib', 'gtk4']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

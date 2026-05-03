@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/sed/"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -32,3 +31,4 @@ cd source
 make DESTDIR=${PART_DIR} install
 install -d -m755           ${PART_DIR}/usr/share/doc/sed-4.9
 install -m644 doc/sed.html ${PART_DIR}/usr/share/doc/sed-4.9'''
+

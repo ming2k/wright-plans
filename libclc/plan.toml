@@ -6,9 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://libclc.llvm.org/"
 
-[dependencies]
-build = ["cmake", "llvm", "make"]
-runtime = ["glibc"]
+build = ['cmake', 'llvm', 'make']
 
 [[sources]]
 type = "http"
@@ -33,3 +31,7 @@ make -j$(nproc)'''
 script = '''
 cd source/build-libclc
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "libclc"
+runtime_deps = ['glibc']

@@ -6,10 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/inotify-tools/inotify-tools"
 
-[dependencies]
-build = ["autoconf", "automake", "gcc", "libtool", "make"]
-link = ["glibc"]
-runtime = ["glibc"]
+build = ['autoconf', 'automake', 'gcc', 'libtool', 'make']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -36,3 +34,7 @@ make -j$(nproc)'''
 script = '''
 cd source/inotify-tools-${VERSION}
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "inotify-tools"
+runtime_deps = ['glibc']

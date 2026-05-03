@@ -5,8 +5,7 @@ description = "API and commands for processing SPIR-V modules"
 license = "Apache-2.0"
 arch = "x86_64"
 
-[dependencies]
-build = ["cmake", "gcc", "ninja", "python", "spirv-headers"]
+build = ['cmake', 'gcc', 'ninja', 'python', 'spirv-headers']
 
 [[sources]]
 type = "http"
@@ -31,3 +30,4 @@ DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''
 
 [output]
 provides = ["spirv-opt"]
+

@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://wheel.readthedocs.io/"
 
-[dependencies]
-build = ["flit-core", "python-packaging", "python"]
+build = ['flit-core', 'python-packaging', 'python']
 
 [[sources]]
 type = "http"
@@ -19,3 +18,4 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+

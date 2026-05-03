@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/rockdaboot/libpsl"
 
-[dependencies]
-build = ["meson", "ninja"]
-link = ["libidn2", "libunistring"]
+build = ['meson', 'ninja']
+link = ['libidn2', 'libunistring']
 
 [[sources]]
 type = "http"
@@ -32,3 +31,4 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+

@@ -6,10 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/rfjakob/gocryptfs"
 
-[dependencies]
-runtime = ["libfuse3"]
-build = ["go", "openssl", "pkgconf"]
-link = ["openssl"]
+build = ['go', 'openssl', 'pkgconf']
+link = ['openssl']
 
 [[sources]]
 type = "git"
@@ -27,3 +25,7 @@ CGO_ENABLED=1 ./build.bash'''
 script = '''
 cd source/gocryptfs-*/
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "gocryptfs"
+runtime_deps = ['libfuse3']

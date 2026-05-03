@@ -5,8 +5,7 @@ description = "Portable lossless data compression library"
 license = "GPL-2.0"
 arch = "x86_64"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -24,3 +23,4 @@ script = "cd source && make -j$(nproc)"
 
 [lifecycle.staging]
 script = "cd source && make DESTDIR=${PART_DIR} install"
+

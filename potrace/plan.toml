@@ -6,10 +6,8 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://potrace.sourceforge.net/"
 
-[dependencies]
-build = ["gcc", "make", "autoconf", "automake", "zlib"]
-runtime = ["zlib"]
-link = ["zlib"]
+build = ['gcc', 'make', 'autoconf', 'automake', 'zlib']
+link = ['zlib']
 
 [[sources]]
 type = "http"
@@ -42,3 +40,7 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+
+[[output]]
+name = "potrace"
+runtime_deps = ['zlib']

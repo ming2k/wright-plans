@@ -6,9 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://libusb.info"
 
-[dependencies]
-build = ["gcc", "make", "pkgconf"]
-link = ["systemd"]
+build = ['gcc', 'make', 'pkgconf']
+link = ['systemd']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ make -j$(nproc)'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://savannah.nongnu.org/projects/attr"
 
-[dependencies]
-build = ["gcc", "make"]
+build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -37,3 +36,4 @@ make check'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://sourceforge.net/projects/jansson/"
 
-[dependencies]
-build = ["gcc", "make"]
-link = ["glibc"]
+build = ['gcc', 'make']
+link = ['glibc']
 
 [[sources]]
 type = "http"
@@ -35,3 +34,4 @@ make check'''
 script = '''
 cd source
 make DESTDIR=${PART_DIR} install'''
+

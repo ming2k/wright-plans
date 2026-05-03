@@ -6,10 +6,8 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/gcr"
 
-[dependencies]
-runtime = ["libsecret", "p11-kit"]
-build = ["gobject-introspection", "libxslt", "meson", "ninja", "pkgconf"]
-link = ["glib", "gtk4", "libgcrypt"]
+build = ['gobject-introspection', 'libxslt', 'meson', 'ninja', 'pkgconf']
+link = ['glib', 'gtk4', 'libgcrypt']
 
 [[sources]]
 type = "http"
@@ -31,3 +29,7 @@ meson compile -C build'''
 script = '''
 cd source
 meson install -C build --destdir ${PART_DIR}'''
+
+[[output]]
+name = "gcr"
+runtime_deps = ['libsecret', 'p11-kit']

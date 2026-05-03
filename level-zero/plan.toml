@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/oneapi-src/level-zero"
 
-[dependencies]
-build = ["cmake", "ninja", "pkgconf"]
-link = ["glibc", "libgcc", "libstdc++"]
+build = ['cmake', 'ninja', 'pkgconf']
+link = ['glibc', 'libgcc', 'libstdc++']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

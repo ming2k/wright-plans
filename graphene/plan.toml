@@ -6,9 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ebassi/graphene"
 
-[dependencies]
-build = ["gobject-introspection", "meson", "ninja"]
-link = ["glib"]
+build = ['gobject-introspection', 'meson', 'ninja']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -30,3 +29,4 @@ ninja -C build'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} ninja -C build install'''
+

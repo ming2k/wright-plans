@@ -6,9 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/texinfo/"
 
-[dependencies]
-runtime = ["perl"]
-build = ["gcc", "make", "perl"]
+build = ['gcc', 'make', 'perl']
 
 [[sources]]
 type = "http"
@@ -36,3 +34,7 @@ script = '''
 cd source
 make DESTDIR=${PART_DIR} install
 make DESTDIR=${PART_DIR} TEXMF=/usr/share/texmf install-tex'''
+
+[[output]]
+name = "texinfo"
+runtime_deps = ['perl']

@@ -5,10 +5,8 @@ description = "Library that provides automatic proxy configuration management"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-[dependencies]
-runtime = ["duktape", "gsettings-desktop-schemas"]
-build = ["gobject-introspection", "meson", "ninja", "pkgconf"]
-link = ["glib"]
+build = ['gobject-introspection', 'meson', 'ninja', 'pkgconf']
+link = ['glib']
 
 [[sources]]
 type = "http"
@@ -30,3 +28,7 @@ meson compile -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 cd source
 DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''
+
+[[output]]
+name = "libproxy"
+runtime_deps = ['duktape', 'gsettings-desktop-schemas']

@@ -6,9 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/kjd/idna"
 
-[dependencies]
-runtime = ["python"]
-build = ["python", "flit-core"]
+build = ['python', 'flit-core']
 
 [[sources]]
 type = "http"
@@ -20,3 +18,7 @@ extract_to = "source"
 script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+
+[[output]]
+name = "python-idna"
+runtime_deps = ['python']

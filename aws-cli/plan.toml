@@ -6,9 +6,6 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://aws.amazon.com/cli/"
 
-[dependencies]
-runtime = []
-
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -34,3 +31,4 @@ cat > ${PART_DIR}/usr/bin/aws_completer << 'EOF'
 exec /usr/lib/aws-cli/aws_completer "$@"
 EOF
 chmod +x ${PART_DIR}/usr/bin/aws_completer'''
+
