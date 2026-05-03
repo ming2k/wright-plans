@@ -1,19 +1,18 @@
 name = "gcc"
-version = "15.2.0"
-release = 3
+version = "16.1.0"
+release = 1
 description = "The GNU Compiler Collection - C and C++ frontends"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://gcc.gnu.org/"
 
 [dependencies]
-runtime = ["binutils"]
 build = ["binutils", "make", "perl", "texinfo"]
-link = ["gcc-libs", "gmp", "mpc", "mpfr", "zlib"]
+link = ["gcc-libs", "gmp", "mpc", "mpfr", "zlib", "glibc"]
 
 [[sources]]
 type = "http"
-sha256 = "438fd996826b0c82485a29da03a72d71d6e3541a83ec702df4271f6fe025d24e"
+sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gcc/gcc-${VERSION}/gcc-${VERSION}.tar.xz"
 extract_to = "source"
 
@@ -22,7 +21,7 @@ ccache = true
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/gcc-${VERSION}
 case $(uname -m) in
     x86_64) sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64 ;;
 esac
@@ -30,14 +29,15 @@ mkdir -v build'''
 
 [lifecycle.configure]
 script = '''
-cd source/build
+cd source/gcc-${VERSION}/build
 SED=sed \
 ../configure --prefix=/usr \
     LD=ld \
-    --enable-languages=c,c++ \
+    --enable-languages=c,c++,jit \
     --enable-default-pie \
     --enable-default-ssp \
     --enable-host-pie \
+    --enable-host-shared \
     --disable-multilib \
     --disable-bootstrap \
     --disable-fixincludes \
@@ -56,45 +56,64 @@ SED=sed \
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/gcc-${VERSION}/build
 make -j$(nproc)'''
 
-[output]
+[lifecycle.staging]
+script = '''
+cd source/gcc-${VERSION}/build
+make DESTDIR=${PART_DIR} install
+ln -sf gcc ${PART_DIR}/usr/bin/cc'''
 
-[output."libgcc"]
-include = ["/.*"]
-description = "GCC runtime library (libgcc_s.so)"
-[output."libgcc".dependencies]
-link = ["glibc"]
+# Main (catch-all) output — no `include` field
+[[output]]
+name = "gcc"
+description = "The GNU Compiler Collection - C and C++ compiler"
+runtime_deps = ["binutils", "gcc-libs", "libstdc++"]
 
-[output."libstdc++"]
-include = ["/.*"]
+[[output]]
+name = "gcc-libs"
+include = [
+    "/usr/lib/libgcc_s\\.so.*",
+    "/usr/lib/libgomp\\.so.*",
+    "/usr/lib/libatomic\\.so.*",
+    "/usr/lib/libitm\\.so.*",
+    "/usr/lib/libasan\\.so.*",
+    "/usr/lib/liblsan\\.so.*",
+    "/usr/lib/libtsan\\.so.*",
+    "/usr/lib/libubsan\\.so.*",
+    "/usr/lib/libhwasan\\.so.*",
+]
+description = "GCC runtime libraries"
+runtime_deps = ["glibc"]
+
+[output.hooks]
+post_install = "ldconfig"
+post_upgrade = "ldconfig"
+
+[[output]]
+name = "libstdc++"
+include = [
+    "/usr/lib/libstdc\\+\\+\\.so.*",
+    "/usr/include/c\\+/.*",
+    "/usr/share/gdb/auto-load/.*",
+]
 description = "GNU C++ standard library"
-[output."libstdc++".dependencies]
-runtime = ["libgcc"]
-link = ["glibc"]
+runtime_deps = ["glibc", "gcc-libs"]
 
-[output."libgomp"]
-include = ["/.*"]
-description = "GNU OpenMP runtime library"
-[output."libgomp".dependencies]
-link = ["glibc"]
+[output.hooks]
+post_install = "ldconfig"
+post_upgrade = "ldconfig"
 
-[output."libatomic"]
-include = ["/.*"]
-description = "GCC atomic operations fallback library"
-[output."libatomic".dependencies]
-link = ["glibc"]
+[[output]]
+name = "libgccjit"
+include = [
+    "/usr/lib/libgccjit\\.so.*",
+    "/usr/include/libgccjit.*\\.h",
+]
+description = "GCC JIT compilation library"
+runtime_deps = ["glibc", "gcc-libs"]
 
-[output."libsanitizer"]
-include = ["/.*"]
-description = "GCC sanitizer runtime libraries (ASan, LSan, TSan, UBSan)"
-[output."libsanitizer".dependencies]
-runtime = ["libgcc", "libstdc++"]
-link = ["glibc"]
-
-[output."gcc-libs"]
-include = ["/.*"]
-description = "GCC runtime libraries (meta-package)"
-[output."gcc-libs".dependencies]
-runtime = ["libatomic", "libgcc", "libgomp", "libstdc++"]
+[output.hooks]
+post_install = "ldconfig"
+post_upgrade = "ldconfig"

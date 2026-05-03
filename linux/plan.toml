@@ -188,25 +188,8 @@ scripts/config --module SND_SOC_SOF_XTENSA
 # because the maintained baseline will carry the policy forward.
 # ---------------------------------------------------------------------------
 
-# HID support for keyboards, mice, gamepads, and tablets.
-scripts/config --enable HID
-scripts/config --enable HID_GENERIC
-scripts/config --enable USB_HID
-scripts/config --enable HID_PID
-scripts/config --module HID_WACOM
-scripts/config --module HID_LOGITECH
-scripts/config --module HID_LOGITECH_DJ
-scripts/config --module HID_MICROSOFT
-scripts/config --module HID_SONY
-scripts/config --module HID_NINTENDO
-scripts/config --module HID_STEAM
-scripts/config --module HID_APPLE
-scripts/config --module HID_LENOVO
-
-# Gaming input (Xbox and compatible gamepads).
-scripts/config --module JOYSTICK_XPAD
-scripts/config --enable JOYSTICK_XPAD_FF
-scripts/config --enable JOYSTICK_XPAD_LEDS
+# scripts/config --enable HID
+# scripts/config --enable HID_GENERIC
 
 make olddefconfig
 '''

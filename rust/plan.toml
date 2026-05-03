@@ -1,5 +1,5 @@
 name = "rust"
-version = "1.94.1"
+version = "1.95.0"
 release = 1
 description = "The Rust programming language compiler and standard library"
 license = "Apache-2.0 AND MIT"
@@ -7,7 +7,6 @@ arch = "x86_64"
 url = "https://www.rust-lang.org"
 
 [dependencies]
-runtime = ["gcc"]
 link = ["glibc"]
 
 [[sources]]
@@ -18,13 +17,23 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
-./install.sh --destdir=${PART_DIR} --prefix=/usr --without=rust-docs'''
+cd source/rust-${VERSION}-x86_64-unknown-linux-gnu
+./install.sh --destdir=${PART_DIR} --prefix=/usr --without=rust-docs
 
-[output]
+# Move non-FHS usr/etc/* to etc/
+if [ -d "${PART_DIR}/usr/etc" ]; then
+    mkdir -p "${PART_DIR}/etc"
+    cp -r "${PART_DIR}/usr/etc/"* "${PART_DIR}/etc/"
+    rm -rf "${PART_DIR}/usr/etc"
+fi'''
 
-[output."cargo"]
-include = ["/.*"]
+# Rust outputs: main compiler + cargo
+[[output]]
+name = "rust"
+# catch-all
+
+[[output]]
+name = "cargo"
 description = "Cargo package manager for Rust"
-[output."cargo".dependencies]
-runtime = ["rust"]
+include = ["/.*"]
+runtime_deps = ["rust"]

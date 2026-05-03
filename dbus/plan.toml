@@ -7,9 +7,8 @@ arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/dbus/"
 
 [dependencies]
-runtime = ["systemd"]
 build = ["gcc", "meson", "ninja", "pkgconf"]
-link = ["expat", "systemd"]
+link = ["expat", "systemd", "glibc"]
 
 [[sources]]
 type = "http"
@@ -57,13 +56,15 @@ ln -sfv /etc/machine-id ${PART_DIR}/var/lib/dbus
 chown 0:18 ${PART_DIR}/usr/libexec/dbus-daemon-launch-helper
 chmod 4750 ${PART_DIR}/usr/libexec/dbus-daemon-launch-helper'''
 
-[output]
+# D-Bus outputs: main package + libdbus library
+[[output]]
+name = "dbus"
+# catch-all output; runtime deps inherited from plan-level
 
-[output."libdbus"]
-include = ["/.*"]
+[[output]]
+name = "libdbus"
 description = "D-Bus low-level shared library"
-[output."libdbus".dependencies]
-link = ["glibc"]
+include = ["/.*"]
 
 [hooks]
 post_install = '''

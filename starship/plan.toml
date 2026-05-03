@@ -1,5 +1,5 @@
 name = "starship"
-version = "1.24.2"
+version = "1.25.1"
 release = 1
 description = "The minimal, blazing-fast, and infinitely customizable prompt for any shell"
 license = "ISC"
@@ -17,18 +17,17 @@ extract_to = "source"
 
 [lifecycle.compile]
 isolation = "relaxed"
-env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
-cd source
+cd source/starship-${VERSION}
 cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd source
-install -Dm755 target/release/starship ${PART_DIR}/usr/bin/starship
+install -Dm755 ${WORKDIR}/target/release/starship ${PART_DIR}/usr/bin/starship
 install -dm755 ${PART_DIR}/usr/share/bash-completion/completions
 install -dm755 ${PART_DIR}/usr/share/zsh/site-functions
 install -dm755 ${PART_DIR}/usr/share/fish/vendor_completions.d
-target/release/starship completions bash > ${PART_DIR}/usr/share/bash-completion/completions/starship
-target/release/starship completions zsh  > ${PART_DIR}/usr/share/zsh/site-functions/_starship
-target/release/starship completions fish > ${PART_DIR}/usr/share/fish/vendor_completions.d/starship.fish'''
+${WORKDIR}/target/release/starship completions bash > ${PART_DIR}/usr/share/bash-completion/completions/starship
+${WORKDIR}/target/release/starship completions zsh  > ${PART_DIR}/usr/share/zsh/site-functions/_starship
+${WORKDIR}/target/release/starship completions fish > ${PART_DIR}/usr/share/fish/vendor_completions.d/starship.fish'''

@@ -7,9 +7,8 @@ arch = "x86_64"
 url = "https://llvm.org"
 
 [dependencies]
-runtime = ["llvm-libs"]
 build = ["cmake", "gcc", "ninja", "pkgconf", "python"]
-link = ["libedit", "libffi", "libxml2", "zlib", "zstd"]
+link = ["libedit", "libffi", "libxml2", "zlib", "zstd", "glibc"]
 
 [[sources]]
 type = "http"
@@ -27,25 +26,25 @@ script = '''
 cd source/llvm-project-${VERSION}.src/llvm
 ninja -C build -j$(nproc)'''
 
-[output]
+# LLVM outputs: main package + libs + clang + lld
+[[output]]
+name = "llvm"
+# catch-all
 
-[output."llvm-libs"]
-include = ["/.*"]
+[[output]]
+name = "llvm-libs"
 description = "LLVM shared libraries"
-[output."llvm-libs".dependencies]
-link = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
-runtime = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
-
-[output."clang"]
 include = ["/.*"]
+runtime_deps = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
+
+[[output]]
+name = "clang"
 description = "C/C++/ObjC compiler frontend for LLVM"
-[output."clang".dependencies]
-runtime = ["llvm-libs"]
-link = ["glibc"]
-
-[output."lld"]
 include = ["/.*"]
+runtime_deps = ["llvm-libs"]
+
+[[output]]
+name = "lld"
 description = "LLVM linker"
-[output."lld".dependencies]
-runtime = ["llvm-libs"]
-link = ["glibc"]
+include = ["/.*"]
+runtime_deps = ["llvm-libs"]
