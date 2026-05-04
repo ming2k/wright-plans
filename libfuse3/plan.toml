@@ -31,13 +31,13 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
+DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install
 
 # Remove legacy init scripts and static device nodes (handled by udev)
-rm -rf ${PART_DIR}/etc/init.d ${PART_DIR}/dev 2>/dev/null || true
+rm -rf ${STAGING_DIR}/etc/init.d ${STAGING_DIR}/dev 2>/dev/null || true
 
 # Allow non-root users to mount FUSE filesystems via fusermount3
-chmod u+s ${PART_DIR}/usr/bin/fusermount3'''
+chmod u+s ${STAGING_DIR}/usr/bin/fusermount3'''
 
 [output]
 backup = ["/etc/fuse.conf"]

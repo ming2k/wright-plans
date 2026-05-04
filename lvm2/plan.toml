@@ -28,7 +28,7 @@ make -j$(nproc) -C ${WORKDIR}'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install -C ${WORKDIR}'''
+make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
 
 [hooks]
 post_install = '''

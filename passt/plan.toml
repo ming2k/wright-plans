@@ -23,5 +23,5 @@ make VERSION="${VERSION}" -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} prefix=/usr install'''
+make DESTDIR=${STAGING_DIR} prefix=/usr install'''
 

@@ -15,11 +15,11 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-install -d ${PART_DIR}/usr/lib
-cp -a ${WORKDIR} ${PART_DIR}/usr/lib/go
-install -d ${PART_DIR}/usr/bin
-ln -sf ../lib/go/bin/go ${PART_DIR}/usr/bin/go
-ln -sf ../lib/go/bin/gofmt ${PART_DIR}/usr/bin/gofmt'''
+install -d ${STAGING_DIR}/usr/lib
+cp -a ${WORKDIR} ${STAGING_DIR}/usr/lib/go
+install -d ${STAGING_DIR}/usr/bin
+ln -sf ../lib/go/bin/go ${STAGING_DIR}/usr/bin/go
+ln -sf ../lib/go/bin/gofmt ${STAGING_DIR}/usr/bin/gofmt'''
 
 [output]
 replaces = ["go"]

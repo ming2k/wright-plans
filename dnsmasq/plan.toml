@@ -36,19 +36,19 @@ make \
     COPTS="-DHAVE_DNSSEC -DHAVE_DBUS -DHAVE_LIBIDN2 -DHAVE_CONNTRACK -DHAVE_NFTSET" \
     PREFIX=/usr \
     BINDIR=/usr/bin \
-    DESTDIR=${PART_DIR} \
+    DESTDIR=${STAGING_DIR} \
     install install-i18n
 
-install -Dm755 contrib/lease-tools/dhcp_release ${PART_DIR}/usr/bin/dhcp_release
-install -Dm755 contrib/lease-tools/dhcp_release6 ${PART_DIR}/usr/bin/dhcp_release6
-install -Dm755 contrib/lease-tools/dhcp_lease_time ${PART_DIR}/usr/bin/dhcp_lease_time
+install -Dm755 contrib/lease-tools/dhcp_release ${STAGING_DIR}/usr/bin/dhcp_release
+install -Dm755 contrib/lease-tools/dhcp_release6 ${STAGING_DIR}/usr/bin/dhcp_release6
+install -Dm755 contrib/lease-tools/dhcp_lease_time ${STAGING_DIR}/usr/bin/dhcp_lease_time
 
-install -Dm644 dbus/dnsmasq.conf ${PART_DIR}/usr/share/dbus-1/system.d/dnsmasq.conf
+install -Dm644 dbus/dnsmasq.conf ${STAGING_DIR}/usr/share/dbus-1/system.d/dnsmasq.conf
 
-install -Dm644 dnsmasq.conf.example ${PART_DIR}/etc/dnsmasq.conf
-install -Dm644 trust-anchors.conf ${PART_DIR}/usr/share/dnsmasq/trust-anchors.conf
+install -Dm644 dnsmasq.conf.example ${STAGING_DIR}/etc/dnsmasq.conf
+install -Dm644 trust-anchors.conf ${STAGING_DIR}/usr/share/dnsmasq/trust-anchors.conf
 
-sed -i 's,%%PREFIX%%,/usr,' ${PART_DIR}/etc/dnsmasq.conf'''
+sed -i 's,%%PREFIX%%,/usr,' ${STAGING_DIR}/etc/dnsmasq.conf'''
 
 [output]
 backup = ["/etc/dnsmasq.conf"]

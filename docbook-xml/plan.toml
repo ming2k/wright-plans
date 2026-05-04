@@ -30,10 +30,10 @@ url = "https://www.oasis-open.org/docbook/xml/4.2/docbook-xml-4.2.zip"
 [lifecycle.staging]
 script = '''
 cd source
-install -dm755 ${PART_DIR}/usr/share/xml/docbook
+install -dm755 ${STAGING_DIR}/usr/share/xml/docbook
 
 for ver in 4.2 4.3 4.4 4.5; do
-  dest_dir=${PART_DIR}/usr/share/xml/docbook/${ver}
+  dest_dir=${STAGING_DIR}/usr/share/xml/docbook/${ver}
   install -dm755 ${dest_dir}
 
   python3 - "${WORKDIR}/docbook-xml-${ver}.zip" "${dest_dir}" <<'PY'
@@ -54,8 +54,8 @@ PY
 done
 
 sed -e 's|V4.2|V4.1.2|g' \
-  ${PART_DIR}/usr/share/xml/docbook/4.2/catalog \
-  > ${PART_DIR}/usr/share/xml/docbook/4.2/catalog-4.1.2'''
+  ${STAGING_DIR}/usr/share/xml/docbook/4.2/catalog \
+  > ${STAGING_DIR}/usr/share/xml/docbook/4.2/catalog-4.1.2'''
 
 [hooks]
 post_install = '''
@@ -74,6 +74,5 @@ xmlcatalog --noout --add nextCatalog "file:///usr/share/xml/docbook/4.2/catalog-
 
 '''
 
-[[output]]
-name = "docbook-xml"
+[output]
 runtime_deps = ['libxml2']

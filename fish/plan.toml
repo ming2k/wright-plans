@@ -36,5 +36,5 @@ make -C build -j$(nproc) VERBOSE=1'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} cmake --install build'''
+DESTDIR=${STAGING_DIR} cmake --install build'''
 

@@ -26,5 +26,5 @@ cmake --build ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''
+DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build'''
 

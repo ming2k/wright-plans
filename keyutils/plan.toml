@@ -24,7 +24,7 @@ make'''
 script = '''
 cd source
 make \
-  DESTDIR=${PART_DIR} \
+  DESTDIR=${STAGING_DIR} \
   NO_ARLIB=1 \
   LIBDIR=/usr/lib \
   BINDIR=/usr/bin \

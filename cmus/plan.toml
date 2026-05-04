@@ -40,11 +40,10 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
 
-install -vDm644 contrib/_cmus ${PART_DIR}/usr/share/zsh/site-functions/_cmus
-install -vDm644 contrib/cmus.bash-completion ${PART_DIR}/usr/share/bash-completion/completions/cmus'''
+install -vDm644 contrib/_cmus ${STAGING_DIR}/usr/share/zsh/site-functions/_cmus
+install -vDm644 contrib/cmus.bash-completion ${STAGING_DIR}/usr/share/bash-completion/completions/cmus'''
 
-[[output]]
-name = "cmus"
+[output]
 runtime_deps = ['pipewire']

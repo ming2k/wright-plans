@@ -57,17 +57,17 @@ cd source/netavark-${VERSION}
 # Upstream's `make install` strictly depends on building documentation via `go-md2man`.
 # Since `go-md2man` is not available in our build environment, we manually stage the
 # binaries and generated systemd units instead of patching the Makefile.
-install -Dm755 bin/netavark ${PART_DIR}/usr/libexec/podman/netavark
-install -Dm755 bin/netavark-dhcp-proxy-client ${PART_DIR}/usr/libexec/podman/netavark-dhcp-proxy-client
-install -Dm755 bin/netavark-connection-tester ${PART_DIR}/usr/libexec/podman/netavark-connection-tester
+install -Dm755 bin/netavark ${STAGING_DIR}/usr/libexec/podman/netavark
+install -Dm755 bin/netavark-dhcp-proxy-client ${STAGING_DIR}/usr/libexec/podman/netavark-dhcp-proxy-client
+install -Dm755 bin/netavark-connection-tester ${STAGING_DIR}/usr/libexec/podman/netavark-connection-tester
 
-install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.socket ${PART_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.socket
-install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.service ${PART_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.service
-install -Dm644 contrib/systemd/system/netavark-firewalld-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-firewalld-reload.service
-install -Dm644 contrib/systemd/system/netavark-nftables-reload.service ${PART_DIR}/usr/lib/systemd/system/netavark-nftables-reload.service
+install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.socket ${STAGING_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.socket
+install -Dm644 contrib/systemd/system/netavark-dhcp-proxy.service ${STAGING_DIR}/usr/lib/systemd/system/netavark-dhcp-proxy.service
+install -Dm644 contrib/systemd/system/netavark-firewalld-reload.service ${STAGING_DIR}/usr/lib/systemd/system/netavark-firewalld-reload.service
+install -Dm644 contrib/systemd/system/netavark-nftables-reload.service ${STAGING_DIR}/usr/lib/systemd/system/netavark-nftables-reload.service
 
-install -Dm644 /dev/null ${PART_DIR}/etc/containers/netavark.conf
-cat > ${PART_DIR}/etc/containers/netavark.conf << 'EOF'
+install -Dm644 /dev/null ${STAGING_DIR}/etc/containers/netavark.conf
+cat > ${STAGING_DIR}/etc/containers/netavark.conf << 'EOF'
 [default]
 firewall_driver = "nftables"
 EOF'''
@@ -83,6 +83,5 @@ post_upgrade = '''
 systemctl daemon-reload 2>/dev/null || true
 '''
 
-[[output]]
-name = "netavark"
+[output]
 runtime_deps = ['aardvark-dns', 'glibc', 'nftables']

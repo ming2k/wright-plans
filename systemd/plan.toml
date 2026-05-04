@@ -88,15 +88,15 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
+DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install
 
 # Preset only the services we opt into.
-install -Dm644 ${WORKDIR}/90-theseus.preset ${PART_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
+install -Dm644 ${WORKDIR}/90-theseus.preset ${STAGING_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
 
 # wait-online: single-NIC laptop policy — any interface online is enough,
 # and cap the wait at 20s so a missing secondary link never pins boot.
 install -Dm644 ${WORKDIR}/network-wait-online.conf \
-    ${PART_DIR}/usr/lib/systemd/system/systemd-networkd-wait-online.service.d/10-theseus.conf'''
+    ${STAGING_DIR}/usr/lib/systemd/system/systemd-networkd-wait-online.service.d/10-theseus.conf'''
 
 [output]
 backup = ["/etc/issue", "/etc/locale.conf", "/etc/nsswitch.conf", "/etc/vconsole.conf", "/etc/systemd/coredump.conf", "/etc/systemd/journald.conf", "/etc/systemd/logind.conf", "/etc/systemd/networkd.conf", "/etc/systemd/oomd.conf", "/etc/systemd/resolved.conf", "/etc/systemd/sleep.conf", "/etc/systemd/system.conf", "/etc/systemd/timesyncd.conf", "/etc/systemd/user.conf", "/etc/udev/iocost.conf", "/etc/udev/udev.conf"]
@@ -115,6 +115,5 @@ systemctl daemon-reexec 2>/dev/null || true
 
 '''
 
-[[output]]
-name = "systemd"
+[output]
 runtime_deps = ['acl', 'bash', 'cryptsetup', 'dbus', 'glibc', 'hwdata', 'kbd', 'kmod', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']

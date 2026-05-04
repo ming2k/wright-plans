@@ -33,9 +33,9 @@ cmake --build ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build
-install -d ${PART_DIR}/usr/lib/pkgconfig
-cat > ${PART_DIR}/usr/lib/pkgconfig/libfyaml.pc << 'PCEOF'
+DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build
+install -d ${STAGING_DIR}/usr/lib/pkgconfig
+cat > ${STAGING_DIR}/usr/lib/pkgconfig/libfyaml.pc << 'PCEOF'
 prefix=/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib

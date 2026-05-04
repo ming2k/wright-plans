@@ -27,9 +27,9 @@ g++ -shared -o libqrcodegencpp.so qrcodegen.o'''
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 ${WORKDIR}/c/libqrcodegen.so ${PART_DIR}/usr/lib/libqrcodegen.so
-install -Dm644 ${WORKDIR}/c/qrcodegen.h ${PART_DIR}/usr/include/qrcodegen.h
+install -Dm755 ${WORKDIR}/c/libqrcodegen.so ${STAGING_DIR}/usr/lib/libqrcodegen.so
+install -Dm644 ${WORKDIR}/c/qrcodegen.h ${STAGING_DIR}/usr/include/qrcodegen.h
 
-install -Dm755 ${WORKDIR}/cpp/libqrcodegencpp.so ${PART_DIR}/usr/lib/libqrcodegencpp.so
-install -Dm644 ${WORKDIR}/cpp/qrcodegen.hpp ${PART_DIR}/usr/include/qrcodegen.hpp'''
+install -Dm755 ${WORKDIR}/cpp/libqrcodegencpp.so ${STAGING_DIR}/usr/lib/libqrcodegencpp.so
+install -Dm644 ${WORKDIR}/cpp/qrcodegen.hpp ${STAGING_DIR}/usr/include/qrcodegen.hpp'''
 

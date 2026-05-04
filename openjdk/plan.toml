@@ -69,16 +69,16 @@ cd source
 
 JDK_IMAGE=build/linux-x86_64-server-release/images/jdk
 
-install -dm755 ${PART_DIR}/usr/lib/jvm/java-26-openjdk
-cp -a ${JDK_IMAGE}/* ${PART_DIR}/usr/lib/jvm/java-26-openjdk/
+install -dm755 ${STAGING_DIR}/usr/lib/jvm/java-26-openjdk
+cp -a ${JDK_IMAGE}/* ${STAGING_DIR}/usr/lib/jvm/java-26-openjdk/
 
-install -dm755 ${PART_DIR}/usr/bin
+install -dm755 ${STAGING_DIR}/usr/bin
 for bin in java javac jar jlink jmod keytool jshell javadoc javap jcmd jps jstat; do
-    ln -sf ../lib/jvm/java-26-openjdk/bin/$bin ${PART_DIR}/usr/bin/$bin
+    ln -sf ../lib/jvm/java-26-openjdk/bin/$bin ${STAGING_DIR}/usr/bin/$bin
 done
 
-install -dm755 ${PART_DIR}/etc/profile.d
-cat > ${PART_DIR}/etc/profile.d/jdk.sh << 'PROF'
+install -dm755 ${STAGING_DIR}/etc/profile.d
+cat > ${STAGING_DIR}/etc/profile.d/jdk.sh << 'PROF'
 export JAVA_HOME=/usr/lib/jvm/java-26-openjdk
 PROF'''
 
@@ -86,6 +86,5 @@ PROF'''
 provides = ["java", "jdk"]
 backup = ["/etc/profile.d/jdk.sh"]
 
-[[output]]
-name = "openjdk"
+[output]
 runtime_deps = ['alsa-lib', 'freetype', 'giflib', 'lcms2', 'libjpeg-turbo', 'libpng', 'zlib']

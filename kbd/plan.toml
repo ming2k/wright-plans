@@ -39,7 +39,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-mkdir -p ${PART_DIR}/usr/share/doc/kbd-${VERSION}
-cp -R -v docs/doc/* ${PART_DIR}/usr/share/doc/kbd-${VERSION}'''
+make DESTDIR=${STAGING_DIR} install
+mkdir -p ${STAGING_DIR}/usr/share/doc/kbd-${VERSION}
+cp -R -v docs/doc/* ${STAGING_DIR}/usr/share/doc/kbd-${VERSION}'''
 

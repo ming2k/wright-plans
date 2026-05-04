@@ -28,5 +28,5 @@ script = '''
 python3 ${WORKDIR}/generate_iana_etc.py \
   ${WORKDIR}/service-names-port-numbers.csv \
   ${WORKDIR}/protocol-numbers-1.csv \
-  ${PART_DIR}'''
+  ${STAGING_DIR}'''
 

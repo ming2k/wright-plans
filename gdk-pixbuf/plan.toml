@@ -27,12 +27,11 @@ meson compile -C ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
+meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
 
 [hooks]
 post_install = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 post_upgrade = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 
-[[output]]
-name = "gdk-pixbuf"
+[output]
 runtime_deps = ['glycin']

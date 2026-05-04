@@ -18,7 +18,7 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''
+DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
 
 [lifecycle.configure]
 script = '''

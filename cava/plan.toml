@@ -33,11 +33,10 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
 [output]
 backup = ["/etc/cava/config"]
 
-[[output]]
-name = "cava"
+[output]
 runtime_deps = ['alsa-lib', 'pipewire', 'ncurses', 'pulseaudio']

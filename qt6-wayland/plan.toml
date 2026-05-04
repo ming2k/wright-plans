@@ -28,5 +28,5 @@ ninja -j$(nproc) -C build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 

@@ -26,7 +26,7 @@ cmake --build ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build'''
+DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build'''
 
 [output]
 provides = ["spirv-opt"]

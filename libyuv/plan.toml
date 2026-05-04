@@ -26,10 +26,10 @@ script = "ninja -C ${WORKDIR}/build"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
+DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install
 
-mkdir -p ${PART_DIR}/usr/lib/pkgconfig
-cat > ${PART_DIR}/usr/lib/pkgconfig/libyuv.pc << PCEOF
+mkdir -p ${STAGING_DIR}/usr/lib/pkgconfig
+cat > ${STAGING_DIR}/usr/lib/pkgconfig/libyuv.pc << PCEOF
 prefix=/usr
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib

@@ -50,13 +50,13 @@ make -j$(nproc) -C ${WORKDIR}'''
 [lifecycle.staging]
 script = '''
 cd source
-make -j1 -C ${WORKDIR} VIMRCLOC=/etc DESTDIR=${PART_DIR} install
+make -j1 -C ${WORKDIR} VIMRCLOC=/etc DESTDIR=${STAGING_DIR} install
 
 # Remove files traditionally provided by (n)vi
-rm -f ${PART_DIR}/usr/bin/{ex,view}
-find ${PART_DIR}/usr/share/man -name 'ex.1' -o -name 'view.1' -o -name 'evim.1' \
+rm -f ${STAGING_DIR}/usr/bin/{ex,view}
+find ${STAGING_DIR}/usr/share/man -name 'ex.1' -o -name 'view.1' -o -name 'evim.1' \
   -delete
 
 install -Dm644 ${WORKDIR}/runtime/doc/uganda.txt \
-  ${PART_DIR}/usr/share/licenses/vim/license.txt'''
+  ${STAGING_DIR}/usr/share/licenses/vim/license.txt'''
 

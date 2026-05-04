@@ -38,7 +38,7 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [hooks]
 post_install = '''
@@ -48,6 +48,5 @@ useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
 
 '''
 
-[[output]]
-name = "polkit"
+[output]
 runtime_deps = ['dbus', 'systemd']

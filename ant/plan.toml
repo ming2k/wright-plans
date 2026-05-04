@@ -16,15 +16,14 @@ extract_to = "source"
 script = '''
 cd source
 
-install -dm755 ${PART_DIR}/usr/share/ant
-cp -a bin lib etc ${PART_DIR}/usr/share/ant/
+install -dm755 ${STAGING_DIR}/usr/share/ant
+cp -a bin lib etc ${STAGING_DIR}/usr/share/ant/
 
-install -dm755 ${PART_DIR}/usr/bin
-ln -sf ../share/ant/bin/ant ${PART_DIR}/usr/bin/ant'''
+install -dm755 ${STAGING_DIR}/usr/bin
+ln -sf ../share/ant/bin/ant ${STAGING_DIR}/usr/bin/ant'''
 
 [output]
 provides = ["apache-ant"]
 
-[[output]]
-name = "ant"
+[output]
 runtime_deps = ['openjdk']

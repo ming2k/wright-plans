@@ -42,8 +42,8 @@ meson compile -C ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-meson install -C ${WORKDIR}/build --destdir ${PART_DIR}
-mkdir -p ${PART_DIR}/var/lib/flatpak'''
+meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}
+mkdir -p ${STAGING_DIR}/var/lib/flatpak'''
 
 [hooks]
 post_install = '''
@@ -62,6 +62,5 @@ systemctl daemon-reload 2>/dev/null || true
 
 '''
 
-[[output]]
-name = "flatpak"
+[output]
 runtime_deps = ['ca-certificates', 'dbus', 'systemd', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'shared-mime-info', 'desktop-file-utils']

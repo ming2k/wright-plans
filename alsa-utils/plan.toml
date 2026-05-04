@@ -27,11 +27,10 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} make install'''
+DESTDIR=${STAGING_DIR} make install'''
 
 [hooks]
 post_install = "alsactl init 2>/dev/null || true"
 
-[[output]]
-name = "alsa-utils"
+[output]
 runtime_deps = ['alsa-ucm-conf']

@@ -27,5 +27,5 @@ make -j1'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 

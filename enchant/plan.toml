@@ -28,6 +28,6 @@ make'''
 [lifecycle.staging]
 script = '''
 cd source
-install -dm755 ${PART_DIR}/usr/lib/enchant-2
-make DESTDIR=${PART_DIR} install'''
+install -dm755 ${STAGING_DIR}/usr/lib/enchant-2
+make DESTDIR=${STAGING_DIR} install'''
 

@@ -31,8 +31,7 @@ cmake --build build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} cmake --install build'''
+DESTDIR=${STAGING_DIR} cmake --install build'''
 
-[[output]]
-name = "spirv-llvm-translator"
+[output]
 runtime_deps = ['glibc', 'libgcc', 'libstdc++', 'llvm']

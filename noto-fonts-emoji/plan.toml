@@ -13,8 +13,8 @@ url = "https://github.com/googlefonts/noto-emoji/raw/v${VERSION}/fonts/NotoColor
 
 [lifecycle.staging]
 script = '''
-mkdir -p ${PART_DIR}/usr/share/fonts/noto-emoji
-cp ${WORKDIR}/NotoColorEmoji.ttf ${PART_DIR}/usr/share/fonts/noto-emoji/'''
+mkdir -p ${STAGING_DIR}/usr/share/fonts/noto-emoji
+cp ${WORKDIR}/NotoColorEmoji.ttf ${STAGING_DIR}/usr/share/fonts/noto-emoji/'''
 
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"

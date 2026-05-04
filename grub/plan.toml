@@ -60,17 +60,16 @@ cd source
 
 # Install BIOS build first, then EFI on top (shared tools are identical)
 cd build-bios
-make DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
 
 cd source/build-efi
-make DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
 
 # Relocate bash completion
-mkdir -p ${PART_DIR}/usr/share/bash-completion/completions
-mv -v ${PART_DIR}/etc/bash_completion.d/grub \
-    ${PART_DIR}/usr/share/bash-completion/completions/ 2>/dev/null || true
-rmdir ${PART_DIR}/etc/bash_completion.d 2>/dev/null || true'''
+mkdir -p ${STAGING_DIR}/usr/share/bash-completion/completions
+mv -v ${STAGING_DIR}/etc/bash_completion.d/grub \
+    ${STAGING_DIR}/usr/share/bash-completion/completions/ 2>/dev/null || true
+rmdir ${STAGING_DIR}/etc/bash_completion.d 2>/dev/null || true'''
 
-[[output]]
-name = "grub"
+[output]
 runtime_deps = ['dosfstools']

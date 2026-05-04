@@ -27,8 +27,7 @@ meson compile -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''
+DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
 
-[[output]]
-name = "libproxy"
+[output]
 runtime_deps = ['duktape', 'gsettings-desktop-schemas']

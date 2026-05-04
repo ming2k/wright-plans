@@ -28,8 +28,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} make install'''
+DESTDIR=${STAGING_DIR} make install'''
 
-[[output]]
-name = "itstool"
+[output]
 runtime_deps = ['libxml2', 'python']

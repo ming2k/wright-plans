@@ -30,8 +30,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/build-libclc
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "libclc"
+[output]
 runtime_deps = ['glibc']

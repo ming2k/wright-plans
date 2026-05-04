@@ -20,4 +20,4 @@ make -j$(nproc) -C ${WORKDIR} prefix=/usr'''
 [lifecycle.staging]
 script = '''
 cd source
-make -C ${WORKDIR} prefix=/usr DESTDIR=${PART_DIR} install'''
+make -C ${WORKDIR} prefix=/usr DESTDIR=${STAGING_DIR} install'''

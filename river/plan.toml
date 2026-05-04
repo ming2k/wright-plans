@@ -115,7 +115,7 @@ zig build -Doptimize=ReleaseSafe
 [lifecycle.staging]
 script = '''
 cd source/river-${VERSION}
-zig build -Doptimize=ReleaseSafe --prefix ${PART_DIR}/usr install
+zig build -Doptimize=ReleaseSafe --prefix ${STAGING_DIR}/usr install
 '''
 
 [output]

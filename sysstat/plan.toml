@@ -38,11 +38,11 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
 
-if [ -d ${PART_DIR}/usr/sbin ]; then
-  cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
-  rm -rf ${PART_DIR}/usr/sbin
+if [ -d ${STAGING_DIR}/usr/sbin ]; then
+  cp -a ${STAGING_DIR}/usr/sbin/. ${STAGING_DIR}/usr/bin/
+  rm -rf ${STAGING_DIR}/usr/sbin
 fi'''
 
 [output]
@@ -53,6 +53,5 @@ post_install = "systemctl enable --now sysstat 2>/dev/null || true"
 post_upgrade = "systemctl try-restart sysstat 2>/dev/null || true"
 pre_remove = "systemctl disable --now sysstat 2>/dev/null || true"
 
-[[output]]
-name = "sysstat"
+[output]
 runtime_deps = ['systemd']

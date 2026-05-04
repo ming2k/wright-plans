@@ -28,11 +28,10 @@ ninja -C build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [hooks]
 post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
 
-[[output]]
-name = "xdg-desktop-portal-gnome"
+[output]
 runtime_deps = ['gnome-desktop', 'gsettings-desktop-schemas', 'xdg-desktop-portal']

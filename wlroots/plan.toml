@@ -31,7 +31,7 @@ ninja -C build
 [lifecycle.staging]
 script = '''
 cd source/wlroots-${VERSION}
-DESTDIR=${PART_DIR} ninja -C build install
+DESTDIR=${STAGING_DIR} ninja -C build install
 '''
 
 [output]

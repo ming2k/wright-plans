@@ -32,6 +32,6 @@ make check'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-rm -f ${PART_DIR}/usr/share/info/dir'''
+make DESTDIR=${STAGING_DIR} install
+rm -f ${STAGING_DIR}/usr/share/info/dir'''
 

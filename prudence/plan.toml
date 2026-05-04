@@ -24,6 +24,6 @@ cargo build --release --locked'''
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 target/release/prudence ${PART_DIR}/usr/bin/prudence
-install -Dm644 man/man1/prudence.1 ${PART_DIR}/usr/share/man/man1/prudence.1'''
+install -Dm755 target/release/prudence ${STAGING_DIR}/usr/bin/prudence
+install -Dm644 man/man1/prudence.1 ${STAGING_DIR}/usr/share/man/man1/prudence.1'''
 

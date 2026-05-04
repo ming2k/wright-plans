@@ -20,4 +20,4 @@ rm -v man3/crypt*'''
 [lifecycle.staging]
 script = '''
 cd source
-make -R GIT=false prefix=/usr DESTDIR=${PART_DIR} install'''
+make -R GIT=false prefix=/usr DESTDIR=${STAGING_DIR} install'''

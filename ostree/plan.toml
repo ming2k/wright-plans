@@ -38,8 +38,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} make install'''
+DESTDIR=${STAGING_DIR} make install'''
 
-[[output]]
-name = "ostree"
+[output]
 runtime_deps = ['systemd']

@@ -24,8 +24,7 @@ CGO_ENABLED=1 ./build.bash'''
 [lifecycle.staging]
 script = '''
 cd source/gocryptfs-*/
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "gocryptfs"
+[output]
 runtime_deps = ['libfuse3']

@@ -29,5 +29,5 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/build
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 

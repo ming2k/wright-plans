@@ -23,7 +23,7 @@ make all -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} PREFIX=/usr install'''
+make DESTDIR=${STAGING_DIR} PREFIX=/usr install'''
 
 [hooks]
 post_install = "setcap 'cap_perfmon=+ep' /usr/bin/btop"

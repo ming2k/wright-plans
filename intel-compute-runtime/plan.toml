@@ -56,11 +56,11 @@ script = "cmake --build build -j$(nproc)"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} cmake --install build
-install -D -m644 "compute-runtime-${VERSION}/LICENSE.md" -t "${PART_DIR}/usr/share/licenses/${NAME}"
+DESTDIR=${STAGING_DIR} cmake --install build
+install -D -m644 "compute-runtime-${VERSION}/LICENSE.md" -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
 
 # 补全 Level Zero 驱动的软链接
-cd ${PART_DIR}/usr/lib
+cd ${STAGING_DIR}/usr/lib
 target_so=$(find . -regex '.*libze_intel_gpu.so.[0-9]*' -exec basename {} \;)
 if [ -n "$target_so" ]; then
     ln -s "$target_so" "libze_intel_gpu.so"
@@ -70,6 +70,5 @@ fi
 [output]
 provides = ["level-zero-driver", "opencl-driver"]
 
-[[output]]
-name = "intel-compute-runtime"
+[output]
 runtime_deps = ['glibc', 'intel-gmmlib', 'intel-graphics-compiler', 'libgcc', 'libstdc++']

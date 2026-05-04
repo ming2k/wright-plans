@@ -27,10 +27,10 @@ make -j$(nproc) PREFIX=/usr XCFLAGS='-fPIC''''
 [lifecycle.staging]
 script = '''
 cd source
-make PREFIX=/usr DESTDIR=${PART_DIR} install
+make PREFIX=/usr DESTDIR=${STAGING_DIR} install
 
-mkdir -p ${PART_DIR}/usr/lib/pkgconfig
-cat > ${PART_DIR}/usr/lib/pkgconfig/luajit.pc << PCEOF
+mkdir -p ${STAGING_DIR}/usr/lib/pkgconfig
+cat > ${STAGING_DIR}/usr/lib/pkgconfig/luajit.pc << PCEOF
 prefix=/usr
 exec_prefix=\${prefix}
 libdir=\${exec_prefix}/lib

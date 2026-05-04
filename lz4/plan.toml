@@ -27,5 +27,5 @@ make -j1 check'''
 [lifecycle.staging]
 script = '''
 cd source
-make BUILD_STATIC=no PREFIX=/usr DESTDIR=${PART_DIR} install'''
+make BUILD_STATIC=no PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 

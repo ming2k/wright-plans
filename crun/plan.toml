@@ -37,8 +37,7 @@ make -j$(nproc)'''
 isolation = "none"
 script = '''
 cd source/crun-${VERSION}
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "crun"
+[output]
 runtime_deps = ['glibc', 'libcap', 'libseccomp', 'systemd']

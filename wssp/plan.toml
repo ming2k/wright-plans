@@ -24,19 +24,18 @@ cargo build --release'''
 script = '''
 cd source
 # Install binaries
-install -Dm755 target/release/wssp-daemon ${PART_DIR}/usr/bin/wssp-daemon
-install -Dm755 target/release/wssp-prompter ${PART_DIR}/usr/bin/wssp-prompter
-install -Dm755 target/release/wssp-cli ${PART_DIR}/usr/bin/wssp-cli
+install -Dm755 target/release/wssp-daemon ${STAGING_DIR}/usr/bin/wssp-daemon
+install -Dm755 target/release/wssp-prompter ${STAGING_DIR}/usr/bin/wssp-prompter
+install -Dm755 target/release/wssp-cli ${STAGING_DIR}/usr/bin/wssp-cli
 
 # Install PAM module
-install -Dm755 target/release/libpam_wssp.so ${PART_DIR}/usr/lib/security/pam_wssp.so
+install -Dm755 target/release/libpam_wssp.so ${STAGING_DIR}/usr/lib/security/pam_wssp.so
 
 # Install systemd unit (user)
-install -Dm644 systemd/user/wssp-daemon.service ${PART_DIR}/usr/lib/systemd/user/wssp-daemon.service
+install -Dm644 systemd/user/wssp-daemon.service ${STAGING_DIR}/usr/lib/systemd/user/wssp-daemon.service
 
 # Install portal file
-install -Dm644 systemd/portals/wssp.portal ${PART_DIR}/usr/share/xdg-desktop-portal/portals/wssp.portal'''
+install -Dm644 systemd/portals/wssp.portal ${STAGING_DIR}/usr/share/xdg-desktop-portal/portals/wssp.portal'''
 
-[[output]]
-name = "wssp"
+[output]
 runtime_deps = ['libadwaita', 'gtk4', 'linux-pam']

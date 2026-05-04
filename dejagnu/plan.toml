@@ -35,10 +35,9 @@ make check'''
 [lifecycle.staging]
 script = '''
 cd source/build
-make DESTDIR=${PART_DIR} install
-install -v -dm755  ${PART_DIR}/usr/share/doc/dejagnu-1.6.3
-install -v -m644   doc/dejagnu.{html,txt} ${PART_DIR}/usr/share/doc/dejagnu-1.6.3'''
+make DESTDIR=${STAGING_DIR} install
+install -v -dm755  ${STAGING_DIR}/usr/share/doc/dejagnu-1.6.3
+install -v -m644   doc/dejagnu.{html,txt} ${STAGING_DIR}/usr/share/doc/dejagnu-1.6.3'''
 
-[[output]]
-name = "dejagnu"
+[output]
 runtime_deps = ['expect']

@@ -26,9 +26,9 @@ ninja -C ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
+DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install
 # 兼容性软链接：确保 pkg-config 始终能找到 libjpeg.pc
-if [ ! -f ${PART_DIR}/usr/lib/pkgconfig/libjpeg.pc ]; then
-    ln -sv libjpeg-turbo.pc ${PART_DIR}/usr/lib/pkgconfig/libjpeg.pc
+if [ ! -f ${STAGING_DIR}/usr/lib/pkgconfig/libjpeg.pc ]; then
+    ln -sv libjpeg-turbo.pc ${STAGING_DIR}/usr/lib/pkgconfig/libjpeg.pc
 fi'''
 

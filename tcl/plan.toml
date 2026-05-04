@@ -29,9 +29,9 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/unix
-make DESTDIR=${PART_DIR} install
-make DESTDIR=${PART_DIR} install-private-headers
+make DESTDIR=${STAGING_DIR} install
+make DESTDIR=${STAGING_DIR} install-private-headers
 
-ln -sfv tclsh8.6 ${PART_DIR}/usr/bin/tclsh
-mv ${PART_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3'''
+ln -sfv tclsh8.6 ${STAGING_DIR}/usr/bin/tclsh
+mv ${STAGING_DIR}/usr/share/man/man3/{Thread,Tcl_Thread}.3'''
 

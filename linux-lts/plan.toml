@@ -112,13 +112,12 @@ make -j$(nproc)'''
 isolation = "none"
 script = '''
 cd source/linux-${VERSION}
-make INSTALL_MOD_PATH=${PART_DIR}/usr modules_install
-rm -f ${PART_DIR}/usr/lib/modules/*/build
-install -d ${PART_DIR}/boot
-cp -v arch/x86/boot/bzImage ${PART_DIR}/boot/vmlinuz-theseus-lts
-cp -v System.map ${PART_DIR}/boot/System.map-theseus-lts
-cp -v .config ${PART_DIR}/boot/config-theseus-lts'''
+make INSTALL_MOD_PATH=${STAGING_DIR}/usr modules_install
+rm -f ${STAGING_DIR}/usr/lib/modules/*/build
+install -d ${STAGING_DIR}/boot
+cp -v arch/x86/boot/bzImage ${STAGING_DIR}/boot/vmlinuz-theseus-lts
+cp -v System.map ${STAGING_DIR}/boot/System.map-theseus-lts
+cp -v .config ${STAGING_DIR}/boot/config-theseus-lts'''
 
-[[output]]
-name = "linux-lts"
+[output]
 runtime_deps = ['kmod', 'dracut-ng']

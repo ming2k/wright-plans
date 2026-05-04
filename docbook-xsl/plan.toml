@@ -15,15 +15,15 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-install -dm755 "${PART_DIR}/usr/share/xml/docbook"
-cp -r "${WORKDIR}/." "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-${VERSION}/"
-ln -sfn "xsl-stylesheets-${VERSION}" "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets"
-ln -sfn "xsl-stylesheets-${VERSION}" "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-nons"
+install -dm755 "${STAGING_DIR}/usr/share/xml/docbook"
+cp -r "${WORKDIR}/." "${STAGING_DIR}/usr/share/xml/docbook/xsl-stylesheets-${VERSION}/"
+ln -sfn "xsl-stylesheets-${VERSION}" "${STAGING_DIR}/usr/share/xml/docbook/xsl-stylesheets"
+ln -sfn "xsl-stylesheets-${VERSION}" "${STAGING_DIR}/usr/share/xml/docbook/xsl-stylesheets-nons"
 
 # Write a comprehensive catalog for use inside strict build sandboxes
 # (where /etc/xml/catalog is not mounted). Build tools set XML_CATALOG_FILES
 # to this file to resolve all common DocBook XSL URIs locally.
-cat > "${PART_DIR}/usr/share/xml/docbook/xsl-stylesheets-${VERSION}/catalog.xml" << 'EOF'
+cat > "${STAGING_DIR}/usr/share/xml/docbook/xsl-stylesheets-${VERSION}/catalog.xml" << 'EOF'
 <?xml version="1.0"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
   <rewriteURI uriStartString="http://cdn.docbook.org/release/xsl/current/"         rewritePrefix="./"/>
@@ -62,6 +62,5 @@ xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl-nons/curren
 
 '''
 
-[[output]]
-name = "docbook-xsl"
+[output]
 runtime_deps = ['libxml2']

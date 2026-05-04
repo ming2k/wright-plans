@@ -39,11 +39,11 @@ gcc $CFLAGS $LDFLAGS -I.. -Ilibgnu -o localepaper localepaper.c libgnu/.libs/lib
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-install -Dt ${PART_DIR}/usr/lib -m0755 src/localepaper
-install -dm755 ${PART_DIR}/etc
-echo '# Simply write the paper name. See man 1 paper and "paper --no-size --all" for possible values' > ${PART_DIR}/etc/papersize
-install -dm755 ${PART_DIR}/etc/libpaper.d'''
+make DESTDIR=${STAGING_DIR} install
+install -Dt ${STAGING_DIR}/usr/lib -m0755 src/localepaper
+install -dm755 ${STAGING_DIR}/etc
+echo '# Simply write the paper name. See man 1 paper and "paper --no-size --all" for possible values' > ${STAGING_DIR}/etc/papersize
+install -dm755 ${STAGING_DIR}/etc/libpaper.d'''
 
 [output]
 backup = ["/etc/papersize"]

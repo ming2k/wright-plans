@@ -15,17 +15,17 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-install -dm755 ${PART_DIR}/usr/lib/jvm
-cp -a ${WORKDIR} ${PART_DIR}/usr/lib/jvm/java-25-temurin
+install -dm755 ${STAGING_DIR}/usr/lib/jvm
+cp -a ${WORKDIR} ${STAGING_DIR}/usr/lib/jvm/java-25-temurin
 
-install -dm755 ${PART_DIR}/usr/bin
-for bin in ${PART_DIR}/usr/lib/jvm/java-25-temurin/bin/*; do
+install -dm755 ${STAGING_DIR}/usr/bin
+for bin in ${STAGING_DIR}/usr/lib/jvm/java-25-temurin/bin/*; do
     name=$(basename "${bin}")
-    ln -sf ../lib/jvm/java-25-temurin/bin/${name} ${PART_DIR}/usr/bin/${name}
+    ln -sf ../lib/jvm/java-25-temurin/bin/${name} ${STAGING_DIR}/usr/bin/${name}
 done
 
-install -dm755 ${PART_DIR}/etc/profile.d
-cat > ${PART_DIR}/etc/profile.d/jdk.sh << 'PROF'
+install -dm755 ${STAGING_DIR}/etc/profile.d
+cat > ${STAGING_DIR}/etc/profile.d/jdk.sh << 'PROF'
 export JAVA_HOME=/usr/lib/jvm/java-25-temurin
 PROF'''
 

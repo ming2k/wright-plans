@@ -28,8 +28,7 @@ cmake --build build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} cmake --install build'''
+DESTDIR=${STAGING_DIR} cmake --install build'''
 
-[[output]]
-name = "quickshell"
+[output]
 runtime_deps = ['jemalloc', 'polkit', 'qt6-base', 'qt6-declarative', 'qt6-svg', 'qt6-wayland']

@@ -49,8 +49,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "emacs"
+[output]
 runtime_deps = ['giflib', 'glib', 'gnutls', 'gtk3', 'harfbuzz', 'libgccjit', 'libjpeg-turbo', 'libpng', 'librsvg', 'libtiff', 'libwebp', 'ncurses', 'pango', 'sqlite', 'tree-sitter', 'zlib']

@@ -67,15 +67,15 @@ ninja'''
 [lifecycle.staging]
 script = '''
 cd source/build
-DESTDIR=${PART_DIR} ninja install
+DESTDIR=${STAGING_DIR} ninja install
 
-chmod -v 4755 ${PART_DIR}/usr/bin/unix_chkpwd
+chmod -v 4755 ${STAGING_DIR}/usr/bin/unix_chkpwd
 
-rm -rf ${PART_DIR}/usr/lib/systemd
+rm -rf ${STAGING_DIR}/usr/lib/systemd
 
-install -vdm755 ${PART_DIR}/etc/pam.d
+install -vdm755 ${STAGING_DIR}/etc/pam.d
 for f in system-account system-auth system-session system-password other; do
-    install -Dm644 ${WORKDIR}/${f} ${PART_DIR}/etc/pam.d/${f}
+    install -Dm644 ${WORKDIR}/${f} ${STAGING_DIR}/etc/pam.d/${f}
 done'''
 
 [output]
@@ -85,6 +85,5 @@ backup = ["/etc/pam.d/system-account", "/etc/pam.d/system-auth", "/etc/pam.d/sys
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
 
-[[output]]
-name = "linux-pam"
+[output]
 runtime_deps = ['systemd']

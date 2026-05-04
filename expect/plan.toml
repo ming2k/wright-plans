@@ -47,9 +47,8 @@ make test'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-ln -svf expect${VERSION}/libexpect${VERSION}.so ${PART_DIR}/usr/lib'''
+make DESTDIR=${STAGING_DIR} install
+ln -svf expect${VERSION}/libexpect${VERSION}.so ${STAGING_DIR}/usr/lib'''
 
-[[output]]
-name = "expect"
+[output]
 runtime_deps = ['tcl']

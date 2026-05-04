@@ -22,8 +22,7 @@ python3 setup.py build'''
 [lifecycle.staging]
 script = '''
 cd source
-python3 setup.py install --root=${PART_DIR} --prefix=/usr --optimize=1'''
+python3 setup.py install --root=${STAGING_DIR} --prefix=/usr --optimize=1'''
 
-[[output]]
-name = "meson"
+[output]
 runtime_deps = ['python', 'ninja']

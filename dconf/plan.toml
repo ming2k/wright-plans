@@ -28,12 +28,12 @@ meson compile -C ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-meson install -C ${WORKDIR}/build --destdir ${PART_DIR}
+meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}
 
 # /etc/dconf/db  — root-only: dconf-update writes compiled .db files here
 # /etc/dconf/profile — group-writable: users in the 'dconf' group can add profiles
-install -dm755  "${PART_DIR}/etc/dconf/db"
-install -dm2775 "${PART_DIR}/etc/dconf/profile"'''
+install -dm755  "${STAGING_DIR}/etc/dconf/db"
+install -dm2775 "${STAGING_DIR}/etc/dconf/profile"'''
 
 [hooks]
 post_install = '''
@@ -42,6 +42,5 @@ chgrp dconf /etc/dconf/profile
 
 '''
 
-[[output]]
-name = "dconf"
+[output]
 runtime_deps = ['dbus']

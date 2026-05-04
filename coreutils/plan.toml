@@ -33,8 +33,8 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/coreutils-${VERSION}
-make DESTDIR=${PART_DIR} install
-mkdir -p ${PART_DIR}/usr/share/man/man8
-mv -v ${PART_DIR}/usr/share/man/man1/chroot.1 ${PART_DIR}/usr/share/man/man8/chroot.8
-sed -i 's/"1"/"8"/' ${PART_DIR}/usr/share/man/man8/chroot.8'''
+make DESTDIR=${STAGING_DIR} install
+mkdir -p ${STAGING_DIR}/usr/share/man/man8
+mv -v ${STAGING_DIR}/usr/share/man/man1/chroot.1 ${STAGING_DIR}/usr/share/man/man8/chroot.8
+sed -i 's/"1"/"8"/' ${STAGING_DIR}/usr/share/man/man8/chroot.8'''
 

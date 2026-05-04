@@ -28,5 +28,5 @@ meson compile -C ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build'''
+DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
 

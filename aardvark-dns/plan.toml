@@ -48,8 +48,7 @@ make PREFIX=/usr CARGO="cargo --locked --offline" build'''
 isolation = "none"
 script = '''
 cd source/aardvark-dns-${VERSION}
-make DESTDIR=${PART_DIR} PREFIX=/usr install'''
+make DESTDIR=${STAGING_DIR} PREFIX=/usr install'''
 
-[[output]]
-name = "aardvark-dns"
+[output]
 runtime_deps = ['glibc']

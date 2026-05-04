@@ -74,15 +74,14 @@ _gemdir=$(gem env gemdir)
 
 install --verbose -D --mode=0644 \
   "tmp_install${_gemdir}/gems/asciidoctor-${VERSION}/man/asciidoctor.1" \
-  "${PART_DIR}/usr/share/man/man1/asciidoctor.1"
+  "${STAGING_DIR}/usr/share/man/man1/asciidoctor.1"
 
-cp --archive --verbose tmp_install/* "${PART_DIR}"
+cp --archive --verbose tmp_install/* "${STAGING_DIR}"
 
 install --verbose -D --mode=0644 LICENSE* \
-  --target-directory "${PART_DIR}/usr/share/licenses/asciidoctor"
+  --target-directory "${STAGING_DIR}/usr/share/licenses/asciidoctor"
 install --verbose -D --mode=0644 *.adoc \
-  --target-directory "${PART_DIR}/usr/share/doc/asciidoctor"'''
+  --target-directory "${STAGING_DIR}/usr/share/doc/asciidoctor"'''
 
-[[output]]
-name = "asciidoctor"
+[output]
 runtime_deps = ['ruby']

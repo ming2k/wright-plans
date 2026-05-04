@@ -30,8 +30,7 @@ make -C ${WORKDIR} -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''
+make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "tpm2-tools"
+[output]
 runtime_deps = ['tpm2-tss']

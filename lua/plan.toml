@@ -32,14 +32,14 @@ ${CC:-gcc} -shared -fPIC -Wl,-soname,liblua.so.5.4 \
 [lifecycle.staging]
 script = '''
 cd source
-make INSTALL_TOP=${PART_DIR}/usr INSTALL_MAN=${PART_DIR}/usr/share/man/man1 install
+make INSTALL_TOP=${STAGING_DIR}/usr INSTALL_MAN=${STAGING_DIR}/usr/share/man/man1 install
 
 # Install shared library
-install -Dm755 src/liblua.so.5.4 ${PART_DIR}/usr/lib/liblua.so.5.4
-ln -sf liblua.so.5.4 ${PART_DIR}/usr/lib/liblua.so
+install -Dm755 src/liblua.so.5.4 ${STAGING_DIR}/usr/lib/liblua.so.5.4
+ln -sf liblua.so.5.4 ${STAGING_DIR}/usr/lib/liblua.so
 
-mkdir -p ${PART_DIR}/usr/lib/pkgconfig
-cat > ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc << PCEOF
+mkdir -p ${STAGING_DIR}/usr/lib/pkgconfig
+cat > ${STAGING_DIR}/usr/lib/pkgconfig/lua5.4.pc << PCEOF
 prefix=/usr
 exec_prefix=\${prefix}
 libdir=\${exec_prefix}/lib
@@ -52,8 +52,8 @@ Libs: -L\${libdir} -llua
 Libs.private: -lm -ldl
 Cflags: -I\${includedir}
 PCEOF
-cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua-5.4.pc
-cp ${PART_DIR}/usr/lib/pkgconfig/lua5.4.pc ${PART_DIR}/usr/lib/pkgconfig/lua.pc'''
+cp ${STAGING_DIR}/usr/lib/pkgconfig/lua5.4.pc ${STAGING_DIR}/usr/lib/pkgconfig/lua-5.4.pc
+cp ${STAGING_DIR}/usr/lib/pkgconfig/lua5.4.pc ${STAGING_DIR}/usr/lib/pkgconfig/lua.pc'''
 
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"

@@ -31,5 +31,5 @@ make WARN_CFLAGS= -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/src
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 

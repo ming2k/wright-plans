@@ -34,24 +34,24 @@ script = '''
 cd source
 
 # Install tzcode tools (zic, zdump, tzselect)
-make CC=gcc DESTDIR=${PART_DIR} install
+make CC=gcc DESTDIR=${STAGING_DIR} install
 
 # Generate zoneinfo database
-./zic -b fat -d ${PART_DIR}/usr/share/zoneinfo africa antarctica asia australasia europe northamerica southamerica etcetera backward factory
+./zic -b fat -d ${STAGING_DIR}/usr/share/zoneinfo africa antarctica asia australasia europe northamerica southamerica etcetera backward factory
 
-./zic -b fat -d ${PART_DIR}/usr/share/zoneinfo/posix africa antarctica asia australasia europe northamerica southamerica etcetera backward factory
+./zic -b fat -d ${STAGING_DIR}/usr/share/zoneinfo/posix africa antarctica asia australasia europe northamerica southamerica etcetera backward factory
 
-./zic -b fat -d ${PART_DIR}/usr/share/zoneinfo/right -L leapseconds africa antarctica asia australasia europe northamerica southamerica etcetera backward factory
+./zic -b fat -d ${STAGING_DIR}/usr/share/zoneinfo/right -L leapseconds africa antarctica asia australasia europe northamerica southamerica etcetera backward factory
 
 # POSIX rules (New York — POSIX requires US DST rules)
-./zic -b fat -d ${PART_DIR}/usr/share/zoneinfo -p America/New_York
+./zic -b fat -d ${STAGING_DIR}/usr/share/zoneinfo -p America/New_York
 
 # Reference data files
-install -m644 iso3166.tab leap-seconds.list zone1970.tab zone.tab SECURITY ${PART_DIR}/usr/share/zoneinfo
+install -m644 iso3166.tab leap-seconds.list zone1970.tab zone.tab SECURITY ${STAGING_DIR}/usr/share/zoneinfo
 
 # /etc/localtime is managed by the user, not the package
-rm -f ${PART_DIR}/etc/localtime
+rm -f ${STAGING_DIR}/etc/localtime
 
 # License
-install -Dm644 LICENSE ${PART_DIR}/usr/share/licenses/tzdata/LICENSE'''
+install -Dm644 LICENSE ${STAGING_DIR}/usr/share/licenses/tzdata/LICENSE'''
 

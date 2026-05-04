@@ -25,8 +25,7 @@ make -j$(nproc)'''
 isolation = "none"
 script = '''
 cd source/conmon-${VERSION}
-make DESTDIR=${PART_DIR} PREFIX=/usr LIBEXECDIR=/usr/libexec install.podman'''
+make DESTDIR=${STAGING_DIR} PREFIX=/usr LIBEXECDIR=/usr/libexec install.podman'''
 
-[[output]]
-name = "conmon"
+[output]
 runtime_deps = ['glib', 'glibc', 'libseccomp', 'systemd']

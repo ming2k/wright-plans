@@ -28,5 +28,5 @@ make NETNS_RUN_DIR=/run/netns -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make SBINDIR=/usr/bin DESTDIR=${PART_DIR} install'''
+make SBINDIR=/usr/bin DESTDIR=${STAGING_DIR} install'''
 

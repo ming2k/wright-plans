@@ -46,8 +46,7 @@ ninja -j$(nproc) -C ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
-[[output]]
-name = "qt6-base"
+[output]
 runtime_deps = ['dbus', 'double-conversion', 'mesa', 'pcre2']

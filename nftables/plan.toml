@@ -54,10 +54,10 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
 
-install -Dm644 ${WORKDIR}/nftables.conf ${PART_DIR}/etc/nftables.conf
-install -Dm644 ${WORKDIR}/nftables.service ${PART_DIR}/usr/lib/systemd/system/nftables.service'''
+install -Dm644 ${WORKDIR}/nftables.conf ${STAGING_DIR}/etc/nftables.conf
+install -Dm644 ${WORKDIR}/nftables.service ${STAGING_DIR}/usr/lib/systemd/system/nftables.service'''
 
 [output]
 backup = ["/etc/nftables.conf"]

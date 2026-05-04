@@ -31,6 +31,6 @@ make PREFIX=/usr \
      SBINDIR=/usr/bin \
      SHAREDIR=/usr/share/hwdata \
      SHARED=yes \
-     DESTDIR=${PART_DIR} \
+     DESTDIR=${STAGING_DIR} \
      install install-lib'''
 

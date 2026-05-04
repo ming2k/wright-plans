@@ -28,6 +28,6 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-chmod -v 755 ${PART_DIR}/usr/lib/lib{hogweed,nettle}.so'''
+make DESTDIR=${STAGING_DIR} install
+chmod -v 755 ${STAGING_DIR}/usr/lib/lib{hogweed,nettle}.so'''
 

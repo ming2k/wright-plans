@@ -17,8 +17,7 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-make PREFIX=/usr DESTDIR=${PART_DIR} install'''
+make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "pass"
+[output]
 runtime_deps = ['bash', 'gnupg', 'git']

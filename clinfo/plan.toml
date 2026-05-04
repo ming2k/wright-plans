@@ -22,8 +22,7 @@ make'''
 [lifecycle.staging]
 script = '''
 cd clinfo-${VERSION}
-make DESTDIR=${PART_DIR} PREFIX=/usr MANDIR=/usr/share/man install'''
+make DESTDIR=${STAGING_DIR} PREFIX=/usr MANDIR=/usr/share/man install'''
 
-[[output]]
-name = "clinfo"
+[output]
 runtime_deps = ['glibc', 'ocl-icd']

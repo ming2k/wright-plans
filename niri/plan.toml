@@ -43,13 +43,12 @@ cargo build --release --locked'''
 [lifecycle.staging]
 script = '''
 cd source/*
-install -Dm755 ${WORKDIR}/target/release/niri ${PART_DIR}/usr/bin/niri
-install -Dm755 resources/niri-session ${PART_DIR}/usr/bin/niri-session
-install -Dm644 resources/niri.desktop ${PART_DIR}/usr/share/wayland-sessions/niri.desktop
-install -Dm644 resources/niri-portals.conf ${PART_DIR}/usr/share/xdg-desktop-portal/niri-portals.conf
-install -Dm644 resources/niri.service ${PART_DIR}/usr/lib/systemd/user/niri.service
-install -Dm644 resources/niri-shutdown.target ${PART_DIR}/usr/lib/systemd/user/niri-shutdown.target'''
+install -Dm755 ${WORKDIR}/target/release/niri ${STAGING_DIR}/usr/bin/niri
+install -Dm755 resources/niri-session ${STAGING_DIR}/usr/bin/niri-session
+install -Dm644 resources/niri.desktop ${STAGING_DIR}/usr/share/wayland-sessions/niri.desktop
+install -Dm644 resources/niri-portals.conf ${STAGING_DIR}/usr/share/xdg-desktop-portal/niri-portals.conf
+install -Dm644 resources/niri.service ${STAGING_DIR}/usr/lib/systemd/user/niri.service
+install -Dm644 resources/niri-shutdown.target ${STAGING_DIR}/usr/lib/systemd/user/niri-shutdown.target'''
 
-[[output]]
-name = "niri"
+[output]
 runtime_deps = ['seatd', 'pipewire', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk']

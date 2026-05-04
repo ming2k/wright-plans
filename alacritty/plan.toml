@@ -32,23 +32,23 @@ cargo build --release --no-default-features --features wayland --locked'''
 script = '''
 cd source
 
-install -Dm755 target/release/alacritty ${PART_DIR}/usr/bin/alacritty
-install -Dm644 extra/logo/alacritty-term.svg ${PART_DIR}/usr/share/pixmaps/Alacritty.svg
-install -Dm644 extra/linux/Alacritty.desktop ${PART_DIR}/usr/share/applications/Alacritty.desktop
+install -Dm755 target/release/alacritty ${STAGING_DIR}/usr/bin/alacritty
+install -Dm644 extra/logo/alacritty-term.svg ${STAGING_DIR}/usr/share/pixmaps/Alacritty.svg
+install -Dm644 extra/linux/Alacritty.desktop ${STAGING_DIR}/usr/share/applications/Alacritty.desktop
 
-install -dm755 ${PART_DIR}/usr/share/man/man1
-install -dm755 ${PART_DIR}/usr/share/man/man5
-scdoc < extra/man/alacritty.1.scd | gzip -c > ${PART_DIR}/usr/share/man/man1/alacritty.1.gz
-scdoc < extra/man/alacritty-msg.1.scd | gzip -c > ${PART_DIR}/usr/share/man/man1/alacritty-msg.1.gz
-scdoc < extra/man/alacritty.5.scd | gzip -c > ${PART_DIR}/usr/share/man/man5/alacritty.5.gz
-scdoc < extra/man/alacritty-bindings.5.scd | gzip -c > ${PART_DIR}/usr/share/man/man5/alacritty-bindings.5.gz
+install -dm755 ${STAGING_DIR}/usr/share/man/man1
+install -dm755 ${STAGING_DIR}/usr/share/man/man5
+scdoc < extra/man/alacritty.1.scd | gzip -c > ${STAGING_DIR}/usr/share/man/man1/alacritty.1.gz
+scdoc < extra/man/alacritty-msg.1.scd | gzip -c > ${STAGING_DIR}/usr/share/man/man1/alacritty-msg.1.gz
+scdoc < extra/man/alacritty.5.scd | gzip -c > ${STAGING_DIR}/usr/share/man/man5/alacritty.5.gz
+scdoc < extra/man/alacritty-bindings.5.scd | gzip -c > ${STAGING_DIR}/usr/share/man/man5/alacritty-bindings.5.gz
 
-install -Dm644 extra/completions/alacritty.bash ${PART_DIR}/usr/share/bash-completion/completions/alacritty
-install -Dm644 extra/completions/_alacritty ${PART_DIR}/usr/share/zsh/site-functions/_alacritty
-install -Dm644 extra/completions/alacritty.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/alacritty.fish
+install -Dm644 extra/completions/alacritty.bash ${STAGING_DIR}/usr/share/bash-completion/completions/alacritty
+install -Dm644 extra/completions/_alacritty ${STAGING_DIR}/usr/share/zsh/site-functions/_alacritty
+install -Dm644 extra/completions/alacritty.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/alacritty.fish
 
-install -dm755 ${PART_DIR}/usr/share/terminfo
-tic -xe alacritty,alacritty-direct -o ${PART_DIR}/usr/share/terminfo extra/alacritty.info'''
+install -dm755 ${STAGING_DIR}/usr/share/terminfo
+tic -xe alacritty,alacritty-direct -o ${STAGING_DIR}/usr/share/terminfo extra/alacritty.info'''
 
 [hooks]
 post_install = '''

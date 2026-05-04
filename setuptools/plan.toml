@@ -17,5 +17,5 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
 

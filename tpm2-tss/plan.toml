@@ -37,7 +37,7 @@ make -C ${WORKDIR} -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make -C ${WORKDIR} DESTDIR=${PART_DIR} install'''
+make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
 [hooks]
 post_install = '''
@@ -53,6 +53,5 @@ systemd-sysusers /usr/lib/sysusers.d/tpm2-tss.conf 2>/dev/null || true
 
 '''
 
-[[output]]
-name = "tpm2-tss"
+[output]
 runtime_deps = ['systemd']

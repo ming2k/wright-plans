@@ -36,7 +36,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
 [hooks]
 post_install = '''
@@ -47,6 +47,5 @@ systemctl enable iwd.service 2>/dev/null || true
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 
-[[output]]
-name = "iwd"
+[output]
 runtime_deps = ['dbus', 'ell']

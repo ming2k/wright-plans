@@ -39,8 +39,7 @@ ninja -j$(nproc) -C build'''
 [lifecycle.staging]
 script = '''
 cd source/mesa-${VERSION}
-DESTDIR=${PART_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[[output]]
-name = "mesa"
+[output]
 runtime_deps = ['elfutils', 'expat', 'libdisplay-info', 'libdrm', 'libglvnd', 'libunwind', 'llvm', 'wayland', 'zlib', 'zstd']

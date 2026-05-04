@@ -39,8 +39,8 @@ go build -ldflags "-X github.com/xtls/xray-core.codename=xray -X github.com/xtls
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 xray ${PART_DIR}/usr/bin/xray
-install -dm755 ${PART_DIR}/etc/xray'''
+install -Dm755 xray ${STAGING_DIR}/usr/bin/xray
+install -dm755 ${STAGING_DIR}/etc/xray'''
 
 [output]
 backup = ["/etc/xray/config.json"]

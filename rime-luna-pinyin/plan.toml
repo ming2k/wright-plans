@@ -15,9 +15,8 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-install -d ${PART_DIR}/usr/share/rime-data
-install -Dm644 ${WORKDIR}/*.yaml -t ${PART_DIR}/usr/share/rime-data/'''
+install -d ${STAGING_DIR}/usr/share/rime-data
+install -Dm644 ${WORKDIR}/*.yaml -t ${STAGING_DIR}/usr/share/rime-data/'''
 
-[[output]]
-name = "rime-luna-pinyin"
+[output]
 runtime_deps = ['rime-prelude']

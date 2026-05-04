@@ -20,4 +20,4 @@ make PREFIX=/usr -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make PREFIX=/usr DESTDIR=${PART_DIR} install'''
+make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''

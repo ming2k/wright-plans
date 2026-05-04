@@ -22,11 +22,11 @@ make -C generate/unix -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 generate/unix/bin/iasl ${PART_DIR}/usr/bin/iasl
-install -Dm755 generate/unix/bin/acpibin ${PART_DIR}/usr/bin/acpibin
-install -Dm755 generate/unix/bin/acpidump ${PART_DIR}/usr/bin/acpidump
-install -Dm755 generate/unix/bin/acpiexec ${PART_DIR}/usr/bin/acpiexec
-install -Dm755 generate/unix/bin/acpihelp ${PART_DIR}/usr/bin/acpihelp
-install -Dm755 generate/unix/bin/acpisrc ${PART_DIR}/usr/bin/acpisrc
-install -Dm644 changes.txt ${PART_DIR}/usr/share/doc/acpica/changes.txt'''
+install -Dm755 generate/unix/bin/iasl ${STAGING_DIR}/usr/bin/iasl
+install -Dm755 generate/unix/bin/acpibin ${STAGING_DIR}/usr/bin/acpibin
+install -Dm755 generate/unix/bin/acpidump ${STAGING_DIR}/usr/bin/acpidump
+install -Dm755 generate/unix/bin/acpiexec ${STAGING_DIR}/usr/bin/acpiexec
+install -Dm755 generate/unix/bin/acpihelp ${STAGING_DIR}/usr/bin/acpihelp
+install -Dm755 generate/unix/bin/acpisrc ${STAGING_DIR}/usr/bin/acpisrc
+install -Dm644 changes.txt ${STAGING_DIR}/usr/share/doc/acpica/changes.txt'''
 

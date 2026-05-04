@@ -23,5 +23,5 @@ make -j$(nproc) shared-lib static-lib gifbuild giffix giftext giftool gifclrmp P
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} PREFIX=/usr install-bin install-include install-lib'''
+make DESTDIR=${STAGING_DIR} PREFIX=/usr install-bin install-include install-lib'''
 

@@ -31,8 +31,7 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install'''
+DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
-[[output]]
-name = "libva-utils"
+[output]
 runtime_deps = ['libdrm', 'libva', 'wayland']

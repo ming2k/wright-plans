@@ -36,11 +36,11 @@ meson compile -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build
+DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build
 
 # Create standard module configuration directories
-install -dm755 ${PART_DIR}/etc/depmod.d
-install -dm755 ${PART_DIR}/etc/modprobe.d
-install -dm755 ${PART_DIR}/usr/lib/depmod.d
-install -dm755 ${PART_DIR}/usr/lib/modprobe.d'''
+install -dm755 ${STAGING_DIR}/etc/depmod.d
+install -dm755 ${STAGING_DIR}/etc/modprobe.d
+install -dm755 ${STAGING_DIR}/usr/lib/depmod.d
+install -dm755 ${STAGING_DIR}/usr/lib/modprobe.d'''
 

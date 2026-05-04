@@ -34,10 +34,9 @@ make -j$(nproc) LDFLAGS="${LDFLAGS} -lreadline -lhistory"'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} make install
-ln -sf gpg  ${PART_DIR}/usr/bin/gpg2
-ln -sf gpgv ${PART_DIR}/usr/bin/gpgv2'''
+DESTDIR=${STAGING_DIR} make install
+ln -sf gpg  ${STAGING_DIR}/usr/bin/gpg2
+ln -sf gpgv ${STAGING_DIR}/usr/bin/gpgv2'''
 
-[[output]]
-name = "gnupg"
+[output]
 runtime_deps = ['pinentry']

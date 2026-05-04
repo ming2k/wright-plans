@@ -38,8 +38,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "neomutt"
+[output]
 runtime_deps = ['ca-certificates', 'gnupg']

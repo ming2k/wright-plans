@@ -40,8 +40,7 @@ ninja -C build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[[output]]
-name = "vulkan-tools"
+[output]
 runtime_deps = ['vulkan-loader', 'wayland']

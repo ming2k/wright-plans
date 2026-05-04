@@ -33,8 +33,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/inotify-tools-${VERSION}
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "inotify-tools"
+[output]
 runtime_deps = ['glibc']

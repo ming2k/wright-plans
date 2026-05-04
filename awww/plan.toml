@@ -25,10 +25,10 @@ cargo build --release --locked'''
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 target/release/swww ${PART_DIR}/usr/bin/swww
-install -Dm755 target/release/swww-daemon ${PART_DIR}/usr/bin/swww-daemon
+install -Dm755 target/release/swww ${STAGING_DIR}/usr/bin/swww
+install -Dm755 target/release/swww-daemon ${STAGING_DIR}/usr/bin/swww-daemon
 
-install -Dm644 completions/swww.bash ${PART_DIR}/usr/share/bash-completion/completions/swww
-install -Dm644 completions/swww.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/swww.fish
-install -Dm644 completions/_swww ${PART_DIR}/usr/share/zsh/site-functions/_swww'''
+install -Dm644 completions/swww.bash ${STAGING_DIR}/usr/share/bash-completion/completions/swww
+install -Dm644 completions/swww.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/swww.fish
+install -Dm644 completions/_swww ${STAGING_DIR}/usr/share/zsh/site-functions/_swww'''
 

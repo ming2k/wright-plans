@@ -25,9 +25,8 @@ echo "no build needed"'''
 [lifecycle.staging]
 script = '''
 cd source
-mkdir -p ${PART_DIR}/usr/share/alsa
-cp -a ucm2 ${PART_DIR}/usr/share/alsa/ucm2'''
+mkdir -p ${STAGING_DIR}/usr/share/alsa
+cp -a ucm2 ${STAGING_DIR}/usr/share/alsa/ucm2'''
 
-[[output]]
-name = "alsa-ucm-conf"
+[output]
 runtime_deps = ['alsa-lib']

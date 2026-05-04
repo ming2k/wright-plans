@@ -92,7 +92,7 @@ cd source
 _perllibdir=$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')
 
 make \
-  DESTDIR=${PART_DIR} \
+  DESTDIR=${STAGING_DIR} \
   prefix=/usr \
   gitexecdir=/usr/lib/git-core \
   perllibdir="${_perllibdir}" \
@@ -109,18 +109,18 @@ make \
   install
 
 # bash completion
-mkdir -p ${PART_DIR}/usr/share/bash-completion/completions/
+mkdir -p ${STAGING_DIR}/usr/share/bash-completion/completions/
 install -m 0644 ./contrib/completion/git-completion.bash \
-  ${PART_DIR}/usr/share/bash-completion/completions/git
+  ${STAGING_DIR}/usr/share/bash-completion/completions/git
 
 # git prompt
-mkdir -p ${PART_DIR}/usr/share/git/
+mkdir -p ${STAGING_DIR}/usr/share/git/
 install -m 0644 ./contrib/completion/git-prompt.sh \
-  ${PART_DIR}/usr/share/git/git-prompt.sh
+  ${STAGING_DIR}/usr/share/git/git-prompt.sh
 
 # libsecret credentials helper
 install -m 0755 contrib/credential/libsecret/git-credential-libsecret \
-  ${PART_DIR}/usr/lib/git-core/git-credential-libsecret
+  ${STAGING_DIR}/usr/lib/git-core/git-credential-libsecret
 make \
   prefix=/usr \
   gitexecdir=/usr/lib/git-core \
@@ -139,7 +139,7 @@ make \
 
 # subtree install
 make \
-  DESTDIR=${PART_DIR} \
+  DESTDIR=${STAGING_DIR} \
   prefix=/usr \
   gitexecdir=/usr/lib/git-core \
   perllibdir="${_perllibdir}" \
@@ -157,13 +157,12 @@ make \
 
 # contrib extras
 find contrib/ -name '.gitignore' -delete
-cp -a ./contrib/* ${PART_DIR}/usr/share/git/
+cp -a ./contrib/* ${STAGING_DIR}/usr/share/git/
 
 # zsh completion (merged into main package)
-install -d ${PART_DIR}/usr/share/zsh/site-functions/
+install -d ${STAGING_DIR}/usr/share/zsh/site-functions/
 ln -s ../../git/completion/git-completion.zsh \
-  ${PART_DIR}/usr/share/zsh/site-functions/_git'''
+  ${STAGING_DIR}/usr/share/zsh/site-functions/_git'''
 
-[[output]]
-name = "git"
+[output]
 runtime_deps = ['ca-certificates', 'curl', 'expat', 'perl', 'openssl', 'pcre2', 'grep', 'shadow', 'zlib-ng', 'openssh']

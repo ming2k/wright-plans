@@ -33,7 +33,7 @@ make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr'''
 [lifecycle.staging]
 script = '''
 cd source
-make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${PART_DIR} install'''
+make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
 [hooks]
 post_install = '''

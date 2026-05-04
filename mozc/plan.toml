@@ -31,11 +31,10 @@ bazel --batch build server:mozc_server gui/tool:mozc_tool \
 script = '''
 cd source/src
 
-install -Dm755 bazel-bin/server/mozc_server ${PART_DIR}/usr/lib/mozc/mozc_server
-install -Dm755 bazel-bin/gui/tool/mozc_tool ${PART_DIR}/usr/lib/mozc/mozc_tool
+install -Dm755 bazel-bin/server/mozc_server ${STAGING_DIR}/usr/lib/mozc/mozc_server
+install -Dm755 bazel-bin/gui/tool/mozc_tool ${STAGING_DIR}/usr/lib/mozc/mozc_tool
 
-install -Dm644 ${WORKDIR}/LICENSE ${PART_DIR}/usr/share/licenses/mozc/LICENSE'''
+install -Dm644 ${WORKDIR}/LICENSE ${STAGING_DIR}/usr/share/licenses/mozc/LICENSE'''
 
-[[output]]
-name = "mozc"
+[output]
 runtime_deps = ['qt6-base']

@@ -27,8 +27,7 @@ ninja -j$(nproc) -C build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[[output]]
-name = "qt6-shadertools"
+[output]
 runtime_deps = ['qt6-base']

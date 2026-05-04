@@ -30,6 +30,6 @@ ninja -C build
 [lifecycle.staging]
 script = """
 cd source/c
-DESTDIR=${PART_DIR} ninja -C build install
+DESTDIR=${STAGING_DIR} ninja -C build install
 """
 

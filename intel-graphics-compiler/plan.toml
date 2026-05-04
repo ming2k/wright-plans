@@ -114,21 +114,21 @@ script = "cmake --build build -j$(nproc)"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} cmake --install build
-install -D -m644 "intel-graphics-compiler-${VERSION}/LICENSE.md" -t "${PART_DIR}/usr/share/licenses/${NAME}"
+DESTDIR=${STAGING_DIR} cmake --install build
+install -D -m644 "intel-graphics-compiler-${VERSION}/LICENSE.md" -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
 
 # 按照 Arch 规范移动头文件
-mkdir -p ${PART_DIR}/usr/include/igc
-mv ${PART_DIR}/usr/include/opencl-c.h ${PART_DIR}/usr/include/igc/
-mv ${PART_DIR}/usr/include/opencl-c-base.h ${PART_DIR}/usr/include/igc/
+mkdir -p ${STAGING_DIR}/usr/include/igc
+mv ${STAGING_DIR}/usr/include/opencl-c.h ${STAGING_DIR}/usr/include/igc/
+mv ${STAGING_DIR}/usr/include/opencl-c-base.h ${STAGING_DIR}/usr/include/igc/
 
 # 移动 NOTICES.txt 到许可证目录（igc* 可能包含主版本号，如 igc2）
-mv ${PART_DIR}/usr/lib/igc*/NOTICES.txt ${PART_DIR}/usr/share/licenses/${NAME}/ || true
+mv ${STAGING_DIR}/usr/lib/igc*/NOTICES.txt ${STAGING_DIR}/usr/share/licenses/${NAME}/ || true
 
 # opencl-clang 兼容性文件
-install -D -m644 opencl-clang/opencl_clang.h -t "${PART_DIR}/usr/include/cclang"
-install -D -m644 opencl-clang/LICENSE "${PART_DIR}/usr/share/licenses/${NAME}/LICENSE-opencl-clang"
-ln -sf libopencl-clang.so.16 "${PART_DIR}/usr/lib/libopencl-clang.so"
+install -D -m644 opencl-clang/opencl_clang.h -t "${STAGING_DIR}/usr/include/cclang"
+install -D -m644 opencl-clang/LICENSE "${STAGING_DIR}/usr/share/licenses/${NAME}/LICENSE-opencl-clang"
+ln -sf libopencl-clang.so.16 "${STAGING_DIR}/usr/lib/libopencl-clang.so"
 '''
 
 [output]
@@ -136,6 +136,5 @@ provides = ["intel-opencl-clang=16"]
 conflicts = ["intel-opencl-clang"]
 replaces = ["intel-opencl-clang"]
 
-[[output]]
-name = "intel-graphics-compiler"
+[output]
 runtime_deps = ['glibc', 'libgcc', 'libstdc++', 'zlib', 'zstd']

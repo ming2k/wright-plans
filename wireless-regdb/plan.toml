@@ -15,5 +15,5 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm644 regulatory.db ${PART_DIR}/usr/lib/firmware/regulatory.db
-install -Dm644 regulatory.db.p7s ${PART_DIR}/usr/lib/firmware/regulatory.db.p7s'''
+install -Dm644 regulatory.db ${STAGING_DIR}/usr/lib/firmware/regulatory.db
+install -Dm644 regulatory.db.p7s ${STAGING_DIR}/usr/lib/firmware/regulatory.db.p7s'''

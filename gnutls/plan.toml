@@ -30,8 +30,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "gnutls"
+[output]
 runtime_deps = ['libtasn1', 'nettle', 'p11-kit']

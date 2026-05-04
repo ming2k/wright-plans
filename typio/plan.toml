@@ -37,6 +37,6 @@ cmake --build build -j$(nproc)
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} cmake --install build
+DESTDIR=${STAGING_DIR} cmake --install build
 '''
 

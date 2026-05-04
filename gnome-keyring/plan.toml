@@ -28,7 +28,7 @@ meson compile -C build'''
 [lifecycle.staging]
 script = '''
 cd source
-meson install -C build --destdir ${PART_DIR}'''
+meson install -C build --destdir ${STAGING_DIR}'''
 
 [hooks]
 post_install = '''
@@ -42,6 +42,5 @@ ldconfig 2>/dev/null || true
 
 '''
 
-[[output]]
-name = "gnome-keyring"
+[output]
 runtime_deps = ['dbus', 'gcr3', 'libsecret', 'linux-pam', 'p11-kit']

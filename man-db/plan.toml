@@ -40,8 +40,7 @@ make check'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
-[[output]]
-name = "man-db"
+[output]
 runtime_deps = ['gdbm', 'groff', 'libpipeline']

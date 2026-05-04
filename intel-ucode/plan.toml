@@ -15,9 +15,9 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-install -d "${PART_DIR}/usr/lib/firmware"
-cp -r "${WORKDIR}/intel-ucode" "${PART_DIR}/usr/lib/firmware/"
-cp -r "${WORKDIR}/intel-ucode-with-caveats" "${PART_DIR}/usr/lib/firmware/"
+install -d "${STAGING_DIR}/usr/lib/firmware"
+cp -r "${WORKDIR}/intel-ucode" "${STAGING_DIR}/usr/lib/firmware/"
+cp -r "${WORKDIR}/intel-ucode-with-caveats" "${STAGING_DIR}/usr/lib/firmware/"
 
 install -Dm644 "${WORKDIR}/license" \
-    "${PART_DIR}/usr/share/licenses/intel-ucode/LICENSE"'''
+    "${STAGING_DIR}/usr/share/licenses/intel-ucode/LICENSE"'''

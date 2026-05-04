@@ -33,6 +33,6 @@ make -j$(nproc)'''
 script = '''
 cd source
 sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
-make MANSUFFIX=ssl DESTDIR=${PART_DIR} install
-mv -v ${PART_DIR}/usr/share/doc/openssl ${PART_DIR}/usr/share/doc/openssl-${VERSION}'''
+make MANSUFFIX=ssl DESTDIR=${STAGING_DIR} install
+mv -v ${STAGING_DIR}/usr/share/doc/openssl ${STAGING_DIR}/usr/share/doc/openssl-${VERSION}'''
 

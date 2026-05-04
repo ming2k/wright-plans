@@ -17,8 +17,7 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-pip3 install --no-index --no-user --no-deps --root=${PART_DIR} --no-build-isolation .'''
+pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
 
-[[output]]
-name = "python-sphinx"
+[output]
 runtime_deps = ['python', 'python-jinja2', 'python-pygments', 'python-docutils', 'python-babel', 'python-alabaster', 'python-requests', 'python-packaging', 'sphinxcontrib-applehelp', 'sphinxcontrib-devhelp', 'sphinxcontrib-htmlhelp', 'sphinxcontrib-jsmath', 'sphinxcontrib-qthelp', 'sphinxcontrib-serializinghtml']

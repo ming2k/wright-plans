@@ -28,12 +28,11 @@ ninja -C build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [hooks]
 post_install = "ldconfig"
 post_upgrade = "ldconfig"
 
-[[output]]
-name = "libzip"
+[output]
 runtime_deps = ['zlib', 'openssl', 'bzip2', 'xz', 'zstd']

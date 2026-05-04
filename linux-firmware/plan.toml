@@ -15,5 +15,5 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-mkdir -p ${PART_DIR}/usr/lib/firmware
-./copy-firmware.sh ${PART_DIR}/usr/lib/firmware'''
+mkdir -p ${STAGING_DIR}/usr/lib/firmware
+./copy-firmware.sh ${STAGING_DIR}/usr/lib/firmware'''

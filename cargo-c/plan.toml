@@ -25,8 +25,8 @@ LIBGIT2_NO_PKG_CONFIG=1 cargo build --release'''
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 target/release/cargo-cbuild   ${PART_DIR}/usr/bin/cargo-cbuild
-install -Dm755 target/release/cargo-cinstall ${PART_DIR}/usr/bin/cargo-cinstall
-install -Dm755 target/release/cargo-capi     ${PART_DIR}/usr/bin/cargo-capi
-install -Dm755 target/release/cargo-ctest    ${PART_DIR}/usr/bin/cargo-ctest'''
+install -Dm755 target/release/cargo-cbuild   ${STAGING_DIR}/usr/bin/cargo-cbuild
+install -Dm755 target/release/cargo-cinstall ${STAGING_DIR}/usr/bin/cargo-cinstall
+install -Dm755 target/release/cargo-capi     ${STAGING_DIR}/usr/bin/cargo-capi
+install -Dm755 target/release/cargo-ctest    ${STAGING_DIR}/usr/bin/cargo-ctest'''
 

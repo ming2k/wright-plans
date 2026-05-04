@@ -27,15 +27,15 @@ script = "meson compile -C ${WORKDIR}/build -j$(nproc)"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build
+DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build
 
-install -Dm644 ${WORKDIR}/LICENSE -t ${PART_DIR}/usr/share/licenses/rtkit/
+install -Dm644 ${WORKDIR}/LICENSE -t ${STAGING_DIR}/usr/share/licenses/rtkit/
 sed -n '4,25p' ${WORKDIR}/rtkit.c |
-  install -Dm644 /dev/stdin ${PART_DIR}/usr/share/licenses/rtkit/LICENSE.MIT
+  install -Dm644 /dev/stdin ${STAGING_DIR}/usr/share/licenses/rtkit/LICENSE.MIT
 
-if [ -d ${PART_DIR}/usr/sbin ]; then
-  cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
-  rm -rf ${PART_DIR}/usr/sbin
+if [ -d ${STAGING_DIR}/usr/sbin ]; then
+  cp -a ${STAGING_DIR}/usr/sbin/. ${STAGING_DIR}/usr/bin/
+  rm -rf ${STAGING_DIR}/usr/sbin
 fi'''
 
 [hooks]

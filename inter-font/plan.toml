@@ -29,8 +29,8 @@ bsdtar xf ${WORKDIR}/Inter-${VERSION}.zip -C inter-extracted'''
 [lifecycle.staging]
 script = '''
 cd source
-mkdir -p ${PART_DIR}/usr/share/fonts/inter
-find ${WORKDIR}/inter-extracted -name '*.ttf' -exec cp {} ${PART_DIR}/usr/share/fonts/inter/ \;'''
+mkdir -p ${STAGING_DIR}/usr/share/fonts/inter
+find ${WORKDIR}/inter-extracted -name '*.ttf' -exec cp {} ${STAGING_DIR}/usr/share/fonts/inter/ \;'''
 
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"

@@ -41,7 +41,7 @@ sh ${WORKDIR}/bundle.sh'''
 script = '''
 cd source
 install -Dm644 ca-bundle.trust.p11-kit \
-  ${PART_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit'''
+  ${STAGING_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit'''
 
 [hooks]
 post_install = '''
@@ -53,6 +53,5 @@ update-ca-trust
 
 '''
 
-[[output]]
-name = "ca-certificates"
+[output]
 runtime_deps = ['p11-kit']

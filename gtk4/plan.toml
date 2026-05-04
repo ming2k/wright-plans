@@ -40,9 +40,9 @@ meson compile -C ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-meson install -C ${WORKDIR}/build --destdir ${PART_DIR}
+meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}
 
-pc_file="${PART_DIR}/usr/lib/pkgconfig/gtk4.pc"
+pc_file="${STAGING_DIR}/usr/lib/pkgconfig/gtk4.pc"
 if [ -f "${pc_file}" ]; then
     if ! grep -q 'libjpeg' "${pc_file}"; then
         sed -i "s/^Requires: /Requires: libjpeg, libpng, /" "${pc_file}"
@@ -63,6 +63,5 @@ gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 
 '''
 
-[[output]]
-name = "gtk4"
+[output]
 runtime_deps = ['adwaita-icon-theme', 'shared-mime-info', 'iso-codes']

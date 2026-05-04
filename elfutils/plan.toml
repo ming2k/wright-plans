@@ -30,7 +30,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-rm -f ${PART_DIR}/usr/lib/lib*.a
-rm -rf ${PART_DIR}/usr/etc'''
+make DESTDIR=${STAGING_DIR} install
+rm -f ${STAGING_DIR}/usr/lib/lib*.a
+rm -rf ${STAGING_DIR}/usr/etc'''
 

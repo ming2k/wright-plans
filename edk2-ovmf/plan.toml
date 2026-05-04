@@ -112,8 +112,8 @@ script = '''
 cd source
 edk2_dir=$(find "${WORKDIR}" -maxdepth 1 -mindepth 1 -type d -name 'edk2-*' | head -n1)
 cd "${edk2_dir}"
-install -Dm644 OVMF_CODE.fd ${PART_DIR}/usr/share/edk2/x64/OVMF_CODE.fd
-install -Dm644 OVMF_VARS.fd ${PART_DIR}/usr/share/edk2/x64/OVMF_VARS.fd
-install -Dm644 OVMF_CODE.secboot.4m.fd ${PART_DIR}/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd
-install -Dm644 OVMF_VARS.4m.fd ${PART_DIR}/usr/share/edk2/x64/OVMF_VARS.4m.fd'''
+install -Dm644 OVMF_CODE.fd ${STAGING_DIR}/usr/share/edk2/x64/OVMF_CODE.fd
+install -Dm644 OVMF_VARS.fd ${STAGING_DIR}/usr/share/edk2/x64/OVMF_VARS.fd
+install -Dm644 OVMF_CODE.secboot.4m.fd ${STAGING_DIR}/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd
+install -Dm644 OVMF_VARS.4m.fd ${STAGING_DIR}/usr/share/edk2/x64/OVMF_VARS.4m.fd'''
 

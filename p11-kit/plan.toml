@@ -31,10 +31,10 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
+DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install
 
 # Create update-ca-trust script
-cat > ${PART_DIR}/usr/bin/update-ca-trust << 'SCRIPT'
+cat > ${STAGING_DIR}/usr/bin/update-ca-trust << 'SCRIPT'
 #!/bin/sh
 # Extract CA certificates from p11-kit trust store
 # openssl-directory first, then bundle — bundle must come last
@@ -44,11 +44,10 @@ trust extract --format=openssl-directory --filter=ca-anchors \
 trust extract --format=pem-bundle --filter=ca-anchors \
   --overwrite --purpose=server-auth /etc/ssl/certs/ca-certificates.crt
 SCRIPT
-chmod 755 ${PART_DIR}/usr/bin/update-ca-trust
+chmod 755 ${STAGING_DIR}/usr/bin/update-ca-trust
 
 # Link trust-extract-compat to update-ca-trust
-ln -sf ../../bin/update-ca-trust ${PART_DIR}/usr/libexec/p11-kit/trust-extract-compat'''
+ln -sf ../../bin/update-ca-trust ${STAGING_DIR}/usr/libexec/p11-kit/trust-extract-compat'''
 
-[[output]]
-name = "p11-kit"
+[output]
 runtime_deps = ['libtasn1']

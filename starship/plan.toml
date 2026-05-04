@@ -23,11 +23,11 @@ cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-install -Dm755 ${WORKDIR}/target/release/starship ${PART_DIR}/usr/bin/starship
-install -dm755 ${PART_DIR}/usr/share/bash-completion/completions
-install -dm755 ${PART_DIR}/usr/share/zsh/site-functions
-install -dm755 ${PART_DIR}/usr/share/fish/vendor_completions.d
-${WORKDIR}/target/release/starship completions bash > ${PART_DIR}/usr/share/bash-completion/completions/starship
-${WORKDIR}/target/release/starship completions zsh  > ${PART_DIR}/usr/share/zsh/site-functions/_starship
-${WORKDIR}/target/release/starship completions fish > ${PART_DIR}/usr/share/fish/vendor_completions.d/starship.fish'''
+install -Dm755 ${WORKDIR}/target/release/starship ${STAGING_DIR}/usr/bin/starship
+install -dm755 ${STAGING_DIR}/usr/share/bash-completion/completions
+install -dm755 ${STAGING_DIR}/usr/share/zsh/site-functions
+install -dm755 ${STAGING_DIR}/usr/share/fish/vendor_completions.d
+${WORKDIR}/target/release/starship completions bash > ${STAGING_DIR}/usr/share/bash-completion/completions/starship
+${WORKDIR}/target/release/starship completions zsh  > ${STAGING_DIR}/usr/share/zsh/site-functions/_starship
+${WORKDIR}/target/release/starship completions fish > ${STAGING_DIR}/usr/share/fish/vendor_completions.d/starship.fish'''
 

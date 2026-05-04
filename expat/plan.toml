@@ -29,6 +29,6 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-install -v -m644 doc/*.{html,css} ${PART_DIR}/usr/share/doc/expat-${VERSION}'''
+make DESTDIR=${STAGING_DIR} install
+install -v -m644 doc/*.{html,css} ${STAGING_DIR}/usr/share/doc/expat-${VERSION}'''
 

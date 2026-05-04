@@ -12,4 +12,4 @@ sha256 = "SKIP"
 url = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.285-1/virtio-win.iso"
 
 [lifecycle.staging]
-script = "install -Dm644 ${WORKDIR}/virtio-win.iso ${PART_DIR}/usr/share/virtio-win/virtio-win.iso"
+script = "install -Dm644 ${WORKDIR}/virtio-win.iso ${STAGING_DIR}/usr/share/virtio-win/virtio-win.iso"

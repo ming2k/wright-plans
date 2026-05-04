@@ -32,7 +32,7 @@ cmake --build ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} cmake --install ${WORKDIR}/build
-install -Dm 644 ${WORKDIR}/LICENSE.md ${PART_DIR}/usr/share/licenses/zlib-ng/LICENSE.md
-install -Dm 644 ${WORKDIR}/README.md ${PART_DIR}/usr/share/doc/zlib-ng/README.md'''
+DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build
+install -Dm 644 ${WORKDIR}/LICENSE.md ${STAGING_DIR}/usr/share/licenses/zlib-ng/LICENSE.md
+install -Dm 644 ${WORKDIR}/README.md ${STAGING_DIR}/usr/share/doc/zlib-ng/README.md'''
 

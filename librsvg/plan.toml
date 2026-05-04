@@ -30,5 +30,5 @@ meson compile -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
+meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
 

@@ -42,5 +42,5 @@ make -j$(nproc)'''
 script = '''
 cd source
 cd ${SRC_DIR}/rnnoise-${VERSION}
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 

@@ -35,9 +35,9 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C ${WORKDIR}/build install
-if [ -d ${PART_DIR}/usr/sbin ]; then
-    mv ${PART_DIR}/usr/sbin/* ${PART_DIR}/usr/bin/
-    rmdir ${PART_DIR}/usr/sbin
+DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install
+if [ -d ${STAGING_DIR}/usr/sbin ]; then
+    mv ${STAGING_DIR}/usr/sbin/* ${STAGING_DIR}/usr/bin/
+    rmdir ${STAGING_DIR}/usr/sbin
 fi'''
 

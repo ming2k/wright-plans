@@ -31,8 +31,8 @@ make mrproper
 make headers
 find usr/include -name '.*' -delete
 rm -f usr/include/Makefile
-install -d ${PART_DIR}/usr
-cp -a usr/include ${PART_DIR}/usr/
-# Remove any stray files that leak into ${PART_DIR}
-find ${PART_DIR} -maxdepth 2 -name '*.pl' -delete'''
+install -d ${STAGING_DIR}/usr
+cp -a usr/include ${STAGING_DIR}/usr/
+# Remove any stray files that leak into ${STAGING_DIR}
+find ${STAGING_DIR} -maxdepth 2 -name '*.pl' -delete'''
 

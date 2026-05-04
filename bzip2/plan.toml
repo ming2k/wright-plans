@@ -48,18 +48,18 @@ script = '''
 cd source
 
 # Install programs and static lib
-make PREFIX=${PART_DIR}/usr install
+make PREFIX=${STAGING_DIR}/usr install
 
 # Install shared library
-cp -av libbz2.so.* ${PART_DIR}/usr/lib/
-ln -sv libbz2.so.${VERSION} ${PART_DIR}/usr/lib/libbz2.so
+cp -av libbz2.so.* ${STAGING_DIR}/usr/lib/
+ln -sv libbz2.so.${VERSION} ${STAGING_DIR}/usr/lib/libbz2.so
 
 # Install shared bzip2 binary and create symlinks
-cp -v bzip2-shared ${PART_DIR}/usr/bin/bzip2
-for i in ${PART_DIR}/usr/bin/{bzcat,bunzip2}; do
+cp -v bzip2-shared ${STAGING_DIR}/usr/bin/bzip2
+for i in ${STAGING_DIR}/usr/bin/{bzcat,bunzip2}; do
 ln -sfv bzip2 $i
 done
 
 # Remove useless static library
-rm -fv ${PART_DIR}/usr/lib/libbz2.a'''
+rm -fv ${STAGING_DIR}/usr/lib/libbz2.a'''
 

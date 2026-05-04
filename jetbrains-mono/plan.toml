@@ -28,8 +28,8 @@ bsdtar xf ${WORKDIR}/JetBrainsMono-${VERSION}.zip -C jbmono'''
 [lifecycle.staging]
 script = '''
 cd source
-mkdir -p ${PART_DIR}/usr/share/fonts/jetbrains-mono
-find ${WORKDIR}/jbmono -name '*.ttf' -not -name '*NL*' -exec cp {} ${PART_DIR}/usr/share/fonts/jetbrains-mono/ \;'''
+mkdir -p ${STAGING_DIR}/usr/share/fonts/jetbrains-mono
+find ${WORKDIR}/jbmono -name '*.ttf' -not -name '*NL*' -exec cp {} ${STAGING_DIR}/usr/share/fonts/jetbrains-mono/ \;'''
 
 [hooks]
 post_install = "fc-cache -s 2>/dev/null || true"

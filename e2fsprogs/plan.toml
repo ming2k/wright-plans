@@ -37,9 +37,9 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/build
-DESTDIR=${PART_DIR} make install
-DESTDIR=${PART_DIR} make install-libs
+DESTDIR=${STAGING_DIR} make install
+DESTDIR=${STAGING_DIR} make install-libs
 
 # Remove static libraries
-rm -f ${PART_DIR}/usr/lib/lib{com_err,e2p,ext2fs,ss}.a'''
+rm -f ${STAGING_DIR}/usr/lib/lib{com_err,e2p,ext2fs,ss}.a'''
 

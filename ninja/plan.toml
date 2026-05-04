@@ -22,9 +22,8 @@ python3 configure.py --bootstrap'''
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 ninja ${PART_DIR}/usr/bin/ninja
-install -Dm644 misc/bash-completion ${PART_DIR}/usr/share/bash-completion/completions/ninja'''
+install -Dm755 ninja ${STAGING_DIR}/usr/bin/ninja
+install -Dm644 misc/bash-completion ${STAGING_DIR}/usr/share/bash-completion/completions/ninja'''
 
-[[output]]
-name = "ninja"
+[output]
 runtime_deps = ['python']

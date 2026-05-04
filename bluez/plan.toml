@@ -50,7 +50,7 @@ make -j$(nproc) -C ${WORKDIR}'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
 
 # Intentionally do not install src/main.conf. bluetoothd has sensible built-in
 # defaults and upstream's sample main.conf drifts across releases — shipping it
@@ -66,6 +66,5 @@ systemctl enable bluetooth.service 2>/dev/null || true
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 
-[[output]]
-name = "bluez"
+[output]
 runtime_deps = ['dbus', 'systemd']

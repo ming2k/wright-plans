@@ -29,12 +29,11 @@ CGO_ENABLED=0 go build -trimpath \
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 docker-compose ${PART_DIR}/usr/bin/docker-compose
+install -Dm755 docker-compose ${STAGING_DIR}/usr/bin/docker-compose
 
 # Install as docker CLI plugin
-install -dm755 ${PART_DIR}/usr/lib/docker/cli-plugins
-ln -s /usr/bin/docker-compose ${PART_DIR}/usr/lib/docker/cli-plugins/docker-compose'''
+install -dm755 ${STAGING_DIR}/usr/lib/docker/cli-plugins
+ln -s /usr/bin/docker-compose ${STAGING_DIR}/usr/lib/docker/cli-plugins/docker-compose'''
 
-[[output]]
-name = "docker-compose"
+[output]
 runtime_deps = ['podman']

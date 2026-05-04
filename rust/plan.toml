@@ -17,23 +17,32 @@ extract_to = "source"
 [lifecycle.compile]
 script = '''
 cd source/rust-${VERSION}-x86_64-unknown-linux-gnu
-./install.sh --destdir=${PART_DIR} --prefix=/usr --without=rust-docs
+./install.sh --destdir=${STAGING_DIR} --prefix=/usr --without=rust-docs
 
 # Move non-FHS usr/etc/* to etc/
-if [ -d "${PART_DIR}/usr/etc" ]; then
-    mkdir -p "${PART_DIR}/etc"
-    cp -r "${PART_DIR}/usr/etc/"* "${PART_DIR}/etc/"
-    rm -rf "${PART_DIR}/usr/etc"
+if [ -d "${STAGING_DIR}/usr/etc" ]; then
+    mkdir -p "${STAGING_DIR}/etc"
+    cp -r "${STAGING_DIR}/usr/etc/"* "${STAGING_DIR}/etc/"
+    rm -rf "${STAGING_DIR}/usr/etc"
 fi'''
 
-# Rust outputs: main compiler + cargo
-[[output]]
-name = "rust"
-# catch-all
-
+# Rust outputs: cargo is split out; rest stays in rust catch-all
 [[output]]
 name = "cargo"
 description = "Cargo package manager for Rust"
-include = ["/.*"]
+include = [
+    "/usr/bin/cargo",
+    "/usr/bin/cargo-.*",
+    "/usr/libexec/cargo-.*",
+    "/usr/share/cargo/.*",
+    "/usr/share/doc/cargo/.*",
+    "/usr/share/man/man1/cargo.*",
+    "/usr/share/zsh/site-functions/_cargo",
+    "/usr/lib/rustlib/src/rust/Cargo\\.lock",
+    "/usr/lib/rustlib/src/rust/library/.*/Cargo\\.toml",
+]
 runtime_deps = ["rust"]
 
+[[output]]
+name = "rust"
+# catch-all — rustc, rustdoc, stdlib, rustlib, etc.

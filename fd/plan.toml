@@ -24,14 +24,14 @@ cargo build --release --locked'''
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 target/release/fd ${PART_DIR}/usr/bin/fd
+install -Dm755 target/release/fd ${STAGING_DIR}/usr/bin/fd
 
 if [ -f doc/fd.1 ]; then
-  install -Dm644 doc/fd.1 ${PART_DIR}/usr/share/man/man1/fd.1
+  install -Dm644 doc/fd.1 ${STAGING_DIR}/usr/share/man/man1/fd.1
 fi
 if [ -d completions ]; then
-  install -Dm644 completions/fd.bash ${PART_DIR}/usr/share/bash-completion/completions/fd || true
-  install -Dm644 completions/_fd ${PART_DIR}/usr/share/zsh/site-functions/_fd || true
-  install -Dm644 completions/fd.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/fd.fish || true
+  install -Dm644 completions/fd.bash ${STAGING_DIR}/usr/share/bash-completion/completions/fd || true
+  install -Dm644 completions/_fd ${STAGING_DIR}/usr/share/zsh/site-functions/_fd || true
+  install -Dm644 completions/fd.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/fd.fish || true
 fi'''
 

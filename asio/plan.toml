@@ -15,6 +15,6 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-install -d ${PART_DIR}/usr/include
-cp -r ${WORKDIR}/asio/include/asio.hpp ${PART_DIR}/usr/include/
-cp -r ${WORKDIR}/asio/include/asio ${PART_DIR}/usr/include/'''
+install -d ${STAGING_DIR}/usr/include
+cp -r ${WORKDIR}/asio/include/asio.hpp ${STAGING_DIR}/usr/include/
+cp -r ${WORKDIR}/asio/include/asio ${STAGING_DIR}/usr/include/'''

@@ -24,9 +24,9 @@ cargo build --release --locked'''
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 target/release/zoxide ${PART_DIR}/usr/bin/zoxide
-install -Dm644 contrib/completions/zoxide.bash ${PART_DIR}/usr/share/bash-completion/completions/zoxide
-install -Dm644 contrib/completions/_zoxide     ${PART_DIR}/usr/share/zsh/site-functions/_zoxide
-install -Dm644 contrib/completions/zoxide.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/zoxide.fish
-install -Dm644 man/man1/*.1 -t ${PART_DIR}/usr/share/man/man1/'''
+install -Dm755 target/release/zoxide ${STAGING_DIR}/usr/bin/zoxide
+install -Dm644 contrib/completions/zoxide.bash ${STAGING_DIR}/usr/share/bash-completion/completions/zoxide
+install -Dm644 contrib/completions/_zoxide     ${STAGING_DIR}/usr/share/zsh/site-functions/_zoxide
+install -Dm644 contrib/completions/zoxide.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/zoxide.fish
+install -Dm644 man/man1/*.1 -t ${STAGING_DIR}/usr/share/man/man1/'''
 

@@ -28,8 +28,7 @@ meson compile -C build'''
 [lifecycle.staging]
 script = '''
 cd source
-meson install -C build --destdir ${PART_DIR}'''
+meson install -C build --destdir ${STAGING_DIR}'''
 
-[[output]]
-name = "gcr"
+[output]
 runtime_deps = ['libsecret', 'p11-kit']

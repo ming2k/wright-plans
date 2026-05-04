@@ -15,25 +15,24 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-install -d ${PART_DIR}/usr/lib
-cp -a ${WORKDIR} ${PART_DIR}/usr/lib/google-cloud-sdk
+install -d ${STAGING_DIR}/usr/lib
+cp -a ${WORKDIR} ${STAGING_DIR}/usr/lib/google-cloud-sdk
 
 # Disable the built-in auto-updater; version management is handled by wright.
 printf '[core]
 disable_updater = true
-' > ${PART_DIR}/usr/lib/google-cloud-sdk/properties
+' > ${STAGING_DIR}/usr/lib/google-cloud-sdk/properties
 
-install -d ${PART_DIR}/usr/bin
+install -d ${STAGING_DIR}/usr/bin
 for bin in gcloud gsutil bq; do
-    ln -sf ../lib/google-cloud-sdk/bin/${bin} ${PART_DIR}/usr/bin/${bin}
+    ln -sf ../lib/google-cloud-sdk/bin/${bin} ${STAGING_DIR}/usr/bin/${bin}
 done
 
 # Bash completion
-install -Dm644 ${WORKDIR}/completion.bash.inc ${PART_DIR}/usr/share/bash-completion/completions/gcloud
+install -Dm644 ${WORKDIR}/completion.bash.inc ${STAGING_DIR}/usr/share/bash-completion/completions/gcloud
 
 # Zsh completion
-install -Dm644 ${WORKDIR}/completion.zsh.inc ${PART_DIR}/usr/share/zsh/site-functions/_gcloud'''
+install -Dm644 ${WORKDIR}/completion.zsh.inc ${STAGING_DIR}/usr/share/zsh/site-functions/_gcloud'''
 
-[[output]]
-name = "gcloud"
+[output]
 runtime_deps = ['python']

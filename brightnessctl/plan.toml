@@ -22,8 +22,7 @@ make ENABLE_SYSTEMD=1'''
 [lifecycle.staging]
 script = '''
 cd source
-make install DESTDIR=${PART_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0'''
+make install DESTDIR=${STAGING_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0'''
 
-[[output]]
-name = "brightnessctl"
+[output]
 runtime_deps = ['systemd']

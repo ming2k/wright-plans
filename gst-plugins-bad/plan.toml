@@ -33,8 +33,7 @@ ninja -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/build
-DESTDIR=${PART_DIR} ninja install'''
+DESTDIR=${STAGING_DIR} ninja install'''
 
-[[output]]
-name = "gst-plugins-bad"
+[output]
 runtime_deps = ['gst-plugins-base', 'gstreamer']

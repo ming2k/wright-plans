@@ -30,8 +30,7 @@ meson compile -C ${WORKDIR}/build'''
 [lifecycle.staging]
 script = '''
 cd source
-meson install -C ${WORKDIR}/build --destdir ${PART_DIR}'''
+meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
 
-[[output]]
-name = "gobject-introspection"
+[output]
 runtime_deps = ['python']

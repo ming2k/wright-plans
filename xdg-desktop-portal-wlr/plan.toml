@@ -33,8 +33,7 @@ ninja -C build'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[[output]]
-name = "xdg-desktop-portal-wlr"
+[output]
 runtime_deps = ['xdg-desktop-portal', 'pipewire']

@@ -22,5 +22,5 @@ cd source
 script = "cd source && make -j$(nproc)"
 
 [lifecycle.staging]
-script = "cd source && make DESTDIR=${PART_DIR} install"
+script = "cd source && make DESTDIR=${STAGING_DIR} install"
 

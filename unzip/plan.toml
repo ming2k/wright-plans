@@ -46,10 +46,9 @@ make -f unix/Makefile prefix=/usr \
 [lifecycle.staging]
 script = '''
 cd source
-make prefix=${PART_DIR}/usr \
-  MANDIR=${PART_DIR}/usr/share/man/man1 \
+make prefix=${STAGING_DIR}/usr \
+  MANDIR=${STAGING_DIR}/usr/share/man/man1 \
   -f unix/Makefile install'''
 
-[[output]]
-name = "unzip"
+[output]
 runtime_deps = ['bash', 'bzip2']

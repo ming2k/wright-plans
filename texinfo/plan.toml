@@ -32,9 +32,8 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-make DESTDIR=${PART_DIR} TEXMF=/usr/share/texmf install-tex'''
+make DESTDIR=${STAGING_DIR} install
+make DESTDIR=${STAGING_DIR} TEXMF=/usr/share/texmf install-tex'''
 
-[[output]]
-name = "texinfo"
+[output]
 runtime_deps = ['perl']

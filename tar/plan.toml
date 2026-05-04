@@ -28,6 +28,6 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-make -C doc DESTDIR=${PART_DIR} install-html docdir=/usr/share/doc/tar-${VERSION}'''
+make DESTDIR=${STAGING_DIR} install
+make -C doc DESTDIR=${STAGING_DIR} install-html docdir=/usr/share/doc/tar-${VERSION}'''
 

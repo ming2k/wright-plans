@@ -13,8 +13,8 @@ url = "https://github.com/bazelbuild/bazelisk/releases/download/v${VERSION}/baze
 
 [lifecycle.staging]
 script = '''
-install -Dm755 ${WORKDIR}/bazelisk-linux-amd64 ${PART_DIR}/usr/bin/bazelisk
-ln -sf bazelisk ${PART_DIR}/usr/bin/bazel'''
+install -Dm755 ${WORKDIR}/bazelisk-linux-amd64 ${STAGING_DIR}/usr/bin/bazelisk
+ln -sf bazelisk ${STAGING_DIR}/usr/bin/bazel'''
 
 [output]
 provides = ["bazel"]

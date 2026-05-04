@@ -46,7 +46,7 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
 
-test -x ${PART_DIR}/usr/bin/magick'''
+test -x ${STAGING_DIR}/usr/bin/magick'''
 

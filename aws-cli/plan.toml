@@ -15,20 +15,20 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 # Install AWS CLI dist files
-mkdir -p ${PART_DIR}/usr/lib/aws-cli
-rsync -a source/aws/dist/ ${PART_DIR}/usr/lib/aws-cli/
+mkdir -p ${STAGING_DIR}/usr/lib/aws-cli
+rsync -a source/aws/dist/ ${STAGING_DIR}/usr/lib/aws-cli/
 
 # Create wrapper scripts in /usr/bin
-mkdir -p ${PART_DIR}/usr/bin
-cat > ${PART_DIR}/usr/bin/aws << 'EOF'
+mkdir -p ${STAGING_DIR}/usr/bin
+cat > ${STAGING_DIR}/usr/bin/aws << 'EOF'
 #!/bin/sh
 exec /usr/lib/aws-cli/aws "$@"
 EOF
-chmod +x ${PART_DIR}/usr/bin/aws
+chmod +x ${STAGING_DIR}/usr/bin/aws
 
-cat > ${PART_DIR}/usr/bin/aws_completer << 'EOF'
+cat > ${STAGING_DIR}/usr/bin/aws_completer << 'EOF'
 #!/bin/sh
 exec /usr/lib/aws-cli/aws_completer "$@"
 EOF
-chmod +x ${PART_DIR}/usr/bin/aws_completer'''
+chmod +x ${STAGING_DIR}/usr/bin/aws_completer'''
 

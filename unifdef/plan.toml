@@ -29,5 +29,5 @@ make -j$(nproc)'''
 script = '''
 cd source
 # prefix 定义安装路径
-make prefix=${PART_DIR}/usr install'''
+make prefix=${STAGING_DIR}/usr install'''
 

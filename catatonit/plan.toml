@@ -38,10 +38,9 @@ make -j$(nproc)'''
 isolation = "none"
 script = '''
 cd source/catatonit-${VERSION}
-make DESTDIR=${PART_DIR} install
-install -dm755 ${PART_DIR}/usr/libexec/podman
-ln -sf ../../bin/catatonit ${PART_DIR}/usr/libexec/podman/catatonit'''
+make DESTDIR=${STAGING_DIR} install
+install -dm755 ${STAGING_DIR}/usr/libexec/podman
+ln -sf ../../bin/catatonit ${STAGING_DIR}/usr/libexec/podman/catatonit'''
 
-[[output]]
-name = "catatonit"
+[output]
 runtime_deps = ['glibc']

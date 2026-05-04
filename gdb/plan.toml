@@ -41,11 +41,10 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/build
-make DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
 
 # Remove static libraries
-rm -f ${PART_DIR}/usr/lib/libinproctrace.a'''
+rm -f ${STAGING_DIR}/usr/lib/libinproctrace.a'''
 
-[[output]]
-name = "gdb"
+[output]
 runtime_deps = ['expat', 'ncurses', 'python', 'readline', 'xz', 'zlib']

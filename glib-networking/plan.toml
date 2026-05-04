@@ -28,14 +28,13 @@ meson compile -C ${WORKDIR}/build -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${PART_DIR} meson install -C ${WORKDIR}/build
-rm -f ${PART_DIR}/usr/lib/gio/modules/giomodule.cache'''
+DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build
+rm -f ${STAGING_DIR}/usr/lib/gio/modules/giomodule.cache'''
 
 [hooks]
 post_install = "gio-querymodules /usr/lib/gio/modules"
 post_upgrade = "gio-querymodules /usr/lib/gio/modules"
 pre_remove = "gio-querymodules /usr/lib/gio/modules"
 
-[[output]]
-name = "glib-networking"
+[output]
 runtime_deps = ['gnutls', 'gsettings-desktop-schemas', 'libproxy']

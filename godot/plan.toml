@@ -34,9 +34,9 @@ scons platform=linuxbsd target=editor wayland=yes x11=no libdecor=yes builtin_li
 [lifecycle.staging]
 script = '''
 cd source
-mkdir -p ${PART_DIR}/usr/bin
+mkdir -p ${STAGING_DIR}/usr/bin
 # Binary name depends on target and arch. 
 # Godot 4.x linuxbsd editor binary is typically named godot.linuxbsd.editor.x86_64
-cp ${WORKDIR}/bin/godot.linuxbsd.editor.x86_64 ${PART_DIR}/usr/bin/godot
-chmod +x ${PART_DIR}/usr/bin/godot'''
+cp ${WORKDIR}/bin/godot.linuxbsd.editor.x86_64 ${STAGING_DIR}/usr/bin/godot
+chmod +x ${STAGING_DIR}/usr/bin/godot'''
 

@@ -35,6 +35,6 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-install -dm750 ${PART_DIR}/var/lib/udisks2'''
+make DESTDIR=${STAGING_DIR} install
+install -dm750 ${STAGING_DIR}/var/lib/udisks2'''
 

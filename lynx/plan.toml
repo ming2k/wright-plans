@@ -42,11 +42,11 @@ make -j$(nproc) BUILD_CC=gcc BUILD_CPP='gcc -E''''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
 
-if [ -d ${PART_DIR}/usr/etc ]; then
-  mkdir -p ${PART_DIR}/etc
-  cp -a ${PART_DIR}/usr/etc/. ${PART_DIR}/etc/
-  rm -rf ${PART_DIR}/usr/etc
+if [ -d ${STAGING_DIR}/usr/etc ]; then
+  mkdir -p ${STAGING_DIR}/etc
+  cp -a ${STAGING_DIR}/usr/etc/. ${STAGING_DIR}/etc/
+  rm -rf ${STAGING_DIR}/usr/etc
 fi'''
 

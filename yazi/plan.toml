@@ -25,20 +25,20 @@ cargo build --release --locked'''
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 target/release/yazi ${PART_DIR}/usr/bin/yazi
-install -Dm755 target/release/ya   ${PART_DIR}/usr/bin/ya
+install -Dm755 target/release/yazi ${STAGING_DIR}/usr/bin/yazi
+install -Dm755 target/release/ya   ${STAGING_DIR}/usr/bin/ya
 
 # Shell completions for yazi
-install -Dm644 yazi-boot/completions/yazi.bash ${PART_DIR}/usr/share/bash-completion/completions/yazi || true
-install -Dm644 yazi-boot/completions/_yazi     ${PART_DIR}/usr/share/zsh/site-functions/_yazi || true
-install -Dm644 yazi-boot/completions/yazi.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/yazi.fish || true
+install -Dm644 yazi-boot/completions/yazi.bash ${STAGING_DIR}/usr/share/bash-completion/completions/yazi || true
+install -Dm644 yazi-boot/completions/_yazi     ${STAGING_DIR}/usr/share/zsh/site-functions/_yazi || true
+install -Dm644 yazi-boot/completions/yazi.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/yazi.fish || true
 
 # Shell completions for ya
-install -Dm644 yazi-cli/completions/ya.bash ${PART_DIR}/usr/share/bash-completion/completions/ya || true
-install -Dm644 yazi-cli/completions/_ya     ${PART_DIR}/usr/share/zsh/site-functions/_ya || true
-install -Dm644 yazi-cli/completions/ya.fish ${PART_DIR}/usr/share/fish/vendor_completions.d/ya.fish || true
+install -Dm644 yazi-cli/completions/ya.bash ${STAGING_DIR}/usr/share/bash-completion/completions/ya || true
+install -Dm644 yazi-cli/completions/_ya     ${STAGING_DIR}/usr/share/zsh/site-functions/_ya || true
+install -Dm644 yazi-cli/completions/ya.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/ya.fish || true
 
 # Desktop integration
-install -Dm644 assets/yazi.desktop ${PART_DIR}/usr/share/applications/yazi.desktop || true
-install -Dm644 assets/yazi.svg     ${PART_DIR}/usr/share/icons/hicolor/scalable/apps/yazi.svg || true'''
+install -Dm644 assets/yazi.desktop ${STAGING_DIR}/usr/share/applications/yazi.desktop || true
+install -Dm644 assets/yazi.svg     ${STAGING_DIR}/usr/share/icons/hicolor/scalable/apps/yazi.svg || true'''
 

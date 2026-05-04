@@ -25,18 +25,18 @@ cd source
 [lifecycle.staging]
 script = '''
 cd source
-install -dm755 ${PART_DIR}/usr/lib/zig
+install -dm755 ${STAGING_DIR}/usr/lib/zig
 
 # The tarball extracts to a single directory like zig-x86_64-linux-0.16.0/
 for dir in zig-x86_64-linux-*; do
   if [ -d "$dir" ]; then
-    cp -a "$dir"/* ${PART_DIR}/usr/lib/zig/
+    cp -a "$dir"/* ${STAGING_DIR}/usr/lib/zig/
     break
   fi
 done
 
-install -dm755 ${PART_DIR}/usr/bin
-ln -sf /usr/lib/zig/zig ${PART_DIR}/usr/bin/zig
+install -dm755 ${STAGING_DIR}/usr/bin
+ln -sf /usr/lib/zig/zig ${STAGING_DIR}/usr/bin/zig
 '''
 
 [output]

@@ -1,5 +1,5 @@
 name = "llvm"
-version = "22.1.3"
+version = "22.1.4"
 release = 1
 description = "The LLVM Compiler Infrastructure"
 license = "Apache-2.0-with-LLVM-exception"
@@ -18,33 +18,63 @@ extract_to = "source"
 [lifecycle.configure]
 script = '''
 cd source/llvm-project-${VERSION}.src/llvm
-cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_INSTALL_RPATH=ON -DLLVM_ENABLE_PROJECTS="clang;lld" -DLLVM_ENABLE_RUNTIMES="compiler-rt" -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_LINK_LLVM_DYLIB=ON -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_FFI=ON -DLLVM_ENABLE_ZLIB=ON -DLLVM_ENABLE_ZSTD=ON -DLLVM_ENABLE_LIBEDIT=ON -DLLVM_BINUTILS_INCDIR=/usr/include -DCLANG_DEFAULT_PIE_ON_LINUX=ON -DCLANG_LINK_CLANG_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_ENABLE_ASSERTIONS=OFF -DLLVM_ENABLE_BINDINGS=OFF'''
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_INSTALL_RPATH=ON -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld" -DLLVM_ENABLE_RUNTIMES="compiler-rt" -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_LINK_LLVM_DYLIB=ON -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_FFI=ON -DLLVM_ENABLE_ZLIB=ON -DLLVM_ENABLE_ZSTD=ON -DLLVM_ENABLE_LIBEDIT=ON -DLLVM_BINUTILS_INCDIR=/usr/include -DCLANG_DEFAULT_PIE_ON_LINUX=ON -DCLANG_LINK_CLANG_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_ENABLE_ASSERTIONS=OFF -DLLVM_ENABLE_BINDINGS=OFF'''
 
 [lifecycle.compile]
 script = '''
 cd source/llvm-project-${VERSION}.src/llvm
 ninja -C build -j$(nproc)'''
 
-# LLVM outputs: main package + libs + clang + lld
-[[output]]
-name = "llvm"
-# catch-all
+# LLVM outputs: libs + clang + lld + clangd
+# Note: no catch-all; unclaimed files (e.g. llvm-as, opt, llc, headers) are discarded.
 
 [[output]]
 name = "llvm-libs"
 description = "LLVM shared libraries"
-include = ["/.*"]
+include = [
+    "/usr/lib/libLLVM-[0-9]+.*\\.so.*",
+    "/usr/lib/libclang\\.so.*",
+    "/usr/lib/libclang-cpp\\.so.*",
+    "/usr/lib/liblld.*\\.so.*",
+    "/usr/lib/libLTO\\.so.*",
+    "/usr/lib/LLVMgold\\.so",
+]
 runtime_deps = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
 
 [[output]]
 name = "clang"
 description = "C/C++/ObjC compiler frontend for LLVM"
-include = ["/.*"]
+include = [
+    "/usr/bin/clang",
+    "/usr/bin/clang-[0-9]+",
+    "/usr/bin/clang\\+\\+",
+    "/usr/bin/clang-cl",
+    "/usr/bin/clang-cpp",
+    "/usr/lib/clang/.*",
+    "/usr/lib/cmake/clang/.*",
+    "/usr/share/clang/.*",
+]
 runtime_deps = ["llvm-libs"]
 
 [[output]]
 name = "lld"
 description = "LLVM linker"
-include = ["/.*"]
+include = [
+    "/usr/bin/lld",
+    "/usr/bin/lld-[0-9]+",
+    "/usr/bin/ld\\.lld",
+    "/usr/bin/ld64\\.lld",
+    "/usr/bin/wasm-ld",
+    "/usr/lib/cmake/lld/.*",
+]
 runtime_deps = ["llvm-libs"]
 
+[[output]]
+name = "clangd"
+description = "Language server protocol implementation for C/C++"
+include = [
+    "/usr/bin/clangd",
+    "/usr/share/clang/clangd.*",
+    "/usr/lib/cmake/clangd/.*",
+]
+runtime_deps = ["clang", "llvm-libs"]

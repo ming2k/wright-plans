@@ -64,18 +64,18 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-make -C man DESTDIR=${PART_DIR} install
+make DESTDIR=${STAGING_DIR} install
+make -C man DESTDIR=${STAGING_DIR} install
 
 # Relocate anything installed to /usr/sbin — shadow ignores --sbindir for some tools
-if [ -d ${PART_DIR}/usr/sbin ]; then
-  cp -a ${PART_DIR}/usr/sbin/. ${PART_DIR}/usr/bin/
-  rm -rf ${PART_DIR}/usr/sbin
+if [ -d ${STAGING_DIR}/usr/sbin ]; then
+  cp -a ${STAGING_DIR}/usr/sbin/. ${STAGING_DIR}/usr/bin/
+  rm -rf ${STAGING_DIR}/usr/sbin
 fi
 
-install -vdm755 ${PART_DIR}/etc/pam.d
+install -vdm755 ${STAGING_DIR}/etc/pam.d
 
-cat > ${PART_DIR}/etc/pam.d/login << 'PAMEOF'
+cat > ${STAGING_DIR}/etc/pam.d/login << 'PAMEOF'
 # Begin /etc/pam.d/login
 auth      optional    pam_faildelay.so  delay=3000000
 auth      requisite   pam_nologin.so
@@ -91,13 +91,13 @@ password  include     system-password
 # End /etc/pam.d/login
 PAMEOF
 
-cat > ${PART_DIR}/etc/pam.d/passwd << 'PAMEOF'
+cat > ${STAGING_DIR}/etc/pam.d/passwd << 'PAMEOF'
 # Begin /etc/pam.d/passwd
 password  include     system-password
 # End /etc/pam.d/passwd
 PAMEOF
 
-cat > ${PART_DIR}/etc/pam.d/su << 'PAMEOF'
+cat > ${STAGING_DIR}/etc/pam.d/su << 'PAMEOF'
 # Begin /etc/pam.d/su
 auth      sufficient  pam_rootok.so
 auth      include     system-auth
@@ -109,14 +109,14 @@ password  include     system-password
 # End /etc/pam.d/su
 PAMEOF
 
-cat > ${PART_DIR}/etc/pam.d/chpasswd << 'PAMEOF'
+cat > ${STAGING_DIR}/etc/pam.d/chpasswd << 'PAMEOF'
 # Begin /etc/pam.d/chpasswd
 auth      sufficient  pam_rootok.so
 password  include     system-password
 # End /etc/pam.d/chpasswd
 PAMEOF
 
-cat > ${PART_DIR}/etc/pam.d/newusers << 'PAMEOF'
+cat > ${STAGING_DIR}/etc/pam.d/newusers << 'PAMEOF'
 # Begin /etc/pam.d/newusers
 auth      sufficient  pam_rootok.so
 password  include     system-password
@@ -125,7 +125,7 @@ PAMEOF
 
 for PROGRAM in chage chfn chgpasswd chsh groupadd groupdel \
 groupmems groupmod useradd userdel usermod; do
-cat > ${PART_DIR}/etc/pam.d/${PROGRAM} << PAMEOF
+cat > ${STAGING_DIR}/etc/pam.d/${PROGRAM} << PAMEOF
 # Begin /etc/pam.d/${PROGRAM}
 auth      sufficient  pam_rootok.so
 account   include     system-account

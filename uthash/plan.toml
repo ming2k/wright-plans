@@ -15,5 +15,5 @@ extract_to = "source"
 [lifecycle.staging]
 script = '''
 cd source
-install -d ${PART_DIR}/usr/include
-install -m644 ${WORKDIR}/src/*.h ${PART_DIR}/usr/include/'''
+install -d ${STAGING_DIR}/usr/include
+install -m644 ${WORKDIR}/src/*.h ${STAGING_DIR}/usr/include/'''

@@ -26,35 +26,35 @@ skip_fhs_check = true
 [lifecycle.staging]
 script = '''
 # --- FHS directory skeleton ---
-install -d -m 0700 ${PART_DIR}/boot
-install -d -m 0755 ${PART_DIR}/etc
-install -d -m 0755 ${PART_DIR}/{usr,usr/bin,usr/lib,usr/share}
-install -d -m 0755 ${PART_DIR}/usr/share/man/man{1,2,3,4,5,6,7,8}
-install -d -m 0755 ${PART_DIR}/{var,var/cache,var/lib,var/log}
-install -d -m 0750 ${PART_DIR}/root
-install -d -m 1777 ${PART_DIR}/tmp
-install -d -m 1777 ${PART_DIR}/var/tmp
+install -d -m 0700 ${STAGING_DIR}/boot
+install -d -m 0755 ${STAGING_DIR}/etc
+install -d -m 0755 ${STAGING_DIR}/{usr,usr/bin,usr/lib,usr/share}
+install -d -m 0755 ${STAGING_DIR}/usr/share/man/man{1,2,3,4,5,6,7,8}
+install -d -m 0755 ${STAGING_DIR}/{var,var/cache,var/lib,var/log}
+install -d -m 0750 ${STAGING_DIR}/root
+install -d -m 1777 ${STAGING_DIR}/tmp
+install -d -m 1777 ${STAGING_DIR}/var/tmp
 
 # usr-merge: top-level symlinks into /usr
-ln -s usr/bin ${PART_DIR}/bin
-ln -s usr/bin ${PART_DIR}/sbin
-ln -s usr/lib ${PART_DIR}/lib
-ln -s usr/lib ${PART_DIR}/lib64
+ln -s usr/bin ${STAGING_DIR}/bin
+ln -s usr/bin ${STAGING_DIR}/sbin
+ln -s usr/lib ${STAGING_DIR}/lib
+ln -s usr/lib ${STAGING_DIR}/lib64
 
 # usr-merge: within /usr
-ln -s bin ${PART_DIR}/usr/sbin
-ln -s lib ${PART_DIR}/usr/lib64
+ln -s bin ${STAGING_DIR}/usr/sbin
+ln -s lib ${STAGING_DIR}/usr/lib64
 
 # /run lives on tmpfs at boot; var entries are compat symlinks
-ln -s /run          ${PART_DIR}/var/run
-ln -s /run/lock     ${PART_DIR}/var/lock
-ln -s ../proc/self/mounts ${PART_DIR}/etc/mtab
+ln -s /run          ${STAGING_DIR}/var/run
+ln -s /run/lock     ${STAGING_DIR}/var/lock
+ln -s ../proc/self/mounts ${STAGING_DIR}/etc/mtab
 
 # --- /etc files ---
-install -m 0644 ${WORKDIR}/os-release ${PART_DIR}/etc/os-release
-install -m 0644 ${WORKDIR}/shells     ${PART_DIR}/etc/shells
-install -m 0644 ${WORKDIR}/profile    ${PART_DIR}/etc/profile
-install -d -m 0755 ${PART_DIR}/etc/profile.d'''
+install -m 0644 ${WORKDIR}/os-release ${STAGING_DIR}/etc/os-release
+install -m 0644 ${WORKDIR}/shells     ${STAGING_DIR}/etc/shells
+install -m 0644 ${WORKDIR}/profile    ${STAGING_DIR}/etc/profile
+install -d -m 0755 ${STAGING_DIR}/etc/profile.d'''
 
 [output]
 backup = ["/etc/shells", "/etc/profile"]

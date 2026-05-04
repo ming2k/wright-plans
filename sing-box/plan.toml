@@ -35,10 +35,10 @@ go build -o sing-box \
 [lifecycle.staging]
 script = '''
 cd source
-install -Dm755 sing-box ${PART_DIR}/usr/bin/sing-box
-install -dm755 ${PART_DIR}/etc/sing-box
-echo '{}' > ${PART_DIR}/etc/sing-box/config.json
-install -Dm644 ${WORKDIR}/sing-box.service ${PART_DIR}/usr/lib/systemd/system/sing-box.service'''
+install -Dm755 sing-box ${STAGING_DIR}/usr/bin/sing-box
+install -dm755 ${STAGING_DIR}/etc/sing-box
+echo '{}' > ${STAGING_DIR}/etc/sing-box/config.json
+install -Dm644 ${WORKDIR}/sing-box.service ${STAGING_DIR}/usr/lib/systemd/system/sing-box.service'''
 
 [output]
 backup = ["/etc/sing-box/config.json"]

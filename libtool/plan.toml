@@ -27,6 +27,6 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install
-rm -fv ${PART_DIR}/usr/lib/libltdl.a'''
+make DESTDIR=${STAGING_DIR} install
+rm -fv ${STAGING_DIR}/usr/lib/libltdl.a'''
 

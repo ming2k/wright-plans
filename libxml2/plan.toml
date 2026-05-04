@@ -32,8 +32,7 @@ ninja -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/build
-DESTDIR=${PART_DIR} ninja install'''
+DESTDIR=${STAGING_DIR} ninja install'''
 
-[[output]]
-name = "libxml2"
+[output]
 runtime_deps = ['icu', 'python']

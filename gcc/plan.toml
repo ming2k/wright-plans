@@ -61,17 +61,12 @@ make -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source/gcc-${VERSION}/build
-make DESTDIR=${PART_DIR} install
-ln -sf gcc ${PART_DIR}/usr/bin/cc'''
-
-# Main (catch-all) output — no `include` field
-[[output]]
-name = "gcc"
-description = "The GNU Compiler Collection - C and C++ compiler"
-runtime_deps = ["binutils", "gcc-libs", "libstdc++"]
+make DESTDIR=${STAGING_DIR} install
+ln -sf gcc ${STAGING_DIR}/usr/bin/cc'''
 
 [[output]]
 name = "gcc-libs"
+description = "GCC runtime libraries"
 include = [
     "/usr/lib/libgcc_s\\.so.*",
     "/usr/lib/libgomp\\.so.*",
@@ -83,37 +78,36 @@ include = [
     "/usr/lib/libubsan\\.so.*",
     "/usr/lib/libhwasan\\.so.*",
 ]
-description = "GCC runtime libraries"
 runtime_deps = ["glibc"]
-
-[output.hooks]
-post_install = "ldconfig"
-post_upgrade = "ldconfig"
+hooks.post_install = "ldconfig"
+hooks.post_upgrade = "ldconfig"
 
 [[output]]
 name = "libstdc++"
+description = "GNU C++ standard library"
 include = [
     "/usr/lib/libstdc\\+\\+\\.so.*",
     "/usr/include/c\\+/.*",
     "/usr/share/gdb/auto-load/.*",
 ]
-description = "GNU C++ standard library"
 runtime_deps = ["glibc", "gcc-libs"]
-
-[output.hooks]
-post_install = "ldconfig"
-post_upgrade = "ldconfig"
+hooks.post_install = "ldconfig"
+hooks.post_upgrade = "ldconfig"
 
 [[output]]
 name = "libgccjit"
+description = "GCC JIT compilation library"
 include = [
     "/usr/lib/libgccjit\\.so.*",
     "/usr/include/libgccjit.*\\.h",
 ]
-description = "GCC JIT compilation library"
 runtime_deps = ["glibc", "gcc-libs"]
+hooks.post_install = "ldconfig"
+hooks.post_upgrade = "ldconfig"
 
-[output.hooks]
-post_install = "ldconfig"
-post_upgrade = "ldconfig"
+# Main (catch-all) output — must be last
+[[output]]
+name = "gcc"
+description = "The GNU Compiler Collection - C and C++ compiler"
+runtime_deps = ["binutils", "gcc-libs", "libstdc++"]
 

@@ -31,22 +31,22 @@ chmod 755 opt/warpdotdev/warp-terminal/warp usr/bin/warp-terminal
 script = '''
 cd source
 
-install -dm755 ${PART_DIR}/opt
-cp -a opt/warpdotdev ${PART_DIR}/opt/
+install -dm755 ${STAGING_DIR}/opt
+cp -a opt/warpdotdev ${STAGING_DIR}/opt/
 
-install -Dm755 usr/bin/warp-terminal ${PART_DIR}/usr/bin/warp-terminal
-install -Dm644 usr/share/applications/dev.warp.Warp.desktop ${PART_DIR}/usr/share/applications/dev.warp.Warp.desktop
+install -Dm755 usr/bin/warp-terminal ${STAGING_DIR}/usr/bin/warp-terminal
+install -Dm644 usr/share/applications/dev.warp.Warp.desktop ${STAGING_DIR}/usr/share/applications/dev.warp.Warp.desktop
 
 for size in 16 32 64 128 256 512; do
   install -Dm644 usr/share/icons/hicolor/${size}x${size}/apps/dev.warp.Warp.png \
-    ${PART_DIR}/usr/share/icons/hicolor/${size}x${size}/apps/dev.warp.Warp.png
+    ${STAGING_DIR}/usr/share/icons/hicolor/${size}x${size}/apps/dev.warp.Warp.png
 done
 
 install -Dm644 opt/warpdotdev/warp-terminal/resources/THIRD_PARTY_LICENSES.txt \
-  ${PART_DIR}/usr/share/licenses/warp-terminal/THIRD_PARTY_LICENSES.txt
+  ${STAGING_DIR}/usr/share/licenses/warp-terminal/THIRD_PARTY_LICENSES.txt
 
 # The official package includes pacman debug/source metadata; Wright does not need it.
-rm -rf ${PART_DIR}/usr/src
+rm -rf ${STAGING_DIR}/usr/src
 '''
 
 [output]

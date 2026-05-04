@@ -31,8 +31,8 @@ rake -j$(nproc)'''
 [lifecycle.staging]
 script = '''
 cd source
-rake DESTDIR=${PART_DIR} install
+rake DESTDIR=${STAGING_DIR} install
 
 # Remove icon directory as MKVToolNix Rakefile installs icons unconditionally even when GUI is disabled
-rm -rf ${PART_DIR}/usr/share/icons'''
+rm -rf ${STAGING_DIR}/usr/share/icons'''
 

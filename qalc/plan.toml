@@ -36,12 +36,11 @@ make check'''
 [lifecycle.staging]
 script = '''
 cd source
-make DESTDIR=${PART_DIR} install'''
+make DESTDIR=${STAGING_DIR} install'''
 
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
 
-[[output]]
-name = "qalc"
+[output]
 runtime_deps = ['curl', 'gettext', 'gmp', 'icu', 'libxml2', 'mpfr', 'readline']
