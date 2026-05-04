@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://sourceware.org/libffi/"
 
-build = ['bash', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -16,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libffi-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libffi-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libffi-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

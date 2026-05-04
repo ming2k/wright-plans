@@ -6,8 +6,7 @@ license = "BSD-3-Clause, GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://xiph.org/flac/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['libogg']
+link_deps = ['libogg:default']
 
 [[sources]]
 type = "http"

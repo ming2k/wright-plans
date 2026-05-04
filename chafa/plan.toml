@@ -6,8 +6,7 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://hpjansson.org/chafa/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['glib', 'freetype', 'libjpeg-turbo', 'librsvg', 'libtiff', 'libwebp', 'libavif', 'libheif', 'libjxl']
+link_deps = ['glib:default', 'freetype:default', 'libjpeg-turbo:default', 'librsvg:default', 'libtiff:default', 'libwebp:default', 'libavif:default', 'libheif:default', 'libjxl:default']
 
 [[sources]]
 type = "http"
@@ -35,4 +34,4 @@ cd source
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
 [output]
-runtime_deps = ['glib', 'freetype', 'libjpeg-turbo', 'librsvg', 'libtiff', 'libwebp', 'libavif', 'libheif', 'libjxl']
+runtime_deps = ['glib:default', 'freetype:default', 'libjpeg-turbo:default', 'librsvg:default', 'libtiff:default', 'libwebp:default', 'libavif:default', 'libheif:default', 'libjxl:default']

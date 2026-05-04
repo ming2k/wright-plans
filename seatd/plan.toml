@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://sr.ht/~kennylevinsen/seatd/"
 
-build = ['meson', 'ninja']
 
 [[sources]]
 type = "http"

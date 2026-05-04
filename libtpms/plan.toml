@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/stefanberger/libtpms"
 
-build = ['autoconf', 'automake', 'bash', 'gcc', 'libtool', 'make', 'pkgconf']
-link = ['openssl']
+link_deps = ['openssl:default']
 
 [[sources]]
 type = "http"

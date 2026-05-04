@@ -6,7 +6,6 @@ license = "BSD-3-Clause AND GPL-2.0-only"
 arch = "x86_64"
 url = "https://facebook.github.io/zstd/"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/gnome-desktop"
 
-build = ['gobject-introspection', 'meson', 'ninja']
-link = ['glib', 'gtk4', 'libseccomp', 'libxkbcommon']
+link_deps = ['glib:default', 'gtk4:default', 'libseccomp:default', 'libxkbcommon:default']
 
 [[sources]]
 type = "http"
@@ -35,4 +34,4 @@ post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || 
 post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
 
 [output]
-runtime_deps = ['gsettings-desktop-schemas', 'iso-codes']
+runtime_deps = ['gsettings-desktop-schemas:default', 'iso-codes:default']

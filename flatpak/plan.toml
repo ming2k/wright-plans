@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://flatpak.org"
 
-build = ['meson', 'ninja', 'pkgconf', 'libxslt', 'gettext', 'gobject-introspection', 'python-pyparsing', 'bubblewrap', 'xdg-dbus-proxy']
-link = ['glib', 'libarchive', 'libxml2', 'ostree', 'polkit', 'json-glib', 'curl', 'appstream', 'gdk-pixbuf', 'libjpeg-turbo', 'libfuse3', 'gpgme', 'libseccomp']
+link_deps = ['glib:default', 'libarchive:default', 'libxml2:default', 'ostree:default', 'polkit:default', 'json-glib:default', 'curl:default', 'appstream:default', 'gdk-pixbuf:default', 'libjpeg-turbo:default', 'libfuse3:default', 'gpgme:default', 'libseccomp:default']
 
 [[sources]]
 type = "http"
@@ -63,4 +62,4 @@ systemctl daemon-reload 2>/dev/null || true
 '''
 
 [output]
-runtime_deps = ['ca-certificates', 'dbus', 'systemd', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'shared-mime-info', 'desktop-file-utils']
+runtime_deps = ['ca-certificates:default', 'dbus:default', 'systemd:default', 'xdg-desktop-portal:default', 'xdg-desktop-portal-gtk:default', 'shared-mime-info:default', 'desktop-file-utils:default']

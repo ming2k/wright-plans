@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/intel/libva"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['libdrm', 'mesa', 'wayland']
+link_deps = ['libdrm:default', 'mesa:default', 'wayland:default']
 
 [[sources]]
 type = "http"

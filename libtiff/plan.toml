@@ -6,8 +6,7 @@ license = "libtiff"
 arch = "x86_64"
 url = "https://libtiff.gitlab.io/libtiff/"
 
-build = ['gcc', 'make']
-link = ['zlib', 'libjpeg-turbo']
+link_deps = ['zlib:default', 'libjpeg-turbo:default']
 
 [[sources]]
 type = "http"

@@ -6,7 +6,6 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://e2fsprogs.sourceforge.net"
 
-build = ['util-linux']
 
 [[sources]]
 type = "http"

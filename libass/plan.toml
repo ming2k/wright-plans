@@ -6,8 +6,7 @@ license = "ISC"
 arch = "x86_64"
 url = "https://github.com/libass/libass"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['freetype', 'fribidi', 'harfbuzz', 'fontconfig']
+link_deps = ['freetype:default', 'fribidi:default', 'harfbuzz:default', 'fontconfig:default']
 
 [[sources]]
 type = "http"

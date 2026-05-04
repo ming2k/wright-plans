@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/wayland/wayland-utils"
 
-build = ['gcc', 'libdrm', 'meson', 'ninja', 'pkgconf', 'wayland']
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"
@@ -34,4 +33,4 @@ cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [output]
-runtime_deps = ['wayland']
+runtime_deps = ['wayland:default']

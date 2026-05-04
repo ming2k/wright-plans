@@ -5,8 +5,7 @@ description = "Simple GObject game controller library"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-build = ['gobject-introspection', 'libevdev', 'libgudev', 'meson', 'ninja', 'pkgconf']
-link = ['glib']
+link_deps = ['glib:default']
 
 [[sources]]
 type = "http"
@@ -33,4 +32,4 @@ cd source/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
 [output]
-runtime_deps = ['libevdev', 'libgudev']
+runtime_deps = ['libevdev:default', 'libgudev:default']

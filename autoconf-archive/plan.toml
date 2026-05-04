@@ -6,7 +6,6 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/autoconf-archive/"
 
-build = ['make']
 
 [[sources]]
 type = "http"
@@ -30,4 +29,4 @@ cd source
 make DESTDIR=${STAGING_DIR} install'''
 
 [output]
-runtime_deps = ['m4']
+runtime_deps = ['m4:default']

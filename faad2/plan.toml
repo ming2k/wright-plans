@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/knik0/faad2"
 
-build = ['gcc', 'make', 'cmake', 'pkgconf']
-link = ['libsndfile']
+link_deps = ['libsndfile:default']
 
 [[sources]]
 type = "http"

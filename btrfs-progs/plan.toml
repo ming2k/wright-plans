@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://btrfs.readthedocs.io"
 
-build = ['pkgconf']
-link = ['util-linux', 'zlib', 'lzo', 'zstd', 'e2fsprogs', 'libgcrypt', 'systemd']
+link_deps = ['util-linux:default', 'zlib:default', 'lzo:default', 'zstd:default', 'e2fsprogs:default', 'libgcrypt:default', 'systemd:default']
 
 [[sources]]
 type = "http"

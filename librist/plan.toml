@@ -6,8 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://code.videolan.org/rist/librist"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['mbedtls']
+link_deps = ['mbedtls:default']
 
 [[sources]]
 type = "http"

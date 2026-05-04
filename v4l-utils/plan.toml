@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://linuxtv.org/wiki/index.php/V4l-utils"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['systemd', 'elfutils', 'json-c']
+link_deps = ['systemd:default', 'elfutils:default', 'json-c:default']
 
 [[sources]]
 type = "http"

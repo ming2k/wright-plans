@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/xorg/lib/libpciaccess"
 
-build = ['meson', 'ninja']
-link = ['glibc', 'zlib']
+link_deps = ['glibc:default', 'zlib:default']
 
 [[sources]]
 type = "http"

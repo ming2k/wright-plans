@@ -6,7 +6,6 @@ license = "Zlib"
 arch = "x86_64"
 url = "https://zlib.net/"
 
-build = ['bash', 'gcc', 'make']
 
 [[sources]]
 type = "http"

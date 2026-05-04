@@ -6,8 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://github.com/rootless-containers/slirp4netns"
 
-build = ['autoconf', 'automake', 'pkgconf']
-link = ['glib', 'libcap', 'libseccomp', 'libslirp']
+link_deps = ['glib:default', 'libcap:default', 'libseccomp:default', 'libslirp:default']
 
 [[sources]]
 type = "http"

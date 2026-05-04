@@ -7,8 +7,7 @@ license = "MIT, Apache-2.0 WITH LLVM-exception"
 arch = "x86_64"
 url = "https://github.com/intel/intel-graphics-compiler"
 
-build = ['cmake', 'git', 'python', 'python-mako', 'python-yaml', 'ninja']
-link = ['glibc', 'libgcc', 'libstdc++', 'zlib', 'zstd']
+link_deps = ['glibc:default', 'libgcc:default', 'libstdc++:default', 'zlib:default', 'zstd:default']
 
 [[sources]]
 type = "http"
@@ -137,4 +136,4 @@ conflicts = ["intel-opencl-clang"]
 replaces = ["intel-opencl-clang"]
 
 [output]
-runtime_deps = ['glibc', 'libgcc', 'libstdc++', 'zlib', 'zstd']
+runtime_deps = ['glibc:default', 'libgcc:default', 'libstdc++:default', 'zlib:default', 'zstd:default']

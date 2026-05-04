@@ -6,7 +6,6 @@ license = "LGPL-2.1-or-later AND GPL-3.0-or-later AND FSFAP"
 arch = "x86_64"
 url = "https://github.com/rrthomas/libpaper"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

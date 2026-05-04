@@ -5,8 +5,7 @@ description = "Specifications of extended Wayland protocols"
 license = "MIT"
 arch = "any"
 
-build = ['meson', 'ninja', 'pkgconf', 'wayland']
-link = ['wayland']
+link_deps = ['wayland:default']
 
 [[sources]]
 type = "http"

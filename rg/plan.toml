@@ -6,8 +6,7 @@ license = "MIT OR Unlicense"
 arch = "x86_64"
 url = "https://github.com/BurntSushi/ripgrep"
 
-build = ['rust']
-link = ['gcc', 'pcre2', 'glibc']
+link_deps = ['gcc:default', 'pcre2:default', 'glibc:default']
 
 [[sources]]
 type = "http"
@@ -37,4 +36,4 @@ if [ -d complete ]; then
 fi'''
 
 [output]
-runtime_deps = ['pcre2']
+runtime_deps = ['pcre2:default']

@@ -6,7 +6,6 @@ license = "TCL"
 arch = "x86_64"
 url = "https://www.tcl.tk/"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

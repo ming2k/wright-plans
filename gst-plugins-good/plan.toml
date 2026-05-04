@@ -5,8 +5,7 @@ description = "GStreamer Good Plugins"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
-build = ['cairo', 'gdk-pixbuf', 'gst-plugins-base', 'gstreamer', 'meson', 'ninja', 'pkgconf']
-link = ['libsoup']
+link_deps = ['libsoup:default']
 
 [[sources]]
 type = "http"
@@ -31,4 +30,4 @@ cd source/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
 [output]
-runtime_deps = ['cairo', 'gdk-pixbuf', 'gst-plugins-base', 'gstreamer']
+runtime_deps = ['cairo:default', 'gdk-pixbuf:default', 'gst-plugins-base:default', 'gstreamer:default']

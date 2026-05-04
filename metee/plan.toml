@@ -6,8 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/intel/metee"
 
-build = ['cmake', 'ninja', 'pkgconf']
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"

@@ -6,7 +6,6 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/grub/"
 
-build = ['bison', 'flex', 'gcc', 'make', 'freetype']
 
 [[sources]]
 type = "http"
@@ -72,4 +71,4 @@ mv -v ${STAGING_DIR}/etc/bash_completion.d/grub \
 rmdir ${STAGING_DIR}/etc/bash_completion.d 2>/dev/null || true'''
 
 [output]
-runtime_deps = ['dosfstools']
+runtime_deps = ['dosfstools:default']

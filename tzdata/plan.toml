@@ -6,7 +6,6 @@ license = "LicenseRef-tz"
 arch = "any"
 url = "https://www.iana.org/time-zones"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

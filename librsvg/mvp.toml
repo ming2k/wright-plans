@@ -1,4 +1,4 @@
-link = ["cairo", "gdk-pixbuf", "pango", "glib", "libxml2", "harfbuzz", "freetype", "fribidi"]
+link_deps = ['cairo:default', 'gdk-pixbuf:default', 'pango:default', 'glib:default', 'libxml2:default', 'harfbuzz:default', 'freetype:default', 'fribidi:default']
 
 [lifecycle.configure]
 dockyard = "relaxed"

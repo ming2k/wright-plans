@@ -5,8 +5,7 @@ description = "HEIF and AVIF file format decoder and encoder"
 license = "LGPL-3.0-or-later"
 arch = "x86_64"
 
-build = ['cmake', 'ninja', 'gcc', 'pkgconf']
-link = ['libde265', 'dav1d', 'aom', 'libjpeg-turbo', 'libpng']
+link_deps = ['libde265:default', 'dav1d:default', 'aom:default', 'libjpeg-turbo:default', 'libpng:default']
 
 [[sources]]
 type = "http"

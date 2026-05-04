@@ -6,7 +6,6 @@ license = "ISC"
 arch = "x86_64"
 url = "https://wireless.wiki.kernel.org/en/users/documentation/iw"
 
-build = ['gcc', 'libnl', 'make']
 
 [[sources]]
 type = "http"
@@ -25,4 +24,4 @@ cd source
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
 [output]
-runtime_deps = ['libnl']
+runtime_deps = ['libnl:default']

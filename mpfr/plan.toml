@@ -6,8 +6,7 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.mpfr.org/"
 
-build = ['make']
-link = ['gmp']
+link_deps = ['gmp:default']
 
 [[sources]]
 type = "http"

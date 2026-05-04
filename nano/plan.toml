@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.nano-editor.org/"
 
-build = ['gcc', 'make']
-link = ['ncurses']
+link_deps = ['ncurses:default']
 
 [[sources]]
 type = "http"

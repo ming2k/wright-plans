@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.musicpd.org/"
 
-build = ['gcc', 'meson', 'ninja', 'pkgconf']
-link = ['alsa-lib', 'pipewire', 'ffmpeg', 'sqlite', 'curl', 'dbus', 'libsndfile', 'fmt']
+link_deps = ['alsa-lib:default', 'pipewire:default', 'ffmpeg:default', 'sqlite:default', 'curl:default', 'dbus:default', 'libsndfile:default', 'fmt:default']
 
 [[sources]]
 type = "http"

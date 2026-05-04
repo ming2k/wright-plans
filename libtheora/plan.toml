@@ -5,8 +5,7 @@ description = "Theora video compression reference implementation"
 license = "BSD-3-Clause"
 arch = "x86_64"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['libogg', 'libvorbis']
+link_deps = ['libogg:default', 'libvorbis:default']
 
 [[sources]]
 type = "http"

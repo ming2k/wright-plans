@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/slirp/libslirp"
 
-build = ['bash', 'python', 'meson', 'ninja', 'pkgconf']
-link = ['glib']
+link_deps = ['glib:default']
 
 [[sources]]
 type = "http"

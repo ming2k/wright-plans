@@ -6,8 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/gavinhoward/bc"
 
-build = ['gcc', 'make']
-link = ['readline']
+link_deps = ['readline:default']
 
 [[sources]]
 type = "http"

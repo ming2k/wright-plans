@@ -6,8 +6,7 @@ license = "BSL-1.0"
 arch = "x86_64"
 url = "https://www.boost.org"
 
-build = ['gcc', 'make']
-link = ['bzip2', 'icu', 'zlib', 'zstd']
+link_deps = ['bzip2:default', 'icu:default', 'zlib:default', 'zstd:default']
 
 [[sources]]
 type = "http"

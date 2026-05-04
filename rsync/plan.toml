@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://rsync.samba.org/"
 
-build = ['gcc', 'make']
-link = ['openssl', 'zlib', 'zstd', 'lz4']
+link_deps = ['openssl:default', 'zlib:default', 'zstd:default', 'lz4:default']
 
 [[sources]]
 type = "http"

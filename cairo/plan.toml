@@ -6,8 +6,7 @@ license = "LGPL-2.1-only OR MPL-1.1"
 arch = "x86_64"
 url = "https://cairographics.org/"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['pixman', 'libpng', 'fontconfig', 'freetype', 'glib', 'zlib']
+link_deps = ['pixman:default', 'libpng:default', 'fontconfig:default', 'freetype:default', 'glib:default', 'zlib:default']
 
 [[sources]]
 type = "http"

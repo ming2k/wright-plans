@@ -6,8 +6,7 @@ license = "Apache-2.0 OR MIT"
 arch = "x86_64"
 url = "https://github.com/sharkdp/fd"
 
-build = ['rust']
-link = ['gcc', 'glibc']
+link_deps = ['gcc:default', 'glibc:default']
 
 [[sources]]
 type = "http"

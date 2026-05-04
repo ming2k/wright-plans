@@ -5,8 +5,7 @@ description = "Speex is an Open Source/Free Software patent-free audio compressi
 license = "BSD-3-Clause"
 arch = "x86_64"
 
-build = ['gcc', 'make']
-link = ['libogg']
+link_deps = ['libogg:default']
 
 [[sources]]
 type = "http"

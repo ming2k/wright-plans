@@ -6,8 +6,7 @@ license = "GPL-2.0-only AND BSD-3-Clause AND ISC AND MIT AND PSF-2.0"
 arch = "x86_64"
 url = "https://fishshell.com/"
 
-build = ['cmake', 'make', 'pkgconf', 'rust', 'git', 'jq', 'gettext']
-link = ['pcre2']
+link_deps = ['pcre2:default']
 
 [[sources]]
 type = "http"

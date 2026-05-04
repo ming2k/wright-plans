@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://valgrind.org/"
 
-build = ['gcc', 'make', 'perl']
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"
@@ -33,4 +32,4 @@ cd source
 make DESTDIR=${STAGING_DIR} install'''
 
 [output]
-runtime_deps = ['glibc']
+runtime_deps = ['glibc:default']

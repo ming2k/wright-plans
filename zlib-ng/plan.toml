@@ -6,7 +6,6 @@ license = "Zlib"
 arch = "x86_64"
 url = "https://github.com/zlib-ng/zlib-ng"
 
-build = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"

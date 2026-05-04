@@ -5,8 +5,7 @@ description = "Library with common API for Wayland GNOME applications"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-build = ['meson', 'ninja']
-link = ['glib', 'gtk4']
+link_deps = ['glib:default', 'gtk4:default']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/coreutils/"
 
-build = ['gcc', 'gettext', 'make']
-link = ['acl', 'attr', 'libcap', 'openssl']
+link_deps = ['acl:default', 'attr:default', 'libcap:default', 'openssl:default']
 
 [[sources]]
 type = "http"

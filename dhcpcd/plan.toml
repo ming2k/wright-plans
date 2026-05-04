@@ -6,7 +6,6 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/NetworkConfiguration/dhcpcd"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

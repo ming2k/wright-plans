@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.com/procps-ng/procps"
 
-build = ['gcc', 'gettext', 'make']
-link = ['ncurses', 'systemd']
+link_deps = ['ncurses:default', 'systemd:default']
 
 [[sources]]
 type = "http"

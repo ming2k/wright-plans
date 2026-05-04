@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://notmuchmail.org/"
 
-build = ['bash', 'gcc', 'make', 'pkgconf', 'python']
-link = ['gmime', 'talloc', 'xapian-core', 'zlib']
+link_deps = ['gmime:default', 'talloc:default', 'xapian-core:default', 'zlib:default']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://git-scm.com/"
 
-build = ['python', 'rust', 'libsecret']
-link = ['curl', 'expat', 'openssl', 'pcre2', 'zlib-ng', 'libsecret']
+link_deps = ['curl:default', 'expat:default', 'openssl:default', 'pcre2:default', 'zlib-ng:default', 'libsecret:default']
 
 [[sources]]
 type = "http"
@@ -165,4 +164,4 @@ ln -s ../../git/completion/git-completion.zsh \
   ${STAGING_DIR}/usr/share/zsh/site-functions/_git'''
 
 [output]
-runtime_deps = ['ca-certificates', 'curl', 'expat', 'perl', 'openssl', 'pcre2', 'grep', 'shadow', 'zlib-ng', 'openssh']
+runtime_deps = ['ca-certificates:default', 'curl:default', 'expat:default', 'perl:default', 'openssl:default', 'pcre2:default', 'grep:default', 'shadow:default', 'zlib-ng:default', 'openssh:default']

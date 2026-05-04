@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://mkvtoolnix.download/"
 
-build = ['gcc', 'make', 'ruby', 'pkgconf', 'libxslt', 'docbook-xsl']
-link = ['boost', 'cmark', 'flac', 'fmt', 'libebml', 'libmatroska', 'libogg', 'libvorbis', 'nlohmann-json', 'zlib']
+link_deps = ['boost:default', 'cmark:default', 'flac:default', 'fmt:default', 'libebml:default', 'libmatroska:default', 'libogg:default', 'libvorbis:default', 'nlohmann-json:default', 'zlib:default']
 
 [[sources]]
 type = "http"

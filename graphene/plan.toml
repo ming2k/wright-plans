@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ebassi/graphene"
 
-build = ['gobject-introspection', 'meson', 'ninja']
-link = ['glib']
+link_deps = ['glib:default']
 
 [[sources]]
 type = "http"

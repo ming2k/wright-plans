@@ -6,8 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://www.openssl.org/"
 
-build = ['gcc', 'make', 'perl']
-link = ['zlib']
+link_deps = ['zlib:default']
 
 [[sources]]
 type = "http"

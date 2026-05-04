@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/intel/gmmlib"
 
-build = ['cmake']
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"

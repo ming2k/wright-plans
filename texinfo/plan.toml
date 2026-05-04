@@ -6,7 +6,6 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/texinfo/"
 
-build = ['gcc', 'make', 'perl']
 
 [[sources]]
 type = "http"
@@ -36,4 +35,4 @@ make DESTDIR=${STAGING_DIR} install
 make DESTDIR=${STAGING_DIR} TEXMF=/usr/share/texmf install-tex'''
 
 [output]
-runtime_deps = ['perl']
+runtime_deps = ['perl:default']

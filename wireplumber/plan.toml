@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://pipewire.pages.freedesktop.org/wireplumber/"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['glib', 'lua', 'pipewire', 'systemd']
+link_deps = ['glib:default', 'lua:default', 'pipewire:default', 'systemd:default']
 
 [[sources]]
 type = "http"

@@ -6,7 +6,6 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://www.kernel.org"
 
-build = ['make', 'zlib']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://p11-glue.github.io/p11-glue/p11-kit.html"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['libtasn1', 'libffi']
+link_deps = ['libtasn1:default', 'libffi:default']
 
 [[sources]]
 type = "http"
@@ -50,4 +49,4 @@ chmod 755 ${STAGING_DIR}/usr/bin/update-ca-trust
 ln -sf ../../bin/update-ca-trust ${STAGING_DIR}/usr/libexec/p11-kit/trust-extract-compat'''
 
 [output]
-runtime_deps = ['libtasn1']
+runtime_deps = ['libtasn1:default']

@@ -6,7 +6,6 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/sphinx-doc/sphinxcontrib-jsmath"
 
-build = ['python', 'setuptools']
 
 [[sources]]
 type = "http"
@@ -20,4 +19,4 @@ cd source
 pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
 
 [output]
-runtime_deps = ['python']
+runtime_deps = ['python:default']

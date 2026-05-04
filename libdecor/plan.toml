@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/libdecor/libdecor"
 
-build = ['meson', 'ninja', 'pkgconf', 'wayland-protocols']
-link = ['cairo', 'pango', 'wayland', 'libxkbcommon']
+link_deps = ['cairo:default', 'pango:default', 'wayland:default', 'libxkbcommon:default']
 
 [[sources]]
 type = "http"

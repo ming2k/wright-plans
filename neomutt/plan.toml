@@ -6,8 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://neomutt.org/"
 
-build = ['gcc', 'gettext', 'make', 'pkgconf']
-link = ['cyrus-sasl', 'gdbm', 'gnutls', 'gpgme', 'krb5', 'libidn2', 'lua', 'ncurses', 'pcre2', 'sqlite']
+link_deps = ['cyrus-sasl:default', 'gdbm:default', 'gnutls:default', 'gpgme:default', 'krb5:default', 'libidn2:default', 'lua:default', 'ncurses:default', 'pcre2:default', 'sqlite:default']
 
 [[sources]]
 type = "http"
@@ -41,4 +40,4 @@ cd source
 make DESTDIR=${STAGING_DIR} install'''
 
 [output]
-runtime_deps = ['ca-certificates', 'gnupg']
+runtime_deps = ['ca-certificates:default', 'gnupg:default']

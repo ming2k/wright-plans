@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://dri.freedesktop.org/libdrm/"
 
-build = ['meson', 'ninja']
 
 [[sources]]
 type = "http"

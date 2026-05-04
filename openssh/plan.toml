@@ -6,8 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://www.openssh.com/portable.html"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['glibc', 'libedit', 'linux-pam', 'openssl', 'zlib', 'libxcrypt']
+link_deps = ['glibc:default', 'libedit:default', 'linux-pam:default', 'openssl:default', 'zlib:default', 'libxcrypt:default']
 
 [[sources]]
 type = "http"
@@ -108,4 +107,4 @@ systemctl daemon-reload 2>/dev/null || true
 '''
 
 [output]
-runtime_deps = ['shadow']
+runtime_deps = ['shadow:default']

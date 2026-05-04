@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ajeetdsouza/zoxide"
 
-build = ['rust']
 
 [[sources]]
 type = "http"

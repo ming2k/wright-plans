@@ -6,8 +6,7 @@ license = "NOASSERTION"
 arch = "x86_64"
 url = "https://github.com/ming2k/typio"
 
-build = ['cmake', 'glslang', 'ninja', 'pkgconf', 'vulkan-headers']
-link = ['dbus', 'fontconfig', 'freetype', 'gtk4', 'harfbuzz', 'librime', 'libxkbcommon', 'pipewire', 'vulkan-loader', 'wayland']
+link_deps = ['dbus:default', 'fontconfig:default', 'freetype:default', 'gtk4:default', 'harfbuzz:default', 'librime:default', 'libxkbcommon:default', 'pipewire:default', 'vulkan-loader:default', 'wayland:default']
 
 [[sources]]
 type = "git"

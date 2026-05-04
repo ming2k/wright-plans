@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/systemd/systemd"
 
-build = ['gcc', 'gperf', 'llvm', 'python-jinja2', 'meson', 'ninja', 'pkgconf', 'python']
-link = ['acl', 'cryptsetup', 'glibc', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']
+link_deps = ['acl:default', 'cryptsetup:default', 'glibc:default', 'libcap:default', 'libgcrypt:default', 'libidn2:default', 'libseccomp:default', 'libxcrypt:default', 'linux-pam:default', 'lz4:default', 'openssl:default', 'p11-kit:default', 'pcre2:default', 'tpm2-tss:default', 'util-linux:default', 'xz:default', 'zstd:default']
 
 [[sources]]
 type = "http"
@@ -116,4 +115,4 @@ systemctl daemon-reexec 2>/dev/null || true
 '''
 
 [output]
-runtime_deps = ['acl', 'bash', 'cryptsetup', 'dbus', 'glibc', 'hwdata', 'kbd', 'kmod', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']
+runtime_deps = ['acl:default', 'bash:default', 'cryptsetup:default', 'dbus:default', 'glibc:default', 'hwdata:default', 'kbd:default', 'kmod:default', 'libcap:default', 'libgcrypt:default', 'libidn2:default', 'libseccomp:default', 'libxcrypt:default', 'linux-pam:default', 'lz4:default', 'openssl:default', 'p11-kit:default', 'pcre2:default', 'tpm2-tss:default', 'util-linux:default', 'xz:default', 'zstd:default']

@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gnupg.org/software/gpgme/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['libassuan', 'libgpg-error', 'gnupg']
+link_deps = ['libassuan:default', 'libgpg-error:default', 'gnupg:default']
 
 [[sources]]
 type = "http"

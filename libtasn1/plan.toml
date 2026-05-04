@@ -6,7 +6,6 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/libtasn1/"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -16,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libtasn1-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libtasn1-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libtasn1-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

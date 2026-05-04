@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/storaged-project/libbytesize"
 
-build = ['gcc', 'make', 'python-pygments']
-link = ['glib', 'mpfr', 'pcre2']
+link_deps = ['glib:default', 'mpfr:default', 'pcre2:default']
 
 [[sources]]
 type = "http"

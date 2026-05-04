@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/udisks/"
 
-build = ['gcc', 'make', 'pkgconf', 'gettext', 'glib', 'docbook-xsl', 'libxslt', 'polkit']
-link = ['acl', 'libatasmart', 'libblockdev', 'libgudev', 'polkit', 'systemd']
+link_deps = ['acl:default', 'libatasmart:default', 'libblockdev:default', 'libgudev:default', 'polkit:default', 'systemd:default']
 
 [[sources]]
 type = "http"

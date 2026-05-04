@@ -6,7 +6,6 @@ license = "Public Domain"
 arch = "x86_64"
 url = "https://core.tcl.tk/expect/"
 
-build = ['gcc', 'make', 'tcl']
 
 [[sources]]
 type = "http"
@@ -51,4 +50,4 @@ make DESTDIR=${STAGING_DIR} install
 ln -svf expect${VERSION}/libexpect${VERSION}.so ${STAGING_DIR}/usr/lib'''
 
 [output]
-runtime_deps = ['tcl']
+runtime_deps = ['tcl:default']

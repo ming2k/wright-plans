@@ -6,7 +6,6 @@ license = "LGPL-2.1-or-later OR GPL-2.0-or-later OR MPL-2.0"
 arch = "x86_64"
 url = "https://graphite.sil.org/"
 
-build = ['gcc', 'cmake', 'ninja']
 
 [[sources]]
 type = "http"

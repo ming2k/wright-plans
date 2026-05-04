@@ -35,4 +35,4 @@ install -Dm644 ${WORKDIR}/completion.bash.inc ${STAGING_DIR}/usr/share/bash-comp
 install -Dm644 ${WORKDIR}/completion.zsh.inc ${STAGING_DIR}/usr/share/zsh/site-functions/_gcloud'''
 
 [output]
-runtime_deps = ['python']
+runtime_deps = ['python:default']

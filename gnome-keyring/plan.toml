@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/gnome-keyring"
 
-build = ['gettext', 'libxslt', 'meson', 'ninja', 'pkgconf']
-link = ['dbus', 'gcr3', 'glib', 'libsecret', 'linux-pam', 'p11-kit']
+link_deps = ['dbus:default', 'gcr3:default', 'glib:default', 'libsecret:default', 'linux-pam:default', 'p11-kit:default']
 
 [[sources]]
 type = "http"
@@ -43,4 +42,4 @@ ldconfig 2>/dev/null || true
 '''
 
 [output]
-runtime_deps = ['dbus', 'gcr3', 'libsecret', 'linux-pam', 'p11-kit']
+runtime_deps = ['dbus:default', 'gcr3:default', 'libsecret:default', 'linux-pam:default', 'p11-kit:default']

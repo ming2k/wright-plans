@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://nghttp2.org/"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

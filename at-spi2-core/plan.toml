@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://wiki.gnome.org/Accessibility"
 
-build = ['dbus', 'gobject-introspection', 'meson', 'ninja']
-link = ['glib']
+link_deps = ['glib:default']
 
 [[sources]]
 type = "http"
@@ -33,4 +32,4 @@ cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [output]
-runtime_deps = ['dbus', 'systemd']
+runtime_deps = ['dbus:default', 'systemd:default']

@@ -5,8 +5,7 @@ description = "Core Wayland window system code and protocol"
 license = "MIT"
 arch = "x86_64"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['expat', 'libffi', 'libxml2']
+link_deps = ['expat:default', 'libffi:default', 'libxml2:default']
 
 [[sources]]
 type = "http"

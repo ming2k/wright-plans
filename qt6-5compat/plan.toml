@@ -6,8 +6,7 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
 
-build = ['cmake', 'gcc', 'ninja', 'qt6-base']
-link = ['qt6-base']
+link_deps = ['qt6-base:default']
 
 [[sources]]
 type = "http"

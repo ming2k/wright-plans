@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://xfs.wiki.kernel.org"
 
-build = ['pkgconf']
-link = ['util-linux', 'icu', 'inih']
+link_deps = ['util-linux:default', 'icu:default', 'inih:default']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gnupg.org/software/libgcrypt/"
 
-build = ['pkgconf']
-link = ['libgpg-error']
+link_deps = ['libgpg-error:default']
 
 [[sources]]
 type = "http"

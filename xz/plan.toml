@@ -6,7 +6,6 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://tukaani.org/xz/"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

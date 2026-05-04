@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/google/leveldb"
 
-build = ['cmake', 'ninja']
-link = ['snappy']
+link_deps = ['snappy:default']
 
 [[sources]]
 type = "http"

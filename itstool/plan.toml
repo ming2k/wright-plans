@@ -6,7 +6,6 @@ license = "GPL-3.0-or-later"
 arch = "any"
 url = "https://itstool.org"
 
-build = ['libxml2', 'python']
 
 [[sources]]
 type = "http"
@@ -31,4 +30,4 @@ cd source
 DESTDIR=${STAGING_DIR} make install'''
 
 [output]
-runtime_deps = ['libxml2', 'python']
+runtime_deps = ['libxml2:default', 'python:default']

@@ -5,8 +5,7 @@ description = "Network extensions for GLib"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-build = ['gettext', 'meson', 'ninja', 'pkgconf']
-link = ['glib']
+link_deps = ['glib:default']
 
 [[sources]]
 type = "http"
@@ -37,4 +36,4 @@ post_upgrade = "gio-querymodules /usr/lib/gio/modules"
 pre_remove = "gio-querymodules /usr/lib/gio/modules"
 
 [output]
-runtime_deps = ['gnutls', 'gsettings-desktop-schemas', 'libproxy']
+runtime_deps = ['gnutls:default', 'gsettings-desktop-schemas:default', 'libproxy:default']

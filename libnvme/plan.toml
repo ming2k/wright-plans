@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/linux-nvme/libnvme"
 
-build = ['meson', 'ninja', 'pkgconf', 'gcc']
-link = ['dbus', 'json-c', 'keyutils', 'openssl']
+link_deps = ['dbus:default', 'json-c:default', 'keyutils:default', 'openssl:default']
 
 [[sources]]
 type = "http"

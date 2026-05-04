@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://github.com/bugaevc/wl-clipboard"
 
-build = ['meson', 'ninja']
-link = ['wayland', 'wayland-protocols']
+link_deps = ['wayland:default', 'wayland-protocols:default']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/vala"
 
-build = ['bison', 'flex', 'meson', 'ninja', 'pkgconf']
-link = ['glib']
+link_deps = ['glib:default']
 
 [[sources]]
 type = "http"

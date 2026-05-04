@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later AND BSD-3-Clause"
 arch = "x86_64"
 url = "https://passt.top/passt/about/"
 
-build = ['gcc', 'make']
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"

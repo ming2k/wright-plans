@@ -6,7 +6,6 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/commonmark/cmark"
 
-build = ['cmake', 'gcc', 'ninja']
 
 [[sources]]
 type = "http"

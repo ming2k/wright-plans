@@ -1,16 +1,15 @@
 name = "libclc"
-version = "19.1.7"
+version = "22.1.4"
 release = 1
 description = "OpenCL C library implementation for LLVM"
 license = "Apache-2.0"
 arch = "x86_64"
 url = "https://libclc.llvm.org/"
 
-build = ['cmake', 'llvm', 'make']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "3e68c90dda630c27d41d201e37b8bbf5222e39b273dec5ca880709c69e0a07d4"
 url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-project-${VERSION}.src.tar.xz"
 extract_to = "source"
 
@@ -33,4 +32,4 @@ cd source/build-libclc
 make DESTDIR=${STAGING_DIR} install'''
 
 [output]
-runtime_deps = ['glibc']
+runtime_deps = ['glibc:default']

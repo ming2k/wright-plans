@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://git.sr.ht/~exec64/imv"
 
-build = ['meson', 'ninja', 'pkgconf', 'wayland-protocols']
-link = ['pango', 'libxkbcommon', 'inih', 'wayland', 'mesa', 'libpng', 'libjpeg-turbo', 'libtiff', 'librsvg', 'libheif', 'libjxl', 'libwebp', 'icu']
+link_deps = ['pango:default', 'libxkbcommon:default', 'inih:default', 'wayland:default', 'mesa:default', 'libpng:default', 'libjpeg-turbo:default', 'libtiff:default', 'librsvg:default', 'libheif:default', 'libjxl:default', 'libwebp:default', 'icu:default']
 
 [[sources]]
 type = "http"
@@ -48,4 +47,4 @@ cd source/*
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [output]
-runtime_deps = ['wayland']
+runtime_deps = ['wayland:default']

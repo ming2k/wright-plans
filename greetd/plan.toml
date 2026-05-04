@@ -6,8 +6,7 @@ license = "GPL-3.0-only"
 arch = "x86_64"
 url = "https://sr.ht/~kennylevinsen/greetd"
 
-build = ['rust']
-link = ['glibc', 'linux-pam', 'seatd']
+link_deps = ['glibc:default', 'linux-pam:default', 'seatd:default']
 
 [[sources]]
 type = "http"
@@ -97,4 +96,4 @@ systemctl daemon-reload 2>/dev/null || true
 '''
 
 [output]
-runtime_deps = ['seatd', 'systemd']
+runtime_deps = ['seatd:default', 'systemd:default']

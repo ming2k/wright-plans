@@ -6,8 +6,7 @@ license = "Zlib"
 arch = "x86_64"
 url = "https://www.libsdl.org/"
 
-build = ['gcc', 'make', 'pkgconf', 'wayland-protocols']
-link = ['alsa-lib', 'dbus', 'libxkbcommon', 'pipewire', 'wayland']
+link_deps = ['alsa-lib:default', 'dbus:default', 'libxkbcommon:default', 'pipewire:default', 'wayland:default']
 
 [[sources]]
 type = "http"

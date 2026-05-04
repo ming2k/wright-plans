@@ -5,8 +5,7 @@ description = "PNG reference library (Latest Stable)"
 license = "Libpng"
 arch = "x86_64"
 
-build = ['gcc', 'make']
-link = ['zlib']
+link_deps = ['zlib:default']
 
 [[sources]]
 type = "http"

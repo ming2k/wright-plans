@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/rockdaboot/libpsl"
 
-build = ['meson', 'ninja']
-link = ['libidn2', 'libunistring']
+link_deps = ['libidn2:default', 'libunistring:default']
 
 [[sources]]
 type = "http"

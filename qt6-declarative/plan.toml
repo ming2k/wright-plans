@@ -6,7 +6,6 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
 
-build = ['cmake', 'gcc', 'ninja', 'qt6-base', 'qt6-shadertools']
 
 [[sources]]
 type = "http"
@@ -30,4 +29,4 @@ cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [output]
-runtime_deps = ['qt6-base', 'qt6-shadertools']
+runtime_deps = ['qt6-base:default', 'qt6-shadertools:default']

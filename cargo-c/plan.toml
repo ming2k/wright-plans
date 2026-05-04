@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/lu-zero/cargo-c"
 
-build = ['rust', 'pkgconf']
-link = ['openssl']
+link_deps = ['openssl:default']
 
 [[sources]]
 type = "http"

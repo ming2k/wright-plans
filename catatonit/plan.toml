@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/openSUSE/catatonit"
 
-build = ['autoconf', 'automake', 'libtool', 'gcc', 'make']
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"
@@ -43,4 +42,4 @@ install -dm755 ${STAGING_DIR}/usr/libexec/podman
 ln -sf ../../bin/catatonit ${STAGING_DIR}/usr/libexec/podman/catatonit'''
 
 [output]
-runtime_deps = ['glibc']
+runtime_deps = ['glibc:default']

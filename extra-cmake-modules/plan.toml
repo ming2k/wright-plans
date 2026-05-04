@@ -6,7 +6,6 @@ license = "LGPL-2.0-or-later"
 arch = "any"
 url = "https://community.kde.org/Frameworks"
 
-build = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"

@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://gnupg.org"
 
-link = ['libgcrypt', 'libgpg-error', 'libassuan', 'libksba', 'npth', 'readline', 'gnutls', 'sqlite']
+link_deps = ['libgcrypt:default', 'libgpg-error:default', 'libassuan:default', 'libksba:default', 'npth:default', 'readline:default', 'gnutls:default', 'sqlite:default']
 
 [[sources]]
 type = "http"
@@ -39,4 +39,4 @@ ln -sf gpg  ${STAGING_DIR}/usr/bin/gpg2
 ln -sf gpgv ${STAGING_DIR}/usr/bin/gpgv2'''
 
 [output]
-runtime_deps = ['pinentry']
+runtime_deps = ['pinentry:default']

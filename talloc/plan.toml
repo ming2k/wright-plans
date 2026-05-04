@@ -6,7 +6,6 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://talloc.samba.org/"
 
-build = ['docbook-xml', 'docbook-xsl', 'gcc', 'libxslt', 'make', 'python']
 
 [[sources]]
 type = "http"

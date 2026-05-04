@@ -26,4 +26,4 @@ ln -sf ../share/ant/bin/ant ${STAGING_DIR}/usr/bin/ant'''
 provides = ["apache-ant"]
 
 [output]
-runtime_deps = ['openjdk']
+runtime_deps = ['openjdk:default']

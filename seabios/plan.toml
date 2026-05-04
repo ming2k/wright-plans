@@ -6,7 +6,6 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.seabios.org/"
 
-build = ['bash', 'gcc', 'make', 'python']
 
 [[sources]]
 type = "http"

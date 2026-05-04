@@ -5,8 +5,7 @@ description = "Vulkan Loader (Wayland Only)"
 license = "Apache-2.0"
 arch = "x86_64"
 
-build = ['cmake', 'ninja', 'vulkan-headers', 'python']
-link = ['glibc', 'wayland']
+link_deps = ['glibc:default', 'wayland:default']
 
 [[sources]]
 type = "http"

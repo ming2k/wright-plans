@@ -6,7 +6,6 @@ license = "ISC"
 arch = "x86_64"
 url = "https://pkgconf.org/"
 
-build = ['bash', 'gcc', 'make']
 
 [[sources]]
 type = "http"

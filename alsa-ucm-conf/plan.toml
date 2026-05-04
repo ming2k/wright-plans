@@ -29,4 +29,4 @@ mkdir -p ${STAGING_DIR}/usr/share/alsa
 cp -a ucm2 ${STAGING_DIR}/usr/share/alsa/ucm2'''
 
 [output]
-runtime_deps = ['alsa-lib']
+runtime_deps = ['alsa-lib:default']

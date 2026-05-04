@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/XKeyboardConfig/"
 
-build = ['meson', 'ninja']
 
 [[sources]]
 type = "http"

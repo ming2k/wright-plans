@@ -6,8 +6,7 @@ license = "Apache-2.0-with-LLVM-exception"
 arch = "x86_64"
 url = "https://llvm.org"
 
-build = ['cmake', 'gcc', 'ninja', 'pkgconf', 'python']
-link = ['libedit', 'libffi', 'libxml2', 'zlib', 'zstd', 'glibc']
+link_deps = ['libedit:default', 'libffi:default', 'libxml2:default', 'zlib:default', 'zstd:default', 'glibc:default']
 
 [[sources]]
 type = "http"
@@ -25,6 +24,12 @@ script = '''
 cd source/llvm-project-${VERSION}.src/llvm
 ninja -C build -j$(nproc)'''
 
+[lifecycle.staging]
+script = '''
+cd source/llvm-project-${VERSION}.src/llvm
+DESTDIR=${STAGING_DIR} ninja -C build install
+'''
+
 # LLVM outputs: libs + clang + lld + clangd
 # Note: no catch-all; unclaimed files (e.g. llvm-as, opt, llc, headers) are discarded.
 
@@ -32,14 +37,15 @@ ninja -C build -j$(nproc)'''
 name = "llvm-libs"
 description = "LLVM shared libraries"
 include = [
-    "/usr/lib/libLLVM-[0-9]+.*\\.so.*",
+    "/usr/lib/libLLVM.*\\.so.*",
     "/usr/lib/libclang\\.so.*",
     "/usr/lib/libclang-cpp\\.so.*",
     "/usr/lib/liblld.*\\.so.*",
     "/usr/lib/libLTO\\.so.*",
+    "/usr/lib/libRemarks\\.so.*",
     "/usr/lib/LLVMgold\\.so",
 ]
-runtime_deps = ["glibc", "libffi", "libedit", "ncurses", "zlib", "zstd"]
+runtime_deps = ['glibc:default', 'libffi:default', 'libedit:default', 'ncurses:default', 'zlib:default', 'zstd:default']
 
 [[output]]
 name = "clang"
@@ -50,11 +56,25 @@ include = [
     "/usr/bin/clang\\+\\+",
     "/usr/bin/clang-cl",
     "/usr/bin/clang-cpp",
+    "/usr/bin/clang-format",
+    "/usr/bin/clang-tidy",
+    "/usr/bin/clang-check",
+    "/usr/bin/run-clang-tidy",
+    "/usr/bin/git-clang-format",
+    "/usr/bin/clang-apply-replacements",
+    "/usr/bin/scan-build",
+    "/usr/bin/scan-view",
+    "/usr/bin/analyze-build",
+    "/usr/bin/intercept-build",
     "/usr/lib/clang/.*",
     "/usr/lib/cmake/clang/.*",
+    "/usr/lib/libscanbuild/.*",
     "/usr/share/clang/.*",
+    "/usr/share/scan-build/.*",
+    "/usr/share/scan-view/.*",
+    "/usr/share/man/man1/scan-build\\.1",
 ]
-runtime_deps = ["llvm-libs"]
+runtime_deps = ['llvm-libs:default']
 
 [[output]]
 name = "lld"
@@ -64,23 +84,17 @@ include = [
     "/usr/bin/lld-[0-9]+",
     "/usr/bin/ld\\.lld",
     "/usr/bin/ld64\\.lld",
+    "/usr/bin/lld-link",
     "/usr/bin/wasm-ld",
     "/usr/lib/cmake/lld/.*",
 ]
-runtime_deps = ["llvm-libs"]
+runtime_deps = ['llvm-libs:default']
 
 [[output]]
 name = "clangd"
 description = "Language server protocol implementation for C/C++"
 include = [
     "/usr/bin/clangd",
-    "/usr/share/clang/clangd.*",
-    "/usr/lib/cmake/clangd/.*",
 ]
-runtime_deps = ["clang", "llvm-libs"]
+runtime_deps = ['clang:default', 'llvm-libs:default']
 
-[lifecycle.staging]
-script = '''
-cd source/llvm-project-${VERSION}.src/llvm
-DESTDIR=${STAGING_DIR} ninja -C build install
-'''

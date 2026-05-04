@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://libzip.org/"
 
-build = ['cmake', 'ninja']
-link = ['zlib', 'openssl', 'bzip2', 'xz', 'zstd']
+link_deps = ['zlib:default', 'openssl:default', 'bzip2:default', 'xz:default', 'zstd:default']
 
 [[sources]]
 type = "http"
@@ -35,4 +34,4 @@ post_install = "ldconfig"
 post_upgrade = "ldconfig"
 
 [output]
-runtime_deps = ['zlib', 'openssl', 'bzip2', 'xz', 'zstd']
+runtime_deps = ['zlib:default', 'openssl:default', 'bzip2:default', 'xz:default', 'zstd:default']

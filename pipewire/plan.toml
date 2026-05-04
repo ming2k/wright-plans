@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://pipewire.org"
 
-build = ['meson', 'ninja', 'pkgconf', 'rtkit', 'python-docutils']
-link = ['alsa-lib', 'bluez', 'dbus', 'glib', 'gstreamer', 'libcamera', 'libsndfile', 'ncurses', 'opus', 'readline', 'sbc', 'systemd', 'v4l-utils']
+link_deps = ['alsa-lib:default', 'bluez:default', 'dbus:default', 'glib:default', 'gstreamer:default', 'libcamera:default', 'libsndfile:default', 'ncurses:default', 'opus:default', 'readline:default', 'sbc:default', 'systemd:default', 'v4l-utils:default']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/tpm2-software/tpm2-tss"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['curl', 'json-c', 'libtpms', 'libusb', 'openssl', 'util-linux']
+link_deps = ['curl:default', 'json-c:default', 'libtpms:default', 'libusb:default', 'openssl:default', 'util-linux:default']
 
 [[sources]]
 type = "http"
@@ -54,4 +53,4 @@ systemd-sysusers /usr/lib/sysusers.d/tpm2-tss.conf 2>/dev/null || true
 '''
 
 [output]
-runtime_deps = ['systemd']
+runtime_deps = ['systemd:default']

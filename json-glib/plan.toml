@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://wiki.gnome.org/Projects/JsonGlib"
 
-build = ['meson', 'ninja', 'pkgconf', 'gobject-introspection']
-link = ['glib']
+link_deps = ['glib:default']
 
 [[sources]]
 type = "http"

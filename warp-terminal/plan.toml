@@ -6,8 +6,7 @@ license = "custom"
 arch = "x86_64"
 url = "https://github.com/warpdotdev/warp"
 
-build = ['zstd']
-link = ['alsa-lib', 'glibc', 'xz', 'zlib']
+link_deps = ['alsa-lib:default', 'glibc:default', 'xz:default', 'zlib:default']
 
 [[sources]]
 type = "http"

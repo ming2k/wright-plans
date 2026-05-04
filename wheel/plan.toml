@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://wheel.readthedocs.io/"
 
-build = ['flit-core', 'python-packaging', 'python']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://codeberg.org/sox_ng/sox_ng"
 
-build = ['autoconf', 'automake', 'libtool', 'make', 'pkgconf']
-link = ['alsa-lib', 'ffmpeg', 'libpng', 'libsndfile', 'libvorbis', 'libogg', 'zlib']
+link_deps = ['alsa-lib:default', 'ffmpeg:default', 'libpng:default', 'libsndfile:default', 'libvorbis:default', 'libogg:default', 'zlib:default']
 
 [[sources]]
 type = "http"

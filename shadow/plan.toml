@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/shadow-maint/shadow"
 
-build = ['gcc', 'libxslt', 'make']
-link = ['glibc', 'linux-pam']
+link_deps = ['glibc:default', 'linux-pam:default']
 
 [[sources]]
 type = "http"

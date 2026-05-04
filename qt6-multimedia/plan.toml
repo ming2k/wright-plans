@@ -6,8 +6,7 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
 
-build = ['cmake', 'gcc', 'ninja', 'pkgconf', 'qt6-base', 'ffmpeg', 'pipewire']
-link = ['ffmpeg', 'pipewire', 'qt6-base']
+link_deps = ['ffmpeg:default', 'pipewire:default', 'qt6-base:default']
 
 [[sources]]
 type = "http"
@@ -37,4 +36,4 @@ cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [output]
-runtime_deps = ['qt6-base', 'ffmpeg', 'pipewire']
+runtime_deps = ['qt6-base:default', 'ffmpeg:default', 'pipewire:default']

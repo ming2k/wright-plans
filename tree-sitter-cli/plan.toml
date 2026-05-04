@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/tree-sitter/tree-sitter"
 
-build = ['gcc', 'rust']
-link = ['gcc', 'glibc']
+link_deps = ['gcc:default', 'glibc:default']
 
 [[sources]]
 type = "http"

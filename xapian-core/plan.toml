@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://xapian.org/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['libuuid', 'zlib']
+link_deps = ['libuuid:default', 'zlib:default']
 
 [[sources]]
 type = "http"

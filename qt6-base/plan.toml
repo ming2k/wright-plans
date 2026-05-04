@@ -6,8 +6,7 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
 
-build = ['cmake', 'gcc', 'ninja', 'perl', 'pkgconf', 'python']
-link = ['fontconfig', 'freetype', 'glib', 'harfbuzz', 'libdrm', 'libpng', 'libxkbcommon', 'openssl', 'pcre2', 'vulkan-headers', 'zlib']
+link_deps = ['fontconfig:default', 'freetype:default', 'glib:default', 'harfbuzz:default', 'libdrm:default', 'libpng:default', 'libxkbcommon:default', 'openssl:default', 'pcre2:default', 'vulkan-headers:default', 'zlib:default']
 
 [[sources]]
 type = "http"
@@ -49,4 +48,4 @@ cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [output]
-runtime_deps = ['dbus', 'double-conversion', 'mesa', 'pcre2']
+runtime_deps = ['dbus:default', 'double-conversion:default', 'mesa:default', 'pcre2:default']

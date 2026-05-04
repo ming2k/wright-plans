@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://bitmath.org/code/mtdev/"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

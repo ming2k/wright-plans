@@ -6,7 +6,6 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/SPIRV-Cross"
 
-build = ['gcc', 'make', 'cmake']
 
 [[sources]]
 type = "http"

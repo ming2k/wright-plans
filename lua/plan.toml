@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.lua.org"
 
-link = ['readline']
+link_deps = ['readline:default']
 
 [[sources]]
 type = "http"

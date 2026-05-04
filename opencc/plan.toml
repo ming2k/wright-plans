@@ -6,8 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/BYVoid/OpenCC"
 
-build = ['cmake', 'ninja', 'pkgconf']
-link = ['marisa']
+link_deps = ['marisa:default']
 
 [[sources]]
 type = "http"

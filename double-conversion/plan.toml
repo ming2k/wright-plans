@@ -6,7 +6,6 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/google/double-conversion"
 
-build = ['cmake', 'gcc', 'ninja']
 
 [[sources]]
 type = "http"

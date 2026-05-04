@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://www.tcpdump.org/"
 
-build = ['gcc', 'make', 'libpcap']
-link = ['libpcap']
+link_deps = ['libpcap:default']
 
 [[sources]]
 type = "http"

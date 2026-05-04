@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://mj.ucw.cz/sw/pciutils/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['systemd', 'zlib']
+link_deps = ['systemd:default', 'zlib:default']
 
 [[sources]]
 type = "http"

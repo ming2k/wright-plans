@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/libxslt"
 
-build = ['gcc', 'make']
-link = ['libxml2']
+link_deps = ['libxml2:default']
 
 [[sources]]
 type = "http"

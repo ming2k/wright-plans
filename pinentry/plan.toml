@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gnupg.org/software/pinentry/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['libassuan', 'libgpg-error', 'ncurses']
+link_deps = ['libassuan:default', 'libgpg-error:default', 'ncurses:default']
 
 [[sources]]
 type = "http"

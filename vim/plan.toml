@@ -6,8 +6,7 @@ license = "custom:vim"
 arch = "x86_64"
 url = "https://www.vim.org"
 
-build = ['gcc', 'autoconf', 'make', 'pkgconf']
-link = ['acl', 'ncurses', 'zlib']
+link_deps = ['acl:default', 'ncurses:default', 'zlib:default']
 
 [[sources]]
 type = "http"

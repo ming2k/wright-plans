@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://strace.io"
 
-build = ['gcc', 'make']
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"

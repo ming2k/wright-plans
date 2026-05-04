@@ -6,8 +6,7 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://pango.gnome.org"
 
-build = ['meson', 'ninja', 'pkgconf', 'gobject-introspection', 'python']
-link = ['glib', 'cairo', 'harfbuzz', 'fontconfig', 'fribidi', 'freetype']
+link_deps = ['glib:default', 'cairo:default', 'harfbuzz:default', 'fontconfig:default', 'fribidi:default', 'freetype:default']
 
 [[sources]]
 type = "http"

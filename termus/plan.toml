@@ -6,8 +6,7 @@ license = "UNKNOWN"
 arch = "x86_64"
 url = "https://github.com/ming2k/termus"
 
-build = ['autoconf', 'automake', 'gcc', 'make', 'pkgconf']
-link = ['ncurses']
+link_deps = ['ncurses:default']
 
 [[sources]]
 type = "git"

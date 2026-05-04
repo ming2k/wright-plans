@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://gcc.gnu.org/"
 
-build = ['binutils', 'make', 'perl', 'texinfo']
-link = ['gcc-libs', 'gmp', 'mpc', 'mpfr', 'zlib', 'glibc']
+link_deps = ['gcc-libs:default', 'gmp:default', 'mpc:default', 'mpfr:default', 'zlib:default', 'glibc:default']
 
 [[sources]]
 type = "http"
@@ -78,7 +77,7 @@ include = [
     "/usr/lib/libubsan\\.so.*",
     "/usr/lib/libhwasan\\.so.*",
 ]
-runtime_deps = ["glibc"]
+runtime_deps = ['glibc:default']
 hooks.post_install = "ldconfig"
 hooks.post_upgrade = "ldconfig"
 
@@ -90,7 +89,7 @@ include = [
     "/usr/include/c\\+/.*",
     "/usr/share/gdb/auto-load/.*",
 ]
-runtime_deps = ["glibc", "gcc-libs"]
+runtime_deps = ['glibc:default', 'gcc-libs:default']
 hooks.post_install = "ldconfig"
 hooks.post_upgrade = "ldconfig"
 
@@ -101,7 +100,7 @@ include = [
     "/usr/lib/libgccjit\\.so.*",
     "/usr/include/libgccjit.*\\.h",
 ]
-runtime_deps = ["glibc", "gcc-libs"]
+runtime_deps = ['glibc:default', 'gcc-libs:default']
 hooks.post_install = "ldconfig"
 hooks.post_upgrade = "ldconfig"
 
@@ -109,5 +108,5 @@ hooks.post_upgrade = "ldconfig"
 [[output]]
 name = "gcc"
 description = "The GNU Compiler Collection - C and C++ compiler"
-runtime_deps = ["binutils", "gcc-libs", "libstdc++"]
+runtime_deps = ['binutils:default', 'gcc-libs:default', 'libstdc++:default']
 

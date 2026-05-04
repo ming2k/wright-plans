@@ -6,8 +6,7 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://github.com/flatpak/libportal"
 
-build = ['gobject-introspection', 'meson', 'ninja', 'pkgconf']
-link = ['glib', 'gtk4', 'gtk3']
+link_deps = ['glib:default', 'gtk4:default', 'gtk3:default']
 
 [[sources]]
 type = "http"

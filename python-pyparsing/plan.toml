@@ -6,7 +6,6 @@ license = "MIT"
 arch = "any"
 url = "https://github.com/pyparsing/pyparsing"
 
-build = ['python', 'setuptools', 'wheel']
 
 [[sources]]
 type = "http"

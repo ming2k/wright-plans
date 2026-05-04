@@ -6,8 +6,7 @@ license = "Zlib"
 arch = "x86_64"
 url = "https://www.libsdl.org/"
 
-build = ['cmake', 'gcc', 'ninja', 'pkgconf', 'wayland-protocols']
-link = ['alsa-lib', 'dbus', 'libxkbcommon', 'pipewire', 'wayland']
+link_deps = ['alsa-lib:default', 'dbus:default', 'libxkbcommon:default', 'pipewire:default', 'wayland:default']
 
 [[sources]]
 type = "http"
@@ -31,4 +30,4 @@ cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [output]
-runtime_deps = ['alsa-lib', 'dbus', 'libxkbcommon', 'pipewire', 'wayland']
+runtime_deps = ['alsa-lib:default', 'dbus:default', 'libxkbcommon:default', 'pipewire:default', 'wayland:default']

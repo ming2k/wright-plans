@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/emersion/grim"
 
-build = ['meson', 'ninja', 'pkgconf', 'scdoc']
-link = ['libjpeg-turbo', 'libpng', 'pixman', 'wayland', 'wayland-protocols']
+link_deps = ['libjpeg-turbo:default', 'libpng:default', 'pixman:default', 'wayland:default', 'wayland-protocols:default']
 
 [[sources]]
 type = "http"

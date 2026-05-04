@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.com/psmisc/psmisc"
 
-build = ['gcc', 'make']
-link = ['ncurses']
+link_deps = ['ncurses:default']
 
 [[sources]]
 type = "http"

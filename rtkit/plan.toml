@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later AND MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/pipewire/rtkit"
 
-build = ['gcc', 'meson', 'ninja', 'pkgconf', 'vim']
-link = ['dbus', 'libcap', 'polkit', 'systemd']
+link_deps = ['dbus:default', 'libcap:default', 'polkit:default', 'systemd:default']
 
 [[sources]]
 type = "git"

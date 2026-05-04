@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/jstedfast/gmime"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['glib', 'gpgme', 'zlib']
+link_deps = ['glib:default', 'gpgme:default', 'zlib:default']
 
 [[sources]]
 type = "http"

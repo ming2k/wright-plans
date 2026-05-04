@@ -6,7 +6,6 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://www.spice-space.org/"
 
-build = ['meson', 'ninja']
 
 [[sources]]
 type = "http"

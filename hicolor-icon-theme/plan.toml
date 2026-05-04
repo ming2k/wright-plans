@@ -6,7 +6,6 @@ license = "GPL-2.0-or-later"
 arch = "any"
 url = "https://icon-theme.freedesktop.org/"
 
-build = ['meson', 'ninja']
 
 [[sources]]
 type = "http"

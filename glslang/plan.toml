@@ -6,7 +6,6 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/glslang"
 
-build = ['cmake', 'gcc', 'make', 'spirv-headers', 'spirv-tools']
 
 [[sources]]
 type = "http"

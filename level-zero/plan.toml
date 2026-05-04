@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/oneapi-src/level-zero"
 
-build = ['cmake', 'ninja', 'pkgconf']
-link = ['glibc', 'libgcc', 'libstdc++']
+link_deps = ['glibc:default', 'libgcc:default', 'libstdc++:default']
 
 [[sources]]
 type = "http"

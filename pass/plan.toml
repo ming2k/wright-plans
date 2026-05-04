@@ -6,7 +6,6 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.passwordstore.org/"
 
-build = ['make']
 
 [[sources]]
 type = "http"
@@ -20,4 +19,4 @@ cd source
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
 [output]
-runtime_deps = ['bash', 'gnupg', 'git']
+runtime_deps = ['bash:default', 'gnupg:default', 'git:default']

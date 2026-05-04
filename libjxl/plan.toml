@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/libjxl/libjxl"
 
-build = ['cmake', 'ninja', 'pkgconf', 'gcc']
-link = ['brotli', 'hwy', 'lcms2', 'libjpeg-turbo', 'libpng']
+link_deps = ['brotli:default', 'hwy:default', 'lcms2:default', 'libjpeg-turbo:default', 'libpng:default']
 
 [[sources]]
 type = "http"

@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://libexpat.github.io/"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

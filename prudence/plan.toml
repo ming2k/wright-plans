@@ -6,7 +6,6 @@ license = "NOASSERTION"
 arch = "x86_64"
 url = "https://github.com/ming2k/prudence"
 
-build = ['rust']
 
 [[sources]]
 type = "http"

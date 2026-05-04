@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/protocolbuffers/protobuf"
 
-build = ['cmake', 'ninja']
-link = ['abseil-cpp']
+link_deps = ['abseil-cpp:default']
 
 [[sources]]
 type = "http"

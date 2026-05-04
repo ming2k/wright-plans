@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.kernel.org/pub/linux/utils/raid/mdadm/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['systemd', 'util-linux']
+link_deps = ['systemd:default', 'util-linux:default']
 
 [[sources]]
 type = "http"

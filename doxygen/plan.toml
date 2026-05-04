@@ -6,7 +6,6 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "http://www.doxygen.nl"
 
-build = ['cmake', 'gcc', 'flex', 'python']
 
 [[sources]]
 type = "http"

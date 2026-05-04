@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.netfilter.org/projects/libnetfilter_conntrack/"
 
-build = ['gcc', 'make', 'pkg-config']
-link = ['glibc', 'libmnl', 'libnfnetlink']
+link_deps = ['glibc:default', 'libmnl:default', 'libnfnetlink:default']
 
 [[sources]]
 type = "http"

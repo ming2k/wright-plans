@@ -6,8 +6,7 @@ license = "ISC"
 arch = "x86_64"
 url = "https://www.sudo.ws"
 
-build = ['gcc', 'make']
-link = ['glibc', 'linux-pam']
+link_deps = ['glibc:default', 'linux-pam:default']
 
 [[sources]]
 type = "http"

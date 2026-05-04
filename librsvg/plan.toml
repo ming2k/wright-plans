@@ -5,8 +5,7 @@ description = "SVG rendering library using Rust"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-build = ['pkgconf', 'meson', 'ninja', 'rust', 'cargo-c', 'python', 'gobject-introspection']
-link = ['cairo', 'gdk-pixbuf', 'pango', 'glib', 'libxml2', 'harfbuzz', 'freetype', 'fribidi']
+link_deps = ['cairo:default', 'gdk-pixbuf:default', 'pango:default', 'glib:default', 'libxml2:default', 'harfbuzz:default', 'freetype:default', 'fribidi:default']
 
 [[sources]]
 type = "http"

@@ -1,17 +1,16 @@
 name = "mesa"
-version = "26.0.5"
+version = "26.0.6"
 release = 1
 description = "Open-source OpenGL and Vulkan drivers"
 license = "MIT"
 arch = "x86_64"
 url = "https://mesa3d.org"
 
-build = ['elfutils', 'glslang', 'libclc', 'llvm', 'meson', 'ninja', 'pkgconf', 'python-mako', 'python-pyyaml', 'spirv-llvm-translator', 'spirv-tools', 'vulkan-headers', 'wayland-protocols']
-link = ['elfutils', 'expat', 'libdisplay-info', 'libdrm', 'libglvnd', 'libunwind', 'llvm', 'wayland', 'zlib', 'zstd']
+link_deps = ['elfutils:default', 'expat:default', 'libdisplay-info:default', 'libdrm:default', 'libglvnd:default', 'libunwind:default', 'llvm:default', 'wayland:default', 'zlib:default', 'zstd:default']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "1d3c3b8a8363b8cc354175bb4a684ad8b035211cc1d6fa17aeb9b9623c513f89"
 url = "https://mesa.freedesktop.org/archive/mesa-${VERSION}.tar.xz"
 extract_to = "source"
 
@@ -42,4 +41,4 @@ cd source/mesa-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [output]
-runtime_deps = ['elfutils', 'expat', 'libdisplay-info', 'libdrm', 'libglvnd', 'libunwind', 'llvm', 'wayland', 'zlib', 'zstd']
+runtime_deps = ['elfutils:default', 'expat:default', 'libdisplay-info:default', 'libdrm:default', 'libglvnd:default', 'libunwind:default', 'llvm:default', 'wayland:default', 'zlib:default', 'zstd:default']

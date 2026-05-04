@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/sxyazi/yazi"
 
-build = ['rust']
-link = ['gcc', 'glibc']
+link_deps = ['gcc:default', 'glibc:default']
 
 [[sources]]
 type = "http"

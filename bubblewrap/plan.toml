@@ -6,8 +6,7 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/containers/bubblewrap"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['libcap', 'libseccomp']
+link_deps = ['libcap:default', 'libseccomp:default']
 
 [[sources]]
 type = "http"

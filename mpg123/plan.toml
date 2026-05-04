@@ -6,8 +6,7 @@ license = "LGPL-2.1-only"
 arch = "x86_64"
 url = "https://www.mpg123.org/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['alsa-lib']
+link_deps = ['alsa-lib:default']
 
 [[sources]]
 type = "http"

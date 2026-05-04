@@ -6,8 +6,7 @@ license = "Apache-2.0 AND BSD-3-Clause AND MIT"
 arch = "x86_64"
 url = "https://github.com/containers/netavark"
 
-build = ['rust', 'cargo']
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"
@@ -84,4 +83,4 @@ systemctl daemon-reload 2>/dev/null || true
 '''
 
 [output]
-runtime_deps = ['aardvark-dns', 'glibc', 'nftables']
+runtime_deps = ['aardvark-dns:default', 'glibc:default', 'nftables:default']

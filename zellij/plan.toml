@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/zellij-org/zellij"
 
-build = ['rust']
 
 [[sources]]
 type = "http"

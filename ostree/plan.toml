@@ -6,8 +6,7 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://ostreedev.github.io/ostree/"
 
-build = ['gcc', 'make', 'pkgconf', 'gettext']
-link = ['glib', 'libarchive', 'curl', 'gpgme']
+link_deps = ['glib:default', 'libarchive:default', 'curl:default', 'gpgme:default']
 
 [[sources]]
 type = "http"
@@ -41,4 +40,4 @@ cd source
 DESTDIR=${STAGING_DIR} make install'''
 
 [output]
-runtime_deps = ['systemd']
+runtime_deps = ['systemd:default']

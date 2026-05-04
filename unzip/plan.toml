@@ -6,7 +6,6 @@ license = "Info-ZIP"
 arch = "x86_64"
 url = "https://infozip.sourceforge.net/UnZip.html"
 
-build = ['bash', 'bzip2', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -51,4 +50,4 @@ make prefix=${STAGING_DIR}/usr \
   -f unix/Makefile install'''
 
 [output]
-runtime_deps = ['bash', 'bzip2']
+runtime_deps = ['bash:default', 'bzip2:default']

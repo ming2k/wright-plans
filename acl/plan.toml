@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://savannah.nongnu.org/projects/acl"
 
-build = ['gcc', 'make']
-link = ['attr']
+link_deps = ['attr:default']
 
 [[sources]]
 type = "http"

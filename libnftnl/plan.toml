@@ -6,7 +6,6 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.netfilter.org/projects/libnftnl/"
 
-build = ['gcc', 'libmnl', 'make', 'pkgconf']
 
 [[sources]]
 type = "http"
@@ -30,4 +29,4 @@ cd source
 make DESTDIR=${STAGING_DIR} install'''
 
 [output]
-runtime_deps = ['libmnl >= 1.0.4']
+runtime_deps = ['libmnl >= 1.0.4:default']

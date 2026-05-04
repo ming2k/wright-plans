@@ -1,5 +1,4 @@
-build = ["meson", "ninja", "pkgconf", "gobject-introspection"]
-link = ["glib", "libjpeg-turbo", "libpng", "libtiff", "shared-mime-info"]
+link_deps = ['glib:default', 'libjpeg-turbo:default', 'libpng:default', 'libtiff:default', 'shared-mime-info:default']
 
 [lifecycle.configure]
 script = '''

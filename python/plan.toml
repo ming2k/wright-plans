@@ -6,8 +6,7 @@ license = "PSF-2.0"
 arch = "x86_64"
 url = "https://www.python.org/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['expat', 'libffi', 'ncurses', 'openssl', 'readline', 'zlib', 'bzip2', 'xz', 'sqlite', 'gdbm', 'libxcrypt']
+link_deps = ['expat:default', 'libffi:default', 'ncurses:default', 'openssl:default', 'readline:default', 'zlib:default', 'bzip2:default', 'xz:default', 'sqlite:default', 'gdbm:default', 'libxcrypt:default']
 
 [[sources]]
 type = "http"

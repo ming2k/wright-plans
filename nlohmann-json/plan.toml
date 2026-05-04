@@ -6,7 +6,6 @@ license = "MIT"
 arch = "any"
 url = "https://github.com/nlohmann/json"
 
-build = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"

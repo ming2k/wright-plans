@@ -6,8 +6,7 @@ license = "Artistic-1.0-Perl OR GPL-1.0-or-later"
 arch = "x86_64"
 url = "https://www.perl.org/"
 
-build = ['bzip2', 'gcc', 'gdbm', 'make']
-link = ['zlib']
+link_deps = ['zlib:default']
 
 [[sources]]
 type = "http"

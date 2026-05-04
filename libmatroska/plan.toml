@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.matroska.org/"
 
-build = ['gcc', 'cmake', 'ninja']
-link = ['libebml']
+link_deps = ['libebml:default']
 
 [[sources]]
 type = "http"

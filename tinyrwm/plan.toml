@@ -6,8 +6,7 @@ license = "0BSD"
 arch = "x86_64"
 url = "https://codeberg.org/river/tinyrwm"
 
-build = ['meson', 'ninja', 'wayland']
-link = ['wayland', 'libxkbcommon']
+link_deps = ['wayland:default', 'libxkbcommon:default']
 
 [[sources]]
 type = "git"

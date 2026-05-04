@@ -5,8 +5,7 @@ description = "Self-contained, serverless, zero-configuration, transactional SQL
 license = "Blessing"
 arch = "x86_64"
 
-build = ['gcc', 'make']
-link = ['readline', 'zlib']
+link_deps = ['readline:default', 'zlib:default']
 
 [[sources]]
 type = "http"

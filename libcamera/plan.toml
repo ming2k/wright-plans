@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://libcamera.org"
 
-build = ['meson', 'ninja', 'pkgconf', 'python-yaml', 'python-jinja2', 'python-ply']
-link = ['gnutls', 'libevent', 'libyaml', 'systemd', 'gstreamer', 'v4l-utils']
+link_deps = ['gnutls:default', 'libevent:default', 'libyaml:default', 'systemd:default', 'gstreamer:default', 'v4l-utils:default']
 
 [[sources]]
 type = "git"

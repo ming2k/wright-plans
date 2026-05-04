@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/intel/compute-runtime"
 
-build = ['cmake', 'ninja', 'igsc', 'level-zero-headers', 'libva', 'pkg-config']
 
 [[sources]]
 type = "http"
@@ -71,4 +70,4 @@ fi
 provides = ["level-zero-driver", "opencl-driver"]
 
 [output]
-runtime_deps = ['glibc', 'intel-gmmlib', 'intel-graphics-compiler', 'libgcc', 'libstdc++']
+runtime_deps = ['glibc:default', 'intel-gmmlib:default', 'intel-graphics-compiler:default', 'libgcc:default', 'libstdc++:default']

@@ -6,8 +6,7 @@ license = "LGPL-2.1-only OR MPL-2.0"
 arch = "x86_64"
 url = "https://github.com/libical/libical"
 
-build = ['cmake', 'ninja']
-link = ['glibc', 'glib', 'icu', 'libxml2']
+link_deps = ['glibc:default', 'glib:default', 'icu:default', 'libxml2:default']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/intel/igsc"
 
-build = ['cmake', 'ninja', 'pkgconf', 'metee']
-link = ['glibc', 'metee']
+link_deps = ['glibc:default', 'metee:default']
 
 [[sources]]
 type = "http"

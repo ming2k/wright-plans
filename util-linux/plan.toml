@@ -6,8 +6,7 @@ license = "GPL-2.0-only AND GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.1-o
 arch = "x86_64"
 url = "https://github.com/util-linux/util-linux"
 
-build = ['gcc', 'meson', 'ninja', 'pkgconf', 'python']
-link = ['glibc', 'ncurses', 'zlib', 'libcap', 'linux-pam', 'readline']
+link_deps = ['glibc:default', 'ncurses:default', 'zlib:default', 'libcap:default', 'linux-pam:default', 'readline:default']
 
 [[sources]]
 type = "http"

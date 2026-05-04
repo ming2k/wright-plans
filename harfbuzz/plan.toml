@@ -5,8 +5,7 @@ description = "OpenType text shaping engine"
 license = "MIT"
 arch = "x86_64"
 
-build = ['gobject-introspection', 'meson', 'ninja', 'pkgconf', 'graphite2']
-link = ['cairo', 'freetype', 'glib', 'icu', 'graphite2']
+link_deps = ['cairo:default', 'freetype:default', 'glib:default', 'icu:default', 'graphite2:default']
 
 [[sources]]
 type = "http"

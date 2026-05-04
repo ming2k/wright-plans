@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://wayland.emersion.fr/slurp/"
 
-build = ['meson', 'ninja', 'pkgconf', 'scdoc']
-link = ['cairo', 'libxkbcommon', 'wayland', 'wayland-protocols']
+link_deps = ['cairo:default', 'libxkbcommon:default', 'wayland:default', 'wayland-protocols:default']
 
 [[sources]]
 type = "http"

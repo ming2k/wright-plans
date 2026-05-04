@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/rime/librime"
 
-build = ['cmake', 'ninja', 'pkgconf']
-link = ['boost', 'google-glog', 'leveldb', 'lua', 'marisa', 'opencc', 'yaml-cpp']
+link_deps = ['boost:default', 'google-glog:default', 'leveldb:default', 'lua:default', 'marisa:default', 'opencc:default', 'yaml-cpp:default']
 
 [[sources]]
 type = "http"

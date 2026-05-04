@@ -6,7 +6,6 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://gmplib.org/"
 
-build = ['gcc', 'm4', 'make']
 
 [[sources]]
 type = "http"

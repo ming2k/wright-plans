@@ -6,8 +6,7 @@ license = "BSD-3-Clause AND MIT"
 arch = "x86_64"
 url = "https://github.com/intel/media-driver"
 
-build = ['cmake']
-link = ['glibc', 'intel-gmmlib', 'libva']
+link_deps = ['glibc:default', 'intel-gmmlib:default', 'libva:default']
 
 [[sources]]
 type = "http"

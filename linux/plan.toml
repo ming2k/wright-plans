@@ -8,7 +8,6 @@ url = "https://www.kernel.org/"
 
 # See README.md for hardware support policy, Arch/CachyOS comparison, and PGO usage
 
-build = ['bc', 'gcc', 'make']
 
 [[sources]]
 type = "http"
@@ -210,4 +209,4 @@ cp -v System.map ${STAGING_DIR}/boot/System.map-theseus
 cp -v .config ${STAGING_DIR}/boot/config-theseus'''
 
 [output]
-runtime_deps = ['kmod', 'dracut-ng']
+runtime_deps = ['kmod:default', 'dracut-ng:default']

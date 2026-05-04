@@ -6,7 +6,6 @@ license = "MIT"
 arch = "x86_64"
 url = "http://pixman.org/"
 
-build = ['bash', 'python', 'meson', 'ninja', 'pkgconf']
 
 [[sources]]
 type = "http"

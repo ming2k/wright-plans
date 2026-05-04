@@ -6,8 +6,7 @@ license = "BSD-4-Clause-UC"
 arch = "x86_64"
 url = "https://www.cyrusimap.org/sasl/"
 
-build = ['gcc', 'make']
-link = ['krb5', 'openssl']
+link_deps = ['krb5:default', 'openssl:default']
 
 [[sources]]
 type = "http"

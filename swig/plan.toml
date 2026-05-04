@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://swig.org"
 
-build = ['gcc', 'make', 'autoconf', 'automake', 'bison']
-link = ['pcre2', 'zlib']
+link_deps = ['pcre2:default', 'zlib:default']
 
 [[sources]]
 type = "http"

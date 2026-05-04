@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.alsa-project.org"
 
-link = ['alsa-lib', 'ncurses']
+link_deps = ['alsa-lib:default', 'ncurses:default']
 
 [[sources]]
 type = "http"
@@ -33,4 +33,4 @@ DESTDIR=${STAGING_DIR} make install'''
 post_install = "alsactl init 2>/dev/null || true"
 
 [output]
-runtime_deps = ['alsa-ucm-conf']
+runtime_deps = ['alsa-ucm-conf:default']

@@ -6,7 +6,6 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://code.videolan.org/videolan/x264"
 
-build = ['gcc', 'make', 'nasm']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/google/glog"
 
-build = ['cmake', 'ninja']
-link = ['gflags']
+link_deps = ['gflags:default']
 
 [[sources]]
 type = "http"

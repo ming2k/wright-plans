@@ -6,7 +6,6 @@ license = "LGPL-3.0-or-later"
 arch = "any"
 url = "https://gitlab.gnome.org/GNOME/adwaita-icon-theme"
 
-build = ['meson', 'ninja', 'pkgconf']
 
 [[sources]]
 type = "http"
@@ -42,4 +41,4 @@ gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 '''
 
 [output]
-runtime_deps = ['hicolor-icon-theme']
+runtime_deps = ['hicolor-icon-theme:default']

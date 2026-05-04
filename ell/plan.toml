@@ -6,7 +6,6 @@ license = "LGPL-2.1-only"
 arch = "x86_64"
 url = "https://01.org/ell"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

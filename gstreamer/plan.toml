@@ -5,8 +5,7 @@ description = "Streaming media framework"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
-build = ['bison', 'flex', 'gobject-introspection', 'libunwind', 'meson', 'ninja', 'pkgconf']
-link = ['glib']
+link_deps = ['glib:default']
 
 [[sources]]
 type = "http"
@@ -27,4 +26,4 @@ cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [output]
-runtime_deps = ['libunwind']
+runtime_deps = ['libunwind:default']

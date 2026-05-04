@@ -6,8 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://alacritty.org"
 
-build = ['cargo', 'cmake', 'gzip', 'ncurses', 'pkgconf', 'python', 'rust', 'scdoc']
-link = ['fontconfig', 'freetype', 'libglvnd', 'libxkbcommon', 'mesa', 'wayland']
+link_deps = ['fontconfig:default', 'freetype:default', 'libglvnd:default', 'libxkbcommon:default', 'mesa:default', 'wayland:default']
 
 [[sources]]
 type = "http"

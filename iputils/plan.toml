@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/iputils/iputils"
 
-build = ['meson', 'ninja', 'gcc', 'libcap', 'libidn2', 'docbook-xsl', 'docbook-xml', 'libxslt']
-link = ['libcap', 'libidn2']
+link_deps = ['libcap:default', 'libidn2:default']
 
 [[sources]]
 type = "http"

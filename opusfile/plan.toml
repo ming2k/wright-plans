@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://xiph.org/opus/"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['libogg', 'opus', 'openssl']
+link_deps = ['libogg:default', 'opus:default', 'openssl:default']
 
 [[sources]]
 type = "http"

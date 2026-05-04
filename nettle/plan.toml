@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.lysator.liu.se/~nisse/nettle/"
 
-build = ['gcc', 'make']
-link = ['gmp']
+link_deps = ['gmp:default']
 
 [[sources]]
 type = "http"

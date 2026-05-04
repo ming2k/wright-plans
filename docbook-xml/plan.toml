@@ -75,4 +75,4 @@ xmlcatalog --noout --add nextCatalog "file:///usr/share/xml/docbook/4.2/catalog-
 '''
 
 [output]
-runtime_deps = ['libxml2']
+runtime_deps = ['libxml2:default']

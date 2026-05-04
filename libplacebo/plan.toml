@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/haasn/libplacebo"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['glslang', 'lcms2', 'shaderc', 'spirv-cross', 'vulkan-loader', 'vulkan-headers']
+link_deps = ['glslang:default', 'lcms2:default', 'shaderc:default', 'spirv-cross:default', 'vulkan-loader:default', 'vulkan-headers:default']
 
 [[sources]]
 type = "http"

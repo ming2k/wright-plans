@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/upower/upower"
 
-build = ['gettext', 'gobject-introspection', 'meson', 'ninja', 'pkgconf', 'polkit', 'docbook-xsl', 'libxslt']
-link = ['glib', 'libgudev', 'libusb', 'polkit']
+link_deps = ['glib:default', 'libgudev:default', 'libusb:default', 'polkit:default']
 
 [[sources]]
 type = "http"
@@ -45,4 +44,4 @@ systemctl enable upower.service 2>/dev/null || true
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 
 [output]
-runtime_deps = ['systemd']
+runtime_deps = ['systemd:default']

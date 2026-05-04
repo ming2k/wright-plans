@@ -6,7 +6,6 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://savannah.nongnu.org/projects/attr"
 
-build = ['gcc', 'make']
 
 [[sources]]
 type = "http"

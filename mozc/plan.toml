@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/google/mozc"
 
-build = ['bazelisk', 'openjdk', 'python', 'gcc']
-link = ['qt6-base']
+link_deps = ['qt6-base:default']
 
 [[sources]]
 type = "http"
@@ -37,4 +36,4 @@ install -Dm755 bazel-bin/gui/tool/mozc_tool ${STAGING_DIR}/usr/lib/mozc/mozc_too
 install -Dm644 ${WORKDIR}/LICENSE ${STAGING_DIR}/usr/share/licenses/mozc/LICENSE'''
 
 [output]
-runtime_deps = ['qt6-base']
+runtime_deps = ['qt6-base:default']

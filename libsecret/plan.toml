@@ -5,8 +5,7 @@ description = "Library for storing and retrieving passwords and other secrets"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-build = ['gettext', 'glib', 'gobject-introspection', 'meson', 'ninja', 'pkgconf']
-link = ['glib', 'libgcrypt']
+link_deps = ['glib:default', 'libgcrypt:default']
 
 [[sources]]
 type = "http"

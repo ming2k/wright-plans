@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://lynx.invisible-island.net/"
 
-build = ['gcc', 'make']
-link = ['bzip2', 'ncurses', 'openssl', 'zlib']
+link_deps = ['bzip2:default', 'ncurses:default', 'openssl:default', 'zlib:default']
 
 [[sources]]
 type = "http"

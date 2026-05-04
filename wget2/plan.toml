@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/wget/"
 
-build = ['gcc', 'make']
-link = ['gnutls', 'libidn2', 'libpsl', 'nghttp2', 'brotli', 'zstd', 'zlib', 'pcre2', 'gpgme']
+link_deps = ['gnutls:default', 'libidn2:default', 'libpsl:default', 'nghttp2:default', 'brotli:default', 'zstd:default', 'zlib:default', 'pcre2:default', 'gpgme:default']
 
 [[sources]]
 type = "http"
@@ -36,4 +35,4 @@ cd source
 make DESTDIR=${STAGING_DIR} install'''
 
 [output]
-runtime_deps = ['ca-certificates']
+runtime_deps = ['ca-certificates:default']

@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://codeberg.org/LGFae/awww"
 
-build = ['rust']
-link = ['lz4', 'wayland', 'wayland-protocols']
+link_deps = ['lz4:default', 'wayland:default', 'wayland-protocols:default']
 
 [[sources]]
 type = "http"

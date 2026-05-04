@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/rpm-software-management/popt"
 
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"

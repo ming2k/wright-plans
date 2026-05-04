@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gnome.pages.gitlab.gnome.org/libnotify/"
 
-build = ['meson', 'ninja', 'pkgconf', 'gobject-introspection']
-link = ['glib', 'gdk-pixbuf']
+link_deps = ['glib:default', 'gdk-pixbuf:default']
 
 [[sources]]
 type = "http"

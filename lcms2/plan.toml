@@ -5,8 +5,7 @@ description = "Small-footprint color management engine"
 license = "MIT"
 arch = "x86_64"
 
-build = ['gcc', 'make', 'pkgconf']
-link = ['libjpeg-turbo']
+link_deps = ['libjpeg-turbo:default']
 
 [[sources]]
 type = "http"

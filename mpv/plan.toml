@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://mpv.io"
 
-build = ['meson', 'ninja', 'pkgconf']
-link = ['alsa-lib', 'ffmpeg', 'lcms2', 'libass', 'libdrm', 'libplacebo', 'libva', 'luajit', 'mesa', 'pipewire', 'vulkan-loader', 'wayland', 'libxkbcommon']
+link_deps = ['alsa-lib:default', 'ffmpeg:default', 'lcms2:default', 'libass:default', 'libdrm:default', 'libplacebo:default', 'libva:default', 'luajit:default', 'mesa:default', 'pipewire:default', 'vulkan-loader:default', 'wayland:default', 'libxkbcommon:default']
 
 [[sources]]
 type = "http"

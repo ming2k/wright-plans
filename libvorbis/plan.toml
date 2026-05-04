@@ -6,8 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/xiph/vorbis"
 
-build = ['gcc', 'make']
-link = ['libogg']
+link_deps = ['libogg:default']
 
 [[sources]]
 type = "http"

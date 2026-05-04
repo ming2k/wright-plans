@@ -6,8 +6,7 @@ license = "ISC"
 arch = "x86_64"
 url = "https://github.com/tmux/tmux/wiki"
 
-build = ['gcc', 'make']
-link = ['libevent', 'ncurses', 'systemd']
+link_deps = ['libevent:default', 'ncurses:default', 'systemd:default']
 
 [[sources]]
 type = "http"

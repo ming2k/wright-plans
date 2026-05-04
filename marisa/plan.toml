@@ -6,7 +6,6 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/s-yata/marisa-trie"
 
-build = ['autoconf', 'automake', 'libtool', 'make']
 
 [[sources]]
 type = "http"

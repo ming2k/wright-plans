@@ -6,7 +6,6 @@ license = "GPL-2.0-only"
 arch = "any"
 url = "https://github.com/andreafrancia/trash-cli"
 
-build = ['python']
 
 [[sources]]
 type = "http"
@@ -20,4 +19,4 @@ cd source
 pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${STAGING_DIR} .'''
 
 [output]
-runtime_deps = ['python', 'python-psutil']
+runtime_deps = ['python:default', 'python-psutil:default']

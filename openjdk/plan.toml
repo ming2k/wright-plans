@@ -6,8 +6,7 @@ license = "GPL-2.0-with-classpath-exception"
 arch = "x86_64"
 url = "https://openjdk.org"
 
-build = ['autoconf', 'make', 'gcc', 'bash', 'zip', 'unzip', 'fontconfig', 'temurin25']
-link = ['alsa-lib', 'freetype', 'giflib', 'lcms2', 'libjpeg-turbo', 'libpng', 'zlib']
+link_deps = ['alsa-lib:default', 'freetype:default', 'giflib:default', 'lcms2:default', 'libjpeg-turbo:default', 'libpng:default', 'zlib:default']
 
 [[sources]]
 type = "git"
@@ -87,4 +86,4 @@ provides = ["java", "jdk"]
 backup = ["/etc/profile.d/jdk.sh"]
 
 [output]
-runtime_deps = ['alsa-lib', 'freetype', 'giflib', 'lcms2', 'libjpeg-turbo', 'libpng', 'zlib']
+runtime_deps = ['alsa-lib:default', 'freetype:default', 'giflib:default', 'lcms2:default', 'libjpeg-turbo:default', 'libpng:default', 'zlib:default']

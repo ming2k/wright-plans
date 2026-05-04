@@ -5,8 +5,7 @@ description = "Keymap handling library (Wayland Only)"
 license = "MIT"
 arch = "x86_64"
 
-build = ['meson', 'ninja', 'pkgconf', 'bison']
-link = ['wayland', 'wayland-protocols', 'xkeyboard-config']
+link_deps = ['wayland:default', 'wayland-protocols:default', 'xkeyboard-config:default']
 
 [[sources]]
 type = "http"

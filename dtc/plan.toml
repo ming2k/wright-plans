@@ -6,7 +6,6 @@ license = "GPL-2.0-or-later OR BSD-2-Clause"
 arch = "x86_64"
 url = "https://www.kernel.org/pub/software/utils/dtc/"
 
-build = ['bash', 'gcc', 'make', 'pkgconf', 'flex', 'bison']
 
 [[sources]]
 type = "http"

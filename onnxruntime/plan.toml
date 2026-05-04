@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/microsoft/onnxruntime"
 
-build = ['gcc', 'cmake', 'ninja', 'git', 'python']
-link = ['abseil-cpp', 'protobuf']
+link_deps = ['abseil-cpp:default', 'protobuf:default']
 
 [[sources]]
 type = "http"

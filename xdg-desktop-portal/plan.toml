@@ -5,8 +5,7 @@ description = "Portal frontend service for Flatpak and other desktop-neutral app
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-build = ['gobject-introspection', 'meson', 'ninja', 'pkgconf']
-link = ['glib', 'gstreamer', 'gst-plugins-base', 'json-glib', 'gdk-pixbuf', 'libfuse3', 'pipewire']
+link_deps = ['glib:default', 'gstreamer:default', 'gst-plugins-base:default', 'json-glib:default', 'gdk-pixbuf:default', 'libfuse3:default', 'pipewire:default']
 
 [[sources]]
 type = "http"
@@ -30,4 +29,4 @@ cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [output]
-runtime_deps = ['dbus', 'systemd']
+runtime_deps = ['dbus:default', 'systemd:default']

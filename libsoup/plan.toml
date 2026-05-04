@@ -5,8 +5,7 @@ description = "HTTP client/server library for GNOME"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-build = ['gobject-introspection', 'meson', 'ninja', 'pkgconf']
-link = ['glib', 'libpsl', 'libxml2', 'nghttp2', 'sqlite']
+link_deps = ['glib:default', 'libpsl:default', 'libxml2:default', 'nghttp2:default', 'sqlite:default']
 
 [[sources]]
 type = "http"
@@ -30,4 +29,4 @@ cd source
 DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
 
 [output]
-runtime_deps = ['brotli', 'glib-networking']
+runtime_deps = ['brotli:default', 'glib-networking:default']

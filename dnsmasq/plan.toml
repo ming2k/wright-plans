@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://thekelleys.org.uk/dnsmasq/doc.html"
 
-build = ['gcc', 'make', 'pkg-config']
-link = ['glibc', 'gmp', 'nettle', 'libidn2', 'dbus', 'libnetfilter_conntrack', 'nftables']
+link_deps = ['glibc:default', 'gmp:default', 'nettle:default', 'libidn2:default', 'dbus:default', 'libnetfilter_conntrack:default', 'nftables:default']
 
 [[sources]]
 type = "http"

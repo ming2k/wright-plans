@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ggml-org/llama.cpp"
 
-build = ['gcc', 'cmake', 'ninja', 'pkgconf', 'shaderc', 'vulkan-headers']
-link = ['openssl', 'vulkan-loader']
+link_deps = ['openssl:default', 'vulkan-loader:default']
 
 [[sources]]
 type = "local"

@@ -6,7 +6,6 @@ license = "BSD-2-Clause-Patent"
 arch = "x86_64"
 url = "https://github.com/tianocore/edk2"
 
-build = ['acpica', 'bash', 'gcc', 'make', 'nasm', 'python', 'util-linux']
 
 [[sources]]
 type = "http"

@@ -6,8 +6,7 @@ license = "Artistic-1.0-Perl OR GPL-1.0-or-later"
 arch = "x86_64"
 url = "https://github.com/toddr/XML-Parser"
 
-build = ['make', 'perl']
-link = ['expat']
+link_deps = ['expat:default']
 
 [[sources]]
 type = "http"

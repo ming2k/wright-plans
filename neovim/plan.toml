@@ -7,8 +7,7 @@ arch = "x86_64"
 url = "https://neovim.io"
 maintainer = "Neovim contributors <neovim@neovim.io>"
 
-build = ['cmake', 'curl', 'gcc', 'gettext', 'make']
-link = ['glibc']
+link_deps = ['glibc:default']
 
 [[sources]]
 type = "http"

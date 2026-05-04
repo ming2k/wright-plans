@@ -6,8 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/gdb/"
 
-build = ['gcc', 'make', 'texinfo']
-link = ['expat', 'glibc', 'mpfr', 'ncurses', 'readline', 'xz', 'zlib']
+link_deps = ['expat:default', 'glibc:default', 'mpfr:default', 'ncurses:default', 'readline:default', 'xz:default', 'zlib:default']
 
 [[sources]]
 type = "http"
@@ -47,4 +46,4 @@ make DESTDIR=${STAGING_DIR} install
 rm -f ${STAGING_DIR}/usr/lib/libinproctrace.a'''
 
 [output]
-runtime_deps = ['expat', 'ncurses', 'python', 'readline', 'xz', 'zlib']
+runtime_deps = ['expat:default', 'ncurses:default', 'python:default', 'readline:default', 'xz:default', 'zlib:default']

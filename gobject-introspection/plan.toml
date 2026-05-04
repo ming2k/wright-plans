@@ -6,8 +6,7 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gi.readthedocs.io/"
 
-build = ['meson', 'ninja', 'python']
-link = ['glib']
+link_deps = ['glib:default']
 
 [[sources]]
 type = "http"
@@ -33,4 +32,4 @@ cd source
 meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
 
 [output]
-runtime_deps = ['python']
+runtime_deps = ['python:default']

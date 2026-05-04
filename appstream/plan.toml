@@ -6,8 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Distributions/AppStream/"
 
-build = ['meson', 'ninja', 'pkgconf', 'gettext', 'gobject-introspection', 'itstool', 'gperf', 'docbook-xsl']
-link = ['glib', 'libxml2', 'libxmlb', 'curl', 'libfyaml', 'zstd', 'cairo', 'gdk-pixbuf', 'freetype', 'pango', 'fontconfig', 'librsvg']
+link_deps = ['glib:default', 'libxml2:default', 'libxmlb:default', 'curl:default', 'libfyaml:default', 'zstd:default', 'cairo:default', 'gdk-pixbuf:default', 'freetype:default', 'pango:default', 'fontconfig:default', 'librsvg:default']
 
 [[sources]]
 type = "http"
@@ -54,4 +53,4 @@ cd source
 meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
 
 [output]
-runtime_deps = ['systemd']
+runtime_deps = ['systemd:default']

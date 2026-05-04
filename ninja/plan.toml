@@ -6,7 +6,6 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://ninja-build.org/"
 
-build = ['bash', 'gcc', 'make', 'python']
 
 [[sources]]
 type = "http"
@@ -26,4 +25,4 @@ install -Dm755 ninja ${STAGING_DIR}/usr/bin/ninja
 install -Dm644 misc/bash-completion ${STAGING_DIR}/usr/share/bash-completion/completions/ninja'''
 
 [output]
-runtime_deps = ['python']
+runtime_deps = ['python:default']

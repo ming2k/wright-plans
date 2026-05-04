@@ -6,8 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/fontconfig/"
 
-build = ['freetype', 'meson', 'ninja', 'pkgconf', 'gperf']
-link = ['freetype', 'expat']
+link_deps = ['freetype:default', 'expat:default']
 
 [[sources]]
 type = "http"

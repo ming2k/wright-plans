@@ -6,8 +6,7 @@ license = "GPL-2.0-only AND LGPL-2.1-only"
 arch = "x86_64"
 url = "https://sourceware.org/lvm2"
 
-build = ['pkgconf']
-link = ['systemd', 'readline', 'util-linux', 'libaio']
+link_deps = ['systemd:default', 'readline:default', 'util-linux:default', 'libaio:default']
 
 [[sources]]
 type = "http"

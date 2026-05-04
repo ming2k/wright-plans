@@ -5,8 +5,7 @@ description = "BSD-style command line editing library"
 license = "BSD-3-Clause"
 arch = "x86_64"
 
-build = ['gcc', 'make']
-link = ['ncurses']
+link_deps = ['ncurses:default']
 
 [[sources]]
 type = "http"

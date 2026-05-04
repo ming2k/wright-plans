@@ -6,8 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://obsproject.com"
 
-build = ['cmake >= 3.28', 'ninja', 'pkgconf', 'simde', 'swig', 'uthash']
-link = ['alsa-lib', 'curl', 'ffmpeg', 'fontconfig', 'freetype', 'jansson', 'libdrm', 'libglvnd', 'libva', 'libxkbcommon', 'mbedtls', 'mesa', 'nlohmann-json', 'pciutils', 'pipewire', 'qt6-base', 'qt6-svg', 'qt6-wayland', 'rnnoise', 'speexdsp', 'v4l-utils', 'vulkan-loader', 'wayland', 'x264', 'zlib']
+link_deps = ['alsa-lib:default', 'curl:default', 'ffmpeg:default', 'fontconfig:default', 'freetype:default', 'jansson:default', 'libdrm:default', 'libglvnd:default', 'libva:default', 'libxkbcommon:default', 'mbedtls:default', 'mesa:default', 'nlohmann-json:default', 'pciutils:default', 'pipewire:default', 'qt6-base:default', 'qt6-svg:default', 'qt6-wayland:default', 'rnnoise:default', 'speexdsp:default', 'v4l-utils:default', 'vulkan-loader:default', 'wayland:default', 'x264:default', 'zlib:default']
 
 [[sources]]
 type = "git"
@@ -57,4 +56,4 @@ cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [output]
-runtime_deps = ['xdg-desktop-portal']
+runtime_deps = ['xdg-desktop-portal:default']

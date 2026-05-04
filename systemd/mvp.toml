@@ -1,4 +1,4 @@
-link = ["acl", "glibc", "libcap", "libgcrypt", "libidn2", "libseccomp", "libxcrypt", "linux-pam", "lz4", "openssl", "p11-kit", "pcre2", "util-linux", "xz", "zstd"]
+link_deps = ['acl:default', 'glibc:default', 'libcap:default', 'libgcrypt:default', 'libidn2:default', 'libseccomp:default', 'libxcrypt:default', 'linux-pam:default', 'lz4:default', 'openssl:default', 'p11-kit:default', 'pcre2:default', 'util-linux:default', 'xz:default', 'zstd:default']
 
 [lifecycle.configure]
 script = '''

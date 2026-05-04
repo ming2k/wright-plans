@@ -6,8 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://www.netfilter.org/projects/nftables/"
 
-build = ['autoconf', 'automake', 'bison', 'flex', 'gcc', 'libmnl', 'libnftnl', 'make', 'pkgconf']
-link = ['gmp', 'jansson', 'libmnl', 'libnftnl', 'ncurses', 'readline']
+link_deps = ['gmp:default', 'jansson:default', 'libmnl:default', 'libnftnl:default', 'ncurses:default', 'readline:default']
 
 [[sources]]
 type = "http"
