@@ -78,3 +78,9 @@ include = [
     "/usr/lib/cmake/clangd/.*",
 ]
 runtime_deps = ["clang", "llvm-libs"]
+
+[lifecycle.staging]
+script = '''
+cd source/llvm-project-${VERSION}.src/llvm
+DESTDIR=${STAGING_DIR} ninja -C build install
+'''
