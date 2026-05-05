@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/coreutils/"
 
-link_deps = ['acl:default', 'attr:default', 'libcap:default', 'openssl:default']
+link_deps = ['acl', 'attr', 'libcap', 'openssl']
 
 [[sources]]
 type = "http"
@@ -37,3 +37,5 @@ mkdir -p ${STAGING_DIR}/usr/share/man/man8
 mv -v ${STAGING_DIR}/usr/share/man/man1/chroot.1 ${STAGING_DIR}/usr/share/man/man8/chroot.8
 sed -i 's/"1"/"8"/' ${STAGING_DIR}/usr/share/man/man8/chroot.8'''
 
+[[output]]
+runtime_deps = ['acl', 'attr', 'libcap', 'openssl']

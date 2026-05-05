@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://sr.ht/~kennylevinsen/seatd/"
 
 
+build_deps = ['meson', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -35,7 +37,7 @@ cd source/seatd-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install
 '''
 
-[output]
+[[output]]
 provides = ["seatd", "libseat"]
 conflicts = ["seatd", "libseat"]
 

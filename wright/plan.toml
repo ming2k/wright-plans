@@ -1,11 +1,12 @@
 name = "wright"
-version = "4.0.0"
+version = "4.0.4"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ming2k/wright"
 
+build_deps = ['rust']
 
 [[sources]]
 type = "http"
@@ -48,8 +49,8 @@ install -m644 target/completions/wright.fish ${STAGING_DIR}/usr/share/fish/vendo
 install -dm755 ${STAGING_DIR}/usr/share/man/man1
 install -m644 target/man/wright*.1 ${STAGING_DIR}/usr/share/man/man1/'''
 
-[output]
-runtime_deps = ['ca-certificates:default']
+[[output]]
+runtime_deps = ['ca-certificates']
 hooks.post_install = '''
 # Group for plan authors — members can edit plans without root
 groupadd -r wright 2>/dev/null || true

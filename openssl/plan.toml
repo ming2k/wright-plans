@@ -1,22 +1,23 @@
 name = "openssl"
-version = "3.6.2"
+version = "4.0.0"
 release = 1
 description = "Management tools and libraries relating to cryptography"
 license = "Apache-2.0"
 arch = "x86_64"
 url = "https://www.openssl.org/"
 
-link_deps = ['zlib:default']
+build_deps = ['perl']
+link_deps = ['zlib']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "c32cf49a959c4f345f9606982dd36e7d28f7c58b19c2e25d75624d2b3d2f79ac"
 url = "https://github.com/openssl/openssl/releases/download/openssl-${VERSION}/openssl-${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/openssl-${VERSION}
 ./config --prefix=/usr         \
          --openssldir=/etc/ssl \
          --libdir=lib          \
@@ -25,13 +26,15 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/openssl-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/openssl-${VERSION}
 sed -i '/INSTALL_LIBS/s/libcrypto.a libssl.a//' Makefile
 make MANSUFFIX=ssl DESTDIR=${STAGING_DIR} install
 mv -v ${STAGING_DIR}/usr/share/doc/openssl ${STAGING_DIR}/usr/share/doc/openssl-${VERSION}'''
 
+[[output]]
+runtime_deps = ['zlib']

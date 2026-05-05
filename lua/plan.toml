@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.lua.org"
 
-link_deps = ['readline:default']
+link_deps = ['readline']
 
 [[sources]]
 type = "http"
@@ -59,3 +59,5 @@ cp ${STAGING_DIR}/usr/lib/pkgconfig/lua5.4.pc ${STAGING_DIR}/usr/lib/pkgconfig/l
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
 
+[[output]]
+runtime_deps = ['readline']

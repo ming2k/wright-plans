@@ -6,7 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/vala"
 
-link_deps = ['glib:default']
+link_deps = ['glib']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['glib']

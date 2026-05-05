@@ -5,7 +5,8 @@ description = "High quality MP3 encoder"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
-link_deps = ['ncurses:default']
+link_deps = ['ncurses']
+build_deps = ['nasm']
 
 [[sources]]
 type = "http"
@@ -32,3 +33,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['ncurses']

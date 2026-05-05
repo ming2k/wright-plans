@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://git.sr.ht/~exec64/imv"
 
-link_deps = ['pango:default', 'libxkbcommon:default', 'inih:default', 'wayland:default', 'mesa:default', 'libpng:default', 'libjpeg-turbo:default', 'libtiff:default', 'librsvg:default', 'libheif:default', 'libjxl:default', 'libwebp:default', 'icu:default']
+link_deps = ['pango', 'libxkbcommon', 'inih', 'wayland', 'mesa', 'libpng', 'libjpeg-turbo', 'libtiff', 'librsvg', 'libheif', 'libjxl', 'libwebp', 'icu']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -46,5 +47,5 @@ script = '''
 cd source/*
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[output]
-runtime_deps = ['wayland:default']
+[[output]]
+runtime_deps = ['wayland', 'pango', 'libxkbcommon', 'inih', 'mesa', 'libpng', 'libjpeg-turbo', 'libtiff', 'librsvg', 'libheif', 'libjxl', 'libwebp', 'icu']

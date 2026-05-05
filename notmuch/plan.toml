@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://notmuchmail.org/"
 
-link_deps = ['gmime:default', 'talloc:default', 'xapian-core:default', 'zlib:default']
+link_deps = ['gmime', 'talloc', 'xapian-core', 'zlib']
 
 [[sources]]
 type = "http"
@@ -48,3 +48,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} prefix=/usr install'''
 
+[[output]]
+runtime_deps = ['gmime', 'talloc', 'xapian-core', 'zlib']

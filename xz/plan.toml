@@ -15,23 +15,23 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/xz-5.8.3
 ./configure --prefix=/usr    \
 --disable-static \
 --docdir=/usr/share/doc/xz-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/xz-5.8.3
 make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/xz-5.8.3
 make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/xz-5.8.3
 make DESTDIR=${STAGING_DIR} install'''
 

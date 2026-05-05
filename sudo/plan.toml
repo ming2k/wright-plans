@@ -6,7 +6,7 @@ license = "ISC"
 arch = "x86_64"
 url = "https://www.sudo.ws"
 
-link_deps = ['glibc:default', 'linux-pam:default']
+link_deps = ['glibc', 'linux-pam']
 
 [[sources]]
 type = "http"
@@ -59,6 +59,7 @@ session   include     sudo
 # End /etc/pam.d/sudo-i
 PAMEOF'''
 
-[output]
+[[output]]
+runtime_deps = ['glibc', 'linux-pam']
 backup = ["/etc/sudoers", "/etc/pam.d/sudo", "/etc/pam.d/sudo-i"]
 

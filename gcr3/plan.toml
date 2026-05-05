@@ -6,7 +6,8 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/gcr"
 
-link_deps = ['dbus:default', 'glib:default', 'gtk3:default', 'libgcrypt:default', 'p11-kit:default']
+link_deps = ['dbus', 'glib', 'gtk3', 'libgcrypt', 'p11-kit']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,5 +30,5 @@ script = '''
 cd source
 meson install -C build --destdir ${STAGING_DIR}'''
 
-[output]
-runtime_deps = ['libsecret:default', 'p11-kit:default']
+[[output]]
+runtime_deps = ['libsecret', 'p11-kit', 'dbus', 'glib', 'gtk3', 'libgcrypt']

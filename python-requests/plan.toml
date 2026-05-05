@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://requests.readthedocs.io/"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -18,5 +20,5 @@ script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
 
-[output]
-runtime_deps = ['python:default', 'python-charset-normalizer:default', 'python-idna:default', 'python-urllib3:default', 'python-certifi:default']
+[[output]]
+runtime_deps = ['python', 'python-charset-normalizer', 'python-idna', 'python-urllib3', 'python-certifi']

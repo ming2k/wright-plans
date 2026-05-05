@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://godotengine.org"
 
-link_deps = ['alsa-lib:default', 'dbus:default', 'fontconfig:default', 'libdecor:default', 'libxkbcommon:default', 'mesa:default', 'openssl:default', 'pipewire:default', 'systemd:default', 'vulkan-loader:default', 'wayland:default']
+link_deps = ['alsa-lib', 'dbus', 'fontconfig', 'libdecor', 'libxkbcommon', 'mesa', 'openssl', 'pipewire', 'systemd', 'vulkan-loader', 'wayland']
 
 [[sources]]
 type = "http"
@@ -39,3 +39,5 @@ mkdir -p ${STAGING_DIR}/usr/bin
 cp ${WORKDIR}/bin/godot.linuxbsd.editor.x86_64 ${STAGING_DIR}/usr/bin/godot
 chmod +x ${STAGING_DIR}/usr/bin/godot'''
 
+[[output]]
+runtime_deps = ['alsa-lib', 'dbus', 'fontconfig', 'libdecor', 'libxkbcommon', 'mesa', 'openssl', 'pipewire', 'systemd', 'vulkan-loader', 'wayland']

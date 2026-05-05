@@ -208,5 +208,5 @@ cp -v arch/x86/boot/bzImage ${STAGING_DIR}/boot/vmlinuz-theseus
 cp -v System.map ${STAGING_DIR}/boot/System.map-theseus
 cp -v .config ${STAGING_DIR}/boot/config-theseus'''
 
-[output]
-runtime_deps = ['kmod:default', 'dracut-ng:default']
+[[output]]
+runtime_deps = ['kmod', 'dracut-ng']

@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://bitbucket.org/multicoreware/x265_git"
 
 
+build_deps = ['cmake']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

@@ -1,5 +1,5 @@
 name = "ncurses"
-version = "6.6"
+version = "6.6-20260418"
 release = 1
 description = "Libraries for terminal-independent handling of character screens"
 license = "MIT"
@@ -7,15 +7,17 @@ arch = "x86_64"
 url = "https://www.gnu.org/software/ncurses/"
 
 
+build_deps = ['pkgconf']
+
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://ftp.gnu.org/gnu/ncurses/ncurses-6.6.tar.gz"
+sha256 = "b2e7c61e5769b77b200250a38c21d736c3a6eb147df02e58ef2d505cb3d10c04"
+url = "https://invisible-island.net/archives/ncurses/current/ncurses-${VERSION}.tgz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/ncurses-${VERSION}
 ./configure --prefix=/usr           \
 --mandir=/usr/share/man \
 --with-shared           \
@@ -27,18 +29,15 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/ncurses-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-make DESTDIR=$PWD/dest install
-install -vm755 dest/usr/lib/libncursesw.so.6.6 /usr/lib
-rm -v  dest/usr/lib/libncursesw.so.6.6
+cd source/ncurses-${VERSION}
+make DESTDIR=${STAGING_DIR} install
 sed -e 's/^#if.*XOPEN.*$/#if 1/' \
--i dest/usr/include/curses.h
-cp -av dest/* ${STAGING_DIR}/
+-i ${STAGING_DIR}/usr/include/curses.h
 
 for lib in ncurses form panel menu ; do
 ln -sfv lib${lib}w.so ${STAGING_DIR}/usr/lib/lib${lib}.so
@@ -47,6 +46,5 @@ done
 
 ln -sfv libncursesw.so ${STAGING_DIR}/usr/lib/libcurses.so
 
-mkdir -p ${STAGING_DIR}/usr/share/doc/ncurses-6.6
-cp -v -R doc/* ${STAGING_DIR}/usr/share/doc/ncurses-6.6/'''
-
+mkdir -p ${STAGING_DIR}/usr/share/doc/ncurses-${VERSION}
+cp -v -R doc/* ${STAGING_DIR}/usr/share/doc/ncurses-${VERSION}/'''

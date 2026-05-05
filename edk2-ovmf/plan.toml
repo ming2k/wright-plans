@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/tianocore/edk2"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

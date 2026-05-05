@@ -6,7 +6,8 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://quickshell.outfoxxed.me"
 
-link_deps = ['libdrm:default', 'pipewire:default', 'wayland:default', 'wayland-protocols:default']
+link_deps = ['libdrm', 'pipewire', 'wayland']
+build_deps = ['wayland-protocols', 'cmake', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,5 +30,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} cmake --install build'''
 
-[output]
-runtime_deps = ['jemalloc:default', 'polkit:default', 'qt6-base:default', 'qt6-declarative:default', 'qt6-svg:default', 'qt6-wayland:default']
+[[output]]
+runtime_deps = ['jemalloc', 'polkit', 'qt6-base', 'qt6-declarative', 'qt6-svg', 'qt6-wayland', 'libdrm', 'pipewire', 'wayland']

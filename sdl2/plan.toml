@@ -6,7 +6,7 @@ license = "Zlib"
 arch = "x86_64"
 url = "https://www.libsdl.org/"
 
-link_deps = ['alsa-lib:default', 'dbus:default', 'libxkbcommon:default', 'pipewire:default', 'wayland:default']
+link_deps = ['alsa-lib', 'dbus', 'libxkbcommon', 'pipewire', 'wayland']
 
 [[sources]]
 type = "http"
@@ -37,3 +37,5 @@ DESTDIR=${STAGING_DIR} make install
 rm -f ${STAGING_DIR}/usr/lib/libSDL2.a
 test -f ${STAGING_DIR}/usr/lib/pkgconfig/sdl2.pc'''
 
+[[output]]
+runtime_deps = ['alsa-lib', 'dbus', 'libxkbcommon', 'pipewire', 'wayland']

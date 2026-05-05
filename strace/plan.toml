@@ -6,7 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://strace.io"
 
-link_deps = ['glibc:default']
+link_deps = ['glibc']
 
 [[sources]]
 type = "http"
@@ -30,3 +30,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['glibc']

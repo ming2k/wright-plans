@@ -23,5 +23,5 @@ script = '''
 cd source
 make install DESTDIR=${STAGING_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0'''
 
-[output]
-runtime_deps = ['systemd:default']
+[[output]]
+runtime_deps = ['systemd']

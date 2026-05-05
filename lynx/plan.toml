@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://lynx.invisible-island.net/"
 
-link_deps = ['bzip2:default', 'ncurses:default', 'openssl:default', 'zlib:default']
+link_deps = ['bzip2', 'ncurses', 'openssl', 'zlib']
 
 [[sources]]
 type = "http"
@@ -49,3 +49,5 @@ if [ -d ${STAGING_DIR}/usr/etc ]; then
   rm -rf ${STAGING_DIR}/usr/etc
 fi'''
 
+[[output]]
+runtime_deps = ['bzip2', 'ncurses', 'openssl', 'zlib']

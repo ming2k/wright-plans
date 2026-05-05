@@ -6,7 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://www.tcpdump.org/"
 
-link_deps = ['libpcap:default']
+link_deps = ['libpcap']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['libpcap']

@@ -6,7 +6,7 @@ license = "LGPL-3.0-or-later AND GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://sourceware.org/elfutils/"
 
-link_deps = ['zlib:default']
+link_deps = ['zlib']
 
 [[sources]]
 type = "http"
@@ -33,3 +33,5 @@ make DESTDIR=${STAGING_DIR} install
 rm -f ${STAGING_DIR}/usr/lib/lib*.a
 rm -rf ${STAGING_DIR}/usr/etc'''
 
+[[output]]
+runtime_deps = ['zlib']

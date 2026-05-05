@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://mesa3d.org"
 
-link_deps = ['elfutils:default', 'expat:default', 'libdisplay-info:default', 'libdrm:default', 'libglvnd:default', 'libunwind:default', 'llvm:default', 'wayland:default', 'zlib:default', 'zstd:default']
+link_deps = ['elfutils', 'expat', 'libdisplay-info', 'libdrm', 'libglvnd', 'libunwind', 'llvm:llvm-libs', 'wayland', 'zlib', 'zstd']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -40,5 +41,5 @@ script = '''
 cd source/mesa-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[output]
-runtime_deps = ['elfutils:default', 'expat:default', 'libdisplay-info:default', 'libdrm:default', 'libglvnd:default', 'libunwind:default', 'llvm:default', 'wayland:default', 'zlib:default', 'zstd:default']
+[[output]]
+runtime_deps = ['elfutils', 'expat', 'libdisplay-info', 'libdrm', 'libglvnd', 'libunwind', 'llvm:llvm-libs', 'wayland', 'zlib', 'zstd']

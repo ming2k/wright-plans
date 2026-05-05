@@ -6,7 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/google/leveldb"
 
-link_deps = ['snappy:default']
+link_deps = ['snappy']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -34,3 +35,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['snappy']

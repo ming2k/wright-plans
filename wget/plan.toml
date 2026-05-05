@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/wget/"
 
-link_deps = ['openssl:default', 'libidn2:default', 'libpsl:default', 'pcre2:default', 'zlib:default']
+link_deps = ['openssl', 'libidn2', 'libpsl', 'pcre2', 'zlib']
 
 [[sources]]
 type = "http"
@@ -31,5 +31,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['ca-certificates:default']
+[[output]]
+runtime_deps = ['ca-certificates', 'openssl', 'libidn2', 'libpsl', 'pcre2', 'zlib']

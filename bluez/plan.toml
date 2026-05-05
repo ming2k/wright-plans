@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.bluez.org/"
 
-link_deps = ['glibc:default', 'glib:default', 'dbus:default', 'ell:default', 'alsa-lib:default', 'json-c:default', 'libical:default', 'readline:default']
+link_deps = ['glibc', 'glib', 'dbus', 'ell', 'alsa-lib', 'json-c', 'libical', 'readline']
 
 [[sources]]
 type = "http"
@@ -65,5 +65,5 @@ systemctl enable bluetooth.service 2>/dev/null || true
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 
-[output]
-runtime_deps = ['dbus:default', 'systemd:default']
+[[output]]
+runtime_deps = ['dbus', 'systemd', 'glibc', 'glib', 'ell', 'alsa-lib', 'json-c', 'libical', 'readline']

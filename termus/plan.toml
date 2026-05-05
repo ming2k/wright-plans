@@ -6,7 +6,8 @@ license = "UNKNOWN"
 arch = "x86_64"
 url = "https://github.com/ming2k/termus"
 
-link_deps = ['ncurses:default']
+link_deps = ['ncurses']
+build_deps = ['autoconf', 'automake', 'libtool']
 
 [[sources]]
 type = "git"
@@ -32,3 +33,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['ncurses']

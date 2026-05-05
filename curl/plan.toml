@@ -6,7 +6,7 @@ license = "curl"
 arch = "x86_64"
 url = "https://curl.se/"
 
-link_deps = ['libidn2:default', 'libpsl:default', 'nghttp2:default', 'openssl:default']
+link_deps = ['libidn2', 'libpsl', 'nghttp2', 'openssl']
 
 [[sources]]
 type = "http"
@@ -33,5 +33,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['ca-certificates:default']
+[[output]]
+runtime_deps = ['ca-certificates', 'libidn2', 'libpsl', 'nghttp2', 'openssl']

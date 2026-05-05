@@ -6,7 +6,7 @@ license = "BSL-1.0"
 arch = "x86_64"
 url = "https://www.boost.org"
 
-link_deps = ['bzip2:default', 'icu:default', 'zlib:default', 'zstd:default']
+link_deps = ['bzip2', 'icu', 'zlib', 'zstd']
 
 [[sources]]
 type = "http"
@@ -42,3 +42,5 @@ EOF
     ln -sf libboost_system.so.1.90.0 ${STAGING_DIR}/usr/lib/libboost_system.so
 fi'''
 
+[[output]]
+runtime_deps = ['bzip2', 'icu', 'zlib', 'zstd']

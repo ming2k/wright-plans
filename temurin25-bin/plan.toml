@@ -29,7 +29,7 @@ cat > ${STAGING_DIR}/etc/profile.d/jdk.sh << 'PROF'
 export JAVA_HOME=/usr/lib/jvm/java-25-temurin
 PROF'''
 
-[output]
+[[output]]
 provides = ["java", "jdk"]
 conflicts = ["openjdk"]
 replaces = ["openjdk"]

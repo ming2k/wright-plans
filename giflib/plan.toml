@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://sourceforge.net/projects/giflib/"
 
-link_deps = ['glibc:default']
+link_deps = ['glibc']
 
 [[sources]]
 type = "http"
@@ -24,3 +24,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} PREFIX=/usr install-bin install-include install-lib'''
 
+[[output]]
+runtime_deps = ['glibc']

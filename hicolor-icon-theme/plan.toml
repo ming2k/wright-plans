@@ -7,6 +7,8 @@ arch = "any"
 url = "https://icon-theme.freedesktop.org/"
 
 
+build_deps = ['meson', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

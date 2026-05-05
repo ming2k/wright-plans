@@ -6,7 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/shadow-maint/shadow"
 
-link_deps = ['glibc:default', 'linux-pam:default']
+link_deps = ['glibc', 'linux-pam']
 
 [[sources]]
 type = "http"
@@ -134,7 +134,8 @@ session   include     system-session
 PAMEOF
 done'''
 
-[output]
+[[output]]
+runtime_deps = ['glibc', 'linux-pam']
 backup = ["/etc/login.defs", "/etc/default/useradd", "/etc/pam.d/login", "/etc/pam.d/passwd", "/etc/pam.d/su", "/etc/subuid", "/etc/subgid"]
 
 [hooks]

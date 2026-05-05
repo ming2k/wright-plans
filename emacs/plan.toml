@@ -5,7 +5,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/emacs/"
 
-link_deps = ['giflib:default', 'glib:default', 'glibc:default', 'gnutls:default', 'gtk3:default', 'harfbuzz:default', 'libgccjit:default', 'libjpeg-turbo:default', 'libpng:default', 'librsvg:default', 'libtiff:default', 'libwebp:default', 'ncurses:default', 'pango:default', 'sqlite:default', 'tree-sitter:default', 'zlib:default']
+link_deps = ['giflib', 'glib', 'glibc', 'gnutls', 'gtk3', 'harfbuzz', 'gcc:libgccjit', 'libjpeg-turbo', 'libpng', 'librsvg', 'libtiff', 'libwebp', 'ncurses', 'pango', 'sqlite', 'tree-sitter', 'zlib']
 
 [[sources]]
 type = "git"
@@ -50,5 +50,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['giflib:default', 'glib:default', 'gnutls:default', 'gtk3:default', 'harfbuzz:default', 'libgccjit:default', 'libjpeg-turbo:default', 'libpng:default', 'librsvg:default', 'libtiff:default', 'libwebp:default', 'ncurses:default', 'pango:default', 'sqlite:default', 'tree-sitter:default', 'zlib:default']
+[[output]]
+runtime_deps = ['giflib', 'glib', 'gnutls', 'gtk3', 'harfbuzz', 'gcc:libgccjit', 'libjpeg-turbo', 'libpng', 'librsvg', 'libtiff', 'libwebp', 'ncurses', 'pango', 'sqlite', 'tree-sitter', 'zlib', 'glibc']

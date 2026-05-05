@@ -6,7 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/libjxl/libjxl"
 
-link_deps = ['brotli:default', 'hwy:default', 'lcms2:default', 'libjpeg-turbo:default', 'libpng:default']
+link_deps = ['brotli', 'hwy', 'lcms2', 'libjpeg-turbo', 'libpng']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -40,3 +41,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['brotli', 'hwy', 'lcms2', 'libjpeg-turbo', 'libpng']

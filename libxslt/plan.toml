@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/libxslt"
 
-link_deps = ['libxml2:default']
+link_deps = ['libxml2']
 
 [[sources]]
 type = "http"
@@ -31,3 +31,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['libxml2']

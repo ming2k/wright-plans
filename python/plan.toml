@@ -1,12 +1,12 @@
 name = "python"
 version = "3.14.4"
-release = 1
+release = 4
 description = "The Python programming language (Long-term Stable Baseline)"
 license = "PSF-2.0"
 arch = "x86_64"
 url = "https://www.python.org/"
 
-link_deps = ['expat:default', 'libffi:default', 'ncurses:default', 'openssl:default', 'readline:default', 'zlib:default', 'bzip2:default', 'xz:default', 'sqlite:default', 'gdbm:default', 'libxcrypt:default']
+link_deps = ['expat', 'libffi', 'ncurses', 'openssl', 'readline', 'zlib', 'bzip2', 'xz', 'sqlite', 'gdbm', 'libxcrypt']
 
 [[sources]]
 type = "http"
@@ -16,24 +16,26 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/Python-${VERSION}
+# OpenSSL 4.0 removed legacy per-protocol method symbols that Python 3.14
+# still probes through deprecated ssl.PROTOCOL_* compatibility paths.
+export CPPFLAGS="${CPPFLAGS:-} -DOPENSSL_NO_SSL3 -DOPENSSL_NO_SSL3_METHOD -DOPENSSL_NO_TLS1_METHOD -DOPENSSL_NO_TLS1_1_METHOD -DOPENSSL_NO_TLS1_2_METHOD"
 ./configure --prefix=/usr        \
             --enable-shared      \
             --with-system-expat  \
             --with-system-ffi    \
-            --enable-optimizations \
             --with-lto           \
             --with-computed-gotos \
             --without-static-libpython'''
 
 [lifecycle.compile]
 script = '''
-cd source
-make -C ${WORKDIR} -j$(nproc)'''
+cd source/Python-${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/Python-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 rm -rf ${STAGING_DIR}/usr/lib/python3.14/test
 rm -rf ${STAGING_DIR}/usr/lib/python3.14/*/test
@@ -43,3 +45,5 @@ cat > ${STAGING_DIR}/usr/lib/python3.14/EXTERNALLY-MANAGED << EOF
 Error=Please use 'wright install python-<package>' to install system-level Python packages.
 EOF'''
 
+[[output]]
+runtime_deps = ['expat', 'libffi', 'ncurses', 'openssl', 'readline', 'zlib', 'bzip2', 'xz', 'sqlite', 'gdbm', 'libxcrypt']

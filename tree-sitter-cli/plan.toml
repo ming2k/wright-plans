@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/tree-sitter/tree-sitter"
 
-link_deps = ['gcc:default', 'glibc:default']
+link_deps = ['gcc:gcc-libs', 'glibc']
+build_deps = ['rust']
 
 [[sources]]
 type = "http"
@@ -25,3 +26,5 @@ script = '''
 cd source
 install -Dm755 target/release/tree-sitter ${STAGING_DIR}/usr/bin/tree-sitter'''
 
+[[output]]
+runtime_deps = ['gcc:gcc-libs', 'glibc']

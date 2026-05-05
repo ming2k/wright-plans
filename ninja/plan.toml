@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://ninja-build.org/"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -15,14 +17,14 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/ninja-${VERSION}
 python3 configure.py --bootstrap'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/ninja-${VERSION}
 install -Dm755 ninja ${STAGING_DIR}/usr/bin/ninja
 install -Dm644 misc/bash-completion ${STAGING_DIR}/usr/share/bash-completion/completions/ninja'''
 
-[output]
-runtime_deps = ['python:default']
+[[output]]
+runtime_deps = ['python']

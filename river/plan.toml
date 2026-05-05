@@ -118,7 +118,7 @@ cd source/river-${VERSION}
 zig build -Doptimize=ReleaseSafe --prefix ${STAGING_DIR}/usr install
 '''
 
-[output]
+[[output]]
 provides = ["river"]
 conflicts = ["river"]
 

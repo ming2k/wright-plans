@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://linuxtv.org/wiki/index.php/V4l-utils"
 
-link_deps = ['systemd:default', 'elfutils:default', 'json-c:default']
+link_deps = ['systemd', 'elfutils', 'json-c']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -40,3 +41,5 @@ if [ -d ${STAGING_DIR}/usr/sbin ]; then
     rmdir ${STAGING_DIR}/usr/sbin
 fi'''
 
+[[output]]
+runtime_deps = ['systemd', 'elfutils', 'json-c']

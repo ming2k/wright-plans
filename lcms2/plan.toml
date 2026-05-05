@@ -5,7 +5,7 @@ description = "Small-footprint color management engine"
 license = "MIT"
 arch = "x86_64"
 
-link_deps = ['libjpeg-turbo:default']
+link_deps = ['libjpeg-turbo']
 
 [[sources]]
 type = "http"
@@ -28,3 +28,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['libjpeg-turbo']

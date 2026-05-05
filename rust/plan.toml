@@ -6,7 +6,7 @@ license = "Apache-2.0 AND MIT"
 arch = "x86_64"
 url = "https://www.rust-lang.org"
 
-link_deps = ['glibc:default']
+link_deps = ['glibc']
 
 [[sources]]
 type = "http"
@@ -41,8 +41,9 @@ include = [
     "/usr/lib/rustlib/src/rust/Cargo\\.lock",
     "/usr/lib/rustlib/src/rust/library/.*/Cargo\\.toml",
 ]
-runtime_deps = ['rust:default']
+runtime_deps = ['rust']
 
 [[output]]
 name = "rust"
+runtime_deps = ['glibc']
 # catch-all — rustc, rustdoc, stdlib, rustlib, etc.

@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/rfjakob/gocryptfs"
 
-link_deps = ['openssl:default']
+link_deps = ['openssl']
 
 [[sources]]
 type = "git"
@@ -25,5 +25,5 @@ script = '''
 cd source/gocryptfs-*/
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['libfuse3:default']
+[[output]]
+runtime_deps = ['libfuse3', 'openssl']

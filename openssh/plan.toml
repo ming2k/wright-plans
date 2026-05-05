@@ -6,7 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://www.openssh.com/portable.html"
 
-link_deps = ['glibc:default', 'libedit:default', 'linux-pam:default', 'openssl:default', 'zlib:default', 'libxcrypt:default']
+link_deps = ['glibc', 'libedit', 'linux-pam', 'openssl', 'zlib', 'libxcrypt']
 
 [[sources]]
 type = "http"
@@ -91,7 +91,8 @@ if [ -e ${STAGING_DIR}/usr/lib/ssh/ssh-keysign ]; then
   chmod 4755 ${STAGING_DIR}/usr/lib/ssh/ssh-keysign
 fi'''
 
-[output]
+[[output]]
+runtime_deps = ['shadow', 'glibc', 'libedit', 'linux-pam', 'openssl', 'zlib', 'libxcrypt']
 backup = ["/etc/ssh/ssh_config", "/etc/ssh/sshd_config", "/etc/pam.d/sshd"]
 
 [hooks]
@@ -105,6 +106,3 @@ systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
-
-[output]
-runtime_deps = ['shadow:default']

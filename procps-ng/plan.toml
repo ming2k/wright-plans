@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later AND LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.com/procps-ng/procps"
 
-link_deps = ['ncurses:default', 'systemd:default']
+link_deps = ['ncurses', 'systemd']
 
 [[sources]]
 type = "http"
@@ -44,3 +44,5 @@ if [ -d ${STAGING_DIR}/usr/sbin ]; then
   rm -rf ${STAGING_DIR}/usr/sbin
 fi'''
 
+[[output]]
+runtime_deps = ['ncurses', 'systemd']

@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/knik0/faad2"
 
-link_deps = ['libsndfile:default']
+link_deps = ['libsndfile']
+build_deps = ['cmake']
 
 [[sources]]
 type = "http"
@@ -30,3 +31,5 @@ script = '''
 cd source/build
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['libsndfile']

@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.kernel.org/pub/linux/utils/raid/mdadm/"
 
-link_deps = ['systemd:default', 'util-linux:default']
+link_deps = ['systemd', 'util-linux']
 
 [[sources]]
 type = "http"
@@ -34,3 +34,5 @@ if [ -d ${STAGING_DIR}/usr/etc ]; then
   rm -rf ${STAGING_DIR}/usr/etc
 fi'''
 
+[[output]]
+runtime_deps = ['systemd', 'util-linux']

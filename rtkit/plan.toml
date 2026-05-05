@@ -6,7 +6,8 @@ license = "GPL-3.0-or-later AND MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/pipewire/rtkit"
 
-link_deps = ['dbus:default', 'libcap:default', 'polkit:default', 'systemd:default']
+link_deps = ['dbus', 'libcap', 'polkit', 'systemd']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "git"
@@ -51,3 +52,5 @@ systemctl restart rtkit-daemon.service
 
 '''
 
+[[output]]
+runtime_deps = ['dbus', 'libcap', 'polkit', 'systemd']

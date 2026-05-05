@@ -6,7 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/k2-fsa/sherpa-onnx"
 
-link_deps = ['onnxruntime:default']
+link_deps = ['onnxruntime']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -49,3 +50,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
+[[output]]
+runtime_deps = ['onnxruntime']

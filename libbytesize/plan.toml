@@ -6,7 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/storaged-project/libbytesize"
 
-link_deps = ['glib:default', 'mpfr:default', 'pcre2:default']
+link_deps = ['glib', 'mpfr', 'pcre2']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['glib', 'mpfr', 'pcre2']

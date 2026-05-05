@@ -6,7 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/Vulkan-Tools"
 
-link_deps = ['vulkan-loader:default', 'wayland:default']
+link_deps = ['vulkan-loader', 'wayland']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -41,5 +42,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[output]
-runtime_deps = ['vulkan-loader:default', 'wayland:default']
+[[output]]
+runtime_deps = ['vulkan-loader', 'wayland']

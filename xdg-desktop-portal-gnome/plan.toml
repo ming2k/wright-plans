@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/xdg-desktop-portal-gnome"
 
-link_deps = ['gtk4:default', 'libadwaita:default']
+link_deps = ['gtk4', 'libadwaita']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -32,5 +33,5 @@ DESTDIR=${STAGING_DIR} ninja -C build install'''
 [hooks]
 post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
 
-[output]
-runtime_deps = ['gnome-desktop:default', 'gsettings-desktop-schemas:default', 'xdg-desktop-portal:default']
+[[output]]
+runtime_deps = ['gnome-desktop', 'gsettings-desktop-schemas', 'xdg-desktop-portal', 'gtk4', 'libadwaita']

@@ -6,6 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 
 
+build_deps = ['ninja', 'cmake']
+
 [[sources]]
 type = "git"
 url = "https://chromium.googlesource.com/libyuv/libyuv.git"

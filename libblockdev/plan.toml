@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/storaged-project/libblockdev"
 
-link_deps = ['btrfs-progs:default', 'cryptsetup:default', 'glib:default', 'json-glib:default', 'keyutils:default', 'kmod:default', 'libatasmart:default', 'libbytesize:default', 'libnvme:default', 'libyaml:default', 'lvm2:default', 'util-linux:default']
+link_deps = ['btrfs-progs', 'cryptsetup', 'glib', 'json-glib', 'keyutils', 'kmod', 'libatasmart', 'libbytesize', 'libnvme', 'libyaml', 'lvm2', 'util-linux']
+build_deps = ['autoconf', 'automake', 'libtool']
 
 [[sources]]
 type = "http"
@@ -43,5 +44,5 @@ if [ -d ${STAGING_DIR}/usr/etc ]; then
   rm -rf ${STAGING_DIR}/usr/etc
 fi'''
 
-[output]
-runtime_deps = ['mdadm:default']
+[[output]]
+runtime_deps = ['mdadm', 'btrfs-progs', 'cryptsetup', 'glib', 'json-glib', 'keyutils', 'kmod', 'libatasmart', 'libbytesize', 'libnvme', 'libyaml', 'lvm2', 'util-linux']

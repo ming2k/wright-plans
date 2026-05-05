@@ -6,7 +6,8 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://github.com/flatpak/libportal"
 
-link_deps = ['glib:default', 'gtk4:default', 'gtk3:default']
+link_deps = ['glib', 'gtk4', 'gtk3']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,3 +30,5 @@ script = '''
 cd source
 meson install -C build --destdir ${STAGING_DIR}'''
 
+[[output]]
+runtime_deps = ['glib', 'gtk4', 'gtk3']

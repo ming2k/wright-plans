@@ -6,7 +6,7 @@ license = "libtiff"
 arch = "x86_64"
 url = "https://libtiff.gitlab.io/libtiff/"
 
-link_deps = ['zlib:default', 'libjpeg-turbo:default']
+link_deps = ['zlib', 'libjpeg-turbo']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['zlib', 'libjpeg-turbo']

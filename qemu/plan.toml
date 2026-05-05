@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.qemu.org/"
 
-link_deps = ['glib:default', 'pixman:default', 'zlib:default', 'libslirp:default', 'dtc:default', 'spice:default']
+link_deps = ['glib', 'pixman', 'zlib', 'libslirp', 'dtc', 'spice']
+build_deps = ['python']
 
 [[sources]]
 type = "http"
@@ -32,5 +33,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['seabios:default']
+[[output]]
+runtime_deps = ['seabios', 'glib', 'pixman', 'zlib', 'libslirp', 'dtc', 'spice']

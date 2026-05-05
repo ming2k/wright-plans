@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://tiswww.case.edu/php/chet/readline/rltop.html"
 
-link_deps = ['ncurses:default']
+link_deps = ['ncurses']
 
 [[sources]]
 type = "http"
@@ -34,34 +34,34 @@ ccache = true
 
 [lifecycle.prepare]
 script = '''
-cd source
-patch -Np0 < ${WORKDIR}/readline83-001
-patch -Np0 < ${WORKDIR}/readline83-002
-patch -Np0 < ${WORKDIR}/readline83-003
+cd source/readline-${VERSION}
+patch -Np0 < ${WORKDIR}/readline-readline83-001
+patch -Np0 < ${WORKDIR}/readline-readline83-002
+patch -Np0 < ${WORKDIR}/readline-readline83-003
 sed -i '/MV.*old/d' Makefile.in
 sed -i '/{OLDSUFF}/c:' support/shlib-install'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/readline-${VERSION}
 ./configure --prefix=/usr    --disable-static --with-curses    --docdir=/usr/share/doc/readline-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/readline-${VERSION}
 make SHLIB_LIBS="-lncursesw"'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/readline-${VERSION}
 make SHLIB_LIBS="-lncursesw" DESTDIR=${STAGING_DIR} install
 install -d ${STAGING_DIR}/usr/share/doc/readline-${VERSION}
 install -v -m644 doc/*.{ps,pdf,html,dvi} ${STAGING_DIR}/usr/share/doc/readline-${VERSION}/ 2>/dev/null || true'''
 
-[output]
+[[output]]
+runtime_deps = ['ncurses']
 backup = ["/etc/inputrc"]
 
 [hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
-

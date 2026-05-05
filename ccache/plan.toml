@@ -1,0 +1,40 @@
+name = "ccache"
+version = "4.13.6"
+release = 1
+description = "Fast C/C++ compiler cache"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://ccache.dev"
+
+build_deps = ['cmake', 'ninja', 'zstd']
+link_deps = ['zstd']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/ccache/ccache/releases/download/v${VERSION}/ccache-${VERSION}.tar.xz"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source/ccache-${VERSION}
+cmake -B build -G Ninja \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DENABLE_TESTING=OFF \
+  -DCCACHE_DEV_MODE=OFF \
+  -DZSTD_FROM_INTERNET=OFF \
+  -DHIREDIS_FROM_INTERNET=OFF'''
+
+[lifecycle.compile]
+script = '''
+cd source/ccache-${VERSION}
+ninja -C build -j$(nproc)'''
+
+[lifecycle.staging]
+script = '''
+cd source/ccache-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
+
+[[output]]
+runtime_deps = ['zstd']

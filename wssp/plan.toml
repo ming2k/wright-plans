@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/ming2k/wssp"
 
 
+build_deps = ['rust']
+
 [[sources]]
 type = "http"
 url = "https://github.com/ming2k/wssp/archive/refs/tags/v${VERSION}.tar.gz"
@@ -36,5 +38,5 @@ install -Dm644 systemd/user/wssp-daemon.service ${STAGING_DIR}/usr/lib/systemd/u
 # Install portal file
 install -Dm644 systemd/portals/wssp.portal ${STAGING_DIR}/usr/share/xdg-desktop-portal/portals/wssp.portal'''
 
-[output]
-runtime_deps = ['libadwaita:default', 'gtk4:default', 'linux-pam:default']
+[[output]]
+runtime_deps = ['libadwaita', 'gtk4', 'linux-pam']

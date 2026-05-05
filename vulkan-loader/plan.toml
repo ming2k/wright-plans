@@ -5,7 +5,8 @@ description = "Vulkan Loader (Wayland Only)"
 license = "Apache-2.0"
 arch = "x86_64"
 
-link_deps = ['glibc:default', 'wayland:default']
+link_deps = ['glibc', 'wayland']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -28,6 +29,7 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
-[output]
+[[output]]
+runtime_deps = ['glibc', 'wayland']
 provides = ["vulkan-icd-loader"]
 

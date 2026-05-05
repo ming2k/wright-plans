@@ -1,11 +1,13 @@
 name = "libclc"
 version = "22.1.4"
-release = 1
+release = 2
 description = "OpenCL C library implementation for LLVM"
 license = "Apache-2.0"
 arch = "x86_64"
 url = "https://libclc.llvm.org/"
 
+link_deps = ['llvm:llvm-libs']
+build_deps = ['cmake', 'llvm:clang']
 
 [[sources]]
 type = "http"
@@ -15,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/llvm-project-${VERSION}.src
 mkdir build-libclc && cd build-libclc
 cmake ../libclc                              \
 -DCMAKE_INSTALL_PREFIX=/usr            \
@@ -23,13 +25,13 @@ cmake ../libclc                              \
 
 [lifecycle.compile]
 script = '''
-cd source/build-libclc
+cd source/llvm-project-${VERSION}.src/build-libclc
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build-libclc
+cd source/llvm-project-${VERSION}.src/build-libclc
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['glibc:default']
+[[output]]
+runtime_deps = ['glibc', 'llvm:llvm-libs']

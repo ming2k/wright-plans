@@ -6,7 +6,7 @@ license = "Artistic-1.0-Perl OR GPL-1.0-or-later"
 arch = "x86_64"
 url = "https://www.perl.org/"
 
-link_deps = ['zlib:default']
+link_deps = ['zlib']
 
 [[sources]]
 type = "http"
@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/perl-${VERSION}
 export BUILD_ZLIB=False
 export BUILD_BZIP2=0
 sh Configure -des                                          \
@@ -36,12 +36,14 @@ sh Configure -des                                          \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/perl-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/perl-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 unset BUILD_ZLIB BUILD_BZIP2'''
 
+[[output]]
+runtime_deps = ['zlib']

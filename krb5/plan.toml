@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://web.mit.edu/kerberos/"
 
-link_deps = ['keyutils:default', 'openssl:default']
+link_deps = ['keyutils', 'openssl']
 
 [[sources]]
 type = "http"
@@ -32,3 +32,5 @@ script = '''
 cd source/src
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['keyutils', 'openssl']

@@ -6,7 +6,8 @@ license = "Zlib"
 arch = "x86_64"
 url = "https://www.libsdl.org/"
 
-link_deps = ['alsa-lib:default', 'dbus:default', 'libxkbcommon:default', 'pipewire:default', 'wayland:default']
+link_deps = ['alsa-lib', 'dbus', 'libxkbcommon', 'pipewire', 'wayland']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -29,5 +30,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[output]
-runtime_deps = ['alsa-lib:default', 'dbus:default', 'libxkbcommon:default', 'pipewire:default', 'wayland:default']
+[[output]]
+runtime_deps = ['alsa-lib', 'dbus', 'libxkbcommon', 'pipewire', 'wayland']

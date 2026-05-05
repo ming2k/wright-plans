@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/intel/compute-runtime"
 
 
+build_deps = ['cmake', 'ninja']
+
 [[sources]]
 type = "http"
 url = "https://github.com/intel/compute-runtime/archive/${VERSION}/intel-compute-runtime-${VERSION}.tar.gz"
@@ -66,8 +68,6 @@ if [ -n "$target_so" ]; then
 fi
 '''
 
-[output]
+[[output]]
+runtime_deps = ['glibc', 'intel-gmmlib', 'intel-graphics-compiler', 'gcc:gcc-libs', 'gcc:libstdc++']
 provides = ["level-zero-driver", "opencl-driver"]
-
-[output]
-runtime_deps = ['glibc:default', 'intel-gmmlib:default', 'intel-graphics-compiler:default', 'libgcc:default', 'libstdc++:default']

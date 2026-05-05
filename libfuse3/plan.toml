@@ -6,6 +6,8 @@ license = "GPL-2.0-only AND LGPL-2.1-only"
 arch = "x86_64"
 url = "https://github.com/libfuse/libfuse"
 
+build_deps = ['meson', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -39,5 +41,5 @@ rm -rf ${STAGING_DIR}/etc/init.d ${STAGING_DIR}/dev 2>/dev/null || true
 # Allow non-root users to mount FUSE filesystems via fusermount3
 chmod u+s ${STAGING_DIR}/usr/bin/fusermount3'''
 
-[output]
+[[output]]
 backup = ["/etc/fuse.conf"]

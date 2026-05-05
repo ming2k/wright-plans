@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/linux-nvme/libnvme"
 
-link_deps = ['dbus:default', 'json-c:default', 'keyutils:default', 'openssl:default']
+link_deps = ['dbus', 'json-c', 'keyutils', 'openssl']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -32,3 +33,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
+[[output]]
+runtime_deps = ['dbus', 'json-c', 'keyutils', 'openssl']

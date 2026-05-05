@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://www.qt.io"
 
 
+build_deps = ['ninja', 'cmake']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -28,5 +30,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[output]
-runtime_deps = ['qt6-base:default']
+[[output]]
+runtime_deps = ['qt6-base']

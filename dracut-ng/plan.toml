@@ -34,5 +34,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['bash:default', 'coreutils:default', 'cpio:default', 'kmod:default', 'systemd:default', 'util-linux:default']
+[[output]]
+runtime_deps = ['bash', 'coreutils', 'cpio', 'kmod', 'systemd', 'util-linux']

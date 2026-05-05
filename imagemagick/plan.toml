@@ -6,7 +6,7 @@ license = "ImageMagick"
 arch = "x86_64"
 url = "https://imagemagick.org"
 
-link_deps = ['bzip2:default', 'fontconfig:default', 'freetype:default', 'lcms2:default', 'libjpeg-turbo:default', 'libpng:default', 'libtiff:default', 'libwebp:default', 'libxml2:default', 'openjpeg:default', 'xz:default', 'zlib:default']
+link_deps = ['bzip2', 'fontconfig', 'freetype', 'lcms2', 'libjpeg-turbo', 'libpng', 'libtiff', 'libwebp', 'libxml2', 'openjpeg', 'xz', 'zlib']
 
 [[sources]]
 type = "http"
@@ -49,3 +49,5 @@ make DESTDIR=${STAGING_DIR} install
 
 test -x ${STAGING_DIR}/usr/bin/magick'''
 
+[[output]]
+runtime_deps = ['bzip2', 'fontconfig', 'freetype', 'lcms2', 'libjpeg-turbo', 'libpng', 'libtiff', 'libwebp', 'libxml2', 'openjpeg', 'xz', 'zlib']

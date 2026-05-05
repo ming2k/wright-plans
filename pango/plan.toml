@@ -6,7 +6,8 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://pango.gnome.org"
 
-link_deps = ['glib:default', 'cairo:default', 'harfbuzz:default', 'fontconfig:default', 'fribidi:default', 'freetype:default']
+link_deps = ['glib', 'cairo', 'harfbuzz', 'fontconfig', 'fribidi', 'freetype']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -34,3 +35,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['glib', 'cairo', 'harfbuzz', 'fontconfig', 'fribidi', 'freetype']

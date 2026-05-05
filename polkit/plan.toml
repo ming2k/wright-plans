@@ -6,7 +6,8 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/polkit-org/polkit"
 
-link_deps = ['glib:default', 'duktape:default', 'linux-pam:default']
+link_deps = ['glib', 'duktape', 'linux-pam']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -47,5 +48,5 @@ useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
 
 '''
 
-[output]
-runtime_deps = ['dbus:default', 'systemd:default']
+[[output]]
+runtime_deps = ['dbus', 'systemd', 'glib', 'duktape', 'linux-pam']

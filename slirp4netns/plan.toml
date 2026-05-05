@@ -6,7 +6,7 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://github.com/rootless-containers/slirp4netns"
 
-link_deps = ['glib:default', 'libcap:default', 'libseccomp:default', 'libslirp:default']
+link_deps = ['glib', 'libcap', 'libseccomp', 'libslirp']
 
 [[sources]]
 type = "http"
@@ -30,3 +30,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
 
+[[output]]
+runtime_deps = ['glib', 'libcap', 'libseccomp', 'libslirp']

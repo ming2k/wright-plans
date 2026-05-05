@@ -6,7 +6,8 @@ license = "custom:vim"
 arch = "x86_64"
 url = "https://www.vim.org"
 
-link_deps = ['acl:default', 'ncurses:default', 'zlib:default']
+link_deps = ['acl', 'ncurses', 'zlib']
+build_deps = ['autoconf']
 
 [[sources]]
 type = "http"
@@ -59,3 +60,5 @@ find ${STAGING_DIR}/usr/share/man -name 'ex.1' -o -name 'view.1' -o -name 'evim.
 install -Dm644 ${WORKDIR}/runtime/doc/uganda.txt \
   ${STAGING_DIR}/usr/share/licenses/vim/license.txt'''
 
+[[output]]
+runtime_deps = ['acl', 'ncurses', 'zlib']

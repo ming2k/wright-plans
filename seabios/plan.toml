@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://www.seabios.org/"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

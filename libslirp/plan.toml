@@ -6,7 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/slirp/libslirp"
 
-link_deps = ['glib:default']
+link_deps = ['glib']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,3 +30,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
 
+[[output]]
+runtime_deps = ['glib']

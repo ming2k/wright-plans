@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/haasn/libplacebo"
 
-link_deps = ['glslang:default', 'lcms2:default', 'shaderc:default', 'spirv-cross:default', 'vulkan-loader:default', 'vulkan-headers:default']
+link_deps = ['glslang', 'lcms2', 'shaderc', 'spirv-cross', 'vulkan-loader']
+build_deps = ['vulkan-headers', 'meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -38,3 +39,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['glslang', 'lcms2', 'shaderc', 'spirv-cross', 'vulkan-loader']

@@ -6,7 +6,7 @@ license = "Artistic-1.0-Perl OR GPL-1.0-or-later"
 arch = "x86_64"
 url = "https://github.com/toddr/XML-Parser"
 
-link_deps = ['expat:default']
+link_deps = ['expat']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['expat']

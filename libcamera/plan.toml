@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://libcamera.org"
 
-link_deps = ['gnutls:default', 'libevent:default', 'libyaml:default', 'systemd:default', 'gstreamer:default', 'v4l-utils:default']
+link_deps = ['gnutls', 'libevent', 'libyaml', 'systemd', 'gstreamer', 'v4l-utils']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "git"
@@ -40,3 +41,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['gnutls', 'libevent', 'libyaml', 'systemd', 'gstreamer', 'v4l-utils']

@@ -6,7 +6,8 @@ license = "UoI-NCSA"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator"
 
-link_deps = ['glibc:default', 'libgcc:default', 'libstdc++:default', 'llvm:default']
+link_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++', 'llvm:llvm-libs']
+build_deps = ['cmake']
 
 [[sources]]
 type = "http"
@@ -32,5 +33,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} cmake --install build'''
 
-[output]
-runtime_deps = ['glibc:default', 'libgcc:default', 'libstdc++:default', 'llvm:default']
+[[output]]
+runtime_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++', 'llvm:llvm-libs']

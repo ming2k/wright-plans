@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/pantoniou/libfyaml"
 
 
+build_deps = ['cmake', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

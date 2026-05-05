@@ -38,5 +38,5 @@ make DESTDIR=${STAGING_DIR} install
 install -v -dm755  ${STAGING_DIR}/usr/share/doc/dejagnu-1.6.3
 install -v -m644   doc/dejagnu.{html,txt} ${STAGING_DIR}/usr/share/doc/dejagnu-1.6.3'''
 
-[output]
-runtime_deps = ['expect:default']
+[[output]]
+runtime_deps = ['expect']

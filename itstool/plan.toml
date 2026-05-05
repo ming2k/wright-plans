@@ -7,6 +7,8 @@ arch = "any"
 url = "https://itstool.org"
 
 
+build_deps = ['autoconf', 'automake', 'libtool']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -29,5 +31,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} make install'''
 
-[output]
-runtime_deps = ['libxml2:default', 'python:default']
+[[output]]
+runtime_deps = ['libxml2', 'python']

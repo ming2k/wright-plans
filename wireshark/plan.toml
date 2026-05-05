@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.wireshark.org/"
 
-link_deps = ['c-ares:default', 'glib:default', 'libcap:default', 'libgcrypt:default', 'libpcap:default', 'libxml2:default', 'pcre2:default', 'qt6-5compat:default', 'qt6-base:default', 'qt6-svg:default', 'speexdsp:default', 'zlib:default']
+link_deps = ['c-ares', 'glib', 'libcap', 'libgcrypt', 'libpcap', 'libxml2', 'pcre2', 'qt6-5compat', 'qt6-base', 'qt6-svg', 'speexdsp', 'zlib']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -40,3 +41,5 @@ DESTDIR=${STAGING_DIR} ninja -C build install'''
 post_install = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
 post_upgrade = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
 
+[[output]]
+runtime_deps = ['c-ares', 'glib', 'libcap', 'libgcrypt', 'libpcap', 'libxml2', 'pcre2', 'qt6-5compat', 'qt6-base', 'qt6-svg', 'speexdsp', 'zlib']

@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/google/double-conversion"
 
 
+build_deps = ['ninja', 'cmake']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

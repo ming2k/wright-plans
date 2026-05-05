@@ -49,5 +49,5 @@ cd source
 make DESTDIR=${STAGING_DIR} install
 ln -svf expect${VERSION}/libexpect${VERSION}.so ${STAGING_DIR}/usr/lib'''
 
-[output]
-runtime_deps = ['tcl:default']
+[[output]]
+runtime_deps = ['tcl']

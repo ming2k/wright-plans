@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://wayland.emersion.fr/slurp/"
 
-link_deps = ['cairo:default', 'libxkbcommon:default', 'wayland:default', 'wayland-protocols:default']
+link_deps = ['cairo', 'libxkbcommon', 'wayland']
+build_deps = ['wayland-protocols', 'meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -31,3 +32,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['cairo', 'libxkbcommon', 'wayland']

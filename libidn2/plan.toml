@@ -6,7 +6,7 @@ license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/libidn/#libidn2"
 
-link_deps = ['libunistring:default']
+link_deps = ['libunistring']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['libunistring']

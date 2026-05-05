@@ -6,7 +6,7 @@ license = "ISC"
 arch = "x86_64"
 url = "https://github.com/libass/libass"
 
-link_deps = ['freetype:default', 'fribidi:default', 'harfbuzz:default', 'fontconfig:default']
+link_deps = ['freetype', 'fribidi', 'harfbuzz', 'fontconfig']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['freetype', 'fribidi', 'harfbuzz', 'fontconfig']

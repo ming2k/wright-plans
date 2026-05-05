@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/libdecor/libdecor"
 
-link_deps = ['cairo:default', 'pango:default', 'wayland:default', 'libxkbcommon:default']
+link_deps = ['cairo', 'pango', 'wayland', 'libxkbcommon']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,3 +30,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['cairo', 'pango', 'wayland', 'libxkbcommon']

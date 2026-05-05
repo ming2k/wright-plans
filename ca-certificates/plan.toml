@@ -7,6 +7,8 @@ arch = "any"
 url = "https://firefox-source-docs.mozilla.org/security/nss/index.html"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -27,14 +29,14 @@ path = "bundle.sh"
 script = '''
 cd source
 mkdir -p certs
-ln -sf ${WORKDIR}/nss/lib/ckfw/builtins/certdata.txt certs/certdata.txt
-ln -sf ${WORKDIR}/nss/lib/ckfw/builtins/nssckbi.h certs/nssckbi.h
+ln -sf ${WORKDIR}/source/nss-${VERSION}/nss/lib/ckfw/builtins/certdata.txt certs/certdata.txt
+ln -sf ${WORKDIR}/source/nss-${VERSION}/nss/lib/ckfw/builtins/nssckbi.h certs/nssckbi.h
 
 cd certs
-python3 ${WORKDIR}/certdata2pem.py
+python3 ${WORKDIR}/ca-certificates-certdata2pem.py
 
-cd source
-sh ${WORKDIR}/bundle.sh'''
+cd ${WORKDIR}/source
+sh ${WORKDIR}/ca-certificates-bundle.sh'''
 
 [lifecycle.staging]
 script = '''
@@ -52,5 +54,5 @@ update-ca-trust
 
 '''
 
-[output]
-runtime_deps = ['p11-kit:default']
+[[output]]
+runtime_deps = ['p11-kit']

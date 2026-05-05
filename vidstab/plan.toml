@@ -6,6 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 
 
+build_deps = ['cmake']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

@@ -6,6 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://github.com/hughsie/libxmlb"
 
+build_deps = ['meson', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

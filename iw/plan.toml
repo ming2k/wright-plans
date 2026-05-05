@@ -23,5 +23,5 @@ script = '''
 cd source
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['libnl:default']
+[[output]]
+runtime_deps = ['libnl']

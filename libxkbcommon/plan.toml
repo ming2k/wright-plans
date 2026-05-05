@@ -5,7 +5,8 @@ description = "Keymap handling library (Wayland Only)"
 license = "MIT"
 arch = "x86_64"
 
-link_deps = ['wayland:default', 'wayland-protocols:default', 'xkeyboard-config:default']
+link_deps = ['wayland', 'xkeyboard-config']
+build_deps = ['wayland-protocols', 'meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -28,3 +29,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
 
+[[output]]
+runtime_deps = ['wayland', 'xkeyboard-config']

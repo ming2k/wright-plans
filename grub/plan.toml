@@ -70,5 +70,5 @@ mv -v ${STAGING_DIR}/etc/bash_completion.d/grub \
     ${STAGING_DIR}/usr/share/bash-completion/completions/ 2>/dev/null || true
 rmdir ${STAGING_DIR}/etc/bash_completion.d 2>/dev/null || true'''
 
-[output]
-runtime_deps = ['dosfstools:default']
+[[output]]
+runtime_deps = ['dosfstools']

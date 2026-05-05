@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/fontconfig/"
 
-link_deps = ['freetype:default', 'expat:default']
+link_deps = ['freetype', 'expat']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -38,3 +39,5 @@ DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 post_install = "fc-cache -s 2>/dev/null || true"
 post_upgrade = "fc-cache -s 2>/dev/null || true"
 
+[[output]]
+runtime_deps = ['freetype', 'expat']

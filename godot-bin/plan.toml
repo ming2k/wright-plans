@@ -68,7 +68,7 @@ Icon=applications-development
 StartupNotify=true
 EOF'''
 
-[output]
+[[output]]
 replaces = ["godot"]
 conflicts = ["godot"]
 provides = ["godot"]

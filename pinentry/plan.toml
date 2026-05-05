@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gnupg.org/software/pinentry/"
 
-link_deps = ['libassuan:default', 'libgpg-error:default', 'ncurses:default']
+link_deps = ['libassuan', 'libgpg-error', 'ncurses']
 
 [[sources]]
 type = "http"
@@ -44,3 +44,5 @@ if [ ! -e ${STAGING_DIR}/usr/bin/pinentry ] && [ -e ${STAGING_DIR}/usr/bin/pinen
   ln -sf pinentry-curses ${STAGING_DIR}/usr/bin/pinentry
 fi'''
 
+[[output]]
+runtime_deps = ['libassuan', 'libgpg-error', 'ncurses']

@@ -6,7 +6,8 @@ license = "LGPL-2.1-only OR MPL-1.1"
 arch = "x86_64"
 url = "https://cairographics.org/"
 
-link_deps = ['pixman:default', 'libpng:default', 'fontconfig:default', 'freetype:default', 'glib:default', 'zlib:default']
+link_deps = ['pixman', 'libpng', 'fontconfig', 'freetype', 'glib', 'zlib']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -41,3 +42,5 @@ script = "cd source && meson compile -C build"
 [lifecycle.staging]
 script = "cd source && meson install -C build --destdir ${STAGING_DIR}"
 
+[[output]]
+runtime_deps = ['pixman', 'libpng', 'fontconfig', 'freetype', 'glib', 'zlib']

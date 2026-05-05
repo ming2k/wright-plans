@@ -6,6 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/wlroots/wlroots"
 
+build_deps = ['meson', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -34,7 +36,7 @@ cd source/wlroots-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install
 '''
 
-[output]
+[[output]]
 provides = ["wlroots"]
 conflicts = ["wlroots"]
 

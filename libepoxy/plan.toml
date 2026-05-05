@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/anholt/libepoxy"
 
-link_deps = ['mesa:default', 'libglvnd:default']
+link_deps = ['mesa', 'libglvnd']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -32,5 +33,5 @@ script = '''
 cd source
 meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
 
-[output]
-runtime_deps = ['mesa:default']
+[[output]]
+runtime_deps = ['mesa', 'libglvnd']

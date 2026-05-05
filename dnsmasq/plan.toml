@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://thekelleys.org.uk/dnsmasq/doc.html"
 
-link_deps = ['glibc:default', 'gmp:default', 'nettle:default', 'libidn2:default', 'dbus:default', 'libnetfilter_conntrack:default', 'nftables:default']
+link_deps = ['glibc', 'gmp', 'nettle', 'libidn2', 'dbus', 'libnetfilter_conntrack', 'nftables']
 
 [[sources]]
 type = "http"
@@ -49,7 +49,8 @@ install -Dm644 trust-anchors.conf ${STAGING_DIR}/usr/share/dnsmasq/trust-anchors
 
 sed -i 's,%%PREFIX%%,/usr,' ${STAGING_DIR}/etc/dnsmasq.conf'''
 
-[output]
+[[output]]
+runtime_deps = ['glibc', 'gmp', 'nettle', 'libidn2', 'dbus', 'libnetfilter_conntrack', 'nftables']
 backup = ["/etc/dnsmasq.conf"]
 
 [hooks]

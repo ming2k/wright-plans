@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.musicpd.org/"
 
-link_deps = ['alsa-lib:default', 'pipewire:default', 'ffmpeg:default', 'sqlite:default', 'curl:default', 'dbus:default', 'libsndfile:default', 'fmt:default']
+link_deps = ['alsa-lib', 'pipewire', 'ffmpeg', 'sqlite', 'curl', 'dbus', 'libsndfile', 'fmt']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -66,3 +67,5 @@ install -vDm644 doc/mpdconf.example \
 post_install = "systemctl daemon-reload 2>/dev/null || true"
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 
+[[output]]
+runtime_deps = ['alsa-lib', 'pipewire', 'ffmpeg', 'sqlite', 'curl', 'dbus', 'libsndfile', 'fmt']

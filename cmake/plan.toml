@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/cmake-${VERSION}
 sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
 ./bootstrap --prefix=/usr \
 --no-system-jsoncpp \
@@ -27,11 +27,10 @@ sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/cmake-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/cmake-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
-

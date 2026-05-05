@@ -6,7 +6,7 @@ license = "Apache-2.0 AND MIT AND Zlib"
 arch = "x86_64"
 url = "https://github.com/containers/aardvark-dns"
 
-link_deps = ['glibc:default']
+link_deps = ['glibc']
 
 [[sources]]
 type = "http"
@@ -49,5 +49,5 @@ script = '''
 cd source/aardvark-dns-${VERSION}
 make DESTDIR=${STAGING_DIR} PREFIX=/usr install'''
 
-[output]
-runtime_deps = ['glibc:default']
+[[output]]
+runtime_deps = ['glibc']

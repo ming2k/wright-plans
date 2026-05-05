@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://xapian.org/"
 
-link_deps = ['libuuid:default', 'zlib:default']
+link_deps = ['util-linux', 'zlib']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['util-linux', 'zlib']

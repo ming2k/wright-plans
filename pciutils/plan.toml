@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://mj.ucw.cz/sw/pciutils/"
 
-link_deps = ['systemd:default', 'zlib:default']
+link_deps = ['systemd', 'zlib']
 
 [[sources]]
 type = "http"
@@ -33,3 +33,5 @@ make PREFIX=/usr \
      DESTDIR=${STAGING_DIR} \
      install install-lib'''
 
+[[output]]
+runtime_deps = ['systemd', 'zlib']

@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/rpm-software-management/popt"
 
-link_deps = ['glibc:default']
+link_deps = ['glibc']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
 
+[[output]]
+runtime_deps = ['glibc']

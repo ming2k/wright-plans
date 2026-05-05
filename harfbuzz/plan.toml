@@ -5,7 +5,8 @@ description = "OpenType text shaping engine"
 license = "MIT"
 arch = "x86_64"
 
-link_deps = ['cairo:default', 'freetype:default', 'glib:default', 'icu:default', 'graphite2:default']
+link_deps = ['cairo', 'freetype', 'glib', 'icu', 'graphite2']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -38,3 +39,5 @@ script = '''
 cd source/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
+[[output]]
+runtime_deps = ['cairo', 'freetype', 'glib', 'icu', 'graphite2']

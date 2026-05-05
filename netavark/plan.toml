@@ -6,7 +6,7 @@ license = "Apache-2.0 AND BSD-3-Clause AND MIT"
 arch = "x86_64"
 url = "https://github.com/containers/netavark"
 
-link_deps = ['glibc:default']
+link_deps = ['glibc']
 
 [[sources]]
 type = "http"
@@ -71,7 +71,8 @@ cat > ${STAGING_DIR}/etc/containers/netavark.conf << 'EOF'
 firewall_driver = "nftables"
 EOF'''
 
-[output]
+[[output]]
+runtime_deps = ['aardvark-dns', 'glibc', 'nftables']
 backup = ["/etc/containers/netavark.conf"]
 
 [hooks]
@@ -81,6 +82,3 @@ systemctl daemon-reload 2>/dev/null || true
 post_upgrade = '''
 systemctl daemon-reload 2>/dev/null || true
 '''
-
-[output]
-runtime_deps = ['aardvark-dns:default', 'glibc:default', 'nftables:default']

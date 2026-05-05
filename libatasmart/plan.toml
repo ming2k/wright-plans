@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "http://0pointer.de/blog/projects/being-smart.html"
 
-link_deps = ['systemd:default']
+link_deps = ['systemd']
+build_deps = ['autoconf', 'automake', 'libtool']
 
 [[sources]]
 type = "http"
@@ -30,3 +31,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['systemd']

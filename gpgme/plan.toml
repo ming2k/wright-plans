@@ -6,7 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gnupg.org/software/gpgme/"
 
-link_deps = ['libassuan:default', 'libgpg-error:default', 'gnupg:default']
+link_deps = ['libassuan', 'libgpg-error', 'gnupg']
 
 [[sources]]
 type = "http"
@@ -32,3 +32,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} make install'''
 
+[[output]]
+runtime_deps = ['libassuan', 'libgpg-error', 'gnupg']

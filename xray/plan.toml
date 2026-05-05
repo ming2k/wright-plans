@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/XTLS/Xray-core"
 
 
+build_deps = ['go']
+
 [[sources]]
 type = "http"
 sha256 = "992a4997e6bb846d11469435d687f99ef812fcde1e0a009bb8e95189ea20331d"
@@ -41,7 +43,7 @@ cd source
 install -Dm755 xray ${STAGING_DIR}/usr/bin/xray
 install -dm755 ${STAGING_DIR}/etc/xray'''
 
-[output]
+[[output]]
 backup = ["/etc/xray/config.json"]
 
 [hooks]

@@ -6,7 +6,7 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/containers/conmon"
 
-link_deps = ['glib:default', 'glibc:default', 'libseccomp:default', 'systemd:default']
+link_deps = ['glib', 'glibc', 'libseccomp', 'systemd']
 
 [[sources]]
 type = "http"
@@ -26,5 +26,5 @@ script = '''
 cd source/conmon-${VERSION}
 make DESTDIR=${STAGING_DIR} PREFIX=/usr LIBEXECDIR=/usr/libexec install.podman'''
 
-[output]
-runtime_deps = ['glib:default', 'glibc:default', 'libseccomp:default', 'systemd:default']
+[[output]]
+runtime_deps = ['glib', 'glibc', 'libseccomp', 'systemd']

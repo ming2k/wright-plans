@@ -15,18 +15,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gdbm-${VERSION}
 ./configure --prefix=/usr    \
 --disable-static \
 --enable-libgdbm-compat'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gdbm-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gdbm-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

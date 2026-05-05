@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later AND BSD-3-Clause"
 arch = "x86_64"
 url = "https://passt.top/passt/about/"
 
-link_deps = ['glibc:default']
+link_deps = ['glibc']
 
 [[sources]]
 type = "http"
@@ -24,3 +24,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} prefix=/usr install'''
 
+[[output]]
+runtime_deps = ['glibc']

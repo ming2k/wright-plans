@@ -18,5 +18,5 @@ script = '''
 cd source
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['bash:default', 'gnupg:default', 'git:default']
+[[output]]
+runtime_deps = ['bash', 'gnupg', 'git']

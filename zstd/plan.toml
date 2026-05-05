@@ -15,12 +15,12 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/zstd-1.5.7
 make prefix=/usr -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/zstd-1.5.7
 make prefix=/usr DESTDIR=${STAGING_DIR} install
 rm -v ${STAGING_DIR}/usr/lib/libzstd.a'''
 

@@ -6,7 +6,8 @@ license = "GPL-3.0-only"
 arch = "x86_64"
 url = "https://sr.ht/~kennylevinsen/greetd"
 
-link_deps = ['glibc:default', 'linux-pam:default', 'seatd:default']
+link_deps = ['glibc', 'linux-pam', 'seatd']
+build_deps = ['rust']
 
 [[sources]]
 type = "http"
@@ -78,7 +79,8 @@ u greeter - "Greeter user" /var/lib/greetd
 m greeter video
 SYSUSERS'''
 
-[output]
+[[output]]
+runtime_deps = ['seatd', 'systemd', 'glibc', 'linux-pam']
 backup = ["/etc/greetd/config.toml", "/etc/pam.d/greetd"]
 
 [hooks]
@@ -94,6 +96,3 @@ chown greeter:greeter /var/lib/greetd 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
-
-[output]
-runtime_deps = ['seatd:default', 'systemd:default']

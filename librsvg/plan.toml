@@ -5,7 +5,8 @@ description = "SVG rendering library using Rust"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-link_deps = ['cairo:default', 'gdk-pixbuf:default', 'pango:default', 'glib:default', 'libxml2:default', 'harfbuzz:default', 'freetype:default', 'fribidi:default']
+link_deps = ['cairo', 'gdk-pixbuf', 'pango', 'glib', 'libxml2', 'harfbuzz', 'freetype', 'fribidi']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -31,3 +32,5 @@ script = '''
 cd source
 meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
 
+[[output]]
+runtime_deps = ['cairo', 'gdk-pixbuf', 'pango', 'glib', 'libxml2', 'harfbuzz', 'freetype', 'fribidi']

@@ -39,7 +39,7 @@ install -dm755 ${STAGING_DIR}/usr/bin
 ln -sf /usr/lib/zig/zig ${STAGING_DIR}/usr/bin/zig
 '''
 
-[output]
+[[output]]
 provides = ["zig"]
 conflicts = ["zig"]
 

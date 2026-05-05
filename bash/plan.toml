@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/bash/"
 
-link_deps = ['ncurses:default', 'readline:default']
+link_deps = ['ncurses', 'readline']
 
 [[sources]]
 type = "http"
@@ -32,3 +32,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['ncurses', 'readline']

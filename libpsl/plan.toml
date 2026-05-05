@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/rockdaboot/libpsl"
 
-link_deps = ['libidn2:default', 'libunistring:default']
+link_deps = ['libidn2', 'libunistring']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -31,3 +32,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['libidn2', 'libunistring']

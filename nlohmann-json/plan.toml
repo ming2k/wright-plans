@@ -7,6 +7,8 @@ arch = "any"
 url = "https://github.com/nlohmann/json"
 
 
+build_deps = ['ninja', 'cmake']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

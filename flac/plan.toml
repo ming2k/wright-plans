@@ -6,7 +6,8 @@ license = "BSD-3-Clause, GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://xiph.org/flac/"
 
-link_deps = ['libogg:default']
+link_deps = ['libogg']
+build_deps = ['doxygen']
 
 [[sources]]
 type = "http"
@@ -36,3 +37,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['libogg']

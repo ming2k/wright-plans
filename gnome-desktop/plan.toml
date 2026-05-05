@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/gnome-desktop"
 
-link_deps = ['glib:default', 'gtk4:default', 'libseccomp:default', 'libxkbcommon:default']
+link_deps = ['glib', 'gtk4', 'libseccomp', 'libxkbcommon']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -33,5 +34,5 @@ DESTDIR=${STAGING_DIR} ninja -C build install'''
 post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
 post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
 
-[output]
-runtime_deps = ['gsettings-desktop-schemas:default', 'iso-codes:default']
+[[output]]
+runtime_deps = ['gsettings-desktop-schemas', 'iso-codes', 'glib', 'gtk4', 'libseccomp', 'libxkbcommon']

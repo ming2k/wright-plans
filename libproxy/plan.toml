@@ -5,7 +5,8 @@ description = "Library that provides automatic proxy configuration management"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-link_deps = ['glib:default']
+link_deps = ['glib']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -28,5 +29,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
 
-[output]
-runtime_deps = ['duktape:default', 'gsettings-desktop-schemas:default']
+[[output]]
+runtime_deps = ['duktape', 'gsettings-desktop-schemas', 'glib']

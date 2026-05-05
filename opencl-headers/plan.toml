@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/KhronosGroup/OpenCL-Headers"
 
 
+build_deps = ['cmake', 'ninja']
+
 [[sources]]
 type = "http"
 url = "https://github.com/KhronosGroup/OpenCL-Headers/archive/refs/tags/v${VERSION}/OpenCL-Headers-${VERSION}.tar.gz"

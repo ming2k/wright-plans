@@ -6,7 +6,8 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/gdb/"
 
-link_deps = ['expat:default', 'glibc:default', 'mpfr:default', 'ncurses:default', 'readline:default', 'xz:default', 'zlib:default']
+link_deps = ['expat', 'glibc', 'mpfr', 'ncurses', 'readline', 'xz', 'zlib']
+build_deps = ['python']
 
 [[sources]]
 type = "http"
@@ -45,5 +46,5 @@ make DESTDIR=${STAGING_DIR} install
 # Remove static libraries
 rm -f ${STAGING_DIR}/usr/lib/libinproctrace.a'''
 
-[output]
-runtime_deps = ['expat:default', 'ncurses:default', 'python:default', 'readline:default', 'xz:default', 'zlib:default']
+[[output]]
+runtime_deps = ['expat', 'ncurses', 'python', 'readline', 'xz', 'zlib', 'glibc', 'mpfr']

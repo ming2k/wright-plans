@@ -22,8 +22,6 @@ cp -a bin lib etc ${STAGING_DIR}/usr/share/ant/
 install -dm755 ${STAGING_DIR}/usr/bin
 ln -sf ../share/ant/bin/ant ${STAGING_DIR}/usr/bin/ant'''
 
-[output]
+[[output]]
+runtime_deps = ['openjdk']
 provides = ["apache-ant"]
-
-[output]
-runtime_deps = ['openjdk:default']

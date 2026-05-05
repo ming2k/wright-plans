@@ -6,7 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://alacritty.org"
 
-link_deps = ['fontconfig:default', 'freetype:default', 'libglvnd:default', 'libxkbcommon:default', 'mesa:default', 'wayland:default']
+link_deps = ['fontconfig', 'freetype', 'libglvnd', 'libxkbcommon', 'mesa', 'wayland']
+build_deps = ['scdoc', 'rust']
 
 [[sources]]
 type = "http"
@@ -59,3 +60,5 @@ update-desktop-database -q /usr/share/applications 2>/dev/null || true
 
 '''
 
+[[output]]
+runtime_deps = ['fontconfig', 'freetype', 'libglvnd', 'libxkbcommon', 'mesa', 'wayland']

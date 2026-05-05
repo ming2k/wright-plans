@@ -6,7 +6,7 @@ license = "GPL-2.0-with-classpath-exception"
 arch = "x86_64"
 url = "https://openjdk.org"
 
-link_deps = ['alsa-lib:default', 'freetype:default', 'giflib:default', 'lcms2:default', 'libjpeg-turbo:default', 'libpng:default', 'zlib:default']
+link_deps = ['alsa-lib', 'freetype', 'giflib', 'lcms2', 'libjpeg-turbo', 'libpng', 'zlib']
 
 [[sources]]
 type = "git"
@@ -81,9 +81,7 @@ cat > ${STAGING_DIR}/etc/profile.d/jdk.sh << 'PROF'
 export JAVA_HOME=/usr/lib/jvm/java-26-openjdk
 PROF'''
 
-[output]
+[[output]]
+runtime_deps = ['alsa-lib', 'freetype', 'giflib', 'lcms2', 'libjpeg-turbo', 'libpng', 'zlib']
 provides = ["java", "jdk"]
 backup = ["/etc/profile.d/jdk.sh"]
-
-[output]
-runtime_deps = ['alsa-lib:default', 'freetype:default', 'giflib:default', 'lcms2:default', 'libjpeg-turbo:default', 'libpng:default', 'zlib:default']

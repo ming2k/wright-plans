@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://scons.org"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 url = "https://files.pythonhosted.org/packages/source/s/scons/scons-${VERSION}.tar.gz"

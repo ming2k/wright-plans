@@ -62,5 +62,5 @@ xmlcatalog --noout --del "http://docbook.sourceforge.net/release/xsl-nons/curren
 
 '''
 
-[output]
-runtime_deps = ['libxml2:default']
+[[output]]
+runtime_deps = ['libxml2']

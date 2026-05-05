@@ -6,7 +6,8 @@ license = "LGPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/containers/bubblewrap"
 
-link_deps = ['libcap:default', 'libseccomp:default']
+link_deps = ['libcap', 'libseccomp']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -32,3 +33,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
+[[output]]
+runtime_deps = ['libcap', 'libseccomp']

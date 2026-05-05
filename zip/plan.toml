@@ -35,5 +35,5 @@ make prefix=${STAGING_DIR}/usr \
     MANDIR=${STAGING_DIR}/usr/share/man/man1 \
     -f unix/Makefile install'''
 
-[output]
-runtime_deps = ['bzip2:default']
+[[output]]
+runtime_deps = ['bzip2']

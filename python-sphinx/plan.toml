@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://www.sphinx-doc.org/"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -18,5 +20,5 @@ script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
 
-[output]
-runtime_deps = ['python:default', 'python-jinja2:default', 'python-pygments:default', 'python-docutils:default', 'python-babel:default', 'python-alabaster:default', 'python-requests:default', 'python-packaging:default', 'sphinxcontrib-applehelp:default', 'sphinxcontrib-devhelp:default', 'sphinxcontrib-htmlhelp:default', 'sphinxcontrib-jsmath:default', 'sphinxcontrib-qthelp:default', 'sphinxcontrib-serializinghtml:default']
+[[output]]
+runtime_deps = ['python', 'python-jinja2', 'python-pygments', 'python-docutils', 'python-babel', 'python-alabaster', 'python-requests', 'python-packaging', 'sphinxcontrib-applehelp', 'sphinxcontrib-devhelp', 'sphinxcontrib-htmlhelp', 'sphinxcontrib-jsmath', 'sphinxcontrib-qthelp', 'sphinxcontrib-serializinghtml']

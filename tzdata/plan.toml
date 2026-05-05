@@ -1,6 +1,6 @@
 name = "tzdata"
 version = "2025c"
-release = 1
+release = 2
 description = "Sources for time zone and daylight saving time data"
 license = "LicenseRef-tz"
 arch = "any"
@@ -17,6 +17,7 @@ extract_to = "source"
 type = "http"
 sha256 = "SKIP"
 url = "https://data.iana.org/time-zones/releases/tzdata${VERSION}.tar.gz"
+extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
@@ -53,4 +54,3 @@ rm -f ${STAGING_DIR}/etc/localtime
 
 # License
 install -Dm644 LICENSE ${STAGING_DIR}/usr/share/licenses/tzdata/LICENSE'''
-

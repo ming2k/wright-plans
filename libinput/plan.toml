@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/libinput/"
 
 
+build_deps = ['meson', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -34,5 +36,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
-[output]
-runtime_deps = ['libevdev:default', 'mtdev:default']
+[[output]]
+runtime_deps = ['libevdev', 'mtdev']

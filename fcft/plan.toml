@@ -6,6 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://codeberg.org/dnkl/fcft"
 
+build_deps = ['meson', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

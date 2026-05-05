@@ -5,7 +5,8 @@ description = "Library for storing and retrieving passwords and other secrets"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-link_deps = ['glib:default', 'libgcrypt:default']
+link_deps = ['glib', 'libgcrypt']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -28,3 +29,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
 
+[[output]]
+runtime_deps = ['glib', 'libgcrypt']

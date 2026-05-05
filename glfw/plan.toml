@@ -6,7 +6,8 @@ license = "Zlib"
 arch = "x86_64"
 url = "https://www.glfw.org/"
 
-link_deps = ['wayland:default', 'libxkbcommon:default']
+link_deps = ['wayland', 'libxkbcommon']
+build_deps = ['cmake']
 
 [[sources]]
 type = "http"
@@ -37,8 +38,6 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} cmake --install build'''
 
-[output]
+[[output]]
+runtime_deps = ['wayland', 'libxkbcommon']
 provides = ["libglfw"]
-
-[output]
-runtime_deps = ['wayland:default', 'libxkbcommon:default']

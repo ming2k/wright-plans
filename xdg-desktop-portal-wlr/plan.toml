@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/emersion/xdg-desktop-portal-wlr"
 
-link_deps = ['pipewire:default', 'wayland:default', 'inih:default']
+link_deps = ['pipewire', 'wayland', 'inih']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -34,5 +35,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[output]
-runtime_deps = ['xdg-desktop-portal:default', 'pipewire:default']
+[[output]]
+runtime_deps = ['xdg-desktop-portal', 'pipewire', 'wayland', 'inih']

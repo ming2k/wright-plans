@@ -6,7 +6,8 @@ license = "LGPL-2.1-only OR MPL-2.0"
 arch = "x86_64"
 url = "https://github.com/libical/libical"
 
-link_deps = ['glibc:default', 'glib:default', 'icu:default', 'libxml2:default']
+link_deps = ['glibc', 'glib', 'icu', 'libxml2']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -30,3 +31,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja install -C ${WORKDIR}/build'''
 
+[[output]]
+runtime_deps = ['glibc', 'glib', 'icu', 'libxml2']

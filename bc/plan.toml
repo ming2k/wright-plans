@@ -6,7 +6,7 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/gavinhoward/bc"
 
-link_deps = ['readline:default']
+link_deps = ['readline']
 
 [[sources]]
 type = "http"
@@ -35,3 +35,5 @@ cd source
 make DESTDIR=${STAGING_DIR} install
 rm -f ${STAGING_DIR}/usr/share/info/dir'''
 
+[[output]]
+runtime_deps = ['readline']

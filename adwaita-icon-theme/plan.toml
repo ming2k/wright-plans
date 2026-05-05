@@ -7,6 +7,8 @@ arch = "any"
 url = "https://gitlab.gnome.org/GNOME/adwaita-icon-theme"
 
 
+build_deps = ['meson', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -40,5 +42,5 @@ gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 
 '''
 
-[output]
-runtime_deps = ['hicolor-icon-theme:default']
+[[output]]
+runtime_deps = ['hicolor-icon-theme']

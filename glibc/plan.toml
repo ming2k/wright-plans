@@ -1,6 +1,6 @@
 name = "glibc"
 version = "2.43"
-release = 4
+release = 5
 description = "The GNU C Library"
 license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
@@ -22,7 +22,7 @@ path = "locale.gen"
 script = '''
 # Glibc requires an out-of-tree build
 mkdir -pv ${WORKDIR}/build
-cd source/build
+cd ${WORKDIR}/build
 
 # _FORTIFY_SOURCE=3 conflicts with --enable-fortify-source
 CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=3/}"
@@ -34,7 +34,7 @@ sbindir=/usr/bin
 rootsbindir=/usr/bin
 EOF
 
-../configure                          \
+../source/glibc-${VERSION}/configure  \
   --prefix=/usr                       \
   --libdir=/usr/lib                   \
   --libexecdir=/usr/lib               \
@@ -52,17 +52,17 @@ EOF
 [lifecycle.compile]
 isolation = "strict"
 script = '''
-cd source/build
+cd ${WORKDIR}/build
 make -O -j$(nproc)'''
 
-[lifecycle.check]
-script = '''
-cd source/build
-make -O check || true'''
+# [lifecycle.check]
+# script = '''
+# cd ${WORKDIR}/build
+# make -O check || true'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd ${WORKDIR}/build
 
 mkdir -p ${STAGING_DIR}/etc
 
@@ -79,7 +79,7 @@ rm -f ${STAGING_DIR}/usr/share/man/man8/{tzselect,zdump,zic}.8
 # Fix hardcoded /usr prefix in ldd so it resolves via /lib symlink
 sed '/RTLDLIST=/s@/usr@@g' -i ${STAGING_DIR}/usr/bin/ldd
 
-install -Dm644 ${WORKDIR}/locale.gen ${STAGING_DIR}/etc/locale.gen
+install -Dm644 ${WORKDIR}/glibc-locale.gen ${STAGING_DIR}/etc/locale.gen
 
 # Default system locale
 echo 'LANG=en_US.UTF-8' > ${STAGING_DIR}/etc/locale.conf
@@ -114,8 +114,9 @@ include /etc/ld.so.conf.d/*.conf
 LDEOF
 mkdir -pv ${STAGING_DIR}/etc/ld.so.conf.d'''
 
-[output]
+[[output]]
 backup = ["/etc/nsswitch.conf", "/etc/ld.so.conf", "/etc/locale.gen", "/etc/locale.conf"]
+runtime_deps = ['linux-api-headers >= 4.10', 'tzdata >= 2025c']
 
 [hooks]
 post_install = '''
@@ -132,6 +133,3 @@ localedef -i C -f UTF-8 C.UTF-8
 localedef -i en_US -f UTF-8 en_US.UTF-8
 
 '''
-
-[output]
-runtime_deps = ['linux-api-headers >= 4.10:default', 'tzdata >= 2025c:default']

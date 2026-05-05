@@ -6,7 +6,8 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://www.opencode.net/trialuser/qt6ct"
 
-link_deps = ['qt6-base:default', 'qt6-svg:default']
+link_deps = ['qt6-base', 'qt6-svg']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -31,3 +32,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
+[[output]]
+runtime_deps = ['qt6-base', 'qt6-svg']

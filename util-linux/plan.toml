@@ -6,7 +6,8 @@ license = "GPL-2.0-only AND GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.1-o
 arch = "x86_64"
 url = "https://github.com/util-linux/util-linux"
 
-link_deps = ['glibc:default', 'ncurses:default', 'zlib:default', 'libcap:default', 'linux-pam:default', 'readline:default']
+link_deps = ['glibc', 'ncurses', 'zlib', 'libcap', 'linux-pam', 'readline']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -53,3 +54,5 @@ script = '''
 cd source
 meson compile -C ${WORKDIR}/build -j$(nproc)'''
 
+[[output]]
+runtime_deps = ['glibc', 'ncurses', 'zlib', 'libcap', 'linux-pam', 'readline']

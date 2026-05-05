@@ -6,7 +6,7 @@ license = "Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-
 arch = "x86_64"
 url = "https://github.com/containers/podman"
 
-link_deps = ['glib:default', 'glibc:default', 'gpgme:default', 'libseccomp:default', 'sqlite:default', 'systemd:default']
+link_deps = ['glib', 'glibc', 'gpgme', 'libseccomp', 'sqlite', 'systemd']
 
 [[sources]]
 type = "http"
@@ -40,5 +40,5 @@ systemd-tmpfiles --create /usr/lib/tmpfiles.d/podman.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 '''
 
-[output]
-runtime_deps = ['aardvark-dns >= 1.17.1:default', 'catatonit >= 0.2.1:default', 'conmon >= 2.2.1:default', 'containers-common >= 0.64.1:default', 'crun >= 1.27:default', 'fuse-overlayfs >= 1.16:default', 'glib:default', 'glibc:default', 'gpgme:default', 'libseccomp:default', 'netavark >= 1.17.2:default', 'shadow:default', 'sqlite:default', 'systemd:default']
+[[output]]
+runtime_deps = ['aardvark-dns >= 1.17.1', 'catatonit >= 0.2.1', 'conmon >= 2.2.1', 'containers-common >= 0.64.1', 'crun >= 1.27', 'fuse-overlayfs >= 1.16', 'glib', 'glibc', 'gpgme', 'libseccomp', 'netavark >= 1.17.2', 'shadow', 'sqlite', 'systemd']

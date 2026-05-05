@@ -5,7 +5,8 @@ description = "GStreamer Bad Plugins"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
 
-link_deps = ['openssl:default']
+link_deps = ['openssl']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -34,5 +35,5 @@ script = '''
 cd source/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
-[output]
-runtime_deps = ['gst-plugins-base:default', 'gstreamer:default']
+[[output]]
+runtime_deps = ['gst-plugins-base', 'gstreamer', 'openssl']

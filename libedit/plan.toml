@@ -5,7 +5,7 @@ description = "BSD-style command line editing library"
 license = "BSD-3-Clause"
 arch = "x86_64"
 
-link_deps = ['ncurses:default']
+link_deps = ['ncurses']
 
 [[sources]]
 type = "http"
@@ -15,16 +15,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libedit-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libedit-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libedit-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['ncurses']

@@ -41,5 +41,5 @@ unqualified-search-registries = ["docker.io", "quay.io", "registry.fedoraproject
 short-name-mode = "permissive"
 EOF'''
 
-[output]
+[[output]]
 backup = ["/etc/containers/policy.json", "/etc/containers/registries.conf"]

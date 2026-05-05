@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/sxyazi/yazi"
 
-link_deps = ['gcc:default', 'glibc:default']
+link_deps = ['gcc:gcc-libs', 'glibc']
+build_deps = ['rust']
 
 [[sources]]
 type = "http"
@@ -41,3 +42,5 @@ install -Dm644 yazi-cli/completions/ya.fish ${STAGING_DIR}/usr/share/fish/vendor
 install -Dm644 assets/yazi.desktop ${STAGING_DIR}/usr/share/applications/yazi.desktop || true
 install -Dm644 assets/yazi.svg     ${STAGING_DIR}/usr/share/icons/hicolor/scalable/apps/yazi.svg || true'''
 
+[[output]]
+runtime_deps = ['gcc:gcc-libs', 'glibc']

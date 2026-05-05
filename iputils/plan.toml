@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/iputils/iputils"
 
-link_deps = ['libcap:default', 'libidn2:default']
+link_deps = ['libcap', 'libidn2']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -46,3 +47,5 @@ post_upgrade = '''
 setcap cap_net_raw+ep /usr/bin/ping 2>/dev/null || true
 '''
 
+[[output]]
+runtime_deps = ['libcap', 'libidn2']

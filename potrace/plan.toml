@@ -6,7 +6,8 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://potrace.sourceforge.net/"
 
-link_deps = ['zlib:default']
+link_deps = ['zlib']
+build_deps = ['autoconf', 'automake', 'libtool']
 
 [[sources]]
 type = "http"
@@ -40,5 +41,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['zlib:default']
+[[output]]
+runtime_deps = ['zlib']

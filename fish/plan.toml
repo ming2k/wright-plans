@@ -6,7 +6,8 @@ license = "GPL-2.0-only AND BSD-3-Clause AND ISC AND MIT AND PSF-2.0"
 arch = "x86_64"
 url = "https://fishshell.com/"
 
-link_deps = ['pcre2:default']
+link_deps = ['pcre2']
+build_deps = ['cmake']
 
 [[sources]]
 type = "http"
@@ -37,3 +38,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} cmake --install build'''
 
+[[output]]
+runtime_deps = ['pcre2']

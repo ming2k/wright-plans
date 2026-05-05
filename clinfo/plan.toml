@@ -6,7 +6,7 @@ license = "CC0-1.0"
 arch = "x86_64"
 url = "https://github.com/Oblomov/clinfo"
 
-link_deps = ['glibc:default', 'ocl-icd:default']
+link_deps = ['glibc', 'ocl-icd']
 
 [[sources]]
 type = "http"
@@ -23,5 +23,5 @@ script = '''
 cd clinfo-${VERSION}
 make DESTDIR=${STAGING_DIR} PREFIX=/usr MANDIR=/usr/share/man install'''
 
-[output]
-runtime_deps = ['glibc:default', 'ocl-icd:default']
+[[output]]
+runtime_deps = ['glibc', 'ocl-icd']

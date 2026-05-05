@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://swig.org"
 
-link_deps = ['pcre2:default', 'zlib:default']
+link_deps = ['pcre2', 'zlib']
 
 [[sources]]
 type = "http"
@@ -35,3 +35,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['pcre2', 'zlib']

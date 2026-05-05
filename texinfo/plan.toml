@@ -34,5 +34,5 @@ cd source
 make DESTDIR=${STAGING_DIR} install
 make DESTDIR=${STAGING_DIR} TEXMF=/usr/share/texmf install-tex'''
 
-[output]
-runtime_deps = ['perl:default']
+[[output]]
+runtime_deps = ['perl']

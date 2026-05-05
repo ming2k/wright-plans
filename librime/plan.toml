@@ -6,7 +6,8 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/rime/librime"
 
-link_deps = ['boost:default', 'google-glog:default', 'leveldb:default', 'lua:default', 'marisa:default', 'opencc:default', 'yaml-cpp:default']
+link_deps = ['boost', 'google-glog', 'leveldb', 'lua', 'marisa', 'opencc', 'yaml-cpp']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -33,3 +34,5 @@ ninja -C ${WORKDIR}/build -j$(nproc)'''
 script = '''
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['boost', 'google-glog', 'leveldb', 'lua', 'marisa', 'opencc', 'yaml-cpp']

@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/inotify-tools/inotify-tools"
 
-link_deps = ['glibc:default']
+link_deps = ['glibc']
+build_deps = ['autoconf', 'automake', 'libtool', 'doxygen']
 
 [[sources]]
 type = "http"
@@ -34,5 +35,5 @@ script = '''
 cd source/inotify-tools-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['glibc:default']
+[[output]]
+runtime_deps = ['glibc']

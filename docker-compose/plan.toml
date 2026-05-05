@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/docker/compose"
 
 
+build_deps = ['go']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -34,5 +36,5 @@ install -Dm755 docker-compose ${STAGING_DIR}/usr/bin/docker-compose
 install -dm755 ${STAGING_DIR}/usr/lib/docker/cli-plugins
 ln -s /usr/bin/docker-compose ${STAGING_DIR}/usr/lib/docker/cli-plugins/docker-compose'''
 
-[output]
-runtime_deps = ['podman:default']
+[[output]]
+runtime_deps = ['podman']

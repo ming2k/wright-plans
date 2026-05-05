@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://pipewire.org"
 
-link_deps = ['alsa-lib:default', 'bluez:default', 'dbus:default', 'glib:default', 'gstreamer:default', 'libcamera:default', 'libsndfile:default', 'ncurses:default', 'opus:default', 'readline:default', 'sbc:default', 'systemd:default', 'v4l-utils:default']
+link_deps = ['alsa-lib', 'bluez', 'dbus', 'glib', 'gstreamer', 'libcamera', 'libsndfile', 'ncurses', 'opus', 'readline', 'sbc', 'systemd', 'v4l-utils']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -58,3 +59,5 @@ systemd-tmpfiles --create /usr/lib/tmpfiles.d/pipewire.conf 2>/dev/null || true
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 
+[[output]]
+runtime_deps = ['alsa-lib', 'bluez', 'dbus', 'glib', 'gstreamer', 'libcamera', 'libsndfile', 'ncurses', 'opus', 'readline', 'sbc', 'systemd', 'v4l-utils']

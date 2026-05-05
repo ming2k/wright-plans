@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://qalculate.github.io/"
 
-link_deps = ['curl:default', 'gettext:default', 'gmp:default', 'icu:default', 'libxml2:default', 'mpfr:default', 'readline:default']
+link_deps = ['curl', 'gettext', 'gmp', 'icu', 'libxml2', 'mpfr', 'readline']
 
 [[sources]]
 type = "http"
@@ -41,5 +41,5 @@ make DESTDIR=${STAGING_DIR} install'''
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
 
-[output]
-runtime_deps = ['curl:default', 'gettext:default', 'gmp:default', 'icu:default', 'libxml2:default', 'mpfr:default', 'readline:default']
+[[output]]
+runtime_deps = ['curl', 'gettext', 'gmp', 'icu', 'libxml2', 'mpfr', 'readline']

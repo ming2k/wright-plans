@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/ming2k/prudence"
 
 
+build_deps = ['rust']
+
 [[sources]]
 type = "http"
 sha256 = "eb16564fda7542cbc10a007f842a6ac4f4097210155a629d1757f9e1f31d58ea"

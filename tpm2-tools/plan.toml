@@ -6,7 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/tpm2-software/tpm2-tools"
 
-link_deps = ['curl:default', 'glibc:default', 'openssl:default', 'tpm2-tss:default']
+link_deps = ['curl', 'glibc', 'openssl', 'tpm2-tss']
 
 [[sources]]
 type = "http"
@@ -31,5 +31,5 @@ script = '''
 cd source
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['tpm2-tss:default']
+[[output]]
+runtime_deps = ['tpm2-tss', 'curl', 'glibc', 'openssl']

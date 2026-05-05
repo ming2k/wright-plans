@@ -6,7 +6,7 @@ license = "custom"
 arch = "x86_64"
 url = "https://github.com/warpdotdev/warp"
 
-link_deps = ['alsa-lib:default', 'glibc:default', 'xz:default', 'zlib:default']
+link_deps = ['alsa-lib', 'glibc', 'xz', 'zlib']
 
 [[sources]]
 type = "http"
@@ -48,7 +48,8 @@ install -Dm644 opt/warpdotdev/warp-terminal/resources/THIRD_PARTY_LICENSES.txt \
 rm -rf ${STAGING_DIR}/usr/src
 '''
 
-[output]
+[[output]]
+runtime_deps = ['alsa-lib', 'glibc', 'xz', 'zlib']
 provides = ["warp"]
 conflicts = ["warp"]
 

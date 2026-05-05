@@ -44,13 +44,11 @@ if [ -d ${STAGING_DIR}/usr/sbin ]; then
   rm -rf ${STAGING_DIR}/usr/sbin
 fi'''
 
-[output]
+[[output]]
+runtime_deps = ['systemd']
 backup = ["/etc/default/sysstat"]
 
 [hooks]
 post_install = "systemctl enable --now sysstat 2>/dev/null || true"
 post_upgrade = "systemctl try-restart sysstat 2>/dev/null || true"
 pre_remove = "systemctl disable --now sysstat 2>/dev/null || true"
-
-[output]
-runtime_deps = ['systemd:default']

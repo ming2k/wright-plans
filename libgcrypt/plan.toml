@@ -6,7 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gnupg.org/software/libgcrypt/"
 
-link_deps = ['libgpg-error:default']
+link_deps = ['libgpg-error']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} make install'''
 
+[[output]]
+runtime_deps = ['libgpg-error']

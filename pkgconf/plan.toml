@@ -15,21 +15,20 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/pkgconf-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/pkgconf-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/pkgconf-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 ln -sf pkgconf ${STAGING_DIR}/usr/bin/pkg-config'''
 
-[output]
+[[output]]
 provides = ["pkg-config"]
 conflicts = ["pkg-config"]
-

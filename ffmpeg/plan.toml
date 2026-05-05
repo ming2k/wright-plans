@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://ffmpeg.org"
 
-link_deps = ['alsa-lib:default', 'aom:default', 'dav1d:default', 'freetype:default', 'gnutls:default', 'lame:default', 'libass:default', 'libdrm:default', 'libglvnd:default', 'libplacebo:default', 'libsndfile:default', 'libtheora:default', 'libva:default', 'libvorbis:default', 'libvpx:default', 'libwebp:default', 'libxml2:default', 'mesa:default', 'openjpeg:default', 'opus:default', 'pipewire:default', 'sdl2:default', 'srt:default', 'svt-av1:default', 'vulkan-loader:default', 'x264:default', 'x265:default', 'zlib:default', 'bzip2:default', 'lz4:default', 'zstd:default']
+link_deps = ['alsa-lib', 'aom', 'dav1d', 'freetype', 'gnutls', 'lame', 'libass', 'libdrm', 'libglvnd', 'libplacebo', 'libsndfile', 'libtheora', 'libva', 'libvorbis', 'libvpx', 'libwebp', 'libxml2', 'mesa', 'openjpeg', 'opus', 'pipewire', 'sdl2', 'srt', 'svt-av1', 'vulkan-loader', 'x264', 'x265', 'zlib', 'bzip2', 'lz4', 'zstd']
+build_deps = ['pkgconf']
 
 [[sources]]
 type = "http"
@@ -77,5 +78,5 @@ make DESTDIR=${STAGING_DIR} install
 
 test -x ${STAGING_DIR}/usr/bin/ffplay'''
 
-[output]
-runtime_deps = ['alsa-lib:default', 'aom:default', 'dav1d:default', 'freetype:default', 'gnutls:default', 'lame:default', 'libass:default', 'libdrm:default', 'libglvnd:default', 'libplacebo:default', 'libsndfile:default', 'libtheora:default', 'libva:default', 'libvorbis:default', 'libvpx:default', 'libwebp:default', 'libxml2:default', 'mesa:default', 'openjpeg:default', 'opus:default', 'pipewire:default', 'sdl2:default', 'srt:default', 'svt-av1:default', 'vulkan-loader:default', 'x264:default', 'x265:default', 'zlib:default', 'bzip2:default', 'lz4:default', 'zstd:default']
+[[output]]
+runtime_deps = ['alsa-lib', 'aom', 'dav1d', 'freetype', 'gnutls', 'lame', 'libass', 'libdrm', 'libglvnd', 'libplacebo', 'libsndfile', 'libtheora', 'libva', 'libvorbis', 'libvpx', 'libwebp', 'libxml2', 'mesa', 'openjpeg', 'opus', 'pipewire', 'sdl2', 'srt', 'svt-av1', 'vulkan-loader', 'x264', 'x265', 'zlib', 'bzip2', 'lz4', 'zstd']

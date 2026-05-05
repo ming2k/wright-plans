@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://www.iana.org/protocols"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 sha256 = "7c799c0ac86672b1e3573333b0485b04b3e5fdb4a7a3232f85ee7d8df207f795"

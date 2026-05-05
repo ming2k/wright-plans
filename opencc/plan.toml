@@ -6,7 +6,8 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/BYVoid/OpenCC"
 
-link_deps = ['marisa:default']
+link_deps = ['marisa']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -34,3 +35,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['marisa']

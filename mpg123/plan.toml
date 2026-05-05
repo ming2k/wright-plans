@@ -6,7 +6,7 @@ license = "LGPL-2.1-only"
 arch = "x86_64"
 url = "https://www.mpg123.org/"
 
-link_deps = ['alsa-lib:default']
+link_deps = ['alsa-lib']
 
 [[sources]]
 type = "http"
@@ -33,3 +33,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['alsa-lib']

@@ -6,7 +6,7 @@ license = "ISC"
 arch = "x86_64"
 url = "https://github.com/tmux/tmux/wiki"
 
-link_deps = ['libevent:default', 'ncurses:default', 'systemd:default']
+link_deps = ['libevent', 'ncurses', 'systemd']
 
 [[sources]]
 type = "http"
@@ -31,3 +31,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['libevent', 'ncurses', 'systemd']

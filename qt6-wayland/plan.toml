@@ -6,7 +6,8 @@ license = "LGPL-3.0-only"
 arch = "x86_64"
 url = "https://www.qt.io"
 
-link_deps = ['wayland:default', 'qt6-base:default', 'qt6-declarative:default']
+link_deps = ['wayland', 'qt6-base', 'qt6-declarative']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -29,3 +30,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
+[[output]]
+runtime_deps = ['wayland', 'qt6-base', 'qt6-declarative']

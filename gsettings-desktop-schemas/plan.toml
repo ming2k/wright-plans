@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas"
 
 
+build_deps = ['meson', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"

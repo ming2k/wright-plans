@@ -15,16 +15,15 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-./configure --prefix=/usr'''
+cd source/autoconf-${VERSION}
+CONFIG_SHELL=/usr/bin/bash SHELL=/usr/bin/bash /usr/bin/bash ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
-make -j$(nproc)'''
+cd source/autoconf-${VERSION}
+make SHELL=/usr/bin/bash -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-make DESTDIR=${STAGING_DIR} install'''
-
+cd source/autoconf-${VERSION}
+make SHELL=/usr/bin/bash DESTDIR=${STAGING_DIR} install'''

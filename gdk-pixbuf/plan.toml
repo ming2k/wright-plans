@@ -5,7 +5,8 @@ description = "GNOME image loading library (Modern Glycin Enabled)"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-link_deps = ['glib:default', 'libjpeg-turbo:default', 'libpng:default', 'libtiff:default', 'shared-mime-info:default']
+link_deps = ['glib', 'libjpeg-turbo', 'libpng', 'libtiff', 'shared-mime-info']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -32,5 +33,5 @@ meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
 post_install = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 post_upgrade = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
 
-[output]
-runtime_deps = ['glycin:default']
+[[output]]
+runtime_deps = ['glycin', 'glib', 'libjpeg-turbo', 'libpng', 'libtiff', 'shared-mime-info']

@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://mkvtoolnix.download/"
 
-link_deps = ['boost:default', 'cmark:default', 'flac:default', 'fmt:default', 'libebml:default', 'libmatroska:default', 'libogg:default', 'libvorbis:default', 'nlohmann-json:default', 'zlib:default']
+link_deps = ['boost', 'cmark', 'flac', 'fmt', 'libebml', 'libmatroska', 'libogg', 'libvorbis', 'nlohmann-json', 'zlib']
 
 [[sources]]
 type = "http"
@@ -35,3 +35,5 @@ rake DESTDIR=${STAGING_DIR} install
 # Remove icon directory as MKVToolNix Rakefile installs icons unconditionally even when GUI is disabled
 rm -rf ${STAGING_DIR}/usr/share/icons'''
 
+[[output]]
+runtime_deps = ['boost', 'cmark', 'flac', 'fmt', 'libebml', 'libmatroska', 'libogg', 'libvorbis', 'nlohmann-json', 'zlib']

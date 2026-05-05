@@ -1,4 +1,4 @@
-link_deps = ['glib:default', 'libjpeg-turbo:default', 'libpng:default', 'libtiff:default', 'shared-mime-info:default']
+link_deps = ['glib', 'libjpeg-turbo', 'libpng', 'libtiff', 'shared-mime-info']
 
 [lifecycle.configure]
 script = '''

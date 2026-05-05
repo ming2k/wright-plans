@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/intel/libva-utils"
 
-link_deps = ['libdrm:default', 'libva:default', 'wayland:default']
+link_deps = ['libdrm', 'libva', 'wayland']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -32,5 +33,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
-[output]
-runtime_deps = ['libdrm:default', 'libva:default', 'wayland:default']
+[[output]]
+runtime_deps = ['libdrm', 'libva', 'wayland']

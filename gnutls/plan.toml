@@ -6,7 +6,7 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.gnutls.org/"
 
-link_deps = ['libunistring:default']
+link_deps = ['libunistring']
 
 [[sources]]
 type = "http"
@@ -31,5 +31,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['libtasn1:default', 'nettle:default', 'p11-kit:default']
+[[output]]
+runtime_deps = ['libtasn1', 'nettle', 'p11-kit', 'libunistring']

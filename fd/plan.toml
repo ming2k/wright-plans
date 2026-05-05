@@ -6,7 +6,8 @@ license = "Apache-2.0 OR MIT"
 arch = "x86_64"
 url = "https://github.com/sharkdp/fd"
 
-link_deps = ['gcc:default', 'glibc:default']
+link_deps = ['gcc:gcc-libs', 'glibc']
+build_deps = ['rust']
 
 [[sources]]
 type = "http"
@@ -34,3 +35,5 @@ if [ -d completions ]; then
   install -Dm644 completions/fd.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/fd.fish || true
 fi'''
 
+[[output]]
+runtime_deps = ['gcc:gcc-libs', 'glibc']

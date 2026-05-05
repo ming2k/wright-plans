@@ -6,7 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/stefanberger/swtpm"
 
-link_deps = ['glib:default', 'gmp:default', 'json-glib:default', 'libtpms:default', 'openssl:default']
+link_deps = ['glib', 'gmp', 'json-glib', 'libtpms', 'openssl']
 
 [[sources]]
 type = "http"
@@ -29,5 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['libtpms:default']
+[[output]]
+runtime_deps = ['libtpms', 'glib', 'gmp', 'json-glib', 'openssl']

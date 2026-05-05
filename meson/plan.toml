@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://mesonbuild.com/"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -15,13 +17,13 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/meson-${VERSION}
 python3 setup.py build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/meson-${VERSION}
 python3 setup.py install --root=${STAGING_DIR} --prefix=/usr --optimize=1'''
 
-[output]
-runtime_deps = ['python:default', 'ninja:default']
+[[output]]
+runtime_deps = ['python', 'ninja']

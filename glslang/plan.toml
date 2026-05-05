@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/KhronosGroup/glslang"
 
 
+build_deps = ['cmake']
+
 [[sources]]
 type = "http"
 sha256 = "01985335785c97906a91afe3cb5ee015997696181ec6c125bab5555602ba08e2"

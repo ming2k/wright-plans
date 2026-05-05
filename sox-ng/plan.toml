@@ -6,7 +6,8 @@ license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://codeberg.org/sox_ng/sox_ng"
 
-link_deps = ['alsa-lib:default', 'ffmpeg:default', 'libpng:default', 'libsndfile:default', 'libvorbis:default', 'libogg:default', 'zlib:default']
+link_deps = ['alsa-lib', 'ffmpeg', 'libpng', 'libsndfile', 'libvorbis', 'libogg', 'zlib']
+build_deps = ['autoconf', 'automake', 'libtool']
 
 [[sources]]
 type = "http"
@@ -44,3 +45,5 @@ script = '''
 cd source
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['alsa-lib', 'ffmpeg', 'libpng', 'libsndfile', 'libvorbis', 'libogg', 'zlib']

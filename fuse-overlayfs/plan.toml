@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/containers/fuse-overlayfs"
 
-link_deps = ['glibc:default', 'libfuse3:default']
+link_deps = ['glibc', 'libfuse3']
+build_deps = ['autoconf', 'automake', 'libtool']
 
 [[sources]]
 type = "http"
@@ -39,5 +40,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['glibc:default', 'libfuse3:default']
+[[output]]
+runtime_deps = ['glibc', 'libfuse3']

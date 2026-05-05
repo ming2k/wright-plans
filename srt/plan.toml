@@ -6,7 +6,8 @@ license = "MPL-2.0"
 arch = "x86_64"
 url = "https://github.com/Haivision/srt"
 
-link_deps = ['openssl:default']
+link_deps = ['openssl']
+build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
@@ -36,3 +37,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['openssl']

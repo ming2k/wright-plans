@@ -56,5 +56,5 @@ install -m 0644 ${WORKDIR}/shells     ${STAGING_DIR}/etc/shells
 install -m 0644 ${WORKDIR}/profile    ${STAGING_DIR}/etc/profile
 install -d -m 0755 ${STAGING_DIR}/etc/profile.d'''
 
-[output]
+[[output]]
 backup = ["/etc/shells", "/etc/profile"]

@@ -6,7 +6,7 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.com/cryptsetup/cryptsetup"
 
-link_deps = ['glibc:default', 'json-c:default', 'openssl:default', 'popt:default', 'util-linux:default']
+link_deps = ['glibc', 'json-c', 'openssl', 'popt', 'util-linux']
 
 [[sources]]
 type = "http"
@@ -29,5 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
 
-[output]
-runtime_deps = ['lvm2:default']
+[[output]]
+runtime_deps = ['lvm2', 'glibc', 'json-c', 'openssl', 'popt', 'util-linux']

@@ -6,7 +6,8 @@ license = "AFL-2.1 OR GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/dbus/"
 
-link_deps = ['expat:default', 'systemd:default', 'glibc:default']
+link_deps = ['expat', 'systemd', 'glibc']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -58,6 +59,7 @@ chmod 4750 ${STAGING_DIR}/usr/libexec/dbus-daemon-launch-helper'''
 [[output]]
 name = "libdbus"
 description = "D-Bus low-level shared library"
+runtime_deps = ['expat', 'glibc']
 include = [
     "/usr/lib/libdbus-1\\.so.*",
     "/usr/lib/libdbus-1\\.a",
@@ -68,17 +70,16 @@ include = [
 
 [[output]]
 name = "dbus"
+runtime_deps = ['dbus:libdbus', 'systemd', 'glibc']
 # catch-all — daemon, configs, tools, etc.
-
-[hooks]
-post_install = '''
+hooks.post_install = '''
 if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
     chown root:messagebus /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
     chmod 4750 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
 fi
 
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
     chown root:messagebus /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
     chmod 4750 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true

@@ -1,12 +1,13 @@
 name = "llvm"
 version = "22.1.4"
-release = 1
+release = 3
 description = "The LLVM Compiler Infrastructure"
 license = "Apache-2.0-with-LLVM-exception"
 arch = "x86_64"
 url = "https://llvm.org"
 
-link_deps = ['libedit:default', 'libffi:default', 'libxml2:default', 'zlib:default', 'zstd:default', 'glibc:default']
+build_deps = ['cmake', 'ninja', 'python', 'ccache']
+link_deps = ['libedit', 'libffi', 'libxml2', 'zlib', 'zstd', 'glibc']
 
 [[sources]]
 type = "http"
@@ -17,7 +18,30 @@ extract_to = "source"
 [lifecycle.configure]
 script = '''
 cd source/llvm-project-${VERSION}.src/llvm
-cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_SKIP_INSTALL_RPATH=ON -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld" -DLLVM_ENABLE_RUNTIMES="compiler-rt" -DLLVM_TARGETS_TO_BUILD="X86" -DLLVM_BUILD_LLVM_DYLIB=ON -DLLVM_LINK_LLVM_DYLIB=ON -DLLVM_ENABLE_RTTI=ON -DLLVM_ENABLE_FFI=ON -DLLVM_ENABLE_ZLIB=ON -DLLVM_ENABLE_ZSTD=ON -DLLVM_ENABLE_LIBEDIT=ON -DLLVM_BINUTILS_INCDIR=/usr/include -DCLANG_DEFAULT_PIE_ON_LINUX=ON -DCLANG_LINK_CLANG_DYLIB=ON -DLLVM_INCLUDE_TESTS=OFF -DLLVM_INCLUDE_EXAMPLES=OFF -DLLVM_ENABLE_ASSERTIONS=OFF -DLLVM_ENABLE_BINDINGS=OFF'''
+cmake -B build -G Ninja \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_C_COMPILER_LAUNCHER=ccache \
+  -DCMAKE_CXX_COMPILER_LAUNCHER=ccache \
+  -DCMAKE_SKIP_INSTALL_RPATH=ON \
+  -DLLVM_ENABLE_PROJECTS="clang;clang-tools-extra;lld" \
+  -DLLVM_ENABLE_RUNTIMES="compiler-rt" \
+  -DLLVM_TARGETS_TO_BUILD="X86" \
+  -DLLVM_BUILD_LLVM_DYLIB=ON \
+  -DLLVM_LINK_LLVM_DYLIB=ON \
+  -DLLVM_ENABLE_RTTI=ON \
+  -DLLVM_ENABLE_FFI=ON \
+  -DLLVM_ENABLE_ZLIB=ON \
+  -DLLVM_ENABLE_ZSTD=ON \
+  -DLLVM_ENABLE_LIBEDIT=ON \
+  -DLLVM_BINUTILS_INCDIR=/usr/include \
+  -DCLANG_DEFAULT_PIE_ON_LINUX=ON \
+  -DCLANG_LINK_CLANG_DYLIB=ON \
+  -DLLVM_INCLUDE_TESTS=OFF \
+  -DLLVM_INCLUDE_EXAMPLES=OFF \
+  -DLLVM_ENABLE_ASSERTIONS=OFF \
+  -DLLVM_ENABLE_BINDINGS=OFF \
+  -DLLVM_OPTIMIZED_TABLEGEN=ON'''
 
 [lifecycle.compile]
 script = '''
@@ -30,13 +54,25 @@ cd source/llvm-project-${VERSION}.src/llvm
 DESTDIR=${STAGING_DIR} ninja -C build install
 '''
 
-# LLVM outputs: libs + clang + lld + clangd
-# Note: no catch-all; unclaimed files (e.g. llvm-as, opt, llc, headers) are discarded.
+# LLVM outputs: libs + clang + lld + clangd.
+# Keep each CMake package self-consistent: LLVM/Clang/LLD targets import
+# component archives and command-line tools even when shared dylibs are built.
 
 [[output]]
 name = "llvm-libs"
 description = "LLVM shared libraries"
 include = [
+    "/usr/bin/bugpoint",
+    "/usr/bin/dsymutil",
+    "/usr/bin/llc",
+    "/usr/bin/lli",
+    "/usr/bin/llvm-.*",
+    "/usr/bin/opt",
+    "/usr/bin/reduce-chunk-list",
+    "/usr/bin/sancov",
+    "/usr/bin/sanstats",
+    "/usr/bin/verify-uselistorder",
+    "/usr/lib/libLLVM.*\\.a",
     "/usr/lib/libLLVM.*\\.so.*",
     "/usr/lib/libclang\\.so.*",
     "/usr/lib/libclang-cpp\\.so.*",
@@ -44,51 +80,71 @@ include = [
     "/usr/lib/libLTO\\.so.*",
     "/usr/lib/libRemarks\\.so.*",
     "/usr/lib/LLVMgold\\.so",
+    "/usr/lib/cmake/llvm/.*",
+    "/usr/lib/cmake/mlir/.*",
+    "/usr/include/llvm/.*",
+    "/usr/include/llvm-c/.*",
+    "/usr/include/mlir/.*",
+    "/usr/share/opt-viewer/.*",
 ]
-runtime_deps = ['glibc:default', 'libffi:default', 'libedit:default', 'ncurses:default', 'zlib:default', 'zstd:default']
+runtime_deps = ['glibc', 'libffi', 'libedit', 'ncurses', 'zlib', 'zstd']
 
 [[output]]
 name = "clang"
 description = "C/C++/ObjC compiler frontend for LLVM"
 include = [
-    "/usr/bin/clang",
-    "/usr/bin/clang-[0-9]+",
+    "/usr/bin/amdgpu-arch",
+    "/usr/bin/clang.*",
     "/usr/bin/clang\\+\\+",
-    "/usr/bin/clang-cl",
-    "/usr/bin/clang-cpp",
-    "/usr/bin/clang-format",
-    "/usr/bin/clang-tidy",
-    "/usr/bin/clang-check",
+    "/usr/bin/diagtool",
+    "/usr/bin/find-all-symbols",
+    "/usr/bin/modularize",
+    "/usr/bin/offload-arch",
+    "/usr/bin/pp-trace",
+    "/usr/bin/hmaptool",
+    "/usr/bin/nvptx-arch",
     "/usr/bin/run-clang-tidy",
     "/usr/bin/git-clang-format",
-    "/usr/bin/clang-apply-replacements",
     "/usr/bin/scan-build",
     "/usr/bin/scan-view",
     "/usr/bin/analyze-build",
     "/usr/bin/intercept-build",
+    "/usr/include/clang/.*",
+    "/usr/include/clang-c/.*",
+    "/usr/include/clang-tidy/.*",
     "/usr/lib/clang/.*",
     "/usr/lib/cmake/clang/.*",
+    "/usr/lib/libclang.*\\.a",
+    "/usr/lib/libfindAllSymbols\\.a",
+    "/usr/lib/libear/.*",
     "/usr/lib/libscanbuild/.*",
+    "/usr/libexec/analyze-c\\+\\+",
+    "/usr/libexec/analyze-cc",
+    "/usr/libexec/c\\+\\+-analyzer",
+    "/usr/libexec/ccc-analyzer",
+    "/usr/libexec/intercept-c\\+\\+",
+    "/usr/libexec/intercept-cc",
     "/usr/share/clang/.*",
+    "/usr/share/clang-doc/.*",
     "/usr/share/scan-build/.*",
     "/usr/share/scan-view/.*",
     "/usr/share/man/man1/scan-build\\.1",
 ]
-runtime_deps = ['llvm-libs:default']
+runtime_deps = ['llvm:llvm-libs']
 
 [[output]]
 name = "lld"
 description = "LLVM linker"
 include = [
-    "/usr/bin/lld",
-    "/usr/bin/lld-[0-9]+",
+    "/usr/bin/lld.*",
     "/usr/bin/ld\\.lld",
     "/usr/bin/ld64\\.lld",
-    "/usr/bin/lld-link",
     "/usr/bin/wasm-ld",
+    "/usr/include/lld/.*",
     "/usr/lib/cmake/lld/.*",
+    "/usr/lib/liblld.*\\.a",
 ]
-runtime_deps = ['llvm-libs:default']
+runtime_deps = ['llvm:llvm-libs']
 
 [[output]]
 name = "clangd"
@@ -96,5 +152,4 @@ description = "Language server protocol implementation for C/C++"
 include = [
     "/usr/bin/clangd",
 ]
-runtime_deps = ['clang:default', 'llvm-libs:default']
-
+runtime_deps = ['llvm:clang', 'llvm:llvm-libs']

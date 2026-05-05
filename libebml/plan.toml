@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://www.matroska.org/"
 
 
+build_deps = ['cmake', 'ninja']
+
 [[sources]]
 type = "http"
 sha256 = "4971640b0592da29c2d426f303e137a9b0b3d07e1b81d069c1e56a2f49ab221b"

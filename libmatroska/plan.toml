@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.matroska.org/"
 
-link_deps = ['libebml:default']
+link_deps = ['libebml']
+build_deps = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
@@ -34,3 +35,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build'''
 
+[[output]]
+runtime_deps = ['libebml']

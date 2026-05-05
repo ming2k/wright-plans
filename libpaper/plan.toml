@@ -44,6 +44,6 @@ install -dm755 ${STAGING_DIR}/etc
 echo '# Simply write the paper name. See man 1 paper and "paper --no-size --all" for possible values' > ${STAGING_DIR}/etc/papersize
 install -dm755 ${STAGING_DIR}/etc/libpaper.d'''
 
-[output]
+[[output]]
 backup = ["/etc/papersize"]
 

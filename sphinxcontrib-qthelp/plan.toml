@@ -7,6 +7,8 @@ arch = "x86_64"
 url = "https://github.com/sphinx-doc/sphinxcontrib-qthelp"
 
 
+build_deps = ['python']
+
 [[sources]]
 type = "http"
 sha256 = "SKIP"
@@ -18,5 +20,5 @@ script = '''
 cd source
 pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
 
-[output]
-runtime_deps = ['python:default']
+[[output]]
+runtime_deps = ['python']

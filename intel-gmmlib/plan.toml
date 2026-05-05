@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/intel/gmmlib"
 
-link_deps = ['glibc:default']
+link_deps = ['glibc']
+build_deps = ['cmake']
 
 [[sources]]
 type = "http"
@@ -32,3 +33,5 @@ script = '''
 cd source
 make -C ${WORKDIR}/build DESTDIR=${STAGING_DIR} install'''
 
+[[output]]
+runtime_deps = ['glibc']

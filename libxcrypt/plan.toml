@@ -15,25 +15,25 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-./configure --prefix=/usr                \
+cd source/libxcrypt-${VERSION}
+CONFIG_SHELL=/usr/bin/bash /usr/bin/bash ./configure --prefix=/usr \
 --enable-hashes=strong,glibc \
 --enable-obsolete-api=no     \
 --disable-static             \
+--disable-werror             \
 --disable-failure-tokens'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libxcrypt-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/libxcrypt-${VERSION}
 make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libxcrypt-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
-

@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/swaywm/swayidle"
 
-link_deps = ['wayland:default', 'wayland-protocols:default']
+link_deps = ['wayland']
+build_deps = ['wayland-protocols', 'meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,5 +30,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[output]
-runtime_deps = ['systemd:default']
+[[output]]
+runtime_deps = ['systemd', 'wayland']

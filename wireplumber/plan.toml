@@ -6,7 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://pipewire.pages.freedesktop.org/wireplumber/"
 
-link_deps = ['glib:default', 'lua:default', 'pipewire:default', 'systemd:default']
+link_deps = ['glib', 'lua', 'pipewire', 'systemd']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -40,3 +41,5 @@ DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 post_install = "systemctl daemon-reload 2>/dev/null || true"
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 
+[[output]]
+runtime_deps = ['glib', 'lua', 'pipewire', 'systemd']

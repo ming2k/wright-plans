@@ -6,7 +6,7 @@ license = "LGPL-2.1-only"
 arch = "x86_64"
 url = "https://iwd.wiki.kernel.org/"
 
-link_deps = ['readline:default']
+link_deps = ['readline']
 
 [[sources]]
 type = "http"
@@ -46,5 +46,5 @@ systemctl enable iwd.service 2>/dev/null || true
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 
-[output]
-runtime_deps = ['dbus:default', 'ell:default']
+[[output]]
+runtime_deps = ['dbus', 'ell', 'readline']

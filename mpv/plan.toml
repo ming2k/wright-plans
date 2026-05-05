@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://mpv.io"
 
-link_deps = ['alsa-lib:default', 'ffmpeg:default', 'lcms2:default', 'libass:default', 'libdrm:default', 'libplacebo:default', 'libva:default', 'luajit:default', 'mesa:default', 'pipewire:default', 'vulkan-loader:default', 'wayland:default', 'libxkbcommon:default']
+link_deps = ['alsa-lib', 'ffmpeg', 'lcms2', 'libass', 'libdrm', 'libplacebo', 'libva', 'luajit', 'mesa', 'pipewire', 'vulkan-loader', 'wayland', 'libxkbcommon']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -45,3 +46,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
+[[output]]
+runtime_deps = ['alsa-lib', 'ffmpeg', 'lcms2', 'libass', 'libdrm', 'libplacebo', 'libva', 'luajit', 'mesa', 'pipewire', 'vulkan-loader', 'wayland', 'libxkbcommon']

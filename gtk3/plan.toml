@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.gtk.org"
 
-link_deps = ['at-spi2-core:default', 'glib:default', 'pango:default', 'cairo:default', 'gdk-pixbuf:default', 'libepoxy:default', 'libxkbcommon:default', 'wayland:default']
+link_deps = ['at-spi2-core', 'glib', 'pango', 'cairo', 'gdk-pixbuf', 'libepoxy', 'libxkbcommon', 'wayland']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -43,5 +44,5 @@ gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 
 '''
 
-[output]
-runtime_deps = ['adwaita-icon-theme:default', 'shared-mime-info:default', 'iso-codes:default']
+[[output]]
+runtime_deps = ['adwaita-icon-theme', 'shared-mime-info', 'iso-codes', 'at-spi2-core', 'glib', 'pango', 'cairo', 'gdk-pixbuf', 'libepoxy', 'libxkbcommon', 'wayland']

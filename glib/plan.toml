@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.gtk.org/"
 
-link_deps = ['libffi:default', 'pcre2:default']
+link_deps = ['libffi', 'pcre2']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -29,3 +30,5 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
 
+[[output]]
+runtime_deps = ['libffi', 'pcre2']

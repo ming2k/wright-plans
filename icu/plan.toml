@@ -1,5 +1,5 @@
 name = "icu"
-version = "78.2"
+version = "78.3"
 release = 1
 description = "International Components for Unicode"
 license = "ICU"
@@ -8,23 +8,22 @@ arch = "x86_64"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://github.com/unicode-org/icu/releases/download/release-78.2/icu4c-78.2-sources.tgz"
+sha256 = "3a2e7a47604ba702f345878308e6fefeca612ee895cf4a5f222e7955fabfe0c0"
+url = "https://github.com/unicode-org/icu/releases/download/release-78.3/icu4c-78.3-sources.tgz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
 # ICU 的源码位于解压后的 source 子目录中
-cd source/source
+cd source/icu/source
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static --enable-tests=no --enable-samples=no'''
 
 [lifecycle.compile]
 script = '''
-cd source/source
+cd source/icu/source
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/source
+cd source/icu/source
 make DESTDIR=${STAGING_DIR} install'''
-

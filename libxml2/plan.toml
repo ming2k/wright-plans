@@ -1,5 +1,5 @@
 name = "libxml2"
-version = "2.15.1"
+version = "2.15.3"
 release = 1
 description = "XML C parser and toolkit"
 license = "MIT"
@@ -7,15 +7,17 @@ arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/libxml2"
 
 
+build_deps = ['meson', 'ninja', 'python']
+
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "78262a6e7ac170d6528ebfe2efccdf220191a5af6a6cd61ea4a9a9a5042c7a07"
 url = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libxml2-${VERSION}
 mkdir -p build && cd build
 meson setup .. --prefix=/usr \
     -D history=enabled \
@@ -25,13 +27,13 @@ meson setup .. --prefix=/usr \
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/libxml2-${VERSION}/build
 ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/libxml2-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
-[output]
-runtime_deps = ['icu:default', 'python:default']
+[[output]]
+runtime_deps = ['icu', 'python']

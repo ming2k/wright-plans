@@ -6,7 +6,8 @@ license = "Apache-2.0 OR MIT"
 arch = "x86_64"
 url = "https://github.com/sharkdp/bat"
 
-link_deps = ['gcc:default', 'glibc:default']
+link_deps = ['gcc:gcc-libs', 'glibc']
+build_deps = ['rust']
 
 [[sources]]
 type = "http"
@@ -41,3 +42,5 @@ sed \
   -e 's/{{PROJECT_EXECUTABLE}}/bat/g' \
   assets/manual/bat.1.in > ${STAGING_DIR}/usr/share/man/man1/bat.1'''
 
+[[output]]
+runtime_deps = ['gcc:gcc-libs', 'glibc']

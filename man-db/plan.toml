@@ -41,5 +41,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''
 
-[output]
-runtime_deps = ['gdbm:default', 'groff:default', 'libpipeline:default']
+[[output]]
+runtime_deps = ['gdbm', 'groff', 'libpipeline']

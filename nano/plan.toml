@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.nano-editor.org/"
 
-link_deps = ['ncurses:default']
+link_deps = ['ncurses']
 
 [[sources]]
 type = "http"
@@ -33,3 +33,5 @@ cd source
 make DESTDIR=${STAGING_DIR} install
 install -v -m644 doc/{nano.html,sample.nanorc} ${STAGING_DIR}/usr/share/doc/nano-${VERSION}'''
 
+[[output]]
+runtime_deps = ['ncurses']

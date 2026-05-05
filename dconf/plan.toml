@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/dconf"
 
-link_deps = ['glib:default']
+link_deps = ['glib']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -41,5 +42,5 @@ chgrp dconf /etc/dconf/profile
 
 '''
 
-[output]
-runtime_deps = ['dbus:default']
+[[output]]
+runtime_deps = ['dbus', 'glib']

@@ -1,5 +1,5 @@
 name = "expat"
-version = "2.7.3"
+version = "2.8.0"
 release = 1
 description = "Stream oriented C library for parsing XML"
 license = "MIT"
@@ -9,25 +9,24 @@ url = "https://libexpat.github.io/"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://github.com/libexpat/libexpat/releases/download/R_2_7_3/expat-${VERSION}.tar.xz"
+sha256 = "a37bfae0aa9775bd8521ebd85dc456d486f0ff31138f6c91fd902ea732624542"
+url = "https://github.com/libexpat/libexpat/releases/download/R_2_8_0/expat-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-./configure --prefix=/usr    \
+cd source/expat-${VERSION}
+CONFIG_SHELL=/usr/bin/bash /usr/bin/bash ./configure --prefix=/usr \
 --disable-static \
 --docdir=/usr/share/doc/expat-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/expat-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/expat-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 install -v -m644 doc/*.{html,css} ${STAGING_DIR}/usr/share/doc/expat-${VERSION}'''
-

@@ -6,7 +6,7 @@ license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://xfs.wiki.kernel.org"
 
-link_deps = ['util-linux:default', 'icu:default', 'inih:default']
+link_deps = ['util-linux', 'icu', 'inih']
 
 [[sources]]
 type = "http"
@@ -29,3 +29,5 @@ script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
 
+[[output]]
+runtime_deps = ['util-linux', 'icu', 'inih']

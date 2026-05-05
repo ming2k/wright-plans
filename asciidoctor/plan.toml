@@ -82,5 +82,5 @@ install --verbose -D --mode=0644 LICENSE* \
 install --verbose -D --mode=0644 *.adoc \
   --target-directory "${STAGING_DIR}/usr/share/doc/asciidoctor"'''
 
-[output]
-runtime_deps = ['ruby:default']
+[[output]]
+runtime_deps = ['ruby']

@@ -6,7 +6,8 @@ license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.gtk.org"
 
-link_deps = ['glib:default', 'pango:default', 'cairo:default', 'gdk-pixbuf:default', 'libpng:default', 'libjpeg-turbo:default', 'libtiff:default', 'graphene:default', 'libepoxy:default', 'libxkbcommon:default', 'wayland:default', 'vulkan-loader:default']
+link_deps = ['glib', 'pango', 'cairo', 'gdk-pixbuf', 'libpng', 'libjpeg-turbo', 'libtiff', 'graphene', 'libepoxy', 'libxkbcommon', 'wayland', 'vulkan-loader']
+build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
@@ -62,5 +63,5 @@ gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 
 '''
 
-[output]
-runtime_deps = ['adwaita-icon-theme:default', 'shared-mime-info:default', 'iso-codes:default']
+[[output]]
+runtime_deps = ['adwaita-icon-theme', 'shared-mime-info', 'iso-codes', 'glib', 'pango', 'cairo', 'gdk-pixbuf', 'libpng', 'libjpeg-turbo', 'libtiff', 'graphene', 'libepoxy', 'libxkbcommon', 'wayland', 'vulkan-loader']

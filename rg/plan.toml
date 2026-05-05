@@ -6,7 +6,8 @@ license = "MIT OR Unlicense"
 arch = "x86_64"
 url = "https://github.com/BurntSushi/ripgrep"
 
-link_deps = ['gcc:default', 'pcre2:default', 'glibc:default']
+link_deps = ['gcc:gcc-libs', 'pcre2', 'glibc']
+build_deps = ['rust']
 
 [[sources]]
 type = "http"
@@ -35,5 +36,5 @@ if [ -d complete ]; then
   install -Dm644 complete/rg.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/rg.fish || true
 fi'''
 
-[output]
-runtime_deps = ['pcre2:default']
+[[output]]
+runtime_deps = ['pcre2', 'gcc:gcc-libs', 'glibc']
