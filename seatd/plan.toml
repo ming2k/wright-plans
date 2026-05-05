@@ -1,0 +1,42 @@
+name = "seatd"
+version = "0.9.3"
+release = 1
+description = "Seat management library (libseat) with systemd-logind backend"
+license = "MIT"
+arch = "x86_64"
+url = "https://sr.ht/~kennylevinsen/seatd"
+
+link_deps = ['glibc', 'systemd']
+build_deps = ['meson', 'ninja']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://git.sr.ht/~kennylevinsen/seatd/archive/${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source/seatd-${VERSION}
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -D server=disabled \
+    -D libseat-logind=systemd \
+    -D libseat-seatd=disabled \
+    -D libseat-builtin=disabled \
+    -D examples=disabled \
+    -D man-pages=disabled'''
+
+[lifecycle.compile]
+script = '''
+cd source/seatd-${VERSION}
+ninja -C build -j$(nproc)'''
+
+[lifecycle.staging]
+script = '''
+cd source/seatd-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
+
+[[output]]
+runtime_deps = ['glibc', 'systemd']

@@ -38,19 +38,17 @@ script = '''
 cd source/tpm2-tss-${VERSION}
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
-[hooks]
+[[output]]
+runtime_deps = ['systemd', 'curl', 'json-c', 'libtpms', 'libusb', 'openssl', 'util-linux']
+
+[output.hooks]
 post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/tpm2-tss.conf 2>/dev/null || true
 [ -f /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf ] && \
   systemd-tmpfiles --create /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf 2>/dev/null || true
-
 '''
 post_upgrade = '''
 systemd-sysusers /usr/lib/sysusers.d/tpm2-tss.conf 2>/dev/null || true
 [ -f /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf ] && \
   systemd-tmpfiles --create /usr/lib/tmpfiles.d/tpm2-tss-fapi.conf 2>/dev/null || true
-
 '''
-
-[[output]]
-runtime_deps = ['systemd', 'curl', 'json-c', 'libtpms', 'libusb', 'openssl', 'util-linux']
