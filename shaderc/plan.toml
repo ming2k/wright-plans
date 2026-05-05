@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/shaderc-${VERSION}
 
 # De-vendor libs and disable git versioning like Arch's PKGBUILD
 sed '/examples/d;/third_party/d' -i CMakeLists.txt
@@ -34,27 +34,28 @@ BUILDVER_EOF'''
 
 [lifecycle.configure]
 script = '''
-cd source
-cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja \
-  -DCMAKE_INSTALL_PREFIX=/usr \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_CXX_FLAGS="${CXXFLAGS} -ffat-lto-objects" \
-  -DSHADERC_SKIP_TESTS=ON \
-  -DPYTHON_EXECUTABLE=python \
-  -Dglslang_SOURCE_DIR=/usr/include/glslang'''
+cd source/shaderc-${VERSION}
+cmake -B build -S . -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_CXX_FLAGS="${CXXFLAGS} -ffat-lto-objects" \
+    -DSHADERC_SKIP_TESTS=ON \
+    -DPYTHON_EXECUTABLE=python \
+    -Dglslang_SOURCE_DIR=/usr/include/glslang'''
 
 [lifecycle.compile]
 script = '''
-cmake --build ${WORKDIR}/build
+cd source/shaderc-${VERSION}
+cmake --build build
 
-cd source/glslc
+cd glslc
 asciidoctor -b manpage README.asciidoc -o glslc.1'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build
-install -Dm 644 ${WORKDIR}/glslc/glslc.1 ${STAGING_DIR}/usr/share/man/man1/glslc.1
+cd source/shaderc-${VERSION}
+DESTDIR=${STAGING_DIR} cmake --install build
+install -Dm 644 glslc/glslc.1 ${STAGING_DIR}/usr/share/man/man1/glslc.1
 rm -f ${STAGING_DIR}/usr/lib/pkgconfig/shaderc_static.pc'''
 
 [[output]]

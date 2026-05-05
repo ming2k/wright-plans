@@ -21,17 +21,17 @@ ccache = true
 [lifecycle.configure]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/neovim-${VERSION}
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr deps'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/neovim-${VERSION}
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/neovim-${VERSION}
 make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
 [hooks]

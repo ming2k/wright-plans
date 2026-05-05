@@ -1,11 +1,10 @@
 name = "kbd"
-version = "2.8.0"
+version = "2.9.0"
 release = 1
 description = "Key-table files, console fonts, and keyboard utilities"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://kbd-project.org/"
-
 
 [[sources]]
 type = "http"
@@ -13,32 +12,19 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/utils/kbd/kbd-${VERSION}.tar.xz"
 extract_to = "source"
 
-[[sources]]
-type = "http"
-sha256 = "SKIP"
-url = "https://www.linuxfromscratch.org/patches/lfs/12.4/kbd-${VERSION}-backspace-1.patch"
-
-[lifecycle.prepare]
-script = '''
-cd source
-patch -Np1 < ${WORKDIR}/kbd-${VERSION}-backspace-1.patch
-sed -i '/RESIZECONS_PROGS=/s/yes/no/' configure
-sed -i 's/resizecons.8 //' docs/man/man8/Makefile.in'''
-
 [lifecycle.configure]
 script = '''
-cd source
+cd source/kbd-${VERSION}
 ./configure --prefix=/usr --disable-vlock'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/kbd-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/kbd-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 mkdir -p ${STAGING_DIR}/usr/share/doc/kbd-${VERSION}
 cp -R -v docs/doc/* ${STAGING_DIR}/usr/share/doc/kbd-${VERSION}'''
-

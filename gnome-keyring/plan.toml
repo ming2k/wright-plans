@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gnome-keyring-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dsystemd=disabled -Dssh-agent=true'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gnome-keyring-${VERSION}
 meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gnome-keyring-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''
 
 [hooks]

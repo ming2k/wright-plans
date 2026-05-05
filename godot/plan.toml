@@ -1,6 +1,6 @@
 name = "godot"
 version = "4.6.2"
-release = 1
+release = 2
 description = "Multi-platform 2D and 3D game engine (Pure Wayland)"
 license = "MIT"
 arch = "x86_64"
@@ -16,12 +16,12 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/godot-${VERSION}
 patch -p1 < ${PLAN_DIR}/null-compose.patch'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/godot-${VERSION}
 # Pure Wayland build:
 # - wayland=yes x11=no: Forces native Wayland and removes X11 dependency.
 # - libdecor=yes builtin_libdecor=no: Uses system libdecor for window decorations.
@@ -32,7 +32,7 @@ scons platform=linuxbsd target=editor wayland=yes x11=no libdecor=yes builtin_li
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/godot-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/bin
 # Binary name depends on target and arch. 
 # Godot 4.x linuxbsd editor binary is typically named godot.linuxbsd.editor.x86_64

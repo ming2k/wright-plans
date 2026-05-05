@@ -15,19 +15,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gettext-${VERSION}
 ./configure --prefix=/usr    \
             --disable-static \
             --docdir=/usr/share/doc/gettext-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gettext-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gettext-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 chmod -v 0755 ${STAGING_DIR}/usr/lib/preloadable_libintl.so'''
 

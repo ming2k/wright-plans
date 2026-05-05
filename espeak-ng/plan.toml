@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/espeak-ng-${VERSION}
 cmake -B build -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
@@ -29,11 +29,11 @@ cmake -B build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/espeak-ng-${VERSION}
 ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/espeak-ng-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 

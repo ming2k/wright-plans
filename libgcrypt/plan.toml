@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libgcrypt-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libgcrypt-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libgcrypt-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''
 
 [[output]]

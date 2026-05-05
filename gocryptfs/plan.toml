@@ -1,6 +1,6 @@
 name = "gocryptfs"
 version = "2.6.1"
-release = 2
+release = 3
 description = "Encrypted overlay filesystem written in Go"
 license = "MIT"
 arch = "x86_64"
@@ -17,12 +17,12 @@ extract_to = "source"
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source/gocryptfs-*/
+cd source
 CGO_ENABLED=1 ./build.bash'''
 
 [lifecycle.staging]
 script = '''
-cd source/gocryptfs-*/
+cd source
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

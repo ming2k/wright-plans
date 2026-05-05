@@ -18,12 +18,12 @@ extract_to = "source"
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/greetd-${VERSION}
 cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/greetd-${VERSION}
 
 install -Dm755 target/release/greetd ${STAGING_DIR}/usr/bin/greetd
 install -Dm755 target/release/agreety ${STAGING_DIR}/usr/bin/agreety

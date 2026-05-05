@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/mpd-${VERSION}
 meson setup build       \
   --prefix=/usr         \
   --buildtype=plain     \
@@ -52,12 +52,12 @@ meson setup build       \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/mpd-${VERSION}
 ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/mpd-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install
 
 install -vDm644 doc/mpdconf.example \

@@ -1,6 +1,6 @@
 name = "xray"
 version = "26.3.27"
-release = 3
+release = 1
 description = "Platform for building proxies to bypass network restrictions"
 license = "MPL-2.0"
 arch = "x86_64"
@@ -18,7 +18,7 @@ extract_to = "source"
 [lifecycle.prepare]
 isolation = "none"
 script = '''
-cd source
+cd source/xray-${VERSION}
 export PATH=/usr/lib/go/bin:$PATH
 export GOPROXY=https://proxy.golang.org,direct
 export GOMODCACHE=/tmp/go-mod-cache
@@ -28,7 +28,7 @@ go mod vendor'''
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/xray-${VERSION}
 export PATH=/usr/lib/go/bin:$PATH
 export CGO_ENABLED=0
 export GOCACHE=/tmp/go-cache/build
@@ -39,7 +39,7 @@ go build -ldflags "-X github.com/xtls/xray-core.codename=xray -X github.com/xtls
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/xray-${VERSION}
 install -Dm755 xray ${STAGING_DIR}/usr/bin/xray
 install -dm755 ${STAGING_DIR}/etc/xray'''
 
@@ -53,6 +53,5 @@ echo ":: Provide your own service file or launcher as needed"
 echo ":: This plan does not install a systemd unit"
 echo ":: Optional geodata can be installed via v2fly-domain-list-community, v2fly-geoip, or v2ray-rules-dat"
 echo ":: Those plans install to their own /usr/share/<plan-name>/ directories"
-
 '''
 

@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/boost-${VERSION}
 ./bootstrap.sh --with-toolset=gcc --with-icu --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/boost-${VERSION}
 ./b2 variant=release threading=multi link=shared -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/boost-${VERSION}
 ./b2 variant=release threading=multi link=shared \
     --prefix=${STAGING_DIR}/usr install
 

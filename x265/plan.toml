@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/x265_${VERSION}
 # Fix cmake_minimum_required and policies removed in CMake 4.0
 # (equivalent to upstream cherry-picks b354c009, 51ae8e92, 78e5ac35)
 sed -i 's/cmake_minimum_required(VERSION 2\.[^)]*)/cmake_minimum_required(VERSION 3.5)/' source/CMakeLists.txt
@@ -28,7 +28,7 @@ sed -i '/#include <limits>/a #include <cstdint>' source/dynamicHDR10/json11/json
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/x265_${VERSION}
 local_opts="-S source -DCMAKE_INSTALL_PREFIX=/usr -DENABLE_HDR10_PLUS=TRUE -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -Wno-dev"
 
 cmake -B build-10 $local_opts \
@@ -54,7 +54,7 @@ cmake -B build $local_opts \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/x265_${VERSION}
 cmake --build build-10 -- -j$(nproc)
 cmake --build build-12 -- -j$(nproc)
 ln -sr build-10/libx265.a build/libx265_main10.a
@@ -63,6 +63,6 @@ cmake --build build -- -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/x265_${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 

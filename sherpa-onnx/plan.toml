@@ -17,13 +17,13 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/sherpa-onnx-${VERSION}
 sed -i "s|    ./|    lib/pkgconfig|" CMakeLists.txt'''
 
 [lifecycle.configure]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/sherpa-onnx-${VERSION}
 cmake -B build -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
@@ -42,12 +42,12 @@ cmake -B build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/sherpa-onnx-${VERSION}
 ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/sherpa-onnx-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

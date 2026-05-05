@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/level-zero-${VERSION}
 cmake -B build -S level-zero-${VERSION} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=Release'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/level-zero-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/level-zero-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

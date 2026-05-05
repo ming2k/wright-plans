@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/cairo-${VERSION}
 meson setup build \
     --prefix=/usr            \
     --buildtype=release      \
@@ -37,10 +37,10 @@ meson setup build \
     -Dlzo=disabled'''
 
 [lifecycle.compile]
-script = "cd source && meson compile -C build"
+script = "cd source/cairo-${VERSION} && meson compile -C build"
 
 [lifecycle.staging]
-script = "cd source && meson install -C build --destdir ${STAGING_DIR}"
+script = "cd source/cairo-${VERSION} && meson install -C build --destdir ${STAGING_DIR}"
 
 [[output]]
 runtime_deps = ['pixman', 'libpng', 'fontconfig', 'freetype', 'glib', 'zlib']

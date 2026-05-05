@@ -16,13 +16,13 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/bluez-${VERSION}
 # Remove bundled ell to ensure external ell is used exclusively
 rm -rf ell'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/bluez-${VERSION}
 ./configure --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
@@ -43,12 +43,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
-make -j$(nproc) -C ${WORKDIR}'''
+cd source/bluez-${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/bluez-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 
 # Intentionally do not install src/main.conf. bluetoothd has sensible built-in
@@ -57,13 +57,10 @@ make DESTDIR=${STAGING_DIR} install
 # were removed or renamed. Users can place their own /etc/bluetooth/main.conf
 # if they need to override defaults.'''
 
-[hooks]
-post_install = '''
-systemctl daemon-reload 2>/dev/null || true
-systemctl enable bluetooth.service 2>/dev/null || true
-
-'''
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
 [[output]]
 runtime_deps = ['dbus', 'systemd', 'glibc', 'glib', 'ell', 'alsa-lib', 'json-c', 'libical', 'readline']
+hooks.post_install = '''
+systemctl daemon-reload 2>/dev/null || true
+systemctl enable bluetooth.service 2>/dev/null || true
+'''
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

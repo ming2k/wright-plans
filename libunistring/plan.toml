@@ -1,5 +1,5 @@
 name = "libunistring"
-version = "1.4"
+version = "1.4.2"
 release = 1
 description = "Library for manipulating Unicode strings"
 license = "LGPL-3.0-or-later"
@@ -15,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libunistring-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libunistring-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libunistring-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

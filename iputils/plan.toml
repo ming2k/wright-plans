@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/iputils-${VERSION}
 mkdir build
 cd build
 meson setup \
@@ -31,12 +31,12 @@ meson setup \
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/iputils-${VERSION}/build
 ninja'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/iputils-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
 [hooks]

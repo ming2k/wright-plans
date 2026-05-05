@@ -17,20 +17,20 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/alacritty-${VERSION}
 echo "cargo project, no configure step"'''
 
 [lifecycle.compile]
 isolation = "relaxed"
 env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
 script = '''
-cd source
+cd source/alacritty-${VERSION}
 # Wright currently ships a Wayland-only graphics stack, so avoid the default X11 feature.
 cargo build --release --no-default-features --features wayland --locked'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/alacritty-${VERSION}
 
 install -Dm755 target/release/alacritty ${STAGING_DIR}/usr/bin/alacritty
 install -Dm644 extra/logo/alacritty-term.svg ${STAGING_DIR}/usr/share/pixmaps/Alacritty.svg

@@ -17,19 +17,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/usbutils-${VERSION}
 meson setup build \
     --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build -j$(nproc)'''
+cd source/usbutils-${VERSION}
+meson compile -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
+cd source/usbutils-${VERSION}
+DESTDIR=${STAGING_DIR} meson install -C build'''
 
 [[output]]
 runtime_deps = ['hwdata', 'glibc', 'libusb', 'systemd']

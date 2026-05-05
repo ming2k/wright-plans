@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/appstream-${VERSION}
 sanitize_flags() {
     printf "%s" "$1" | sed -E "s/(^|[[:space:]])-I([[:space:]]|$)/ /g; s/[[:space:]]+/ /g; s/^ //; s/ $//"
 }
@@ -34,24 +34,24 @@ meson setup build              \
     -Dcompose=true             \
     -Dgir=true                 \
     -Dinstall-docs=false       \
-    -Dman=true                 \
+    -Dman=false                \
     -Dbash-completion=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/appstream-${VERSION}
 sanitize_flags() {
     printf "%s" "$1" | sed -E "s/(^|[[:space:]])-I([[:space:]]|$)/ /g; s/[[:space:]]+/ /g; s/^ //; s/ $//"
 }
 export CPPFLAGS="$(sanitize_flags "${CPPFLAGS:-}")"
 export CFLAGS="$(sanitize_flags "${CFLAGS:-}")"
 export CXXFLAGS="$(sanitize_flags "${CXXFLAGS:-}")"
-meson compile -C ${WORKDIR}/build'''
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
+cd source/appstream-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}'''
 
 [[output]]
 runtime_deps = ['systemd', 'glib', 'libxml2', 'libxmlb', 'curl', 'libfyaml', 'zstd', 'cairo', 'gdk-pixbuf', 'freetype', 'pango', 'fontconfig', 'librsvg']

@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/xfsprogs-${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/xfsprogs-${VERSION}
 make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/xfsprogs-${VERSION}
 make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
 
 [[output]]

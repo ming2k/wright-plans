@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/xml-parser-${VERSION}
 perl Makefile.PL'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/xml-parser-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/xml-parser-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

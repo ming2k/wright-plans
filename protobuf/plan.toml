@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/protobuf-${VERSION}
 cmake -B ${WORKDIR}/build -S ${WORKDIR} -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
@@ -29,12 +29,12 @@ cmake -B ${WORKDIR}/build -S ${WORKDIR} -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/protobuf-${VERSION}
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/protobuf-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [[output]]

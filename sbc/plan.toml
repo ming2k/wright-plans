@@ -16,19 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/sbc-${VERSION}
 ./configure --prefix=/usr \
     --disable-static \
     --disable-tester'''
 
 [lifecycle.compile]
 script = '''
-cd source
-make -j$(nproc) -C ${WORKDIR}'''
+cd source/sbc-${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/sbc-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

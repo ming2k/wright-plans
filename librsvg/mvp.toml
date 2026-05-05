@@ -1,8 +1,7 @@
 link_deps = ['cairo', 'gdk-pixbuf', 'pango', 'glib', 'libxml2', 'harfbuzz', 'freetype', 'fribidi']
 
 [lifecycle.configure]
-dockyard = "relaxed"
+isolation = "relaxed"
 script = '''
-cd source
+cd source/librsvg-${VERSION}
 meson setup build --prefix=/usr --libdir=lib --buildtype=release -Dintrospection=enabled -Ddocs=disabled -Dtests=false -Dvala=disabled'''
-

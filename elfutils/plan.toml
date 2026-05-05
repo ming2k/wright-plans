@@ -16,19 +16,20 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/elfutils-${VERSION}
+CFLAGS="-Wno-error=discarded-qualifiers" \
 ./configure --prefix=/usr        \
             --disable-debuginfod \
             --enable-libdebuginfod=dummy'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/elfutils-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/elfutils-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 rm -f ${STAGING_DIR}/usr/lib/lib*.a
 rm -rf ${STAGING_DIR}/usr/etc'''

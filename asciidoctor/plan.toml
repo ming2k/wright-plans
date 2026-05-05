@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/asciidoctor-${VERSION}
 
 # Allow newer dependency versions
 sed --in-place --regexp-extended \
@@ -24,7 +24,7 @@ sed --in-place --regexp-extended \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/asciidoctor-${VERSION}
 
 _gemdir=$(gem env gemdir)
 
@@ -67,7 +67,7 @@ find "tmp_install${_gemdir}/extensions/" \
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/asciidoctor-${VERSION}
 
 _gemdir=$(gem env gemdir)
 

@@ -15,18 +15,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/ell-${VERSION}
 ./configure --prefix=/usr \
 --enable-shared \
 --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/ell-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/ell-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

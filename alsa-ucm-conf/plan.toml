@@ -14,17 +14,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/alsa-ucm-conf-${VERSION}
 echo "data-only package"'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/alsa-ucm-conf-${VERSION}
 echo "no build needed"'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/alsa-ucm-conf-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/share/alsa
 cp -a ucm2 ${STAGING_DIR}/usr/share/alsa/ucm2'''
 

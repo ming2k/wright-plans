@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/notmuch-${VERSION}
 set +e
 ./configure --prefix=/usr \
     --without-docs \
@@ -40,12 +40,12 @@ fi'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/notmuch-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/notmuch-${VERSION}
 make DESTDIR=${STAGING_DIR} prefix=/usr install'''
 
 [[output]]

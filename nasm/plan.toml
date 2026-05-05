@@ -13,15 +13,15 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/nasm-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/nasm-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/nasm-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

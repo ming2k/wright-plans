@@ -1,5 +1,5 @@
 name = "sdl3"
-version = "3.4.4"
+version = "3.4.8"
 release = 1
 description = "Simple DirectMedia Layer 3"
 license = "Zlib"
@@ -12,22 +12,33 @@ build_deps = ['ninja', 'cmake']
 [[sources]]
 type = "http"
 url = "https://github.com/libsdl-org/SDL/releases/download/release-${VERSION}/SDL3-${VERSION}.tar.gz"
-sha256 = "ee712dbe6a89bb140bbfc2ce72358fb5ee5cc2240abeabd54855012db30b3864"
+sha256 = "SKIP"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-cmake -B build -S ${WORKDIR} -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DSDL_SHARED=ON -DSDL_STATIC=OFF -DSDL_WAYLAND=ON -DSDL_X11=OFF -DSDL_ALSA=ON -DSDL_PIPEWIRE=ON -DSDL_DBUS=ON -DSDL_RPATH=OFF -DSDL_TEST_LIBRARY=OFF'''
+cd source/SDL3-${VERSION}
+cmake -B build -S . -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DSDL_SHARED=ON \
+    -DSDL_STATIC=OFF \
+    -DSDL_WAYLAND=ON \
+    -DSDL_X11=OFF \
+    -DSDL_ALSA=ON \
+    -DSDL_PIPEWIRE=ON \
+    -DSDL_DBUS=ON \
+    -DSDL_RPATH=OFF \
+    -DSDL_TEST_LIBRARY=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/SDL3-${VERSION}
 ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/SDL3-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

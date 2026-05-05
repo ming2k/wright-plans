@@ -14,12 +14,12 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/lzo-${VERSION}
 ./configure --prefix=/usr --enable-shared --disable-static --docdir=/usr/share/doc/lzo-${VERSION}'''
 
 [lifecycle.compile]
-script = "cd source && make -j$(nproc)"
+script = "cd source/lzo-${VERSION} && make -j$(nproc)"
 
 [lifecycle.staging]
-script = "cd source && make DESTDIR=${STAGING_DIR} install"
+script = "cd source/lzo-${VERSION} && make DESTDIR=${STAGING_DIR} install"
 

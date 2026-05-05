@@ -17,21 +17,21 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
+cd source/libva-utils-${VERSION}
+meson setup build \
 --prefix=/usr                        \
 --buildtype=release                  \
 -D tests=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/libva-utils-${VERSION}
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/libva-utils-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['libdrm', 'libva', 'wayland']

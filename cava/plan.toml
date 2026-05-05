@@ -17,22 +17,22 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/cava-${VERSION}
 autoreconf -vfi'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/cava-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/cava-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/cava-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

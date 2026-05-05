@@ -5,8 +5,8 @@ description = "Keymap handling library (Wayland Only)"
 license = "MIT"
 arch = "x86_64"
 
-link_deps = ['wayland', 'xkeyboard-config']
-build_deps = ['wayland-protocols', 'meson', 'ninja']
+link_deps = ['libxml2', 'wayland', 'xkeyboard-config']
+build_deps = ['bison', 'meson', 'ninja', 'pkgconf', 'wayland-protocols']
 
 [[sources]]
 type = "http"
@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libxkbcommon-xkbcommon-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Denable-x11=false -Denable-wayland=true -Denable-docs=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/libxkbcommon-xkbcommon-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
+cd source/libxkbcommon-xkbcommon-${VERSION}
+DESTDIR=${STAGING_DIR} meson install -C build'''
 
 [[output]]
-runtime_deps = ['wayland', 'xkeyboard-config']
+runtime_deps = ['libxml2', 'wayland', 'xkeyboard-config']

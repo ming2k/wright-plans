@@ -15,13 +15,13 @@ url = "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/${VER
 extract_to = "source"
 
 [lifecycle.configure]
-script = "cd source && meson setup build --prefix=/usr -Dtests=false"
+script = "cd source/wayland-protocols-${VERSION} && meson setup build --prefix=/usr -Dtests=false"
 
 [lifecycle.compile]
-script = "cd source && meson compile -C build"
+script = "cd source/wayland-protocols-${VERSION} && meson compile -C build"
 
 [lifecycle.staging]
-script = "cd source && meson install -C build --destdir ${STAGING_DIR}"
+script = "cd source/wayland-protocols-${VERSION} && meson install -C build --destdir ${STAGING_DIR}"
 
 [[output]]
 runtime_deps = ['wayland']

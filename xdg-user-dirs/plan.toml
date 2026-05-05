@@ -17,16 +17,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/xdg-user-dirs-${VERSION}
 meson setup build --prefix=/usr --buildtype=release'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/xdg-user-dirs-${VERSION}
 meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/xdg-user-dirs-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''
 

@@ -15,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libseccomp-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libseccomp-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libseccomp-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

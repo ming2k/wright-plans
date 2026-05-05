@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/dbus-${VERSION}
 mkdir -p build
 cd build
 meson setup --prefix=/usr \
@@ -38,12 +38,12 @@ meson setup --prefix=/usr \
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/dbus-${VERSION}/build
 ninja'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/dbus-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install
 
 # Symlink so D-Bus and systemd share machine-id

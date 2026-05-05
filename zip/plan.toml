@@ -20,17 +20,17 @@ path = "patches/fix-memfuncs.patch"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/zip-${VERSION}
 patch -Np1 < ${WORKDIR}/fix-memfuncs.patch'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/zip-${VERSION}
 make -f unix/Makefile prefix=/usr generic_gcc'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/zip-${VERSION}
 make prefix=${STAGING_DIR}/usr \
     MANDIR=${STAGING_DIR}/usr/share/man/man1 \
     -f unix/Makefile install'''

@@ -17,16 +17,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/double-conversion-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_SHARED_LIBS=ON -DBUILD_TESTING=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/double-conversion-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/double-conversion-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 

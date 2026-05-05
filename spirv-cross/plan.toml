@@ -17,10 +17,10 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-mkdir -p ${WORKDIR}/build && cd source/build
+cd source/SPIRV-Cross-vulkan-sdk-${VERSION}
+mkdir -p build && cd build
 cmake -DCMAKE_INSTALL_PREFIX=/usr \
       -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
       -DSPIRV_CROSS_SHARED=ON \
       -DSPIRV_CROSS_STATIC=OFF \
       -DSPIRV_CROSS_CLI=OFF \
@@ -28,11 +28,11 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr \
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/SPIRV-Cross-vulkan-sdk-${VERSION}/build
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/SPIRV-Cross-vulkan-sdk-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install'''
 

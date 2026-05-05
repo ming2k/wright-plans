@@ -17,7 +17,7 @@ extract_to = "source"
 [lifecycle.compile]
 isolation = "none"
 script = '''
-cd source
+cd source/podman-${VERSION}
 export GOFLAGS="-trimpath -mod=vendor"
 export BUILDTAGS="seccomp $(hack/btrfs_installed_tag.sh) $(hack/sqlite_tag.sh) $(hack/systemd_tag.sh) $(hack/libsubid_tag.sh) grpcnotrace"
 make podman podman-remote rootlessport quadlet BUILDTAGS="${BUILDTAGS}" GOFLAGS="${GOFLAGS}" PREFIX=/usr ETCDIR=/etc
@@ -26,7 +26,7 @@ make completions'''
 [lifecycle.staging]
 isolation = "none"
 script = '''
-cd source
+cd source/podman-${VERSION}
 export BUILDTAGS="seccomp $(hack/btrfs_installed_tag.sh) $(hack/sqlite_tag.sh) $(hack/systemd_tag.sh) $(hack/libsubid_tag.sh) grpcnotrace"
 make DESTDIR=${STAGING_DIR} PREFIX=/usr ETCDIR=/etc BINDIR=/usr/bin LIBEXECDIR=/usr/libexec LIBEXECPODMAN=/usr/libexec/podman TMPFILESDIR=/usr/lib/tmpfiles.d SYSTEMDDIR=/usr/lib/systemd/system USERSYSTEMDDIR=/usr/lib/systemd/user SYSTEMDGENERATORSDIR=/usr/lib/systemd/system-generators USERSYSTEMDGENERATORSDIR=/usr/lib/systemd/user-generators BUILDTAGS="${BUILDTAGS}" install.bin install.remote install.completions install.systemd'''
 

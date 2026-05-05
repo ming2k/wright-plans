@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gnupg-${VERSION}
 ./configure --prefix=/usr              \
 --libexecdir=/usr/lib/gnupg \
 --sbindir=/usr/bin          \
@@ -28,12 +28,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gnupg-${VERSION}
 make -j$(nproc) LDFLAGS="${LDFLAGS} -lreadline -lhistory"'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gnupg-${VERSION}
 DESTDIR=${STAGING_DIR} make install
 ln -sf gpg  ${STAGING_DIR}/usr/bin/gpg2
 ln -sf gpgv ${STAGING_DIR}/usr/bin/gpgv2'''

@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/lame-${VERSION}
 ./configure \
     --prefix=/usr \
     --enable-shared \
@@ -25,12 +25,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/lame-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/lame-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

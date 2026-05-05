@@ -15,15 +15,15 @@ url = "https://code.videolan.org/videolan/dav1d/-/archive/${VERSION}/dav1d-${VER
 extract_to = "source"
 
 [lifecycle.configure]
-script = "cd source && meson setup build --prefix=/usr --buildtype=release"
+script = "cd source/dav1d-${VERSION} && meson setup build --prefix=/usr --buildtype=release"
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/dav1d-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
+cd source/dav1d-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}'''
 

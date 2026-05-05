@@ -1,5 +1,5 @@
 name = "bubblewrap"
-version = "0.11.1"
+version = "0.11.2"
 release = 1
 description = "Unprivileged sandboxing tool"
 license = "LGPL-2.0-or-later"
@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/bubblewrap-${VERSION}
 meson setup build      \
 --prefix=/usr          \
 --buildtype=release    \
@@ -25,12 +25,12 @@ meson setup build      \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/bubblewrap-${VERSION}
 ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/bubblewrap-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

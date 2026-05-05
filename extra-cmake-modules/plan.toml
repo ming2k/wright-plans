@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/extra-cmake-modules-${VERSION}
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_HTML_DOCS=OFF \
@@ -26,11 +26,11 @@ cmake -B build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/extra-cmake-modules-${VERSION}
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/extra-cmake-modules-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 

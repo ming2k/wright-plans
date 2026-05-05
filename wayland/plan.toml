@@ -16,14 +16,14 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/wayland-${VERSION}
 meson setup build --prefix=/usr -Ddocumentation=false -Dtests=false'''
 
 [lifecycle.compile]
-script = "cd source && meson compile -C build"
+script = "meson compile -C source/wayland-${VERSION}/build"
 
 [lifecycle.staging]
-script = "cd source && meson install -C build --destdir ${STAGING_DIR}"
+script = "meson install -C source/wayland-${VERSION}/build --destdir ${STAGING_DIR}"
 
 [[output]]
 runtime_deps = ['expat', 'libffi', 'libxml2']

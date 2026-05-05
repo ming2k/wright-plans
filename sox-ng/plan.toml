@@ -17,12 +17,12 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/sox-ng-${VERSION}
 autoreconf -fi'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/sox-ng-${VERSION}
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -37,12 +37,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/sox-ng-${VERSION}
 make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/sox-ng-${VERSION}
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

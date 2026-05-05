@@ -1,6 +1,6 @@
 name = "glib-networking"
 version = "2.80.1"
-release = 1
+release = 2
 description = "Network extensions for GLib"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -17,18 +17,18 @@ extract_to = "source"
 [lifecycle.configure]
 env = { GIO_MODULE_DIR = '/usr/lib/gio/modules' }
 script = '''
-cd source
+cd source/glib-networking-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dgnutls=enabled -Dlibproxy=enabled -Dopenssl=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build -j$(nproc)'''
+cd source/glib-networking-${VERSION}
+meson compile -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build
+cd source/glib-networking-${VERSION}
+DESTDIR=${STAGING_DIR} meson install -C build
 rm -f ${STAGING_DIR}/usr/lib/gio/modules/giomodule.cache'''
 
 [hooks]

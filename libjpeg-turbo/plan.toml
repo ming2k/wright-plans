@@ -6,7 +6,7 @@ license = "IJG"
 arch = "x86_64"
 
 
-build_deps = ['ninja', 'cmake', 'pkgconf']
+build_deps = ['cmake', 'nasm', 'ninja', 'pkgconf']
 
 [[sources]]
 type = "http"
@@ -16,20 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libjpeg-turbo-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DWITH_JPEG8=ON'''
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build'''
+cd source/libjpeg-turbo-${VERSION}
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install
+cd source/libjpeg-turbo-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install
 # 兼容性软链接：确保 pkg-config 始终能找到 libjpeg.pc
 if [ ! -f ${STAGING_DIR}/usr/lib/pkgconfig/libjpeg.pc ]; then
     ln -sv libjpeg-turbo.pc ${STAGING_DIR}/usr/lib/pkgconfig/libjpeg.pc
 fi'''
-

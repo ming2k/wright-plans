@@ -16,12 +16,12 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/passt-${VERSION}
 make VERSION="${VERSION}" -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/passt-${VERSION}
 make DESTDIR=${STAGING_DIR} prefix=/usr install'''
 
 [[output]]

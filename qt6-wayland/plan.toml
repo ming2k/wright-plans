@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/qtwayland-everywhere-src-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/qtwayland-everywhere-src-${VERSION}
 ninja -j$(nproc) -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/qtwayland-everywhere-src-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

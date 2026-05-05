@@ -17,20 +17,21 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/hicolor-icon-theme-${VERSION}
 meson setup build --prefix=/usr --buildtype=release'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/hicolor-icon-theme-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
+cd source/hicolor-icon-theme-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}'''
 
-[hooks]
+[[output]]
+
+[output.hooks]
 post_install = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
 post_upgrade = "gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true"
-

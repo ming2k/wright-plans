@@ -23,7 +23,7 @@ cd source/src
 [lifecycle.staging]
 isolation = "none"
 script = '''
-cd source
+cd source/go-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/lib
 # Copy everything built
 cp -a ${WORKDIR} ${STAGING_DIR}/usr/lib/go

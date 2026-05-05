@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/zlib-ng-${VERSION}
 cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja \
   -DCMAKE_BUILD_TYPE=None \
   -DCMAKE_INSTALL_PREFIX=/usr \
@@ -27,12 +27,12 @@ cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/zlib-ng-${VERSION}
 cmake --build ${WORKDIR}/build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/zlib-ng-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build
 install -Dm 644 ${WORKDIR}/LICENSE.md ${STAGING_DIR}/usr/share/licenses/zlib-ng/LICENSE.md
 install -Dm 644 ${WORKDIR}/README.md ${STAGING_DIR}/usr/share/doc/zlib-ng/README.md'''

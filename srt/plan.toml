@@ -1,6 +1,6 @@
 name = "srt"
 version = "1.5.4"
-release = 1
+release = 2
 description = "Secure Reliable Transport protocol library"
 license = "MPL-2.0"
 arch = "x86_64"
@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/srt-${VERSION}
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
@@ -29,13 +29,13 @@ cmake -B build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -j$(nproc) -C ${WORKDIR}/build'''
+cd source/srt-${VERSION}
+ninja -j$(nproc) -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/srt-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['openssl']

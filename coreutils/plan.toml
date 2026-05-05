@@ -1,6 +1,6 @@
 name = "coreutils"
 version = "9.11"
-release = 1
+release = 2
 description = "Basic utility programs needed by every operating system"
 license = "GPL-3.0-or-later"
 arch = "x86_64"

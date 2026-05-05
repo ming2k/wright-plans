@@ -15,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/jq-${VERSION}
 ./configure --prefix=/usr --disable-static --with-oniguruma=builtin'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/jq-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/jq-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

@@ -16,12 +16,12 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/mdadm-${VERSION}
 make CWFLAGS="-Wall -Werror -Wstrict-prototypes -Wextra -Wno-unused-parameter -Wformat -Wformat-security -Werror=format-security -fstack-protector-strong -fPIE -Warray-bounds -Wimplicit-fallthrough=0 -Wno-error=implicit-fallthrough -Wno-error=unterminated-string-initialization"'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/mdadm-${VERSION}
 make \
   DESTDIR=${STAGING_DIR} \
   BINDIR=/usr/bin \

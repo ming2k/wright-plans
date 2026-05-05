@@ -1,5 +1,5 @@
 name = "glslang"
-version = "16.2.0"
+version = "16.3.0"
 release = 1
 description = "Khronos reference GLSL/ESSL compiler and SPIR-V generator"
 license = "BSD-3-Clause"
@@ -11,13 +11,13 @@ build_deps = ['cmake']
 
 [[sources]]
 type = "http"
-sha256 = "01985335785c97906a91afe3cb5ee015997696181ec6c125bab5555602ba08e2"
+sha256 = "efff5a15258dce1ca2d323bf64c974f5fca03778174615dbc30c8d36db645bf5"
 url = "https://github.com/KhronosGroup/glslang/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/glslang-${VERSION}
 mkdir build && cd build
 cmake ..                                \
 -DCMAKE_INSTALL_PREFIX=/usr       \
@@ -27,11 +27,11 @@ cmake ..                                \
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/glslang-${VERSION}/build
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/glslang-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install'''
 

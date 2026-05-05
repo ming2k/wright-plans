@@ -1,6 +1,6 @@
 name = "curl"
 version = "8.19.0"
-release = 1
+release = 2
 description = "Command line tool and library for transferring data with URLs"
 license = "curl"
 arch = "x86_64"
@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/curl-${VERSION}
 ./configure --prefix=/usr                    \
 --disable-static                 \
 --with-openssl                   \
@@ -25,12 +25,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/curl-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/curl-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

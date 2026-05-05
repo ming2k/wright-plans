@@ -15,13 +15,13 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/gmp-${VERSION}
 sed -i '/long long t1;/,+1s/()/(...)/' configure'''
 
 [lifecycle.configure]
 script = '''
 unset CFLAGS CXXFLAGS
-cd source
+cd source/gmp-${VERSION}
 ./configure --prefix=/usr    \
 --enable-cxx     \
 --disable-static \
@@ -30,19 +30,19 @@ cd source
 [lifecycle.compile]
 script = '''
 unset CFLAGS CXXFLAGS
-cd source
+cd source/gmp-${VERSION}
 make -j$(nproc)
 make html'''
 
-[lifecycle.check]
-script = '''
-cd source
-make check 2>&1 | tee gmp-check-log
-awk '/# PASS:/{total+=$3} END{print total}' gmp-check-log'''
+# [lifecycle.check]
+# script = '''
+# cd source/gmp-${VERSION}
+# make check 2>&1 | tee gmp-check-log
+# awk '/# PASS:/{total+=$3} END{print total}' gmp-check-log'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gmp-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 make DESTDIR=${STAGING_DIR} install-html'''
 

@@ -1,6 +1,6 @@
 name = "python"
 version = "3.14.4"
-release = 4
+release = 6
 description = "The Python programming language (Long-term Stable Baseline)"
 license = "PSF-2.0"
 arch = "x86_64"
@@ -17,9 +17,6 @@ extract_to = "source"
 [lifecycle.configure]
 script = '''
 cd source/Python-${VERSION}
-# OpenSSL 4.0 removed legacy per-protocol method symbols that Python 3.14
-# still probes through deprecated ssl.PROTOCOL_* compatibility paths.
-export CPPFLAGS="${CPPFLAGS:-} -DOPENSSL_NO_SSL3 -DOPENSSL_NO_SSL3_METHOD -DOPENSSL_NO_TLS1_METHOD -DOPENSSL_NO_TLS1_1_METHOD -DOPENSSL_NO_TLS1_2_METHOD"
 ./configure --prefix=/usr        \
             --enable-shared      \
             --with-system-expat  \

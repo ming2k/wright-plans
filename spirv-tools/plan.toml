@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-cmake -B ${WORKDIR}/build -G Ninja -S ${WORKDIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_INSTALL_INCLUDEDIR=include -DSPIRV_WERROR=OFF -DSPIRV-Headers_SOURCE_DIR=/usr -DSPIRV_SKIP_TESTS=ON'''
+cd source/SPIRV-Tools-${VERSION}
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DSPIRV_WERROR=OFF -DSPIRV-Headers_SOURCE_DIR=/usr -DSPIRV_SKIP_TESTS=ON'''
 
 [lifecycle.compile]
 script = '''
-cd source
-cmake --build ${WORKDIR}/build'''
+cd source/SPIRV-Tools-${VERSION}
+cmake --build build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build'''
+cd source/SPIRV-Tools-${VERSION}
+DESTDIR=${STAGING_DIR} cmake --install build'''
 
 [[output]]
 provides = ["spirv-opt"]

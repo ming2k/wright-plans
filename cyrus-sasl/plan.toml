@@ -1,6 +1,6 @@
 name = "cyrus-sasl"
 version = "2.1.28"
-release = 1
+release = 2
 description = "Simple Authentication and Security Layer library"
 license = "BSD-4-Clause-UC"
 arch = "x86_64"
@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/cyrus-sasl-${VERSION}
 export CFLAGS="${CFLAGS} -std=gnu89"
 export CPPFLAGS="${CPPFLAGS} -DHAVE_TIME_H=1"
 ./configure --prefix=/usr \
@@ -29,12 +29,12 @@ export CPPFLAGS="${CPPFLAGS} -DHAVE_TIME_H=1"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/cyrus-sasl-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/cyrus-sasl-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

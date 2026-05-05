@@ -1,8 +1,8 @@
-link_deps = ['acl', 'glibc', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'util-linux', 'xz', 'zstd']
+link_deps = ['acl', 'glibc', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/systemd-${VERSION}
 mkdir -p build
 cd build
 meson setup .. \

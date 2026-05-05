@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/alsa-utils-${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-alsaloop --disable-bat --disable-xmlto --disable-rst2man'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/alsa-utils-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/alsa-utils-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''
 
 [hooks]

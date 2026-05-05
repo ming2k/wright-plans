@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/strace-${VERSION}
 ./configure --prefix=/usr \
     --with-libiberty'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/strace-${VERSION}
 make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/strace-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

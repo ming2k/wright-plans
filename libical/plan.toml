@@ -17,19 +17,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libical-${VERSION}
 mkdir -p build && cd build
 cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBEXECDIR=lib -DSHARED_ONLY=true -DCMAKE_DISABLE_FIND_PACKAGE_BerkeleyDB=true -DGOBJECT_INTROSPECTION=false -DICAL_GLIB_VAPI=false -DENABLE_GTK_DOC=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -j$(nproc) -C ${WORKDIR}/build'''
+cd source/libical-${VERSION}
+ninja -j$(nproc) -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja install -C ${WORKDIR}/build'''
+cd source/libical-${VERSION}
+DESTDIR=${STAGING_DIR} ninja install -C build'''
 
 [[output]]
 runtime_deps = ['glibc', 'glib', 'icu', 'libxml2']

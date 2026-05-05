@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
+cd source/fcft
+meson setup build \
 --prefix=/usr          \
 --buildtype=release    \
 -D docs=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/fcft
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/fcft
+DESTDIR=${STAGING_DIR} ninja -C build install'''

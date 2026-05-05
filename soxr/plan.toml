@@ -15,7 +15,7 @@ url = "https://sourceforge.net/projects/soxr/files/soxr-0.1.3-Source.tar.xz/down
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/soxr-${VERSION}
 cmake -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
@@ -24,11 +24,11 @@ cmake -B build \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/soxr-${VERSION}
 cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/soxr-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 

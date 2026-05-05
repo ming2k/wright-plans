@@ -17,16 +17,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/talloc-${VERSION}
 ./configure --prefix=/usr --disable-python'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/talloc-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/talloc-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/qalc-${VERSION}
 ./configure --prefix=/usr \
     --disable-static \
     --with-readline \
@@ -24,17 +24,17 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/qalc-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/qalc-${VERSION}
 make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/qalc-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [hooks]

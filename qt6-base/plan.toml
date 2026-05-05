@@ -1,6 +1,6 @@
 name = "qt6-base"
 version = "6.11.0"
-release = 2
+release = 3
 description = "Qt 6 base module (Wayland Only)"
 license = "LGPL-3.0-only"
 arch = "x86_64"
@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/qtbase-everywhere-src-${VERSION}
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
@@ -40,13 +40,13 @@ cmake -B build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -j$(nproc) -C ${WORKDIR}/build'''
+cd source/qtbase-everywhere-src-${VERSION}
+ninja -j$(nproc) -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/qtbase-everywhere-src-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['dbus', 'double-conversion', 'mesa', 'pcre2', 'fontconfig', 'freetype', 'glib', 'harfbuzz', 'libdrm', 'libpng', 'libxkbcommon', 'openssl', 'zlib']

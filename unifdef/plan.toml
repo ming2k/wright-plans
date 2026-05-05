@@ -14,19 +14,19 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/unifdef-${VERSION}
 # 修复 GCC 15 (C23) 编译错误：
 # 将变量名 'constexpr' 重命名为 'const_expr'，避免与 C23 关键字冲突
 sed -i 's/constexpr/const_expr/g' unifdef.c'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/unifdef-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/unifdef-${VERSION}
 # prefix 定义安装路径
 make prefix=${STAGING_DIR}/usr install'''
 

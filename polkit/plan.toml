@@ -17,8 +17,8 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
+cd source/polkit-${VERSION}
+meson setup build \
     --prefix=/usr               \
     --buildtype=release         \
     -D authfw=pam               \
@@ -32,21 +32,18 @@ meson setup ${WORKDIR}/build ${WORKDIR} \
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/polkit-${VERSION}
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
-
-[hooks]
-post_install = '''
-groupadd -fg 27 polkitd 2>/dev/null || true
-useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
-    -c "PolicyKit Daemon Owner" polkitd 2>/dev/null || true
-
-'''
+cd source/polkit-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['dbus', 'systemd', 'glib', 'duktape', 'linux-pam']
+hooks.post_install = '''
+groupadd -fg 27 polkitd 2>/dev/null || true
+useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
+    -c "PolicyKit Daemon Owner" polkitd 2>/dev/null || true
+'''

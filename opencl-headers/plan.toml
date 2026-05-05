@@ -17,11 +17,11 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/opencl-headers-${VERSION}
 cmake -B build -S ${WORKDIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -GNinja -DOPENCL_HEADERS_BUILD_TESTING=OFF'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/opencl-headers-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 

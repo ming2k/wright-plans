@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/cmark-${VERSION}
 cmake -B build -G Ninja \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=Release \
@@ -27,11 +27,11 @@ cmake -B build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/cmark-${VERSION}
 ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/cmark-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 

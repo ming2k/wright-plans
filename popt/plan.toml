@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/popt-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
-make -j$(nproc) -C ${WORKDIR}'''
+cd source/popt-${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
+cd source/popt-${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]
 runtime_deps = ['glibc']

@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/xkeyboard-config-${VERSION}
 mkdir -p build && cd build
 meson setup --prefix=/usr --buildtype=release ..'''
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/xkeyboard-config-${VERSION}/build
 ninja'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/xkeyboard-config-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''
 

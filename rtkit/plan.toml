@@ -16,18 +16,18 @@ ref = "v${VERSION}"
 
 [lifecycle.configure]
 script = '''
-meson setup ${WORKDIR}/build ${WORKDIR} \
+meson setup build \
   --prefix=/usr \
   --sbindir=/usr/bin \
   --buildtype=release \
   -D installed_tests=false'''
 
 [lifecycle.compile]
-script = "meson compile -C ${WORKDIR}/build -j$(nproc)"
+script = "meson compile -C build -j$(nproc)"
 
 [lifecycle.staging]
 script = '''
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build
+DESTDIR=${STAGING_DIR} meson install -C build
 
 install -Dm644 ${WORKDIR}/LICENSE -t ${STAGING_DIR}/usr/share/licenses/rtkit/
 sed -n '4,25p' ${WORKDIR}/rtkit.c |

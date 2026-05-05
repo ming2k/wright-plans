@@ -14,6 +14,6 @@ extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/linux-firmware-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/lib/firmware
 ./copy-firmware.sh ${STAGING_DIR}/usr/lib/firmware'''

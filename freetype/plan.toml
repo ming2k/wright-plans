@@ -14,7 +14,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/freetype-${VERSION}
 sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg
 sed -r "s:.*(#.*SUBPIXEL_RENDERING) .*:\1:" \
 -i include/freetype/config/ftoption.h
@@ -24,10 +24,10 @@ sed -r "s:.*(#.*SUBPIXEL_RENDERING) .*:\1:" \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/freetype-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/freetype-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''

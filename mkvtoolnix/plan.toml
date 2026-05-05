@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/mkvtoolnix-${VERSION}
 ./configure \
   --prefix=/usr \
   --with-boost-libdir=/usr/lib \
@@ -24,12 +24,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/mkvtoolnix-${VERSION}
 rake -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/mkvtoolnix-${VERSION}
 rake DESTDIR=${STAGING_DIR} install
 
 # Remove icon directory as MKVToolNix Rakefile installs icons unconditionally even when GUI is disabled

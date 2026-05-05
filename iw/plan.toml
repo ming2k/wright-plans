@@ -15,12 +15,12 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/iw-${VERSION}
 make PREFIX=/usr -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/iw-${VERSION}
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

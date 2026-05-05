@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/libaom-${VERSION}
 
 # 修复: GCC 15 需要显式包含 <cstdint> 才能使用 uint32_t/uint64_t
 # 问题出在捆绑的第三方库 libwebm 中
@@ -27,18 +27,17 @@ find . -name "*.cmake" -exec sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/c
 
 [lifecycle.configure]
 script = '''
-mkdir -p ${WORKDIR}/build
-cd source/build
+mkdir -p source/libaom-${VERSION}/build
+cd source/libaom-${VERSION}/build
 
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DENABLE_NASM=ON -DENABLE_TESTS=OFF -DENABLE_DOCS=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/libaom-${VERSION}/build
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/libaom-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install'''
-

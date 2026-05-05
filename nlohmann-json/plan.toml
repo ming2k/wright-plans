@@ -17,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/nlohmann-json-${VERSION}
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DJSON_BuildTests=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/nlohmann-json-${VERSION}
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/nlohmann-json-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 

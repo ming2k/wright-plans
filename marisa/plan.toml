@@ -17,12 +17,12 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/marisa-${VERSION}
 autoreconf -fi'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/marisa-${VERSION}
 ./configure \
     --prefix=/usr \
     --disable-static \
@@ -30,11 +30,11 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/marisa-${VERSION}
 make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/marisa-${VERSION}
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 

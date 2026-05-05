@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/yaml-cpp-${VERSION}
 cmake -B build -G Ninja \
     -DCMAKE_CXX_FLAGS="-include cstdint" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -28,11 +28,11 @@ cmake -B build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/yaml-cpp-${VERSION}
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/yaml-cpp-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 

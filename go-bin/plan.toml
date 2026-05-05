@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/go-bin-${VERSION}
 install -d ${STAGING_DIR}/usr/lib
 cp -a ${WORKDIR} ${STAGING_DIR}/usr/lib/go
 install -d ${STAGING_DIR}/usr/bin

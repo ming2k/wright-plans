@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/slirp4netns-${VERSION}
 ./autogen.sh
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/slirp4netns-${VERSION}
 make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/slirp4netns-${VERSION}
 make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
 
 [[output]]

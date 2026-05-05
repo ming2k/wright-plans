@@ -1,5 +1,5 @@
 name = "seabios"
-version = "1.16.3"
+version = "1.17.0"
 release = 1
 description = "Open source legacy BIOS implementation used by QEMU"
 license = "LGPL-3.0-or-later"
@@ -11,18 +11,18 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "5159a35fac5c1579dd5d702001033c826ce45d30d3bd657ec1b2695455997712"
 url = "https://www.seabios.org/downloads/seabios-${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/seabios-${VERSION}
 make -j$(nproc) PYTHON=python3'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/seabios-${VERSION}
 install -Dm644 out/bios.bin ${STAGING_DIR}/usr/share/qemu/bios.bin
 if [ -f out/vgabios.bin ]; then
   install -Dm644 out/vgabios.bin ${STAGING_DIR}/usr/share/qemu/vgabios.bin

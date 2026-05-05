@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/attr-${VERSION}
 ./configure --prefix=/usr     \
 --disable-static  \
 --sysconfdir=/etc \
@@ -23,16 +23,16 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/attr-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/attr-${VERSION}
 make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/attr-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

@@ -15,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/lz4-${VERSION}
 make BUILD_STATIC=no PREFIX=/usr -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/lz4-${VERSION}
 make -j1 check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/lz4-${VERSION}
 make BUILD_STATIC=no PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 

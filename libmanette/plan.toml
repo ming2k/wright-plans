@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libmanette-${VERSION}
 # 修复：
 # 1. 将 -Dexamples=false 改为 -Ddemos=false (这是 libmanette 正确的选项名)
 # 2. 确保 introspection 和 vapi 选项格式正确
@@ -24,12 +24,12 @@ meson setup build --prefix=/usr --libdir=lib -Dintrospection=true -Dvapi=false -
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/libmanette-${VERSION}/build
 ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/libmanette-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
 [[output]]

@@ -14,7 +14,7 @@ extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gcloud-${VERSION}
 install -d ${STAGING_DIR}/usr/lib
 cp -a ${WORKDIR} ${STAGING_DIR}/usr/lib/google-cloud-sdk
 

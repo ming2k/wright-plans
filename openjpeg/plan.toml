@@ -1,5 +1,5 @@
 name = "openjpeg"
-version = "2.5.3"
+version = "2.5.4"
 release = 1
 description = "Open-source JPEG 2000 codec"
 license = "BSD-2-Clause"
@@ -10,22 +10,22 @@ build_deps = ['cmake']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "a695fbe19c0165f295a8531b1e4e855cd94d0875d2f88ec4b61080677e27188a"
 url = "https://github.com/uclouvain/openjpeg/archive/v${VERSION}/openjpeg-v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/openjpeg-${VERSION}
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_STATIC_LIBS=OFF -DBUILD_DOC=OFF -DBUILD_TESTING=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
-cmake --build ${WORKDIR}/build -j$(nproc)'''
+cd source/openjpeg-${VERSION}
+cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build'''
+cd source/openjpeg-${VERSION}
+DESTDIR=${STAGING_DIR} cmake --install build'''
 

@@ -1,12 +1,13 @@
 name = "cryptsetup"
 version = "2.8.4"
-release = 1
+release = 3
 description = "Userspace setup tool for transparent encryption of block devices using dm-crypt"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.com/cryptsetup/cryptsetup"
 
-link_deps = ['glibc', 'json-c', 'openssl', 'popt', 'util-linux']
+link_deps = ['glibc', 'json-c', 'lvm2', 'openssl', 'popt', 'util-linux']
+build_deps = ['lvm2']
 
 [[sources]]
 type = "http"
@@ -16,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/cryptsetup-${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-ssh-token --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
-make -j$(nproc) -C ${WORKDIR}'''
+cd source/cryptsetup-${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
+cd source/cryptsetup-${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]
 runtime_deps = ['lvm2', 'glibc', 'json-c', 'openssl', 'popt', 'util-linux']

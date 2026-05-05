@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/python-evdev-${VERSION}
 pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]

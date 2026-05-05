@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gsettings-desktop-schemas-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dintrospection=true'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gsettings-desktop-schemas-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gsettings-desktop-schemas-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [hooks]

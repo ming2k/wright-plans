@@ -14,7 +14,7 @@ extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/intel-ucode-${VERSION}
 install -d "${STAGING_DIR}/usr/lib/firmware"
 cp -r "${WORKDIR}/intel-ucode" "${STAGING_DIR}/usr/lib/firmware/"
 cp -r "${WORKDIR}/intel-ucode-with-caveats" "${STAGING_DIR}/usr/lib/firmware/"

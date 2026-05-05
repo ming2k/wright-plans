@@ -18,12 +18,12 @@ extract_to = "source"
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/ripgrep-${VERSION}
 cargo build --release --locked --features pcre2'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/ripgrep-${VERSION}
 install -Dm755 target/release/rg ${STAGING_DIR}/usr/bin/rg
 
 if [ -f doc/rg.1 ]; then

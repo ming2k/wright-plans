@@ -1,6 +1,6 @@
 name = "kmod"
 version = "34.2"
-release = 3
+release = 4
 description = "Linux kernel module management tools and library"
 license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
 arch = "x86_64"
@@ -16,8 +16,9 @@ url = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-$
 extract_to = "source"
 
 [lifecycle.configure]
+isolation = "relaxed"
 script = '''
-cd source
+cd source/kmod-${VERSION}
 meson setup build          \
   --prefix=/usr            \
   --sbindir=/usr/bin       \
@@ -29,14 +30,16 @@ meson setup build          \
   -D zstd=enabled'''
 
 [lifecycle.compile]
+isolation = "relaxed"
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build -j$(nproc)'''
+cd source/kmod-${VERSION}
+meson compile -C build -j$(nproc)'''
 
 [lifecycle.staging]
+isolation = "relaxed"
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build
+cd source/kmod-${VERSION}
+DESTDIR=${STAGING_DIR} meson install -C build
 
 # Create standard module configuration directories
 install -dm755 ${STAGING_DIR}/etc/depmod.d

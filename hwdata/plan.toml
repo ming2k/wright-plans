@@ -15,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/hwdata-${VERSION}
 ./configure --prefix=/usr --datarootdir=/usr/share'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/hwdata-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/hwdata-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

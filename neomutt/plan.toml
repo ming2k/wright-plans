@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/neomutt-${VERSION}
 ./configure --prefix=/usr \
     --disable-doc \
     --with-lock=fcntl \
@@ -31,12 +31,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/neomutt-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/neomutt-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

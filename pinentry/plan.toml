@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/pinentry-${VERSION}
 ./configure \
   --prefix=/usr \
   --disable-static \
@@ -31,12 +31,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/pinentry-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/pinentry-${VERSION}
 DESTDIR=${STAGING_DIR} make install
 
 # Ensure a generic pinentry binary exists for gpg-agent defaults.

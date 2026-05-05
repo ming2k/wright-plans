@@ -1,6 +1,6 @@
 name = "flatpak"
 version = "1.16.6"
-release = 2
+release = 1
 description = "Universal app distribution framework (Pure Wayland)"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/flatpak-${VERSION}
 meson setup build \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -36,17 +36,18 @@ meson setup build \
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/flatpak-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}
+cd source/flatpak-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}
 mkdir -p ${STAGING_DIR}/var/lib/flatpak'''
 
-[hooks]
-post_install = '''
+[[output]]
+runtime_deps = ['ca-certificates', 'dbus', 'systemd', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'shared-mime-info', 'desktop-file-utils', 'glib', 'libarchive', 'libxml2', 'ostree', 'polkit', 'json-glib', 'curl', 'appstream', 'gdk-pixbuf', 'libjpeg-turbo', 'libfuse3', 'gpgme', 'libseccomp']
+hooks.post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/flatpak.conf 2>/dev/null || true
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true
 [ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
@@ -54,13 +55,10 @@ update-mime-database /usr/share/mime 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true
 [ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
 update-mime-database /usr/share/mime 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
-
-[[output]]
-runtime_deps = ['ca-certificates', 'dbus', 'systemd', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'shared-mime-info', 'desktop-file-utils', 'glib', 'libarchive', 'libxml2', 'ostree', 'polkit', 'json-glib', 'curl', 'appstream', 'gdk-pixbuf', 'libjpeg-turbo', 'libfuse3', 'gpgme', 'libseccomp']

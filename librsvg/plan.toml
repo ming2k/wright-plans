@@ -17,20 +17,20 @@ extract_to = "source"
 [lifecycle.configure]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/librsvg-${VERSION}
 meson setup build --prefix=/usr --libdir=lib --buildtype=release -Dintrospection=enabled -Ddocs=disabled -Dtests=false -Dvala=disabled'''
 
 [lifecycle.compile]
 isolation = "relaxed"
 env = { LD_LIBRARY_PATH = '${BUILD_DIR}/build/librsvg' }
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build -j$(nproc)'''
+cd source/librsvg-${VERSION}
+meson compile -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
+cd source/librsvg-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}'''
 
 [[output]]
 runtime_deps = ['cairo', 'gdk-pixbuf', 'pango', 'glib', 'libxml2', 'harfbuzz', 'freetype', 'fribidi']

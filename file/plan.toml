@@ -15,21 +15,21 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/file-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/file-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/file-${VERSION}
 make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/file-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

@@ -1,17 +1,17 @@
 name = "qemu"
-version = "10.2.2"
-release = 1
+version = "11.0.0"
+release = 2
 description = "Machine emulator and virtualizer"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.qemu.org/"
 
-link_deps = ['glib', 'pixman', 'zlib', 'libslirp', 'dtc', 'spice']
+link_deps = ['glib', 'pixman', 'zlib', 'libslirp', 'dtc']
 build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "c04ca36012653f32d11c674d370cf52a710e7d3f18c2d8b63e4932052a4854d6"
 url = "https://download.qemu.org/qemu-${VERSION}.tar.xz"
 extract_to = "source"
 
@@ -20,18 +20,31 @@ timeout = 14400
 
 [lifecycle.configure]
 script = '''
-cd source
-./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --target-list=x86_64-softmmu --python=/usr/bin/python3 --disable-download --enable-fdt=system --audio-drv-list= --enable-slirp --enable-spice --disable-docs --disable-werror'''
+cd source/qemu-${VERSION}
+./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --target-list=x86_64-softmmu \
+    --python=/usr/bin/python3 \
+    --disable-download \
+    --enable-fdt=system \
+    --audio-drv-list= \
+    --enable-slirp \
+    --disable-spice \
+    --disable-vnc \
+    --disable-docs \
+    --disable-werror'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/qemu-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/qemu-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]
-runtime_deps = ['seabios', 'glib', 'pixman', 'zlib', 'libslirp', 'dtc', 'spice']
+runtime_deps = ['seabios', 'glib', 'pixman', 'zlib', 'libslirp', 'dtc']

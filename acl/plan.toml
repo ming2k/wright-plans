@@ -16,19 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/acl-${VERSION}
 ./configure --prefix=/usr    \
 --disable-static \
 --docdir=/usr/share/doc/acl-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/acl-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/acl-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

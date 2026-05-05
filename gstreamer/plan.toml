@@ -10,20 +10,20 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-1.28.0.tar.xz"
+sha256 = "ce5cd44d4ffeafdcc3dddaa072b2179c0b7cb1abf4e6c5d18d4375f8a39fe491"
+url = "https://gstreamer.freedesktop.org/src/gstreamer/gstreamer-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gstreamer-${VERSION}
 # 移除 --libdir=lib，让 meson 自动决定是 lib 还是 lib64
 meson setup build --prefix=/usr -Dtests=disabled -Dbenchmarks=disabled -Dintrospection=enabled
 ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gstreamer-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

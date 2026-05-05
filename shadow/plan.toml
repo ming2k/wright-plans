@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/shadow-${VERSION}
 # groups(1) is provided by coreutils
 sed -i 's/groups$(EXEEXT) //' src/Makefile.in
 find man -name Makefile.in -exec sed -i 's/groups\.1 / /'   {} \;
@@ -33,7 +33,7 @@ touch ${WORKDIR}/passwd_dummy'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/shadow-${VERSION}
 # --disable-account-tools-setuid: use fcaps (--with-fcaps) instead of setuid bits
 #   for account management tools (useradd, groupadd, etc.)
 # --with-yescrypt/bcrypt: yescrypt is the modern default; bcrypt for compatibility
@@ -57,12 +57,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/shadow-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/shadow-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 make -C man DESTDIR=${STAGING_DIR} install
 
@@ -138,8 +138,7 @@ done'''
 runtime_deps = ['glibc', 'linux-pam']
 backup = ["/etc/login.defs", "/etc/default/useradd", "/etc/pam.d/login", "/etc/pam.d/passwd", "/etc/pam.d/su", "/etc/subuid", "/etc/subgid"]
 
-[hooks]
-post_install = '''
+hooks.post_install = '''
 # Ensure canonical shadow setup exists even on custom/minimal systems.
 if ! getent group shadow >/dev/null 2>&1; then
   groupadd --system shadow >/dev/null 2>&1 || true
@@ -175,7 +174,7 @@ awk -F: '$3 >= 1000 && $3 < 65534 { print $1 }' /etc/passwd | while read -r user
 done
 
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 if ! getent group shadow >/dev/null 2>&1; then
   groupadd --system shadow >/dev/null 2>&1 || true
 fi

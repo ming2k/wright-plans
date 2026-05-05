@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/zziplib-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DZZIPDOCS=OFF -DZZIPTEST=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/zziplib-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/zziplib-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

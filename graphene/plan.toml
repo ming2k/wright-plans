@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/graphene-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dintrospection=enabled -Dinstalled_tests=false -Dtests=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/graphene-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/graphene-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

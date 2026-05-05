@@ -22,7 +22,7 @@ path = "sing-box.service"
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/sing-box-${VERSION}
 export PATH=/usr/lib/go/bin:$PATH
 export GOPATH=/tmp/go-cache
 export GOCACHE=/tmp/go-cache/build
@@ -35,7 +35,7 @@ go build -o sing-box \
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/sing-box-${VERSION}
 install -Dm755 sing-box ${STAGING_DIR}/usr/bin/sing-box
 install -dm755 ${STAGING_DIR}/etc/sing-box
 echo '{}' > ${STAGING_DIR}/etc/sing-box/config.json

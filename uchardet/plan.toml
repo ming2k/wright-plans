@@ -26,11 +26,11 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr \
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/uchardet-${VERSION}/build
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/uchardet-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install'''
 

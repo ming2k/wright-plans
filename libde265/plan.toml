@@ -15,15 +15,14 @@ url = "https://github.com/strukturag/libde265/releases/download/v${VERSION}/libd
 extract_to = "source"
 
 [lifecycle.configure]
-script = "cd source && cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_SHARED=ON -DENABLE_STATIC=OFF"
+script = "cd source/libde265-${VERSION} && cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release"
 
 [lifecycle.compile]
 script = '''
-cd source
-make -C ${WORKDIR}/build -j$(nproc)'''
+cd source/libde265-${VERSION}
+make -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-make -C ${WORKDIR}/build DESTDIR=${STAGING_DIR} install'''
-
+cd source/libde265-${VERSION}
+make -C build DESTDIR=${STAGING_DIR} install'''

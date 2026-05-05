@@ -16,22 +16,22 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/bc-${VERSION}
 CC='gcc -std=c99' ./configure --prefix=/usr -G -O3 -r'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/bc-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/bc-${VERSION}
 make test'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/bc-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 rm -f ${STAGING_DIR}/usr/share/info/dir'''
 

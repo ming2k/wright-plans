@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/pass-${VERSION}
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

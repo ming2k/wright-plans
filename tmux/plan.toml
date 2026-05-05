@@ -16,19 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/tmux-${VERSION}
 ./configure --prefix=/usr \
             --enable-sixel   \
             --enable-systemd'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/tmux-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/tmux-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

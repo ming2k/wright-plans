@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libportal-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dbackend-gtk3=enabled -Dbackend-gtk4=enabled -Dintrospection=true -Dvapi=false -Ddocs=false -Dtests=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libportal-${VERSION}
 meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libportal-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''
 
 [[output]]

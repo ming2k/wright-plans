@@ -6,17 +6,17 @@ license = "MIT"
 arch = "x86_64"
 
 link_deps = ['cairo', 'freetype', 'glib', 'icu', 'graphite2']
-build_deps = ['meson', 'ninja']
+build_deps = ['meson', 'ninja', 'pkgconf']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://github.com/harfbuzz/harfbuzz/releases/download/12.3.2/harfbuzz-12.3.2.tar.xz"
+sha256 = "ee0eb3a1da2c5a28147f12dff55f6c7d60aeeeb29ac7ef334eabe84c8476c105"
+url = "https://github.com/harfbuzz/harfbuzz/releases/download/${VERSION}/harfbuzz-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/harfbuzz-${VERSION}
 meson setup build \
     --prefix=/usr          \
     --buildtype=release    \
@@ -31,12 +31,12 @@ meson setup build \
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/harfbuzz-${VERSION}/build
 ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/harfbuzz-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
 [[output]]

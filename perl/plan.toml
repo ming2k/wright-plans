@@ -1,6 +1,6 @@
 name = "perl"
-version = "5.42.0"
-release = 1
+version = "5.42.2"
+release = 2
 description = "Practical Extraction and Report Language"
 license = "Artistic-1.0-Perl OR GPL-1.0-or-later"
 arch = "x86_64"
@@ -10,8 +10,8 @@ link_deps = ['zlib']
 
 [[sources]]
 type = "http"
-sha256 = "73cf6cc1ea2b2b1c110a18c14bbbc73a362073003893ffcedc26d22ebdbdd0c3"
-url = "https://www.cpan.org/src/5.0/perl-5.42.0.tar.xz"
+sha256 = "SKIP"
+url = "https://www.cpan.org/src/5.0/perl-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]

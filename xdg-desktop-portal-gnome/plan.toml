@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/xdg-desktop-portal-gnome-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dsystemduserunitdir=/usr/lib/systemd/user'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/xdg-desktop-portal-gnome-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/xdg-desktop-portal-gnome-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [hooks]

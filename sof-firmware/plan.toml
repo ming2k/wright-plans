@@ -14,17 +14,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/sof-firmware-${VERSION}
 echo "firmware package"'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/sof-firmware-${VERSION}
 echo "no build needed"'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/sof-firmware-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/lib/firmware/intel
 cp -a sof ${STAGING_DIR}/usr/lib/firmware/intel/sof
 cp -a sof-ipc4 ${STAGING_DIR}/usr/lib/firmware/intel/sof-ipc4

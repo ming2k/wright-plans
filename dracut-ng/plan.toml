@@ -1,5 +1,5 @@
 name = "dracut-ng"
-version = "110"
+version = "111"
 release = 1
 description = "Event-driven initramfs infrastructure with UKI support"
 license = "GPL-2.0-or-later"
@@ -9,13 +9,13 @@ url = "https://github.com/dracut-ng/dracut-ng"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "a6bdbd55e2c40a6dd760f59626a6b70e7c8ee0ea46436b340dcedb6f4e54481b"
 url = "https://github.com/dracut-ng/dracut-ng/archive/${VERSION}/dracut-ng-${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/dracut-ng-${VERSION}
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib \
@@ -26,12 +26,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/dracut-ng-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/dracut-ng-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/wget2-${VERSION}
 ./configure --prefix=/usr      \
     --sysconfdir=/etc          \
     --with-ssl=gnutls          \
@@ -26,12 +26,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/wget2-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/wget2-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

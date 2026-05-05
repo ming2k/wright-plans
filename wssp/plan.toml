@@ -18,12 +18,12 @@ extract_to = "source"
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/wssp-${VERSION}
 cargo build --release'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/wssp-${VERSION}
 # Install binaries
 install -Dm755 target/release/wssp-daemon ${STAGING_DIR}/usr/bin/wssp-daemon
 install -Dm755 target/release/wssp-prompter ${STAGING_DIR}/usr/bin/wssp-prompter

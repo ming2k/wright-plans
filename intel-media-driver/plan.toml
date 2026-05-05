@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/intel-media-driver-${VERSION}
 cmake -B ${WORKDIR}/build -S ${WORKDIR} \
     -G "Unix Makefiles" \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -27,12 +27,12 @@ cmake -B ${WORKDIR}/build -S ${WORKDIR} \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/intel-media-driver-${VERSION}
 make -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/intel-media-driver-${VERSION}
 make -C ${WORKDIR}/build DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

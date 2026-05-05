@@ -1,6 +1,6 @@
 name = "systemd"
 version = "260.1"
-release = 5
+release = 8
 description = "System and Service Manager"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -27,14 +27,15 @@ path = "network-wait-online.conf"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/systemd-${VERSION}
 sed -i -e 's/GROUP="render"/GROUP="video"/' \
        -e 's/GROUP="sgx", //' \
-       rules.d/50-udev-default.rules.in'''
+       rules.d/50-udev-default.rules.in
+'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/systemd-${VERSION}
 meson setup build \
     --prefix=/usr \
     --buildtype=release \
@@ -48,6 +49,7 @@ meson setup build \
     -D shared-lib-tag="${VERSION}" \
     -D mode=release \
     -D install-tests=false \
+    -D tests=false \
     -D ldconfig=false \
     -D man=disabled \
     -D rpmmacrosdir=no \
@@ -82,36 +84,35 @@ meson setup build \
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/systemd-${VERSION}
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install
+cd source/systemd-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install
 
 # Preset only the services we opt into.
-install -Dm644 ${WORKDIR}/90-theseus.preset ${STAGING_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
+install -Dm644 ${WORKDIR}/systemd-90-theseus.preset ${STAGING_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
 
 # wait-online: single-NIC laptop policy — any interface online is enough,
 # and cap the wait at 20s so a missing secondary link never pins boot.
-install -Dm644 ${WORKDIR}/network-wait-online.conf \
-    ${STAGING_DIR}/usr/lib/systemd/system/systemd-networkd-wait-online.service.d/10-theseus.conf'''
+install -Dm644 ${WORKDIR}/systemd-network-wait-online.conf \
+    ${STAGING_DIR}/usr/lib/systemd/system/systemd-networkd-wait-online.service.d/10-theseus.conf
+'''
 
 [[output]]
 runtime_deps = ['acl', 'bash', 'cryptsetup', 'dbus', 'glibc', 'hwdata', 'kbd', 'kmod', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']
 backup = ["/etc/issue", "/etc/locale.conf", "/etc/nsswitch.conf", "/etc/vconsole.conf", "/etc/systemd/coredump.conf", "/etc/systemd/journald.conf", "/etc/systemd/logind.conf", "/etc/systemd/networkd.conf", "/etc/systemd/oomd.conf", "/etc/systemd/resolved.conf", "/etc/systemd/sleep.conf", "/etc/systemd/system.conf", "/etc/systemd/timesyncd.conf", "/etc/systemd/user.conf", "/etc/udev/iocost.conf", "/etc/udev/udev.conf"]
 
-[hooks]
+[output.hooks]
 post_install = '''
 ldconfig 2>/dev/null || true
 systemd-machine-id-setup 2>/dev/null || true
 systemctl preset-all 2>/dev/null || true
 systemctl daemon-reexec 2>/dev/null || true
-
 '''
 post_upgrade = '''
 ldconfig 2>/dev/null || true
 systemctl daemon-reexec 2>/dev/null || true
-
 '''

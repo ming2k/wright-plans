@@ -16,16 +16,15 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON -DHWY_ENABLE_EXAMPLES=OFF -DHWY_ENABLE_TESTS=OFF'''
+cd source/highway-${VERSION}
+cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON -DHWY_ENABLE_EXAMPLES=OFF -DHWY_ENABLE_TESTS=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
-cmake --build ${WORKDIR}/build'''
+cd source/highway-${VERSION}
+cmake --build build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build'''
-
+cd source/highway-${VERSION}
+DESTDIR=${STAGING_DIR} cmake --install build'''

@@ -24,7 +24,7 @@ sed -E 's|^.*(#define VIMRC_FILE.*").*$|\1|g' -i ${WORKDIR}/src/feature.h
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/vim-${VERSION}
 ./configure \
   --prefix=/usr \
   --localstatedir=/var/lib/vim \
@@ -44,12 +44,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/vim-${VERSION}
 make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/vim-${VERSION}
 make -j1 -C ${WORKDIR} VIMRCLOC=/etc DESTDIR=${STAGING_DIR} install
 
 # Remove files traditionally provided by (n)vi

@@ -1,6 +1,6 @@
 name = "llama.cpp"
 version = "b8693"
-release = 3
+release = 4
 description = "LLM inference in C/C++"
 license = "MIT"
 arch = "x86_64"
@@ -20,12 +20,12 @@ url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${VERSION}.tar.gz
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/llama.cpp-${VERSION}
 patch -Np1 < ${WORKDIR}/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch || true'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/llama.cpp-${VERSION}
 cmake -B build -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr/lib/llama.cpp \
@@ -36,12 +36,12 @@ cmake -B build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/llama.cpp-${VERSION}
 ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/llama.cpp-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

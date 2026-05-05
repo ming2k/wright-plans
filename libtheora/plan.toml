@@ -15,17 +15,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libtheora-${VERSION}
 ./configure --prefix=/usr --enable-shared --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libtheora-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libtheora-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

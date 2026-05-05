@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/flac-${VERSION}
 ./configure \
   --prefix=/usr \
   --disable-static \
@@ -29,12 +29,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/flac-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/flac-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

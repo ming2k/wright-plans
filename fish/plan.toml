@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/fish-${VERSION}
 cmake -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_SYSCONFDIR=/etc \
@@ -30,12 +30,12 @@ cmake -B build \
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/fish-${VERSION}
 make -C build -j$(nproc) VERBOSE=1'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/fish-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 
 [[output]]

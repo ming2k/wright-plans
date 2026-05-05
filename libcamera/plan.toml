@@ -1,5 +1,5 @@
 name = "libcamera"
-version = "0.7.0"
+version = "0.7.1"
 release = 1
 description = "Linux camera stack and framework"
 license = "LGPL-2.1-or-later AND GPL-2.0-or-later"
@@ -19,7 +19,8 @@ extract_to = "source"
 isolation = "relaxed"
 script = '''
 cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
+export CXXFLAGS="${CXXFLAGS:-} -Wno-error=array-bounds"
+meson setup build \
 --prefix=/usr                        \
 --buildtype=release                  \
 -D documentation=disabled            \
@@ -34,12 +35,12 @@ meson setup ${WORKDIR}/build ${WORKDIR} \
 [lifecycle.compile]
 script = '''
 cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
 cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['gnutls', 'libevent', 'libyaml', 'systemd', 'gstreamer', 'v4l-utils']

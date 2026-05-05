@@ -15,21 +15,21 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/libcap-${VERSION}
 sed -i '/install -m.*STA/d' libcap/Makefile'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libcap-${VERSION}
 make prefix=/usr lib=lib SBINDIR=/usr/bin -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/libcap-${VERSION}
 make test'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libcap-${VERSION}
 make prefix=/usr lib=lib SBINDIR=/usr/bin DESTDIR=${STAGING_DIR} install'''
 

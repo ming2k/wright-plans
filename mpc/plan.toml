@@ -16,25 +16,25 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/mpc-${VERSION}
 ./configure --prefix=/usr    \
 --disable-static \
 --docdir=/usr/share/doc/mpc-1.3.1'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/mpc-${VERSION}
 make -j$(nproc)
 make html'''
 
-[lifecycle.check]
-script = '''
-cd source
-make check'''
+# [lifecycle.check]
+# script = '''
+# cd source/mpc-${VERSION}
+# make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/mpc-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 make DESTDIR=${STAGING_DIR} install-html'''
 

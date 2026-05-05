@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/sysstat-${VERSION}
 sa_lib_dir=/usr/lib/sa \
 sa_dir=/var/log/sa \
 conf_dir=/etc/default \
@@ -31,12 +31,12 @@ conf_dir=/etc/default \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/sysstat-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/sysstat-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 
 if [ -d ${STAGING_DIR}/usr/sbin ]; then

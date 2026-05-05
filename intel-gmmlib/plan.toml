@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/intel-gmmlib-${VERSION}
 cmake -B ${WORKDIR}/build -S ${WORKDIR} \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -25,12 +25,12 @@ cmake -B ${WORKDIR}/build -S ${WORKDIR} \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/intel-gmmlib-${VERSION}
 make -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/intel-gmmlib-${VERSION}
 make -C ${WORKDIR}/build DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

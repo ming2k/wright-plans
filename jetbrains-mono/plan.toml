@@ -15,18 +15,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/jetbrains-mono-${VERSION}
 echo preparing jetbrains-mono'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/jetbrains-mono-${VERSION}
 rm -rf jbmono
 bsdtar xf ${WORKDIR}/JetBrainsMono-${VERSION}.zip -C jbmono'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/jetbrains-mono-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/share/fonts/jetbrains-mono
 find ${WORKDIR}/jbmono -name '*.ttf' -not -name '*NL*' -exec cp {} ${STAGING_DIR}/usr/share/fonts/jetbrains-mono/ \;'''
 

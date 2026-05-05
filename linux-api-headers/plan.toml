@@ -15,12 +15,12 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/linux-api-headers-${VERSION}
 echo preparing linux-api-headers'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/linux-api-headers-${VERSION}
 echo no compile stage for linux-api-headers'''
 
 [lifecycle.staging]

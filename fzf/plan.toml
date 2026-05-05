@@ -18,13 +18,13 @@ extract_to = "source"
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/fzf-${VERSION}
 export CGO_ENABLED=0
 go build -trimpath -ldflags "-s -w -X main.version=${VERSION}" -o bin/fzf .'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/fzf-${VERSION}
 install -Dm755 bin/fzf ${STAGING_DIR}/usr/bin/fzf
 install -Dm644 man/man1/fzf.1 ${STAGING_DIR}/usr/share/man/man1/fzf.1
 install -Dm644 shell/completion.bash ${STAGING_DIR}/usr/share/bash-completion/completions/fzf

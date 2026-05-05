@@ -16,12 +16,12 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/keyutils-${VERSION}
 make'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/keyutils-${VERSION}
 make \
   DESTDIR=${STAGING_DIR} \
   NO_ARLIB=1 \

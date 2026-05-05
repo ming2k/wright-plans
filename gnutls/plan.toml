@@ -16,19 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gnutls-${VERSION}
 ./configure --prefix=/usr          \
 --disable-static       \
 --with-default-trust-store-pkcs11="pkcs11:"'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gnutls-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gnutls-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

@@ -21,23 +21,23 @@ path = "patches/cpio-2.15-c23-conformity.patch"
 
 [lifecycle.prepare]
 script = '''
-cd source
-patch -Np1 -i ${WORKDIR}/cpio-2.15-c23-conformity.patch'''
+cd source/cpio-${VERSION}
+patch -Np1 -i ${WORKDIR}/cpio-cpio-2.15-c23-conformity.patch'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/cpio-${VERSION}
 ./configure --prefix=/usr --with-rmt=/dev/null'''
 
 [lifecycle.compile]
 script = '''
-cd source
-make -j$(nproc) -C ${WORKDIR}'''
+cd source/cpio-${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
+cd source/cpio-${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]
 runtime_deps = ['glibc']

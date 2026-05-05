@@ -15,19 +15,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/inter-font-${VERSION}
 echo preparing inter-font'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/inter-font-${VERSION}
 rm -rf inter-extracted
 mkdir -p inter-extracted
 bsdtar xf ${WORKDIR}/Inter-${VERSION}.zip -C inter-extracted'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/inter-font-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/share/fonts/inter
 find ${WORKDIR}/inter-extracted -name '*.ttf' -exec cp {} ${STAGING_DIR}/usr/share/fonts/inter/ \;'''
 

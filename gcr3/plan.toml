@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gcr3-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dintrospection=true'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gcr3-${VERSION}
 meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gcr3-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''
 
 [[output]]

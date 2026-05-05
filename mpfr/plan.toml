@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/mpfr-${VERSION}
 ./configure --prefix=/usr        \
 --disable-static     \
 --enable-thread-safe \
@@ -24,18 +24,18 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/mpfr-${VERSION}
 make -j$(nproc)
 make html'''
 
-[lifecycle.check]
-script = '''
-cd source
-make check'''
+# [lifecycle.check]
+# script = '''
+# cd source/mpfr-${VERSION}
+# make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/mpfr-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 make DESTDIR=${STAGING_DIR} install-html'''
 

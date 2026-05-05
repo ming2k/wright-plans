@@ -17,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libdecor-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Ddemo=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libdecor-${VERSION}
 ninja -j$(nproc) -C ${WORKDIR}/build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/libdecor-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['cairo', 'pango', 'wayland', 'libxkbcommon']

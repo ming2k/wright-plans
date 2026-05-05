@@ -16,23 +16,23 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/swig-${VERSION}
 ./autogen.sh'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/swig-${VERSION}
 ./configure --prefix=/usr \
             --with-pcre2'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/swig-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/swig-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

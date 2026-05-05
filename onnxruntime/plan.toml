@@ -21,7 +21,7 @@ timeout = 3600
 [lifecycle.configure]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/onnxruntime-${VERSION}
 cmake --compile-no-warning-as-error \
   -S cmake -B build -G Ninja \
   -Wno-dev \
@@ -40,12 +40,12 @@ cmake --compile-no-warning-as-error \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/onnxruntime-${VERSION}
 ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/onnxruntime-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

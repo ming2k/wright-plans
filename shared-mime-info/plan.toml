@@ -6,7 +6,8 @@ license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/xdg/shared-mime-info"
 
-build_deps = ['meson', 'ninja']
+link_deps = ['glib', 'libxml2']
+build_deps = ['gettext', 'meson', 'ninja', 'pkgconf']
 
 [[sources]]
 type = "http"
@@ -16,22 +17,27 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
+cd source/shared-mime-info-${VERSION}
+sed -i '/^if xmlto\.found()/,/^endif$/d' data/meson.build
+meson setup build \
     --prefix=/usr          \
     --buildtype=release    \
-    -D update-mimedb=false'''
+    -D update-mimedb=false \
+    -D build-tests=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/shared-mime-info-${VERSION}
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/shared-mime-info-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[hooks]
+[[output]]
+runtime_deps = ['glib', 'libxml2']
+
+[output.hooks]
 post_install = "update-mime-database /usr/share/mime 2>/dev/null || true"
 post_upgrade = "update-mime-database /usr/share/mime 2>/dev/null || true"

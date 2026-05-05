@@ -15,17 +15,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/godot-bin-${VERSION}
 echo preparing godot-bin'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/godot-bin-${VERSION}
 chmod 755 Godot_v${VERSION}-stable_linux.x86_64'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/godot-bin-${VERSION}
 install -Dm755 ${WORKDIR}/Godot_v${VERSION}-stable_linux.x86_64 ${STAGING_DIR}/usr/lib/godot-bin/godot
 
 install -Dm755 /dev/stdin ${STAGING_DIR}/usr/bin/godot <<'EOF'

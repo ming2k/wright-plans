@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/ocl-icd-${VERSION}
 cmake -B build -G Ninja -S OpenCL-ICD-Loader-* -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DOPENCL_ICD_LOADER_HEADERS_DIR=/usr/include'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/ocl-icd-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/ocl-icd-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

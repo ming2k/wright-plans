@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gmime-${VERSION}
 ./configure --prefix=/usr \
     --disable-static \
     --disable-maintainer-mode \
@@ -25,12 +25,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gmime-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gmime-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

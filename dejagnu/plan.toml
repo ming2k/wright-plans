@@ -15,25 +15,25 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/dejagnu-${VERSION}
 mkdir -v build
 cd build
 ../configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/dejagnu-${VERSION}/build
 makeinfo --html --no-split -o doc/dejagnu.html ../doc/dejagnu.texi
 makeinfo --plaintext       -o doc/dejagnu.txt  ../doc/dejagnu.texi'''
 
 [lifecycle.check]
 script = '''
-cd source/build
+cd source/dejagnu-${VERSION}/build
 make check'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/dejagnu-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install
 install -v -dm755  ${STAGING_DIR}/usr/share/doc/dejagnu-1.6.3
 install -v -m644   doc/dejagnu.{html,txt} ${STAGING_DIR}/usr/share/doc/dejagnu-1.6.3'''

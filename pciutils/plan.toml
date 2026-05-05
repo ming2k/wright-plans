@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/pciutils-${VERSION}
 make PREFIX=/usr \
      SHAREDIR=/usr/share/hwdata \
      SHARED=yes \
@@ -25,7 +25,7 @@ make PREFIX=/usr \
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/pciutils-${VERSION}
 make PREFIX=/usr \
      SBINDIR=/usr/bin \
      SHAREDIR=/usr/share/hwdata \

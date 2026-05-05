@@ -15,16 +15,24 @@ sha256 = "SKIP"
 url = "https://github.com/ccache/ccache/releases/download/v${VERSION}/ccache-${VERSION}.tar.xz"
 extract_to = "source"
 
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/Cyan4973/xxhash/archive/refs/tags/v0.8.3.tar.gz"
+extract_to = "source/xxhash-src"
+
 [lifecycle.configure]
 script = '''
+XXHASH_SRC=$(realpath source/xxhash-src/xxHash-*)
 cd source/ccache-${VERSION}
 cmake -B build -G Ninja \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=Release \
   -DENABLE_TESTING=OFF \
   -DCCACHE_DEV_MODE=OFF \
+  -DREDIS_STORAGE_BACKEND=OFF \
   -DZSTD_FROM_INTERNET=OFF \
-  -DHIREDIS_FROM_INTERNET=OFF'''
+  -DFETCHCONTENT_SOURCE_DIR_XXHASH="$XXHASH_SRC"'''
 
 [lifecycle.compile]
 script = '''

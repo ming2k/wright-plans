@@ -15,19 +15,19 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/grub-${VERSION}
 echo depends bli part_gpt > grub-core/extra_deps.lst'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/grub-${VERSION}
 # Configure and compile are combined — GRUB requires two separate
 # configure/make cycles for BIOS and EFI platforms.
 echo "Skipping standalone configure — handled in compile stage."'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/grub-${VERSION}
 unset {C,CPP,CXX,LD}FLAGS
 
 # ── Build 1: BIOS (i386-pc) ──────────────────────────────────────────────────
@@ -42,7 +42,7 @@ cd build-bios
 make -j$(nproc)
 
 # ── Build 2: UEFI (x86_64-efi) ───────────────────────────────────────────────
-cd source
+cd source/grub-${VERSION}
 mkdir -p build-efi
 cd build-efi
 ../configure --prefix=/usr          \
@@ -55,7 +55,7 @@ make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/grub-${VERSION}
 
 # Install BIOS build first, then EFI on top (shared tools are identical)
 cd build-bios

@@ -1,5 +1,5 @@
 name = "quickshell"
-version = "0.2.1"
+version = "0.3.0"
 release = 1
 description = "Flexible QtQuick based desktop shell toolkit"
 license = "LGPL-3.0-only"
@@ -11,24 +11,44 @@ build_deps = ['wayland-protocols', 'cmake', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "d815c5f99f4a0a28545ffaa90464420c773b7c0ab62f713d9d8735a8e7282ca7"
+sha256 = "f4821f9084cab04bd2b5384cc92b9726aecc4ce3eb27200dca24edc67da3b6e5"
 url = "https://git.outfoxxed.me/quickshell/quickshell/archive/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_EXE_LINKER_FLAGS="-Wl,--allow-multiple-definition" -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--allow-multiple-definition" -DCMAKE_MODULE_LINKER_FLAGS="-Wl,--allow-multiple-definition" -DX11=OFF -DCRASH_REPORTER=OFF -DUSE_JEMALLOC=ON -DWAYLAND=ON -DWAYLAND_WLR_LAYERSHELL=ON -DWAYLAND_SESSION_LOCK=ON -DWAYLAND_TOPLEVEL_MANAGEMENT=ON -DSCREENCOPY=ON -DHYPRLAND=OFF -DI3=OFF -DSERVICE_PIPEWIRE=ON -DSERVICE_STATUS_NOTIFIER=ON -DSERVICE_MPRIS=ON -DSERVICE_PAM=ON -DSERVICE_POLKIT=ON'''
+cd source/quickshell
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+    -DCMAKE_EXE_LINKER_FLAGS="-Wl,--allow-multiple-definition" \
+    -DCMAKE_SHARED_LINKER_FLAGS="-Wl,--allow-multiple-definition" \
+    -DCMAKE_MODULE_LINKER_FLAGS="-Wl,--allow-multiple-definition" \
+    -DX11=OFF \
+    -DCRASH_HANDLER=OFF \
+    -DUSE_JEMALLOC=OFF \
+    -DWAYLAND=ON \
+    -DWAYLAND_WLR_LAYERSHELL=ON \
+    -DWAYLAND_SESSION_LOCK=ON \
+    -DWAYLAND_TOPLEVEL_MANAGEMENT=ON \
+    -DSCREENCOPY=ON \
+    -DHYPRLAND=OFF \
+    -DI3=OFF \
+    -DSERVICE_PIPEWIRE=ON \
+    -DSERVICE_STATUS_NOTIFIER=ON \
+    -DSERVICE_MPRIS=ON \
+    -DSERVICE_PAM=ON \
+    -DSERVICE_POLKIT=ON'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/quickshell
 cmake --build build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/quickshell
 DESTDIR=${STAGING_DIR} cmake --install build'''
 
 [[output]]
-runtime_deps = ['jemalloc', 'polkit', 'qt6-base', 'qt6-declarative', 'qt6-svg', 'qt6-wayland', 'libdrm', 'pipewire', 'wayland']
+runtime_deps = ['polkit', 'qt6-base', 'qt6-declarative', 'qt6-svg', 'qt6-wayland', 'libdrm', 'pipewire', 'wayland']

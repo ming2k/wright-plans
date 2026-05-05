@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/dnsmasq-${VERSION}
 make \
     CFLAGS="${CFLAGS}" \
     LDFLAGS="${LDFLAGS}" \
@@ -30,7 +30,7 @@ make all -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/dnsmasq-${VERSION}
 make \
     COPTS="-DHAVE_DNSSEC -DHAVE_DBUS -DHAVE_LIBIDN2 -DHAVE_CONNTRACK -DHAVE_NFTSET" \
     PREFIX=/usr \

@@ -15,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/findutils-${VERSION}
 ./configure --prefix=/usr --localstatedir=/var/lib/locate'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/findutils-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/findutils-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

@@ -18,26 +18,26 @@ extract_to = "source"
 [lifecycle.prepare]
 isolation = "none"
 script = '''
-cd source
+cd source/fuse-overlayfs-${VERSION}
 autoreconf -fi'''
 
 [lifecycle.configure]
 isolation = "none"
 env = { ac_cv_path_MD2MAN = '' }
 script = '''
-cd source
+cd source/fuse-overlayfs-${VERSION}
 ./configure --prefix=/usr --bindir=/usr/bin'''
 
 [lifecycle.compile]
 isolation = "none"
 script = '''
-cd source
+cd source/fuse-overlayfs-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 isolation = "none"
 script = '''
-cd source
+cd source/fuse-overlayfs-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

@@ -18,12 +18,12 @@ extract_to = "source"
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/tree-sitter-cli-${VERSION}
 cargo build --release --locked -p tree-sitter-cli'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/tree-sitter-cli-${VERSION}
 install -Dm755 target/release/tree-sitter ${STAGING_DIR}/usr/bin/tree-sitter'''
 
 [[output]]

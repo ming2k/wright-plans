@@ -15,31 +15,33 @@ sha256 = "ab38928f7f6248e2a98cc184956021acb927b16a0dee71b4d260dc040a4320ea"
 url = "https://github.com/libjxl/libjxl/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
-script = '''
-cd source
-
-# Patch deps.sh to use GitHub mirror for skcms instead of skia.googlesource.com
-sed -i 's|"https://skia.googlesource.com/skcms/+archive/"|google/skcms|' deps.sh
-
-# skcms now uses GitHub like the others, so it needs strip-components=1
-# Fix the download function: when project is not a URL, it uses GitHub with strip_components=1
-./deps.sh'''
-
 [lifecycle.configure]
 script = '''
-cd source
-cmake -B build -G Ninja -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DJPEGXL_ENABLE_BENCHMARK=OFF -DJPEGXL_ENABLE_EXAMPLES=OFF -DJPEGXL_ENABLE_TESTS=OFF -DJPEGXL_FORCE_SYSTEM_BROTLI=ON -DJPEGXL_FORCE_SYSTEM_HWY=ON -DJPEGXL_FORCE_SYSTEM_LCMS2=ON'''
+cd source/libjxl-${VERSION}
+cmake -B build -G Ninja \
+  -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++ \
+  -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_TESTING=OFF \
+  -DJPEGXL_ENABLE_BENCHMARK=OFF \
+  -DJPEGXL_ENABLE_EXAMPLES=OFF \
+  -DJPEGXL_ENABLE_TESTS=OFF \
+  -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
+  -DJPEGXL_FORCE_SYSTEM_HWY=ON \
+  -DJPEGXL_FORCE_SYSTEM_LCMS2=ON \
+  -DJPEGXL_ENABLE_SKCMS=OFF \
+  -DJPEGXL_ENABLE_SJPEG=OFF \
+  -DJPEGXL_BUNDLE_LIBPNG=OFF \
+  -DJPEGXL_ENABLE_JPEGLI=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build'''
+cd source/libjxl-${VERSION}
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/libjxl-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['brotli', 'hwy', 'lcms2', 'libjpeg-turbo', 'libpng']

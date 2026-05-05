@@ -16,19 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libxslt-${VERSION}
 ./configure --prefix=/usr                 \
 --disable-static              \
 --docdir=/usr/share/doc/libxslt-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libxslt-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libxslt-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

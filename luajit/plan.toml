@@ -15,17 +15,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/luajit-${VERSION}
 echo "LuaJIT uses the upstream make-based build"'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/luajit-${VERSION}
 make -j$(nproc) PREFIX=/usr XCFLAGS='-fPIC''''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/luajit-${VERSION}
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install
 
 mkdir -p ${STAGING_DIR}/usr/lib/pkgconfig

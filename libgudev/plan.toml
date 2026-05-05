@@ -17,19 +17,19 @@ extract_to = "source"
 [lifecycle.configure]
 script = '''
 # 修复：必须先进入源码目录
-cd source
+cd source/libgudev-${VERSION}
 
 # 修正 meson 调用方式：指定构建目录为 'build'
 meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Dintrospection=enabled -Dvapi=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/libgudev-${VERSION}/build
 ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/libgudev-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
 [[output]]

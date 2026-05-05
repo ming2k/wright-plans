@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libblockdev-${VERSION}
 autoreconf -fi
 ./configure --prefix=/usr \
   --with-gtk-doc=no \
@@ -30,12 +30,12 @@ autoreconf -fi
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libblockdev-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libblockdev-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 
 if [ -d ${STAGING_DIR}/usr/etc ]; then

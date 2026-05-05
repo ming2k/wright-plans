@@ -18,19 +18,19 @@ extract_to = "source"
 [lifecycle.configure]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/glycin-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dtests=false -Dvapi=false'''
 
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/glycin-${VERSION}
+meson compile -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
+cd source/glycin-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}'''
 
 [[output]]
 runtime_deps = ['bubblewrap', 'glib', 'gtk4', 'lcms2', 'fontconfig', 'libjpeg-turbo', 'libpng', 'libheif', 'libjxl', 'librsvg']

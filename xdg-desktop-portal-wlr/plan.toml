@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/xdg-desktop-portal-wlr-${VERSION}
 meson setup build \
   --prefix=/usr \
   --sysconfdir=/etc \
@@ -27,12 +27,12 @@ meson setup build \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/xdg-desktop-portal-wlr-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/xdg-desktop-portal-wlr-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

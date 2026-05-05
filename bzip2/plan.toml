@@ -9,21 +9,13 @@ url = "https://www.sourceware.org/bzip2/"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269"
 url = "https://www.sourceware.org/pub/bzip2/bzip2-${VERSION}.tar.gz"
 extract_to = "source"
-
-[[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "patches/bzip2-1.0.8-install_docs-1.patch"
 
 [lifecycle.prepare]
 script = '''
 cd source/bzip2-${VERSION}
-
-# Apply documentation install patch
-patch -Np1 -i ${WORKDIR}/bzip2-bzip2-1.0.8-install_docs-1.patch
 
 # Ensure symbolic links are relative
 sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile

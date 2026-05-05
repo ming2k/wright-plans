@@ -14,17 +14,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/zig-${VERSION}
 '''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/zig-${VERSION}
 '''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/zig-${VERSION}
 install -dm755 ${STAGING_DIR}/usr/lib/zig
 
 # The tarball extracts to a single directory like zig-x86_64-linux-0.16.0/

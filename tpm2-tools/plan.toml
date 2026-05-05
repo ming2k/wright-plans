@@ -1,6 +1,6 @@
 name = "tpm2-tools"
 version = "5.7"
-release = 1
+release = 2
 description = "The source repository for the Trusted Platform Module (TPM2.0) tools"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -16,19 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/tpm2-tools-${VERSION}
 ./configure \
     --prefix=/usr \
     --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/tpm2-tools-${VERSION}
 make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/tpm2-tools-${VERSION}
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

@@ -10,13 +10,13 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-1.28.0.tar.xz"
+sha256 = "4db76b3619280037a4047de7d9dbb38613a4272dcc40efb333257124635a888d"
+url = "https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gst-plugins-base-${VERSION}
 # 确保能找到 gstreamer-1.0.pc
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
 
@@ -24,12 +24,12 @@ meson setup build --prefix=/usr -Dtests=disabled -Ddoc=disabled -Dintrospection=
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/gst-plugins-base-${VERSION}/build
 ninja -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/gst-plugins-base-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
 [[output]]

@@ -22,23 +22,23 @@ path = "lto.patch"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/potrace-${VERSION}
 patch -Np1 < ${WORKDIR}/lto.patch
 autoreconf -fiv'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/potrace-${VERSION}
 ./configure --prefix=/usr --mandir=/usr/share/man --with-libpotrace'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/potrace-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/potrace-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

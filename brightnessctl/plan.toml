@@ -15,12 +15,12 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/brightnessctl-${VERSION}
 make ENABLE_SYSTEMD=1'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/brightnessctl-${VERSION}
 make install DESTDIR=${STAGING_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0'''
 
 [[output]]

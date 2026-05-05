@@ -17,16 +17,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/cli11-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/cli11-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/cli11-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 

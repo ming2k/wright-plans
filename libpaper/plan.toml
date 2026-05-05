@@ -20,24 +20,24 @@ path = "localepaper.c"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/libpaper-${VERSION}
 cp ${WORKDIR}/localepaper.c ${WORKDIR}/src/'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libpaper-${VERSION}
 ./configure --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libpaper-${VERSION}
 make -j$(nproc)
 cd src
 gcc $CFLAGS $LDFLAGS -I.. -Ilibgnu -o localepaper localepaper.c libgnu/.libs/libgnupaper.a'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libpaper-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 install -Dt ${STAGING_DIR}/usr/lib -m0755 src/localepaper
 install -dm755 ${STAGING_DIR}/etc

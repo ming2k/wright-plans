@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/wl-clipboard-${VERSION}
 meson setup build --prefix=/usr --buildtype=release'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/wl-clipboard-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/wl-clipboard-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

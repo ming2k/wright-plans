@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/x264-*
 ./configure --prefix=/usr \
             --enable-shared \
             --disable-static \
@@ -24,11 +24,11 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/x264-*
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/x264-*
 make DESTDIR=${STAGING_DIR} install'''
 

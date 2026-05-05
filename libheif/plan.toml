@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libheif-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_LIBDE265=ON -DENABLE_DAV1D=ON -DENABLE_AOM=ON -DWITH_EXAMPLES=OFF -DWITH_GDK_PIXBUF=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build'''
+cd source/libheif-${VERSION}
+ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/libheif-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['libde265', 'dav1d', 'aom', 'libjpeg-turbo', 'libpng']

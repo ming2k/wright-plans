@@ -17,8 +17,8 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
+cd source/mpv-${VERSION}
+meson setup build \
 --prefix=/usr \
 --buildtype=release \
 -D libmpv=true \
@@ -38,13 +38,13 @@ meson setup ${WORKDIR}/build ${WORKDIR} \
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/mpv-${VERSION}
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/mpv-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['alsa-lib', 'ffmpeg', 'lcms2', 'libass', 'libdrm', 'libplacebo', 'libva', 'luajit', 'mesa', 'pipewire', 'vulkan-loader', 'wayland', 'libxkbcommon']

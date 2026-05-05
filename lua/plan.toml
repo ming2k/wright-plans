@@ -16,12 +16,12 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/lua-${VERSION}
 sed -i 's/^CFLAGS=.*/CFLAGS= -O2 -Wall -Wextra -DLUA_COMPAT_5_3 -fPIC $(SYSCFLAGS) $(MYCFLAGS)/' src/Makefile'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/lua-${VERSION}
 make -j$(nproc) linux-readline
 # Build shared library from the PIC-compiled archive objects
 cd source/src
@@ -31,7 +31,7 @@ ${CC:-gcc} -shared -fPIC -Wl,-soname,liblua.so.5.4 \
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/lua-${VERSION}
 make INSTALL_TOP=${STAGING_DIR}/usr INSTALL_MAN=${STAGING_DIR}/usr/share/man/man1 install
 
 # Install shared library

@@ -15,22 +15,22 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/m4-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/m4-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/m4-${VERSION}
 make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/m4-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 rm -f ${STAGING_DIR}/usr/share/info/dir'''
 

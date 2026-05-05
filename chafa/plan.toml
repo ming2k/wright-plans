@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/chafa-${VERSION}
 ./configure \
   --prefix=/usr \
   --disable-static \
@@ -25,12 +25,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/chafa-${VERSION}
 make -C ${WORKDIR} -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/chafa-${VERSION}
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

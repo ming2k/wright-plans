@@ -1,6 +1,6 @@
 name = "rsync"
 version = "3.4.1"
-release = 1
+release = 2
 description = "A fast and versatile file copying tool for remote and local files"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/rsync-${VERSION}
 ./configure --prefix=/usr    \
 --disable-xxhash             \
 --without-included-popt      \
@@ -24,12 +24,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/rsync-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/rsync-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

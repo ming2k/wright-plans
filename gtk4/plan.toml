@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gtk-${VERSION}
 meson setup build \
     --prefix=/usr \
     --buildtype=release \
@@ -34,13 +34,13 @@ meson setup build \
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/gtk-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}
+cd source/gtk-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}
 
 pc_file="${STAGING_DIR}/usr/lib/pkgconfig/gtk4.pc"
 if [ -f "${pc_file}" ]; then
@@ -49,7 +49,10 @@ if [ -f "${pc_file}" ]; then
     fi
 fi'''
 
-[hooks]
+[[output]]
+runtime_deps = ['adwaita-icon-theme', 'shared-mime-info', 'iso-codes', 'glib', 'pango', 'cairo', 'gdk-pixbuf', 'libpng', 'libjpeg-turbo', 'libtiff', 'graphene', 'libepoxy', 'libxkbcommon', 'wayland', 'vulkan-loader']
+
+[output.hooks]
 post_install = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
@@ -62,6 +65,3 @@ gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
 gtk4-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
 
 '''
-
-[[output]]
-runtime_deps = ['adwaita-icon-theme', 'shared-mime-info', 'iso-codes', 'glib', 'pango', 'cairo', 'gdk-pixbuf', 'libpng', 'libjpeg-turbo', 'libtiff', 'graphene', 'libepoxy', 'libxkbcommon', 'wayland', 'vulkan-loader']

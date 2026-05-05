@@ -17,12 +17,12 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/gdb-${VERSION}
 mkdir -v build'''
 
 [lifecycle.configure]
 script = '''
-cd source/build
+cd source/gdb-${VERSION}/build
 ../configure --prefix=/usr \
     --with-system-readline \
     --with-python=/usr/bin/python3 \
@@ -35,12 +35,12 @@ cd source/build
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/gdb-${VERSION}/build
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/gdb-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install
 
 # Remove static libraries

@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-./configure --prefix=/usr --disable-static'''
+cd source/tiff-${VERSION}
+./configure --prefix=/usr --disable-static --disable-docs'''
 
 [lifecycle.compile]
 script = '''
-cd source
-make -C ${WORKDIR} -j$(nproc)'''
+cd source/tiff-${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
+cd source/tiff-${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]
 runtime_deps = ['zlib', 'libjpeg-turbo']

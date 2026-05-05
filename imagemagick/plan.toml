@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/imagemagick-${VERSION}
 ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
@@ -39,12 +39,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/imagemagick-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/imagemagick-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 
 test -x ${STAGING_DIR}/usr/bin/magick'''

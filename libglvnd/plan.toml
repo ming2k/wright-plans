@@ -16,19 +16,14 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-# 纯 Wayland 环境配置：
-# -Dglx=disabled: 禁用 GLX (依赖 X11)
-# -Dx11=disabled: 禁用 X11 支持
+cd source/libglvnd-v${VERSION}
 meson setup build --prefix=/usr --libdir=lib -Dglx=disabled -Dx11=disabled -Dheaders=true'''
 
 [lifecycle.compile]
 script = '''
-cd source/build
-ninja -j$(nproc)'''
+ninja -C source/libglvnd-v${VERSION}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
-DESTDIR=${STAGING_DIR} ninja install'''
+DESTDIR=${STAGING_DIR} ninja -C source/libglvnd-v${VERSION}/build install'''
 

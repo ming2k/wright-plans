@@ -21,17 +21,17 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/tzdata-${VERSION}
 sed -i "s:sbin:bin:g" Makefile'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/tzdata-${VERSION}
 make CC=gcc LFLAGS="${LDFLAGS}" -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/tzdata-${VERSION}
 
 # Install tzcode tools (zic, zdump, tzselect)
 make CC=gcc DESTDIR=${STAGING_DIR} install

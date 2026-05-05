@@ -15,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/bison-${VERSION}
 ./configure --prefix=/usr --docdir=/usr/share/doc/bison-${VERSION}'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/bison-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/bison-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

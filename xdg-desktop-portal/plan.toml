@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/xdg-desktop-portal-${VERSION}
 meson setup build --prefix=/usr --sysconfdir=/etc --localstatedir=/var --buildtype=release -Dsystemd=enabled -Dgeoclue=disabled -Dman-pages=disabled -Dtests=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/xdg-desktop-portal-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/xdg-desktop-portal-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

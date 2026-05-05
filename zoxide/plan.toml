@@ -19,12 +19,12 @@ extract_to = "source"
 isolation = "relaxed"
 env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
 script = '''
-cd source
+cd source/zoxide-${VERSION}
 cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/zoxide-${VERSION}
 install -Dm755 target/release/zoxide ${STAGING_DIR}/usr/bin/zoxide
 install -Dm644 contrib/completions/zoxide.bash ${STAGING_DIR}/usr/share/bash-completion/completions/zoxide
 install -Dm644 contrib/completions/_zoxide     ${STAGING_DIR}/usr/share/zsh/site-functions/_zoxide

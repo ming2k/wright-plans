@@ -11,12 +11,12 @@ build_deps = ['cmake']
 [[sources]]
 type = "http"
 sha256 = "6c4c0c44ff0ba3d136d6f57f3a707f9de8e9c866f50f809c1d22a43f0d8c9583"
-url = "https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v4.1.0/SVT-AV1-v4.1.0.tar.gz"
+url = "https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v${VERSION}/SVT-AV1-v${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/SVT-AV1-v${VERSION}
 cmake -B build \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
@@ -26,11 +26,11 @@ cmake -B build \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/SVT-AV1-v${VERSION}
 cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/SVT-AV1-v${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 

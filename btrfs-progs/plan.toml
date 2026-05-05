@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/btrfs-progs-${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static --disable-documentation --with-crypto=libgcrypt'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/btrfs-progs-${VERSION}
 make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/btrfs-progs-${VERSION}
 make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
 
 [hooks]

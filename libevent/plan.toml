@@ -1,6 +1,6 @@
 name = "libevent"
 version = "2.1.12-stable"
-release = 1
+release = 2
 description = "An event notification library for developing asynchronous applications"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libevent-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libevent-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libevent-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

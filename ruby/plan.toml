@@ -1,5 +1,5 @@
 name = "ruby"
-version = "4.0.1"
+version = "4.0.3"
 release = 1
 description = "An interpreted object-oriented programming language"
 license = "BSD-2-Clause"
@@ -10,24 +10,24 @@ link_deps = ['gmp', 'libffi', 'libyaml', 'openssl', 'readline', 'zlib']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://cache.ruby-lang.org/pub/ruby/4.0/ruby-4.0.1.tar.gz"
+url = "https://cache.ruby-lang.org/pub/ruby/4.0/ruby-${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/ruby-${VERSION}
 # --enable-shared: 构建 libruby.so
 # --disable-install-doc: 跳过文档安装以节省时间和空间
 ./configure --prefix=/usr --enable-shared --disable-install-doc --with-openssl-dir=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/ruby-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/ruby-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

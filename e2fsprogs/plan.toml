@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/e2fsprogs-${VERSION}
 mkdir -p build && cd build
 ../configure --prefix=/usr          \
 --with-root-prefix=''   \
@@ -30,12 +30,12 @@ mkdir -p build && cd build
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/e2fsprogs-${VERSION}/build
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/e2fsprogs-${VERSION}/build
 DESTDIR=${STAGING_DIR} make install
 DESTDIR=${STAGING_DIR} make install-libs
 

@@ -17,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/xdg-utils-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/xdg-utils-${VERSION}
 sed -i 's#^XMLTO[[:space:]]*=.*#XMLTO           = /usr/bin/xmlto --skip-validation#' scripts/Makefile
 export LYNX_CFG=/etc/lynx.cfg
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/xdg-utils-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

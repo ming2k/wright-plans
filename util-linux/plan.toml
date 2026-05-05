@@ -17,12 +17,12 @@ extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
+cd source/util-linux-${VERSION}
+DESTDIR=${STAGING_DIR} meson install -C build'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/util-linux-${VERSION}
 
 # Tool ownership policy:
 #   login, su, chfn, chsh, newgrp, nologin, vipw/vigr — owned by shadow
@@ -51,8 +51,8 @@ meson setup build \
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build -j$(nproc)'''
+cd source/util-linux-${VERSION}
+meson compile -C build -j$(nproc)'''
 
 [[output]]
 runtime_deps = ['glibc', 'ncurses', 'zlib', 'libcap', 'linux-pam', 'readline']

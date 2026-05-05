@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/glfw-${VERSION}
 cmake -B build \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=Release \
@@ -30,12 +30,12 @@ cmake -B build \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/glfw-${VERSION}
 cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/glfw-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 
 [[output]]

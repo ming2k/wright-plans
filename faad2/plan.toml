@@ -18,17 +18,17 @@ extract_to = "source"
 [lifecycle.configure]
 script = '''
 mkdir -p ${WORKDIR}/build
-cd source/build
+cd source/faad2-${VERSION}/build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS=ON'''
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/faad2-${VERSION}/build
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/faad2-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

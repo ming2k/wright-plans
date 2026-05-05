@@ -1,6 +1,6 @@
 name = "openssh"
 version = "10.3p1"
-release = 7
+release = 8
 description = "Free implementation of the SSH protocol suite"
 license = "BSD-2-Clause"
 arch = "x86_64"
@@ -41,7 +41,7 @@ path = "openssh.tmpfiles"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/openssh-${VERSION}
 # --with-privsep-user=nobody: no dedicated sshd user needed
 # --with-security-key-builtin omitted: requires libfido2 (not yet packaged)
 # --with-xauth omitted: pure Wayland system, no X11
@@ -60,30 +60,30 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/openssh-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/openssh-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 
 # ── Systemd system units ──────────────────────────────────────────────────────
-install -Dm644 ${WORKDIR}/sshd.service         ${STAGING_DIR}/usr/lib/systemd/system/sshd.service
+install -Dm644 ${WORKDIR}/openssh-sshd.service         ${STAGING_DIR}/usr/lib/systemd/system/sshd.service
 
 # ── Systemd user units (ssh-agent) ────────────────────────────────────────────
-install -Dm644 ${WORKDIR}/ssh-agent.service    ${STAGING_DIR}/usr/lib/systemd/user/ssh-agent.service
-install -Dm644 ${WORKDIR}/ssh-agent.socket     ${STAGING_DIR}/usr/lib/systemd/user/ssh-agent.socket
+install -Dm644 ${WORKDIR}/openssh-ssh-agent.service    ${STAGING_DIR}/usr/lib/systemd/user/ssh-agent.service
+install -Dm644 ${WORKDIR}/openssh-ssh-agent.socket     ${STAGING_DIR}/usr/lib/systemd/user/ssh-agent.socket
 
 # ── tmpfiles (privilege separation chroot) ────────────────────────────────────
-install -Dm644 ${WORKDIR}/openssh.tmpfiles     ${STAGING_DIR}/usr/lib/tmpfiles.d/openssh.conf
+install -Dm644 ${WORKDIR}/openssh-openssh.tmpfiles     ${STAGING_DIR}/usr/lib/tmpfiles.d/openssh.conf
 
 # ── Factory defaults (pristine upstream configs for reference) ────────────────
 install -Dm644 ${STAGING_DIR}/etc/ssh/ssh_config     ${STAGING_DIR}/usr/share/factory/etc/ssh/ssh_config
 install -Dm644 ${STAGING_DIR}/etc/ssh/sshd_config    ${STAGING_DIR}/usr/share/factory/etc/ssh/sshd_config
 
 # ── PAM configuration ─────────────────────────────────────────────────────────
-install -Dm644 ${WORKDIR}/sshd.pam             ${STAGING_DIR}/etc/pam.d/sshd
+install -Dm644 ${WORKDIR}/openssh-sshd.pam             ${STAGING_DIR}/etc/pam.d/sshd
 
 # ── Permissions ───────────────────────────────────────────────────────────────
 # ssh-keysign needs setuid for host-based authentication
@@ -95,13 +95,12 @@ fi'''
 runtime_deps = ['shadow', 'glibc', 'libedit', 'linux-pam', 'openssl', 'zlib', 'libxcrypt']
 backup = ["/etc/ssh/ssh_config", "/etc/ssh/sshd_config", "/etc/pam.d/sshd"]
 
-[hooks]
-post_install = '''
+hooks.post_install = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 
 '''
-post_upgrade = '''
+hooks.post_upgrade = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 

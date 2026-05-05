@@ -16,12 +16,12 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/btop-${VERSION}
 make all -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/btop-${VERSION}
 make DESTDIR=${STAGING_DIR} PREFIX=/usr install'''
 
 [hooks]

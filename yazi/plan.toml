@@ -19,12 +19,12 @@ extract_to = "source"
 isolation = "relaxed"
 env = { YAZI_GEN_COMPLETIONS = 'true' }
 script = '''
-cd source
+cd source/yazi-${VERSION}
 cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/yazi-${VERSION}
 install -Dm755 target/release/yazi ${STAGING_DIR}/usr/bin/yazi
 install -Dm755 target/release/ya   ${STAGING_DIR}/usr/bin/ya
 

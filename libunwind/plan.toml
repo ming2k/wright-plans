@@ -14,7 +14,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libunwind-${VERSION}
 # CFLAGS修复:
 # -Wno-error: 防止 'unreachable' 重定义警告变成错误
 # -std=gnu99: 使用旧标准以获得更好的兼容性
@@ -28,11 +28,11 @@ sed -i 's/ tests//g' Makefile'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libunwind-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libunwind-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

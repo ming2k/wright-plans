@@ -15,16 +15,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/exfatprogs-${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/exfatprogs-${VERSION}
 make -j$(nproc) -C ${WORKDIR}'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/exfatprogs-${VERSION}
 make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
 

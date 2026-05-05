@@ -17,8 +17,8 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
+cd source/libplacebo-v${VERSION}
+meson setup build \
 --prefix=/usr \
 --buildtype=release \
 -D demos=false \
@@ -31,13 +31,13 @@ meson setup ${WORKDIR}/build ${WORKDIR} \
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/libplacebo-v${VERSION}
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+cd source/libplacebo-v${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['glslang', 'lcms2', 'shaderc', 'spirv-cross', 'vulkan-loader']

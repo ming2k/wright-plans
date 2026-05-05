@@ -1,6 +1,6 @@
 name = "libtpms"
 version = "0.10.2"
-release = 1
+release = 2
 description = "Trusted Platform Module library for virtual machines"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libtpms-${VERSION}
 ./autogen.sh
 ./configure --prefix=/usr --disable-static --with-openssl CFLAGS="${CFLAGS:--O2} -Wno-error=discarded-qualifiers"'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libtpms-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libtpms-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

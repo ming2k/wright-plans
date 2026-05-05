@@ -19,7 +19,7 @@ url = "https://github.com/notofonts/noto-cjk/releases/download/Serif${VERSION}/0
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/noto-fonts-cjk-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/share/fonts/noto-cjk
 find ${WORKDIR} -name '*.otf' -exec cp {} ${STAGING_DIR}/usr/share/fonts/noto-cjk/ \;'''
 

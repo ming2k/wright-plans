@@ -1,6 +1,6 @@
 name = "opusfile"
 version = "0.12"
-release = 1
+release = 2
 description = "Library for reading Opus files"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/opusfile-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/opusfile-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/opusfile-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/enchant-${VERSION}
 ./configure --prefix=/usr --sysconfdir=/etc --disable-static --with-groff'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/enchant-${VERSION}
 make'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/enchant-${VERSION}
 install -dm755 ${STAGING_DIR}/usr/lib/enchant-2
 make DESTDIR=${STAGING_DIR} install'''
 

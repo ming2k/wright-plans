@@ -17,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gtk3-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dwayland_backend=true -Dx11_backend=false -Dbroadway_backend=false -Dintrospection=true -Dgtk_doc=false -Dman=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/gtk3-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
+cd source/gtk3-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}'''
 
 [hooks]
 post_install = '''

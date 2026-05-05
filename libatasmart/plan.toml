@@ -17,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libatasmart-${VERSION}
 autoreconf -fi
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libatasmart-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libatasmart-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

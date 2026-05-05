@@ -16,10 +16,10 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-cmake -B build -S ${WORKDIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -GNinja -DCMAKE_CXX_SCAN_FOR_MODULES=OFF -DCMAKE_POLICY_VERSION_MINIMUM=3.5'''
+cd source/Vulkan-Headers-${VERSION}
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/Vulkan-Headers-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

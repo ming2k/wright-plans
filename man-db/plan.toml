@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/man-db-${VERSION}
 ./configure --prefix=/usr                           \
 --sbindir=/usr/bin                          \
 --docdir=/usr/share/doc/man-db-${VERSION} \
@@ -28,17 +28,17 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/man-db-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/man-db-${VERSION}
 make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/man-db-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

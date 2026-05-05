@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/swaylock-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dpam=enabled -Dgdk-pixbuf=enabled -Dman-pages=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/swaylock-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/swaylock-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

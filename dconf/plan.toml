@@ -17,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/dconf-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dvapi=false -Dman=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/dconf-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}
+cd source/dconf-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}
 
 # /etc/dconf/db  — root-only: dconf-update writes compiled .db files here
 # /etc/dconf/profile — group-writable: users in the 'dconf' group can add profiles

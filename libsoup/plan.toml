@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libsoup-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dvapi=disabled -Dsysprof=disabled -Dtests=false -Ddocs=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build -j$(nproc)'''
+cd source/libsoup-${VERSION}
+meson compile -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
+cd source/libsoup-${VERSION}
+DESTDIR=${STAGING_DIR} meson install -C build'''
 
 [[output]]
 runtime_deps = ['brotli', 'glib-networking', 'glib', 'libpsl', 'libxml2', 'nghttp2', 'sqlite']

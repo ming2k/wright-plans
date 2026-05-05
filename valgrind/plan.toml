@@ -16,19 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/valgrind-${VERSION}
 ./configure --prefix=/usr \
     --datadir=/usr/share/doc/valgrind-${VERSION} \
     --disable-werror'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/valgrind-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/valgrind-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

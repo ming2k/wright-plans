@@ -1,6 +1,6 @@
 name = "edk2-ovmf"
 version = "202602"
-release = 1
+release = 2
 description = "OVMF UEFI firmware images for QEMU virtual machines"
 license = "BSD-2-Clause-Patent"
 arch = "x86_64"
@@ -60,7 +60,7 @@ timeout = 14400
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/edk2-ovmf-${VERSION}
 src_root=${WORKDIR}
 edk2_dir=$(find "${src_root}" -maxdepth 1 -mindepth 1 -type d -name 'edk2-*' | head -n1)
 if [ -z "${edk2_dir}" ]; then
@@ -110,7 +110,7 @@ cp -av Build/OvmfX64/RELEASE_GCC5/FV/OVMF_VARS.fd OVMF_VARS.4m.fd'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/edk2-ovmf-${VERSION}
 edk2_dir=$(find "${WORKDIR}" -maxdepth 1 -mindepth 1 -type d -name 'edk2-*' | head -n1)
 cd "${edk2_dir}"
 install -Dm644 OVMF_CODE.fd ${STAGING_DIR}/usr/share/edk2/x64/OVMF_CODE.fd

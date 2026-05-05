@@ -17,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libnotify-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dtests=false -Dintrospection=enabled -Dman=false -Dgtk_doc=false -Ddocbook_docs=disabled'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/libnotify-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
+cd source/libnotify-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}'''
 
 [[output]]
 runtime_deps = ['glib', 'gdk-pixbuf']

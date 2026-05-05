@@ -19,11 +19,11 @@ extract_to = "source"
 isolation = "relaxed"
 env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
 script = '''
-cd source
+cd source/bottom-${VERSION}
 cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/bottom-${VERSION}
 install -Dm755 target/release/btm ${STAGING_DIR}/usr/bin/btm'''
 

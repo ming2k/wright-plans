@@ -1,5 +1,5 @@
 name = "ostree"
-version = "2025.7"
+version = "2026.1"
 release = 2
 description = "Operating system and container binary deployment and upgrades"
 license = "LGPL-2.0-or-later"
@@ -10,13 +10,13 @@ link_deps = ['glib', 'libarchive', 'curl', 'gpgme']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "8e77c285dd6fa5ec5fb063130390977be727fe11107335ed8778a40385069e95"
 url = "https://github.com/ostreedev/ostree/releases/download/v${VERSION}/libostree-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libostree-${VERSION}
 ./configure --prefix=/usr       \
     --disable-static            \
     --with-curl                 \
@@ -31,12 +31,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libostree-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libostree-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''
 
 [[output]]

@@ -16,12 +16,12 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/giflib-${VERSION}
 make -j$(nproc) shared-lib static-lib gifbuild giffix giftext giftool gifclrmp PREFIX=/usr'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/giflib-${VERSION}
 make DESTDIR=${STAGING_DIR} PREFIX=/usr install-bin install-include install-lib'''
 
 [[output]]

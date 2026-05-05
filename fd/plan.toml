@@ -18,12 +18,12 @@ extract_to = "source"
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/fd-${VERSION}
 cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/fd-${VERSION}
 install -Dm755 target/release/fd ${STAGING_DIR}/usr/bin/fd
 
 if [ -f doc/fd.1 ]; then

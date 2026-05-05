@@ -16,18 +16,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libproxy-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Ddocs=false -Dtests=false -Dvapi=false -Dconfig-gnome=true -Dpacrunner-duktape=true'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build -j$(nproc)'''
+cd source/libproxy-${VERSION}
+meson compile -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
+cd source/libproxy-${VERSION}
+DESTDIR=${STAGING_DIR} meson install -C build'''
 
 [[output]]
 runtime_deps = ['duktape', 'gsettings-desktop-schemas', 'glib']

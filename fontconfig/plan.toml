@@ -17,8 +17,8 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
+cd source/fontconfig-${VERSION}
+meson setup build \
     --prefix=/usr                        \
     --buildtype=release                  \
     --wrap-mode=nofallback               \
@@ -27,17 +27,17 @@ meson setup ${WORKDIR}/build ${WORKDIR} \
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/fontconfig-${VERSION}
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
-
-[hooks]
-post_install = "fc-cache -s 2>/dev/null || true"
-post_upgrade = "fc-cache -s 2>/dev/null || true"
+cd source/fontconfig-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['freetype', 'expat']
+
+[output.hooks]
+post_install = "fc-cache -s 2>/dev/null || true"
+post_upgrade = "fc-cache -s 2>/dev/null || true"

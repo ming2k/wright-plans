@@ -30,12 +30,12 @@ ccache = true
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/nftables-${VERSION}
 autoreconf -fiv'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/nftables-${VERSION}
 ./configure --prefix=/usr       \
   --sbindir=/usr/bin  \
   --sysconfdir=/etc   \
@@ -48,23 +48,25 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/nftables-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/nftables-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 
-install -Dm644 ${WORKDIR}/nftables.conf ${STAGING_DIR}/etc/nftables.conf
-install -Dm644 ${WORKDIR}/nftables.service ${STAGING_DIR}/usr/lib/systemd/system/nftables.service'''
+install -Dm644 ${WORKDIR}/nftables-nftables.conf ${STAGING_DIR}/etc/nftables.conf
+install -Dm644 ${WORKDIR}/nftables-nftables.service ${STAGING_DIR}/usr/lib/systemd/system/nftables.service'''
 
 [[output]]
 runtime_deps = ['gmp', 'jansson', 'libmnl', 'libnftnl', 'ncurses', 'readline']
 backup = ["/etc/nftables.conf"]
-
-[hooks]
-post_install = "ldconfig 2>/dev/null || true"
-post_upgrade = "ldconfig 2>/dev/null || true"
-pre_remove = "nft flush ruleset 2>/dev/null || true"
+hooks.post_install = '''
+ldconfig 2>/dev/null || true
+systemctl daemon-reload 2>/dev/null || true
+systemctl enable nftables.service 2>/dev/null || true
+'''
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.pre_remove = "nft flush ruleset 2>/dev/null || true"
 

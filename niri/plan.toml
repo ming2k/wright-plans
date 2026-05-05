@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://github.com/niri-wm/niri"
 
-link_deps = ['cairo', 'glib', 'libdisplay-info', 'libinput', 'mesa', 'pango', 'pipewire', 'seatd', 'systemd', 'wayland', 'libxkbcommon']
+link_deps = ['cairo', 'glib', 'libdisplay-info', 'libinput', 'mesa', 'pango', 'pipewire', 'systemd', 'wayland', 'libxkbcommon']
 build_deps = ['rust']
 
 [[sources]]
@@ -51,4 +51,4 @@ install -Dm644 resources/niri.service ${STAGING_DIR}/usr/lib/systemd/user/niri.s
 install -Dm644 resources/niri-shutdown.target ${STAGING_DIR}/usr/lib/systemd/user/niri-shutdown.target'''
 
 [[output]]
-runtime_deps = ['seatd', 'pipewire', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'cairo', 'glib', 'libdisplay-info', 'libinput', 'mesa', 'pango', 'systemd', 'wayland', 'libxkbcommon']
+runtime_deps = ['pipewire', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'cairo', 'glib', 'libdisplay-info', 'libinput', 'mesa', 'pango', 'systemd', 'wayland', 'libxkbcommon']

@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/sudo-${VERSION}
 ./configure --prefix=/usr \
 --libexecdir=/usr/lib \
 --sbindir=/usr/bin \
@@ -33,12 +33,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/sudo-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/sudo-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 mkdir -p ${STAGING_DIR}/etc/sudoers.d
 install -vdm755 ${STAGING_DIR}/etc/pam.d

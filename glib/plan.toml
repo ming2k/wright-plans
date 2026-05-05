@@ -1,34 +1,53 @@
 name = "glib"
-version = "2.86.5"
+version = "2.88.1"
 release = 1
 description = "Core application building blocks library"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.gtk.org/"
 
-link_deps = ['libffi', 'pcre2']
-build_deps = ['meson', 'ninja']
+link_deps = ['libffi', 'pcre2', 'util-linux', 'zlib']
+build_deps = ['meson', 'ninja', 'pkgconf']
 
 [[sources]]
 type = "http"
-sha256 = "ce85a947bb8b3c0204dbeff79aec39bcb46371c6fafb64ba5b8726c71e038d5f"
-url = "https://download.gnome.org/sources/glib/2.86/glib-${VERSION}.tar.xz"
+sha256 = "51ab804c56f6eab3e5045c774d1290ac5e4c923d4f9a3d8e33123bee45c1840e"
+url = "https://download.gnome.org/sources/glib/2.88/glib-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared -Dtests=false -Dinstalled_tests=false'''
+cd source/glib-${VERSION}
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    --wrap-mode=nodownload \
+    -Ddefault_library=shared \
+    -Dtests=false \
+    -Dinstalled_tests=false \
+    -Dman-pages=disabled \
+    -Ddocumentation=false \
+    -Dintrospection=disabled \
+    -Dlibmount=enabled \
+    -Dlibelf=disabled \
+    -Dselinux=disabled \
+    -Dsysprof=disabled \
+    -Dnls=disabled \
+    -Dxattr=true \
+    -Dglib_debug=disabled \
+    -Dglib_assert=true \
+    -Dglib_checks=true \
+    -Dfile_monitor_backend=inotify'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/glib-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
+cd source/glib-${VERSION}
+DESTDIR=${STAGING_DIR} meson install -C build'''
 
 [[output]]
-runtime_deps = ['libffi', 'pcre2']
+runtime_deps = ['libffi', 'pcre2', 'util-linux', 'zlib']

@@ -15,18 +15,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/sed-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/sed-${VERSION}
 make -j$(nproc)
 make html'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/sed-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 install -d -m755           ${STAGING_DIR}/usr/share/doc/sed-4.9
 install -m644 doc/sed.html ${STAGING_DIR}/usr/share/doc/sed-4.9'''

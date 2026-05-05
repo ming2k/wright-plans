@@ -15,24 +15,24 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/flex-${VERSION}
 ./configure --prefix=/usr \
 --docdir=/usr/share/doc/flex-${VERSION} \
 --disable-static'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/flex-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.check]
 script = '''
-cd source
+cd source/flex-${VERSION}
 make check'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/flex-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 
 # Create lex compatibility symlinks

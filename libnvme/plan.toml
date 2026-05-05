@@ -1,6 +1,6 @@
 name = "libnvme"
 version = "1.16.1"
-release = 1
+release = 2
 description = "C library for NVM Express on Linux"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libnvme-${VERSION}
 meson setup build \
   --prefix=/usr \
   -Ddocs=false \
@@ -25,12 +25,12 @@ meson setup build \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libnvme-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libnvme-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

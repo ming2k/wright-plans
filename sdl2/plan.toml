@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/SDL2-${VERSION}
 ./configure \
   --prefix=/usr \
   --disable-static \
@@ -26,12 +26,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/SDL2-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/SDL2-${VERSION}
 DESTDIR=${STAGING_DIR} make install
 
 rm -f ${STAGING_DIR}/usr/lib/libSDL2.a

@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/doxygen-${VERSION}
 cmake -B build \
     -DCMAKE_BUILD_TYPE=None \
     -DCMAKE_INSTALL_PREFIX=/usr \
@@ -27,11 +27,11 @@ cmake -B build \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/doxygen-${VERSION}
 cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/doxygen-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 

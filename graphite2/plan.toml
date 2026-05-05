@@ -22,21 +22,21 @@ path = "gcc15.patch"
 
 [lifecycle.prepare]
 script = '''
-cd source
-patch -Np1 < ${WORKDIR}/gcc15.patch'''
+cd source/graphite2-${VERSION}
+patch -Np1 < ../../graphite2-gcc15.patch'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/graphite2-${VERSION}
 cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=None -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_SKIP_INSTALL_RPATH=ON -DGRAPHITE2_COMPARE_RENDERER=OFF -DGRAPHITE2_VM_TYPE=direct'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/graphite2-${VERSION}
 cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/graphite2-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 

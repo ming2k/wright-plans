@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libvpx-${VERSION}
 ./configure --prefix=/usr \
             --enable-shared \
             --disable-static \
@@ -26,11 +26,11 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libvpx-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libvpx-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

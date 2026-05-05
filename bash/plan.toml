@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/bash-${VERSION}
 ./configure --prefix=/usr             \
             --without-bash-malloc     \
             --with-installed-readline \
@@ -24,12 +24,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/bash-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/bash-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

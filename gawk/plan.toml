@@ -15,21 +15,21 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/gawk-${VERSION}
 sed -i 's/extras//' Makefile.in'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gawk-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gawk-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gawk-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

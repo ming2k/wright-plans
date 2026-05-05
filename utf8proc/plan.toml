@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/utf8proc-${VERSION}
 echo "cmake project"'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/utf8proc-${VERSION}
 mkdir -p build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/utf8proc-${VERSION}/build
 DESTDIR=${STAGING_DIR} make install'''

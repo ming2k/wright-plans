@@ -17,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/itstool-${VERSION}
 autoreconf -fi
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/itstool-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/itstool-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''
 
 [[output]]

@@ -1,6 +1,6 @@
 name = "wget"
 version = "1.25.0"
-release = 1
+release = 2
 description = "Network utility to retrieve files from the web"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -16,19 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/wget-${VERSION}
 ./configure --prefix=/usr      \
     --sysconfdir=/etc          \
     --with-ssl=openssl'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/wget-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/wget-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

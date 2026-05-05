@@ -20,7 +20,7 @@ script = "cd source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/ffmpeg-${VERSION}
 
 pkg-config --exists sdl2 || {
   echo "ffplay requested but SDL2 pkg-config metadata is missing"
@@ -68,12 +68,12 @@ command -v sdl2-config >/dev/null 2>&1 || {
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/ffmpeg-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/ffmpeg-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 
 test -x ${STAGING_DIR}/usr/bin/ffplay'''

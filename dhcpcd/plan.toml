@@ -15,7 +15,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/dhcpcd-${VERSION}
 ./configure --prefix=/usr       \
 --sbindir=/usr/bin  \
 --sysconfdir=/etc   \
@@ -26,11 +26,11 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/dhcpcd-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/dhcpcd-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 

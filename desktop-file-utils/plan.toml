@@ -17,28 +17,26 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/desktop-file-utils-${VERSION}
 meson setup build --prefix=/usr --buildtype=release'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/desktop-file-utils-${VERSION}
 meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/desktop-file-utils-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''
-
-[hooks]
-post_install = '''
-update-desktop-database -q /usr/share/applications 2>/dev/null || true
-[ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
-'''
-post_upgrade = '''
-update-desktop-database -q /usr/share/applications 2>/dev/null || true
-[ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
-'''
 
 [[output]]
 runtime_deps = ['glib']
+hooks.post_install = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+[ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
+'''
+hooks.post_upgrade = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+[ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
+'''

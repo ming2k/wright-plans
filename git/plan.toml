@@ -1,6 +1,6 @@
 name = "git"
 version = "2.53.0"
-release = 4
+release = 5
 description = "The fast distributed version control system"
 license = "GPL-2.0-only"
 arch = "x86_64"
@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/git-${VERSION}
 
 _perllibdir=$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')
 
@@ -86,7 +86,7 @@ make \
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/git-${VERSION}
 
 _perllibdir=$(/usr/bin/perl -MConfig -wle 'print $Config{installvendorlib}')
 

@@ -20,17 +20,17 @@ ccache = true
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/SPIRV-LLVM-Translator-${VERSION}
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DLLVM_EXTERNAL_SPIRV_HEADERS_SOURCE_DIR=/usr -DLLVM_SPIRV_INCLUDE_TESTS=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/SPIRV-LLVM-Translator-${VERSION}
 cmake --build build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/SPIRV-LLVM-Translator-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 
 [[output]]

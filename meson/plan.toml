@@ -1,5 +1,5 @@
 name = "meson"
-version = "1.10.2"
+version = "1.11.1"
 release = 1
 description = "High productivity build system"
 license = "Apache-2.0"
@@ -7,23 +7,18 @@ arch = "x86_64"
 url = "https://mesonbuild.com/"
 
 
-build_deps = ['python']
+build_deps = ['python', 'setuptools', 'python-wheel']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "6788ae299979643f8d841bcaf64352558436cae45a0355148a3aeeccf7913866"
 url = "https://github.com/mesonbuild/meson/releases/download/${VERSION}/meson-${VERSION}.tar.gz"
 extract_to = "source"
-
-[lifecycle.compile]
-script = '''
-cd source/meson-${VERSION}
-python3 setup.py build'''
 
 [lifecycle.staging]
 script = '''
 cd source/meson-${VERSION}
-python3 setup.py install --root=${STAGING_DIR} --prefix=/usr --optimize=1'''
+pip3 install --no-index --no-user --no-deps --ignore-installed --no-cache-dir --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python', 'ninja']

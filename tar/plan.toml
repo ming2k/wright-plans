@@ -15,18 +15,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/tar-${VERSION}
 FORCE_UNSAFE_CONFIGURE=1 \
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/tar-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/tar-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 make -C doc DESTDIR=${STAGING_DIR} install-html docdir=/usr/share/doc/tar-${VERSION}'''
 

@@ -19,12 +19,12 @@ extract_to = "source"
 isolation = "relaxed"
 env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
 script = '''
-cd source
+cd source/prudence-${VERSION}
 cargo build --release --locked'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/prudence-${VERSION}
 install -Dm755 target/release/prudence ${STAGING_DIR}/usr/bin/prudence
 install -Dm644 man/man1/prudence.1 ${STAGING_DIR}/usr/share/man/man1/prudence.1'''
 

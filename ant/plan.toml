@@ -14,7 +14,7 @@ extract_to = "source"
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/ant-${VERSION}
 
 install -dm755 ${STAGING_DIR}/usr/share/ant
 cp -a bin lib etc ${STAGING_DIR}/usr/share/ant/

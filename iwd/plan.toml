@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/iwd-${VERSION}
 ./configure --prefix=/usr            \
 --sysconfdir=/etc        \
 --localstatedir=/var     \
@@ -29,22 +29,21 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/iwd-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/iwd-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
-[hooks]
+[[output]]
+runtime_deps = ['dbus', 'ell', 'readline']
+
+[output.hooks]
 post_install = '''
 groupadd -f netdev 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable iwd.service 2>/dev/null || true
-
 '''
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
-[[output]]
-runtime_deps = ['dbus', 'ell', 'readline']

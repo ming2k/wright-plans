@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gpgme-${VERSION}
 ./configure \
     --prefix=/usr \
     --disable-static \
@@ -24,12 +24,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gpgme-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gpgme-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''
 
 [[output]]

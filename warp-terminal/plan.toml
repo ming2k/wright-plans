@@ -16,19 +16,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/warp-terminal-${VERSION}
 echo "using upstream stable Linux binary package"
 '''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/warp-terminal-${VERSION}
 chmod 755 opt/warpdotdev/warp-terminal/warp usr/bin/warp-terminal
 '''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/warp-terminal-${VERSION}
 
 install -dm755 ${STAGING_DIR}/opt
 cp -a opt/warpdotdev ${STAGING_DIR}/opt/

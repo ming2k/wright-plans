@@ -15,22 +15,22 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/texinfo-${VERSION}
 sed 's/! $output_file eq/$output_file ne/' -i tp/Texinfo/Convert/*.pm'''
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/texinfo-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/texinfo-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/texinfo-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 make DESTDIR=${STAGING_DIR} TEXMF=/usr/share/texmf install-tex'''
 

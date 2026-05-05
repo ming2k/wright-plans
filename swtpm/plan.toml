@@ -1,6 +1,6 @@
 name = "swtpm"
 version = "0.10.1"
-release = 1
+release = 2
 description = "Libtpms-based TPM emulator for QEMU and other hypervisors"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -16,17 +16,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/swtpm-${VERSION}
 ./autogen.sh --prefix=/usr --disable-static --without-cuse --without-selinux --without-seccomp --disable-tests'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/swtpm-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/swtpm-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

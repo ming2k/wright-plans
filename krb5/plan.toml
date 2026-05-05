@@ -1,6 +1,6 @@
 name = "krb5"
 version = "1.22.2"
-release = 1
+release = 2
 description = "MIT Kerberos network authentication system"
 license = "MIT"
 arch = "x86_64"

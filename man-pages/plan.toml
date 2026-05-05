@@ -14,10 +14,10 @@ extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source
+cd source/man-pages-${VERSION}
 rm -v man3/crypt*'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/man-pages-${VERSION}
 make -R GIT=false prefix=/usr DESTDIR=${STAGING_DIR} install'''

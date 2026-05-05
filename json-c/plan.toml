@@ -17,19 +17,19 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/json-c-${VERSION}
 mkdir -p build && cd build
 cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_STATIC_LIBS=OFF -DENABLE_RDRAND=OFF -DENABLE_THREADING=ON'''
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -j$(nproc) -C ${WORKDIR}/build'''
+cd source/json-c-${VERSION}
+ninja -j$(nproc) -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja install -C ${WORKDIR}/build'''
+cd source/json-c-${VERSION}
+DESTDIR=${STAGING_DIR} ninja install -C build'''
 
 [[output]]
 runtime_deps = ['glibc']

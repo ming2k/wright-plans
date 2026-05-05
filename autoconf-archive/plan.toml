@@ -15,17 +15,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/autoconf-archive-${VERSION}
 ./configure --prefix=/usr'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/autoconf-archive-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/autoconf-archive-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]

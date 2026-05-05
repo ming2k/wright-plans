@@ -15,12 +15,12 @@ extract_to = "source"
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/acpica-${VERSION}
 make -C generate/unix -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/acpica-${VERSION}
 install -Dm755 generate/unix/bin/iasl ${STAGING_DIR}/usr/bin/iasl
 install -Dm755 generate/unix/bin/acpibin ${STAGING_DIR}/usr/bin/acpibin
 install -Dm755 generate/unix/bin/acpidump ${STAGING_DIR}/usr/bin/acpidump

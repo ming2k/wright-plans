@@ -17,7 +17,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libmatroska-${VERSION}
 cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_BUILD_TYPE=Release \
@@ -27,12 +27,12 @@ cmake -S ${WORKDIR} -B ${WORKDIR}/build -G Ninja \
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libmatroska-${VERSION}
 cmake --build ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libmatroska-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install ${WORKDIR}/build'''
 
 [[output]]

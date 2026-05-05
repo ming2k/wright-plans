@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/nano-${VERSION}
 ./configure --prefix=/usr \
 --sysconfdir=/etc \
 --enable-utf8 \
@@ -24,12 +24,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/nano-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/nano-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 install -v -m644 doc/{nano.html,sample.nanorc} ${STAGING_DIR}/usr/share/doc/nano-${VERSION}'''
 

@@ -42,7 +42,7 @@ path = "pam.d/other"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/Linux-PAM-${VERSION}
 mkdir -p build
 cd build
 meson setup .. \
@@ -61,12 +61,12 @@ meson setup .. \
 
 [lifecycle.compile]
 script = '''
-cd source/build
+cd source/Linux-PAM-${VERSION}/build
 ninja'''
 
 [lifecycle.staging]
 script = '''
-cd source/build
+cd source/Linux-PAM-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install
 
 chmod -v 4755 ${STAGING_DIR}/usr/bin/unix_chkpwd
@@ -75,13 +75,11 @@ rm -rf ${STAGING_DIR}/usr/lib/systemd
 
 install -vdm755 ${STAGING_DIR}/etc/pam.d
 for f in system-account system-auth system-session system-password other; do
-    install -Dm644 ${WORKDIR}/${f} ${STAGING_DIR}/etc/pam.d/${f}
+    install -Dm644 ${WORKDIR}/linux-pam-${f} ${STAGING_DIR}/etc/pam.d/${f}
 done'''
 
 [[output]]
 runtime_deps = ['systemd', 'glibc']
 backup = ["/etc/pam.d/system-account", "/etc/pam.d/system-auth", "/etc/pam.d/system-session", "/etc/pam.d/system-password", "/etc/pam.d/other"]
-
-[hooks]
-post_install = "ldconfig 2>/dev/null || true"
-post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"

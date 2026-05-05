@@ -16,14 +16,14 @@ extract_to = "source"
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source
+cd source/github-cli-${VERSION}
 export PATH=/usr/lib/go/bin:$PATH
 export CGO_ENABLED=0
 make bin/gh manpages'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/github-cli-${VERSION}
 install -Dm755 bin/gh ${STAGING_DIR}/usr/bin/gh
 install -dm755 ${STAGING_DIR}/usr/share/bash-completion/completions
 install -dm755 ${STAGING_DIR}/usr/share/fish/vendor_completions.d

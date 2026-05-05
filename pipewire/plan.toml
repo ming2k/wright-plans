@@ -1,5 +1,5 @@
 name = "pipewire"
-version = "1.6.3"
+version = "1.6.4"
 release = 1
 description = "Low-latency audio/video router and processor"
 license = "MIT"
@@ -20,8 +20,8 @@ script = "cd source"
 
 [lifecycle.configure]
 script = '''
-cd source
-meson setup ${WORKDIR}/build ${WORKDIR} \
+cd source/pipewire-${VERSION}
+meson setup build \
 --prefix=/usr                        \
 --buildtype=release                  \
 -D docs=disabled                     \
@@ -43,21 +43,18 @@ meson setup ${WORKDIR}/build ${WORKDIR} \
 
 [lifecycle.compile]
 script = '''
-cd source
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+cd source/pipewire-${VERSION}
+ninja -C build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
-
-[hooks]
-post_install = '''
-systemctl daemon-reload 2>/dev/null || true
-systemd-tmpfiles --create /usr/lib/tmpfiles.d/pipewire.conf 2>/dev/null || true
-
-'''
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+cd source/pipewire-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['alsa-lib', 'bluez', 'dbus', 'glib', 'gstreamer', 'libcamera', 'libsndfile', 'ncurses', 'opus', 'readline', 'sbc', 'systemd', 'v4l-utils']
+hooks.post_install = '''
+systemctl daemon-reload 2>/dev/null || true
+systemd-tmpfiles --create /usr/lib/tmpfiles.d/pipewire.conf 2>/dev/null || true
+'''
+hooks.post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

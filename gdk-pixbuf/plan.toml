@@ -5,7 +5,7 @@ description = "GNOME image loading library (Modern Glycin Enabled)"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 
-link_deps = ['glib', 'libjpeg-turbo', 'libpng', 'libtiff', 'shared-mime-info']
+link_deps = ['glycin', 'glib', 'libjpeg-turbo', 'libpng', 'libtiff', 'shared-mime-info']
 build_deps = ['meson', 'ninja']
 
 [[sources]]
@@ -16,22 +16,22 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gdk-pixbuf-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dman=false -Dgtk_doc=false -Dtests=false -Dintrospection=enabled -Dglycin=enabled'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/gdk-pixbuf-${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-meson install -C ${WORKDIR}/build --destdir ${STAGING_DIR}'''
-
-[hooks]
-post_install = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
-post_upgrade = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
+cd source/gdk-pixbuf-${VERSION}
+meson install -C build --destdir ${STAGING_DIR}'''
 
 [[output]]
-runtime_deps = ['glycin', 'glib', 'libjpeg-turbo', 'libpng', 'libtiff', 'shared-mime-info']
+runtime_deps = ['glib', 'libjpeg-turbo', 'libpng', 'libtiff', 'shared-mime-info']
+
+[output.hooks]
+post_install = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"
+post_upgrade = "gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true"

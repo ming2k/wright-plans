@@ -16,7 +16,7 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/udisks2-${VERSION}
 ./configure \
   --prefix=/usr \
   --sbindir=/usr/bin \
@@ -28,12 +28,12 @@ cd source
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/udisks2-${VERSION}
 make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/udisks2-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 install -dm750 ${STAGING_DIR}/var/lib/udisks2'''
 

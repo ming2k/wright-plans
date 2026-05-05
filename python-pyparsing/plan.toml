@@ -17,16 +17,16 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/python-pyparsing-${VERSION}
 echo "python package"'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/python-pyparsing-${VERSION}
 echo "no build needed"'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/python-pyparsing-${VERSION}
 pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${STAGING_DIR} .'''
 

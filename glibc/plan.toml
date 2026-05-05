@@ -118,7 +118,7 @@ mkdir -pv ${STAGING_DIR}/etc/ld.so.conf.d'''
 backup = ["/etc/nsswitch.conf", "/etc/ld.so.conf", "/etc/locale.gen", "/etc/locale.conf"]
 runtime_deps = ['linux-api-headers >= 4.10', 'tzdata >= 2025c']
 
-[hooks]
+[output.hooks]
 post_install = '''
 ldconfig
 mkdir -p /usr/lib/locale

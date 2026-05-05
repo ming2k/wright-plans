@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/gnome-desktop-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dintrospection=true -Dgtk_doc=false -Ddesktop_docs=false -Ddebug_tools=false -Dlegacy_library=false'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/gnome-desktop-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/gnome-desktop-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [hooks]

@@ -1,6 +1,6 @@
 name = "libzip"
 version = "1.11.2"
-release = 1
+release = 2
 description = "C library for reading, creating, and modifying zip archives"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -17,17 +17,17 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libzip-${VERSION}
 cmake -B build -S ${WORKDIR} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DENABLE_BZIP2=ON -DENABLE_LZMA=ON -DENABLE_ZSTD=ON -DENABLE_OPENSSL=ON -DBUILD_EXAMPLES=OFF -DBUILD_REGRESS=OFF -DBUILD_DOC=OFF'''
 
 [lifecycle.compile]
 script = '''
-cd source
+cd source/libzip-${VERSION}
 ninja -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
+cd source/libzip-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [hooks]

@@ -17,18 +17,18 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source
+cd source/libslirp-v${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared'''
 
 [lifecycle.compile]
 script = '''
-cd source
-meson compile -C ${WORKDIR}/build'''
+cd source/libslirp-v${VERSION}
+meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source
-DESTDIR=${STAGING_DIR} meson install -C ${WORKDIR}/build'''
+cd source/libslirp-v${VERSION}
+DESTDIR=${STAGING_DIR} meson install -C build'''
 
 [[output]]
 runtime_deps = ['glib']
