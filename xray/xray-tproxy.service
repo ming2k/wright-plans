@@ -1,0 +1,39 @@
+[Unit]
+Description=Xray TProxy Service
+Documentation=https://github.com/XTLS/Xray-core
+After=network-online.target nss-lookup.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/etc/xray
+CapabilityBoundingSet=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW
+AmbientCapabilities=CAP_NET_ADMIN CAP_NET_BIND_SERVICE CAP_NET_RAW
+NoNewPrivileges=true
+
+Environment=XRAY_LOCATION_ASSET=/usr/share/v2ray-rules-dat
+
+ExecStartPre=/bin/bash -c 'ip route show table 110 | grep -q "local default" || ip route add local 0.0.0.0/0 dev lo table 110'
+ExecStartPre=/bin/bash -c 'ip -6 route show table 110 | grep -q "local default" || ip -6 route add local ::/0 dev lo table 110'
+ExecStartPre=/usr/sbin/nft -f /etc/nftables/xray-tproxy.nft
+
+ExecStart=/usr/bin/xray run -config /etc/xray/config.json
+
+ExecStopPost=/bin/bash -c 'ip route flush table 110 2>/dev/null || true'
+ExecStopPost=/bin/bash -c 'ip -6 route flush table 110 2>/dev/null || true'
+ExecStopPost=-/usr/sbin/nft delete table ip xray_v4
+ExecStopPost=-/usr/sbin/nft delete table ip6 xray_v6
+
+Restart=on-failure
+RestartSec=3
+LimitNPROC=512
+LimitNOFILE=infinity
+ProtectSystem=false
+ProtectHome=true
+PrivateTmp=true
+TimeoutStartSec=30
+TimeoutStopSec=15
+
+[Install]
+WantedBy=multi-user.target

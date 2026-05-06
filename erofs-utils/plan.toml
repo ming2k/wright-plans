@@ -1,0 +1,55 @@
+name = "erofs-utils"
+version = "1.9.1"
+release = 1
+description = "Userspace utilities for the EROFS filesystem"
+license = "GPL-2.0-or-later AND Apache-2.0 AND MIT AND BSD-2-Clause AND Unlicense"
+arch = "x86_64"
+url = "https://git.kernel.org/pub/scm/linux/kernel/git/xiang/erofs-utils.git"
+
+build_deps = ['autoconf', 'automake', 'libtool', 'pkgconf']
+link_deps = ['util-linux', 'zlib', 'lz4', 'xz', 'zstd']
+
+[[sources]]
+type = "http"
+sha256 = "a9ef5ab67c4b8d2d3e9ed71f39cd008bda653142a720d8a395a36f1110d0c432"
+url = "https://git.kernel.org/pub/scm/linux/kernel/git/xiang/erofs-utils.git/snapshot/erofs-utils-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source/erofs-utils-${VERSION}
+EROFS_UTILS_VERSION=${VERSION} ./autogen.sh
+./configure \
+  --prefix=/usr \
+  --sbindir=/usr/bin \
+  --disable-static \
+  --enable-multithreading \
+  --enable-lz4 \
+  --enable-lzma \
+  --with-zlib \
+  --with-libzstd \
+  --without-libdeflate \
+  --without-qpl \
+  --without-xxhash \
+  --without-libcurl \
+  --without-openssl \
+  --without-libxml2 \
+  --without-json-c \
+  --without-libnl3 \
+  --disable-s3 \
+  --disable-oci \
+  --disable-fuse \
+  --without-selinux'''
+
+[lifecycle.compile]
+script = '''
+cd source/erofs-utils-${VERSION}
+make -j$(nproc)'''
+
+[lifecycle.staging]
+script = '''
+cd source/erofs-utils-${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
+
+[[output]]
+runtime_deps = ['util-linux', 'zlib', 'lz4', 'xz', 'zstd']

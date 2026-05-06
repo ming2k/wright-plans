@@ -16,8 +16,9 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source/tpm2-tss-${VERSION}
-./configure \
+mkdir -p ${WORKDIR}/build
+cd ${WORKDIR}/build
+${WORKDIR}/source/tpm2-tss-${VERSION}/configure \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
@@ -30,13 +31,11 @@ cd source/tpm2-tss-${VERSION}
 
 [lifecycle.compile]
 script = '''
-cd source/tpm2-tss-${VERSION}
-make -C ${WORKDIR} -j$(nproc)'''
+make -C ${WORKDIR}/build -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/tpm2-tss-${VERSION}
-make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
+make -C ${WORKDIR}/build DESTDIR=${STAGING_DIR} install'''
 
 [[output]]
 runtime_deps = ['systemd', 'curl', 'json-c', 'libtpms', 'libusb', 'openssl', 'util-linux']

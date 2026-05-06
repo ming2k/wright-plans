@@ -1,0 +1,60 @@
+name = "squashfs-tools"
+version = "4.7.5"
+release = 1
+description = "Tools for creating and extracting Squashfs filesystems"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://github.com/plougher/squashfs-tools"
+
+link_deps = ['zlib', 'xz', 'lzo', 'lz4', 'zstd']
+
+[[sources]]
+type = "http"
+sha256 = "547b7b7f4d2e44bf91b6fc554664850c69563701deab9fd9cd7e21f694c88ea6"
+url = "https://github.com/plougher/squashfs-tools/releases/download/${VERSION}/squashfs-tools-${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.compile]
+script = '''
+cd source/squashfs-tools-${VERSION}/squashfs-tools
+make CONFIG=1 \
+  GZIP_SUPPORT=1 \
+  XZ_SUPPORT=1 \
+  LZO_SUPPORT=1 \
+  LZ4_SUPPORT=1 \
+  ZSTD_SUPPORT=1 \
+  COMP_DEFAULT=gzip \
+  XATTR_SUPPORT=1 \
+  XATTR_OS_SUPPORT=1 \
+  XATTR_DEFAULT=1 \
+  SMALL_READER_THREADS=4 \
+  BLOCK_READER_THREADS=4 \
+  USE_PREBUILT_MANPAGES=y \
+  INSTALL_PREFIX=/usr \
+  INSTALL_DIR=/usr/bin \
+  INSTALL_MANPAGES_DIR=/usr/share/man/man1 \
+  -j$(nproc)'''
+
+[lifecycle.staging]
+script = '''
+cd source/squashfs-tools-${VERSION}/squashfs-tools
+make CONFIG=1 \
+  GZIP_SUPPORT=1 \
+  XZ_SUPPORT=1 \
+  LZO_SUPPORT=1 \
+  LZ4_SUPPORT=1 \
+  ZSTD_SUPPORT=1 \
+  COMP_DEFAULT=gzip \
+  XATTR_SUPPORT=1 \
+  XATTR_OS_SUPPORT=1 \
+  XATTR_DEFAULT=1 \
+  SMALL_READER_THREADS=4 \
+  BLOCK_READER_THREADS=4 \
+  USE_PREBUILT_MANPAGES=y \
+  INSTALL_PREFIX=/usr \
+  INSTALL_DIR=${STAGING_DIR}/usr/bin \
+  INSTALL_MANPAGES_DIR=${STAGING_DIR}/usr/share/man/man1 \
+  install'''
+
+[[output]]
+runtime_deps = ['zlib', 'xz', 'lzo', 'lz4', 'zstd']

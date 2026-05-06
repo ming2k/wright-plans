@@ -17,16 +17,14 @@ extract_to = "source"
 isolation = "none"
 env = { GOROOT_BOOTSTRAP = '/usr/lib/go-bootstrap', GOOS = 'linux', GOARCH = 'amd64', CGO_ENABLED = '1' }
 script = '''
-cd source/src
+cd source/go/src
 ./make.bash'''
 
 [lifecycle.staging]
 isolation = "none"
 script = '''
-cd source/go-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/lib
-# Copy everything built
-cp -a ${WORKDIR} ${STAGING_DIR}/usr/lib/go
+cp -a source/go ${STAGING_DIR}/usr/lib/go
 
 # Cleanup things we don't want to distribute
 rm -rf ${STAGING_DIR}/usr/lib/go/pkg/obj

@@ -1,6 +1,6 @@
 name = "linux-lts"
 version = "6.18.26"
-release = 1
+release = 2
 description = "The Linux kernel (LTS)"
 license = "GPL-2.0-only"
 arch = "x86_64"
@@ -176,15 +176,6 @@ scripts/config --module SND_SOC_SOF_HDA_PROBES
 scripts/config --module SND_SOC_SOF_INTEL_SOUNDWIRE
 scripts/config --module SND_SOC_SOF_INTEL_SOUNDWIRE_LINK_BASELINE
 scripts/config --module SND_SOC_SOF_XTENSA
-
-# ---------------------------------------------------------------------------
-# Baseline sync: temporary migration aids. Once the final build .config has
-# been copied back to linux-lts/config and verified, these blocks can be removed
-# because the maintained baseline will carry the policy forward.
-# ---------------------------------------------------------------------------
-
-# scripts/config --enable HID
-# scripts/config --enable HID_GENERIC
 
 make olddefconfig
 '''

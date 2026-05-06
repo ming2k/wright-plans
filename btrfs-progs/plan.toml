@@ -16,25 +16,25 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source/btrfs-progs-${VERSION}
+cd source/btrfs-progs-v${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static --disable-documentation --with-crypto=libgcrypt'''
 
 [lifecycle.compile]
 script = '''
-cd source/btrfs-progs-${VERSION}
-make -j$(nproc) -C ${WORKDIR}'''
+cd source/btrfs-progs-v${VERSION}
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/btrfs-progs-${VERSION}
-make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
+cd source/btrfs-progs-v${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
 
-[hooks]
+[[output]]
+runtime_deps = ['util-linux', 'zlib', 'lzo', 'zstd', 'e2fsprogs', 'libgcrypt', 'systemd']
+
+[output.hooks]
 post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 systemctl enable btrfs-scrub@-.timer 2>/dev/null || true
 
 '''
-
-[[output]]
-runtime_deps = ['util-linux', 'zlib', 'lzo', 'zstd', 'e2fsprogs', 'libgcrypt', 'systemd']

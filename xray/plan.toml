@@ -15,10 +15,14 @@ sha256 = "992a4997e6bb846d11469435d687f99ef812fcde1e0a009bb8e95189ea20331d"
 url = "https://github.com/XTLS/Xray-core/archive/v${VERSION}.tar.gz"
 extract_to = "source"
 
+[[sources]]
+type = "local"
+path = "xray-tproxy.service"
+
 [lifecycle.prepare]
 isolation = "none"
 script = '''
-cd source/xray-${VERSION}
+cd source/Xray-core-${VERSION}
 export PATH=/usr/lib/go/bin:$PATH
 export GOPROXY=https://proxy.golang.org,direct
 export GOMODCACHE=/tmp/go-mod-cache
@@ -28,7 +32,7 @@ go mod vendor'''
 [lifecycle.compile]
 isolation = "relaxed"
 script = '''
-cd source/xray-${VERSION}
+cd source/Xray-core-${VERSION}
 export PATH=/usr/lib/go/bin:$PATH
 export CGO_ENABLED=0
 export GOCACHE=/tmp/go-cache/build
@@ -39,19 +43,19 @@ go build -ldflags "-X github.com/xtls/xray-core.codename=xray -X github.com/xtls
 
 [lifecycle.staging]
 script = '''
-cd source/xray-${VERSION}
+cd source/Xray-core-${VERSION}
 install -Dm755 xray ${STAGING_DIR}/usr/bin/xray
-install -dm755 ${STAGING_DIR}/etc/xray'''
+install -dm755 ${STAGING_DIR}/etc/xray
+install -Dm644 ${WORKDIR}/xray-xray-tproxy.service ${STAGING_DIR}/usr/lib/systemd/system/xray-tproxy.service'''
 
 [[output]]
+runtime_deps = ['glibc', 'v2ray-rules-dat']
 backup = ["/etc/xray/config.json"]
 
-[hooks]
+[output.hooks]
 post_install = '''
 echo ":: Create /etc/xray/config.json before starting xray"
-echo ":: Provide your own service file or launcher as needed"
-echo ":: This plan does not install a systemd unit"
-echo ":: Optional geodata can be installed via v2fly-domain-list-community, v2fly-geoip, or v2ray-rules-dat"
-echo ":: Those plans install to their own /usr/share/<plan-name>/ directories"
+echo ":: Install /etc/nftables/xray-tproxy.nft with your tproxy nftables rules"
+echo ":: If /etc/systemd/system/xray-tproxy.service exists from a previous manual install, remove it"
+echo ":: Then: systemctl daemon-reload && systemctl enable --now xray-tproxy"
 '''
-
