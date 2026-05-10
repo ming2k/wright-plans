@@ -37,9 +37,9 @@ script = '''
 cd source/wireplumber-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[hooks]
-post_install = "systemctl daemon-reload 2>/dev/null || true"
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
 [[output]]
 runtime_deps = ['glib', 'lua', 'pipewire', 'systemd']
+
+[output.hooks]
+post_install = "systemctl daemon-reload 2>/dev/null || true"
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Surfer
+Comment=Waveform viewer for VCD, FST, and GHW
+Exec=surfer %F
+Icon=surfer
+Terminal=false
+Categories=Development;Debugger;
+MimeType=application/x-vcd;application/x-fst;

@@ -1,5 +1,5 @@
 name = "lvm2"
-version = "2.03.38"
+version = "2.03.40"
 release = 2
 description = "Linux Logical Volume Manager 2 utilities"
 license = "GPL-2.0-only AND LGPL-2.1-only"

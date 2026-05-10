@@ -6,7 +6,7 @@ license = "GPL-2.0-only AND GPL-2.0-or-later AND GPL-3.0-or-later AND LGPL-2.1-o
 arch = "x86_64"
 url = "https://github.com/util-linux/util-linux"
 
-link_deps = ['glibc', 'ncurses', 'zlib', 'libcap', 'linux-pam', 'readline']
+link_deps = ['glibc', 'ncurses', 'zlib', 'libcap', 'readline']
 build_deps = ['meson', 'ninja']
 
 [[sources]]
@@ -27,6 +27,8 @@ cd source/util-linux-${VERSION}
 # Tool ownership policy:
 #   login, su, chfn, chsh, newgrp, nologin, vipw/vigr — owned by shadow
 #     (better PAM + NSS + /etc/shadow integration)
+#   runuser — disabled with su because this system does not keep util-linux
+#     on the PAM login path
 #   mesg, write — unique to util-linux (terminal messaging)
 #   line — obsolete, not built
 meson setup build \
@@ -45,6 +47,7 @@ meson setup build \
     -D build-mesg=enabled \
     -D build-newgrp=disabled \
     -D build-nologin=disabled \
+    -D build-runuser=disabled \
     -D build-su=disabled \
     -D build-vipw=disabled \
     -D build-write=enabled'''
@@ -55,4 +58,4 @@ cd source/util-linux-${VERSION}
 meson compile -C build -j$(nproc)'''
 
 [[output]]
-runtime_deps = ['glibc', 'ncurses', 'zlib', 'libcap', 'linux-pam', 'readline']
+runtime_deps = ['glibc', 'ncurses', 'zlib', 'libcap', 'readline']

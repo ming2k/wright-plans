@@ -1,5 +1,5 @@
 name = "shadow"
-version = "4.19.3"
+version = "4.19.4"
 release = 8
 description = "Shadow password utilities (rebuilt with PAM support)"
 license = "BSD-3-Clause"
@@ -208,4 +208,3 @@ awk -F: '$3 >= 1000 && $3 < 65534 { print $1 }' /etc/passwd | while read -r user
 done
 
 '''
-

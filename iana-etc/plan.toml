@@ -1,5 +1,5 @@
 name = "iana-etc"
-version = "20260318"
+version = "20260430"
 release = 1
 description = "Data for network services and protocols (/etc/services and /etc/protocols)"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "7c799c0ac86672b1e3573333b0485b04b3e5fdb4a7a3232f85ee7d8df207f795"
+sha256 = "11f67138163d1de144adee30d7a053de1050e6e586237ca12e24e5f70f47c5fb"
 url = "https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv"
 
 [[sources]]
@@ -30,4 +30,3 @@ python3 ${WORKDIR}/generate_iana_etc.py \
   ${WORKDIR}/service-names-port-numbers.csv \
   ${WORKDIR}/protocol-numbers-1.csv \
   ${STAGING_DIR}'''
-

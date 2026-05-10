@@ -1,6 +1,6 @@
 name = "openssl"
 version = "3.6.2"
-release = 3
+release = 1
 description = "Management tools and libraries relating to cryptography"
 license = "Apache-2.0"
 arch = "x86_64"
@@ -18,7 +18,8 @@ extract_to = "source"
 [lifecycle.configure]
 script = '''
 cd source/openssl-${VERSION}
-./config --prefix=/usr         \
+./Configure linux-x86_64       \
+         --prefix=/usr         \
          --openssldir=/etc/ssl \
          --libdir=lib          \
          shared                \
@@ -37,4 +38,13 @@ make MANSUFFIX=ssl DESTDIR=${STAGING_DIR} install
 mv -v ${STAGING_DIR}/usr/share/doc/openssl ${STAGING_DIR}/usr/share/doc/openssl-${VERSION}'''
 
 [[output]]
+name = "openssl"
 runtime_deps = ['zlib']
+
+[output.hooks]
+post_upgrade = '''
+# Critical: after upgrading OpenSSL, rebuild all reverse dependencies
+# to ensure binaries link against the new soname. Run:
+#   wright rebuild --reverse-deps openssl
+# See /var/lib/wright/plans/README.md for core library upgrade guidelines.
+'''

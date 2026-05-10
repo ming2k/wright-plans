@@ -1,0 +1,56 @@
+name = "sunshine"
+version = "2025.924.154138"
+release = 1
+description = "Self-hosted game stream host for Moonlight"
+license = "GPL-3.0-only"
+arch = "x86_64"
+url = "https://app.lizardbyte.dev/Sunshine"
+
+build_deps = ['cmake', 'ninja', 'nodejs', 'pkgconf', 'wayland-protocols']
+link_deps = ['openssl', 'curl', 'miniupnpc', 'libdrm', 'libcap', 'libva', 'wayland', 'libevdev', 'boost', 'pipewire', 'ffmpeg']
+
+[[sources]]
+type = "git"
+url = "https://github.com/LizardByte/Sunshine.git"
+tag = "v2025.924.154138"
+extract_to = "source"
+
+[lifecycle.prepare]
+script = '''
+cd source
+git submodule update --init --recursive
+sed -i 's/ EXACT COMPONENTS/ COMPONENTS/g' cmake/dependencies/Boost_Sunshine.cmake
+sed -i '/if(NOT DEFINED FFMPEG_PREPARED_BINARIES)/,/set(FFMPEG_INCLUDE_DIRS/c\
+pkg_check_modules(FFMPEG REQUIRED libavcodec libavutil libswscale)\n\
+set(FFMPEG_LIBRARIES ${FFMPEG_LIBRARIES} ${FFMPEG_PLATFORM_LIBRARIES})\n\
+set(FFMPEG_INCLUDE_DIRS ${FFMPEG_INCLUDE_DIRS})' cmake/dependencies/common.cmake
+'''
+
+[lifecycle.configure]
+script = '''
+cd source
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DSUNSHINE_ENABLE_WAYLAND=ON \
+    -DSUNSHINE_ENABLE_X11=OFF \
+    -DSUNSHINE_ENABLE_TRAY=OFF \
+    -DSUNSHINE_SYSTEM_WAYLAND_PROTOCOLS=ON \
+    -DBOOST_USE_STATIC=OFF \
+    -DBUILD_WERROR=OFF
+'''
+
+[lifecycle.compile]
+script = '''
+cd source
+ninja -C build
+'''
+
+[lifecycle.staging]
+script = '''
+cd source
+DESTDIR=${STAGING_DIR} ninja -C build install
+'''
+
+[[output]]
+runtime_deps = ['openssl', 'curl', 'miniupnpc', 'libdrm', 'libcap', 'libva', 'wayland', 'libevdev', 'boost', 'pipewire', 'ffmpeg', 'nodejs']

@@ -1,5 +1,5 @@
 name = "groff"
-version = "1.23.0"
+version = "1.24.1"
 release = 1
 description = "Programs for processing and formatting text and images"
 license = "GPL-3.0-or-later"
@@ -27,4 +27,3 @@ make -j1'''
 script = '''
 cd source/groff-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
-

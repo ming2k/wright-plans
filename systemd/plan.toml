@@ -102,7 +102,7 @@ install -Dm644 ${WORKDIR}/systemd-network-wait-online.conf \
 '''
 
 [[output]]
-runtime_deps = ['acl', 'bash', 'cryptsetup', 'dbus', 'glibc', 'hwdata', 'kbd', 'kmod', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']
+runtime_deps = ['acl', 'bash', 'cryptsetup', 'glibc', 'hwdata', 'kbd', 'kmod', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']
 backup = ["/etc/issue", "/etc/locale.conf", "/etc/nsswitch.conf", "/etc/vconsole.conf", "/etc/systemd/coredump.conf", "/etc/systemd/journald.conf", "/etc/systemd/logind.conf", "/etc/systemd/networkd.conf", "/etc/systemd/oomd.conf", "/etc/systemd/resolved.conf", "/etc/systemd/sleep.conf", "/etc/systemd/system.conf", "/etc/systemd/timesyncd.conf", "/etc/systemd/user.conf", "/etc/udev/iocost.conf", "/etc/udev/udev.conf"]
 
 [output.hooks]

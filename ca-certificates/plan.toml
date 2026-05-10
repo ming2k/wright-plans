@@ -1,5 +1,5 @@
 name = "ca-certificates"
-version = "3.121"
+version = "3.123.1"
 release = 1
 description = "Mozilla's set of trusted CA certificates"
 license = "MPL-2.0"
@@ -12,7 +12,7 @@ build_deps = ['python']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_121_RTM/src/nss-${VERSION}.tar.gz"
+url = "https://archive.mozilla.org/pub/security/nss/releases/NSS_3_123_1_RTM/src/nss-${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
@@ -27,7 +27,7 @@ path = "bundle.sh"
 
 [lifecycle.compile]
 script = '''
-cd source/ca-certificates-${VERSION}
+cd source/nss-${VERSION}
 mkdir -p certs
 ln -sf ${WORKDIR}/source/nss-${VERSION}/nss/lib/ckfw/builtins/certdata.txt certs/certdata.txt
 ln -sf ${WORKDIR}/source/nss-${VERSION}/nss/lib/ckfw/builtins/nssckbi.h certs/nssckbi.h
@@ -35,24 +35,22 @@ ln -sf ${WORKDIR}/source/nss-${VERSION}/nss/lib/ckfw/builtins/nssckbi.h certs/ns
 cd certs
 python3 ${WORKDIR}/ca-certificates-certdata2pem.py
 
-cd ${WORKDIR}/source
+cd ${WORKDIR}/source/nss-${VERSION}
 sh ${WORKDIR}/ca-certificates-bundle.sh'''
 
 [lifecycle.staging]
 script = '''
-cd source/ca-certificates-${VERSION}
+cd source/nss-${VERSION}
 install -Dm644 ca-bundle.trust.p11-kit \
   ${STAGING_DIR}/usr/share/ca-certificates/trust-source/mozilla.trust.p11-kit'''
 
-[hooks]
-post_install = '''
-update-ca-trust
-
-'''
-post_upgrade = '''
-update-ca-trust
-
-'''
-
 [[output]]
 runtime_deps = ['p11-kit']
+hooks.post_install = '''
+update-ca-trust
+
+'''
+hooks.post_upgrade = '''
+update-ca-trust
+
+'''

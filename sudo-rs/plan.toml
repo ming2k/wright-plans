@@ -1,0 +1,65 @@
+name = "sudo-rs"
+version = "0.2.13"
+release = 1
+description = "A memory safe implementation of sudo and su written in Rust"
+license = "Apache-2.0 OR MIT"
+arch = "x86_64"
+url = "https://github.com/trifectatechfoundation/sudo-rs"
+maintainer = ""
+
+build_deps = ["rust", "linux-pam"]
+link_deps = ["linux-pam"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/trifectatechfoundation/sudo-rs/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[options]
+static = false
+debug = false
+ccache = false
+
+[lifecycle.compile]
+executor = "shell"
+isolation = "relaxed"
+script = """
+cd source/sudo-rs-${VERSION}
+cargo build --release --features gettext
+"""
+
+[lifecycle.staging]
+script = """
+cd source/sudo-rs-${VERSION}
+
+# Install binaries with setuid for sudo and su
+install -Dm4755 target/release/sudo ${STAGING_DIR}/usr/bin/sudo
+install -Dm4755 target/release/su ${STAGING_DIR}/usr/bin/su
+install -Dm755 target/release/visudo ${STAGING_DIR}/usr/bin/visudo
+
+# sudoedit is traditionally a symlink to sudo
+ln -sf sudo ${STAGING_DIR}/usr/bin/sudoedit
+
+# Install translations
+if [ -d po ] && [ -f Makefile ]; then
+    make DESTDIR=${STAGING_DIR} install-mo || true
+fi
+
+# Install documentation
+install -Dm644 README.md ${STAGING_DIR}/usr/share/doc/sudo-rs/README.md
+install -Dm644 CHANGELOG.md ${STAGING_DIR}/usr/share/doc/sudo-rs/CHANGELOG.md
+install -Dm644 LICENSE-APACHE ${STAGING_DIR}/usr/share/licenses/sudo-rs/LICENSE-APACHE
+install -Dm644 LICENSE-MIT ${STAGING_DIR}/usr/share/licenses/sudo-rs/LICENSE-MIT
+"""
+
+[[output]]
+name = ""
+description = "Memory safe implementation of sudo and su"
+provides = ["sudo"]
+conflicts = ["sudo"]
+runtime_deps = ["linux-pam"]
+backup = ["/etc/sudoers", "/etc/sudoers-rs"]
+
+[output.hooks]
+post_install = "chmod 4755 /usr/bin/sudo /usr/bin/su 2>/dev/null || true"

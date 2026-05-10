@@ -1,5 +1,5 @@
 name = "libcap"
-version = "2.76"
+version = "2.78"
 release = 3
 description = "POSIX 1003.1e capabilities userspace interface"
 license = "BSD-3-Clause"
@@ -32,4 +32,3 @@ make test'''
 script = '''
 cd source/libcap-${VERSION}
 make prefix=/usr lib=lib SBINDIR=/usr/bin DESTDIR=${STAGING_DIR} install'''
-

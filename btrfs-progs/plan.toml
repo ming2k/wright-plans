@@ -1,5 +1,5 @@
 name = "btrfs-progs"
-version = "6.19"
+version = "6.19.1"
 release = 1
 description = "Btrfs filesystem userspace utilities"
 license = "GPL-2.0-or-later AND LGPL-2.1-or-later"

@@ -1,5 +1,5 @@
 name = "nano"
-version = "8.6"
+version = "8.7.1"
 release = 1
 description = "A small, simple text editor aiming to replace Pico"
 license = "GPL-3.0-or-later"

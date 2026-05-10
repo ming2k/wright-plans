@@ -17,32 +17,30 @@ extract_to = "source"
 
 [lifecycle.configure]
 script = '''
-cd source/gtk3-${VERSION}
+cd source/gtk-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dwayland_backend=true -Dx11_backend=false -Dbroadway_backend=false -Dintrospection=true -Dgtk_doc=false -Dman=false'''
 
 [lifecycle.compile]
 script = '''
-cd source/gtk3-${VERSION}
+cd source/gtk-${VERSION}
 meson compile -C build'''
 
 [lifecycle.staging]
 script = '''
-cd source/gtk3-${VERSION}
+cd source/gtk-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''
 
-[hooks]
+[[output]]
+runtime_deps = ['adwaita-icon-theme', 'shared-mime-info', 'iso-codes', 'at-spi2-core', 'glib', 'pango', 'cairo', 'gdk-pixbuf', 'libepoxy', 'libxkbcommon', 'wayland']
+
+[output.hooks]
 post_install = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
 gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
-
 '''
 post_upgrade = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 gdk-pixbuf-query-loaders --update-cache 2>/dev/null || true
 gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true
-
 '''
-
-[[output]]
-runtime_deps = ['adwaita-icon-theme', 'shared-mime-info', 'iso-codes', 'at-spi2-core', 'glib', 'pango', 'cairo', 'gdk-pixbuf', 'libepoxy', 'libxkbcommon', 'wayland']

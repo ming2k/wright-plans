@@ -1,6 +1,6 @@
 name = "gmp"
 version = "6.3.0"
-release = 2
+release = 3
 description = "GNU Multiple Precision Arithmetic Library"
 license = "LGPL-3.0-or-later"
 arch = "x86_64"
@@ -23,6 +23,7 @@ script = '''
 unset CFLAGS CXXFLAGS
 cd source/gmp-${VERSION}
 ./configure --prefix=/usr    \
+--build=x86_64-pc-linux-gnu \
 --enable-cxx     \
 --disable-static \
 --docdir=/usr/share/doc/gmp-6.3.0'''
@@ -45,4 +46,3 @@ script = '''
 cd source/gmp-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 make DESTDIR=${STAGING_DIR} install-html'''
-

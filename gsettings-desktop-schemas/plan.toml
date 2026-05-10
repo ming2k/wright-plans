@@ -1,18 +1,17 @@
 name = "gsettings-desktop-schemas"
-version = "49.1"
+version = "50.1"
 release = 1
 description = "GSettings schemas for GNOME desktop components"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://gitlab.gnome.org/GNOME/gsettings-desktop-schemas"
 
-
 build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://download.gnome.org/sources/gsettings-desktop-schemas/49/gsettings-desktop-schemas-${VERSION}.tar.xz"
+url = "https://download.gnome.org/sources/gsettings-desktop-schemas/50/gsettings-desktop-schemas-${VERSION}.tar.xz"
 extract_to = "source"
 
 [lifecycle.configure]
@@ -30,7 +29,9 @@ script = '''
 cd source/gsettings-desktop-schemas-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[hooks]
+[[output]]
+name = "gsettings-desktop-schemas"
+
+[output.hooks]
 post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
 post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
-

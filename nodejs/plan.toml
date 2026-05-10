@@ -1,0 +1,38 @@
+name = "nodejs"
+version = "24.15.0"
+release = 1
+description = "Evented I/O for V8 javascript"
+license = "MIT"
+arch = "x86_64"
+url = "https://nodejs.org/"
+
+build_deps = ['python', 'cmake', 'ninja']
+link_deps = ['zlib', 'openssl', 'icu']
+
+[[sources]]
+type = "http"
+sha256 = "a4f653d79ed140aaad921e8c22a3b585ca85cfdab80d4030f6309e4663a8a1c8"
+url = "https://nodejs.org/dist/v${VERSION}/node-v${VERSION}.tar.xz"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source/node-v${VERSION}
+./configure --prefix=/usr \
+    --shared-openssl \
+    --shared-zlib \
+    --with-intl=system-icu \
+    --ninja'''
+
+[lifecycle.compile]
+script = '''
+cd source/node-v${VERSION}
+make -j$(nproc)'''
+
+[lifecycle.staging]
+script = '''
+cd source/node-v${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
+
+[[output]]
+runtime_deps = ['openssl', 'zlib']

@@ -1,5 +1,5 @@
 name = "dhcpcd"
-version = "10.3.0"
+version = "10.3.2"
 release = 1
 description = "DHCP/DHCPv6 client with IPv4LL support"
 license = "BSD-2-Clause"
@@ -33,4 +33,3 @@ make -j$(nproc)'''
 script = '''
 cd source/dhcpcd-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
-

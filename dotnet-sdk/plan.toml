@@ -1,0 +1,48 @@
+name = "dotnet-sdk"
+version = "9.0.100"
+release = 1
+description = ".NET SDK for building and running .NET applications"
+license = "MIT"
+arch = "x86_64"
+url = "https://dotnet.microsoft.com"
+
+link_deps = ['glibc', 'icu', 'libunwind', 'openssl']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://dotnetcli.azureedge.net/dotnet/Sdk/${VERSION}/dotnet-sdk-${VERSION}-linux-x64.tar.gz"
+extract_to = "source"
+
+[lifecycle.staging]
+script = '''
+install -dm755 ${STAGING_DIR}/usr/share/dotnet
+cp -a source/* ${STAGING_DIR}/usr/share/dotnet/
+
+install -dm755 ${STAGING_DIR}/usr/bin
+ln -sf ../share/dotnet/dotnet ${STAGING_DIR}/usr/bin/dotnet
+
+install -dm755 ${STAGING_DIR}/etc/profile.d
+cat > ${STAGING_DIR}/etc/profile.d/dotnet.sh << 'PROF'
+export DOTNET_ROOT=/usr/share/dotnet
+export PATH=$PATH:/usr/share/dotnet
+PROF'''
+
+[[output]]
+name = "dotnet-sdk"
+description = ".NET SDK and runtime"
+provides = ["dotnet"]
+conflicts = ["dotnet-sdk-bin"]
+replaces = ["dotnet-sdk-bin"]
+runtime_deps = ['glibc', 'icu', 'libunwind', 'openssl']
+backup = ["/etc/profile.d/dotnet.sh"]
+
+[[output]]
+name = "dotnet-runtime"
+description = ".NET runtime only"
+include = [
+    "/usr/share/dotnet/shared/Microsoft.NETCore.App/.*",
+    "/usr/share/dotnet/shared/Microsoft.AspNetCore.App/.*",
+    "/usr/share/dotnet/host/.*",
+]
+runtime_deps = ['glibc', 'icu', 'libunwind', 'openssl']

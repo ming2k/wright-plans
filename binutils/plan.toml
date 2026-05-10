@@ -44,13 +44,12 @@ make DESTDIR=${STAGING_DIR} tooldir=/usr install
 # Remove static libraries
 rm -fv ${STAGING_DIR}/usr/lib/lib{bfd,ctf,ctf-nobfd,gprofng,opcodes,sframe}.a'''
 
-[hooks]
-post_install = '''
+[[output]]
+hooks.post_install = '''
 # Clean old binutils residuals
 rm -f /usr/lib/libbfd-2.45.so /usr/lib/libbfd-2.44.so /usr/lib/libbfd-2.43.1.so
 rm -f /usr/lib/libsframe.so.1.0.0
 ldconfig
 
 '''
-post_upgrade = "ldconfig"
-
+hooks.post_upgrade = "ldconfig"

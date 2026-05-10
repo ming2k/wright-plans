@@ -21,10 +21,10 @@ cd source/dosfstools-${VERSION}
 [lifecycle.compile]
 script = '''
 cd source/dosfstools-${VERSION}
-make -j$(nproc) -C ${WORKDIR}'''
+make -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
 cd source/dosfstools-${VERSION}
-make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
+make DESTDIR=${STAGING_DIR} install'''
 

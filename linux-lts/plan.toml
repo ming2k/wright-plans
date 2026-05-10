@@ -53,20 +53,51 @@ make olddefconfig
 scripts/config --set-str LOCALVERSION "-theseus-lts"
 scripts/config --set-str DEFAULT_HOSTNAME "theseus"
 
+# --- 64-bit x86_64 only ---
+# Commands: keep the kernel generic across modern x86_64 CPUs, but disable
+# IA32 and x32 userspace compatibility.
+# Principle: the package should run on normal modern 64-bit Intel/AMD-family
+# PCs without being tied to the build host, while deliberately dropping old
+# 32-bit ABI support.
+# Scenario: desktop/workstation installs that run only native 64-bit userspace.
+scripts/config --disable X86_NATIVE_CPU
+scripts/config --set-val X86_MINIMUM_CPU_FAMILY 64
+scripts/config --enable CPU_SUP_INTEL
+scripts/config --enable CPU_SUP_AMD
+scripts/config --enable CPU_SUP_HYGON
+scripts/config --enable CPU_SUP_CENTAUR
+scripts/config --enable CPU_SUP_ZHAOXIN
+scripts/config --disable IA32_EMULATION
+scripts/config --disable X86_X32_ABI
+scripts/config --disable COMPAT
+scripts/config --disable COMPAT_32
+scripts/config --disable COMPAT_BINFMT_ELF
+scripts/config --disable COMPAT_32BIT_TIME
+scripts/config --disable MODIFY_LDT_SYSCALL
+
 # --- Boot-critical support (no initramfs, must be built-in) ---
-# Commands: enable root filesystem, EFI System Partition filesystem, and the
-# NVMe block driver as built-in (y, not m).
+# Commands: enable supported root filesystems, EFI System Partition filesystem,
+# NVMe, AHCI/SATA, SCSI disk, xHCI USB, and USB mass storage as built-in
+# support (y, not m).
 # Principle: without an initramfs the kernel must mount root and access the
-# boot partition entirely on its own. If any of these are modules the system
-# will fail to boot.
-# Scenario: every boot path.
+# boot partition entirely on its own. If these are modules, the package may
+# only boot on the builder's storage layout.
+# Scenario: common modern desktop/laptop and rescue-USB boot paths.
 scripts/config --enable EXT4_FS
+scripts/config --enable BTRFS_FS
 scripts/config --enable VFAT_FS
 scripts/config --enable NLS_CODEPAGE_437
 scripts/config --enable NLS_ISO8859_1
 scripts/config --enable NLS_UTF8
 scripts/config --enable BLK_DEV_NVME
 scripts/config --enable NVME_CORE
+scripts/config --enable SCSI
+scripts/config --enable BLK_DEV_SD
+scripts/config --enable ATA
+scripts/config --enable SATA_AHCI
+scripts/config --enable USB_XHCI_HCD
+scripts/config --enable USB_STORAGE
+scripts/config --module XFS_FS
 scripts/config --enable EFI
 scripts/config --enable EFI_STUB
 scripts/config --enable EFI_MIXED

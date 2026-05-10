@@ -1,0 +1,33 @@
+name = "miniupnpc"
+version = "2.3.3"
+release = 1
+description = "UPnP IGD client lightweight library"
+license = "BSD-3-Clause"
+arch = "x86_64"
+url = "http://miniupnp.free.fr/"
+
+build_deps = ['cmake', 'ninja']
+
+[[sources]]
+type = "http"
+sha256 = "8cf2c833b3e76fc4893ff29c2a376e3394962449e5970e373c0a91421724d222"
+url = "https://github.com/miniupnp/miniupnp/archive/refs/tags/miniupnpc_2_3_3.tar.gz"
+extract_to = "source"
+
+[lifecycle.configure]
+script = '''
+cd source/miniupnpc
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DUPNPC_BUILD_STATIC=OFF'''
+
+[lifecycle.compile]
+script = '''
+cd source/miniupnpc
+ninja -C build'''
+
+[lifecycle.staging]
+script = '''
+cd source/miniupnpc
+DESTDIR=${STAGING_DIR} ninja -C build install'''

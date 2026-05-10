@@ -61,7 +61,5 @@ install -v -m644 doc/*.{ps,pdf,html,dvi} ${STAGING_DIR}/usr/share/doc/readline-$
 [[output]]
 runtime_deps = ['ncurses']
 backup = ["/etc/inputrc"]
-
-[hooks]
-post_install = "ldconfig 2>/dev/null || true"
-post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"

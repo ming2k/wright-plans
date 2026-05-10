@@ -1,5 +1,5 @@
 name = "man-pages"
-version = "6.15"
+version = "6.18"
 release = 1
 description = "Linux man pages - over 2,400 manual pages documenting the Linux kernel and C library interfaces"
 license = "GPL-2.0-or-later AND MIT"

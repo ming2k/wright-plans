@@ -1,0 +1,44 @@
+name = "iverilog"
+version = "13.0"
+release = 1
+description = "Icarus Verilog compiler and simulation runtime"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://steveicarus.github.io/iverilog/"
+
+link_deps = ['readline']
+build_deps = ['autoconf', 'flex', 'bison', 'gperf']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/steveicarus/iverilog/archive/refs/tags/v13_0.tar.gz"
+extract_to = "source"
+
+[lifecycle.prepare]
+script = '''
+cd source/iverilog-13_0
+sh autoconf.sh'''
+
+[lifecycle.configure]
+script = '''
+cd source/iverilog-13_0
+./configure --prefix=/usr'''
+
+[lifecycle.compile]
+script = '''
+cd source/iverilog-13_0
+make -j$(nproc)'''
+
+[lifecycle.check]
+script = '''
+cd source/iverilog-13_0
+make check'''
+
+[lifecycle.staging]
+script = '''
+cd source/iverilog-13_0
+make DESTDIR=${STAGING_DIR} install'''
+
+[[output]]
+runtime_deps = ['readline']

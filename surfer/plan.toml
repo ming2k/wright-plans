@@ -1,0 +1,70 @@
+name = "surfer"
+version = "0.7.0"
+release = 1
+description = "Waveform viewer for VCD, FST, and GHW with a snappy interface"
+license = "EUPL-1.2"
+arch = "x86_64"
+url = "https://surfer-project.gitlab.io/surfer"
+
+link_deps = ['libglvnd', 'libxkbcommon', 'mesa', 'wayland']
+build_deps = ['rust']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://gitlab.com/surfer-project/surfer/-/archive/v${VERSION}/surfer-v${VERSION}.tar.gz"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/jkarns275/f128/archive/e60de395f0d6454c1dc546b87f06a6358425b6b6.tar.gz"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/ics-jku/instruction-decoder/archive/02bdcbfd5663a72e4a0b1b9d54519412d417fab1.tar.gz"
+extract_to = "source"
+
+[[sources]]
+sha256 = "SKIP"
+type = "local"
+path = "patches/0001-disable-x11-eframe-feature.patch"
+
+[[sources]]
+sha256 = "SKIP"
+type = "local"
+path = "surfer.desktop"
+
+[lifecycle.prepare]
+script = '''
+set -euo pipefail
+rm -rf "source/surfer-v${VERSION}/f128"
+mv source/f128-e60de395f0d6454c1dc546b87f06a6358425b6b6 "source/surfer-v${VERSION}/f128"
+rm -rf "source/surfer-v${VERSION}/instruction-decoder"
+mv source/instruction-decoder-02bdcbfd5663a72e4a0b1b9d54519412d417fab1 "source/surfer-v${VERSION}/instruction-decoder"
+cd "source/surfer-v${VERSION}"
+patch -Np1 < ${WORKDIR}/${NAME}-0001-disable-x11-eframe-feature.patch'''
+
+[lifecycle.configure]
+script = '''
+cd source/surfer-v${VERSION}
+echo "cargo project, no configure step"'''
+
+[lifecycle.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
+script = '''
+cd source/surfer-v${VERSION}
+cargo build --release'''
+
+[lifecycle.staging]
+script = '''
+install -Dm755 ${WORKDIR}/target/release/surfer ${STAGING_DIR}/usr/bin/surfer
+install -Dm755 ${WORKDIR}/target/release/surver ${STAGING_DIR}/usr/bin/surver
+install -Dm644 ${WORKDIR}/${NAME}-surfer.desktop ${STAGING_DIR}/usr/share/applications/surfer.desktop
+install -Dm644 source/surfer-v${VERSION}/surfer/assets/logo.png ${STAGING_DIR}/usr/share/icons/hicolor/256x256/apps/surfer.png'''
+
+[[output]]
+runtime_deps = ['libglvnd', 'libxkbcommon', 'mesa', 'wayland']

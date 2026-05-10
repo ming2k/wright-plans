@@ -79,7 +79,10 @@ for f in system-account system-auth system-session system-password other; do
 done'''
 
 [[output]]
-runtime_deps = ['systemd', 'glibc']
+# The default system-session stack references pam_systemd.so as optional.
+# Keep systemd as a root target in system manifests, but do not make PAM itself
+# depend on systemd; systemd is built with PAM support and depends on linux-pam.
+runtime_deps = ['glibc']
 backup = ["/etc/pam.d/system-account", "/etc/pam.d/system-auth", "/etc/pam.d/system-session", "/etc/pam.d/system-password", "/etc/pam.d/other"]
 hooks.post_install = "ldconfig 2>/dev/null || true"
 hooks.post_upgrade = "ldconfig 2>/dev/null || true"

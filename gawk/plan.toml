@@ -1,5 +1,5 @@
 name = "gawk"
-version = "5.3.2"
+version = "5.4.0"
 release = 1
 description = "Programs for manipulating text files"
 license = "GPL-3.0-or-later"
@@ -32,4 +32,3 @@ make -j$(nproc)'''
 script = '''
 cd source/gawk-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
-

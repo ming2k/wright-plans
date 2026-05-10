@@ -1,6 +1,6 @@
 name = "gcc"
 version = "16.1.0"
-release = 1
+release = 2
 description = "The GNU Compiler Collection - C and C++ frontends"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -20,9 +20,7 @@ ccache = true
 [lifecycle.prepare]
 script = '''
 cd source/gcc-${VERSION}
-case $(uname -m) in
-    x86_64) sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64 ;;
-esac
+sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 mkdir -v build'''
 
 [lifecycle.configure]
@@ -108,4 +106,3 @@ hooks.post_upgrade = "ldconfig"
 name = "gcc"
 description = "The GNU Compiler Collection - C and C++ compiler"
 runtime_deps = ['binutils', 'gcc:gcc-libs', 'gcc:libstdc++']
-

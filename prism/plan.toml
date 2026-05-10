@@ -1,0 +1,46 @@
+name = "prism"
+version = "9.0.537"
+release = 1
+description = "Prism framework for building loosely coupled, maintainable, and testable XAML applications"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/PrismLibrary/Prism"
+
+link_deps = ['dotnet-sdk']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/PrismLibrary/Prism/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
+
+[lifecycle.compile]
+isolation = "none"
+script = '''
+cd source/Prism-${VERSION}
+
+# Restore NuGet packages
+dotnet restore PrismLibrary_Core.slnf
+
+# Build only the .NET 6.0 target (Linux-compatible, skip net462/net47)
+dotnet build PrismLibrary_Core.slnf -c Release -f net6.0 --no-restore'''
+
+[lifecycle.staging]
+script = '''
+cd source/Prism-${VERSION}
+
+# Install built assemblies
+install -dm755 ${STAGING_DIR}/usr/lib/prism
+
+# Copy core library outputs (built for net6.0)
+for proj in Prism.Core Prism.Events Prism.Container.Abstractions Prism.Container.DryIoc; do
+    if [ -d "src/${proj}/bin/Release/net6.0" ]; then
+        cp "src/${proj}/bin/Release/net6.0"/*.dll ${STAGING_DIR}/usr/lib/prism/
+        cp "src/${proj}/bin/Release/net6.0"/*.xml ${STAGING_DIR}/usr/lib/prism/ 2>/dev/null || true
+    fi
+done'''
+
+[[output]]
+name = "prism"
+description = "Prism core libraries for XAML application development"
+runtime_deps = ['dotnet-sdk']

@@ -1,5 +1,5 @@
 name = "tzdata"
-version = "2025c"
+version = "2026b"
 release = 2
 description = "Sources for time zone and daylight saving time data"
 license = "LicenseRef-tz"
@@ -9,29 +9,29 @@ url = "https://www.iana.org/time-zones"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "37e9ed8427f5d3521c22fc58e293cbfb043d70eedf1003870b33f363f61ca344"
 url = "https://data.iana.org/time-zones/releases/tzcode${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "114543d9f19a6bfeb5bca43686aea173d38755a3db1f2eec112647ae92c6f544"
 url = "https://data.iana.org/time-zones/releases/tzdata${VERSION}.tar.gz"
 extract_to = "source"
 
 [lifecycle.prepare]
 script = '''
-cd source/tzdata-${VERSION}
+cd source
 sed -i "s:sbin:bin:g" Makefile'''
 
 [lifecycle.compile]
 script = '''
-cd source/tzdata-${VERSION}
+cd source
 make CC=gcc LFLAGS="${LDFLAGS}" -j$(nproc)'''
 
 [lifecycle.staging]
 script = '''
-cd source/tzdata-${VERSION}
+cd source
 
 # Install tzcode tools (zic, zdump, tzselect)
 make CC=gcc DESTDIR=${STAGING_DIR} install

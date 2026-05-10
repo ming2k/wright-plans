@@ -1,5 +1,5 @@
 name = "sed"
-version = "4.9"
+version = "4.10"
 release = 1
 description = "Stream editor"
 license = "GPL-3.0-or-later"
@@ -30,4 +30,3 @@ cd source/sed-${VERSION}
 make DESTDIR=${STAGING_DIR} install
 install -d -m755           ${STAGING_DIR}/usr/share/doc/sed-4.9
 install -m644 doc/sed.html ${STAGING_DIR}/usr/share/doc/sed-4.9'''
-

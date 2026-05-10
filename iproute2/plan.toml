@@ -1,5 +1,5 @@
 name = "iproute2"
-version = "6.19.0"
+version = "7.0.0"
 release = 1
 description = "Programs for basic and advanced IPV4-based networking"
 license = "GPL-2.0-or-later"
@@ -28,4 +28,3 @@ make NETNS_RUN_DIR=/run/netns -j$(nproc)'''
 script = '''
 cd source/iproute2-${VERSION}
 make SBINDIR=/usr/bin DESTDIR=${STAGING_DIR} install'''
-
