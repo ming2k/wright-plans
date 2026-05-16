@@ -20,26 +20,26 @@ type = "http"
 sha256 = "SKIP"
 url = "https://media.xiph.org/rnnoise/models/rnnoise_data-0b50c45.tar.gz"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/rnnoise-${VERSION}
 cd ${SRC_DIR}/rnnoise-${VERSION}
 cp ${SRC_DIR}/src/rnnoise_data* src/
 autoreconf -fi'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/rnnoise-${VERSION}
 cd ${SRC_DIR}/rnnoise-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/rnnoise-${VERSION}
 cd ${SRC_DIR}/rnnoise-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/rnnoise-${VERSION}
 cd ${SRC_DIR}/rnnoise-${VERSION}

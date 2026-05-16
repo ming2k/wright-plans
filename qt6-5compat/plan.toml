@@ -15,7 +15,7 @@ sha256 = "e62954646b2749723aa5c7db32faab407358734075590058a01e793382d4c63e"
 url = "https://download.qt.io/official_releases/qt/6.11/${VERSION}/submodules/qt5compat-everywhere-src-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/qt5compat-everywhere-src-${VERSION}
 cmake -B build -G Ninja \
@@ -25,12 +25,12 @@ cmake -B build -G Ninja \
     -DQT_BUILD_EXAMPLES=OFF \
     -DQT_BUILD_TESTS=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/qt5compat-everywhere-src-${VERSION}
 ninja -j$(nproc) -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/qt5compat-everywhere-src-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

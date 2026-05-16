@@ -15,7 +15,7 @@ sha256 = "675a46af1ec7998909819a0829aec6b03c79f0b573d1588d858dd54ac3063329"
 url = "https://gitlab.freedesktop.org/drm/igt-gpu-tools/-/archive/v${VERSION}/igt-gpu-tools-v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/igt-gpu-tools-${VERSION}
 meson setup build \
@@ -31,12 +31,12 @@ meson setup build \
     -D valgrind=disabled \
     -D oping=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/igt-gpu-tools-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/igt-gpu-tools-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/flatpak/flatpak/releases/download/${VERSION}/flatpak-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/flatpak-${VERSION}
 meson setup build \
@@ -34,12 +34,12 @@ meson setup build \
     -Dtests=false \
     -Dinstalled_tests=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/flatpak-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/flatpak-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}

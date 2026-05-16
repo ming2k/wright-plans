@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://github.com/stefanberger/swtpm/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/swtpm-${VERSION}
 ./autogen.sh --prefix=/usr --disable-static --without-cuse --without-selinux --without-seccomp --disable-tests'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/swtpm-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/swtpm-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

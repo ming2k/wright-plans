@@ -15,7 +15,7 @@ sha256 = "78262a6e7ac170d6528ebfe2efccdf220191a5af6a6cd61ea4a9a9a5042c7a07"
 url = "https://download.gnome.org/sources/libxml2/2.15/libxml2-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libxml2-${VERSION}
 mkdir -p build && cd build
@@ -25,12 +25,12 @@ meson setup .. --prefix=/usr \
     -D python=enabled \
     -D docs=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libxml2-${VERSION}/build
 ninja -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libxml2-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''

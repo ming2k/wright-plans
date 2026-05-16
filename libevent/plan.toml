@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://github.com/libevent/libevent/releases/download/release-${VERSION}/libevent-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libevent-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libevent-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libevent-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

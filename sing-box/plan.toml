@@ -19,7 +19,7 @@ extract_to = "source"
 type = "local"
 path = "sing-box.service"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/sing-box-${VERSION}
@@ -33,7 +33,7 @@ go build -o sing-box \
 -ldflags "-s -w -X github.com/sagernet/sing-box/constant.Version=${VERSION}" \
 ./cmd/sing-box'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/sing-box-${VERSION}
 install -Dm755 sing-box ${STAGING_DIR}/usr/bin/sing-box

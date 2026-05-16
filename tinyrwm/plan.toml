@@ -15,19 +15,19 @@ url = "https://codeberg.org/river/tinyrwm.git"
 ref = "a3fc724da4650da015676869e4e5cfc8130fe5b8"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = """
 cd source/c
 meson setup build --prefix=/usr --buildtype=release
 """
 
-[lifecycle.compile]
+[pipeline.compile]
 script = """
 cd source/c
 ninja -C build
 """
 
-[lifecycle.staging]
+[pipeline.staging]
 script = """
 cd source/c
 DESTDIR=${STAGING_DIR} ninja -C build install

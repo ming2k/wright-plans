@@ -14,22 +14,22 @@ sha256 = "SKIP"
 url = "https://github.com/akheron/jansson/releases/download/v${VERSION}/jansson-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/jansson-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/jansson-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/jansson-${VERSION}
 make check'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/jansson-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

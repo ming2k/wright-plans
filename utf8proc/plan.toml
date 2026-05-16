@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://github.com/JuliaStrings/utf8proc/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/utf8proc-${VERSION}
 echo "cmake project"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/utf8proc-${VERSION}
 mkdir -p build && cd build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/utf8proc-${VERSION}/build
 DESTDIR=${STAGING_DIR} make install'''

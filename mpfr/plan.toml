@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/mpfr/mpfr-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/mpfr-${VERSION}
 ./configure --prefix=/usr        \
@@ -22,18 +22,18 @@ cd source/mpfr-${VERSION}
 --enable-thread-safe \
 --docdir=/usr/share/doc/mpfr-4.2.2'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/mpfr-${VERSION}
 make -j$(nproc)
 make html'''
 
-# [lifecycle.check]
+# [pipeline.check]
 # script = '''
 # cd source/mpfr-${VERSION}
 # make check'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/mpfr-${VERSION}
 make DESTDIR=${STAGING_DIR} install

@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://files.pythonhosted.org/packages/b2/e8/9ed3830aeed71f17c026a07a5097edcf44b692850ef215b161b8ad875729/sphinxcontrib-jsmath-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/sphinxcontrib-jsmath-${VERSION}
 pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''

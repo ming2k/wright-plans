@@ -15,26 +15,26 @@ sha256 = "SKIP"
 url = "https://github.com/s-yata/marisa-trie/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
-cd source/marisa-${VERSION}
+cd source/marisa-trie-${VERSION}
 autoreconf -fi'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
-cd source/marisa-${VERSION}
+cd source/marisa-trie-${VERSION}
 ./configure \
     --prefix=/usr \
     --disable-static \
     --enable-sse2'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
-cd source/marisa-${VERSION}
-make -C ${WORKDIR} -j$(nproc)'''
+cd source/marisa-trie-${VERSION}
+make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
-cd source/marisa-${VERSION}
-make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''
+cd source/marisa-trie-${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
 

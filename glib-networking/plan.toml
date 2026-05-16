@@ -14,18 +14,18 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/glib-networking/2.80/glib-networking-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 env = { GIO_MODULE_DIR = '/usr/lib/gio/modules' }
 script = '''
 cd source/glib-networking-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dgnutls=enabled -Dlibproxy=enabled -Dopenssl=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/glib-networking-${VERSION}
 meson compile -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/glib-networking-${VERSION}
 DESTDIR=${STAGING_DIR} meson install -C build

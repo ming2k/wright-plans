@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/vala/0.56/vala-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/vala-${VERSION}
 ./configure --prefix=/usr --disable-valadoc'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/vala-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/vala-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

@@ -13,19 +13,19 @@ sha256 = "SKIP"
 url = "https://github.com/thom311/libnl/releases/download/libnl3_11_0/libnl-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libnl-${VERSION}
 ./configure --prefix=/usr     \
 --sysconfdir=/etc \
 --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libnl-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libnl-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

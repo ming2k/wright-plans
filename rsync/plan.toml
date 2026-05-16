@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://www.samba.org/ftp/rsync/src/rsync-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/rsync-${VERSION}
 ./configure --prefix=/usr    \
@@ -22,12 +22,12 @@ cd source/rsync-${VERSION}
 --without-included-popt      \
 --without-included-zlib'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/rsync-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/rsync-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

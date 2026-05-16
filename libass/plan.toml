@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://github.com/libass/libass/releases/download/${VERSION}/libass-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libass-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libass-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libass-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

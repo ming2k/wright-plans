@@ -13,14 +13,14 @@ sha256 = "SKIP"
 url = "https://go.dev/dl/go${VERSION}.src.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "none"
 env = { GOROOT_BOOTSTRAP = '/usr/lib/go-bootstrap', GOOS = 'linux', GOARCH = 'amd64', CGO_ENABLED = '1' }
 script = '''
 cd source/go/src
 ./make.bash'''
 
-[lifecycle.staging]
+[pipeline.staging]
 isolation = "none"
 script = '''
 mkdir -p ${STAGING_DIR}/usr/lib

@@ -20,7 +20,7 @@ sha256 = "SKIP"
 type = "local"
 path = "patches/0001-default-xwayland-satellite-off.patch"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/*
 # Pure Wayland system policy: default xwayland-satellite to off so niri never
@@ -28,19 +28,19 @@ cd source/*
 # for users who still want X11: `xwayland-satellite { on; }`.
 patch -Np1 < ${WORKDIR}/${NAME}-0001-default-xwayland-satellite-off.patch'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/*
 echo "cargo project, no configure step"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
 cd source/*
 cargo build --release --locked'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/*
 install -Dm755 ${WORKDIR}/target/release/niri ${STAGING_DIR}/usr/bin/niri

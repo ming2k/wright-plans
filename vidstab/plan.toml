@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://github.com/georgmartius/vid.stab/archive/refs/tags/v1.1.1.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/vidstab-${VERSION}
 cmake -B build \
@@ -22,12 +22,12 @@ cmake -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/vidstab-${VERSION}
 cmake --build build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/vidstab-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

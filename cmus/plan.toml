@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://github.com/ming2k/cmus/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/cmus-${VERSION}
 ./configure \
@@ -31,12 +31,12 @@ cd source/cmus-${VERSION}
   CONFIG_MP4=n \
   CONFIG_AAC=n'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/cmus-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/cmus-${VERSION}
 make DESTDIR=${STAGING_DIR} install

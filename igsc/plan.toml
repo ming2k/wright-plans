@@ -15,17 +15,17 @@ url = "https://github.com/intel/igsc/archive/refs/tags/V${VERSION}.tar.gz"
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/igsc-${VERSION}
 cmake -B build -S igsc-${VERSION} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=Release -DMETEE_DIR=/usr/lib/cmake/metee'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/igsc-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/igsc-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -1,6 +1,7 @@
-link_deps = ['acl', 'glibc', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']
+link_deps = ['acl', 'glibc', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'util-linux', 'xz', 'zstd']
+runtime_deps = ['acl', 'bash', 'cryptsetup', 'glibc', 'hwdata', 'kbd', 'kmod', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'util-linux', 'xz', 'zstd']
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/systemd-${VERSION}
 mkdir -p build
@@ -39,6 +40,7 @@ meson setup .. \
     -D audit=disabled \
     -D selinux=disabled \
     -D libcryptsetup=disabled \
+    -D tpm2=disabled \
     -D default-dnssec=no \
     -D default-kill-user-processes=false \
     -D default-locale='C.UTF-8' \

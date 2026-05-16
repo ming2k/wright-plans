@@ -14,7 +14,7 @@ sha256 = "6c4c0c44ff0ba3d136d6f57f3a707f9de8e9c866f50f809c1d22a43f0d8c9583"
 url = "https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v${VERSION}/SVT-AV1-v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/SVT-AV1-v${VERSION}
 cmake -B build \
@@ -24,12 +24,12 @@ cmake -B build \
     -DBUILD_DEC=ON \
     -DBUILD_ENC=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/SVT-AV1-v${VERSION}
 cmake --build build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/SVT-AV1-v${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

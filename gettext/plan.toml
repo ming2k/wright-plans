@@ -13,19 +13,19 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gettext/gettext-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gettext-${VERSION}
 ./configure --prefix=/usr    \
             --disable-static \
             --docdir=/usr/share/doc/gettext-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gettext-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gettext-${VERSION}
 make DESTDIR=${STAGING_DIR} install

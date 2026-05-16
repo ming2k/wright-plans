@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://git.sr.ht/~kennylevinsen/seatd/archive/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/seatd-${VERSION}
 meson setup build \
@@ -28,12 +28,12 @@ meson setup build \
     -D examples=disabled \
     -D man-pages=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/seatd-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/seatd-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

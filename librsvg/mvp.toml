@@ -1,6 +1,6 @@
 link_deps = ['cairo', 'gdk-pixbuf', 'pango', 'glib', 'libxml2', 'harfbuzz', 'freetype', 'fribidi']
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 script = '''
 cd source/librsvg-${VERSION}

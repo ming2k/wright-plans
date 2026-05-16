@@ -20,22 +20,22 @@ sha256 = "SKIP"
 type = "local"
 path = "gcc15.patch"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/graphite2-${VERSION}
 patch -Np1 < ../../graphite2-gcc15.patch'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/graphite2-${VERSION}
 cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=None -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_SKIP_INSTALL_RPATH=ON -DGRAPHITE2_COMPARE_RENDERER=OFF -DGRAPHITE2_VM_TYPE=direct'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/graphite2-${VERSION}
 cmake --build build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/graphite2-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

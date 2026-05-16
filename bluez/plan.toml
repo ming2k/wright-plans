@@ -14,13 +14,16 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/bluetooth/bluez-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/bluez-${VERSION}
-# Remove bundled ell to ensure external ell is used exclusively
+# Drop the bundled ell/ snapshot so the build uses the system ell exclusively
+# (matches --enable-external-ell). With it gone, automake's -I. can't shadow
+# <ell/ell.h> with a stale local copy, and gcc resolves all ell includes to
+# /usr/include/ell/*.h — the same library we link against.
 rm -rf ell'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/bluez-${VERSION}
 ./configure --prefix=/usr \
@@ -41,12 +44,12 @@ cd source/bluez-${VERSION}
     --disable-manpages \
     --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/bluez-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/bluez-${VERSION}
 make DESTDIR=${STAGING_DIR} install

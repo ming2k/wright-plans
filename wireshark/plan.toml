@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://www.wireshark.org/download/src/wireshark-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/wireshark-${VERSION}
 cmake -B build -G Ninja \
@@ -27,12 +27,12 @@ cmake -B build -G Ninja \
     -DBUILD_wireshark=ON \
     -DENABLE_KERBEROS=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/wireshark-${VERSION}
 ninja -j$(nproc) -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/wireshark-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

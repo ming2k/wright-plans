@@ -15,7 +15,7 @@ url = "https://github.com/ming2k/termus.git"
 ref = "v${VERSION}"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source
 autoreconf --force --install --verbose
@@ -23,12 +23,12 @@ autoreconf --force --install --verbose
     --prefix=/usr \
     --mandir=/usr/share/man'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''

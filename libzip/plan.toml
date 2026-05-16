@@ -15,17 +15,17 @@ url = "https://libzip.org/download/libzip-${VERSION}.tar.gz"
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libzip-${VERSION}
 cmake -B build -S ${WORKDIR} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DENABLE_BZIP2=ON -DENABLE_LZMA=ON -DENABLE_ZSTD=ON -DENABLE_OPENSSL=ON -DBUILD_EXAMPLES=OFF -DBUILD_REGRESS=OFF -DBUILD_DOC=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libzip-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libzip-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

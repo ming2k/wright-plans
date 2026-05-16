@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://sourceware.org/pub/valgrind/valgrind-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/valgrind-${VERSION}
 ./configure --prefix=/usr \
     --datadir=/usr/share/doc/valgrind-${VERSION} \
     --disable-werror'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/valgrind-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/valgrind-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

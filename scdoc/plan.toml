@@ -12,12 +12,12 @@ sha256 = "SKIP"
 url = "https://git.sr.ht/~sircmpwn/scdoc/archive/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/scdoc-${VERSION}
 make PREFIX=/usr -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/scdoc-${VERSION}
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''

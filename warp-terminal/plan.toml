@@ -14,19 +14,19 @@ sha256 = "9a2db9dcaa0f328e24164b28c76e93d4fa72c5769f784185041bd228e097d4d4"
 url = "https://releases.warp.dev/linux/pacman/warpdotdev/x86_64/warp-terminal-v${VERSION}-1-x86_64.pkg.tar.zst"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/warp-terminal-${VERSION}
 echo "using upstream stable Linux binary package"
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/warp-terminal-${VERSION}
 chmod 755 opt/warpdotdev/warp-terminal/warp usr/bin/warp-terminal
 '''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/warp-terminal-${VERSION}
 

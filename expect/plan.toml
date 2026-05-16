@@ -18,12 +18,12 @@ type = "http"
 sha256 = "SKIP"
 url = "https://www.linuxfromscratch.org/patches/lfs/12.4/expect-${VERSION}-gcc15-1.patch"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/expect-${VERSION}
 patch -Np1 < ${WORKDIR}/expect-${VERSION}-gcc15-1.patch'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/expect-${VERSION}
 ./configure --prefix=/usr           \
@@ -33,17 +33,17 @@ cd source/expect-${VERSION}
 --mandir=/usr/share/man \
 --with-tclinclude=/usr/include'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/expect-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/expect-${VERSION}
 make test'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/expect-${VERSION}
 make DESTDIR=${STAGING_DIR} install

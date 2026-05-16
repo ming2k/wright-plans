@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/gflags/gflags/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gflags-${VERSION}
 cmake -B build -G Ninja \
@@ -26,13 +26,13 @@ cmake -B build -G Ninja \
     -DBUILD_TESTING=OFF \
     -DREGISTER_INSTALL_PREFIX=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gflags-${VERSION}
-ninja -C ${WORKDIR}/build -j$(nproc)'''
+ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gflags-${VERSION}
-DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install'''
 

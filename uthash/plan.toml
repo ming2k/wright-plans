@@ -12,7 +12,7 @@ sha256 = "SKIP"
 url = "https://github.com/troydhanson/uthash/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/uthash-${VERSION}
 install -d ${STAGING_DIR}/usr/include

@@ -15,13 +15,13 @@ sha256 = "SKIP"
 url = "https://git.sr.ht/~kennylevinsen/greetd/archive/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/greetd-${VERSION}
 cargo build --release --locked'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/greetd-${VERSION}
 

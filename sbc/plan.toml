@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/bluetooth/sbc-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/sbc-${VERSION}
 ./configure --prefix=/usr \
     --disable-static \
     --disable-tester'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/sbc-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/sbc-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

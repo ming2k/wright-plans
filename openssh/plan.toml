@@ -39,7 +39,7 @@ sha256 = "SKIP"
 type = "local"
 path = "openssh.tmpfiles"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/openssh-${VERSION}
 # --with-privsep-user=nobody: no dedicated sshd user needed
@@ -58,12 +58,12 @@ cd source/openssh-${VERSION}
   --disable-lastlog \
   --with-default-path=/usr/bin'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/openssh-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/openssh-${VERSION}
 make DESTDIR=${STAGING_DIR} install

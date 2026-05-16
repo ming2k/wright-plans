@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://github.com/asciidoctor/asciidoctor/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/asciidoctor-${VERSION}
 
@@ -22,7 +22,7 @@ sed --in-place --regexp-extended \
   --expression 's|~>|>=|g' \
   asciidoctor.gemspec'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/asciidoctor-${VERSION}
 
@@ -65,7 +65,7 @@ find "tmp_install${_gemdir}/extensions/" \
   \) \
   -delete'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/asciidoctor-${VERSION}
 

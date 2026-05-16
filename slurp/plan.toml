@@ -15,19 +15,19 @@ sha256 = "0fa880d4a93e1c795e3b5929fbea47546df0955bea34fc2f7ffeb1751678f663"
 url = "https://github.com/emersion/slurp/archive/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/slurp-${VERSION}
 meson setup build \
   --prefix=/usr \
   --buildtype=release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/slurp-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/slurp-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

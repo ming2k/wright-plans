@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/adwaita-icon-theme/50/adwaita-icon-theme-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/adwaita-icon-theme-${VERSION}
 meson setup build --prefix=/usr --buildtype=release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/adwaita-icon-theme-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/adwaita-icon-theme-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''

@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/polkit-org/polkit/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/polkit-${VERSION}
 meson setup build \
@@ -30,12 +30,12 @@ meson setup build \
     -D os_type=lfs              \
     -D examples=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/polkit-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/polkit-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

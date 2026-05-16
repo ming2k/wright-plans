@@ -15,7 +15,7 @@ sha256 = "ce1d9d393feb84c4e82ca096db2bdb7dd4a5fd1997d711cc1904796944f2c579"
 url = "https://github.com/linux-nvme/libnvme/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libnvme-${VERSION}
 meson setup build \
@@ -23,12 +23,12 @@ meson setup build \
   -Ddocs=false \
   -Dpython=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libnvme-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libnvme-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

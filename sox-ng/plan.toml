@@ -15,12 +15,12 @@ sha256 = "SKIP"
 url = "https://codeberg.org/sox_ng/sox_ng/archive/sox_ng-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/sox-ng-${VERSION}
 autoreconf -fi'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/sox-ng-${VERSION}
 ./configure \
@@ -35,12 +35,12 @@ cd source/sox-ng-${VERSION}
     --without-wavpack \
     --without-opus'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/sox-ng-${VERSION}
 make -C ${WORKDIR} -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/sox-ng-${VERSION}
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''

@@ -15,7 +15,7 @@ url = "https://github.com/LizardByte/Sunshine.git"
 tag = "v2025.924.154138"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source
 git submodule update --init --recursive
@@ -26,7 +26,7 @@ set(FFMPEG_LIBRARIES ${FFMPEG_LIBRARIES} ${FFMPEG_PLATFORM_LIBRARIES})\n\
 set(FFMPEG_INCLUDE_DIRS ${FFMPEG_INCLUDE_DIRS})' cmake/dependencies/common.cmake
 '''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source
 cmake -B build -G Ninja \
@@ -40,13 +40,13 @@ cmake -B build -G Ninja \
     -DBUILD_WERROR=OFF
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source
 ninja -C build
 '''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install

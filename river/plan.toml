@@ -48,7 +48,7 @@ sha256 = "SKIP"
 url = "https://github.com/Vexu/arocc/archive/5f5a050569a95ecc40a426f0c3666ae7ef987ede.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/river-${VERSION}
 
@@ -106,13 +106,13 @@ cat > build.zig.zon << 'ZON'
 ZON
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/river-${VERSION}
 zig build -Doptimize=ReleaseSafe
 '''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/river-${VERSION}
 zig build -Doptimize=ReleaseSafe --prefix ${STAGING_DIR}/usr install

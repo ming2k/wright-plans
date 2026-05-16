@@ -12,7 +12,7 @@ sha256 = "SKIP"
 url = "https://github.com/chriskohlhoff/asio/archive/refs/tags/asio-1-38-0.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/asio-${VERSION}
 install -d ${STAGING_DIR}/usr/include

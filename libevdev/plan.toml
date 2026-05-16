@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://www.freedesktop.org/software/libevdev/libevdev-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libevdev-${VERSION}
 meson setup build \
@@ -24,12 +24,12 @@ meson setup build \
 -D documentation=disabled \
 -D tests=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libevdev-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libevdev-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

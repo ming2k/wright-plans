@@ -15,27 +15,27 @@ sha256 = "SKIP"
 url = "https://github.com/steveicarus/iverilog/archive/refs/tags/v13_0.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/iverilog-13_0
 sh autoconf.sh'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/iverilog-13_0
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/iverilog-13_0
 make -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/iverilog-13_0
 make check'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/iverilog-13_0
 make DESTDIR=${STAGING_DIR} install'''

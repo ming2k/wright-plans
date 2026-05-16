@@ -1,6 +1,6 @@
 link_deps = ['glib', 'libjpeg-turbo', 'libpng', 'libtiff', 'shared-mime-info']
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gdk-pixbuf-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dman=false -Dgtk_doc=false -Dtests=false -Dintrospection=enabled -Dglycin=disabled'''

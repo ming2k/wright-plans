@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://github.com/exfatprogs/exfatprogs/releases/download/${VERSION}/exfatprogs-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/exfatprogs-${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/exfatprogs-${VERSION}
-make -j$(nproc) -C ${WORKDIR}'''
+make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/exfatprogs-${VERSION}
-make DESTDIR=${STAGING_DIR} install -C ${WORKDIR}'''
+make DESTDIR=${STAGING_DIR} install'''

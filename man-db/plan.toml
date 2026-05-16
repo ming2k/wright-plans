@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://download.savannah.gnu.org/releases/man-db/man-db-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/man-db-${VERSION}
 ./configure --prefix=/usr                           \
@@ -26,17 +26,17 @@ cd source/man-db-${VERSION}
 --with-vgrind=/usr/bin/vgrind           \
 --with-grap=/usr/bin/grap'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/man-db-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/man-db-${VERSION}
 make check'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/man-db-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

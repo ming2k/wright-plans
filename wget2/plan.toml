@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/wget/wget2-${VERSION}.tar.lz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/wget2-${VERSION}
 ./configure --prefix=/usr      \
@@ -24,12 +24,12 @@ cd source/wget2-${VERSION}
     --with-zstd                \
     --with-nghttp2'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/wget2-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/wget2-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

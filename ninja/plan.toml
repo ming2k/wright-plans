@@ -15,12 +15,12 @@ sha256 = "SKIP"
 url = "https://github.com/ninja-build/ninja/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/ninja-${VERSION}
 python3 configure.py --bootstrap'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/ninja-${VERSION}
 install -Dm755 ninja ${STAGING_DIR}/usr/bin/ninja

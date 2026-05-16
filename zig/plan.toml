@@ -12,17 +12,17 @@ sha256 = "SKIP"
 url = "https://ziglang.org/download/${VERSION}/zig-x86_64-linux-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/zig-${VERSION}
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/zig-${VERSION}
 '''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/zig-${VERSION}
 install -dm755 ${STAGING_DIR}/usr/lib/zig

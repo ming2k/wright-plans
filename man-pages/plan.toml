@@ -12,12 +12,16 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/docs/man-pages/man-pages-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/man-pages-${VERSION}
-rm -v man3/crypt*'''
+rm -v man3/crypt*
+rm -v man5/tzfile.5
+rm -v man8/tzselect.8
+rm -v man8/zdump.8
+rm -v man8/zic.8'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/man-pages-${VERSION}
 make -R GIT=false prefix=/usr DESTDIR=${STAGING_DIR} install'''

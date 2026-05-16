@@ -12,17 +12,17 @@ sha256 = "SKIP"
 url = "https://www.alsa-project.org/files/pub/lib/alsa-lib-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/alsa-lib-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/alsa-lib-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/alsa-lib-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''

@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/KhronosGroup/Vulkan-Tools/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/vulkan-tools-${VERSION}
 cmake -B build -G Ninja \
@@ -32,12 +32,12 @@ cmake -B build -G Ninja \
     -DVULKAN_LOADER_INSTALL_DIR=/usr \
     ${WORKDIR}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/vulkan-tools-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/vulkan-tools-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

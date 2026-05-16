@@ -13,17 +13,17 @@ sha256 = "dd9d825e496435fb3beba3ae7bea9f77e821e894667d07431d1d4c8c570b9e58"
 url = "https://github.com/scop/bash-completion/releases/download/${VERSION}/bash-completion-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/bash-completion-${VERSION}
 ./configure --prefix=/usr --sysconfdir=/etc'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/bash-completion-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/bash-completion-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

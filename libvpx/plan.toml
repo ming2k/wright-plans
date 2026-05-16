@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://github.com/webmproject/libvpx/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libvpx-${VERSION}
 ./configure --prefix=/usr \
@@ -24,12 +24,12 @@ cd source/libvpx-${VERSION}
             --enable-runtime-cpu-detect \
             --enable-postproc'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libvpx-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libvpx-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

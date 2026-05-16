@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://www.python.org/ftp/python/${VERSION}/Python-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/Python-${VERSION}
 ./configure --prefix=/usr        \
@@ -25,14 +25,10 @@ cd source/Python-${VERSION}
             --with-computed-gotos \
             --without-static-libpython'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/Python-${VERSION}
-make -j$(nproc)'''
-
-[lifecycle.staging]
-script = '''
-cd source/Python-${VERSION}
+make -j$(nproc)
 make DESTDIR=${STAGING_DIR} install
 rm -rf ${STAGING_DIR}/usr/lib/python3.14/test
 rm -rf ${STAGING_DIR}/usr/lib/python3.14/*/test

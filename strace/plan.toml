@@ -14,18 +14,18 @@ sha256 = "SKIP"
 url = "https://github.com/strace/strace/releases/download/v${VERSION}/strace-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/strace-${VERSION}
 ./configure --prefix=/usr \
     --with-libiberty'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/strace-${VERSION}
 make -j$(nproc) -C ${WORKDIR}'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/strace-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

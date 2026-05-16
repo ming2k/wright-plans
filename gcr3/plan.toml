@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gcr/3.41/gcr-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gcr3-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dintrospection=true'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gcr3-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gcr3-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''

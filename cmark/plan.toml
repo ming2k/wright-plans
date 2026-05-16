@@ -15,7 +15,7 @@ sha256 = "3da93db5469c30588cfeb283d9d62edfc6ded9eb0edc10a4f5bbfb7d722ea802"
 url = "https://github.com/commonmark/cmark/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/cmark-${VERSION}
 cmake -B build -G Ninja \
@@ -25,12 +25,12 @@ cmake -B build -G Ninja \
   -DBUILD_SHARED_LIBS=ON \
   -DBUILD_TESTING=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/cmark-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/cmark-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/fish-shell/fish-shell/releases/download/${VERSION}/fish-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/fish-${VERSION}
 cmake -B build \
@@ -27,13 +27,13 @@ cmake -B build \
     -DWITH_DOCS=OFF \
     -W no-dev'''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/fish-${VERSION}
 make -C build -j$(nproc) VERBOSE=1'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/fish-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

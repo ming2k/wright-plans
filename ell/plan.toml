@@ -13,19 +13,19 @@ sha256 = "SKIP"
 url = "https://mirrors.edge.kernel.org/pub/linux/libs/ell/ell-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/ell-${VERSION}
 ./configure --prefix=/usr \
 --enable-shared \
 --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/ell-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/ell-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

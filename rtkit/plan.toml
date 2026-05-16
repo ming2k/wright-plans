@@ -14,7 +14,7 @@ type = "git"
 url = "https://gitlab.freedesktop.org/pipewire/rtkit.git"
 ref = "v${VERSION}"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 meson setup build \
   --prefix=/usr \
@@ -22,10 +22,10 @@ meson setup build \
   --buildtype=release \
   -D installed_tests=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = "meson compile -C build -j$(nproc)"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 DESTDIR=${STAGING_DIR} meson install -C build
 

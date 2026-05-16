@@ -15,24 +15,21 @@ sha256 = "SKIP"
 url = "https://github.com/BYVoid/OpenCC/archive/refs/tags/ver.${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
-cd source/opencc-${VERSION}
-cmake -B build -G Ninja \
+cmake -B ${WORKDIR}/build -S ${WORKDIR}/source/OpenCC-ver.${VERSION} -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_PYTHON=OFF \
     -DBUILD_TESTING=OFF \
     -DBUILD_DOCUMENTATION=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
-cd source/opencc-${VERSION}
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
-cd source/opencc-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [[output]]

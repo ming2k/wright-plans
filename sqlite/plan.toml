@@ -14,16 +14,16 @@ sha256 = "851e9b38192fe2ceaa65e0baa665e7fa06230c3d9bd1a6a9662d02380d73365a"
 url = "https://www.sqlite.org/2026/sqlite-autoconf-3530000.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 env = { CFLAGS = '-O2 -pipe -march=x86-64 -DSQLITE_ENABLE_FTS5 -DSQLITE_ENABLE_COLUMN_METADATA -DSQLITE_ENABLE_UNLOCK_NOTIFY -DSQLITE_ENABLE_DBSTAT_VTAB -DSQLITE_DEFAULT_WAL_SYNCHRONOUS=1' }
 script = '''
 cd source/sqlite-autoconf-*
 ./configure --prefix=/usr --disable-static --enable-fts5 --enable-readline --enable-threadsafe'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = "cd source/sqlite-autoconf-* && make -j$(nproc)"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = "cd source/sqlite-autoconf-* && make DESTDIR=${STAGING_DIR} install"
 
 [[output]]

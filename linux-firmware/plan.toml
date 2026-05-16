@@ -12,7 +12,7 @@ sha256 = "SKIP"
 url = "https://cdn.kernel.org/pub/linux/kernel/firmware/linux-firmware-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/linux-firmware-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/lib/firmware

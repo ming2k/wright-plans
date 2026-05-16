@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://download.kde.org/stable/frameworks/6.23/extra-cmake-modules-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/extra-cmake-modules-${VERSION}
 cmake -B build -G Ninja \
@@ -24,12 +24,12 @@ cmake -B build -G Ninja \
     -DBUILD_QTHELP_DOCS=OFF \
     -DBUILD_TESTING=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/extra-cmake-modules-${VERSION}
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/extra-cmake-modules-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''

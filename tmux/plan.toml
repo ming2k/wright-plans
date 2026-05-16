@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://github.com/tmux/tmux/releases/download/${VERSION}/tmux-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/tmux-${VERSION}
 ./configure --prefix=/usr \
             --enable-sixel   \
             --enable-systemd'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/tmux-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/tmux-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

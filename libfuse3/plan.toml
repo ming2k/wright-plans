@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://github.com/libfuse/libfuse/releases/download/fuse-${VERSION}/fuse-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/fuse-${VERSION}
 meson setup build \
@@ -25,11 +25,11 @@ meson setup build \
   -D examples=false      \
   -D useroot=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 ninja -C source/fuse-${VERSION}/build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 DESTDIR=${STAGING_DIR} ninja -C source/fuse-${VERSION}/build install
 

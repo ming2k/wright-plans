@@ -14,7 +14,7 @@ sha256 = "32d825041e5775fc9bf9e8c38e3a5c46c1441eee67f8112572450a9c23c835f0"
 url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.28.0.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gst-plugins-bad-${VERSION}
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
@@ -25,12 +25,12 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
 # -Dgpl=enabled: 启用必要的 GPL 插件
 meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Ddoc=disabled -Dgpl=enabled -Dsctp=disabled -Dintrospection=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gst-plugins-bad-${VERSION}/build
 ninja -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gst-plugins-bad-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''

@@ -15,10 +15,10 @@ sha256 = "SKIP"
 url = "https://github.com/PipeWire/pipewire/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = "cd source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/pipewire-${VERSION}
 meson setup build \
@@ -41,12 +41,12 @@ meson setup build \
 -D libcamera=enabled                \
 -D session-managers='''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/pipewire-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/pipewire-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

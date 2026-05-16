@@ -15,7 +15,7 @@ sha256 = "445ed8208a6e4823de1226a74ca319d3600e83f6369f99b14265006599c32ccb"
 url = "https://cairographics.org/releases/cairo-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/cairo-${VERSION}
 meson setup build \
@@ -36,10 +36,10 @@ meson setup build \
     -Dspectre=disabled       \
     -Dlzo=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = "cd source/cairo-${VERSION} && meson compile -C build"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = "cd source/cairo-${VERSION} && meson install -C build --destdir ${STAGING_DIR}"
 
 [[output]]

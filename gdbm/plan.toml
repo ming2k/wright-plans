@@ -13,19 +13,19 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gdbm/gdbm-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gdbm-${VERSION}
 ./configure --prefix=/usr    \
 --disable-static \
 --enable-libgdbm-compat'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gdbm-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gdbm-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

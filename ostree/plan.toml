@@ -14,7 +14,7 @@ sha256 = "8e77c285dd6fa5ec5fb063130390977be727fe11107335ed8778a40385069e95"
 url = "https://github.com/ostreedev/ostree/releases/download/v${VERSION}/libostree-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libostree-${VERSION}
 ./configure --prefix=/usr       \
@@ -29,12 +29,12 @@ cd source/libostree-${VERSION}
     --disable-otmpfile          \
     --with-builtin-grub2-mkconfig'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libostree-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libostree-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''

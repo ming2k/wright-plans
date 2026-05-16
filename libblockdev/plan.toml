@@ -15,7 +15,7 @@ sha256 = "65ef9a37babd44b85b8ff9b273f90f9f7d5f8ff7b0c76a8edb69240325fd83f4"
 url = "https://github.com/storaged-project/libblockdev/releases/download/${VERSION}/libblockdev-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libblockdev-${VERSION}
 autoreconf -fi
@@ -28,12 +28,12 @@ autoreconf -fi
   --with-nvme=yes \
   --with-smartmontools=no'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libblockdev-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libblockdev-${VERSION}
 make DESTDIR=${STAGING_DIR} install

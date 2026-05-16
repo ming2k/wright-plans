@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gnome-desktop/44/gnome-desktop-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gnome-desktop-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dintrospection=true -Dgtk_doc=false -Ddesktop_docs=false -Ddebug_tools=false -Dlegacy_library=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gnome-desktop-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gnome-desktop-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

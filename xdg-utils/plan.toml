@@ -15,19 +15,19 @@ sha256 = "93d510dccf328378f012fe195b4574c2fac1cd65a74d0852d6eaa72e5a2065a7"
 url = "https://gitlab.freedesktop.org/xdg/xdg-utils/-/archive/v${VERSION}/xdg-utils-v${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/xdg-utils-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/xdg-utils-${VERSION}
 sed -i 's#^XMLTO[[:space:]]*=.*#XMLTO           = /usr/bin/xmlto --skip-validation#' scripts/Makefile
 export LYNX_CFG=/etc/lynx.cfg
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/xdg-utils-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

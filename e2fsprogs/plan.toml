@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v${VERSION}/e2fsprogs-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/e2fsprogs-${VERSION}
 mkdir -p build && cd build
@@ -28,12 +28,12 @@ mkdir -p build && cd build
 --disable-uuidd         \
 --disable-fsck'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/e2fsprogs-${VERSION}/build
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/e2fsprogs-${VERSION}/build
 DESTDIR=${STAGING_DIR} make install

@@ -12,7 +12,7 @@ url = "https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-s
 sha256 = "0972674c86b8ee87609263dcd3e3dc88efa0875e1d8c9ac499c52d43322b2a5f"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gcloud-${VERSION}
 install -d ${STAGING_DIR}/usr/lib

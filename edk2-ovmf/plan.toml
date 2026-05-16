@@ -58,7 +58,7 @@ url = "https://github.com/DMTF/libspdm/archive/1be116c7b7713fa9003e1bd53b53a3475
 [options]
 timeout = 14400
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/edk2-ovmf-${VERSION}
 src_root=${WORKDIR}
@@ -108,7 +108,7 @@ build -a X64 -b RELEASE -t GCC5 -p OvmfPkg/OvmfPkgX64.dsc -D TPM2_ENABLE -D SECU
 cp -av Build/OvmfX64/RELEASE_GCC5/FV/OVMF_CODE.fd OVMF_CODE.secboot.4m.fd
 cp -av Build/OvmfX64/RELEASE_GCC5/FV/OVMF_VARS.fd OVMF_VARS.4m.fd'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/edk2-ovmf-${VERSION}
 edk2_dir=$(find "${WORKDIR}" -maxdepth 1 -mindepth 1 -type d -name 'edk2-*' | head -n1)

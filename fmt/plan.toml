@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/fmtlib/fmt/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/fmt-${VERSION}
 cmake -B build -G Ninja \
@@ -25,12 +25,12 @@ cmake -B build -G Ninja \
   -DFMT_DOC=OFF \
   -DFMT_TEST=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/fmt-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/fmt-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -37,7 +37,7 @@ sha256 = "SKIP"
 type = "local"
 path = "surfer.desktop"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 set -euo pipefail
 rm -rf "source/surfer-v${VERSION}/f128"
@@ -47,19 +47,19 @@ mv source/instruction-decoder-02bdcbfd5663a72e4a0b1b9d54519412d417fab1 "source/s
 cd "source/surfer-v${VERSION}"
 patch -Np1 < ${WORKDIR}/${NAME}-0001-disable-x11-eframe-feature.patch'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/surfer-v${VERSION}
 echo "cargo project, no configure step"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
 cd source/surfer-v${VERSION}
 cargo build --release'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 install -Dm755 ${WORKDIR}/target/release/surfer ${STAGING_DIR}/usr/bin/surfer
 install -Dm755 ${WORKDIR}/target/release/surver ${STAGING_DIR}/usr/bin/surver

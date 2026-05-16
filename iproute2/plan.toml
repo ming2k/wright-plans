@@ -13,18 +13,18 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/iproute2-${VERSION}
 sed -i /ARPD/d Makefile
 rm -fv man/man8/arpd.8'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/iproute2-${VERSION}
 make NETNS_RUN_DIR=/run/netns -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/iproute2-${VERSION}
 make SBINDIR=/usr/bin DESTDIR=${STAGING_DIR} install'''

@@ -18,7 +18,7 @@ extract_to = "source"
 [options]
 timeout = 14400
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/qemu-${VERSION}
 ./configure \
@@ -36,12 +36,12 @@ cd source/qemu-${VERSION}
     --disable-docs \
     --disable-werror'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/qemu-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/qemu-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

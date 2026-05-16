@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gzip/gzip-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gzip-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gzip-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gzip-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

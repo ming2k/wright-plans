@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${VERSION}/wlroots-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/wlroots-${VERSION}
 meson setup build \
@@ -24,13 +24,13 @@ meson setup build \
   -Dxwayland=disabled
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/wlroots-${VERSION}
 ninja -C build
 '''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/wlroots-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install

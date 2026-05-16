@@ -21,7 +21,7 @@ sha256 = "SKIP"
 url = "https://github.com/Cyan4973/xxhash/archive/refs/tags/v0.8.3.tar.gz"
 extract_to = "source/xxhash-src"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 XXHASH_SRC=$(realpath source/xxhash-src/xxHash-*)
 cd source/ccache-${VERSION}
@@ -34,12 +34,12 @@ cmake -B build -G Ninja \
   -DZSTD_FROM_INTERNET=OFF \
   -DFETCHCONTENT_SOURCE_DIR_XXHASH="$XXHASH_SRC"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/ccache-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/ccache-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

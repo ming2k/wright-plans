@@ -15,17 +15,17 @@ url = "https://github.com/KhronosGroup/OpenCL-ICD-Loader/archive/refs/tags/v${VE
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/ocl-icd-${VERSION}
 cmake -B build -G Ninja -S OpenCL-ICD-Loader-* -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DOPENCL_ICD_LOADER_HEADERS_DIR=/usr/include'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/ocl-icd-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/ocl-icd-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

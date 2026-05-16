@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://gnupg.org/ftp/gcrypt/pinentry/pinentry-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/pinentry-${VERSION}
 ./configure \
@@ -29,12 +29,12 @@ cd source/pinentry-${VERSION}
   --disable-pinentry-qt5 \
   --disable-pinentry-qt6'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/pinentry-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/pinentry-${VERSION}
 DESTDIR=${STAGING_DIR} make install

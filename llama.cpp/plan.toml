@@ -18,12 +18,12 @@ type = "http"
 sha256 = "SKIP"
 url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${VERSION}.tar.gz"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/llama.cpp-${VERSION}
 patch -Np1 < ${WORKDIR}/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch || true'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/llama.cpp-${VERSION}
 cmake -B build -G Ninja \
@@ -34,12 +34,12 @@ cmake -B build -G Ninja \
   -DGGML_VULKAN=ON \
   -DLLAMA_OPENSSL=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/llama.cpp-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/llama.cpp-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

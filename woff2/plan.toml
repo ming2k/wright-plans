@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://github.com/google/woff2/archive/v1.0.2.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/woff2-${VERSION}
 
@@ -24,18 +24,18 @@ sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/cmake_minimum_required(VERSION
 # 修复 2: 添加缺失的头文件 <cstdint> 以修复 GCC 13+ 上的 'uint8_t does not name a type' 错误
 sed -i '/#include <string>/a #include <cstdint>' include/woff2/output.h'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 mkdir -p ${WORKDIR}/build
 cd source/woff2-${VERSION}/build
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/woff2-${VERSION}/build
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/woff2-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install

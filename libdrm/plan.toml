@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://dri.freedesktop.org/libdrm/libdrm-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libdrm-${VERSION}
 meson setup build \
@@ -24,12 +24,12 @@ meson setup build \
 -D udev=true           \
 -D valgrind=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libdrm-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libdrm-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

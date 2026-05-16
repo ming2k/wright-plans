@@ -12,17 +12,17 @@ sha256 = "SKIP"
 url = "https://gnupg.org/ftp/gcrypt/npth/npth-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/npth-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/npth-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/npth-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''

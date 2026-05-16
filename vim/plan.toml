@@ -15,14 +15,14 @@ sha256 = "SKIP"
 url = "https://github.com/vim/vim/archive/v${VERSION}/vim-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 # Allow VIMRCLOC to override the compiled-in vimrc paths at install time
 sed -E 's|^.*(#define SYS_.*VIMRC_FILE.*").*$|\1|g' -i source/vim-${VERSION}/src/feature.h
 sed -E 's|^.*(#define VIMRC_FILE.*").*$|\1|g' -i source/vim-${VERSION}/src/feature.h
 (cd source/vim-${VERSION}/src && autoconf)'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/vim-${VERSION}
 ./configure \
@@ -42,12 +42,12 @@ cd source/vim-${VERSION}
   --enable-tclinterp=dynamic \
   --disable-canberra'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/vim-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/vim-${VERSION}
 make -j1 VIMRCLOC=/etc DESTDIR=${STAGING_DIR} install

@@ -14,7 +14,7 @@ sha256 = "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e"
 url = "https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/lame-${VERSION}
 ./configure \
@@ -23,12 +23,12 @@ cd source/lame-${VERSION}
     --enable-nasm \
     --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/lame-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/lame-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

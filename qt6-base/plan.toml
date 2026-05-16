@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://download.qt.io/official_releases/qt/6.11/6.11.0/submodules/qtbase-everywhere-src-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/qtbase-everywhere-src-${VERSION}
 cmake -B build -G Ninja \
@@ -38,12 +38,12 @@ cmake -B build -G Ninja \
     -DQT_FEATURE_vulkan=ON \
     -DQT_FEATURE_sql=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/qtbase-everywhere-src-${VERSION}
 ninja -j$(nproc) -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/qtbase-everywhere-src-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

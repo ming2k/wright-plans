@@ -15,18 +15,18 @@ sha256 = "SKIP"
 url = "https://github.com/itstool/itstool/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/itstool-${VERSION}
 autoreconf -fi
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/itstool-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/itstool-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''

@@ -1,6 +1,6 @@
 name = "linux"
-version = "7.0.3"
-release = 4
+version = "7.0.6"
+release = 1
 description = "The Linux kernel"
 license = "GPL-2.0-only"
 arch = "x86_64"
@@ -20,7 +20,7 @@ sha256 = "SKIP"
 type = "local"
 path = "config"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/linux-${VERSION}
 
@@ -213,13 +213,13 @@ scripts/config --module SND_SOC_SOF_XTENSA
 make olddefconfig
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "none"
 script = '''
 cd source/linux-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 isolation = "none"
 script = '''
 cd source/linux-${VERSION}

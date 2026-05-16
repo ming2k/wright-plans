@@ -14,23 +14,23 @@ sha256 = "SKIP"
 url = "https://github.com/swig/swig/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/swig-${VERSION}
 ./autogen.sh'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/swig-${VERSION}
 ./configure --prefix=/usr \
             --with-pcre2'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/swig-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/swig-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

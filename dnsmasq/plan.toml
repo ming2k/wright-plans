@@ -14,7 +14,7 @@ sha256 = "4bf50c2c1018f9fbc26037df51b90ecea0cb73d46162846763b92df0d6c3a458"
 url = "https://thekelleys.org.uk/dnsmasq/dnsmasq-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/dnsmasq-${VERSION}
 make \
@@ -28,7 +28,7 @@ make \
 cd contrib/lease-tools
 make all -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/dnsmasq-${VERSION}
 make \
@@ -53,7 +53,7 @@ sed -i 's,%%PREFIX%%,/usr,' ${STAGING_DIR}/etc/dnsmasq.conf'''
 runtime_deps = ['glibc', 'gmp', 'nettle', 'libidn2', 'dbus', 'libnetfilter_conntrack', 'nftables']
 backup = ["/etc/dnsmasq.conf"]
 
-[hooks]
+[output.hooks]
 post_install = "systemctl daemon-reload 2>/dev/null || true"
 post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
 pre_remove = "systemctl stop dnsmasq 2>/dev/null || true"

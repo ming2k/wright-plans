@@ -14,7 +14,7 @@ sha256 = "7374b89936d991669e101f4e97f2c9592036e1e8cdaa7bafc259a77ab6fb07ce"
 url = "https://invisible-mirror.net/archives/lynx/tarballs/lynx${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/lynx-${VERSION}
 sed -i configure \
@@ -33,12 +33,12 @@ sed -i configure \
   --enable-ipv6 \
   cf_cv_header_path_ssl=/usr/include/openssl'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/lynx-${VERSION}
 make -j$(nproc) BUILD_CC=gcc BUILD_CPP='gcc -E''''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/lynx-${VERSION}
 make DESTDIR=${STAGING_DIR} install

@@ -13,12 +13,12 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/software/network/iw/iw-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/iw-${VERSION}
 make PREFIX=/usr -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/iw-${VERSION}
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''

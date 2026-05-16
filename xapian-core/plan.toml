@@ -14,17 +14,17 @@ sha256 = "6cea3f49952a47224439a40bdb3608f928d121ad8721b9921cc42802d548ecf8"
 url = "https://oligarchy.co.uk/xapian/${VERSION}/xapian-core-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/xapian-core-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/xapian-core-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/xapian-core-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

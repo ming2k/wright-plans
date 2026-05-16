@@ -11,7 +11,7 @@ type = "http"
 sha256 = "SKIP"
 url = "https://github.com/googlefonts/noto-emoji/raw/v${VERSION}/fonts/NotoColorEmoji.ttf"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 mkdir -p ${STAGING_DIR}/usr/share/fonts/noto-emoji
 cp ${WORKDIR}/NotoColorEmoji.ttf ${STAGING_DIR}/usr/share/fonts/noto-emoji/'''

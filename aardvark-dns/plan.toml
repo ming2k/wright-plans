@@ -19,7 +19,7 @@ type = "http"
 sha256 = "009198f042f150d42025c8a0456bb7a98293c9deeb012d37b2d364f44e52288f"
 url = "https://github.com/containers/aardvark-dns/releases/download/v${VERSION}/aardvark-dns-v${VERSION}-vendor.tar.gz"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 isolation = "none"
 script = '''
 cd source/aardvark-dns-${VERSION}
@@ -33,7 +33,7 @@ replace-with = "vendored-sources"
 directory = "vendor"
 EOF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "none"
 script = '''
 cd source/aardvark-dns-${VERSION}
@@ -43,7 +43,7 @@ export CARGO_TARGET_DIR=${WORKDIR}/target
 # Use upstream Makefile
 make PREFIX=/usr CARGO="cargo --locked --offline" build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 isolation = "none"
 script = '''
 cd source/aardvark-dns-${VERSION}

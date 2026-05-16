@@ -15,19 +15,19 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gobject-introspection/1.86/gobject-introspection-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gobject-introspection-${VERSION}
 meson setup build        \
 --prefix=/usr            \
 --buildtype=release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gobject-introspection-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gobject-introspection-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''

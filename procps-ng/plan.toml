@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://downloads.sourceforge.net/project/procps-ng/Production/procps-ng-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/procps-ng-${VERSION}
 ./configure \
@@ -29,12 +29,12 @@ cd source/procps-ng-${VERSION}
   --enable-watch8bit \
   --with-systemd'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/procps-ng-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/procps-ng-${VERSION}
 make DESTDIR=${STAGING_DIR} install

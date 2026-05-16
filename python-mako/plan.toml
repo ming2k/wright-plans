@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://files.pythonhosted.org/packages/source/m/mako/mako-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/python-mako-${VERSION}
 pip3 install --break-system-packages --no-deps --root=${STAGING_DIR} --no-build-isolation .'''

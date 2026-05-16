@@ -12,19 +12,19 @@ url = "https://example.com/pkgname-${VERSION}.tar.gz"
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = """
 cd source
 ./configure --prefix=/usr
 """
 
-[lifecycle.compile]
+[pipeline.compile]
 script = """
 cd source
 make -j$(nproc)
 """
 
-[lifecycle.staging]
+[pipeline.staging]
 script = """
 cd source
 make DESTDIR=${STAGING_DIR} install

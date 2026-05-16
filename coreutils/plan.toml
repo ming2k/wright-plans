@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/coreutils/coreutils-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/coreutils-${VERSION}
 FORCE_UNSAFE_CONFIGURE=1 ./configure \
@@ -24,12 +24,12 @@ FORCE_UNSAFE_CONFIGURE=1 ./configure \
 --with-openssl           \
 --enable-no-install-program=hostname,kill,uptime'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/coreutils-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/coreutils-${VERSION}
 make DESTDIR=${STAGING_DIR} install

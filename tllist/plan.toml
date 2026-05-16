@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://codeberg.org/dnkl/tllist/archive/1.1.0.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/tllist-${VERSION}
 meson setup build \
 --prefix=/usr          \
 --buildtype=release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/tllist-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/tllist-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://github.com/vcrhonek/hwdata/archive/v${VERSION}/hwdata-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/hwdata-${VERSION}
 ./configure --prefix=/usr --datarootdir=/usr/share'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/hwdata-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/hwdata-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

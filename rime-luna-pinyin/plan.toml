@@ -12,7 +12,7 @@ url = "https://github.com/rime/rime-luna-pinyin.git"
 ref = "master"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source
 install -d ${STAGING_DIR}/usr/share/rime-data

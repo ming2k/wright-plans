@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://www.sudo.ws/dist/sudo-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/sudo-${VERSION}
 ./configure --prefix=/usr \
@@ -31,12 +31,12 @@ cd source/sudo-${VERSION}
 --docdir=/usr/share/doc/sudo-${VERSION} \
 --with-passprompt="[sudo] password for %p: "'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/sudo-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/sudo-${VERSION}
 make DESTDIR=${STAGING_DIR} install

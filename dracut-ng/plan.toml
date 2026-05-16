@@ -13,7 +13,7 @@ sha256 = "a6bdbd55e2c40a6dd760f59626a6b70e7c8ee0ea46436b340dcedb6f4e54481b"
 url = "https://github.com/dracut-ng/dracut-ng/archive/${VERSION}/dracut-ng-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/dracut-ng-${VERSION}
 ./configure \
@@ -24,12 +24,12 @@ cd source/dracut-ng-${VERSION}
   --systemdsystemunitdir=/usr/lib/systemd/system \
   --disable-documentation'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/dracut-ng-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/dracut-ng-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

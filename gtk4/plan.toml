@@ -1,5 +1,5 @@
 name = "gtk4"
-version = "4.22.2"
+version = "4.22.4"
 release = 1
 description = "GTK4 — the GIMP Toolkit (Pure Wayland)"
 license = "LGPL-2.1-or-later"
@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gtk/4.22/gtk-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gtk-${VERSION}
 meson setup build \
@@ -32,12 +32,12 @@ meson setup build \
     -Dbuild-demos=false \
     -Ddocumentation=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gtk-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gtk-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}

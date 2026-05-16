@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://download.savannah.gnu.org/releases/acl/acl-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/acl-${VERSION}
 ./configure --prefix=/usr    \
 --disable-static \
 --docdir=/usr/share/doc/acl-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/acl-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/acl-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

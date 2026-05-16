@@ -21,7 +21,7 @@ type = "http"
 sha256 = "SKIP"
 url = "https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-google.srs"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 install -Dm644 "${WORKDIR}/geoip-cn.srs" "${STAGING_DIR}/usr/share/sing-box/rules/geoip-cn.srs"
 install -Dm644 "${WORKDIR}/geosite-cn.srs" "${STAGING_DIR}/usr/share/sing-box/rules/geosite-cn.srs"

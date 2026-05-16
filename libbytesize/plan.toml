@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://github.com/storaged-project/libbytesize/releases/download/${VERSION}/libbytesize-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libbytesize-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libbytesize-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libbytesize-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

@@ -15,7 +15,7 @@ sha256 = "245002feccbe7f8361b223545a5654cea69780745886872d7efff50a38d96c66"
 url = "https://github.com/google/shaderc/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/shaderc-${VERSION}
 
@@ -32,7 +32,7 @@ cat <<- BUILDVER_EOF > glslc/src/build-version.inc
 "${glslang_ver}\\n"
 BUILDVER_EOF'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/shaderc-${VERSION}
 cmake -B build -S . -G Ninja \
@@ -43,7 +43,7 @@ cmake -B build -S . -G Ninja \
     -DPYTHON_EXECUTABLE=python \
     -Dglslang_SOURCE_DIR=/usr/include/glslang'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/shaderc-${VERSION}
 cmake --build build
@@ -51,7 +51,7 @@ cmake --build build
 cd glslc
 asciidoctor -b manpage README.asciidoc -o glslc.1'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/shaderc-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build

@@ -15,7 +15,7 @@ sha256 = "3e68c90dda630c27d41d201e37b8bbf5222e39b273dec5ca880709c69e0a07d4"
 url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-project-${VERSION}.src.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/llvm-project-${VERSION}.src
 mkdir build-libclc && cd build-libclc
@@ -23,12 +23,12 @@ cmake ../libclc                              \
 -DCMAKE_INSTALL_PREFIX=/usr            \
 -DCMAKE_BUILD_TYPE=Release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/llvm-project-${VERSION}.src/build-libclc
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/llvm-project-${VERSION}.src/build-libclc
 make DESTDIR=${STAGING_DIR} install'''

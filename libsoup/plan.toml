@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libsoup/3.6/libsoup-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libsoup-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dvapi=disabled -Dsysprof=disabled -Dtests=false -Ddocs=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libsoup-${VERSION}
 meson compile -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libsoup-${VERSION}
 DESTDIR=${STAGING_DIR} meson install -C build'''

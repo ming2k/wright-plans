@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/software/scm/git/git-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/git-${VERSION}
 
@@ -84,7 +84,7 @@ make \
   NO_MAN=1 \
   -C contrib/diff-highlight'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/git-${VERSION}
 

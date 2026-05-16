@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/MusicPlayerDaemon/MPD/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/mpd-${VERSION}
 meson setup build       \
@@ -50,12 +50,12 @@ meson setup build       \
   -Dwildmidi=disabled   \
   -Dyajl=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/mpd-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/mpd-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install
@@ -63,9 +63,9 @@ DESTDIR=${STAGING_DIR} ninja -C build install
 install -vDm644 doc/mpdconf.example \
   ${STAGING_DIR}/usr/share/doc/mpd/mpdconf.example'''
 
-[hooks]
-post_install = "systemctl daemon-reload 2>/dev/null || true"
-post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
-
 [[output]]
 runtime_deps = ['alsa-lib', 'pipewire', 'ffmpeg', 'sqlite', 'curl', 'dbus', 'libsndfile', 'fmt']
+
+[output.hooks]
+post_install = "systemctl daemon-reload 2>/dev/null || true"
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"

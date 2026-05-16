@@ -15,23 +15,23 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/xdg-desktop-portal-gnome/49/xdg-desktop-portal-gnome-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/xdg-desktop-portal-gnome-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dsystemduserunitdir=/usr/lib/systemd/user'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/xdg-desktop-portal-gnome-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/xdg-desktop-portal-gnome-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[hooks]
-post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
-
 [[output]]
 runtime_deps = ['gnome-desktop', 'gsettings-desktop-schemas', 'xdg-desktop-portal', 'gtk4', 'libadwaita']
+
+[output.hooks]
+post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"

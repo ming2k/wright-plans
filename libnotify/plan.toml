@@ -15,17 +15,17 @@ sha256 = "23420ef619dc2cb5aebad613f4823a2fa41c07e5a1d05628d40f6ec4b35bfddd"
 url = "https://download.gnome.org/sources/libnotify/0.8/libnotify-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libnotify-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dtests=false -Dintrospection=enabled -Dman=false -Dgtk_doc=false -Ddocbook_docs=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libnotify-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libnotify-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''

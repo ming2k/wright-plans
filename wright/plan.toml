@@ -1,5 +1,5 @@
 name = "wright"
-version = "4.2.0"
+version = "5.2.3"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -19,14 +19,14 @@ sha256 = "SKIP"
 type = "local"
 path = "skel-plan.toml"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/wright-${VERSION}
 export CARGO_HOME=${WORKDIR}/.cargo
 cargo build --release'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/wright-${VERSION}
 install -Dm755 target/release/wright ${STAGING_DIR}/usr/bin/wright

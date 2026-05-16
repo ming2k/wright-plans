@@ -15,13 +15,13 @@ url = "https://github.com/ming2k/wssp/archive/refs/tags/v${VERSION}.tar.gz"
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/wssp-${VERSION}
 cargo build --release'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/wssp-${VERSION}
 # Install binaries

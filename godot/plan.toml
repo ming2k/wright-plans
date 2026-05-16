@@ -14,12 +14,12 @@ url = "https://github.com/godotengine/godot/archive/refs/tags/${VERSION}-stable.
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/godot-${VERSION}
 patch -p1 < ${PLAN_DIR}/null-compose.patch'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/godot-${VERSION}
 # Pure Wayland build:
@@ -30,7 +30,7 @@ cd source/godot-${VERSION}
 # - target=editor: Builds the Godot Editor.
 scons platform=linuxbsd target=editor wayland=yes x11=no libdecor=yes builtin_libdecor=no dbus=yes alsa=yes pipewire=yes udev=yes -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/godot-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/bin

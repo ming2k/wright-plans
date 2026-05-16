@@ -14,17 +14,17 @@ sha256 = "a695fbe19c0165f295a8531b1e4e855cd94d0875d2f88ec4b61080677e27188a"
 url = "https://github.com/uclouvain/openjpeg/archive/v${VERSION}/openjpeg-v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/openjpeg-${VERSION}
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_STATIC_LIBS=OFF -DBUILD_DOC=OFF -DBUILD_TESTING=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/openjpeg-${VERSION}
 cmake --build build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/openjpeg-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

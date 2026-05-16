@@ -14,7 +14,7 @@ sha256 = "4db76b3619280037a4047de7d9dbb38613a4272dcc40efb333257124635a888d"
 url = "https://gstreamer.freedesktop.org/src/gst-plugins-base/gst-plugins-base-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gst-plugins-base-${VERSION}
 # 确保能找到 gstreamer-1.0.pc
@@ -22,12 +22,12 @@ export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
 
 meson setup build --prefix=/usr -Dtests=disabled -Ddoc=disabled -Dintrospection=disabled -Dgl=enabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gst-plugins-base-${VERSION}/build
 ninja -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gst-plugins-base-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''

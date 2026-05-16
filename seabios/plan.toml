@@ -15,12 +15,12 @@ sha256 = "5159a35fac5c1579dd5d702001033c826ce45d30d3bd657ec1b2695455997712"
 url = "https://www.seabios.org/downloads/seabios-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/seabios-${VERSION}
 make -j$(nproc) PYTHON=python3'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/seabios-${VERSION}
 install -Dm644 out/bios.bin ${STAGING_DIR}/usr/share/qemu/bios.bin

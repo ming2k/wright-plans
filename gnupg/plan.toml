@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gnupg-${VERSION}
 ./configure --prefix=/usr              \
@@ -26,12 +26,12 @@ cd source/gnupg-${VERSION}
 --disable-ldap              \
 --disable-doc'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gnupg-${VERSION}
 make -j$(nproc) LDFLAGS="${LDFLAGS} -lreadline -lhistory"'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gnupg-${VERSION}
 DESTDIR=${STAGING_DIR} make install

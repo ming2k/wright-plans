@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/wget/wget-${VERSION}.tar.lz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/wget-${VERSION}
 ./configure --prefix=/usr      \
     --sysconfdir=/etc          \
     --with-ssl=openssl'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/wget-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/wget-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

@@ -14,12 +14,12 @@ url = "https://git.savannah.gnu.org/git/emacs.git"
 tag = "emacs-30.2"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source
 ./autogen.sh'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source
 ./configure --prefix=/usr           \
@@ -41,12 +41,12 @@ cd source
   --with-gnutls                     \
   --disable-silent-rules'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''

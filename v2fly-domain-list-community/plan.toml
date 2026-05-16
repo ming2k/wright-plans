@@ -11,5 +11,5 @@ type = "http"
 sha256 = "1e3cd11272a5f4afa3d9e31f4dc57d0a55e73a587637e67e09d16f41995b910e"
 url = "https://github.com/v2fly/domain-list-community/releases/download/${VERSION}/dlc.dat"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = "install -Dm644 ${WORKDIR}/dlc.dat ${STAGING_DIR}/usr/share/v2fly-domain-list-community/dlc.dat"

@@ -13,19 +13,19 @@ sha256 = "SKIP"
 url = "https://cache.ruby-lang.org/pub/ruby/4.0/ruby-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/ruby-${VERSION}
 # --enable-shared: 构建 libruby.so
 # --disable-install-doc: 跳过文档安装以节省时间和空间
 ./configure --prefix=/usr --enable-shared --disable-install-doc --with-openssl-dir=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/ruby-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/ruby-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

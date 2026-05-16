@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/graphene/1.10/graphene-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/graphene-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dintrospection=enabled -Dinstalled_tests=false -Dtests=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/graphene-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/graphene-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

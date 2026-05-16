@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/emersion/xdg-desktop-portal-wlr/releases/download/v${VERSION}/xdg-desktop-portal-wlr-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/xdg-desktop-portal-wlr-${VERSION}
 meson setup build \
@@ -25,12 +25,12 @@ meson setup build \
   -Dsd-bus-provider=libsystemd \
   -Dman-pages=enabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/xdg-desktop-portal-wlr-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/xdg-desktop-portal-wlr-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

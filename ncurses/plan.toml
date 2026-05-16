@@ -15,7 +15,7 @@ sha256 = "b2e7c61e5769b77b200250a38c21d736c3a6eb147df02e58ef2d505cb3d10c04"
 url = "https://invisible-island.net/archives/ncurses/current/ncurses-${VERSION}.tgz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/ncurses-${VERSION}
 ./configure --prefix=/usr           \
@@ -27,12 +27,12 @@ cd source/ncurses-${VERSION}
 --enable-pc-files       \
 --with-pkg-config-libdir=/usr/lib/pkgconfig'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/ncurses-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/ncurses-${VERSION}
 make DESTDIR=${STAGING_DIR} install

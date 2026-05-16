@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://github.com/c-ares/c-ares/releases/download/v${VERSION}/c-ares-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/c-ares-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/c-ares-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/c-ares-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

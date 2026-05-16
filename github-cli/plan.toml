@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://github.com/cli/cli/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/github-cli-${VERSION}
@@ -21,7 +21,7 @@ export PATH=/usr/lib/go/bin:$PATH
 export CGO_ENABLED=0
 make bin/gh manpages'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/github-cli-${VERSION}
 install -Dm755 bin/gh ${STAGING_DIR}/usr/bin/gh

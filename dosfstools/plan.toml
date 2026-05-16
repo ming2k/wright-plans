@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://github.com/dosfstools/dosfstools/releases/download/v${VERSION}/dosfstools-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/dosfstools-${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --enable-compat-symlinks'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/dosfstools-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/dosfstools-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

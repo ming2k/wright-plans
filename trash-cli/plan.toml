@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://files.pythonhosted.org/packages/source/t/trash-cli/trash_cli-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/trash-cli-${VERSION}
 pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${STAGING_DIR} .'''

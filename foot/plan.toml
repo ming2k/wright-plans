@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://codeberg.org/dnkl/foot/releases/download/${VERSION}/foot-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/foot-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dime=true -Dthemes=true -Dwerror=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/foot-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/foot-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -13,22 +13,22 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/m4/m4-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/m4-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/m4-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/m4-${VERSION}
 make check'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/m4-${VERSION}
 make DESTDIR=${STAGING_DIR} install

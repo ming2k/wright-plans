@@ -15,17 +15,17 @@ url = "https://github.com/intel/metee/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/metee-${VERSION}
 cmake -B build -S metee-${VERSION} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=Release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/metee-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/metee-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

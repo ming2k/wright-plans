@@ -15,12 +15,12 @@ sha256 = "SKIP"
 url = "https://github.com/k2-fsa/sherpa-onnx/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/sherpa-onnx-${VERSION}
 sed -i "s|    ./|    lib/pkgconfig|" CMakeLists.txt'''
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 script = '''
 cd source/sherpa-onnx-${VERSION}
@@ -40,12 +40,12 @@ cmake -B build -G Ninja \
   -DSHERPA_ONNX_ENABLE_BINARY=ON \
   -DSHERPA_ONNX_LINK_LIBSTDCPP_STATICALLY=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/sherpa-onnx-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/sherpa-onnx-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

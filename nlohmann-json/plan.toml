@@ -15,19 +15,19 @@ sha256 = "SKIP"
 url = "https://github.com/nlohmann/json/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/nlohmann-json-${VERSION}
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DJSON_BuildTests=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/nlohmann-json-${VERSION}
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/nlohmann-json-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''

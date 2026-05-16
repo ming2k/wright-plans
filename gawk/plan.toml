@@ -13,22 +13,22 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gawk/gawk-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/gawk-${VERSION}
 sed -i 's/extras//' Makefile.in'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gawk-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gawk-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gawk-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

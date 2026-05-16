@@ -14,7 +14,7 @@ sha256 = "b20ea65afc5a58ea1cea019bd51a5d84eb9042d25d3eb82c55010c8815732d84"
 url = "https://github.com/containers/podman/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "none"
 script = '''
 cd source/podman-${VERSION}
@@ -23,14 +23,17 @@ export BUILDTAGS="seccomp $(hack/btrfs_installed_tag.sh) $(hack/sqlite_tag.sh) $
 make podman podman-remote rootlessport quadlet BUILDTAGS="${BUILDTAGS}" GOFLAGS="${GOFLAGS}" PREFIX=/usr ETCDIR=/etc
 make completions'''
 
-[lifecycle.staging]
+[pipeline.staging]
 isolation = "none"
 script = '''
 cd source/podman-${VERSION}
 export BUILDTAGS="seccomp $(hack/btrfs_installed_tag.sh) $(hack/sqlite_tag.sh) $(hack/systemd_tag.sh) $(hack/libsubid_tag.sh) grpcnotrace"
 make DESTDIR=${STAGING_DIR} PREFIX=/usr ETCDIR=/etc BINDIR=/usr/bin LIBEXECDIR=/usr/libexec LIBEXECPODMAN=/usr/libexec/podman TMPFILESDIR=/usr/lib/tmpfiles.d SYSTEMDDIR=/usr/lib/systemd/system USERSYSTEMDDIR=/usr/lib/systemd/user SYSTEMDGENERATORSDIR=/usr/lib/systemd/system-generators USERSYSTEMDGENERATORSDIR=/usr/lib/systemd/user-generators BUILDTAGS="${BUILDTAGS}" install.bin install.remote install.completions install.systemd'''
 
-[hooks]
+[[output]]
+runtime_deps = ['aardvark-dns >= 1.17.1', 'catatonit >= 0.2.1', 'conmon >= 2.2.1', 'containers-common >= 0.64.1', 'crun >= 1.27', 'fuse-overlayfs >= 1.16', 'glib', 'glibc', 'gpgme', 'libseccomp', 'netavark >= 1.17.2', 'shadow', 'sqlite', 'systemd']
+
+[output.hooks]
 post_install = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/podman.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
@@ -39,6 +42,3 @@ post_upgrade = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/podman.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
 '''
-
-[[output]]
-runtime_deps = ['aardvark-dns >= 1.17.1', 'catatonit >= 0.2.1', 'conmon >= 2.2.1', 'containers-common >= 0.64.1', 'crun >= 1.27', 'fuse-overlayfs >= 1.16', 'glib', 'glibc', 'gpgme', 'libseccomp', 'netavark >= 1.17.2', 'shadow', 'sqlite', 'systemd']

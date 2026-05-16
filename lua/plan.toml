@@ -14,22 +14,23 @@ sha256 = "SKIP"
 url = "https://www.lua.org/ftp/lua-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/lua-${VERSION}
-sed -i 's/^CFLAGS=.*/CFLAGS= -O2 -Wall -Wextra -DLUA_COMPAT_5_3 -fPIC $(SYSCFLAGS) $(MYCFLAGS)/' src/Makefile'''
+# No configure step needed for Lua; -fPIC is passed via MYCFLAGS in compile stage
+true'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/lua-${VERSION}
-make -j$(nproc) linux-readline
+make -j$(nproc) linux-readline MYCFLAGS="-fPIC"
 # Build shared library from the PIC-compiled archive objects
-cd source/src
+cd src
 ${CC:-gcc} -shared -fPIC -Wl,-soname,liblua.so.5.4 \
     $(ar t liblua.a | tr '\n' ' ') \
     -lm -ldl -o liblua.so.5.4'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/lua-${VERSION}
 make INSTALL_TOP=${STAGING_DIR}/usr INSTALL_MAN=${STAGING_DIR}/usr/share/man/man1 install
@@ -55,9 +56,9 @@ PCEOF
 cp ${STAGING_DIR}/usr/lib/pkgconfig/lua5.4.pc ${STAGING_DIR}/usr/lib/pkgconfig/lua-5.4.pc
 cp ${STAGING_DIR}/usr/lib/pkgconfig/lua5.4.pc ${STAGING_DIR}/usr/lib/pkgconfig/lua.pc'''
 
-[hooks]
-post_install = "ldconfig 2>/dev/null || true"
-post_upgrade = "ldconfig 2>/dev/null || true"
-
 [[output]]
 runtime_deps = ['readline']
+
+[output.hooks]
+post_install = "ldconfig 2>/dev/null || true"
+post_upgrade = "ldconfig 2>/dev/null || true"

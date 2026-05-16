@@ -14,12 +14,12 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/utils/raid/mdadm/mdadm-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/mdadm-${VERSION}
 make CWFLAGS="-Wall -Werror -Wstrict-prototypes -Wextra -Wno-unused-parameter -Wformat -Wformat-security -Werror=format-security -fstack-protector-strong -fPIE -Warray-bounds -Wimplicit-fallthrough=0 -Wno-error=implicit-fallthrough -Wno-error=unterminated-string-initialization"'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/mdadm-${VERSION}
 make \

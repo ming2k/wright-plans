@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://github.com/hpjansson/chafa/releases/download/${VERSION}/chafa-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/chafa-${VERSION}
 ./configure \
@@ -23,12 +23,12 @@ cd source/chafa-${VERSION}
   --disable-gtk-doc \
   --disable-man'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/chafa-${VERSION}
 make -C ${WORKDIR} -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/chafa-${VERSION}
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''

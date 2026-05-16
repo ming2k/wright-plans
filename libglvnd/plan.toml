@@ -4,26 +4,33 @@ release = 1
 description = "The GL Vendor-Neutral Dispatch library"
 license = "MIT"
 arch = "x86_64"
-
+url = "https://gitlab.freedesktop.org/glvnd/libglvnd"
 
 build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v1.7.0/libglvnd-v1.7.0.tar.gz"
+url = "https://gitlab.freedesktop.org/glvnd/libglvnd/-/archive/v${VERSION}/libglvnd-v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libglvnd-v${VERSION}
-meson setup build --prefix=/usr --libdir=lib -Dglx=disabled -Dx11=disabled -Dheaders=true'''
+meson setup build \
+--prefix=/usr            \
+--buildtype=release      \
+-Dglx=disabled           \
+-Dx11=disabled           \
+-Dgles1=false            \
+-Dheaders=true'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
-ninja -C source/libglvnd-v${VERSION}/build -j$(nproc)'''
+cd source/libglvnd-v${VERSION}
+meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
-DESTDIR=${STAGING_DIR} ninja -C source/libglvnd-v${VERSION}/build install'''
-
+cd source/libglvnd-v${VERSION}
+meson install -C build --destdir ${STAGING_DIR}'''

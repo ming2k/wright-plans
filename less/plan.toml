@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://www.greenwoodsoftware.com/less/less-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/less-${VERSION}
 ./configure --prefix=/usr --sysconfdir=/etc'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/less-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/less-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

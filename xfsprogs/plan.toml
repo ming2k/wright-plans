@@ -7,6 +7,7 @@ arch = "x86_64"
 url = "https://xfs.wiki.kernel.org"
 
 link_deps = ['util-linux', 'icu', 'inih', 'liburcu']
+build_deps = ['liburcu']
 
 [[sources]]
 type = "http"
@@ -14,17 +15,17 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/utils/fs/xfs/xfsprogs/xfsprogs-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/xfsprogs-${VERSION}
-./configure --prefix=/usr --sbindir=/usr/bin --disable-static'''
+./configure --prefix=/usr --sbindir=/usr/bin --disable-static CFLAGS="-I/usr/include"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/xfsprogs-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/xfsprogs-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

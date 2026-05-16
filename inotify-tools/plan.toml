@@ -15,22 +15,22 @@ url = "https://github.com/inotify-tools/inotify-tools/archive/refs/tags/${VERSIO
 sha256 = "d33a4fd24c72c2d08893f129d724adf725b93dae96c359e4f4e9f32573cc853b"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/inotify-tools-${VERSION}
 autoreconf -fi'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/inotify-tools-${VERSION}
 ./configure --prefix=/usr --disable-static --enable-doxygen=no'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/inotify-tools-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/inotify-tools-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

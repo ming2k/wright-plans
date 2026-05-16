@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://github.com/shadow-maint/shadow/releases/download/${VERSION}/shadow-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/shadow-${VERSION}
 # groups(1) is provided by coreutils
@@ -31,7 +31,7 @@ sed -e 's:#ENCRYPT_METHOD DES:ENCRYPT_METHOD YESCRYPT:' \
 
 touch ${WORKDIR}/passwd_dummy'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/shadow-${VERSION}
 # --disable-account-tools-setuid: use fcaps (--with-fcaps) instead of setuid bits
@@ -55,12 +55,12 @@ cd source/shadow-${VERSION}
 --without-selinux          \
 --with-group-name-max-length=32'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/shadow-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/shadow-${VERSION}
 make DESTDIR=${STAGING_DIR} install

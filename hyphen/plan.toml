@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "http://deb.debian.org/debian/pool/main/h/hyphen/hyphen_${VERSION}.orig.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/hyphen-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/hyphen-${VERSION}
 make'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/hyphen-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

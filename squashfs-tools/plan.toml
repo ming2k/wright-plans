@@ -14,7 +14,7 @@ sha256 = "547b7b7f4d2e44bf91b6fc554664850c69563701deab9fd9cd7e21f694c88ea6"
 url = "https://github.com/plougher/squashfs-tools/releases/download/${VERSION}/squashfs-tools-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/squashfs-tools-${VERSION}/squashfs-tools
 make CONFIG=1 \
@@ -35,7 +35,7 @@ make CONFIG=1 \
   INSTALL_MANPAGES_DIR=/usr/share/man/man1 \
   -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/squashfs-tools-${VERSION}/squashfs-tools
 make CONFIG=1 \

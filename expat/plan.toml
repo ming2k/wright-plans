@@ -13,19 +13,19 @@ sha256 = "a37bfae0aa9775bd8521ebd85dc456d486f0ff31138f6c91fd902ea732624542"
 url = "https://github.com/libexpat/libexpat/releases/download/R_2_8_0/expat-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/expat-${VERSION}
 CONFIG_SHELL=/usr/bin/bash /usr/bin/bash ./configure --prefix=/usr \
 --disable-static \
 --docdir=/usr/share/doc/expat-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/expat-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/expat-${VERSION}
 make DESTDIR=${STAGING_DIR} install

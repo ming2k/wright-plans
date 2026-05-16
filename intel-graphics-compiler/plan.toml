@@ -60,7 +60,7 @@ ccache = true
 # 必须提供 Git 身份，否则 IGC 内部脚本在应用 LLVM 补丁时会失败
 env = { GIT_COMMITTER_NAME = "builduser", GIT_COMMITTER_EMAIL = "builduser@archlinux.org", GIT_AUTHOR_NAME = "builduser", GIT_AUTHOR_EMAIL = "builduser@archlinux.org" }
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 # 建立 LLVM 组件链接（模仿 Arch 的 prepare）
 ln -sf ${WORKDIR}/SPIRV-LLVM-Translator-IGC-LLVM ${WORKDIR}/llvm-project/llvm/projects/llvm-spirv
@@ -70,7 +70,7 @@ ln -sf ${WORKDIR}/opencl-clang ${WORKDIR}/llvm-project/llvm/projects/opencl-clan
 patch -d "intel-graphics-compiler-${VERSION}" -Np1 -i ${WORKDIR}/${MAIN_PART_NAME}-010-intel-graphics-compiler-disable-werror.patch
 '''
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 script = '''
 # 限制符号可见性，防止符号重叠冲突（Arch 核心参数）
@@ -109,10 +109,10 @@ cmake -B build -S "intel-graphics-compiler-${VERSION}" \
     -Wno-dev
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = "cmake --build build -j$(nproc)"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 DESTDIR=${STAGING_DIR} cmake --install build
 install -D -m644 "intel-graphics-compiler-${VERSION}/LICENSE.md" -t "${STAGING_DIR}/usr/share/licenses/${NAME}"

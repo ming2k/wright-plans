@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://github.com/benhoyt/inih/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/inih-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared -Ddistro_install=true'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/inih-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/inih-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''

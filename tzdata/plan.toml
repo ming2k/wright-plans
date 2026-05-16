@@ -19,22 +19,28 @@ sha256 = "114543d9f19a6bfeb5bca43686aea173d38755a3db1f2eec112647ae92c6f544"
 url = "https://data.iana.org/time-zones/releases/tzdata${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source
-sed -i "s:sbin:bin:g" Makefile'''
+sed -i 's|/sbin|/bin|g' Makefile'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source
 make CC=gcc LFLAGS="${LDFLAGS}" -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source
 
 # Install tzcode tools (zic, zdump, tzselect)
 make CC=gcc DESTDIR=${STAGING_DIR} install
+
+# Ensure FHS compliance: move zic from /usr/sbin to /usr/bin
+if [ -d ${STAGING_DIR}/usr/sbin ]; then
+    mv ${STAGING_DIR}/usr/sbin/* ${STAGING_DIR}/usr/bin/ 2>/dev/null || true
+    rmdir ${STAGING_DIR}/usr/sbin 2>/dev/null || true
+fi
 
 # Generate zoneinfo database
 ./zic -b fat -d ${STAGING_DIR}/usr/share/zoneinfo africa antarctica asia australasia europe northamerica southamerica etcetera backward factory

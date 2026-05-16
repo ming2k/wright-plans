@@ -15,7 +15,7 @@ url = "https://github.com/obsproject/obs-studio.git"
 ref = "${VERSION}"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source
 cmake -B build -G Ninja \
@@ -46,12 +46,12 @@ cmake -B build -G Ninja \
     -DENABLE_FFMPEG_LOGGING=OFF \
     -DENABLE_NEW_MPEGTS_OUTPUT=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source
 ninja -j$(nproc) -C ${WORKDIR}/build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''

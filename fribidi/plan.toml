@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://github.com/fribidi/fribidi/releases/download/v${VERSION}/fribidi-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/fribidi-${VERSION}
 meson setup build \
 --prefix=/usr          \
 --buildtype=release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/fribidi-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/fribidi-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

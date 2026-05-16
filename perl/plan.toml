@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://www.cpan.org/src/5.0/perl-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/perl-${VERSION}
 export BUILD_ZLIB=False
@@ -34,12 +34,12 @@ sh Configure -des                                          \
 -D useshrplib                                 \
 -D usethreads'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/perl-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/perl-${VERSION}
 make DESTDIR=${STAGING_DIR} install

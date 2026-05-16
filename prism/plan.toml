@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://github.com/PrismLibrary/Prism/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "none"
 script = '''
 cd source/Prism-${VERSION}
@@ -25,7 +25,7 @@ dotnet restore PrismLibrary_Core.slnf
 # Build only the .NET 6.0 target (Linux-compatible, skip net462/net47)
 dotnet build PrismLibrary_Core.slnf -c Release -f net6.0 --no-restore'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/Prism-${VERSION}
 

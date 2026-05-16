@@ -13,18 +13,18 @@ sha256 = "SKIP"
 url = "https://github.com/JetBrains/JetBrainsMono/releases/download/v${VERSION}/JetBrainsMono-${VERSION}.zip"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/jetbrains-mono-${VERSION}
 echo preparing jetbrains-mono'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/jetbrains-mono-${VERSION}
 rm -rf jbmono
 bsdtar xf ${WORKDIR}/JetBrainsMono-${VERSION}.zip -C jbmono'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/jetbrains-mono-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/share/fonts/jetbrains-mono

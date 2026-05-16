@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://codeberg.org/dnkl/fcft/archive/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/fcft
 meson setup build \
@@ -22,12 +22,12 @@ meson setup build \
 --buildtype=release    \
 -D docs=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/fcft
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/fcft
 DESTDIR=${STAGING_DIR} ninja -C build install'''

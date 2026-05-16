@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/intel/libva-utils/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libva-utils-${VERSION}
 meson setup build \
@@ -23,12 +23,12 @@ meson setup build \
 --buildtype=release                  \
 -D tests=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libva-utils-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libva-utils-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://github.com/libproxy/libproxy/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libproxy-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Ddocs=false -Dtests=false -Dvapi=false -Dconfig-gnome=true -Dpacrunner-duktape=true'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libproxy-${VERSION}
 meson compile -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libproxy-${VERSION}
 DESTDIR=${STAGING_DIR} meson install -C build'''

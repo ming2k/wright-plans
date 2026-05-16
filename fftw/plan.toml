@@ -14,7 +14,7 @@ sha256 = "56c932549852cddcfafdab3820b0200c7742675be92179e59e6215b340e26467"
 url = "http://www.fftw.org/fftw-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/fftw-${VERSION}
 ./configure \
@@ -24,12 +24,12 @@ cd source/fftw-${VERSION}
     --enable-sse2 \
     --enable-avx'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/fftw-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/fftw-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

@@ -14,12 +14,12 @@ sha256 = "SKIP"
 url = "https://passt.top/passt/snapshot/passt-${VERSION}.tar.zst"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/passt-${VERSION}
 make VERSION="${VERSION}" -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/passt-${VERSION}
 make DESTDIR=${STAGING_DIR} prefix=/usr install'''

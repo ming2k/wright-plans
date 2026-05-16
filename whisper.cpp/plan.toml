@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/ggml-org/whisper.cpp/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/whisper.cpp-${VERSION}
 cmake -B build -G Ninja \
@@ -25,12 +25,12 @@ cmake -B build -G Ninja \
   -DGGML_NATIVE=OFF \
   -DWHISPER_SDL2=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/whisper.cpp-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/whisper.cpp-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

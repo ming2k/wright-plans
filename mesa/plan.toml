@@ -15,7 +15,7 @@ sha256 = "1d3c3b8a8363b8cc354175bb4a684ad8b035211cc1d6fa17aeb9b9623c513f89"
 url = "https://mesa.freedesktop.org/archive/mesa-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/mesa-${VERSION}
 # Pure Wayland build:
@@ -31,12 +31,12 @@ cd source/mesa-${VERSION}
 # path and should be investigated independently from this packaging choice.
 meson setup build --prefix=/usr --buildtype=release -D platforms=wayland -D gallium-drivers=iris,crocus,llvmpipe -D vulkan-drivers=intel,intel_hasvk,swrast -D egl=enabled -D gbm=enabled -D gles1=disabled -D gles2=enabled -D glx=disabled -D llvm=enabled -D shared-llvm=enabled -D gallium-va=disabled -D vulkan-layers=device-select,overlay -D video-codecs=all -D valgrind=disabled -D libunwind=enabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/mesa-${VERSION}
 ninja -j$(nproc) -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/mesa-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -12,18 +12,18 @@ sha256 = "SKIP"
 url = "https://duktape.org/duktape-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/duktape-${VERSION}
 echo "makefile project"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/duktape-${VERSION}
 sed -i 's/-Wall -Wextra/-Wall -Wextra -fPIC/' Makefile.sharedlibrary
 make -f Makefile.sharedlibrary -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/duktape-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/lib ${STAGING_DIR}/usr/include ${STAGING_DIR}/usr/lib/pkgconfig

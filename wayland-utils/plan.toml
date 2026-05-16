@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/wayland/wayland-utils/-/archive/${VERSION}/wayland-utils-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/wayland-utils-${VERSION}
 meson setup build \
@@ -23,12 +23,12 @@ meson setup build \
     --buildtype=release \
     -D drm=enabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/wayland-utils-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/wayland-utils-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

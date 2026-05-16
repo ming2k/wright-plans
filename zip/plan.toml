@@ -18,17 +18,17 @@ sha256 = "SKIP"
 type = "local"
 path = "patches/fix-memfuncs.patch"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/zip-${VERSION}
 patch -Np1 < ${WORKDIR}/fix-memfuncs.patch'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/zip-${VERSION}
 make -f unix/Makefile prefix=/usr generic_gcc'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/zip-${VERSION}
 make prefix=${STAGING_DIR}/usr \

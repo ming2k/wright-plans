@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libmanette/0.2/libmanette-0.2.7.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libmanette-${VERSION}
 # 修复：
@@ -22,12 +22,12 @@ cd source/libmanette-${VERSION}
 # 2. 确保 introspection 和 vapi 选项格式正确
 meson setup build --prefix=/usr --libdir=lib -Dintrospection=true -Dvapi=false -Ddemos=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libmanette-${VERSION}/build
 ninja -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libmanette-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''

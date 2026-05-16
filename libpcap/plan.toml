@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://www.tcpdump.org/release/libpcap-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libpcap-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libpcap-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libpcap-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

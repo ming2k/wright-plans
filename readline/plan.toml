@@ -32,7 +32,7 @@ url = "https://ftp.gnu.org/gnu/readline/readline-8.3-patches/readline83-003"
 [options]
 ccache = true
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/readline-${VERSION}
 patch -Np0 < ${WORKDIR}/readline-readline83-001
@@ -41,17 +41,17 @@ patch -Np0 < ${WORKDIR}/readline-readline83-003
 sed -i '/MV.*old/d' Makefile.in
 sed -i '/{OLDSUFF}/c:' support/shlib-install'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/readline-${VERSION}
 ./configure --prefix=/usr    --disable-static --with-curses    --docdir=/usr/share/doc/readline-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/readline-${VERSION}
 make SHLIB_LIBS="-lncursesw"'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/readline-${VERSION}
 make SHLIB_LIBS="-lncursesw" DESTDIR=${STAGING_DIR} install

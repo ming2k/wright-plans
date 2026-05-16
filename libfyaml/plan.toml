@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libfyaml-${VERSION}
 cmake -S . -B build \
@@ -26,12 +26,12 @@ cmake -S . -B build \
     -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DENABLE_ASAN=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libfyaml-${VERSION}
 cmake --build build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libfyaml-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build

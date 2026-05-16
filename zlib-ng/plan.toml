@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/zlib-ng/zlib-ng/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/zlib-ng-${VERSION}
 cmake -S . -B build -G Ninja \
@@ -25,12 +25,12 @@ cmake -S . -B build -G Ninja \
   -DWITH_GTEST=OFF \
   -DBUILD_SHARED_LIBS=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/zlib-ng-${VERSION}
 cmake --build build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/zlib-ng-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build

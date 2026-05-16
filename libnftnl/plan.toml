@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://www.netfilter.org/pub/libnftnl/libnftnl-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libnftnl-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libnftnl-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libnftnl-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/pango/1.57/pango-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/pango-${VERSION}
 meson setup build \
@@ -25,12 +25,12 @@ meson setup build \
 -D xft=disabled             \
 -D introspection=enabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/pango-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/pango-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

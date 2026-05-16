@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://www.nano-editor.org/dist/v8/nano-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/nano-${VERSION}
 ./configure --prefix=/usr \
@@ -22,12 +22,12 @@ cd source/nano-${VERSION}
 --enable-utf8 \
 --docdir=/usr/share/doc/nano-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/nano-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/nano-${VERSION}
 make DESTDIR=${STAGING_DIR} install

@@ -14,12 +14,12 @@ sha256 = "SKIP"
 url = "https://git.kernel.org/pub/scm/linux/kernel/git/dhowells/keyutils.git/snapshot/keyutils-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/keyutils-${VERSION}
 make'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/keyutils-${VERSION}
 make \

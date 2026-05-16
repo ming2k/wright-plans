@@ -15,7 +15,7 @@ sha256 = "f4821f9084cab04bd2b5384cc92b9726aecc4ce3eb27200dca24edc67da3b6e5"
 url = "https://git.outfoxxed.me/quickshell/quickshell/archive/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/quickshell
 cmake -B build -G Ninja \
@@ -40,12 +40,12 @@ cmake -B build -G Ninja \
     -DSERVICE_PAM=ON \
     -DSERVICE_POLKIT=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/quickshell
 cmake --build build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/quickshell
 DESTDIR=${STAGING_DIR} cmake --install build'''

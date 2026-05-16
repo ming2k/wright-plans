@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://www.alsa-project.org/files/pub/utils/alsa-utils-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/alsa-utils-${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-alsaloop --disable-bat --disable-xmlto --disable-rst2man'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/alsa-utils-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/alsa-utils-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''

@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://storage.googleapis.com/aom-releases/libaom-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/libaom-${VERSION}
 
@@ -25,19 +25,19 @@ sed -i '/#include <cassert>/a #include <cstdint>' third_party/libwebm/mkvparser/
 # 可选: 消除 CMake 版本过低的警告 (虽然不是致命错误，但修一下更好)
 find . -name "*.cmake" -exec sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/cmake_minimum_required(VERSION 3.10)/' {} +'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 mkdir -p source/libaom-${VERSION}/build
 cd source/libaom-${VERSION}/build
 
 cmake .. -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DBUILD_SHARED_LIBS=ON -DENABLE_NASM=ON -DENABLE_TESTS=OFF -DENABLE_DOCS=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libaom-${VERSION}/build
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libaom-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install'''

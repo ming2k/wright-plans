@@ -25,7 +25,7 @@ sha256 = "SKIP"
 type = "local"
 path = "network-wait-online.conf"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/systemd-${VERSION}
 sed -i -e 's/GROUP="render"/GROUP="video"/' \
@@ -33,7 +33,7 @@ sed -i -e 's/GROUP="render"/GROUP="video"/' \
        rules.d/50-udev-default.rules.in
 '''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/systemd-${VERSION}
 meson setup build \
@@ -82,12 +82,12 @@ meson setup build \
     -D sbat-distro-pkgname=systemd \
     -D sbat-distro-url=https://github.com/ming2k/wright'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/systemd-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/systemd-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install

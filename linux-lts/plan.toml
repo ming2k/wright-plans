@@ -1,5 +1,5 @@
 name = "linux-lts"
-version = "6.18.26"
+version = "6.18.29"
 release = 2
 description = "The Linux kernel (LTS)"
 license = "GPL-2.0-only"
@@ -18,7 +18,7 @@ sha256 = "SKIP"
 type = "local"
 path = "config"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/linux-${VERSION}
 
@@ -211,13 +211,13 @@ scripts/config --module SND_SOC_SOF_XTENSA
 make olddefconfig
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "none"
 script = '''
 cd source/linux-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 isolation = "none"
 script = '''
 cd source/linux-${VERSION}

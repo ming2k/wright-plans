@@ -12,7 +12,7 @@ sha256 = "SKIP"
 url = "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${VERSION}.zip"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 # Install AWS CLI dist files
 mkdir -p ${STAGING_DIR}/usr/lib/aws-cli

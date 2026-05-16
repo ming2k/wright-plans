@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://dotnetcli.azureedge.net/dotnet/Sdk/${VERSION}/dotnet-sdk-${VERSION}-linux-x64.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 install -dm755 ${STAGING_DIR}/usr/share/dotnet
 cp -a source/* ${STAGING_DIR}/usr/share/dotnet/
@@ -41,8 +41,8 @@ backup = ["/etc/profile.d/dotnet.sh"]
 name = "dotnet-runtime"
 description = ".NET runtime only"
 include = [
-    "/usr/share/dotnet/shared/Microsoft.NETCore.App/.*",
-    "/usr/share/dotnet/shared/Microsoft.AspNetCore.App/.*",
-    "/usr/share/dotnet/host/.*",
+    "/usr/share/dotnet/shared/Microsoft.NETCore.App/**",
+    "/usr/share/dotnet/shared/Microsoft.AspNetCore.App/**",
+    "/usr/share/dotnet/host/**",
 ]
 runtime_deps = ['glibc', 'icu', 'libunwind', 'openssl']

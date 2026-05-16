@@ -20,23 +20,23 @@ sha256 = "SKIP"
 type = "local"
 path = "lto.patch"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/potrace-${VERSION}
 patch -Np1 < ${WORKDIR}/lto.patch
 autoreconf -fiv'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/potrace-${VERSION}
 ./configure --prefix=/usr --mandir=/usr/share/man --with-libpotrace'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/potrace-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/potrace-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

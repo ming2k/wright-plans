@@ -40,7 +40,7 @@ sha256 = "SKIP"
 type = "local"
 path = "pam.d/other"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/Linux-PAM-${VERSION}
 mkdir -p build
@@ -59,12 +59,12 @@ meson setup .. \
     -Ddocs=disabled \
     -Ddocdir=/usr/share/doc/Linux-PAM-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/Linux-PAM-${VERSION}/build
 ninja'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/Linux-PAM-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install

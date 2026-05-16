@@ -15,7 +15,7 @@ sha256 = "efff5a15258dce1ca2d323bf64c974f5fca03778174615dbc30c8d36db645bf5"
 url = "https://github.com/KhronosGroup/glslang/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/glslang-${VERSION}
 mkdir build && cd build
@@ -25,12 +25,12 @@ cmake ..                                \
 -DALLOW_EXTERNAL_SPIRV_TOOLS=ON   \
 -DBUILD_SHARED_LIBS=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/glslang-${VERSION}/build
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/glslang-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install'''

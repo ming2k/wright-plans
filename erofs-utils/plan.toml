@@ -15,7 +15,7 @@ sha256 = "a9ef5ab67c4b8d2d3e9ed71f39cd008bda653142a720d8a395a36f1110d0c432"
 url = "https://git.kernel.org/pub/scm/linux/kernel/git/xiang/erofs-utils.git/snapshot/erofs-utils-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/erofs-utils-${VERSION}
 EROFS_UTILS_VERSION=${VERSION} ./autogen.sh
@@ -41,12 +41,12 @@ EROFS_UTILS_VERSION=${VERSION} ./autogen.sh
   --disable-fuse \
   --without-selinux'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/erofs-utils-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/erofs-utils-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

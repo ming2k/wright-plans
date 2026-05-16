@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://github.com/nghttp2/nghttp2/releases/download/v${VERSION}/nghttp2-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/nghttp2-${VERSION}
 ./configure --prefix=/usr     \
@@ -21,12 +21,12 @@ cd source/nghttp2-${VERSION}
 --enable-lib-only \
 --docdir=/usr/share/doc/nghttp2-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/nghttp2-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/nghttp2-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

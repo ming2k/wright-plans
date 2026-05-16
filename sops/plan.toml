@@ -15,14 +15,14 @@ sha256 = "SKIP"
 url = "https://github.com/getsops/sops/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 env = { GOPATH = '${BUILD_DIR}/.go', GOCACHE = '${BUILD_DIR}/.cache/go-build', CGO_ENABLED = '0' }
 script = '''
 cd source/sops-${VERSION}
 go build -trimpath -ldflags="-s -w -buildid=" -o sops ./cmd/sops'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/sops-${VERSION}
 install -Dm755 sops ${STAGING_DIR}/usr/bin/sops'''

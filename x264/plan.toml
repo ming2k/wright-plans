@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://code.videolan.org/videolan/x264/-/archive/b35605ace3ddf7c1a5d67a2eb553f034aef41d55/x264-b35605ace3ddf7c1a5d67a2eb553f034aef41d55.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/x264-*
 ./configure --prefix=/usr \
@@ -22,12 +22,12 @@ cd source/x264-*
             --enable-lto \
             --disable-cli'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/x264-*
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/x264-*
 make DESTDIR=${STAGING_DIR} install'''

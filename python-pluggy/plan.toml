@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://pypi.org/packages/source/p/pluggy/pluggy-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/python-pluggy-${VERSION}
 pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''

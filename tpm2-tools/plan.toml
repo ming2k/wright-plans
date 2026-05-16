@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://github.com/tpm2-software/tpm2-tools/releases/download/${VERSION}/tpm2-tools-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/tpm2-tools-${VERSION}
 ./configure \
     --prefix=/usr \
     --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/tpm2-tools-${VERSION}
 make -C ${WORKDIR} -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/tpm2-tools-${VERSION}
 make -C ${WORKDIR} DESTDIR=${STAGING_DIR} install'''

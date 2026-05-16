@@ -13,22 +13,22 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/libcap-${VERSION}
 sed -i '/install -m.*STA/d' libcap/Makefile'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libcap-${VERSION}
 make prefix=/usr lib=lib SBINDIR=/usr/bin -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/libcap-${VERSION}
 make test'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libcap-${VERSION}
 make prefix=/usr lib=lib SBINDIR=/usr/bin DESTDIR=${STAGING_DIR} install'''

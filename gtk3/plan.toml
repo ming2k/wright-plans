@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gtk/3.24/gtk-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gtk-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dwayland_backend=true -Dx11_backend=false -Dbroadway_backend=false -Dintrospection=true -Dgtk_doc=false -Dman=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gtk-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gtk-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''

@@ -15,12 +15,12 @@ url = "https://github.com/KhronosGroup/OpenCL-Headers/archive/refs/tags/v${VERSI
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/opencl-headers-${VERSION}
 cmake -B build -S ${WORKDIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -GNinja -DOPENCL_HEADERS_BUILD_TESTING=OFF'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/opencl-headers-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libadwaita/1.9/libadwaita-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 ENV = "PATH=/usr/bin:/bin"
 script = '''
 cd source/libadwaita-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dintrospection=enabled -Dvapi=false -Dtests=false -Ddocumentation=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libadwaita-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libadwaita-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -14,18 +14,18 @@ sha256 = "SKIP"
 url = "https://github.com/stefanberger/libtpms/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libtpms-${VERSION}
 ./autogen.sh
 ./configure --prefix=/usr --disable-static --with-openssl CFLAGS="${CFLAGS:--O2} -Wno-error=discarded-qualifiers"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libtpms-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libtpms-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

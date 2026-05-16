@@ -15,19 +15,19 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/at-spi2-core/2.60/at-spi2-core-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/at-spi2-core-${VERSION}
 meson setup build \
 --prefix=/usr               \
 --buildtype=release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/at-spi2-core-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/at-spi2-core-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -25,7 +25,7 @@ sha256 = "SKIP"
 type = "local"
 path = "bundle.sh"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/nss-${VERSION}
 mkdir -p certs
@@ -38,7 +38,7 @@ python3 ${WORKDIR}/ca-certificates-certdata2pem.py
 cd ${WORKDIR}/source/nss-${VERSION}
 sh ${WORKDIR}/ca-certificates-bundle.sh'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/nss-${VERSION}
 install -Dm644 ca-bundle.trust.p11-kit \

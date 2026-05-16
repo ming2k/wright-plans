@@ -13,7 +13,7 @@ sha256 = "b0231eb39b3c3cabdc568c619df78208a7bd95ea10c9b2236d61218bac1b367d"
 url = "https://cmake.org/files/v4.3/cmake-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/cmake-${VERSION}
 sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
@@ -25,12 +25,12 @@ sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
 --docdir=/share/doc/cmake-${VERSION} \
 --parallel=$(nproc)'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/cmake-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/cmake-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

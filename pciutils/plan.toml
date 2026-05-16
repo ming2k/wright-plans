@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://mj.ucw.cz/download/linux/pci/pciutils-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/pciutils-${VERSION}
 make PREFIX=/usr \
@@ -23,7 +23,7 @@ make PREFIX=/usr \
      ZLIB=yes \
      -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/pciutils-${VERSION}
 make PREFIX=/usr \

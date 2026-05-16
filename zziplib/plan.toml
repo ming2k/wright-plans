@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://github.com/gdraheim/zziplib/archive/v0.13.80.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/zziplib-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DZZIPDOCS=OFF -DZZIPTEST=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/zziplib-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/zziplib-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

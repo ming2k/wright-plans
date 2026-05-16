@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/xdg/shared-mime-info/-/archive/${VERSION}/shared-mime-info-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/shared-mime-info-${VERSION}
 sed -i '/^if xmlto\.found()/,/^endif$/d' data/meson.build
@@ -25,12 +25,12 @@ meson setup build \
     -D update-mimedb=false \
     -D build-tests=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/shared-mime-info-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/shared-mime-info-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

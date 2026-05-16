@@ -14,13 +14,13 @@ url = "https://github.com/rfjakob/gocryptfs.git"
 ref = "v${VERSION}"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source
 CGO_ENABLED=1 ./build.bash'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source
 make DESTDIR=${STAGING_DIR} install'''

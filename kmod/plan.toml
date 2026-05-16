@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://git.kernel.org/pub/scm/utils/kernel/kmod/kmod.git/snapshot/kmod-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 script = '''
 cd source/kmod-${VERSION}
@@ -29,13 +29,13 @@ meson setup build          \
   -D zlib=enabled          \
   -D zstd=enabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/kmod-${VERSION}
 meson compile -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 isolation = "relaxed"
 script = '''
 cd source/kmod-${VERSION}

@@ -14,7 +14,7 @@ sha256 = "a78e55a0df62b7f98566676d0ab9041aad89b2384bb5c6f3a96302a5cf49968d"
 url = "https://github.com/neomutt/neomutt/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/neomutt-${VERSION}
 ./configure --prefix=/usr \
@@ -29,12 +29,12 @@ cd source/neomutt-${VERSION}
     --gdbm \
     --sqlite'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/neomutt-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/neomutt-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

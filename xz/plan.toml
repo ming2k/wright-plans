@@ -13,24 +13,24 @@ sha256 = "SKIP"
 url = "https://github.com/tukaani-project/xz/releases/download/v${VERSION}/xz-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/xz-5.8.3
 ./configure --prefix=/usr    \
 --disable-static \
 --docdir=/usr/share/doc/xz-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/xz-5.8.3
 make -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/xz-5.8.3
 make check'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/xz-5.8.3
 make DESTDIR=${STAGING_DIR} install'''

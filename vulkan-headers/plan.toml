@@ -14,12 +14,12 @@ sha256 = "SKIP"
 url = "https://github.com/KhronosGroup/Vulkan-Headers/archive/v${VERSION}/Vulkan-Headers-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/Vulkan-Headers-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/Vulkan-Headers-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

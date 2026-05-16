@@ -15,10 +15,9 @@ sha256 = "SKIP"
 url = "https://github.com/protocolbuffers/protobuf/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
-cd source/protobuf-${VERSION}
-cmake -B ${WORKDIR}/build -S ${WORKDIR} -G Ninja \
+cmake -B ${WORKDIR}/build -S ${WORKDIR}/source/protobuf-${VERSION} -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
   -DCMAKE_INSTALL_LIBDIR=lib \
@@ -27,14 +26,12 @@ cmake -B ${WORKDIR}/build -S ${WORKDIR} -G Ninja \
   -Dprotobuf_ABSL_PROVIDER=package \
   -Dprotobuf_BUILD_PROTOC_BINARIES=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
-cd source/protobuf-${VERSION}
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
-cd source/protobuf-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [[output]]

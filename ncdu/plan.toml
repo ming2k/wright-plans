@@ -1,0 +1,33 @@
+name = "ncdu"
+version = "1.22"
+release = 1
+description = "NCurses disk usage analyzer"
+license = "MIT"
+arch = "x86_64"
+url = "https://dev.yorhel.nl/ncdu"
+
+link_deps = ['ncurses']
+
+[[sources]]
+type = "http"
+sha256 = "0ad6c096dc04d5120581104760c01b8f4e97d4191d6c9ef79654fa3c691a176b"
+url = "https://dev.yorhel.nl/download/ncdu-${VERSION}.tar.gz"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/ncdu-${VERSION}
+./configure --prefix=/usr'''
+
+[pipeline.compile]
+script = '''
+cd source/ncdu-${VERSION}
+make -j$(nproc)'''
+
+[pipeline.staging]
+script = '''
+cd source/ncdu-${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
+
+[[output]]
+runtime_deps = ['ncurses']

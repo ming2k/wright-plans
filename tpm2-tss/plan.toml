@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://github.com/tpm2-software/tpm2-tss/releases/download/${VERSION}/tpm2-tss-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 mkdir -p ${WORKDIR}/build
 cd ${WORKDIR}/build
@@ -29,11 +29,11 @@ ${WORKDIR}/source/tpm2-tss-${VERSION}/configure \
     --disable-unit \
     --disable-integration'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 make -C ${WORKDIR}/build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 make -C ${WORKDIR}/build DESTDIR=${STAGING_DIR} install'''
 

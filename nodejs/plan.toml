@@ -15,7 +15,7 @@ sha256 = "a4f653d79ed140aaad921e8c22a3b585ca85cfdab80d4030f6309e4663a8a1c8"
 url = "https://nodejs.org/dist/v${VERSION}/node-v${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/node-v${VERSION}
 ./configure --prefix=/usr \
@@ -24,12 +24,12 @@ cd source/node-v${VERSION}
     --with-intl=system-icu \
     --ninja'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/node-v${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/node-v${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

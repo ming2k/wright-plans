@@ -15,7 +15,7 @@ sha256 = "f2c1c76592a82ffff8413ba3c4a1299b6c7ab06c734dee03fd88630485c2b920"
 url = "https://downloads.xiph.org/releases/flac/flac-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/flac-${VERSION}
 ./configure \
@@ -27,12 +27,12 @@ cd source/flac-${VERSION}
   --disable-thorough-tests \
   --with-ogg=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/flac-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/flac-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

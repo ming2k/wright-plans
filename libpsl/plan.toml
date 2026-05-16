@@ -15,19 +15,19 @@ sha256 = "SKIP"
 url = "https://github.com/rockdaboot/libpsl/releases/download/${VERSION}/libpsl-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libpsl-${VERSION}
 meson setup build \
 --prefix=/usr         \
 --buildtype=release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libpsl-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libpsl-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

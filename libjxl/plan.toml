@@ -15,7 +15,7 @@ sha256 = "ab38928f7f6248e2a98cc184956021acb927b16a0dee71b4d260dc040a4320ea"
 url = "https://github.com/libjxl/libjxl/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libjxl-${VERSION}
 cmake -B build -G Ninja \
@@ -33,12 +33,12 @@ cmake -B build -G Ninja \
   -DJPEGXL_BUNDLE_LIBPNG=OFF \
   -DJPEGXL_ENABLE_JPEGLI=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libjxl-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libjxl-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

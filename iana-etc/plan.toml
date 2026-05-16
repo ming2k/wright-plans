@@ -24,9 +24,9 @@ sha256 = "SKIP"
 type = "local"
 path = "generate_iana_etc.py"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
-python3 ${WORKDIR}/generate_iana_etc.py \
-  ${WORKDIR}/service-names-port-numbers.csv \
-  ${WORKDIR}/protocol-numbers-1.csv \
+python3 ${WORKDIR}/iana-etc-generate_iana_etc.py \
+  ${WORKDIR}/iana-etc-service-names-port-numbers.csv \
+  ${WORKDIR}/iana-etc-protocol-numbers-1.csv \
   ${STAGING_DIR}'''

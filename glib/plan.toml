@@ -15,7 +15,7 @@ sha256 = "51ab804c56f6eab3e5045c774d1290ac5e4c923d4f9a3d8e33123bee45c1840e"
 url = "https://download.gnome.org/sources/glib/2.88/glib-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/glib-${VERSION}
 meson setup build \
@@ -39,12 +39,12 @@ meson setup build \
     -Dglib_checks=true \
     -Dfile_monitor_backend=inotify'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/glib-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/glib-${VERSION}
 DESTDIR=${STAGING_DIR} meson install -C build'''

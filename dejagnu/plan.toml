@@ -13,25 +13,25 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/dejagnu/dejagnu-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/dejagnu-${VERSION}
 mkdir -v build
 cd build
 ../configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/dejagnu-${VERSION}/build
 makeinfo --html --no-split -o doc/dejagnu.html ../doc/dejagnu.texi
 makeinfo --plaintext       -o doc/dejagnu.txt  ../doc/dejagnu.texi'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/dejagnu-${VERSION}/build
 make check'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/dejagnu-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install

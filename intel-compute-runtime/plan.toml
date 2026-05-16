@@ -17,7 +17,7 @@ sha256 = "8c51e99af2971f5e6e662b7dd47b786e50da0252323ce4abaa8d135fe3f3f294"
 [options]
 ccache = true
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 # 修复 Blender 等应用中的运行时错误
 export CFLAGS="${CFLAGS} -DSANITIZER_BUILD=1"
@@ -52,10 +52,10 @@ cmake -B build -S "compute-runtime-${VERSION}" \
     -Wno-dev
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = "cmake --build build -j$(nproc)"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 DESTDIR=${STAGING_DIR} cmake --install build
 install -D -m644 "compute-runtime-${VERSION}/LICENSE.md" -t "${STAGING_DIR}/usr/share/licenses/${NAME}"

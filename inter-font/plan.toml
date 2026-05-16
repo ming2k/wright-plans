@@ -13,19 +13,19 @@ sha256 = "SKIP"
 url = "https://github.com/rsms/inter/releases/download/v${VERSION}/Inter-${VERSION}.zip"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/inter-font-${VERSION}
 echo preparing inter-font'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/inter-font-${VERSION}
 rm -rf inter-extracted
 mkdir -p inter-extracted
 bsdtar xf ${WORKDIR}/Inter-${VERSION}.zip -C inter-extracted'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/inter-font-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/share/fonts/inter

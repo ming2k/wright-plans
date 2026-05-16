@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://carlowood.github.io/which/which-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/which-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/which-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/which-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

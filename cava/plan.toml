@@ -15,22 +15,22 @@ sha256 = "43f994f7e609fab843af868d8a7bc21471ac62c5a4724ef97693201eac42e70a"
 url = "https://github.com/karlstav/cava/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/cava-${VERSION}
 autoreconf -vfi'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/cava-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/cava-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/cava-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

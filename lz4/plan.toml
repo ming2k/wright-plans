@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://github.com/lz4/lz4/releases/download/v${VERSION}/lz4-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/lz4-${VERSION}
 make BUILD_STATIC=no PREFIX=/usr -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/lz4-${VERSION}
 make -j1 check'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/lz4-${VERSION}
 make BUILD_STATIC=no PREFIX=/usr DESTDIR=${STAGING_DIR} install'''

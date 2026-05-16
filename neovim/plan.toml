@@ -18,23 +18,26 @@ extract_to = "source"
 [options]
 ccache = true
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 script = '''
 cd source/neovim-${VERSION}
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr deps'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/neovim-${VERSION}
 make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=/usr'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/neovim-${VERSION}
 make CMAKE_INSTALL_PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
 
-[hooks]
+[[output]]
+runtime_deps = ['glibc']
+
+[output.hooks]
 post_install = '''
 update-desktop-database -q 2>/dev/null || true
 
@@ -43,6 +46,3 @@ post_upgrade = '''
 update-desktop-database -q 2>/dev/null || true
 
 '''
-
-[[output]]
-runtime_deps = ['glibc']

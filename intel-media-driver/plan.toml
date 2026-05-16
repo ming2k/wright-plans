@@ -15,7 +15,7 @@ sha256 = "e5cf57c66e22359d1ec07d766b04e5da43677b9330999ce0dbf686aac60cf6bb"
 url = "https://github.com/intel/media-driver/archive/intel-media-${VERSION}/intel-media-driver-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/intel-media-driver-${VERSION}
 cmake -B ${WORKDIR}/build -S ${WORKDIR} \
@@ -25,12 +25,12 @@ cmake -B ${WORKDIR}/build -S ${WORKDIR} \
     -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
     -DMEDIA_BUILD_FATAL_WARNINGS=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/intel-media-driver-${VERSION}
 make -C ${WORKDIR}/build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/intel-media-driver-${VERSION}
 make -C ${WORKDIR}/build DESTDIR=${STAGING_DIR} install'''

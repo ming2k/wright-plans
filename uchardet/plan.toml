@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://www.freedesktop.org/software/uchardet/releases/uchardet-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 mkdir -p ${WORKDIR}/build && cd source/build
 cmake -DCMAKE_INSTALL_PREFIX=/usr \
@@ -24,12 +24,12 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr \
       -DBUILD_STATIC=OFF \
       ..'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/uchardet-${VERSION}/build
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/uchardet-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install'''

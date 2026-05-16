@@ -12,7 +12,7 @@ sha256 = "SKIP"
 url = "https://dlcdn.apache.org/ant/binaries/apache-ant-${VERSION}-bin.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/ant-${VERSION}
 

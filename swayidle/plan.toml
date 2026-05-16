@@ -15,17 +15,17 @@ sha256 = "6c1b769038b60250c88e47380cbb021cfa57a65f872bf4d6c340b5e3057096ac"
 url = "https://github.com/swaywm/swayidle/releases/download/v${VERSION}/swayidle-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/swayidle-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dlogind=enabled -Dlogind-provider=systemd -Dman-pages=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/swayidle-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/swayidle-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

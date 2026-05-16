@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://github.com/PCRE2Project/pcre2/releases/download/pcre2-${VERSION}/pcre2-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/pcre2-${VERSION}
 ./configure --prefix=/usr --disable-static --enable-unicode --enable-pcre2-16 --enable-pcre2-32'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/pcre2-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/pcre2-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

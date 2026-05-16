@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/network/wireless/iwd-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/iwd-${VERSION}
 ./configure --prefix=/usr            \
@@ -27,12 +27,12 @@ cd source/iwd-${VERSION}
 --enable-monitor         \
 --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/iwd-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/iwd-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

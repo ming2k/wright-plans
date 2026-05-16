@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/dconf/0.49/dconf-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/dconf-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dgtk_doc=false -Dvapi=false -Dman=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/dconf-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/dconf-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}
@@ -35,12 +35,12 @@ meson install -C build --destdir ${STAGING_DIR}
 install -dm755  "${STAGING_DIR}/etc/dconf/db"
 install -dm2775 "${STAGING_DIR}/etc/dconf/profile"'''
 
-[hooks]
+[[output]]
+runtime_deps = ['dbus', 'glib']
+
+[output.hooks]
 post_install = '''
 groupadd -r dconf 2>/dev/null || true
 chgrp dconf /etc/dconf/profile
 
 '''
-
-[[output]]
-runtime_deps = ['dbus', 'glib']

@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/Vulkan-Loader-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DVULKAN_HEADERS_INSTALL_DIR=/usr -DBUILD_WSI_XCB_SUPPORT=OFF -DBUILD_WSI_XLIB_SUPPORT=OFF -DBUILD_WSI_WAYLAND_SUPPORT=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/Vulkan-Loader-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/Vulkan-Loader-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

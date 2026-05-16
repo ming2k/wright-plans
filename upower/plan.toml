@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/upower/upower/-/archive/v${VERSION}/upower-v${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/upower-${VERSION}
 meson setup build \
@@ -26,12 +26,12 @@ meson setup build \
   -Dgtk-doc=false \
   -Dsystemdsystemunitdir=/usr/lib/systemd/system'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/upower-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/upower-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

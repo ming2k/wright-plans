@@ -14,17 +14,17 @@ sha256 = "75f530b7154bc93e7ecf846edfc0416bf5f490612de8c45983c36385aa742b42"
 url = "https://github.com/strukturag/libheif/releases/download/v${VERSION}/libheif-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libheif-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DENABLE_LIBDE265=ON -DENABLE_DAV1D=ON -DENABLE_AOM=ON -DWITH_EXAMPLES=OFF -DWITH_GDK_PIXBUF=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libheif-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libheif-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

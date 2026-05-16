@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/slirp/libslirp/-/archive/v${VERSION}/libslirp-v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libslirp-v${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Ddefault_library=shared'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libslirp-v${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libslirp-v${VERSION}
 DESTDIR=${STAGING_DIR} meson install -C build'''

@@ -3,6 +3,8 @@ From: Sergey Poznyakoff <gray@gnu.org>
 Date: Tue, 6 May 2025 21:02:43 +0300
 Subject: [PATCH] Fix c23 conformity
 
+Upstream: https://cgit.git.savannah.gnu.org/cgit/cpio.git/commit/?id=f42137f5ab9cf07d1e62edc05e0212688d3ebaa2
+
 ---
  src/extern.h | 4 ++--
  src/global.c | 4 ++--

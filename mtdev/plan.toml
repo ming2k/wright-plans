@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://bitmath.org/code/mtdev/mtdev-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/mtdev-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/mtdev-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/mtdev-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

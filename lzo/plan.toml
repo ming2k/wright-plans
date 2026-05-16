@@ -12,14 +12,14 @@ sha256 = "SKIP"
 url = "https://www.oberhumer.com/opensource/lzo/download/lzo-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/lzo-${VERSION}
 ./configure --prefix=/usr --enable-shared --disable-static --docdir=/usr/share/doc/lzo-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = "cd source/lzo-${VERSION} && make -j$(nproc)"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = "cd source/lzo-${VERSION} && make DESTDIR=${STAGING_DIR} install"
 

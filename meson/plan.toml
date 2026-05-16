@@ -15,7 +15,7 @@ sha256 = "6788ae299979643f8d841bcaf64352558436cae45a0355148a3aeeccf7913866"
 url = "https://github.com/mesonbuild/meson/releases/download/${VERSION}/meson-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/meson-${VERSION}
 pip3 install --no-index --no-user --no-deps --ignore-installed --no-cache-dir --root=${STAGING_DIR} --no-build-isolation .'''

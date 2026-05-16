@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://github.com/AbiWord/enchant/releases/download/v${VERSION}/enchant-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/enchant-${VERSION}
 ./configure --prefix=/usr --sysconfdir=/etc --disable-static --with-groff'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/enchant-${VERSION}
 make'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/enchant-${VERSION}
 install -dm755 ${STAGING_DIR}/usr/lib/enchant-2

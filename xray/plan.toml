@@ -19,7 +19,7 @@ extract_to = "source"
 type = "local"
 path = "xray-tproxy.service"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 isolation = "none"
 script = '''
 cd source/Xray-core-${VERSION}
@@ -29,7 +29,7 @@ export GOMODCACHE=/tmp/go-mod-cache
 rm -rf vendor
 go mod vendor'''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/Xray-core-${VERSION}
@@ -41,7 +41,7 @@ export GOSUMDB=off
 export GOFLAGS="-trimpath -mod=vendor"
 go build -ldflags "-X github.com/xtls/xray-core.codename=xray -X github.com/xtls/xray-core.version=${VERSION} -buildid=" -o xray ./main'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/Xray-core-${VERSION}
 install -Dm755 xray ${STAGING_DIR}/usr/bin/xray

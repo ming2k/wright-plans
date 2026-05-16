@@ -11,7 +11,7 @@ type = "http"
 sha256 = "SKIP"
 url = "https://github.com/bazelbuild/bazelisk/releases/download/v${VERSION}/bazelisk-linux-amd64"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 install -Dm755 ${WORKDIR}/bazelisk-linux-amd64 ${STAGING_DIR}/usr/bin/bazelisk
 ln -sf bazelisk ${STAGING_DIR}/usr/bin/bazel'''

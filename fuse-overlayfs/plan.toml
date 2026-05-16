@@ -15,26 +15,26 @@ sha256 = "45968517603389ead067222d234bc8d8ed33e4b4f8ba16216bdd3e6aedcccea9"
 url = "https://github.com/containers/fuse-overlayfs/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 isolation = "none"
 script = '''
 cd source/fuse-overlayfs-${VERSION}
 autoreconf -fi'''
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "none"
 env = { ac_cv_path_MD2MAN = '' }
 script = '''
 cd source/fuse-overlayfs-${VERSION}
 ./configure --prefix=/usr --bindir=/usr/bin'''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "none"
 script = '''
 cd source/fuse-overlayfs-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 isolation = "none"
 script = '''
 cd source/fuse-overlayfs-${VERSION}

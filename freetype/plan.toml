@@ -12,7 +12,7 @@ sha256 = "SKIP"
 url = "https://download.savannah.gnu.org/releases/freetype/freetype-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/freetype-${VERSION}
 sed -ri "s:.*(AUX_MODULES.*valid):\1:" modules.cfg
@@ -22,12 +22,12 @@ sed -r "s:.*(#.*SUBPIXEL_RENDERING) .*:\1:" \
 --enable-freetype-config \
 --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/freetype-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/freetype-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''

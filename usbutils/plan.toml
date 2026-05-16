@@ -15,18 +15,18 @@ sha256 = "SKIP"
 url = "https://github.com/gregkh/usbutils/archive/v${VERSION}/usbutils-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/usbutils-${VERSION}
 meson setup build \
     --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/usbutils-${VERSION}
 meson compile -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/usbutils-${VERSION}
 DESTDIR=${STAGING_DIR} meson install -C build'''

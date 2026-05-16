@@ -14,7 +14,7 @@ sha256 = "ee0eb3a1da2c5a28147f12dff55f6c7d60aeeeb29ac7ef334eabe84c8476c105"
 url = "https://github.com/harfbuzz/harfbuzz/releases/download/${VERSION}/harfbuzz-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/harfbuzz-${VERSION}
 meson setup build \
@@ -29,12 +29,12 @@ meson setup build \
     -D tests=disabled      \
     -D docs=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/harfbuzz-${VERSION}/build
 ninja -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/harfbuzz-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''

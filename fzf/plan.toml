@@ -15,14 +15,14 @@ sha256 = "SKIP"
 url = "https://github.com/junegunn/fzf/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/fzf-${VERSION}
 export CGO_ENABLED=0
 go build -trimpath -ldflags "-s -w -X main.version=${VERSION}" -o bin/fzf .'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/fzf-${VERSION}
 install -Dm755 bin/fzf ${STAGING_DIR}/usr/bin/fzf

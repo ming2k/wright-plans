@@ -13,17 +13,17 @@ sha256 = "4b44d4f2b38a370a2d98a78329fefc56a0cf93d1c1be70029217baae6628feea"
 url = "https://downloads.xiph.org/releases/speex/speex-1.2.1.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/speex-${VERSION}
 ./configure --prefix=/usr --enable-shared --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/speex-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/speex-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

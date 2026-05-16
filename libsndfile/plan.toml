@@ -12,17 +12,17 @@ sha256 = "SKIP"
 url = "https://github.com/libsndfile/libsndfile/releases/download/${VERSION}/libsndfile-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libsndfile-${VERSION}
 CFLAGS="-std=gnu17" ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libsndfile-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libsndfile-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''

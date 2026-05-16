@@ -18,7 +18,7 @@ extract_to = "source"
 [options]
 timeout = 3600
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 script = '''
 cd source/onnxruntime-${VERSION}
@@ -38,12 +38,12 @@ cmake --compile-no-warning-as-error \
   -DCMAKE_CXX_STANDARD=17 \
   -DFETCHCONTENT_QUIET=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/onnxruntime-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/onnxruntime-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

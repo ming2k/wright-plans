@@ -15,7 +15,7 @@ url = "https://github.com/libcamera-org/libcamera.git"
 ref = "v${VERSION}"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 script = '''
 cd source
@@ -32,12 +32,12 @@ meson setup build \
 -D udev=enabled                      \
 -D cam=enabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source
 DESTDIR=${STAGING_DIR} ninja -C build install'''

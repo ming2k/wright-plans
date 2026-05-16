@@ -15,19 +15,19 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/glycin/2.1/glycin-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 script = '''
 cd source/glycin-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dtests=false -Dvapi=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/glycin-${VERSION}
 meson compile -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/glycin-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''

@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://lttng.org/files/urcu/userspace-rcu-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/userspace-rcu-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/userspace-rcu-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/userspace-rcu-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

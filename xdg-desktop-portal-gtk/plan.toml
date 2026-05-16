@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://github.com/flatpak/xdg-desktop-portal-gtk/releases/download/${VERSION}/xdg-desktop-portal-gtk-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/xdg-desktop-portal-gtk-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dwallpaper=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/xdg-desktop-portal-gtk-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/xdg-desktop-portal-gtk-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

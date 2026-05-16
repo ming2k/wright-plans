@@ -12,7 +12,7 @@ sha256 = "SKIP"
 url = "https://github.com/libunwind/libunwind/releases/download/v1.8.1/libunwind-1.8.1.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libunwind-${VERSION}
 # CFLAGS修复:
@@ -26,12 +26,12 @@ export CFLAGS="$CFLAGS -Wno-error -std=gnu99"
 # 这样 make 就不会进入 tests 目录编译那些报错的文件了
 sed -i 's/ tests//g' Makefile'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libunwind-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libunwind-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

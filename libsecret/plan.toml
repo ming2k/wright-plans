@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/libsecret/0.21/libsecret-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libsecret-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dvapi=false -Dgtk_doc=false -Dmanpage=false -Dcrypto=libgcrypt'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libsecret-${VERSION}
 meson compile -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libsecret-${VERSION}
 DESTDIR=${STAGING_DIR} meson install -C build'''

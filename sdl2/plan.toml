@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://www.libsdl.org/release/SDL2-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/SDL2-${VERSION}
 ./configure \
@@ -24,12 +24,12 @@ cd source/SDL2-${VERSION}
   --disable-video-x11 \
   --disable-rpath'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/SDL2-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/SDL2-${VERSION}
 DESTDIR=${STAGING_DIR} make install

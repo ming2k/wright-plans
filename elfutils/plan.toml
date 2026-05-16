@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://sourceware.org/ftp/elfutils/${VERSION}/elfutils-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/elfutils-${VERSION}
 CFLAGS="-Wno-error=discarded-qualifiers" \
@@ -22,12 +22,12 @@ CFLAGS="-Wno-error=discarded-qualifiers" \
             --disable-debuginfod \
             --enable-libdebuginfod=dummy'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/elfutils-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/elfutils-${VERSION}
 make DESTDIR=${STAGING_DIR} install

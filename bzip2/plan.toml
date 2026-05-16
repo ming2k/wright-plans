@@ -13,7 +13,7 @@ sha256 = "ab5a03176ee106d3f0fa90e381da478ddae405918153cca248e682cd0c4a2269"
 url = "https://www.sourceware.org/pub/bzip2/bzip2-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/bzip2-${VERSION}
 
@@ -21,9 +21,9 @@ cd source/bzip2-${VERSION}
 sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
 
 # Fix man pages location
-sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile'''
+sed -i 's@$(PREFIX)/man@$(PREFIX)/share/man@g' Makefile'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/bzip2-${VERSION}
 
@@ -34,7 +34,7 @@ make clean
 # Then build the rest
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/bzip2-${VERSION}
 

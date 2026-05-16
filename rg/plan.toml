@@ -15,13 +15,13 @@ sha256 = "SKIP"
 url = "https://github.com/BurntSushi/ripgrep/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/rg-${VERSION}
 cargo build --release --locked --features pcre2'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/rg-${VERSION}
 install -Dm755 target/release/rg ${STAGING_DIR}/usr/bin/rg

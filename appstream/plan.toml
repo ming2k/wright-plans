@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/ximion/appstream/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/appstream-${VERSION}
 sanitize_flags() {
@@ -37,7 +37,7 @@ meson setup build              \
     -Dman=false                \
     -Dbash-completion=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/appstream-${VERSION}
 sanitize_flags() {
@@ -48,7 +48,7 @@ export CFLAGS="$(sanitize_flags "${CFLAGS:-}")"
 export CXXFLAGS="$(sanitize_flags "${CXXFLAGS:-}")"
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/appstream-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''

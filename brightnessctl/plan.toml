@@ -13,12 +13,12 @@ sha256 = "SKIP"
 url = "https://github.com/Hummer12007/brightnessctl/archive/${VERSION}/brightnessctl-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/brightnessctl-${VERSION}
 make ENABLE_SYSTEMD=1'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/brightnessctl-${VERSION}
 make install DESTDIR=${STAGING_DIR} PREFIX=/usr ENABLE_SYSTEMD=1 INSTALL_UDEV_RULES=0'''

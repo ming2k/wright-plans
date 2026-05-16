@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://github.com/google/brotli/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/brotli-${VERSION}
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_LIBDIR=lib'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/brotli-${VERSION}
 cmake --build build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/brotli-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

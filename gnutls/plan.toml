@@ -14,19 +14,19 @@ sha256 = "SKIP"
 url = "https://www.gnupg.org/ftp/gcrypt/gnutls/v3.8/gnutls-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gnutls-${VERSION}
 ./configure --prefix=/usr          \
 --disable-static       \
 --with-default-trust-store-pkcs11="pkcs11:"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gnutls-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gnutls-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

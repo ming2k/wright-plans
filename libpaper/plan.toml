@@ -18,24 +18,24 @@ sha256 = "SKIP"
 type = "local"
 path = "localepaper.c"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/libpaper-${VERSION}
 cp ${WORKDIR}/localepaper.c ${WORKDIR}/src/'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libpaper-${VERSION}
 ./configure --prefix=/usr --sysconfdir=/etc --sbindir=/usr/bin'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libpaper-${VERSION}
 make -j$(nproc)
 cd src
 gcc $CFLAGS $LDFLAGS -I.. -Ilibgnu -o localepaper localepaper.c libgnu/.libs/libgnupaper.a'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libpaper-${VERSION}
 make DESTDIR=${STAGING_DIR} install

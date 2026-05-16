@@ -15,7 +15,7 @@ sha256 = "cc72bd1009ba0cf63922e28f94d9d83b920aa2bb28f798a31d0691b02fa3c9b3"
 url = "https://pypi.org/packages/source/w/wheel/wheel-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/wheel-${VERSION}
 pip3 install --no-index --no-user --no-deps --ignore-installed --no-cache-dir --root=${STAGING_DIR} --no-build-isolation .'''

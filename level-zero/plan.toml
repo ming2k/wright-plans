@@ -15,17 +15,17 @@ url = "https://github.com/oneapi-src/level-zero/archive/refs/tags/v${VERSION}.ta
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/level-zero-${VERSION}
 cmake -B build -S level-zero-${VERSION} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=Release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/level-zero-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/level-zero-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

@@ -12,17 +12,17 @@ sha256 = "SKIP"
 url = "https://github.com/alsa-project/alsa-ucm-conf/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/alsa-ucm-conf-${VERSION}
 echo "data-only package"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/alsa-ucm-conf-${VERSION}
 echo "no build needed"'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/alsa-ucm-conf-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/share/alsa

@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-${VERSION}/mbedtls-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/mbedtls-${VERSION}
 cmake -B build -G Ninja \
@@ -26,12 +26,12 @@ cmake -B build -G Ninja \
     -DENABLE_PROGRAMS=OFF \
     -DENABLE_TESTING=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/mbedtls-${VERSION}
 ninja -j$(nproc) -C ${WORKDIR}/build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/mbedtls-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''

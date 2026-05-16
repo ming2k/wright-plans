@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/doxygen/doxygen/archive/refs/tags/Release_1_16_1.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/doxygen-${VERSION}
 cmake -B build \
@@ -25,12 +25,12 @@ cmake -B build \
     -Dbuild_wizard=OFF \
     -Duse_libclang=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/doxygen-${VERSION}
 cmake --build build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/doxygen-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

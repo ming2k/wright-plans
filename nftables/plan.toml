@@ -28,12 +28,12 @@ path = "nftables.conf"
 [options]
 ccache = true
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/nftables-${VERSION}
 autoreconf -fiv'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/nftables-${VERSION}
 ./configure --prefix=/usr       \
@@ -46,12 +46,12 @@ cd source/nftables-${VERSION}
   --disable-python    \
   --with-mini-gmp=no'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/nftables-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/nftables-${VERSION}
 make DESTDIR=${STAGING_DIR} install

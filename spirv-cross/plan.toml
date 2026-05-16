@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://github.com/KhronosGroup/SPIRV-Cross/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/SPIRV-Cross-vulkan-sdk-${VERSION}
 mkdir -p build && cd build
@@ -26,12 +26,12 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr \
       -DSPIRV_CROSS_CLI=OFF \
       ..'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/SPIRV-Cross-vulkan-sdk-${VERSION}/build
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/SPIRV-Cross-vulkan-sdk-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install'''

@@ -15,13 +15,13 @@ sha256 = "SKIP"
 url = "https://github.com/sharkdp/fd/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 script = '''
 cd source/fd-${VERSION}
 cargo build --release --locked'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/fd-${VERSION}
 install -Dm755 target/release/fd ${STAGING_DIR}/usr/bin/fd

@@ -12,7 +12,7 @@ sha256 = "SKIP"
 url = "https://go.dev/dl/go${VERSION}.linux-amd64.tar.gz"
 extract_to = "source"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/go-bootstrap-${VERSION}
 install -d ${STAGING_DIR}/usr/lib

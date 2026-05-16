@@ -15,18 +15,18 @@ sha256 = "61f0ea345f63d28ab2ff0dc352c22271661b66bf09642db3a4049ac9dbdb0f8d"
 url = "http://0pointer.de/public/libatasmart-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libatasmart-${VERSION}
 autoreconf -fi
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libatasmart-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libatasmart-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

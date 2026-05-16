@@ -14,7 +14,7 @@ sha256 = "SKIP"
 url = "https://mkvtoolnix.download/sources/mkvtoolnix-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/mkvtoolnix-${VERSION}
 ./configure \
@@ -22,12 +22,12 @@ cd source/mkvtoolnix-${VERSION}
   --with-boost-libdir=/usr/lib \
   --disable-gui'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/mkvtoolnix-${VERSION}
 rake -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/mkvtoolnix-${VERSION}
 rake DESTDIR=${STAGING_DIR} install

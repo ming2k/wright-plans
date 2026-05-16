@@ -14,7 +14,7 @@ sha256 = "3243ffbc8ea4d4ac22ddc7dd2a1dc54c57874c40648b60ff97009763554eaf13"
 url = "https://web.mit.edu/Kerberos/dist/krb5/1.22/krb5-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/src
 ./configure --prefix=/usr \
@@ -22,12 +22,12 @@ cd source/src
     --disable-static \
     --without-ldap'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/src
 make WARN_CFLAGS= -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/src
 make DESTDIR=${STAGING_DIR} install'''

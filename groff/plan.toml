@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/groff/groff-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/groff-${VERSION}
 PAGE=A4 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/groff-${VERSION}
 make -j1'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/groff-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

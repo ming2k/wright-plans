@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://files.pythonhosted.org/packages/source/p/pyparsing/pyparsing-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/python-pyparsing-${VERSION}
 echo "python package"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/python-pyparsing-${VERSION}
 echo "no build needed"'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/python-pyparsing-${VERSION}
 pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${STAGING_DIR} .'''

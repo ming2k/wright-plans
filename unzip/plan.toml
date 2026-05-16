@@ -23,14 +23,14 @@ type = "http"
 sha256 = "ea5c012b75512ab1a17ab70dcd379cff2ba19c6bb4c045e5cfab45c6c5d5d924"
 url = "https://www.linuxfromscratch.org/patches/blfs/12.2/unzip-6.0-gcc14-1.patch"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/unzip-${VERSION}
 patch -Np1 < ${WORKDIR}/unzip-6.0-consolidated_fixes-1.patch
 patch -Np1 < ${WORKDIR}/unzip-6.0-gcc14-1.patch
 sed -i '/struct tm \\*gmtime(), \\*localtime();/d' unix/unxcfg.h'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/unzip-${VERSION}
 DEFINES='-DACORN_FTYPE_NFS -DWILD_STOP_AT_DIR -DLARGE_FILE_SUPPORT \
@@ -42,7 +42,7 @@ make -f unix/Makefile prefix=/usr \
   CF="${CFLAGS} ${CPPFLAGS} -I. ${DEFINES} -std=gnu17" \
   unzips'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/unzip-${VERSION}
 make prefix=${STAGING_DIR}/usr \

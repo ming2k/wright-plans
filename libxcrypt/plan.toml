@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://github.com/besser82/libxcrypt/releases/download/v${VERSION}/libxcrypt-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libxcrypt-${VERSION}
 CONFIG_SHELL=/usr/bin/bash /usr/bin/bash ./configure --prefix=/usr \
@@ -23,17 +23,17 @@ CONFIG_SHELL=/usr/bin/bash /usr/bin/bash ./configure --prefix=/usr \
 --disable-werror             \
 --disable-failure-tokens'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libxcrypt-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/libxcrypt-${VERSION}
 make check'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libxcrypt-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

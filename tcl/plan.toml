@@ -13,19 +13,19 @@ sha256 = "SKIP"
 url = "https://downloads.sourceforge.net/project/tcl/Tcl/${VERSION}/tcl${VERSION}-src.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/unix
 ./configure --prefix=/usr           \
             --mandir=/usr/share/man \
             --disable-rpath'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/unix
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/unix
 make DESTDIR=${STAGING_DIR} install

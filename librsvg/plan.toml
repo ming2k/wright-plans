@@ -14,20 +14,20 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/librsvg/2.62/librsvg-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 isolation = "relaxed"
 script = '''
 cd source/librsvg-${VERSION}
 meson setup build --prefix=/usr --libdir=lib --buildtype=release -Dintrospection=enabled -Ddocs=disabled -Dtests=false -Dvala=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 isolation = "relaxed"
 env = { LD_LIBRARY_PATH = '${BUILD_DIR}/build/librsvg' }
 script = '''
 cd source/librsvg-${VERSION}
 meson compile -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/librsvg-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''

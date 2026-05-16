@@ -13,12 +13,12 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/software/utils/dtc/dtc-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/dtc-${VERSION}
 make -j$(nproc) NO_PYTHON=1 PREFIX=/usr CFLAGS="${CFLAGS} -std=gnu17"'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/dtc-${VERSION}
 make DESTDIR=${STAGING_DIR} NO_PYTHON=1 PREFIX=/usr CFLAGS="${CFLAGS} -std=gnu17" install'''

@@ -6,7 +6,7 @@ license = "BSD-3-Clause"
 arch = "x86_64"
 url = "https://github.com/rime/librime"
 
-link_deps = ['boost', 'google-glog', 'leveldb', 'lua', 'marisa', 'opencc', 'yaml-cpp']
+link_deps = ['boost', 'leveldb', 'lua', 'marisa', 'opencc', 'yaml-cpp']
 build_deps = ['ninja', 'cmake']
 
 [[sources]]
@@ -15,24 +15,25 @@ sha256 = "944909b5d9fb81171b044b7f2ea89922bd73457fcc5105798a259173288cd2d9"
 url = "https://github.com/rime/librime/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cmake -B ${WORKDIR}/build -S ${WORKDIR}/source/librime-${VERSION} -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_C_FLAGS="${CFLAGS} -DNDEBUG" \
-    -DCMAKE_CXX_FLAGS="${CXXFLAGS} -DNDEBUG -DGLOG_USE_GLOG_EXPORT" \
+    -DCMAKE_CXX_FLAGS="${CXXFLAGS} -DNDEBUG" \
     -DBUILD_SHARED_LIBS=ON \
     -DBUILD_TEST=OFF \
+    -DENABLE_LOGGING=OFF \
     -DENABLE_EXTERNAL_PLUGINS=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [[output]]
-runtime_deps = ['boost', 'google-glog', 'leveldb', 'lua', 'marisa', 'opencc', 'yaml-cpp']
+runtime_deps = ['boost', 'leveldb', 'lua', 'marisa', 'opencc', 'yaml-cpp']

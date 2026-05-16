@@ -20,12 +20,12 @@ sha256 = "SKIP"
 type = "local"
 path = "patches/fix-missing-stdio.patch"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/*
 patch -Np1 < ${WORKDIR}/${NAME}-fix-missing-stdio.patch'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/*
 meson setup build \
@@ -37,12 +37,12 @@ meson setup build \
     -Dtest=disabled \
     -Dman=disabled'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/*
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/*
 DESTDIR=${STAGING_DIR} ninja -C build install'''

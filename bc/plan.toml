@@ -14,22 +14,22 @@ sha256 = "SKIP"
 url = "https://github.com/gavinhoward/bc/releases/download/${VERSION}/bc-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/bc-${VERSION}
 CC='gcc -std=c99' ./configure --prefix=/usr -G -O3 -r'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/bc-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.check]
+[pipeline.check]
 script = '''
 cd source/bc-${VERSION}
 make test'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/bc-${VERSION}
 make DESTDIR=${STAGING_DIR} install

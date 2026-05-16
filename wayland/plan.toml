@@ -14,15 +14,15 @@ sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/${VERSION}/downloads/wayland-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/wayland-${VERSION}
 meson setup build --prefix=/usr -Ddocumentation=false -Dtests=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = "meson compile -C source/wayland-${VERSION}/build"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = "meson install -C source/wayland-${VERSION}/build --destdir ${STAGING_DIR}"
 
 [[output]]

@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/nettle/nettle-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/nettle-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/nettle-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/nettle-${VERSION}
 make DESTDIR=${STAGING_DIR} install

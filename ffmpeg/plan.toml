@@ -15,10 +15,10 @@ sha256 = "SKIP"
 url = "https://ffmpeg.org/releases/ffmpeg-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = "cd source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/ffmpeg-${VERSION}
 
@@ -66,12 +66,12 @@ command -v sdl2-config >/dev/null 2>&1 || {
   --enable-lto \
   --enable-pic'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/ffmpeg-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/ffmpeg-${VERSION}
 make DESTDIR=${STAGING_DIR} install

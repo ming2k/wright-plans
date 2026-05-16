@@ -13,35 +13,31 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gmp/gmp-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.prepare]
-script = '''
-cd source/gmp-${VERSION}
-sed -i '/long long t1;/,+1s/()/(...)/' configure'''
-
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 unset CFLAGS CXXFLAGS
 cd source/gmp-${VERSION}
+sed -i '/long long t1;/,+1s/()/(...)/' configure
 ./configure --prefix=/usr    \
 --build=x86_64-pc-linux-gnu \
 --enable-cxx     \
 --disable-static \
 --docdir=/usr/share/doc/gmp-6.3.0'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 unset CFLAGS CXXFLAGS
 cd source/gmp-${VERSION}
 make -j$(nproc)
 make html'''
 
-# [lifecycle.check]
+# [pipeline.check]
 # script = '''
 # cd source/gmp-${VERSION}
 # make check 2>&1 | tee gmp-check-log
 # awk '/# PASS:/{total+=$3} END{print total}' gmp-check-log'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gmp-${VERSION}
 make DESTDIR=${STAGING_DIR} install

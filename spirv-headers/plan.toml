@@ -15,17 +15,17 @@ sha256 = "cab0a654c4917e16367483296b44cdb1d614e3120c721beafcd37e3a8580486c"
 url = "https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/spirv-headers-${VERSION}
 cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/spirv-headers-${VERSION}
 cmake --build build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/spirv-headers-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''

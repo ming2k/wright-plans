@@ -15,17 +15,17 @@ sha256 = "SKIP"
 url = "https://github.com/CLIUtils/CLI11/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/cli11-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DCLI11_BUILD_TESTS=OFF -DCLI11_BUILD_EXAMPLES=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/cli11-${VERSION}
 ninja -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/cli11-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

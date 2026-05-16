@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://github.com/nayuki/QR-Code-generator/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/c
 gcc -c -O2 -fPIC -o qrcodegen.o qrcodegen.c
@@ -23,7 +23,7 @@ cd source/cpp
 g++ -c -O2 -fPIC -std=c++17 -o qrcodegen.o qrcodegen.cpp
 g++ -shared -o libqrcodegencpp.so qrcodegen.o'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/qrcodegen-${VERSION}
 install -Dm755 ${WORKDIR}/c/libqrcodegen.so ${STAGING_DIR}/usr/lib/libqrcodegen.so

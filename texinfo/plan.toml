@@ -13,22 +13,24 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/texinfo/texinfo-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/texinfo-${VERSION}
-sed 's/! $output_file eq/$output_file ne/' -i tp/Texinfo/Convert/*.pm'''
+if [ -d tp/Texinfo/Convert ]; then
+  find tp/Texinfo/Convert -name '*.pm' -exec sed 's/! $output_file eq/$output_file ne/' -i {} +
+fi'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/texinfo-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/texinfo-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/texinfo-${VERSION}
 make DESTDIR=${STAGING_DIR} install

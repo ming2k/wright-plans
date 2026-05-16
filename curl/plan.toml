@@ -14,7 +14,7 @@ sha256 = "63fe2dc148ba0ceae89922ef838f7e5c946272c2e78b7c59fab4b79d3ce2b896"
 url = "https://curl.se/download/curl-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/curl-${VERSION}
 ./configure --prefix=/usr                    \
@@ -23,12 +23,12 @@ cd source/curl-${VERSION}
 --enable-threaded-resolver       \
 --with-ca-path=/etc/ssl/certs'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/curl-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/curl-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

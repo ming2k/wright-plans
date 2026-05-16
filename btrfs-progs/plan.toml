@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/kernel/people/kdave/btrfs-progs/btrfs-progs-v${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/btrfs-progs-v${VERSION}
 ./configure --prefix=/usr --sbindir=/usr/bin --disable-static --disable-documentation --with-crypto=libgcrypt'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/btrfs-progs-v${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/btrfs-progs-v${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

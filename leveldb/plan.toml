@@ -15,24 +15,21 @@ sha256 = "SKIP"
 url = "https://github.com/google/leveldb/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
-cd source/leveldb-${VERSION}
-cmake -B build -G Ninja \
+cmake -B ${WORKDIR}/build -S source/leveldb-${VERSION} -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_SHARED_LIBS=ON \
     -DLEVELDB_BUILD_TESTS=OFF \
     -DLEVELDB_BUILD_BENCHMARKS=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
-cd source/leveldb-${VERSION}
 ninja -C ${WORKDIR}/build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
-cd source/leveldb-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C ${WORKDIR}/build install'''
 
 [[output]]

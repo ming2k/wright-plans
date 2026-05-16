@@ -15,18 +15,18 @@ sha256 = "SKIP"
 url = "https://s3.amazonaws.com/json-c_releases/releases/json-c-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/json-c-${VERSION}
 mkdir -p build && cd build
 cmake .. -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=/usr/lib -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DBUILD_STATIC_LIBS=OFF -DENABLE_RDRAND=OFF -DENABLE_THREADING=ON'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/json-c-${VERSION}
 ninja -j$(nproc) -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/json-c-${VERSION}
 DESTDIR=${STAGING_DIR} ninja install -C build'''

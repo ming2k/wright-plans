@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://dbus.freedesktop.org/releases/dbus/dbus-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/dbus-${VERSION}
 mkdir -p build
@@ -36,12 +36,12 @@ meson setup --prefix=/usr \
     -Dmodular_tests=disabled \
     ..'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/dbus-${VERSION}/build
 ninja'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/dbus-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install
@@ -61,11 +61,11 @@ name = "libdbus"
 description = "D-Bus low-level shared library"
 runtime_deps = ['expat', 'glibc']
 include = [
-    "/usr/lib/libdbus-1\\.so.*",
-    "/usr/lib/libdbus-1\\.a",
-    "/usr/lib/pkgconfig/dbus-1\\.pc",
-    "/usr/include/dbus-1\\.0/.*",
-    "/usr/lib/cmake/dbus-1/.*",
+    "/usr/lib/libdbus-1.so*",
+    "/usr/lib/libdbus-1.a",
+    "/usr/lib/pkgconfig/dbus-1.pc",
+    "/usr/include/dbus-1.0/**",
+    "/usr/lib/cmake/dbus-1/**",
 ]
 
 [[output]]

@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://www.tcpdump.org/release/tcpdump-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/tcpdump-${VERSION}
 ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/tcpdump-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/tcpdump-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

@@ -12,17 +12,17 @@ sha256 = "SKIP"
 url = "https://www.kernel.org/pub/linux/utils/kbd/kbd-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/kbd-${VERSION}
 ./configure --prefix=/usr --disable-vlock'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/kbd-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/kbd-${VERSION}
 make DESTDIR=${STAGING_DIR} install

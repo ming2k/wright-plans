@@ -13,12 +13,12 @@ sha256 = "SKIP"
 url = "https://github.com/facebook/zstd/releases/download/v${VERSION}/zstd-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/zstd-1.5.7
 make prefix=/usr -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/zstd-1.5.7
 make prefix=/usr DESTDIR=${STAGING_DIR} install

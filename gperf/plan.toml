@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/gperf/gperf-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gperf-${VERSION}
 ./configure --prefix=/usr --docdir=/usr/share/doc/gperf-${VERSION}'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gperf-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gperf-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

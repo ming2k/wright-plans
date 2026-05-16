@@ -14,13 +14,13 @@ sha256 = "5fd4349bcbc9bab9a46f8cf77d1f434296a7a052c87440a094f63fcf62a58e20"
 url = "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/${VERSION}/downloads/wayland-protocols-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = "cd source/wayland-protocols-${VERSION} && meson setup build --prefix=/usr -Dtests=false"
 
-[lifecycle.compile]
+[pipeline.compile]
 script = "cd source/wayland-protocols-${VERSION} && meson compile -C build"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = "cd source/wayland-protocols-${VERSION} && meson install -C build --destdir ${STAGING_DIR}"
 
 [[output]]

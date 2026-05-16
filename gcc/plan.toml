@@ -17,13 +17,13 @@ extract_to = "source"
 [options]
 ccache = true
 
-[lifecycle.prepare]
+[pipeline.prepare]
 script = '''
 cd source/gcc-${VERSION}
 sed -e '/m64=/s/lib64/lib/' -i.orig gcc/config/i386/t-linux64
 mkdir -v build'''
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gcc-${VERSION}/build
 SED=sed \
@@ -50,12 +50,12 @@ SED=sed \
     --with-linker-hash-style=gnu \
     --disable-werror'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gcc-${VERSION}/build
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gcc-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install
@@ -65,15 +65,15 @@ ln -sf gcc ${STAGING_DIR}/usr/bin/cc'''
 name = "gcc-libs"
 description = "GCC runtime libraries"
 include = [
-    "/usr/lib/libgcc_s\\.so.*",
-    "/usr/lib/libgomp\\.so.*",
-    "/usr/lib/libatomic\\.so.*",
-    "/usr/lib/libitm\\.so.*",
-    "/usr/lib/libasan\\.so.*",
-    "/usr/lib/liblsan\\.so.*",
-    "/usr/lib/libtsan\\.so.*",
-    "/usr/lib/libubsan\\.so.*",
-    "/usr/lib/libhwasan\\.so.*",
+    "/usr/lib/libgcc_s.so*",
+    "/usr/lib/libgomp.so*",
+    "/usr/lib/libatomic.so*",
+    "/usr/lib/libitm.so*",
+    "/usr/lib/libasan.so*",
+    "/usr/lib/liblsan.so*",
+    "/usr/lib/libtsan.so*",
+    "/usr/lib/libubsan.so*",
+    "/usr/lib/libhwasan.so*",
 ]
 runtime_deps = ['glibc']
 hooks.post_install = "ldconfig"
@@ -83,9 +83,9 @@ hooks.post_upgrade = "ldconfig"
 name = "libstdc++"
 description = "GNU C++ standard library"
 include = [
-    "/usr/lib/libstdc\\+\\+\\.so.*",
-    "/usr/include/c\\+/.*",
-    "/usr/share/gdb/auto-load/.*",
+    "/usr/lib/libstdc++.so*",
+    "/usr/include/c++/**",
+    "/usr/share/gdb/auto-load/**",
 ]
 runtime_deps = ['glibc', 'gcc:gcc-libs']
 hooks.post_install = "ldconfig"
@@ -95,10 +95,10 @@ hooks.post_upgrade = "ldconfig"
 name = "libgccjit"
 description = "GCC JIT compilation library"
 include = [
-    "/usr/lib/libgccjit\\.so.*",
-    "/usr/include/libgccjit.*\\.h",
+    "/usr/lib/libgccjit.so*",
+    "/usr/include/libgccjit*.h",
 ]
-runtime_deps = ['glibc', 'gcc:gcc-libs']
+runtime_deps = ['glibc', 'gcc:gcc-libs', 'gmp', 'mpc', 'mpfr', 'zlib']
 hooks.post_install = "ldconfig"
 hooks.post_upgrade = "ldconfig"
 

@@ -15,17 +15,17 @@ url = "https://gitlab.freedesktop.org/libdecor/libdecor/-/archive/${VERSION}/lib
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libdecor-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Ddemo=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libdecor-${VERSION}
 ninja -j$(nproc) -C ${WORKDIR}/build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libdecor-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

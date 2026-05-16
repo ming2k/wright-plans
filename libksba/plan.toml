@@ -12,17 +12,17 @@ sha256 = "SKIP"
 url = "https://gnupg.org/ftp/gcrypt/libksba/libksba-${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libksba-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libksba-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libksba-${VERSION}
 DESTDIR=${STAGING_DIR} make install'''

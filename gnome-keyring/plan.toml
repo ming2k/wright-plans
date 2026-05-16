@@ -15,22 +15,25 @@ sha256 = "SKIP"
 url = "https://download.gnome.org/sources/gnome-keyring/50/gnome-keyring-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/gnome-keyring-${VERSION}
 meson setup build --prefix=/usr --buildtype=release -Dsystemd=disabled -Dssh-agent=true'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/gnome-keyring-${VERSION}
 meson compile -C build'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/gnome-keyring-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''
 
-[hooks]
+[[output]]
+runtime_deps = ['dbus', 'gcr3', 'libsecret', 'linux-pam', 'p11-kit', 'glib']
+
+[output.hooks]
 post_install = '''
 glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 ldconfig 2>/dev/null || true
@@ -41,6 +44,3 @@ glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true
 ldconfig 2>/dev/null || true
 
 '''
-
-[[output]]
-runtime_deps = ['dbus', 'gcr3', 'libsecret', 'linux-pam', 'p11-kit', 'glib']

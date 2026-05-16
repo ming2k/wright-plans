@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://download.osgeo.org/libtiff/tiff-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/tiff-${VERSION}
 ./configure --prefix=/usr --disable-static --disable-docs'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/tiff-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/tiff-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

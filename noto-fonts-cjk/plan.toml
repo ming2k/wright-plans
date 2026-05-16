@@ -17,7 +17,7 @@ type = "http"
 sha256 = "SKIP"
 url = "https://github.com/notofonts/noto-cjk/releases/download/Serif${VERSION}/04_NotoSerifCJK-OTF-VF.tar.xz"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/noto-fonts-cjk-${VERSION}
 mkdir -p ${STAGING_DIR}/usr/share/fonts/noto-cjk

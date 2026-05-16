@@ -13,7 +13,7 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/binutils/binutils-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/binutils-${VERSION}
 mkdir -v build
@@ -31,14 +31,15 @@ cd       build
 --without-zstd      \
 --enable-default-hash-style=gnu'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/binutils-${VERSION}/build
 make tooldir=/usr'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/binutils-${VERSION}/build
+make tooldir=/usr
 make DESTDIR=${STAGING_DIR} tooldir=/usr install
 
 # Remove static libraries

@@ -15,7 +15,7 @@ url = "https://github.com/libsdl-org/SDL/releases/download/release-${VERSION}/SD
 sha256 = "SKIP"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/SDL3-${VERSION}
 cmake -B build -S . -GNinja \
@@ -31,12 +31,12 @@ cmake -B build -S . -GNinja \
     -DSDL_RPATH=OFF \
     -DSDL_TEST_LIBRARY=OFF'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/SDL3-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/SDL3-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

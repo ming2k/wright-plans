@@ -14,17 +14,17 @@ sha256 = "SKIP"
 url = "https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/xml-parser-${VERSION}
 perl Makefile.PL'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/xml-parser-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/xml-parser-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

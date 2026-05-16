@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://gitlab.freedesktop.org/libinput/libinput/-/archive/${VERSION}/libinput-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libinput-${VERSION}
 meson setup build \
@@ -26,12 +26,12 @@ meson setup build \
 -D debug-gui=false      \
 -D libwacom=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libinput-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libinput-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''

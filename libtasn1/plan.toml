@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/libtasn1/libtasn1-${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/libtasn1-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/libtasn1-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/libtasn1-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

@@ -14,17 +14,17 @@ url = "https://downloads.xiph.org/releases/opus/opusfile-${VERSION}.tar.gz"
 sha256 = "118d8601c12dd6a44f52423e68ca9083cc9f2bfe72da7a8c1acb22a80ae3550b"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/opusfile-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/opusfile-${VERSION}
 make -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/opusfile-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''

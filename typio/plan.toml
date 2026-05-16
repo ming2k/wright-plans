@@ -1,44 +1,54 @@
 name = "typio"
-version = "3.2.0"
+version = "3.2.1"
 release = 1
 description = "Native Wayland input method daemon with optional GTK4 control panel"
 license = "NOASSERTION"
 arch = "x86_64"
 url = "https://github.com/ming2k/typio"
 
-link_deps = ['dbus', 'fontconfig', 'freetype', 'gtk4', 'harfbuzz', 'librime', 'libxkbcommon', 'pipewire', 'vulkan-loader', 'wayland']
+link_deps = ['dbus', 'fontconfig', 'freetype', 'gtk4', 'harfbuzz', 'librime', 'libxkbcommon', 'pipewire', 'sherpa-onnx', 'vulkan-loader', 'wayland', 'whisper.cpp']
 build_deps = ['cmake', 'ninja']
 
 [[sources]]
-type = "git"
-url = "https://github.com/ming2k/typio.git"
-ref = "v3.1.0"
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/ming2k/typio/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[[sources]]
+type = "git"
+url = "https://github.com/ming2k/flux.git"
+ref = "d473071"
+depth = 0
+extract_to = "source/flux"
+
+[pipeline.configure]
 script = '''
-cmake -S source -B build -G Ninja \
+cmake -S source/typio-${VERSION} -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_BUILD_TYPE=Release \
     -DBUILD_TESTS=OFF \
     -DBUILD_CONTROL_PANEL=ON \
+    -DBUILD_BASIC_ENGINE=ON \
     -DBUILD_RIME_ENGINE=ON \
     -DBUILD_WHISPER=ON \
     -DBUILD_SHERPA_ONNX=ON \
     -DBUILD_MOZC_ENGINE=ON \
+    -DENABLE_WAYLAND=ON \
+    -DENABLE_STATUS_BUS=ON \
     -DENABLE_SYSTRAY=OFF
 '''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cmake --build build -j$(nproc)
 '''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 DESTDIR=${STAGING_DIR} cmake --install build
 '''
 
 [[output]]
-runtime_deps = ['dbus', 'fontconfig', 'freetype', 'gtk4', 'harfbuzz', 'librime', 'libxkbcommon', 'pipewire', 'vulkan-loader', 'wayland']
+runtime_deps = ['dbus', 'fontconfig', 'freetype', 'gtk4', 'harfbuzz', 'librime', 'libxkbcommon', 'pipewire', 'sherpa-onnx', 'vulkan-loader', 'wayland', 'whisper.cpp']

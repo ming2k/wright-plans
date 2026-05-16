@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://github.com/LuaJIT/LuaJIT/archive/707c12b.tar.gz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/luajit-${VERSION}
 echo "LuaJIT uses the upstream make-based build"'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/luajit-${VERSION}
 make -j$(nproc) PREFIX=/usr XCFLAGS='-fPIC''''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/luajit-${VERSION}
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install

@@ -13,17 +13,17 @@ sha256 = "SKIP"
 url = "https://ftp.gnu.org/gnu/autoconf/autoconf-${VERSION}.tar.xz"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/autoconf-${VERSION}
 CONFIG_SHELL=/usr/bin/bash SHELL=/usr/bin/bash /usr/bin/bash ./configure --prefix=/usr'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/autoconf-${VERSION}
 make SHELL=/usr/bin/bash -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/autoconf-${VERSION}
 make SHELL=/usr/bin/bash DESTDIR=${STAGING_DIR} install'''

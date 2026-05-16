@@ -16,7 +16,7 @@ type = "http"
 sha256 = "7bebce870d8739c384c478c5992621aaea9ddddf02cf42d5af44fc1756019a5b"
 url = "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/${VERSION}/geosite.dat"
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 install -Dm644 ${WORKDIR}/v2ray-rules-dat-geoip.dat ${STAGING_DIR}/usr/share/v2ray-rules-dat/geoip.dat
 install -Dm644 ${WORKDIR}/v2ray-rules-dat-geosite.dat ${STAGING_DIR}/usr/share/v2ray-rules-dat/geosite.dat'''

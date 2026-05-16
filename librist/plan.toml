@@ -15,7 +15,7 @@ sha256 = "SKIP"
 url = "https://code.videolan.org/rist/librist/-/archive/v${VERSION}/librist-v${VERSION}.tar.bz2"
 extract_to = "source"
 
-[lifecycle.configure]
+[pipeline.configure]
 script = '''
 cd source/librist-${VERSION}
 meson setup build \
@@ -24,12 +24,12 @@ meson setup build \
     -D built_tools=false \
     -D test=false'''
 
-[lifecycle.compile]
+[pipeline.compile]
 script = '''
 cd source/librist-${VERSION}
 ninja -C build -j$(nproc)'''
 
-[lifecycle.staging]
+[pipeline.staging]
 script = '''
 cd source/librist-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
