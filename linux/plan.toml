@@ -210,6 +210,19 @@ scripts/config --module SND_SOC_SOF_INTEL_SOUNDWIRE
 scripts/config --module SND_SOC_SOF_INTEL_SOUNDWIRE_LINK_BASELINE
 scripts/config --module SND_SOC_SOF_XTENSA
 
+# --- Intel external device interfaces ---
+# Commands: enable SPI bus and Intel SPI PCI controller for Arrow Lake PCH
+# SPI flash controller, and enable Intel NPU (Neural Processing Unit) driver.
+# Principle: modern Intel laptops expose SPI controller (00:1f.5) for BIOS/TPM
+# and NPU (00:0b.0) for AI acceleration. Without these drivers the devices
+# appear as unbound in lspci and users see "unknown" external interface errors.
+# Scenario: Intel Arrow Lake / Meteor Lake based laptops.
+scripts/config --enable SPI
+scripts/config --enable SPI_MEM
+scripts/config --module SPI_INTEL_PCI
+scripts/config --enable DRM_ACCEL
+scripts/config --module DRM_ACCEL_IVPU
+
 make olddefconfig
 '''
 
