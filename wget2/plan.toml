@@ -11,7 +11,7 @@ link_deps = ['gnutls', 'libidn2', 'libpsl', 'nghttp2', 'brotli', 'zstd', 'zlib',
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://ftp.gnu.org/gnu/wget/wget2-${VERSION}.tar.lz"
+url = "https://mirrors.kernel.org/gnu/wget/wget2-${VERSION}.tar.lz"
 extract_to = "source"
 
 [pipeline.configure]

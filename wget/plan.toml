@@ -11,7 +11,7 @@ link_deps = ['openssl', 'libidn2', 'libpsl', 'pcre2', 'zlib']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://ftp.gnu.org/gnu/wget/wget-${VERSION}.tar.lz"
+url = "https://mirrors.kernel.org/gnu/wget/wget-${VERSION}.tar.lz"
 extract_to = "source"
 
 [pipeline.configure]

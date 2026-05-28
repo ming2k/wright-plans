@@ -11,7 +11,7 @@ link_deps = ['libunistring']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://ftp.gnu.org/gnu/libidn/libidn2-${VERSION}.tar.gz"
+url = "https://mirrors.kernel.org/gnu/libidn/libidn2-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]

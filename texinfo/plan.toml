@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/texinfo/"
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://ftp.gnu.org/gnu/texinfo/texinfo-${VERSION}.tar.xz"
+url = "https://mirrors.kernel.org/gnu/texinfo/texinfo-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.prepare]

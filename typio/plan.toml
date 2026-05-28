@@ -1,13 +1,13 @@
 name = "typio"
-version = "3.2.1"
+version = "4.2.2"
 release = 1
 description = "Native Wayland input method daemon with optional GTK4 control panel"
-license = "NOASSERTION"
 arch = "x86_64"
+license = "NOASSERTION"
 url = "https://github.com/ming2k/typio"
 
 link_deps = ['dbus', 'fontconfig', 'freetype', 'gtk4', 'harfbuzz', 'librime', 'libxkbcommon', 'pipewire', 'sherpa-onnx', 'vulkan-loader', 'wayland', 'whisper.cpp']
-build_deps = ['cmake', 'ninja']
+build_deps = ['meson', 'ninja', 'rust']
 
 [[sources]]
 type = "http"
@@ -18,36 +18,35 @@ extract_to = "source"
 [[sources]]
 type = "git"
 url = "https://github.com/ming2k/flux.git"
-ref = "d473071"
-depth = 0
+ref = "44de7ec"
 extract_to = "source/flux"
 
 [pipeline.configure]
 script = '''
-cmake -S source/typio-${VERSION} -B build -G Ninja \
-    -DCMAKE_INSTALL_PREFIX=/usr \
-    -DCMAKE_INSTALL_LIBDIR=lib \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_TESTS=OFF \
-    -DBUILD_CONTROL_PANEL=ON \
-    -DBUILD_BASIC_ENGINE=ON \
-    -DBUILD_RIME_ENGINE=ON \
-    -DBUILD_WHISPER=ON \
-    -DBUILD_SHERPA_ONNX=ON \
-    -DBUILD_MOZC_ENGINE=ON \
-    -DENABLE_WAYLAND=ON \
-    -DENABLE_STATUS_BUS=ON \
-    -DENABLE_SYSTRAY=OFF
+meson setup build source/typio-${VERSION} \
+    --prefix=/usr \
+    --libdir=lib \
+    --buildtype=release \
+    -Dbuild_tests=false \
+    -Dbuild_control_panel=true \
+    -Dbuild_basic_engine=true \
+    -Dbuild_rime_engine=true \
+    -Dbuild_sherpa_onnx=true \
+    -Dbuild_mozc_engine=true \
+    -Denable_wayland=true \
+    -Denable_status_bus=true \
+    -Denable_systray=false
 '''
 
 [pipeline.compile]
+isolation = "relaxed"
 script = '''
-cmake --build build -j$(nproc)
+ninja -C build
 '''
 
 [pipeline.staging]
 script = '''
-DESTDIR=${STAGING_DIR} cmake --install build
+DESTDIR=${STAGING_DIR} ninja -C build install
 '''
 
 [[output]]

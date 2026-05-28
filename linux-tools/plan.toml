@@ -1,0 +1,75 @@
+name = "linux-tools"
+version = "7.0.10"
+release = 1
+description = "Linux kernel user-space tools (perf, bpftool, cpupower, turbostat, etc.)"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://kernel.org"
+
+link_deps = ['elfutils', 'libunwind', 'openssl', 'zlib', 'libtraceevent', 'pciutils', 'ncurses']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://cdn.kernel.org/pub/linux/kernel/v7.x/linux-${VERSION}.tar.xz"
+extract_to = "source"
+
+[pipeline.compile]
+script = '''
+cd source/linux-${VERSION}
+
+# perf
+make -C tools/perf prefix=/usr WERROR=0 NO_SLANG=1 NO_LIBNUMA=1 -j$(nproc)
+
+# bpftool
+make -C tools/bpf/bpftool prefix=/usr -j$(nproc)
+
+# cpupower
+make -C tools/power/cpupower -j$(nproc)
+
+# turbostat
+make -C tools/power/x86/turbostat -j$(nproc)
+
+# x86_energy_perf_policy
+make -C tools/power/x86/x86_energy_perf_policy -j$(nproc)
+
+# tmon
+make -C tools/thermal/tmon -j$(nproc)'''
+
+[pipeline.staging]
+script = '''
+cd source/linux-${VERSION}
+
+# perf
+make -C tools/perf prefix=/usr install DESTDIR=${STAGING_DIR} NO_SLANG=1 NO_LIBNUMA=1
+
+# bpftool
+make -C tools/bpf/bpftool prefix=/usr install DESTDIR=${STAGING_DIR}
+
+# cpupower
+make -C tools/power/cpupower install DESTDIR=${STAGING_DIR} mandir=/usr/share/man docdir=/usr/share/doc/cpupower
+
+# turbostat
+make -C tools/power/x86/turbostat install DESTDIR=${STAGING_DIR} PREFIX=/usr
+
+# x86_energy_perf_policy
+make -C tools/power/x86/x86_energy_perf_policy install DESTDIR=${STAGING_DIR} PREFIX=/usr
+
+# tmon
+make -C tools/thermal/tmon install INSTALL_ROOT=${STAGING_DIR}
+
+# Wright enforces FHS: no /usr/sbin, move everything to /usr/bin
+if [ -d ${STAGING_DIR}/usr/sbin ]; then
+  mkdir -p ${STAGING_DIR}/usr/bin
+  cp -a ${STAGING_DIR}/usr/sbin/. ${STAGING_DIR}/usr/bin/
+  rm -rf ${STAGING_DIR}/usr/sbin
+fi
+if [ -d ${STAGING_DIR}/sbin ]; then
+  mkdir -p ${STAGING_DIR}/usr/bin
+  cp -a ${STAGING_DIR}/sbin/. ${STAGING_DIR}/usr/bin/
+  rm -rf ${STAGING_DIR}/sbin
+fi'''
+
+
+[[output]]
+runtime_deps = ['elfutils', 'libunwind', 'openssl', 'zlib', 'libtraceevent', 'pciutils', 'ncurses']

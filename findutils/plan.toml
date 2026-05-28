@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/findutils/"
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://ftp.gnu.org/gnu/findutils/findutils-${VERSION}.tar.xz"
+url = "https://mirrors.kernel.org/gnu/findutils/findutils-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.configure]

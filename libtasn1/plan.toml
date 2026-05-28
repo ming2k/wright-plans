@@ -10,7 +10,7 @@ url = "https://www.gnu.org/software/libtasn1/"
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://ftp.gnu.org/gnu/libtasn1/libtasn1-${VERSION}.tar.gz"
+url = "https://mirrors.kernel.org/gnu/libtasn1/libtasn1-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]

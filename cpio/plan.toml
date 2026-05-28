@@ -11,7 +11,7 @@ link_deps = ['glibc']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://ftp.gnu.org/gnu/cpio/cpio-${VERSION}.tar.gz"
+url = "https://mirrors.kernel.org/gnu/cpio/cpio-${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]

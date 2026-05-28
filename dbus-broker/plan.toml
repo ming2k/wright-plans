@@ -1,0 +1,72 @@
+name = "dbus-broker"
+version = "36"
+release = 1
+description = "Linux D-Bus Message Broker - drop-in replacement for dbus-daemon"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/bus1/dbus-broker"
+
+link_deps = ['expat', 'systemd', 'glibc']
+build_deps = ['meson', 'ninja']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/bus1/dbus-broker/releases/download/v${VERSION}/dbus-broker-${VERSION}.tar.xz"
+extract_to = "source"
+
+# Two c-util subprojects ship only as wrap-git stubs in the release tarball.
+# Fetch them at fetch-stage so the build stays offline under strict isolation.
+[[sources]]
+type = "git"
+url = "https://github.com/c-util/c-list.git"
+ref = "v3"
+depth = 1
+extract_to = "source/dbus-broker-${VERSION}/subprojects/libclist-3"
+
+[[sources]]
+type = "git"
+url = "https://github.com/c-util/c-stdaux.git"
+ref = "v1"
+depth = 1
+extract_to = "source/dbus-broker-${VERSION}/subprojects/libcstdaux-1"
+
+[pipeline.configure]
+script = '''
+cd source/dbus-broker-${VERSION}
+mkdir -p build
+cd build
+meson setup --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --buildtype=release \
+    --wrap-mode=nodownload \
+    -Dapparmor=false \
+    -Daudit=false \
+    -Ddocs=false \
+    -Dlauncher=true \
+    -Dlinux-4-17=true \
+    -Dselinux=false \
+    -Dtests=false \
+    ..'''
+
+[pipeline.compile]
+script = '''
+cd source/dbus-broker-${VERSION}/build
+ninja'''
+
+[pipeline.staging]
+script = '''
+cd source/dbus-broker-${VERSION}/build
+DESTDIR=${STAGING_DIR} ninja install'''
+
+[[output]]
+runtime_deps = ['dbus', 'expat', 'systemd', 'glibc']
+
+[output.hooks]
+post_install = '''
+systemctl daemon-reload 2>/dev/null || true
+'''
+post_upgrade = '''
+systemctl daemon-reload 2>/dev/null || true
+'''

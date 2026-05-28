@@ -1,0 +1,38 @@
+name = "libtraceevent"
+version = "1.8.4"
+release = 1
+description = "Library to parse kernel trace event format files"
+license = "LGPL-2.1"
+arch = "x86_64"
+url = "https://git.kernel.org/pub/scm/libs/libtrace/libtraceevent.git/"
+
+link_deps = ['glibc']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://git.kernel.org/pub/scm/libs/libtrace/libtraceevent.git/snapshot/libtraceevent-${VERSION}.tar.gz"
+extract_to = "source"
+
+build_deps = ['meson', 'ninja']
+
+[pipeline.configure]
+script = '''
+cd source/libtraceevent-${VERSION}
+meson setup build \
+  --prefix=/usr \
+  --buildtype=release \
+  -D doc=false'''
+
+[pipeline.compile]
+script = '''
+cd source/libtraceevent-${VERSION}
+ninja -C build -j$(nproc)'''
+
+[pipeline.staging]
+script = '''
+cd source/libtraceevent-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
+
+[[output]]
+runtime_deps = ['glibc']

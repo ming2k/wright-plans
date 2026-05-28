@@ -11,7 +11,7 @@ link_deps = ['gmp']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://ftp.gnu.org/gnu/mpfr/mpfr-${VERSION}.tar.xz"
+url = "https://mirrors.kernel.org/gnu/mpfr/mpfr-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.configure]
