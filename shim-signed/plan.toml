@@ -1,0 +1,27 @@
+name = "shim-signed"
+version = "15.8"
+release = 1
+description = "UEFI Secure Boot shim bootloader (Microsoft-signed binary from Ubuntu)"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://packages.ubuntu.com/noble/shim-signed"
+
+build_deps = ["binutils"]
+
+[[sources]]
+type = "http"
+url = "http://archive.ubuntu.com/ubuntu/pool/main/s/shim-signed/shim-signed_1.59+15.8-0ubuntu2_amd64.deb"
+sha256 = "f8ed71ce2d91a304b6d5eb84997f846f331b554578bc02dbfe78e13ad8ac81a9"
+
+[pipeline.prepare]
+script = """
+cd ${WORKDIR}
+ar xf shim-signed_1.59+15.8-0ubuntu2_amd64.deb
+tar xf data.tar.xz"""
+
+[pipeline.staging]
+script = """
+install -Dm644 ${WORKDIR}/usr/lib/shim/shimx64.efi.signed.latest ${STAGING_DIR}/usr/share/shim-signed/shimx64.efi
+install -Dm644 ${WORKDIR}/usr/lib/shim/mmx64.efi ${STAGING_DIR}/usr/share/shim-signed/mmx64.efi
+install -Dm644 ${WORKDIR}/usr/lib/shim/fbx64.efi ${STAGING_DIR}/usr/share/shim-signed/fbx64.efi
+install -Dm644 ${WORKDIR}/usr/share/doc/shim-signed/copyright ${STAGING_DIR}/usr/share/licenses/shim-signed/LICENSE"""

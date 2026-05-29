@@ -1,0 +1,41 @@
+name = "flux"
+version = "0.0.5"
+release = 1
+description = "C23 Vulkan-first graphics library"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/ming2k/flux"
+
+build_deps = ['meson', 'ninja', 'glslang']
+link_deps = ['vulkan-loader', 'glibc']
+
+[[sources]]
+type = "git"
+url = "https://github.com/ming2k/flux.git"
+ref = "v0.0.5"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source
+meson setup build --prefix=/usr --buildtype=release \
+    -Dcanvas=true \
+    -Dscene=false \
+    -Dcompute=true \
+    -Deffect=false \
+    -Dexamples=false \
+    -Dtests=false'''
+
+[pipeline.compile]
+script = '''
+cd source
+ninja -C build'''
+
+[pipeline.staging]
+script = '''
+cd source
+DESTDIR=${STAGING_DIR} ninja -C build install'''
+
+[[output]]
+name = "flux"
+runtime_deps = ['vulkan-loader', 'glibc']

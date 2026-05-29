@@ -1,6 +1,6 @@
 name = "linux-lts"
-version = "6.18.29"
-release = 2
+version = "6.18.33"
+release = 1
 description = "The Linux kernel (LTS)"
 license = "GPL-2.0-only"
 arch = "x86_64"

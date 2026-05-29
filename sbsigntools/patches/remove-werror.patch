@@ -1,0 +1,18 @@
+From: Wright Plan Patch
+Date: 2026-05-30
+Subject: [PATCH] Remove hardcoded -Werror for GCC 14 compatibility
+
+GCC 14 treats -Wunused-but-set-variable as an error under -Werror,
+breaking the build in image.c. Upstream has not yet released a fix.
+
+--- a/src/Makefile.am
++++ b/src/Makefile.am
+@@ -14,7 +14,7 @@
+ common_SOURCES = idc.c idc.h image.c image.h fileio.c fileio.h \
+ 	efivars.h $(coff_headers)
+ common_LDADD = ../lib/ccan/libccan.a $(libcrypto_LIBS)
+-common_CFLAGS = -I$(top_srcdir)/lib/ccan/ -Werror
++common_CFLAGS = -I$(top_srcdir)/lib/ccan/
+ 
+ sbsign_SOURCES = sbsign.c $(common_SOURCES)
+ sbsign_LDADD = $(common_LDADD)

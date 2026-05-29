@@ -1,6 +1,6 @@
 name = "systemd"
-version = "260.1"
-release = 8
+version = "260.2"
+release = 1
 description = "System and Service Manager"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "71a9ed11cf773478b0d7a16cd96e39ca3c3939ab37ed9a8ee814c31ea9b4f2b5"
 url = "https://github.com/systemd/systemd/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
@@ -66,6 +66,7 @@ meson setup build \
     -D lz4=enabled \
     -D dns-over-tls=openssl \
     -D tpm2=enabled \
+    -D ukify=enabled \
     -D bootloader=enabled \
     -D homed=disabled \
     -D sysupdate=disabled \

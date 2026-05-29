@@ -1,0 +1,23 @@
+name = "gnu-efi"
+version = "4.0.4"
+release = 1
+description = "GNU EFI development environment for UEFI applications"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/ncroxon/gnu-efi"
+
+[[sources]]
+type = "http"
+url = "https://github.com/ncroxon/gnu-efi/archive/refs/tags/${VERSION}.tar.gz"
+sha256 = "40b61e842a4efcbf80f3e53b2f220c044e8cfe46eb4dd6396c83b751240b1c0d"
+extract_to = "source"
+
+[pipeline.compile]
+script = """
+cd source/gnu-efi-${VERSION}
+make -j$(nproc)"""
+
+[pipeline.staging]
+script = """
+cd source/gnu-efi-${VERSION}
+make PREFIX=/usr INSTALLROOT=${STAGING_DIR} install"""

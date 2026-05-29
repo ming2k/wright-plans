@@ -1,0 +1,35 @@
+name = "mokutil"
+version = "0.7.2"
+release = 1
+description = "Machine Owner Key management utility"
+license = "GPL-3.0-or-later"
+arch = "x86_64"
+url = "https://github.com/lcp/mokutil"
+
+build_deps = ["autoconf", "automake", "libtool", "pkgconf"]
+link_deps = ["efivar", "openssl", "keyutils"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/lcp/mokutil/archive/refs/tags/${VERSION}.tar.gz"
+sha256 = "839d677c4fc9805f1565703ca32863e4652692c53da66a88ae9b9e30676f9e17"
+extract_to = "source"
+
+[pipeline.configure]
+script = """
+cd source/mokutil-${VERSION}
+./autogen.sh
+./configure --prefix=/usr"""
+
+[pipeline.compile]
+script = """
+cd source/mokutil-${VERSION}
+make -j$(nproc)"""
+
+[pipeline.staging]
+script = """
+cd source/mokutil-${VERSION}
+make DESTDIR=${STAGING_DIR} install"""
+
+[[output]]
+runtime_deps = ["efivar", "openssl", "keyutils"]

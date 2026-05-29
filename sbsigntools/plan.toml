@@ -1,0 +1,53 @@
+name = "sbsigntools"
+version = "0.9.5"
+release = 1
+description = "Utilities for signing and verifying UEFI binaries for Secure Boot"
+license = "GPL-3.0-only"
+arch = "x86_64"
+url = "https://git.kernel.org/pub/scm/linux/kernel/git/jejb/sbsigntools.git/"
+
+build_deps = ["autoconf", "automake", "libtool", "pkgconf", "binutils", "openssl", "util-linux", "gnu-efi"]
+link_deps = ["openssl", "util-linux"]
+
+[[sources]]
+type = "git"
+url = "https://git.kernel.org/pub/scm/linux/kernel/git/jejb/sbsigntools.git"
+ref = "v${VERSION}"
+depth = 1
+extract_to = "source/sbsigntools"
+
+[[sources]]
+type = "local"
+path = "patches/remove-werror.patch"
+
+[[sources]]
+type = "local"
+path = "patches/disable-man-pages.patch"
+
+[pipeline.prepare]
+isolation = "relaxed"
+script = """
+cd source/sbsigntools
+git submodule update --init
+for p in $(find .. /build -maxdepth 1 -name '*.patch' | sort); do
+  patch -p1 < "${p}"
+done
+./autogen.sh"""
+
+[pipeline.configure]
+script = """
+cd source/sbsigntools
+./configure --prefix=/usr"""
+
+[pipeline.compile]
+script = """
+cd source/sbsigntools
+make -j$(nproc)"""
+
+[pipeline.staging]
+script = """
+cd source/sbsigntools
+make DESTDIR=${STAGING_DIR} install"""
+
+[[output]]
+runtime_deps = ["openssl", "util-linux"]

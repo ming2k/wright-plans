@@ -1,0 +1,66 @@
+name = "libtypio"
+version = "0.0.1"
+release = 1
+description = "Core library of the Typio input method framework"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/typio-ime/libtypio"
+
+link_deps = ['glibc']
+build_deps = ['rust']
+
+[[sources]]
+type = "git"
+url = "https://github.com/typio-ime/libtypio.git"
+ref = "v0.0.1"
+extract_to = "source"
+
+[pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
+script = '''
+cd source
+cargo build --release'''
+
+[pipeline.staging]
+script = '''
+cd source
+install -Dm755 ${WORKDIR}/target/release/libtypio.so ${STAGING_DIR}/usr/lib/libtypio.so
+install -d ${STAGING_DIR}/usr/include/typio
+install -Dm644 include/typio/*.h ${STAGING_DIR}/usr/include/typio/
+install -d ${STAGING_DIR}/usr/include/typio/abi
+install -Dm644 include/typio/abi/*.h ${STAGING_DIR}/usr/include/typio/abi/
+install -d ${STAGING_DIR}/usr/include/typio/schema
+install -Dm644 include/typio/schema/*.h ${STAGING_DIR}/usr/include/typio/schema/
+install -d ${STAGING_DIR}/usr/include/typio/runtime
+install -Dm644 include/typio/runtime/*.h ${STAGING_DIR}/usr/include/typio/runtime/
+
+install -d ${STAGING_DIR}/usr/lib/pkgconfig
+cat > ${STAGING_DIR}/usr/lib/pkgconfig/typio-engine-abi.pc << 'EOF'
+prefix=/usr
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: typio-engine-abi
+Description: Typio engine plugin ABI (headers + core library to link against)
+Version: 0.0.1
+Libs: -L${libdir} -ltypio
+Cflags: -I${includedir}
+EOF
+
+cat > ${STAGING_DIR}/usr/lib/pkgconfig/libtypio.pc << 'EOF'
+prefix=/usr
+includedir=${prefix}/include
+libdir=${prefix}/lib
+
+Name: libtypio
+Description: Typio input method framework — core library and full C ABI
+Version: 0.0.1
+Requires: typio-engine-abi
+Libs: -L${libdir} -ltypio
+Cflags: -I${includedir}
+EOF'''
+
+[[output]]
+name = "libtypio"
+runtime_deps = ['glibc']

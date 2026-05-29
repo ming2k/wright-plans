@@ -1,0 +1,27 @@
+name = "shim"
+version = "16.1"
+release = 1
+description = "UEFI Secure Boot shim bootloader (unsigned source build)"
+license = "BSD-2-Clause"
+arch = "x86_64"
+url = "https://github.com/rhboot/shim"
+
+build_deps = ["openssl"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/rhboot/shim/releases/download/${VERSION}/shim-${VERSION}.tar.bz2"
+sha256 = "46319cd228d8f2c06c744241c0f342412329a7c630436fce7f82cf6936b1d603"
+extract_to = "source"
+
+[pipeline.compile]
+script = """
+cd source/shim-${VERSION}
+make -j$(nproc) shimx64.efi mmx64.efi fbx64.efi"""
+
+[pipeline.staging]
+script = """
+cd source/shim-${VERSION}
+install -Dm644 shimx64.efi ${STAGING_DIR}/usr/share/shim/shimx64.efi
+install -Dm644 mmx64.efi  ${STAGING_DIR}/usr/share/shim/mmx64.efi
+install -Dm644 fbx64.efi  ${STAGING_DIR}/usr/share/shim/fbx64.efi"""

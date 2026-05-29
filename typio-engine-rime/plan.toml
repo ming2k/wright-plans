@@ -1,0 +1,35 @@
+name = "typio-engine-rime"
+version = "0.0.1"
+release = 1
+description = "Rime input engine for the Typio input method framework"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/typio-ime/typio-engine-rime"
+
+build_deps = ['meson', 'ninja']
+link_deps = ['libtypio', 'librime']
+
+[[sources]]
+type = "git"
+url = "https://github.com/typio-ime/typio-engine-rime.git"
+ref = "v0.0.1"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source
+meson setup build --prefix=/usr --buildtype=release'''
+
+[pipeline.compile]
+script = '''
+cd source
+ninja -C build'''
+
+[pipeline.staging]
+script = '''
+cd source
+DESTDIR=${STAGING_DIR} ninja -C build install'''
+
+[[output]]
+name = "typio-engine-rime"
+runtime_deps = ['librime', 'libtypio']

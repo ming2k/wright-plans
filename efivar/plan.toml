@@ -1,0 +1,28 @@
+name = "efivar"
+version = "39"
+release = 1
+description = "Tools and libraries to manipulate EFI variables"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://github.com/rhboot/efivar"
+
+link_deps = ["glibc"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/rhboot/efivar/archive/refs/tags/${VERSION}.tar.gz"
+sha256 = "c9edd15f2eeeea63232f3e669a48e992c7be9aff57ee22672ac31f5eca1609a6"
+extract_to = "source"
+
+[pipeline.compile]
+script = """
+cd source/efivar-${VERSION}
+make ENABLE_DOCS=0 ERRORS="" -j$(nproc)"""
+
+[pipeline.staging]
+script = """
+cd source/efivar-${VERSION}
+make ENABLE_DOCS=0 ERRORS="" LIBDIR=/usr/lib DESTDIR=${STAGING_DIR} install"""
+
+[[output]]
+runtime_deps = ["glibc"]
