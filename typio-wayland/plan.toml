@@ -1,5 +1,5 @@
 name = "typio-wayland"
-version = "0.0.5"
+version = "0.0.6"
 release = 1
 description = "Linux/Wayland host for the Typio input method framework"
 license = "MIT"
@@ -7,12 +7,12 @@ arch = "x86_64"
 url = "https://github.com/typio-ime/typiod-wayland"
 
 build_deps = ['meson', 'ninja']
-link_deps = ['libtypio', 'wayland', 'libxkbcommon', 'dbus', 'pipewire', 'freetype', 'harfbuzz', 'fontconfig', 'flux']
+link_deps = ['libtypio', 'wayland', 'libxkbcommon', 'dbus', 'pipewire', 'freetype', 'harfbuzz', 'fontconfig', 'flux', 'vulkan-loader']
 
 [[sources]]
 type = "git"
 url = "https://github.com/typio-ime/typiod-wayland.git"
-ref = "v0.0.5"
+ref = "v0.0.6"
 extract_to = "source"
 
 [pipeline.configure]
@@ -34,4 +34,4 @@ DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 name = "typio-wayland"
-runtime_deps = ['libtypio', 'wayland', 'libxkbcommon', 'dbus', 'pipewire', 'freetype', 'harfbuzz', 'fontconfig', 'flux']
+runtime_deps = ['libtypio', 'wayland', 'libxkbcommon', 'dbus', 'pipewire', 'freetype', 'harfbuzz', 'fontconfig', 'flux', 'vulkan-loader']

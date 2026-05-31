@@ -103,8 +103,66 @@ install -Dm644 ${WORKDIR}/systemd-network-wait-online.conf \
 '''
 
 [[output]]
+name = "systemd-boot"
+description = "EFI boot manager"
+include = [
+    "/usr/bin/bootctl",
+    "/usr/lib/systemd/boot/efi/**",
+    "/usr/lib/systemd/systemd-boot-check-no-failures",
+    "/usr/lib/systemd/system/systemd-boot-*.service",
+    "/usr/lib/systemd/system/systemd-bootctl@.service",
+    "/usr/lib/systemd/system/systemd-bootctl.socket",
+    "/usr/share/bash-completion/completions/bootctl",
+    "/usr/share/zsh/site-functions/_bootctl",
+]
+runtime_deps = ["systemd"]
+
+[[output]]
+name = "systemd-ukify"
+description = "Unified Kernel Image builder"
+include = [
+    "/usr/bin/ukify",
+    "/usr/lib/kernel/install.d/60-ukify.install",
+]
+runtime_deps = ["systemd", "python", "pefile"]
+
+[[output]]
+name = "systemd-networkd"
+description = "Network configuration daemon"
+include = [
+    "/etc/systemd/networkd.conf",
+    "/usr/bin/networkctl",
+    "/usr/lib/systemd/systemd-networkd",
+    "/usr/lib/systemd/systemd-networkd-wait-online",
+    "/usr/lib/systemd/network/**",
+    "/usr/lib/systemd/system/systemd-networkd*.service",
+    "/usr/lib/systemd/system/systemd-networkd*.socket",
+    "/usr/lib/systemd/system/systemd-networkd-wait-online*.service",
+    "/usr/lib/systemd/system/systemd-networkd-wait-online.service.d/**",
+    "/usr/share/bash-completion/completions/networkctl",
+    "/usr/share/polkit-1/rules.d/systemd-networkd.rules",
+    "/usr/share/zsh/site-functions/_networkctl",
+]
+runtime_deps = ["systemd"]
+
+[[output]]
+name = "systemd-resolved"
+description = "Network name resolution daemon"
+include = [
+    "/etc/systemd/resolved.conf",
+    "/usr/bin/resolvectl",
+    "/usr/lib/systemd/systemd-resolved",
+    "/usr/lib/systemd/system/systemd-resolved*.service",
+    "/usr/lib/systemd/system/systemd-resolved*.socket",
+    "/usr/share/bash-completion/completions/resolvectl",
+    "/usr/share/zsh/site-functions/_resolvectl",
+]
+runtime_deps = ["systemd"]
+
+[[output]]
+description = "System and Service Manager (core)"
 runtime_deps = ['acl', 'bash', 'cryptsetup', 'glibc', 'hwdata', 'kbd', 'kmod', 'libcap', 'libgcrypt', 'libidn2', 'libseccomp', 'libxcrypt', 'linux-pam', 'lz4', 'openssl', 'p11-kit', 'pcre2', 'tpm2-tss', 'util-linux', 'xz', 'zstd']
-backup = ["/etc/issue", "/etc/locale.conf", "/etc/nsswitch.conf", "/etc/vconsole.conf", "/etc/systemd/coredump.conf", "/etc/systemd/journald.conf", "/etc/systemd/logind.conf", "/etc/systemd/networkd.conf", "/etc/systemd/oomd.conf", "/etc/systemd/resolved.conf", "/etc/systemd/sleep.conf", "/etc/systemd/system.conf", "/etc/systemd/timesyncd.conf", "/etc/systemd/user.conf", "/etc/udev/iocost.conf", "/etc/udev/udev.conf"]
+backup = ["/etc/issue", "/etc/locale.conf", "/etc/nsswitch.conf", "/etc/vconsole.conf", "/etc/systemd/coredump.conf", "/etc/systemd/journald.conf", "/etc/systemd/logind.conf", "/etc/systemd/oomd.conf", "/etc/systemd/sleep.conf", "/etc/systemd/system.conf", "/etc/systemd/timesyncd.conf", "/etc/systemd/user.conf", "/etc/udev/iocost.conf", "/etc/udev/udev.conf"]
 
 [output.hooks]
 post_install = '''

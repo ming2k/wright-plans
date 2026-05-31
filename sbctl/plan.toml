@@ -1,0 +1,46 @@
+name = "sbctl"
+version = "0.18"
+release = 1
+description = "Secure Boot key manager"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/Foxboron/sbctl"
+
+build_deps = ["go", "binutils", "pcsc-lite"]
+link_deps = ["binutils", "util-linux", "pcsc-lite"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/Foxboron/sbctl/archive/refs/tags/${VERSION}.tar.gz"
+sha256 = "7aa2af7b50d42abe39eb4875069ae5cd3fb8406d067d7a58b029c8270bacd14d"
+extract_to = "source"
+
+[pipeline.compile]
+isolation = "relaxed"
+script = '''
+cd source/sbctl-${VERSION}
+export CGO_ENABLED=1
+export GOPATH="${WORKDIR}/go"
+export GOMODCACHE="${GOPATH}/pkg/mod"
+go build -buildmode=pie -trimpath \
+    -ldflags="-X github.com/foxboron/sbctl.Version=${VERSION}" \
+    -o sbctl ./cmd/sbctl
+
+# Generate shell completions
+mkdir -p contrib/completions/bash-completion/completions
+mkdir -p contrib/completions/zsh/site-functions
+mkdir -p contrib/completions/fish/vendor_completions.d
+./sbctl completion bash > contrib/completions/bash-completion/completions/sbctl
+./sbctl completion zsh > contrib/completions/zsh/site-functions/_sbctl
+./sbctl completion fish > contrib/completions/fish/vendor_completions.d/sbctl.fish'''
+
+[pipeline.staging]
+script = '''
+cd source/sbctl-${VERSION}
+install -Dm755 sbctl ${STAGING_DIR}/usr/bin/sbctl
+install -Dm644 contrib/completions/bash-completion/completions/sbctl ${STAGING_DIR}/usr/share/bash-completion/completions/sbctl
+install -Dm644 contrib/completions/zsh/site-functions/_sbctl ${STAGING_DIR}/usr/share/zsh/site-functions/_sbctl
+install -Dm644 contrib/completions/fish/vendor_completions.d/sbctl.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/sbctl.fish'''
+
+[[output]]
+runtime_deps = ["binutils", "util-linux", "pcsc-lite"]
