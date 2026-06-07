@@ -1,18 +1,18 @@
 name = "typio-engine-rime"
-version = "0.0.2"
+version = "0.1.4"
 release = 1
 description = "Rime input engine for the Typio input method framework"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/typio-ime/typio-engine-rime"
 
-build_deps = ['meson', 'ninja']
-link_deps = ['libtypio', 'librime']
+build_deps = ['meson', 'ninja', 'pkg-config', 'cc']
+link_deps = ['libtypio', 'librime', 'curl']
 
 [[sources]]
 type = "git"
 url = "https://github.com/typio-ime/typio-engine-rime.git"
-ref = "v0.0.2"
+ref = "v${VERSION}"
 extract_to = "source"
 
 [pipeline.configure]
@@ -27,9 +27,14 @@ ninja -C build'''
 
 [pipeline.staging]
 script = '''
+: "${STAGING_DIR:?STAGING_DIR is required}"
 cd source
-DESTDIR=${STAGING_DIR} ninja -C build install'''
+meson install -C build --destdir "$STAGING_DIR"
+test -f "$STAGING_DIR/usr/lib/typio/engines/libtypio_engine_rime.so" || \
+  test -f "$STAGING_DIR/usr/lib64/typio/engines/libtypio_engine_rime.so"
+test -f "$STAGING_DIR/usr/share/icons/hicolor/scalable/apps/typio-rime-symbolic.svg"
+test -f "$STAGING_DIR/usr/share/icons/hicolor/scalable/apps/typio-rime-latin-symbolic.svg"'''
 
 [[output]]
 name = "typio-engine-rime"
-runtime_deps = ['librime', 'libtypio']
+runtime_deps = ['librime', 'libtypio', 'curl', 'rime-prelude']

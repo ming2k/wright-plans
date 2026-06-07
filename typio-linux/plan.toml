@@ -1,37 +1,38 @@
-name = "typio-wayland"
-version = "0.0.6"
+name = "typio-linux"
+version = "0.1.17"
 release = 1
-description = "Linux/Wayland host for the Typio input method framework"
+description = "Linux host for the Typio input method framework"
 license = "MIT"
 arch = "x86_64"
-url = "https://github.com/typio-ime/typiod-wayland"
+url = "https://github.com/typio-ime/typio-linux"
 
 build_deps = ['meson', 'ninja']
 link_deps = ['libtypio', 'wayland', 'libxkbcommon', 'dbus', 'pipewire', 'freetype', 'harfbuzz', 'fontconfig', 'flux', 'vulkan-loader']
 
 [[sources]]
-type = "git"
-url = "https://github.com/typio-ime/typiod-wayland.git"
-ref = "v0.0.6"
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/typio-ime/typio-linux/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source
+cd source/typio-linux-${VERSION}
 meson setup build --prefix=/usr --sysconfdir=/etc --buildtype=release \
     -Denable_systray=true \
-    -Dbuild_voice=true'''
+    -Denable_voice=true \
+    -Dbuild_tests=false'''
 
 [pipeline.compile]
 script = '''
-cd source
+cd source/typio-linux-${VERSION}
 ninja -C build'''
 
 [pipeline.staging]
 script = '''
-cd source
+cd source/typio-linux-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
-name = "typio-wayland"
+name = "typio-linux"
 runtime_deps = ['libtypio', 'wayland', 'libxkbcommon', 'dbus', 'pipewire', 'freetype', 'harfbuzz', 'fontconfig', 'flux', 'vulkan-loader']

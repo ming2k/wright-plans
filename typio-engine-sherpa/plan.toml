@@ -1,0 +1,35 @@
+name = "typio-engine-sherpa"
+version = "0.0.4"
+release = 1
+description = "Speech-to-text voice engine for the Typio input method framework, powered by sherpa-onnx"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/typio-ime/typio-engine-sherpa"
+
+build_deps = ['meson', 'ninja']
+link_deps = ['libtypio', 'sherpa-onnx', 'curl']
+
+[[sources]]
+type = "git"
+url = "https://github.com/typio-ime/typio-engine-sherpa.git"
+ref = "v${VERSION}"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source
+meson setup build --prefix=/usr --buildtype=release'''
+
+[pipeline.compile]
+script = '''
+cd source
+ninja -C build'''
+
+[pipeline.staging]
+script = '''
+cd source
+DESTDIR=${STAGING_DIR} ninja -C build install'''
+
+[[output]]
+name = "typio-engine-sherpa"
+runtime_deps = ['libtypio', 'sherpa-onnx', 'curl']

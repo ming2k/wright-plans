@@ -14,6 +14,6 @@ extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/rime-prelude-${VERSION}
+cd source/rime-prelude-*
 install -d ${STAGING_DIR}/usr/share/rime-data
-install -Dm644 ${WORKDIR}/*.yaml -t ${STAGING_DIR}/usr/share/rime-data/'''
+install -Dm644 *.yaml -t ${STAGING_DIR}/usr/share/rime-data/'''

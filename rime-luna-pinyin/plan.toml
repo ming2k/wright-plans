@@ -16,7 +16,7 @@ extract_to = "source"
 script = '''
 cd source
 install -d ${STAGING_DIR}/usr/share/rime-data
-install -Dm644 ${WORKDIR}/*.yaml -t ${STAGING_DIR}/usr/share/rime-data/'''
+install -Dm644 *.yaml -t ${STAGING_DIR}/usr/share/rime-data/'''
 
 [[output]]
 runtime_deps = ['rime-prelude']

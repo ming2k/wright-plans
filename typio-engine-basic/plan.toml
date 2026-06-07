@@ -1,5 +1,5 @@
 name = "typio-engine-basic"
-version = "0.0.2"
+version = "0.1.4"
 release = 1
 description = "Always-installable keyboard fallback for the Typio input method framework"
 license = "MIT"
@@ -11,13 +11,13 @@ build_deps = ['rust']
 [[sources]]
 type = "git"
 url = "https://github.com/typio-ime/typio-engine-basic.git"
-ref = "v0.0.2"
+ref = "v${VERSION}"
 extract_to = "source/typio-engine-basic"
 
 [[sources]]
 type = "git"
 url = "https://github.com/typio-ime/libtypio.git"
-ref = "v0.0.2"
+ref = "v0.1.7"
 extract_to = "source/libtypio"
 
 [pipeline.prepare]
