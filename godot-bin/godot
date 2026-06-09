@@ -1,0 +1,30 @@
+#!/bin/sh
+set -eu
+
+bin=/usr/lib/godot-bin/godot
+want_wayland=0
+
+if [ -z "${XCOMPOSEFILE:-}" ] &&
+    [ ! -f /usr/share/X11/locale/compose.dir ]; then
+    XCOMPOSEFILE=/usr/share/godot-bin/godot.compose
+    export XCOMPOSEFILE
+fi
+
+if [ "${XDG_SESSION_TYPE:-}" = "wayland" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; then
+    want_wayland=1
+fi
+
+for arg in "$@"; do
+    case "$arg" in
+        --display-driver|--display-driver=*)
+            want_wayland=0
+            break
+            ;;
+    esac
+done
+
+if [ "$want_wayland" -eq 1 ]; then
+    exec "$bin" --display-driver wayland "$@"
+fi
+
+exec "$bin" "$@"

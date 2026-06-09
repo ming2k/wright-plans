@@ -23,7 +23,7 @@ meson setup build --prefix=/usr --buildtype=release -Ddemo=false'''
 [pipeline.compile]
 script = '''
 cd source/libdecor-${VERSION}
-ninja -j$(nproc) -C ${WORKDIR}/build'''
+ninja -j$(nproc) -C build'''
 
 [pipeline.staging]
 script = '''
