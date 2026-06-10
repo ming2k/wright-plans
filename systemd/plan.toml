@@ -94,11 +94,11 @@ cd source/systemd-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install
 
 # Preset only the services we opt into.
-install -Dm644 ${WORKDIR}/systemd-90-theseus.preset ${STAGING_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
+install -Dm644 ${WORKDIR}/90-theseus.preset ${STAGING_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
 
 # wait-online: single-NIC laptop policy — any interface online is enough,
 # and cap the wait at 20s so a missing secondary link never pins boot.
-install -Dm644 ${WORKDIR}/systemd-network-wait-online.conf \
+install -Dm644 ${WORKDIR}/network-wait-online.conf \
     ${STAGING_DIR}/usr/lib/systemd/system/systemd-networkd-wait-online.service.d/10-theseus.conf
 '''
 

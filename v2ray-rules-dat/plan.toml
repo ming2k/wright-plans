@@ -18,5 +18,5 @@ url = "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/${VERSI
 
 [pipeline.staging]
 script = '''
-install -Dm644 ${WORKDIR}/v2ray-rules-dat-geoip.dat ${STAGING_DIR}/usr/share/v2ray-rules-dat/geoip.dat
-install -Dm644 ${WORKDIR}/v2ray-rules-dat-geosite.dat ${STAGING_DIR}/usr/share/v2ray-rules-dat/geosite.dat'''
+install -Dm644 ${WORKDIR}/geoip.dat ${STAGING_DIR}/usr/share/v2ray-rules-dat/geoip.dat
+install -Dm644 ${WORKDIR}/geosite.dat ${STAGING_DIR}/usr/share/v2ray-rules-dat/geosite.dat'''

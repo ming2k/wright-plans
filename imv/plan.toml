@@ -23,7 +23,7 @@ path = "patches/fix-missing-stdio.patch"
 [pipeline.prepare]
 script = '''
 cd source/*
-patch -Np1 < ${WORKDIR}/${NAME}-fix-missing-stdio.patch'''
+patch -Np1 < ${WORKDIR}/fix-missing-stdio.patch'''
 
 [pipeline.configure]
 script = '''

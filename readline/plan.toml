@@ -35,9 +35,9 @@ ccache = true
 [pipeline.prepare]
 script = '''
 cd source/readline-${VERSION}
-patch -Np0 < ${WORKDIR}/readline-readline83-001
-patch -Np0 < ${WORKDIR}/readline-readline83-002
-patch -Np0 < ${WORKDIR}/readline-readline83-003
+patch -Np0 < ${WORKDIR}/readline83-001
+patch -Np0 < ${WORKDIR}/readline83-002
+patch -Np0 < ${WORKDIR}/readline83-003
 sed -i '/MV.*old/d' Makefile.in
 sed -i '/{OLDSUFF}/c:' support/shlib-install'''
 

@@ -45,7 +45,7 @@ mv source/f128-e60de395f0d6454c1dc546b87f06a6358425b6b6 "source/surfer-v${VERSIO
 rm -rf "source/surfer-v${VERSION}/instruction-decoder"
 mv source/instruction-decoder-02bdcbfd5663a72e4a0b1b9d54519412d417fab1 "source/surfer-v${VERSION}/instruction-decoder"
 cd "source/surfer-v${VERSION}"
-patch -Np1 < ${WORKDIR}/${NAME}-0001-disable-x11-eframe-feature.patch'''
+patch -Np1 < ${WORKDIR}/0001-disable-x11-eframe-feature.patch'''
 
 [pipeline.configure]
 script = '''
@@ -63,7 +63,7 @@ cargo build --release'''
 script = '''
 install -Dm755 ${WORKDIR}/target/release/surfer ${STAGING_DIR}/usr/bin/surfer
 install -Dm755 ${WORKDIR}/target/release/surver ${STAGING_DIR}/usr/bin/surver
-install -Dm644 ${WORKDIR}/${NAME}-surfer.desktop ${STAGING_DIR}/usr/share/applications/surfer.desktop
+install -Dm644 ${WORKDIR}/surfer.desktop ${STAGING_DIR}/usr/share/applications/surfer.desktop
 install -Dm644 source/surfer-v${VERSION}/surfer/assets/logo.png ${STAGING_DIR}/usr/share/icons/hicolor/256x256/apps/surfer.png'''
 
 [[output]]

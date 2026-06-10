@@ -1,6 +1,6 @@
 name = "sing-box"
 version = "1.13.13"
-release = 1
+release = 2
 description = "The universal proxy platform"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -47,7 +47,7 @@ backup = ["/etc/sing-box/config.json"]
 [output.hooks]
 post_install = '''
 systemctl daemon-reload 2>/dev/null || true
-echo ":: Edit /etc/sing-box/config.json before starting sing-box"
+echo ":: Put config files (*.json) in /etc/sing-box/ before starting sing-box"
 echo ":: Enable with: systemctl enable --now sing-box"
 
 '''

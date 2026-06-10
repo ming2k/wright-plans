@@ -51,9 +51,9 @@ ln -s /run/lock     ${STAGING_DIR}/var/lock
 ln -s ../proc/self/mounts ${STAGING_DIR}/etc/mtab
 
 # --- /etc files ---
-install -m 0644 ${WORKDIR}/filesystem-os-release ${STAGING_DIR}/etc/os-release
-install -m 0644 ${WORKDIR}/filesystem-shells     ${STAGING_DIR}/etc/shells
-install -m 0644 ${WORKDIR}/filesystem-profile    ${STAGING_DIR}/etc/profile
+install -m 0644 ${WORKDIR}/os-release ${STAGING_DIR}/etc/os-release
+install -m 0644 ${WORKDIR}/shells     ${STAGING_DIR}/etc/shells
+install -m 0644 ${WORKDIR}/profile    ${STAGING_DIR}/etc/profile
 install -d -m 0755 ${STAGING_DIR}/etc/profile.d'''
 
 [[output]]

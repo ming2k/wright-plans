@@ -33,10 +33,10 @@ ln -sf ${WORKDIR}/source/nss-${VERSION}/nss/lib/ckfw/builtins/certdata.txt certs
 ln -sf ${WORKDIR}/source/nss-${VERSION}/nss/lib/ckfw/builtins/nssckbi.h certs/nssckbi.h
 
 cd certs
-python3 ${WORKDIR}/ca-certificates-certdata2pem.py
+python3 ${WORKDIR}/certdata2pem.py
 
 cd ${WORKDIR}/source/nss-${VERSION}
-sh ${WORKDIR}/ca-certificates-bundle.sh'''
+sh ${WORKDIR}/bundle.sh'''
 
 [pipeline.staging]
 script = '''

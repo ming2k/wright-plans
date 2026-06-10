@@ -75,7 +75,7 @@ rm -rf ${STAGING_DIR}/usr/lib/systemd
 
 install -vdm755 ${STAGING_DIR}/etc/pam.d
 for f in system-account system-auth system-session system-password other; do
-    install -Dm644 ${WORKDIR}/linux-pam-${f} ${STAGING_DIR}/etc/pam.d/${f}
+    install -Dm644 ${WORKDIR}/${f} ${STAGING_DIR}/etc/pam.d/${f}
 done'''
 
 [[output]]

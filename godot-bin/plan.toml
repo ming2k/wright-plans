@@ -47,25 +47,25 @@ install -Dm755 \
     ${STAGING_DIR}/usr/lib/godot-bin/godot
 
 install -Dm755 \
-    ${WORKDIR}/${NAME}-godot \
+    ${WORKDIR}/godot \
     ${STAGING_DIR}/usr/bin/godot
 install -Dm644 \
-    ${WORKDIR}/${NAME}-godot.compose \
+    ${WORKDIR}/godot.compose \
     ${STAGING_DIR}/usr/share/godot-bin/godot.compose
 install -Dm644 \
-    ${WORKDIR}/${NAME}-godot.6 \
+    ${WORKDIR}/godot.6 \
     ${STAGING_DIR}/usr/share/man/man6/godot.6
 install -Dm644 \
-    ${WORKDIR}/${NAME}-godot.svg \
+    ${WORKDIR}/godot.svg \
     ${STAGING_DIR}/usr/share/icons/hicolor/scalable/apps/godot.svg
 install -Dm644 \
-    ${WORKDIR}/${NAME}-org.godotengine.Godot.appdata.xml \
+    ${WORKDIR}/org.godotengine.Godot.appdata.xml \
     ${STAGING_DIR}/usr/share/metainfo/org.godotengine.Godot.appdata.xml
 install -Dm644 \
-    ${WORKDIR}/${NAME}-org.godotengine.Godot.desktop \
+    ${WORKDIR}/org.godotengine.Godot.desktop \
     ${STAGING_DIR}/usr/share/applications/org.godotengine.Godot.desktop
 install -Dm644 \
-    ${WORKDIR}/${NAME}-org.godotengine.Godot.xml \
+    ${WORKDIR}/org.godotengine.Godot.xml \
     ${STAGING_DIR}/usr/share/mime/packages/org.godotengine.Godot.xml'''
 
 [[output]]

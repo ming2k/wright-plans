@@ -80,7 +80,7 @@ rm -f ${STAGING_DIR}/usr/share/man/man8/{tzselect,zdump,zic}.8
 # Fix hardcoded /usr prefix in ldd so it resolves via /lib symlink
 sed '/RTLDLIST=/s@/usr@@g' -i ${STAGING_DIR}/usr/bin/ldd
 
-install -Dm644 ${WORKDIR}/glibc-locale.gen ${STAGING_DIR}/etc/locale.gen
+install -Dm644 ${WORKDIR}/locale.gen ${STAGING_DIR}/etc/locale.gen
 
 # Default system locale
 echo 'LANG=en_US.UTF-8' > ${STAGING_DIR}/etc/locale.conf

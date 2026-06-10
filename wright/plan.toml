@@ -1,5 +1,5 @@
 name = "wright"
-version = "5.3.8"
+version = "5.3.10"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
@@ -32,7 +32,7 @@ cd source/wright-${VERSION}
 install -Dm755 target/release/wright ${STAGING_DIR}/usr/bin/wright
 
 # Skeleton plan for new packages
-install -Dm644 ${WORKDIR}/wright-skel-plan.toml ${STAGING_DIR}/usr/share/wright/skel/plan.toml
+install -Dm644 ${WORKDIR}/skel-plan.toml ${STAGING_DIR}/usr/share/wright/skel/plan.toml
 
 # Plans workspace — created here so permissions are managed by the package
 install -dm755 ${STAGING_DIR}/var/lib/wright/plans

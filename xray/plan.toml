@@ -46,7 +46,7 @@ script = '''
 cd source/Xray-core-${VERSION}
 install -Dm755 xray ${STAGING_DIR}/usr/bin/xray
 install -dm755 ${STAGING_DIR}/etc/xray
-install -Dm644 ${WORKDIR}/xray-xray-tproxy.service ${STAGING_DIR}/usr/lib/systemd/system/xray-tproxy.service'''
+install -Dm644 ${WORKDIR}/xray-tproxy.service ${STAGING_DIR}/usr/lib/systemd/system/xray-tproxy.service'''
 
 [[output]]
 runtime_deps = ['glibc', 'v2ray-rules-dat']

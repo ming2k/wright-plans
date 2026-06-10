@@ -25,7 +25,7 @@ script = '''
 cd source/linux-${VERSION}
 
 # Configuration policy:
-# - ${WORKDIR}/linux-config is the primary kernel config source and should reflect
+# - ${WORKDIR}/config is the primary kernel config source and should reflect
 #   the baseline that users can inspect and edit directly.
 # - Prefer changing config for normal feature choices so the resulting policy is
 #   visible in one place.
@@ -37,7 +37,7 @@ cd source/linux-${VERSION}
 # - "Baseline sync" means a temporary migration aid. Once a final build .config
 #   has been copied back to linux/config and verified, these entries can be
 #   removed from plan.toml because the maintained baseline carries the policy.
-cp ${WORKDIR}/linux-config .config
+cp ${WORKDIR}/config .config
 make olddefconfig
 
 # ---------------------------------------------------------------------------
