@@ -1,0 +1,4 @@
+# greetd owns VT1; logind autovt spawns getty on tty2+ on demand.
+# Must sort lexically before 90-systemd.preset: first matching rule wins.
+enable greetd.service
+disable getty@.service

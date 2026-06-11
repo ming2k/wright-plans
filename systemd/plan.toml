@@ -18,7 +18,7 @@ extract_to = "source"
 [[sources]]
 sha256 = "SKIP"
 type = "local"
-path = "90-theseus.preset"
+path = "80-theseus.preset"
 
 [[sources]]
 sha256 = "SKIP"
@@ -56,6 +56,7 @@ meson setup build \
     -D sysvinit-path= \
     -D sysvrcnd-path= \
     -D firstboot=true \
+    -D first-boot-full-preset=true \
     -D sysusers=true \
     -D pam=enabled \
     -D logind=true \
@@ -94,7 +95,7 @@ cd source/systemd-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install
 
 # Preset only the services we opt into.
-install -Dm644 ${WORKDIR}/90-theseus.preset ${STAGING_DIR}/usr/lib/systemd/system-preset/90-theseus.preset
+install -Dm644 ${WORKDIR}/80-theseus.preset ${STAGING_DIR}/usr/lib/systemd/system-preset/80-theseus.preset
 
 # wait-online: single-NIC laptop policy — any interface online is enough,
 # and cap the wait at 20s so a missing secondary link never pins boot.

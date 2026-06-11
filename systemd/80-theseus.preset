@@ -1,0 +1,10 @@
+# Theseus policy deltas against upstream defaults (90-systemd.preset).
+# Must sort lexically BEFORE 90-systemd.preset: first matching rule wins.
+# Units matched by no rule at all are enabled by preset-all's default.
+
+# Display/login policy (getty vs greetd) lives in the greetd plan:
+# 85-display-manager.preset.
+
+# pcrlock.json hijacks systemd-cryptenroll enrollments; LUKS root uses
+# PIN-only TPM2 binding (see README.md).
+disable systemd-pcrlock-make-policy.service
