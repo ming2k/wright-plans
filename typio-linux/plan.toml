@@ -1,38 +1,61 @@
+# typio-linux — the Wayland host daemon (formerly "typio-wayland").
+# Installs the `typio` binary, its systemd user unit, example configs,
+# and icons. Engines are separate packages (typio-engine-*); the daemon
+# discovers their manifests under /usr/share/typio/engines at runtime.
 name = "typio-linux"
-version = "0.1.17"
+version = "0.3.0"
 release = 1
-description = "Linux host for the Typio input method framework"
+description = "Wayland input-method host daemon for the Typio framework"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/typio-ime/typio-linux"
 
-build_deps = ['meson', 'ninja']
-link_deps = ['libtypio', 'wayland', 'libxkbcommon', 'dbus', 'pipewire', 'freetype', 'harfbuzz', 'fontconfig', 'flux', 'vulkan-loader']
+build_deps = ['meson', 'ninja', 'pkg-config', 'cc', 'wayland']
+link_deps = [
+    'libtypio', 'flux', 'wayland', 'libxkbcommon', 'vulkan-loader',
+    'systemd', 'pipewire', 'fontconfig', 'harfbuzz', 'freetype',
+]
 
 [[sources]]
-type = "http"
-sha256 = "SKIP"
-url = "https://github.com/typio-ime/typio-linux/archive/refs/tags/v${VERSION}.tar.gz"
+type = "git"
+url = "https://github.com/typio-ime/typio-linux.git"
+ref = "v${VERSION}"
 extract_to = "source"
+
+[pipeline.prepare]
+script = '''
+cd source
+# Resolve libtypio and flux from the installed wright packages
+# (pkg-config) instead of re-fetching them as meson subprojects.
+rm -f subprojects/libtypio.wrap subprojects/flux.wrap'''
 
 [pipeline.configure]
 script = '''
-cd source/typio-linux-${VERSION}
-meson setup build --prefix=/usr --sysconfdir=/etc --buildtype=release \
+cd source
+meson setup build --prefix=/usr --buildtype=release \
+    -Dbuild_tests=false \
+    -Denable_wayland=true \
     -Denable_systray=true \
-    -Denable_voice=true \
-    -Dbuild_tests=false'''
+    -Denable_voice=true'''
 
 [pipeline.compile]
 script = '''
-cd source/typio-linux-${VERSION}
+cd source
 ninja -C build'''
 
 [pipeline.staging]
 script = '''
-cd source/typio-linux-${VERSION}
-DESTDIR=${STAGING_DIR} ninja -C build install'''
+: "${STAGING_DIR:?STAGING_DIR is required}"
+cd source
+meson install -C build --destdir "$STAGING_DIR"
+# The daemon, its systemd user unit, and the example config must land.
+test -x "$STAGING_DIR/usr/bin/typio"
+test -f "$STAGING_DIR/usr/lib/systemd/user/typio.service"
+test -f "$STAGING_DIR/usr/share/typio/core.toml.example"'''
 
 [[output]]
 name = "typio-linux"
-runtime_deps = ['libtypio', 'wayland', 'libxkbcommon', 'dbus', 'pipewire', 'freetype', 'harfbuzz', 'fontconfig', 'flux', 'vulkan-loader']
+runtime_deps = [
+    'libtypio', 'flux', 'wayland', 'libxkbcommon', 'vulkan-loader',
+    'systemd', 'pipewire', 'fontconfig', 'harfbuzz', 'freetype',
+]

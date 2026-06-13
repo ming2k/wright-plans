@@ -1,5 +1,5 @@
 name = "typio-engine-rime"
-version = "0.1.4"
+version = "0.3.0"
 release = 1
 description = "Rime input engine for the Typio input method framework"
 license = "MIT"
@@ -30,8 +30,10 @@ script = '''
 : "${STAGING_DIR:?STAGING_DIR is required}"
 cd source
 meson install -C build --destdir "$STAGING_DIR"
-test -f "$STAGING_DIR/usr/lib/typio/engines/libtypio_engine_rime.so" || \
-  test -f "$STAGING_DIR/usr/lib64/typio/engines/libtypio_engine_rime.so"
+# v0.2.0+ ships a private worker executable + runtime manifest (the
+# engine-process model), not a cdylib plugin.
+test -x "$STAGING_DIR/usr/libexec/typio/engines/typio-engine-rime"
+test -f "$STAGING_DIR/usr/share/typio/engines/typio-engine-rime.toml"
 test -f "$STAGING_DIR/usr/share/icons/hicolor/scalable/apps/typio-rime-symbolic.svg"
 test -f "$STAGING_DIR/usr/share/icons/hicolor/scalable/apps/typio-rime-latin-symbolic.svg"'''
 

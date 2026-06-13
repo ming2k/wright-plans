@@ -1,6 +1,6 @@
 name = "bash"
 version = "5.3"
-release = 1
+release = 2
 description = "The Bourne-Again Shell"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
@@ -30,7 +30,9 @@ make -j$(nproc)'''
 [pipeline.staging]
 script = '''
 cd source/bash-${VERSION}
-make DESTDIR=${STAGING_DIR} install'''
+make DESTDIR=${STAGING_DIR} install
+# POSIX sh is provided by bash
+ln -sf bash ${STAGING_DIR}/usr/bin/sh'''
 
 [[output]]
 runtime_deps = ['ncurses', 'readline']

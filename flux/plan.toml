@@ -1,5 +1,5 @@
 name = "flux"
-version = "0.0.6"
+version = "0.0.8"
 release = 1
 description = "C23 Vulkan-first graphics library"
 license = "Apache-2.0"
@@ -12,7 +12,7 @@ link_deps = ['vulkan-loader', 'glibc']
 [[sources]]
 type = "git"
 url = "https://github.com/ming2k/flux.git"
-ref = "v0.0.6"
+ref = "v${VERSION}"
 extract_to = "source"
 
 [pipeline.configure]

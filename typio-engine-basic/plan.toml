@@ -1,5 +1,5 @@
 name = "typio-engine-basic"
-version = "0.1.4"
+version = "0.3.0"
 release = 1
 description = "Always-installable keyboard fallback for the Typio input method framework"
 license = "MIT"
@@ -12,33 +12,41 @@ build_deps = ['rust']
 type = "git"
 url = "https://github.com/typio-ime/typio-engine-basic.git"
 ref = "v${VERSION}"
-extract_to = "source/typio-engine-basic"
-
-[[sources]]
-type = "git"
-url = "https://github.com/typio-ime/libtypio.git"
-ref = "v0.1.7"
-extract_to = "source/libtypio"
-
-[pipeline.prepare]
-script = '''
-cd source/typio-engine-basic
-# Remove dev-dependencies that reference unpublished/local crates
-sed -i '/^\[dev-dependencies\]/,/^$/d' Cargo.toml'''
+extract_to = "source"
 
 [pipeline.compile]
 isolation = "relaxed"
 env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
-cd source/typio-engine-basic
+cd source
 cargo build --release'''
 
 [pipeline.staging]
 script = '''
-cd source/typio-engine-basic
-install -Dm755 ${WORKDIR}/target/release/libtypio_engine_basic.so ${STAGING_DIR}/usr/lib/typio/engines/libtypio_engine_basic.so
-install -Dm644 data/icons/hicolor/symbolic/apps/typio-engine-basic-symbolic.svg ${STAGING_DIR}/usr/share/icons/hicolor/symbolic/apps/typio-engine-basic-symbolic.svg'''
+cd source
+
+# Private worker executable + runtime manifest (engine-process model,
+# ADR-0029 / typio-linux ADR-0031). The worker speaks the Typio Engine
+# Protocol over fd 3; it links nothing from the framework, so the only
+# runtime dependency is glibc.
+install -Dm755 ${WORKDIR}/target/release/typio-engine-basic \
+  ${STAGING_DIR}/usr/libexec/typio/engines/typio-engine-basic
+
+# Ship the repository manifest as the source of truth, but rewrite its
+# dev-relative command to the installed absolute path so the host can
+# spawn the worker.
+install -Dm644 typio-engine-basic.toml \
+  ${STAGING_DIR}/usr/share/typio/engines/typio-engine-basic.toml
+sed -i 's|^command = .*|command = "/usr/libexec/typio/engines/typio-engine-basic"|' \
+  ${STAGING_DIR}/usr/share/typio/engines/typio-engine-basic.toml
+
+install -Dm644 data/icons/hicolor/symbolic/apps/typio-engine-basic-symbolic.svg \
+  ${STAGING_DIR}/usr/share/icons/hicolor/symbolic/apps/typio-engine-basic-symbolic.svg
+
+# Fail the build if the worker or manifest is missing.
+test -x ${STAGING_DIR}/usr/libexec/typio/engines/typio-engine-basic
+test -f ${STAGING_DIR}/usr/share/typio/engines/typio-engine-basic.toml'''
 
 [[output]]
 name = "typio-engine-basic"
-runtime_deps = ['libtypio']
+runtime_deps = ['glibc']
