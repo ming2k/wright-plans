@@ -3,7 +3,7 @@
 # and icons. Engines are separate packages (typio-engine-*); the daemon
 # discovers their manifests under /usr/share/typio/engines at runtime.
 name = "typio-linux"
-version = "0.3.0"
+version = "0.3.3"
 release = 1
 description = "Wayland input-method host daemon for the Typio framework"
 license = "MIT"
