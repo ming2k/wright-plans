@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/typio-ime/typio-engine-rime"
 
-build_deps = ['meson', 'ninja', 'pkg-config', 'cc']
+build_deps = ['meson', 'ninja', 'pkgconf']
 link_deps = ['libtypio', 'librime', 'curl']
 
 [[sources]]

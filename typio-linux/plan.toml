@@ -10,7 +10,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/typio-ime/typio-linux"
 
-build_deps = ['meson', 'ninja', 'pkg-config', 'cc', 'wayland']
+build_deps = ['meson', 'ninja', 'pkgconf', 'wayland']
 link_deps = [
     'libtypio', 'flux', 'wayland', 'libxkbcommon', 'vulkan-loader',
     'systemd', 'pipewire', 'fontconfig', 'harfbuzz', 'freetype',
