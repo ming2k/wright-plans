@@ -1,19 +1,24 @@
-# typio-linux — the Wayland host daemon (formerly "typio-wayland").
-# Installs the `typio` binary, its systemd user unit, example configs,
-# and icons. Engines are separate packages (typio-engine-*); the daemon
-# discovers their manifests under /usr/share/typio/engines at runtime.
+# typio-linux — the Wayland host daemon.
+#
+# Builds with cargo. The Cargo manifest resolves libtypio, typio-abi,
+# flux-sys, and flux-text-sys via git deps (no sibling-checkout assumption);
+# the native libraries (libflux.so, libflux-text.so) come from the flux
+# wright package via pkg-config.
+#
+# Engines are separate packages (typio-engine-*); the daemon discovers their
+# manifests under /usr/share/typio/engines at runtime.
 name = "typio-linux"
-version = "0.3.3"
+version = "0.4.1"
 release = 1
 description = "Wayland input-method host daemon for the Typio framework"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/typio-ime/typio-linux"
 
-build_deps = ['meson', 'ninja', 'pkgconf', 'wayland']
+# bindgen links libclang at build time; pkg-config resolves libflux/libflux-text.
+build_deps = ['rust', 'pkgconf', 'clang']
 link_deps = [
     'libtypio', 'flux', 'wayland', 'libxkbcommon', 'vulkan-loader',
-    'systemd', 'pipewire', 'fontconfig', 'harfbuzz', 'freetype',
 ]
 
 [[sources]]
@@ -22,33 +27,25 @@ url = "https://github.com/typio-ime/typio-linux.git"
 ref = "v${VERSION}"
 extract_to = "source"
 
-[pipeline.prepare]
-script = '''
-cd source
-# Resolve libtypio and flux from the installed wright packages
-# (pkg-config) instead of re-fetching them as meson subprojects.
-rm -f subprojects/libtypio.wrap subprojects/flux.wrap'''
-
-[pipeline.configure]
-script = '''
-cd source
-meson setup build --prefix=/usr --buildtype=release \
-    -Dbuild_tests=false \
-    -Denable_wayland=true \
-    -Denable_systray=true \
-    -Denable_voice=true'''
-
 [pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', TYPIO_INSTALL_PREFIX = '/usr' }
 script = '''
 cd source
-ninja -C build'''
+cargo build --release --features wayland,systray'''
 
 [pipeline.staging]
+env = { CARGO_HOME = '${WORKDIR}/.cargo', TYPIO_INSTALL_PREFIX = '/usr' }
 script = '''
 : "${STAGING_DIR:?STAGING_DIR is required}"
 cd source
-meson install -C build --destdir "$STAGING_DIR"
-# The daemon, its systemd user unit, and the example config must land.
+# xtask install walks data/icons/hicolor, renders the systemd unit from
+# data/typio.service.in, and copies the example configs. It assumes the
+# default target/ layout (no CARGO_TARGET_DIR redirect above).
+cargo run --release --bin xtask -- install \
+    --prefix /usr \
+    --destdir "$STAGING_DIR"
+# Sanity-check the daemon, its user unit, and example config landed.
 test -x "$STAGING_DIR/usr/bin/typio"
 test -f "$STAGING_DIR/usr/lib/systemd/user/typio.service"
 test -f "$STAGING_DIR/usr/share/typio/core.toml.example"'''
@@ -56,6 +53,5 @@ test -f "$STAGING_DIR/usr/share/typio/core.toml.example"'''
 [[output]]
 name = "typio-linux"
 runtime_deps = [
-    'libtypio', 'flux', 'wayland', 'libxkbcommon', 'vulkan-loader',
-    'systemd', 'pipewire', 'fontconfig', 'harfbuzz', 'freetype',
+    'flux', 'wayland', 'libxkbcommon', 'vulkan-loader', 'glibc',
 ]

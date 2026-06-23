@@ -1,13 +1,13 @@
 name = "flux"
-version = "0.0.8"
+version = "0.2.0"
 release = 1
 description = "C23 Vulkan-first graphics library"
-license = "Apache-2.0"
+license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ming2k/flux"
 
-build_deps = ['meson', 'ninja', 'glslang']
-link_deps = ['vulkan-loader', 'glibc']
+build_deps = ['meson', 'ninja', 'glslang', 'pkgconf']
+link_deps = ['vulkan-loader', 'glibc', 'fontconfig', 'harfbuzz', 'freetype']
 
 [[sources]]
 type = "git"
@@ -20,9 +20,10 @@ script = '''
 cd source
 meson setup build --prefix=/usr --buildtype=release \
     -Dcanvas=true \
-    -Dscene=false \
+    -Dtext=true \
+    -Dscene-graph=true \
     -Dcompute=true \
-    -Deffect=false \
+    -Deffect=true \
     -Dexamples=false \
     -Dtests=false'''
 
@@ -34,8 +35,19 @@ ninja -C build'''
 [pipeline.staging]
 script = '''
 cd source
-DESTDIR=${STAGING_DIR} ninja -C build install'''
+meson install -C build --destdir "$STAGING_DIR"
+# Both libflux and libflux-text must land (typio-host's panel.rs links both),
+# and every header flux-sys/wrapper.h includes must be present.
+test -f "$STAGING_DIR/usr/lib/libflux.so"
+test -f "$STAGING_DIR/usr/lib/libflux_text.so"
+test -f "$STAGING_DIR/usr/lib/pkgconfig/flux.pc"
+test -f "$STAGING_DIR/usr/lib/pkgconfig/flux-text.pc"
+test -f "$STAGING_DIR/usr/include/flux/canvas.h"
+test -f "$STAGING_DIR/usr/include/flux/effect.h"
+test -f "$STAGING_DIR/usr/include/flux/scene.h"
+test -f "$STAGING_DIR/usr/include/flux/compute.h"
+test -f "$STAGING_DIR/usr/include/flux-text/text.h"'''
 
 [[output]]
 name = "flux"
-runtime_deps = ['vulkan-loader', 'glibc']
+runtime_deps = ['vulkan-loader', 'glibc', 'fontconfig', 'harfbuzz', 'freetype']
