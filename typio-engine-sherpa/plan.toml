@@ -27,8 +27,14 @@ ninja -C build'''
 
 [pipeline.staging]
 script = '''
+: "${STAGING_DIR:?STAGING_DIR is required}"
 cd source
-DESTDIR=${STAGING_DIR} ninja -C build install'''
+meson install -C build --destdir "$STAGING_DIR"
+# v0.2.0+ ships a private worker executable + runtime manifest (the
+# engine-process model), not a cdylib plugin.
+test -x "$STAGING_DIR/usr/libexec/typio/engines/typio-engine-sherpa"
+test -f "$STAGING_DIR/usr/share/typio/engines/typio-engine-sherpa.toml"
+test -f "$STAGING_DIR/usr/share/icons/hicolor/scalable/apps/typio-sherpa-symbolic.svg"'''
 
 [[output]]
 name = "typio-engine-sherpa"

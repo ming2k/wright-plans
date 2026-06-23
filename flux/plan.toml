@@ -1,5 +1,5 @@
 name = "flux"
-version = "0.2.0"
+version = "0.2.1"
 release = 1
 description = "C23 Vulkan-first graphics library"
 license = "MIT"

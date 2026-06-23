@@ -8,7 +8,7 @@
 # Engines are separate packages (typio-engine-*); the daemon discovers their
 # manifests under /usr/share/typio/engines at runtime.
 name = "typio-linux"
-version = "0.4.1"
+version = "0.5.0"
 release = 1
 description = "Wayland input-method host daemon for the Typio framework"
 license = "MIT"
