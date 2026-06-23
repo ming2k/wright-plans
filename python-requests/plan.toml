@@ -1,9 +1,9 @@
 name = "python-requests"
-version = "2.33.1"
+version = "2.34.2"
 release = 1
 description = "Python HTTP for Humans"
 license = "Apache-2.0"
-arch = "x86_64"
+arch = "any"
 url = "https://requests.readthedocs.io/"
 
 
@@ -11,14 +11,14 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "f288924cae4e29463698d6d60bc6a4da69c89185ad1e0bcc4104f584e960b9ed"
 url = "https://pypi.org/packages/source/r/requests/requests-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-requests-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/requests-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python', 'python-charset-normalizer', 'python-idna', 'python-urllib3', 'python-certifi']

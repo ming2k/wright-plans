@@ -1,5 +1,5 @@
 name = "python-urllib3"
-version = "2.6.3"
+version = "2.7.0"
 release = 1
 description = "HTTP library with thread-safe connection pooling and file post support"
 license = "MIT"
@@ -11,14 +11,14 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "231e0ec3b63ceb14667c67be60f2f2c40a518cb38b03af60abc813da26505f4c"
 url = "https://github.com/urllib3/urllib3/archive/${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
 cd source/urllib3-${VERSION}
-SETUPTOOLS_SCM_PRETEND_VERSION=${VERSION} pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+SETUPTOOLS_SCM_PRETEND_VERSION=${VERSION} pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python']

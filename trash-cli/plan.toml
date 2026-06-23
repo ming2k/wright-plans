@@ -18,7 +18,7 @@ extract_to = "source"
 [pipeline.staging]
 script = '''
 cd source/trash-cli-${VERSION}
-pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${STAGING_DIR} .'''
+pip3 install --no-index --no-user --no-deps --ignore-installed --no-build-isolation --root=${STAGING_DIR} .'''
 
 [[output]]
 runtime_deps = ['python', 'python-psutil']

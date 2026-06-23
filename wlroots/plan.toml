@@ -1,16 +1,17 @@
 name = "wlroots"
-version = "0.20.0"
+version = "0.20.1"
 release = 1
 description = "Modular Wayland compositor library"
 license = "MIT"
 arch = "x86_64"
 url = "https://gitlab.freedesktop.org/wlroots/wlroots"
 
-build_deps = ['meson', 'ninja']
+build_deps = ['meson', 'ninja', 'wayland-protocols']
+link_deps = ['libdrm', 'mesa', 'wayland', 'wayland-protocols', 'libinput', 'libxkbcommon', 'pixman']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "e9e699a06492121153ce3a3448b0aa610f3285130754b85fbb58736c931fffec"
 url = "https://gitlab.freedesktop.org/wlroots/wlroots/-/archive/${VERSION}/wlroots-${VERSION}.tar.gz"
 extract_to = "source"
 
@@ -27,7 +28,7 @@ meson setup build \
 [pipeline.compile]
 script = '''
 cd source/wlroots-${VERSION}
-ninja -C build
+ninja -C build -j $(nproc)
 '''
 
 [pipeline.staging]
@@ -37,6 +38,5 @@ DESTDIR=${STAGING_DIR} ninja -C build install
 '''
 
 [[output]]
-provides = ["wlroots"]
-conflicts = ["wlroots"]
+runtime_deps = ['libdrm', 'mesa', 'wayland', 'wayland-protocols', 'libinput', 'libxkbcommon', 'pixman']
 

@@ -3,7 +3,7 @@ version = "1.0.0"
 release = 1
 description = "Light, configurable Sphinx theme"
 license = "BSD-3-Clause"
-arch = "x86_64"
+arch = "any"
 url = "https://alabaster.readthedocs.io/"
 
 
@@ -17,8 +17,8 @@ extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-alabaster-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/alabaster-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python']

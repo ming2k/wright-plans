@@ -11,14 +11,14 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "722695808f4b6457b320fdc131280796bdceb04ab50fe1795cd540799ebe1698"
 url = "https://files.pythonhosted.org/packages/source/m/markupsafe/markupsafe-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-markupsafe-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/markupsafe-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python']

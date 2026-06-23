@@ -1,9 +1,9 @@
 name = "python-docutils"
-version = "0.22.4"
+version = "0.23"
 release = 1
 description = "Python documentation utilities"
 license = "BSD-2-Clause AND GPL-3.0-or-later AND PSF-2.0"
-arch = "x86_64"
+arch = "any"
 url = "https://docutils.sourceforge.io/"
 
 
@@ -11,14 +11,14 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "746f5060322511280a1e50eb76846ed6bf2342984b2ac04dc42caa1a8d78799e"
 url = "https://pypi.org/packages/source/d/docutils/docutils-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-docutils-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/docutils-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python']

@@ -1,34 +1,33 @@
 name = "vulkan-loader"
-version = "1.4.343"
-release = 2
+version = "1.4.350.1"
+release = 1
 description = "Vulkan Loader (Wayland Only)"
 license = "Apache-2.0"
 arch = "x86_64"
 
 link_deps = ['glibc', 'wayland']
-build_deps = ['ninja', 'cmake']
+build_deps = ['ninja', 'cmake', 'vulkan-headers', 'wayland-protocols']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "602984a71000981e25e4feb419e6cdd70b18ffe2b8004f60f591706027bca468"
+url = "https://github.com/KhronosGroup/Vulkan-Loader/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/Vulkan-Loader-${VERSION}
+cd source/Vulkan-Loader-vulkan-sdk-${VERSION}
 cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DVULKAN_HEADERS_INSTALL_DIR=/usr -DBUILD_WSI_XCB_SUPPORT=OFF -DBUILD_WSI_XLIB_SUPPORT=OFF -DBUILD_WSI_WAYLAND_SUPPORT=ON'''
 
 [pipeline.compile]
 script = '''
-cd source/Vulkan-Loader-${VERSION}
+cd source/Vulkan-Loader-vulkan-sdk-${VERSION}
 ninja -C build'''
 
 [pipeline.staging]
 script = '''
-cd source/Vulkan-Loader-${VERSION}
+cd source/Vulkan-Loader-vulkan-sdk-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['glibc', 'wayland']
-provides = ["vulkan-icd-loader"]

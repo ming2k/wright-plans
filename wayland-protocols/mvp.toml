@@ -1,0 +1,6 @@
+# MVP: build wayland-protocols without wayland-scanner.
+# The MVP pass installs XML protocol files only (no *-enum.h headers).
+# After wayland is built, the full pass rebuilds with wayland-scanner to
+# generate and install the enum headers that wlroots and other consumers
+# expect at <wayland-protocols/*-enum.h>.
+build_deps = ['meson', 'ninja']

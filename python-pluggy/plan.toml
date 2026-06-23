@@ -3,7 +3,7 @@ version = "1.6.0"
 release = 1
 description = "Plugin and hook calling mechanisms for Python"
 license = "MIT"
-arch = "x86_64"
+arch = "any"
 url = "https://github.com/pytest-dev/pluggy"
 
 
@@ -17,8 +17,8 @@ extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-pluggy-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/pluggy-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python']

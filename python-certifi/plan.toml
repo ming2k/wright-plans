@@ -1,9 +1,9 @@
 name = "python-certifi"
-version = "2026.2.25"
+version = "2026.6.17"
 release = 1
 description = "Python package for providing Mozilla's CA Bundle"
 license = "MPL-2.0"
-arch = "x86_64"
+arch = "any"
 url = "https://github.com/certifi/python-certifi"
 
 
@@ -11,14 +11,14 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "024c88eeec92ca068db80f02b8b07c9cef7b9fe261d1d535abfd5abd6f6af432"
 url = "https://pypi.org/packages/source/c/certifi/certifi-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-certifi-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/certifi-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python']

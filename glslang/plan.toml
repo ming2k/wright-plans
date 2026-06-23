@@ -1,5 +1,5 @@
 name = "glslang"
-version = "16.3.0"
+version = "1.4.350.1"
 release = 1
 description = "Khronos reference GLSL/ESSL compiler and SPIR-V generator"
 license = "BSD-3-Clause"
@@ -7,31 +7,30 @@ arch = "x86_64"
 url = "https://github.com/KhronosGroup/glslang"
 
 
-build_deps = ['cmake']
+build_deps = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "efff5a15258dce1ca2d323bf64c974f5fca03778174615dbc30c8d36db645bf5"
-url = "https://github.com/KhronosGroup/glslang/archive/refs/tags/${VERSION}.tar.gz"
+sha256 = "da3224092779d09e275a993b5d2fe2c178847d1a4a5c802082ab99628c159c20"
+url = "https://github.com/KhronosGroup/glslang/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/glslang-${VERSION}
-mkdir build && cd build
-cmake ..                                \
--DCMAKE_INSTALL_PREFIX=/usr       \
--DCMAKE_BUILD_TYPE=Release        \
--DALLOW_EXTERNAL_SPIRV_TOOLS=ON   \
--DBUILD_SHARED_LIBS=ON'''
+cd source/glslang-vulkan-sdk-${VERSION}
+cmake -B build -G Ninja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DALLOW_EXTERNAL_SPIRV_TOOLS=ON \
+    -DBUILD_SHARED_LIBS=ON'''
 
 [pipeline.compile]
 script = '''
-cd source/glslang-${VERSION}/build
-make -j$(nproc)'''
+cd source/glslang-vulkan-sdk-${VERSION}
+cmake --build build -j $(nproc)'''
 
 [pipeline.staging]
 script = '''
-cd source/glslang-${VERSION}/build
-make DESTDIR=${STAGING_DIR} install'''
+cd source/glslang-vulkan-sdk-${VERSION}
+DESTDIR=${STAGING_DIR} cmake --install build'''
 

@@ -1,16 +1,23 @@
 name = "wayland-protocols"
-version = "1.47"
+version = "1.49"
 release = 2
 description = "Specifications of extended Wayland protocols"
 license = "MIT"
 arch = "any"
 
-link_deps = ['wayland']
-build_deps = ['meson', 'ninja']
+# wayland-protocols is pure XML protocol description files at runtime.
+# At build time it needs wayland-scanner (from the wayland package) to
+# generate *-enum.h headers that consumers like wlroots include via
+# <wayland-protocols/*.h>.  This creates a build-time cycle:
+#   wayland → wayland-protocols (protocol XMLs)
+#   wayland-protocols → wayland (wayland-scanner binary)
+# Resolved via mvp.toml (MVP pass builds without scanner, full pass rebuilds
+# with scanner to generate enum headers).
+build_deps = ['meson', 'ninja', 'wayland']
 
 [[sources]]
 type = "http"
-sha256 = "5fd4349bcbc9bab9a46f8cf77d1f434296a7a052c87440a094f63fcf62a58e20"
+sha256 = "ec4c8f74942d6dff7ace8b4ce4764f0ef9ff618a935d974ea77edee2ad240b14"
 url = "https://gitlab.freedesktop.org/wayland/wayland-protocols/-/releases/${VERSION}/downloads/wayland-protocols-${VERSION}.tar.xz"
 extract_to = "source"
 
@@ -24,4 +31,3 @@ script = "cd source/wayland-protocols-${VERSION} && meson compile -C build"
 script = "cd source/wayland-protocols-${VERSION} && meson install -C build --destdir ${STAGING_DIR}"
 
 [[output]]
-runtime_deps = ['wayland']

@@ -1,5 +1,5 @@
 name = "libdrm"
-version = "2.4.131"
+version = "2.4.134"
 release = 1
 description = "Direct Rendering Manager library"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "ac5e74d157830eb8bee44c6a6bf3ad49774ef0dd2a72bdad74a8f20308b52a95"
 url = "https://dri.freedesktop.org/libdrm/libdrm-${VERSION}.tar.xz"
 extract_to = "source"
 
@@ -27,10 +27,13 @@ meson setup build \
 [pipeline.compile]
 script = '''
 cd source/libdrm-${VERSION}
-ninja -C build -j$(nproc)'''
+ninja -C build -j $(nproc)'''
 
 [pipeline.staging]
 script = '''
 cd source/libdrm-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
+
+[[output]]
+runtime_deps = ['glibc']
 

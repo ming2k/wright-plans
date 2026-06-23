@@ -3,7 +3,7 @@ version = "0.47.0"
 release = 1
 description = "Built-package format for Python"
 license = "MIT"
-arch = "x86_64"
+arch = "any"
 url = "https://wheel.readthedocs.io/"
 
 

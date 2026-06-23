@@ -1,5 +1,5 @@
 name = "spirv-cross"
-version = "1.4.341.0"
+version = "1.4.350.1"
 release = 1
 description = "Tool and library for parsing and converting SPIR-V to other shader languages"
 license = "Apache-2.0"
@@ -11,7 +11,7 @@ build_deps = ['cmake']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "21057934ede32fe90a63dc304fdce0f2a6cb4f0ca685a72ed36a73aac6f72ad5"
 url = "https://github.com/KhronosGroup/SPIRV-Cross/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
 extract_to = "source"
 

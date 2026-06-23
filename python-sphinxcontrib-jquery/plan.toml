@@ -3,7 +3,7 @@ version = "4.1"
 release = 1
 description = "Sphinx extension to include jQuery for older themes"
 license = "0BSD"
-arch = "x86_64"
+arch = "any"
 url = "https://github.com/sphinx-contrib/jquery"
 
 
@@ -17,8 +17,8 @@ extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-sphinxcontrib-jquery-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/sphinxcontrib-jquery-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python', 'python-sphinx']

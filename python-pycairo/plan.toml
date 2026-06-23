@@ -17,8 +17,8 @@ extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-pycairo-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/pycairo-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python', 'cairo']

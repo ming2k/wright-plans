@@ -17,16 +17,16 @@ extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/python-pyparsing-${VERSION}
+cd source/pyparsing-${VERSION}
 echo "python package"'''
 
 [pipeline.compile]
 script = '''
-cd source/python-pyparsing-${VERSION}
+cd source/pyparsing-${VERSION}
 echo "no build needed"'''
 
 [pipeline.staging]
 script = '''
-cd source/python-pyparsing-${VERSION}
-pip3 install --no-index --no-user --no-deps --no-build-isolation --break-system-packages --root=${STAGING_DIR} .'''
+cd source/pyparsing-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --no-build-isolation --root=${STAGING_DIR} .'''
 

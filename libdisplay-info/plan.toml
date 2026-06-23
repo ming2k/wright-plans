@@ -1,5 +1,5 @@
 name = "libdisplay-info"
-version = "0.2.0"
+version = "0.3.0"
 release = 1
 description = "EDID and DisplayID library"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "6ae77cd937f9cf7d1321d35c116062c4911e8447010a6a713ac4286f7a9d5987"
 url = "https://gitlab.freedesktop.org/emersion/libdisplay-info/-/releases/${VERSION}/downloads/libdisplay-info-${VERSION}.tar.xz"
 extract_to = "source"
 
@@ -25,10 +25,13 @@ meson setup build \
 [pipeline.compile]
 script = '''
 cd source/libdisplay-info-${VERSION}
-ninja -C build -j$(nproc)'''
+ninja -C build -j $(nproc)'''
 
 [pipeline.staging]
 script = '''
 cd source/libdisplay-info-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
+
+[[output]]
+runtime_deps = ['glibc']
 

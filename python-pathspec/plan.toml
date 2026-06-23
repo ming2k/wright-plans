@@ -1,9 +1,9 @@
 name = "python-pathspec"
-version = "1.0.4"
+version = "1.1.1"
 release = 1
 description = "Utility library for gitignore style pattern matching of file paths"
 license = "MPL-2.0"
-arch = "x86_64"
+arch = "any"
 url = "https://github.com/cpburnz/python-pathspec"
 
 
@@ -11,14 +11,14 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "17db5ecd524104a120e173814c90367a96a98d07c45b2e10c2f3919fff91bf5a"
 url = "https://pypi.org/packages/source/p/pathspec/pathspec-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-pathspec-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/pathspec-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python']

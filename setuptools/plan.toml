@@ -1,9 +1,9 @@
 name = "setuptools"
-version = "80.9.0"
+version = "82.0.1"
 release = 1
 description = "Python package development process library"
 license = "MIT"
-arch = "x86_64"
+arch = "any"
 url = "https://setuptools.pypa.io/"
 
 
@@ -11,12 +11,12 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "7d872682c5d01cfde07da7bccc7b65469d3dca203318515ada1de5eda35efbf9"
 url = "https://pypi.org/packages/source/s/setuptools/setuptools-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
 cd source/setuptools-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 

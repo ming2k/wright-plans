@@ -1,16 +1,16 @@
 name = "wayland"
-version = "1.24.0"
+version = "1.25.0"
 release = 1
 description = "Core Wayland window system code and protocol"
 license = "MIT"
 arch = "x86_64"
 
 link_deps = ['expat', 'libffi', 'libxml2']
-build_deps = ['meson', 'ninja']
+build_deps = ['meson', 'ninja', 'wayland-protocols']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "c065f040afdff3177680600f249727e41a1afc22fccf27222f15f5306faa1f03"
 url = "https://gitlab.freedesktop.org/wayland/wayland/-/releases/${VERSION}/downloads/wayland-${VERSION}.tar.xz"
 extract_to = "source"
 

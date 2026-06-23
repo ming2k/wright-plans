@@ -1,22 +1,26 @@
 name = "python-mako"
-version = "1.3.10"
+version = "1.3.12"
 release = 1
 description = "Fast templating language for Python"
 license = "MIT"
-arch = "x86_64"
+arch = "any"
 url = "https://www.makotemplates.org/"
 
 
-build_deps = ['python']
+# --no-build-isolation means pip won't fetch build requirements, so they must
+# be present in the build environment. mako's pyproject.toml declares
+# setuptools + wheel as build-system requirements; markupsafe is its runtime
+# dependency that the import-time check in setuptools needs available.
+build_deps = ['python', 'setuptools', 'python-markupsafe', 'python-wheel']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "9f778e93289bd410bb35daadeb4fc66d95a746f0b75777b942088b7fd7af550a"
 url = "https://files.pythonhosted.org/packages/source/m/mako/mako-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-mako-${VERSION}
-pip3 install --break-system-packages --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/mako-${VERSION}
+pip3 install --no-index --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 

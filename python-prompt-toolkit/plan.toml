@@ -1,5 +1,5 @@
 name = "python-prompt-toolkit"
-version = "3.0.51"
+version = "3.0.52"
 release = 1
 description = "Library for building powerful interactive command lines in Python"
 license = "BSD-3-Clause"
@@ -11,14 +11,14 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "28cde192929c8e7321de85de1ddbe736f1375148b02f2e17edd840042b1be855"
 url = "https://pypi.org/packages/source/p/prompt-toolkit/prompt_toolkit-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
 cd source/prompt_toolkit-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python', 'python-wcwidth']

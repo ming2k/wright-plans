@@ -1,32 +1,32 @@
 name = "spirv-headers"
-version = "1.4.341.0"
+version = "1.4.350.1"
 release = 1
 description = "Machine-readable parts of the SPIR-V specification"
 license = "MIT"
-arch = "x86_64"
+arch = "any"
 url = "https://github.com/KhronosGroup/SPIRV-Headers"
 
 
-build_deps = ['cmake']
+build_deps = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "cab0a654c4917e16367483296b44cdb1d614e3120c721beafcd37e3a8580486c"
+sha256 = "9e6d5c78878172d2b810e97f3a74ecbbb14b4ad52b07384ce915fbbeb226d610"
 url = "https://github.com/KhronosGroup/SPIRV-Headers/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/spirv-headers-${VERSION}
-cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release'''
+cd source/SPIRV-Headers-vulkan-sdk-${VERSION}
+cmake -B build -G Ninja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release'''
 
 [pipeline.compile]
 script = '''
-cd source/spirv-headers-${VERSION}
-cmake --build build -j$(nproc)'''
+cd source/SPIRV-Headers-vulkan-sdk-${VERSION}
+cmake --build build -j $(nproc)'''
 
 [pipeline.staging]
 script = '''
-cd source/spirv-headers-${VERSION}
+cd source/SPIRV-Headers-vulkan-sdk-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
 

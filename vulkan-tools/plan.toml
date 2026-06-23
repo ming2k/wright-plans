@@ -1,23 +1,23 @@
 name = "vulkan-tools"
-version = "1.4.344"
-release = 3
+version = "1.4.350.1"
+release = 1
 description = "Vulkan tools, including vulkaninfo"
 license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/Vulkan-Tools"
 
 link_deps = ['vulkan-loader', 'wayland']
-build_deps = ['ninja', 'cmake']
+build_deps = ['ninja', 'cmake', 'vulkan-headers', 'wayland-protocols']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://github.com/KhronosGroup/Vulkan-Tools/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "502b53a585f49036e45372724f652bacc1fad2c62396e321bc8f5fbc031c14d5"
+url = "https://github.com/KhronosGroup/Vulkan-Tools/archive/refs/tags/vulkan-sdk-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/vulkan-tools-${VERSION}
+cd source/Vulkan-Tools-vulkan-sdk-${VERSION}
 cmake -B build -G Ninja \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_BUILD_TYPE=Release \
@@ -29,17 +29,16 @@ cmake -B build -G Ninja \
     -DBUILD_WSI_XLIB_SUPPORT=OFF \
     -DBUILD_WSI_WAYLAND_SUPPORT=ON \
     -DVULKAN_HEADERS_INSTALL_DIR=/usr \
-    -DVULKAN_LOADER_INSTALL_DIR=/usr \
-    ${WORKDIR}'''
+    -DVULKAN_LOADER_INSTALL_DIR=/usr'''
 
 [pipeline.compile]
 script = '''
-cd source/vulkan-tools-${VERSION}
-ninja -C build -j$(nproc)'''
+cd source/Vulkan-Tools-vulkan-sdk-${VERSION}
+ninja -C build -j $(nproc)'''
 
 [pipeline.staging]
 script = '''
-cd source/vulkan-tools-${VERSION}
+cd source/Vulkan-Tools-vulkan-sdk-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]

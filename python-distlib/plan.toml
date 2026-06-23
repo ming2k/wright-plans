@@ -1,9 +1,9 @@
 name = "python-distlib"
-version = "0.4.0"
+version = "0.4.3"
 release = 1
 description = "Low-level Python packaging utilities used by installer tooling"
 license = "Python-2.0"
-arch = "x86_64"
+arch = "any"
 url = "https://pypi.org/project/distlib/"
 
 
@@ -11,14 +11,14 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "feec40075be03a04501a973d81f633735b4b69f98b05450592310c0f401a4e0d"
+sha256 = "f152097224a0ae24be5a0f6bae1b9359af82133bce63f98a95f86cae1aede9ed"
 url = "https://pypi.org/packages/source/d/distlib/distlib-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.staging]
 script = '''
-cd source/python-distlib-${VERSION}
-pip3 install --no-index --no-user --no-deps --root=${STAGING_DIR} --no-build-isolation .'''
+cd source/distlib-${VERSION}
+pip3 install --no-index --no-user --no-deps --ignore-installed --root=${STAGING_DIR} --no-build-isolation .'''
 
 [[output]]
 runtime_deps = ['python']
