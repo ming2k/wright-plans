@@ -1,0 +1,30 @@
+name = "opencl-clhpp"
+version = "2025.07.22"
+release = 1
+description = "Khronos OpenCL C++ bindings"
+license = "Apache-2.0"
+arch = "any"
+url = "https://github.com/KhronosGroup/OpenCL-CLHPP"
+
+build_deps = ['cmake', 'ninja', 'opencl-headers']
+
+[[sources]]
+type = "http"
+url = "https://github.com/KhronosGroup/OpenCL-CLHPP/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "c1031afde6e9eb042e6fcfbc17078f4b437a7e8d55482a1ca6e0fa762d262a89"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/OpenCL-CLHPP-${VERSION}
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DBUILD_DOCS=OFF \
+  -DBUILD_EXAMPLES=OFF \
+  -DBUILD_TESTING=OFF'''
+
+[pipeline.staging]
+script = '''
+cd source/OpenCL-CLHPP-${VERSION}
+DESTDIR=${STAGING_DIR} cmake --install build'''

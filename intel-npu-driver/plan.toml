@@ -1,0 +1,44 @@
+name = "intel-npu-driver"
+version = "1.33.0"
+release = 1
+description = "Intel NPU Level Zero user-mode driver and firmware"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/intel/linux-npu-driver"
+
+link_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++', 'level-zero']
+build_deps = ['binutils', 'tar']
+
+[[sources]]
+type = "http"
+url = "https://github.com/intel/linux-npu-driver/releases/download/v${VERSION}/linux-npu-driver-v${VERSION}.20260529-26625960453-ubuntu2404.tar.gz"
+sha256 = "48cc219a5bd882a7cadaef523d9bb0c1e03c1b9b5b8562a29ad5ee4b9bfbb3bc"
+extract_to = "source"
+
+[pipeline.staging]
+script = '''
+mkdir -p unpack-driver unpack-firmware
+
+driver_deb=$(find source -name 'intel-level-zero-npu_*.deb' -print -quit)
+firmware_deb=$(find source -name 'intel-fw-npu_*.deb' -print -quit)
+test -n "${driver_deb}"
+test -n "${firmware_deb}"
+
+ar p "${driver_deb}" data.tar.gz | tar -xz -C unpack-driver
+ar p "${firmware_deb}" data.tar.gz | tar -xz -C unpack-firmware
+
+install -dm755 "${STAGING_DIR}/usr/lib"
+cp -a unpack-driver/usr/lib/x86_64-linux-gnu/libze_intel_npu.so* \
+  "${STAGING_DIR}/usr/lib/"
+
+install -dm755 "${STAGING_DIR}/usr/lib/firmware/updates/intel/vpu"
+cp -a unpack-firmware/lib/firmware/updates/intel/vpu/. \
+  "${STAGING_DIR}/usr/lib/firmware/updates/intel/vpu/"'''
+
+[[output]]
+runtime_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++', 'level-zero']
+provides = ['level-zero-npu-driver']
+
+[output.hooks]
+post_install = "ldconfig"
+post_upgrade = "ldconfig"

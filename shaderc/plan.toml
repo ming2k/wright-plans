@@ -1,5 +1,5 @@
 name = "shaderc"
-version = "2026.1"
+version = "2026.2"
 release = 1
 description = "Google shaderc (glslc) compiler and SPIR-V tools"
 license = "Apache-2.0"
@@ -11,7 +11,7 @@ build_deps = ['cmake', 'ninja', 'pkgconf', 'asciidoctor', 'python']
 
 [[sources]]
 type = "http"
-sha256 = "245002feccbe7f8361b223545a5654cea69780745886872d7efff50a38d96c66"
+sha256 = "f924178e75e3293082481b25ed64d5e48a795b479dac3bd3c83d23070855df42"
 url = "https://github.com/google/shaderc/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

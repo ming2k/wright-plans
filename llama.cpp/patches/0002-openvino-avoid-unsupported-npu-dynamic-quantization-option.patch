@@ -1,0 +1,12 @@
+diff --git a/ggml/src/ggml-openvino/ggml-openvino-extra.cpp b/ggml/src/ggml-openvino/ggml-openvino-extra.cpp
+index 1e10ca3..ce84d85 100644
+--- a/ggml/src/ggml-openvino/ggml-openvino-extra.cpp
++++ b/ggml/src/ggml-openvino/ggml-openvino-extra.cpp
+@@ -65,7 +65,6 @@ OpenVINOBackendContext::OpenVINOBackendContext() {
+     const char * cache_dir = ggml_openvino_getenv_str("GGML_OPENVINO_CACHE_DIR");
+     if (device_name == "NPU") {
+         compile_config = {
+-            {"NPU_COMPILER_DYNAMIC_QUANTIZATION", "YES"   },
+             {"NPU_USE_NPUW",                      "YES"   },
+             {"NPUW_DEVICES",                      "NPU"   },
+             {"NPUW_FOLD",                         "YES"   },

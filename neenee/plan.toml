@@ -1,0 +1,30 @@
+name = "neenee"
+version = "0.4.0"
+release = 1
+description = "A Rust-based AI coding agent with a semantic TUI, tool use, and bounded autonomous goals"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/ming2k/neenee"
+
+link_deps = ['gcc:gcc-libs', 'glibc', 'openssl']
+build_deps = ['rust', 'pkg-config']
+
+[[sources]]
+type = "http"
+sha256 = "7c80d8316d0525ccaf2e9424d89be9d473b1254b5eabe3c926875e5839cbc8ed"
+url = "https://github.com/ming2k/neenee/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
+
+[pipeline.compile]
+isolation = "relaxed"
+script = '''
+cd source/neenee-${VERSION}
+cargo build --release --locked'''
+
+[pipeline.staging]
+script = '''
+cd source/neenee-${VERSION}
+install -Dm755 target/release/neenee ${STAGING_DIR}/usr/bin/neenee'''
+
+[[output]]
+runtime_deps = ['gcc:gcc-libs', 'glibc', 'openssl']

@@ -1,27 +1,40 @@
 name = "llama.cpp"
-version = "b8693"
-release = 4
+version = "b9789"
+release = 3
 description = "LLM inference in C/C++"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ggml-org/llama.cpp"
 
-link_deps = ['openssl', 'vulkan-loader']
-build_deps = ['ninja', 'cmake']
-
-[[sources]]
-type = "local"
-path = "patches/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch"
+link_deps = ['ocl-icd', 'openvino', 'openssl', 'vulkan-loader']
+build_deps = [
+  'ninja',
+  'cmake',
+  'opencl-clhpp',
+  'opencl-headers',
+  'shaderc',
+  'spirv-headers',
+]
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "b51f13a1a6656855ff6c0459041e6163c59d5a8d63254a3c0e59c375ce7c2f15"
 url = "https://github.com/ggml-org/llama.cpp/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
+
+[[sources]]
+type = "local"
+path = "patches/0001-openvino-do-not-set-execution-mode-hint-on-npu.patch"
+
+[[sources]]
+type = "local"
+path = "patches/0002-openvino-avoid-unsupported-npu-dynamic-quantization-option.patch"
 
 [pipeline.prepare]
 script = '''
 cd source/llama.cpp-${VERSION}
-patch -Np1 < ${WORKDIR}/0001-disable-spirv-opt-for-iq1_m-get_rows-vulkan-shaders.patch || true'''
+patch -Np1 < ${WORKDIR}/0001-openvino-do-not-set-execution-mode-hint-on-npu.patch
+patch -Np1 < ${WORKDIR}/0002-openvino-avoid-unsupported-npu-dynamic-quantization-option.patch'''
 
 [pipeline.configure]
 script = '''
@@ -29,15 +42,30 @@ cd source/llama.cpp-${VERSION}
 cmake -B build -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr/lib/llama.cpp \
+  -DCMAKE_INSTALL_RPATH='/opt/intel/openvino/runtime/lib/intel64;/opt/intel/openvino/runtime/3rdparty/tbb/lib' \
   -DBUILD_SHARED_LIBS=OFF \
   -DGGML_NATIVE=OFF \
+  -DGGML_OPENVINO=ON \
   -DGGML_VULKAN=ON \
-  -DLLAMA_OPENSSL=ON'''
+  -DOpenVINO_DIR=/opt/intel/openvino/runtime/cmake \
+  -DLLAMA_OPENSSL=ON \
+  -DLLAMA_USE_PREBUILT_UI=OFF'''
 
 [pipeline.compile]
 script = '''
 cd source/llama.cpp-${VERSION}
 ninja -C build -j$(nproc)'''
+
+[pipeline.check]
+script = '''
+cd source/llama.cpp-${VERSION}
+test -f build/ggml/src/ggml-openvino/libggml-openvino.a
+
+LD_LIBRARY_PATH='/opt/intel/openvino/runtime/lib/intel64:/opt/intel/openvino/runtime/3rdparty/tbb/lib' \
+GGML_OPENVINO_DEVICE=CPU \
+  build/bin/llama-cli --list-devices > openvino-devices.txt
+
+grep -q 'OPENVINO' openvino-devices.txt'''
 
 [pipeline.staging]
 script = '''
@@ -45,4 +73,11 @@ cd source/llama.cpp-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
-runtime_deps = ['openssl', 'vulkan-loader']
+runtime_deps = [
+  'intel-compute-runtime',
+  'intel-npu-driver',
+  'ocl-icd',
+  'openvino',
+  'openssl',
+  'vulkan-loader',
+]

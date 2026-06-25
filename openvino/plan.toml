@@ -1,0 +1,117 @@
+name = "openvino"
+version = "2026.2.0.21903.52ddc073857"
+release = 1
+description = "Intel OpenVINO Runtime with CPU, GPU, and NPU plugins"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/openvinotoolkit/openvino"
+
+build_deps = ['binutils', 'tar']
+link_deps = [
+  'glibc',
+  'gcc:gcc-libs',
+  'gcc:libstdc++',
+  'intel-compute-runtime',
+  'intel-npu-driver',
+  'level-zero',
+  'ocl-icd',
+  'zlib',
+  'zstd',
+]
+
+[[sources]]
+type = "http"
+url = "https://storage.openvinotoolkit.org/repositories/openvino/packages/2026.2/linux/openvino_toolkit_ubuntu24_${VERSION}_x86_64.tgz"
+sha256 = "7ab44e505154459c374990f73e6732c6937b1cd98e25feedc9591ad09459cd87"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+url = "https://github.com/intel/linux-npu-driver/releases/download/v1.33.0/linux-npu-driver-v1.33.0.20260529-26625960453-ubuntu2404.tar.gz"
+sha256 = "48cc219a5bd882a7cadaef523d9bb0c1e03c1b9b5b8562a29ad5ee4b9bfbb3bc"
+extract_to = "source"
+
+[[sources]]
+type = "local"
+path = "query-device.cpp"
+
+[pipeline.compile]
+script = '''
+openvino_root=$(find source -mindepth 1 -maxdepth 1 -type d \
+  -name 'openvino_toolkit_*' -print -quit)
+test -n "${openvino_root}"
+
+c++ -std=c++17 -O2 \
+  -I"${openvino_root}/runtime/include" \
+  "${WORKDIR}/query-device.cpp" \
+  -L"${openvino_root}/runtime/lib/intel64" \
+  -L"${openvino_root}/runtime/3rdparty/tbb/lib" \
+  -Wl,-rpath,/opt/intel/openvino/runtime/lib/intel64 \
+  -Wl,-rpath,/opt/intel/openvino/runtime/3rdparty/tbb/lib \
+  -lopenvino \
+  -ltbb \
+  -o openvino-query-device'''
+
+[pipeline.check]
+script = '''
+openvino_root=$(find source -mindepth 1 -maxdepth 1 -type d \
+  -name 'openvino_toolkit_*' -print -quit)
+
+LD_LIBRARY_PATH="${openvino_root}/runtime/lib/intel64:${openvino_root}/runtime/3rdparty/tbb/lib" \
+  ./openvino-query-device | grep -q '^CPU$' '''
+
+[pipeline.staging]
+script = '''
+openvino_root=$(find source -mindepth 1 -maxdepth 1 -type d \
+  -name 'openvino_toolkit_*' -print -quit)
+install_root="${STAGING_DIR}/opt/intel/openvino_${VERSION}"
+
+install -dm755 "${install_root}"
+cp -a "${openvino_root}/runtime" "${install_root}/"
+cp -a "${openvino_root}/setupvars.sh" "${install_root}/"
+cp -a "${openvino_root}/docs/licensing" "${install_root}/"
+
+# Use the compiler from the Intel NPU v1.33.0 verified configuration instead
+# of the generic compiler bundled in the OpenVINO archive.
+compiler_deb=$(find source -name 'intel-driver-compiler-npu_*.deb' -print -quit)
+test -n "${compiler_deb}"
+mkdir -p unpack-compiler
+ar p "${compiler_deb}" data.tar.gz | tar -xz -C unpack-compiler
+cp -a unpack-compiler/usr/lib/x86_64-linux-gnu/libopenvino_intel_npu_compiler*.so \
+  "${install_root}/runtime/lib/intel64/"
+
+install -dm755 "${STAGING_DIR}/opt/intel"
+ln -s "openvino_${VERSION}" "${STAGING_DIR}/opt/intel/openvino"
+
+install -Dm755 openvino-query-device \
+  "${STAGING_DIR}/usr/bin/openvino-query-device"
+
+install -Dm644 /dev/stdin \
+  "${STAGING_DIR}/etc/ld.so.conf.d/openvino.conf" << 'LDCONF'
+/opt/intel/openvino/runtime/lib/intel64
+/opt/intel/openvino/runtime/3rdparty/tbb/lib
+LDCONF
+
+install -Dm644 /dev/stdin \
+  "${STAGING_DIR}/etc/profile.d/openvino.sh" << 'PROFILE'
+export INTEL_OPENVINO_DIR=/opt/intel/openvino
+export OpenVINO_DIR=/opt/intel/openvino/runtime/cmake
+PROFILE'''
+
+[[output]]
+runtime_deps = [
+  'glibc',
+  'gcc:gcc-libs',
+  'gcc:libstdc++',
+  'intel-compute-runtime',
+  'intel-npu-driver',
+  'level-zero',
+  'ocl-icd',
+  'zlib',
+  'zstd',
+]
+backup = ['/etc/profile.d/openvino.sh']
+
+[output.hooks]
+post_install = "ldconfig"
+post_upgrade = "ldconfig"
