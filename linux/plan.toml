@@ -1,6 +1,6 @@
 name = "linux"
-version = "7.0.12"
-release = 1
+version = "7.1.2"
+release = 2
 description = "The Linux kernel"
 license = "GPL-2.0-only"
 arch = "x86_64"

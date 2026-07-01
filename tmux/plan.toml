@@ -1,5 +1,5 @@
 name = "tmux"
-version = "3.6a"
+version = "3.6b"
 release = 1
 description = "A terminal multiplexer"
 license = "ISC"

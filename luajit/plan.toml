@@ -15,17 +15,17 @@ extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/luajit-${VERSION}
+cd source/LuaJIT-*
 echo "LuaJIT uses the upstream make-based build"'''
 
 [pipeline.compile]
 script = '''
-cd source/luajit-${VERSION}
+cd source/LuaJIT-*
 make -j$(nproc) PREFIX=/usr XCFLAGS='-fPIC''''
 
 [pipeline.staging]
 script = '''
-cd source/luajit-${VERSION}
+cd source/LuaJIT-*
 make PREFIX=/usr DESTDIR=${STAGING_DIR} install
 
 mkdir -p ${STAGING_DIR}/usr/lib/pkgconfig
@@ -42,7 +42,10 @@ Libs: -L\${libdir} -lluajit-5.1
 Cflags: -I\${includedir}
 PCEOF'''
 
-[hooks]
+[[output]]
+runtime_deps = ['glibc']
+
+[output.hooks]
 post_install = "ldconfig 2>/dev/null || true"
 post_upgrade = "ldconfig 2>/dev/null || true"
 

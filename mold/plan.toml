@@ -1,0 +1,69 @@
+name = "mold"
+version = "2.41.0"
+release = 1
+description = "A high-performance parallel linker"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/rui314/mold"
+
+# mold is a self-contained ELF linker: a single /usr/bin/mold plus symlinks.
+# All optional libs (zlib, zstd, blake3, mimalloc, tbb, rust-demangle, xxhash)
+# are git-subtree'd into third-party/ and statically linked — never shipped as
+# shared libs — so mold has no shared-library ABI of its own. Its only runtime
+# link is to the toolchain's libc/libm/libstdc++/libgcc_s.
+#
+# mold needs a C++20 compiler; we use clang/clang++ from the llvm plan (gcc is
+# fine too, but clang is what upstream dist.sh ships and is the safer default).
+build_deps = ['cmake', 'llvm:clang']
+
+# mold's releases ship only prebuilt binaries (via dist.sh); the authoritative
+# source is the git repo. third-party/ lives in-tree via git subtree (no
+# .gitmodules), so a plain checkout at the tag already contains every vendored
+# dependency — no submodule recursion or extra sources are needed.
+[[sources]]
+type = "git"
+url = "https://github.com/rui314/mold.git"
+ref = "v${VERSION}"
+depth = 1
+extract_to = "source"
+
+[options]
+timeout = 7200   # mold instantiates ~21 targets per template file; needs time
+
+[pipeline.configure]
+script = '''
+cd source
+test -f CMakeLists.txt
+test -d third-party/tbb
+test -d third-party/blake3
+test -d third-party/mimalloc
+test -d third-party/rust-demangle
+test -d third-party/zlib
+test -d third-party/zstd
+
+cmake -S . -B build \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_C_COMPILER=clang \
+    -DCMAKE_CXX_COMPILER=clang++ \
+    -DMOLD_USE_MOLD=OFF \
+    -DMOLD_LTO=OFF'''
+
+[pipeline.compile]
+script = '''
+cd source
+cmake --build build -j$(nproc)'''
+
+[pipeline.staging]
+script = '''
+cd source
+DESTDIR=${STAGING_DIR} cmake --install build --prefix /usr
+
+# Verify the artifacts dist.sh ships actually landed.
+test -x ${STAGING_DIR}/usr/bin/mold
+test -L ${STAGING_DIR}/usr/bin/ld.mold
+test -x ${STAGING_DIR}/usr/libexec/mold/ld
+test -f ${STAGING_DIR}/usr/share/man/man1/mold.1'''
+
+[[output]]
+runtime_deps = ['glibc', 'gcc:libstdc++']

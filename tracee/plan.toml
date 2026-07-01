@@ -1,0 +1,82 @@
+name = "tracee"
+version = "0.24.1"
+release = 1
+description = "Runtime security and forensics using eBPF"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/aquasecurity/tracee"
+maintainer = "wright plans <wright@example.local>"
+
+# tracee uses Go modules (fetched from the proxy at build time) plus a CGO/eBPF
+# toolchain, so the build needs the network. See the plan's compile stage.
+build_deps = [
+    "go",
+    "clang >= 12",
+    "llvm",
+    "llvm-tools",          # llvm-strip / llvm-objcopy for the BPF object
+    "make",
+    "pkg-config",
+    "libelf >= 0.178",     # libelf/libelf-dev: required by bundled libbpf
+    "zlib >= 1.2",         # zlib1g-dev: libelf/bpf linkage
+    "libelf-dev",          # headers for libelf (split -dev if your tree has one)
+    "zlib-dev",            # headers for zlib (split -dev if your tree has one)
+]
+
+# The final tracee binary stays ABI-linked against libelf and zlib (the bundled
+# libbpf links them in). clang/llvm are only build-time -> build_deps above.
+link_deps = ["libelf >= 0.178", "zlib >= 1.2"]
+
+# Source: a tagged release tarball. extract_to = "source" gives one predictable
+# root; build scripts cd into source/<project>-<version>. The GitHub auto
+# archive for a tag expands as tracee-<tag>/ (with the "v" stripped), i.e.
+# tracee-0.24.1/.
+[[sources]]
+type = "http"
+url = "https://github.com/aquasecurity/tracee/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "SKIP"   # TODO: fill with `wright build tracee --checksum` after --fetch
+extract_to = "source"
+
+[options]
+# The Makefile exports GOEXPERIMENT=norandomizedheapbase64 (Go 1.26 randomizes
+# the heap base, which breaks tracee's eBPF Go-heap detector). Propagate it.
+env = { GOEXPERIMENT = "norandomizedheapbase64" }
+timeout = 3600   # eBPF + libbpf build + Go compile is heavy; allow 1h per stage
+
+# libbpf lives in a git submodule (3rdparty/libbpf). A release tarball does not
+# carry submodules, so fetch and drop it in place during prepare. The Makefile's
+# build targets expect it at ./3rdparty/libbpf relative to the source root.
+[pipeline.prepare]
+isolation = "relaxed"   # needs network for the submodule checkout
+script = """
+cd source/tracee-${VERSION}
+git clone --depth 1 https://github.com/libbpf/libbpf 3rdparty/libbpf
+"""
+
+# No separate configure step for tracee; everything happens in compile via make.
+# Using relaxed isolation because `go build` resolves Go modules from the proxy.
+[pipeline.compile]
+isolation = "relaxed"
+script = """
+cd source/tracee-${VERSION}
+# Build the main binary. The eBPF object, BTF data, and LSM support objects are
+# //go:embed-ed into the binary by the Makefile, so `make tracee` is sufficient
+# for a self-contained runtime binary. BTFHUB embedding is disabled (default)
+# to avoid the expensive BTFhub download; the binary then relies on the running
+# kernel's own /sys/kernel/btf/vmlinux at runtime.
+make tracee
+"""
+
+# tracee has no `make install`; it builds into ./dist. Stage manually to FHS.
+[pipeline.staging]
+isolation = "relaxed"
+script = """
+cd source/tracee-${VERSION}
+# Main binary (self-contained: BPF object + BTF data embedded via //go:embed).
+install -Dm755 dist/tracee ${STAGING_DIR}/usr/bin/tracee
+"""
+
+# A single output (the plan name). The binary is self-contained, so this is
+# also the catch-all: any man page or extra we add later is claimed here too.
+[[output]]
+name = "tracee"
+runtime_deps = ["libelf >= 0.178", "zlib >= 1.2"]

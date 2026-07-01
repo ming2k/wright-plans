@@ -1,5 +1,5 @@
 name = "linux-lts"
-version = "6.18.33"
+version = "6.18.37"
 release = 1
 description = "The Linux kernel (LTS)"
 license = "GPL-2.0-only"
