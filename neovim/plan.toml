@@ -1,5 +1,5 @@
 name = "neovim"
-version = "0.12.1"
+version = "0.12.4"
 release = 1
 description = "Hyperextensible Vim-based text editor"
 license = "Apache-2.0"

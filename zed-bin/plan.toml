@@ -1,0 +1,64 @@
+name = "zed-bin"
+version = "1.10.3"
+release = 1
+description = "Prebuilt upstream Zed code editor binary distribution"
+license = "GPL-3.0-or-later AND Apache-2.0"
+arch = "x86_64"
+url = "https://zed.dev"
+maintainer = "wright plans <plans@wright.local>"
+
+# Binary distribution rationale:
+# Zed's large Rust workspace produces very large Cargo and compiler caches, and
+# continuously carrying its fast-moving native build stack imposes excessive
+# engineering tax on the distribution. Use Zed's official Linux binary archive
+# to keep package builds small, predictable, and inexpensive to maintain.
+
+[[sources]]
+type = "http"
+url = "https://github.com/zed-industries/zed/releases/download/v${VERSION}/zed-linux-${ARCH}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[pipeline.staging]
+# Preserve the upstream zed.app layout: the CLI resolves zed-editor relative
+# to itself, and zed-editor resolves the bundled shared libraries by RPATH.
+script = '''
+install -dm755 "${STAGING_DIR}/usr/lib/zed-bin"
+cp -a source/zed.app/bin source/zed.app/lib source/zed.app/libexec \
+    "${STAGING_DIR}/usr/lib/zed-bin/"
+
+install -dm755 "${STAGING_DIR}/usr/bin"
+ln -s ../lib/zed-bin/bin/zed "${STAGING_DIR}/usr/bin/zed"
+
+install -Dm644 source/zed.app/share/applications/dev.zed.Zed.desktop \
+    "${STAGING_DIR}/usr/share/applications/dev.zed.Zed.desktop"
+install -Dm644 source/zed.app/share/icons/hicolor/512x512/apps/zed.png \
+    "${STAGING_DIR}/usr/share/icons/hicolor/512x512/apps/zed.png"
+install -Dm644 source/zed.app/share/icons/hicolor/1024x1024/apps/zed.png \
+    "${STAGING_DIR}/usr/share/icons/hicolor/1024x1024/apps/zed.png"
+install -Dm644 source/zed.app/licenses.md \
+    "${STAGING_DIR}/usr/share/licenses/zed-bin/licenses.md"'''
+
+[[output]]
+runtime_deps = [
+    "alsa-lib",
+    "desktop-file-utils",
+    "fontconfig",
+    "gcc:gcc-libs",
+    "glibc",
+    "libva",
+    "mesa",
+    "pipewire",
+    "vulkan-loader",
+    "wayland",
+    "xdg-desktop-portal",
+]
+replaces = ["zed"]
+
+[output.hooks]
+post_install = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true'''
+post_upgrade = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+gtk-update-icon-cache -qtf /usr/share/icons/hicolor 2>/dev/null || true'''

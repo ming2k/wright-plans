@@ -1,5 +1,5 @@
 name = "neenee"
-version = "0.13.0"
+version = "0.20.2"
 release = 1
 description = "A Rust-based AI coding agent with a semantic TUI, tool use, and bounded autonomous goals"
 license = "MIT"

@@ -8,32 +8,25 @@ url = "https://ziglang.org"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "70e49664a74374b48b51e6f3fdfbf437f6395d42509050588bd49abe52ba3d00"
 url = "https://ziglang.org/download/${VERSION}/zig-x86_64-linux-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/zig-${VERSION}
+cd source/zig-x86_64-linux-${VERSION}
 '''
 
 [pipeline.compile]
 script = '''
-cd source/zig-${VERSION}
+cd source/zig-x86_64-linux-${VERSION}
 '''
 
 [pipeline.staging]
 script = '''
-cd source/zig-${VERSION}
+cd source/zig-x86_64-linux-${VERSION}
 install -dm755 ${STAGING_DIR}/usr/lib/zig
-
-# The tarball extracts to a single directory like zig-x86_64-linux-0.16.0/
-for dir in zig-x86_64-linux-*; do
-  if [ -d "$dir" ]; then
-    cp -a "$dir"/* ${STAGING_DIR}/usr/lib/zig/
-    break
-  fi
-done
+cp -a ./* ${STAGING_DIR}/usr/lib/zig/
 
 install -dm755 ${STAGING_DIR}/usr/bin
 ln -sf /usr/lib/zig/zig ${STAGING_DIR}/usr/bin/zig
@@ -42,4 +35,3 @@ ln -sf /usr/lib/zig/zig ${STAGING_DIR}/usr/bin/zig
 [[output]]
 provides = ["zig"]
 conflicts = ["zig"]
-
