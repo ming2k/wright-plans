@@ -1,5 +1,5 @@
 name = "utf8proc"
-version = "2.10.0"
+version = "2.11.3"
 release = 1
 description = "UTF-8 processing library"
 license = "MIT"

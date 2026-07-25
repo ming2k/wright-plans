@@ -1,5 +1,5 @@
 name = "python-pyproject-metadata"
-version = "0.11.0"
+version = "0.12.1"
 release = 1
 description = "PEP 621 project metadata parser"
 license = "MIT"

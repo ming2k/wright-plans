@@ -1,0 +1,43 @@
+name = "mise"
+version = "2026.7.5"
+release = 1
+description = "Polyglot runtime version manager (asdf-compatible, written in Rust)"
+license = "MIT"
+arch = "x86_64"
+url = "https://mise.jdx.dev"
+
+# Prebuilt upstream binary; only glibc is needed at runtime. Installed to
+# /usr/bin/mise so mise's built-in package-manager detection kicks in and
+# `mise self-update` refuses to run — upgrades must go through wright.
+[[sources]]
+type = "http"
+sha256 = "be92da3afb180dc71b3ce6fcaaaf2f393812c9c50e9a64c9cb6706cf28edb486"
+url = "https://github.com/jdx/mise/releases/download/v${VERSION}/mise-v${VERSION}-linux-x64.tar.gz"
+extract_to = "source"
+
+[pipeline.staging]
+script = '''
+cd source/mise
+
+# Binaries
+install -Dm755 bin/mise ${STAGING_DIR}/usr/bin/mise
+
+# Man page (shipped in tarball)
+install -Dm644 man/man1/mise.1 ${STAGING_DIR}/usr/share/man/man1/mise.1
+
+# Fish activation snippet (shipped in tarball)
+install -Dm644 share/fish/vendor_conf.d/mise-activate.fish \
+    ${STAGING_DIR}/usr/share/fish/vendor_conf.d/mise-activate.fish
+
+# Shell completions generated from the binary itself. The binary only needs
+# glibc, which is present in the strict-isolation read-only lower layer.
+# mkdir -p first: shell redirect does not create parents (unlike install -D).
+mkdir -p ${STAGING_DIR}/usr/share/bash-completion/completions
+mkdir -p ${STAGING_DIR}/usr/share/zsh/site-functions
+mkdir -p ${STAGING_DIR}/usr/share/fish/vendor_completions.d
+./bin/mise completion bash > ${STAGING_DIR}/usr/share/bash-completion/completions/mise
+./bin/mise completion zsh  > ${STAGING_DIR}/usr/share/zsh/site-functions/_mise
+./bin/mise completion fish > ${STAGING_DIR}/usr/share/fish/vendor_completions.d/mise.fish'''
+
+[[output]]
+runtime_deps = ['glibc']

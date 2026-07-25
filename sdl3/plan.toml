@@ -1,5 +1,5 @@
 name = "sdl3"
-version = "3.4.8"
+version = "3.4.12"
 release = 1
 description = "Simple DirectMedia Layer 3"
 license = "Zlib"

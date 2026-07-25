@@ -1,5 +1,5 @@
 name = "sudo-rs"
-version = "0.2.13"
+version = "0.2.14"
 release = 1
 description = "A memory safe implementation of sudo and su written in Rust"
 license = "Apache-2.0 OR MIT"

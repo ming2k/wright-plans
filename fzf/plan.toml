@@ -1,6 +1,6 @@
 name = "fzf"
-version = "0.66.1"
-release = 2
+version = "0.74.1"
+release = 1
 description = "Command-line fuzzy finder"
 license = "MIT"
 arch = "x86_64"

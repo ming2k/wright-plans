@@ -1,5 +1,5 @@
 name = "zed-bin"
-version = "1.10.3"
+version = "1.12.0"
 release = 1
 description = "Prebuilt upstream Zed code editor binary distribution"
 license = "GPL-3.0-or-later AND Apache-2.0"

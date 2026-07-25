@@ -1,6 +1,6 @@
 name = "libunwind"
-version = "1.8.1"
-release = 2
+version = "1.8.3"
+release = 1
 description = "Portable and efficient C programming interface (API) to determine the call-chain of a program"
 license = "MIT"
 arch = "x86_64"
@@ -9,7 +9,7 @@ arch = "x86_64"
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://github.com/libunwind/libunwind/releases/download/v1.8.1/libunwind-1.8.1.tar.gz"
+url = "https://github.com/libunwind/libunwind/releases/download/v${VERSION}/libunwind-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]

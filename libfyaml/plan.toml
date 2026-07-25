@@ -1,6 +1,6 @@
 name = "libfyaml"
-version = "0.9"
-release = 3
+version = "0.9.6"
+release = 1
 description = "Fully feature complete YAML parser and emitter"
 license = "MIT"
 arch = "x86_64"

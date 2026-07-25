@@ -1,5 +1,5 @@
 name = "fish"
-version = "4.5.0"
+version = "4.8.1"
 release = 1
 description = "Smart and user-friendly command line shell"
 license = "GPL-2.0-only AND BSD-3-Clause AND ISC AND MIT AND PSF-2.0"

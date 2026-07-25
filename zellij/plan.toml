@@ -1,5 +1,5 @@
 name = "zellij"
-version = "0.44.1"
+version = "0.44.3"
 release = 1
 description = "A terminal workspace with batteries included"
 license = "MIT"

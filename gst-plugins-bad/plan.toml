@@ -1,6 +1,6 @@
 name = "gst-plugins-bad"
-version = "1.28.0"
-release = 2
+version = "1.28.2"
+release = 1
 description = "GStreamer Bad Plugins"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
@@ -10,8 +10,8 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "32d825041e5775fc9bf9e8c38e3a5c46c1441eee67f8112572450a9c23c835f0"
-url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-1.28.0.tar.xz"
+sha256 = "6467e3964828f4d7d08bfe1fbb4d76287a1c8fa76674e59e101a149c020fefd7"
+url = "https://gstreamer.freedesktop.org/src/gst-plugins-bad/gst-plugins-bad-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.configure]

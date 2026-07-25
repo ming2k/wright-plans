@@ -1,5 +1,5 @@
 name = "github-cli"
-version = "2.88.1"
+version = "2.96.0"
 release = 1
 description = "GitHub CLI"
 license = "MIT"

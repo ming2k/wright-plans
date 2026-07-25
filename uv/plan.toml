@@ -1,0 +1,37 @@
+name = "uv"
+version = "0.11.6"
+release = 1
+description = "Extremely fast Python package and project manager, written in Rust"
+license = "MIT OR Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/astral-sh/uv"
+
+# Prebuilt upstream binaries (uv + uvx launcher). Only glibc is needed at
+# runtime. Installed to /usr/bin/uv so uv's built-in package-manager detection
+# kicks in and `uv self update` refuses to run — upgrades must go through wright.
+[[sources]]
+type = "http"
+sha256 = "0c6bab77a67a445dc849ed5e8ee8d3cb333b6e2eba863643ce1e228075f27943"
+url = "https://github.com/astral-sh/uv/releases/download/${VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz"
+extract_to = "source"
+
+[pipeline.staging]
+script = '''
+cd source/uv-x86_64-unknown-linux-gnu
+
+# Binaries — uvx is a separate launcher shipped upstream (not a symlink)
+install -Dm755 uv  ${STAGING_DIR}/usr/bin/uv
+install -Dm755 uvx ${STAGING_DIR}/usr/bin/uvx
+
+# Shell completions generated from the binary itself. The binary only needs
+# glibc, which is present in the strict-isolation read-only lower layer.
+# mkdir -p first: shell redirect does not create parents (unlike install -D).
+mkdir -p ${STAGING_DIR}/usr/share/bash-completion/completions
+mkdir -p ${STAGING_DIR}/usr/share/zsh/site-functions
+mkdir -p ${STAGING_DIR}/usr/share/fish/vendor_completions.d
+./uv generate-shell-completion bash > ${STAGING_DIR}/usr/share/bash-completion/completions/uv
+./uv generate-shell-completion zsh  > ${STAGING_DIR}/usr/share/zsh/site-functions/_uv
+./uv generate-shell-completion fish > ${STAGING_DIR}/usr/share/fish/vendor_completions.d/uv.fish'''
+
+[[output]]
+runtime_deps = ['glibc']

@@ -1,5 +1,5 @@
 name = "xml-parser"
-version = "2.47"
+version = "2.59"
 release = 1
 description = "Perl interface to the Expat XML parser"
 license = "Artistic-1.0-Perl OR GPL-1.0-or-later"

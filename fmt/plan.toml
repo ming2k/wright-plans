@@ -1,5 +1,5 @@
 name = "fmt"
-version = "12.1.0"
+version = "12.2.0"
 release = 1
 description = "Fast and safe alternative to C stdio and C++ iostreams"
 license = "MIT"

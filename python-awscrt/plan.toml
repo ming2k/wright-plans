@@ -1,5 +1,5 @@
 name = "python-awscrt"
-version = "0.32.2"
+version = "0.36.1"
 release = 1
 description = "A common runtime for AWS Python projects"
 license = "Apache-2.0"

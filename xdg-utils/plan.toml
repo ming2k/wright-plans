@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/xdg-utils/"
 
 
-build_deps = ['xmlto']
+build_deps = []
 
 [[sources]]
 type = "http"
@@ -23,7 +23,7 @@ cd source/xdg-utils-${VERSION}
 [pipeline.compile]
 script = '''
 cd source/xdg-utils-${VERSION}
-sed -i 's#^XMLTO[[:space:]]*=.*#XMLTO           = /usr/bin/xmlto --skip-validation#' scripts/Makefile
+sed -i 's#^XMLTO[[:space:]]*=.*#XMLTO           = /bin/true#' scripts/Makefile
 export LYNX_CFG=/etc/lynx.cfg
 make -j$(nproc)'''
 

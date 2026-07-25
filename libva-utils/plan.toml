@@ -1,5 +1,5 @@
 name = "libva-utils"
-version = "2.23.0"
+version = "2.24.0"
 release = 1
 description = "Utilities for VA-API, including vainfo"
 license = "MIT"

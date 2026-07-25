@@ -1,5 +1,5 @@
 name = "fd"
-version = "10.3.0"
+version = "10.4.2"
 release = 1
 description = "Simple, fast and user-friendly alternative to find"
 license = "Apache-2.0 OR MIT"

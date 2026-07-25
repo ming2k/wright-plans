@@ -1,5 +1,5 @@
 name = "libproxy"
-version = "0.5.8"
+version = "0.5.12"
 release = 1
 description = "Library that provides automatic proxy configuration management"
 license = "LGPL-2.1-or-later"

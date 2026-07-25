@@ -1,6 +1,6 @@
 name = "p11-kit"
-version = "0.26.2"
-release = 3
+version = "0.26.4"
+release = 1
 description = "Library for loading and sharing PKCS#11 modules"
 license = "BSD-3-Clause"
 arch = "x86_64"

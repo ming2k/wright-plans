@@ -1,5 +1,5 @@
 name = "starship"
-version = "1.25.1"
+version = "1.26.0"
 release = 1
 description = "The minimal, blazing-fast, and infinitely customizable prompt for any shell"
 license = "ISC"

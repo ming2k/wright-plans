@@ -1,5 +1,5 @@
 name = "libplacebo"
-version = "7.360.0"
+version = "7.360.1"
 release = 1
 description = "Reusable library for GPU-accelerated image/video processing"
 license = "LGPL-2.1-or-later"

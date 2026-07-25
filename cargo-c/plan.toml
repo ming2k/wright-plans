@@ -1,6 +1,6 @@
 name = "cargo-c"
-version = "0.10.20"
-release = 2
+version = "0.10.24"
+release = 1
 description = "Helper to build and install C-ABI compatible dynamic and static libraries from Rust"
 license = "MIT"
 arch = "x86_64"

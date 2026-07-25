@@ -1,6 +1,6 @@
 name = "libfuse3"
-version = "3.18.1"
-release = 6
+version = "3.18.2"
+release = 1
 description = "Filesystem in Userspace"
 license = "GPL-2.0-only AND LGPL-2.1-only"
 arch = "x86_64"

@@ -1,5 +1,5 @@
 name = "eza"
-version = "0.23.4"
+version = "0.23.5"
 release = 1
 description = "A modern, maintained replacement for ls"
 license = "MIT"

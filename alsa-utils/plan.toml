@@ -7,7 +7,6 @@ arch = "x86_64"
 url = "https://www.alsa-project.org"
 
 link_deps = ['alsa-lib', 'ncurses']
-build_deps = ['xmlto']
 
 [[sources]]
 type = "http"

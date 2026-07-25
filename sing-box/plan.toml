@@ -1,6 +1,6 @@
 name = "sing-box"
-version = "1.13.13"
-release = 2
+version = "1.13.14"
+release = 1
 description = "The universal proxy platform"
 license = "GPL-3.0-or-later"
 arch = "x86_64"

@@ -1,5 +1,5 @@
 name = "go-bootstrap"
-version = "1.26.2"
+version = "1.26.3"
 release = 1
 description = "Bootstrap Go toolchain used to build Go from source"
 license = "BSD-3-Clause"

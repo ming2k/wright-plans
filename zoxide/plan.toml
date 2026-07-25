@@ -1,5 +1,5 @@
 name = "zoxide"
-version = "0.9.9"
+version = "0.10.0"
 release = 1
 description = "A smarter cd command"
 license = "MIT"

@@ -1,5 +1,5 @@
 name = "gst-plugins-good"
-version = "1.28.0"
+version = "1.28.2"
 release = 1
 description = "GStreamer Good Plugins"
 license = "LGPL-2.0-or-later"
@@ -10,8 +10,8 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "d97700f346fdf9ef5461c035e23ed1ce916ca7a31d6ddad987f774774361db77"
-url = "https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-1.28.0.tar.xz"
+sha256 = "1ace2d8ec74f632d82eab5006753a27fe0c2402db4ca94d63271e494b62f50bf"
+url = "https://gstreamer.freedesktop.org/src/gst-plugins-good/gst-plugins-good-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.configure]

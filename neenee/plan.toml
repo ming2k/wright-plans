@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/ming2k/neenee"
 
 link_deps = ['gcc:gcc-libs', 'glibc']
-build_deps = ['rust', 'pkg-config', 'cmake', 'perl']
+build_deps = ['rust', 'pkgconf', 'cmake', 'perl']
 
 [[sources]]
 type = "http"
