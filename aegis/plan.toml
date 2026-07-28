@@ -1,0 +1,74 @@
+name = "aegis"
+version = "0.0.1"
+release = 1
+description = "Aegis Wayland compositor and desktop shell"
+license = "Apache-2.0"
+arch = "x86_64"
+url = "https://github.com/ming2k/aegis"
+
+# aegis is a Rust workspace that links the sibling `optics` C libraries
+# (flux / flux-text / flux-scene-graph / lens / iris) and the usual Wayland
+# stack. The optics crate bindings (flux-rs / lens-rs / iris-rs) live in the
+# optics repo and are consumed as Cargo path deps into ../optics/bindings/*,
+# so this plan fetches the optics source tree a second time and stages it as
+# a sibling (`${WORKDIR}/optics`) of the aegis checkout. The -sys crates link
+# the built C libs through pkg-config; FLUX/LENS/IRIS_USE_INSTALLED=1 makes
+# them skip the in-tree meson probe and use the parts from the optics plan.
+build_deps = ['rust', 'wayland', 'wayland-protocols', 'libdrm', 'libxkbcommon', 'libinput', 'seatd', 'systemd', 'pipewire', 'vulkan-loader', 'vulkan-headers', 'pkgconf', 'flux', 'flux-text', 'flux-scene-graph', 'lens', 'iris']
+link_deps = ['flux', 'flux-text', 'flux-scene-graph', 'lens', 'iris', 'wayland', 'libdrm', 'libxkbcommon', 'libinput', 'seatd', 'systemd', 'pipewire', 'vulkan-loader']
+
+[[sources]]
+type = "git"
+url = "https://github.com/ming2k/aegis.git"
+ref = "e4b830dbcd287de00a95419a0669bae8cd13d657"
+extract_to = "source"
+
+# optics source tree → ${WORKDIR}/optics, a sibling of `source`.
+# aegis's Cargo.toml path-deps read ../optics/bindings/* relative to
+# ${WORKDIR}/source. Pin to the SAME v0.0.1 tag the optics plan builds.
+[[sources]]
+type = "git"
+url = "https://github.com/ming2k/optics.git"
+ref = "refs/tags/v0.0.1"
+extract_to = "optics"
+
+[pipeline.compile]
+isolation = "relaxed"
+# NOTE: no --locked. aegis path-depends on ../optics/bindings/* (Rust binding
+# crates that live in the optics repo); resolving those path deps mutates
+# Cargo.lock, so --locked aborts with "cannot update the lock file". This plan
+# builds the whole workspace so all five binaries are produced.
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target', FLUX_USE_INSTALLED = '1', LENS_USE_INSTALLED = '1', IRIS_USE_INSTALLED = '1' }
+script = '''
+cd source
+cargo build --release --workspace'''
+
+[pipeline.staging]
+script = '''
+src="${WORKDIR}/source"
+bin="${WORKDIR}/target/release"
+out="${STAGING_DIR}/usr"
+
+for b in aegis aegis-settings aegis-ctl aegis-fuji-mcp aegis-portal; do
+    install -Dm755 "$bin/$b" "$out/bin/$b"
+done
+
+install -Dm644 "$src/contrib/io.github.ming2k.aegis.Settings.desktop" \
+    "$out/share/applications/io.github.ming2k.aegis.Settings.desktop"
+install -Dm644 "$src/contrib/icons/hicolor/scalable/apps/io.github.ming2k.aegis.Settings.svg" \
+    "$out/share/icons/hicolor/scalable/apps/io.github.ming2k.aegis.Settings.svg"
+install -Dm644 "$src/contrib/systemd/user/aegis.service" \
+    "$out/lib/systemd/user/aegis.service"
+install -Dm644 "$src/contrib/dbus-1/services/org.freedesktop.impl.portal.desktop.aegis.service" \
+    "$out/share/dbus-1/services/org.freedesktop.impl.portal.desktop.aegis.service"
+install -Dm644 "$src/contrib/xdg-desktop-portal/portals/aegis.portal" \
+    "$out/share/xdg-desktop-portal/portals/aegis.portal"
+install -Dm644 "$src/contrib/xdg-desktop-portal/aegis-portals.conf" \
+    "$out/share/xdg-desktop-portal/aegis-portals.conf"'''
+
+[[output]]
+runtime_deps = ['flux', 'flux-text', 'flux-scene-graph', 'lens', 'iris', 'seatd', 'pipewire', 'libinput', 'systemd', 'wayland', 'libxkbcommon', 'vulkan-loader']
+
+[output.hooks]
+post_install = 'systemctl --user daemon-reload 2>/dev/null || true'
+post_upgrade = 'systemctl --user daemon-reload 2>/dev/null || true'

@@ -1,0 +1,102 @@
+name = "optics"
+version = "0.0.1"
+release = 2
+description = "Optics rendering libraries: flux (Vulkan), lens (UI), iris"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/ming2k/optics"
+
+build_deps = ['meson', 'ninja', 'glslang', 'pkgconf', 'vulkan-headers']
+link_deps = ['vulkan-loader', 'glibc', 'fontconfig', 'harfbuzz', 'freetype', 'fribidi']
+
+[[sources]]
+type = "http"
+url = "https://github.com/ming2k/optics/archive/refs/tags/v0.0.1.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/optics-0.0.1
+meson setup build --prefix=/usr --buildtype=release \
+    -Dcanvas=true \
+    -Dtext=true \
+    -Dscene-graph=true \
+    -Dcompute=true \
+    -Deffect=true \
+    -Dexamples=false \
+    -Dtests=false
+'''
+
+[pipeline.compile]
+script = '''
+cd source/optics-0.0.1
+ninja -C build
+'''
+
+[pipeline.staging]
+script = '''
+cd source/optics-0.0.1
+DESTDIR="$STAGING_DIR" meson install -C build
+'''
+
+[[output]]
+name = "flux"
+description = "libflux Vulkan-first graphics library"
+include = [
+    "/usr/include/flux/**",
+    "/usr/lib/libflux.so",
+    "/usr/lib/libflux.so.*",
+    "/usr/lib/pkgconfig/flux.pc",
+]
+runtime_deps = ['glibc', 'vulkan-loader']
+
+[[output]]
+name = "flux-text"
+description = "libflux_text HarfBuzz shaping sibling of flux"
+include = [
+    "/usr/include/flux-text/**",
+    "/usr/lib/libflux_text.so",
+    "/usr/lib/pkgconfig/flux-text.pc",
+]
+runtime_deps = ['flux', 'glibc', 'freetype', 'harfbuzz', 'fontconfig', 'fribidi']
+
+[[output]]
+name = "flux-scene-graph"
+description = "libflux_scene_graph glTF/scene-graph sibling of flux"
+include = [
+    "/usr/include/flux-scene-graph/**",
+    "/usr/lib/libflux_scene_graph.so",
+    "/usr/lib/pkgconfig/flux-scene-graph.pc",
+]
+runtime_deps = ['flux', 'glibc']
+
+[[output]]
+name = "lens"
+description = "liblens immediate-mode UI over a retained core"
+include = [
+    "/usr/include/lens/**",
+    "/usr/lib/liblens.so",
+    "/usr/lib/liblens.so.*",
+    "/usr/lib/pkgconfig/lens.pc",
+]
+runtime_deps = ['flux', 'flux-text', 'glibc']
+
+[[output]]
+name = "iris"
+description = "libiris windowing/UI layer over lens"
+include = [
+    "/usr/include/iris/**",
+    "/usr/lib/libiris.so",
+    "/usr/lib/libiris.so.*",
+    "/usr/lib/pkgconfig/iris.pc",
+]
+runtime_deps = ['lens', 'glibc', 'wayland', 'libxkbcommon', 'vulkan-loader']
+
+# NOTE: an earlier revision (release 1) of this plan shipped a single "optics"
+# meta-part bundling every header + .so, with the five libraries above as its
+# runtime_deps. That part still sits in parts/optics-0.0.1-1-*.wright.tar.zst as
+# a historical artifact. The current (release 2) design is granular: depend on
+# the concrete part(s) you need (flux, flux-text, flux-scene-graph, lens, iris)
+# rather than the meta. aegis, for example, links flux + flux-text +
+# flux-scene-graph + lens + iris directly.
