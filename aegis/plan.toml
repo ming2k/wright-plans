@@ -1,47 +1,55 @@
 name = "aegis"
-version = "0.0.1"
+version = "0.0.8"
 release = 1
 description = "Aegis Wayland compositor and desktop shell"
-license = "Apache-2.0"
+license = "MIT AND GPL-3.0-only"
 arch = "x86_64"
 url = "https://github.com/ming2k/aegis"
 
-# aegis is a Rust workspace that links the sibling `optics` C libraries
-# (flux / flux-text / flux-scene-graph / lens / iris) and the usual Wayland
-# stack. The optics crate bindings (flux-rs / lens-rs / iris-rs) live in the
-# optics repo and are consumed as Cargo path deps into ../optics/bindings/*,
-# so this plan fetches the optics source tree a second time and stages it as
-# a sibling (`${WORKDIR}/optics`) of the aegis checkout. The -sys crates link
-# the built C libs through pkg-config; FLUX/LENS/IRIS_USE_INSTALLED=1 makes
-# them skip the in-tree meson probe and use the parts from the optics plan.
-build_deps = ['rust', 'wayland', 'wayland-protocols', 'libdrm', 'libxkbcommon', 'libinput', 'seatd', 'systemd', 'pipewire', 'vulkan-loader', 'vulkan-headers', 'pkgconf', 'flux', 'flux-text', 'flux-scene-graph', 'lens', 'iris']
-link_deps = ['flux', 'flux-text', 'flux-scene-graph', 'lens', 'iris', 'wayland', 'libdrm', 'libxkbcommon', 'libinput', 'seatd', 'systemd', 'pipewire', 'vulkan-loader']
+# Optics is a separate multi-output plan. Depend on the concrete outputs it
+# ships, NOT the deprecated `optics` meta-part (see the optics plan's own
+# note). The native .so/.pc/headers from these parts are what the aegis -sys
+# build scripts link via pkg-config at build time, and what the built
+# compositor dlopen/loaders at runtime.
+build_deps = [
+    'rust',
+    'wayland', 'wayland-protocols',
+    'libdrm', 'libxkbcommon', 'libinput', 'seatd',
+    'systemd', 'pipewire',
+    'vulkan-loader', 'vulkan-headers',
+    'pkgconf',
+    'optics:flux', 'optics:flux-text', 'optics:flux-scene-graph',
+    'optics:lens', 'optics:iris',
+]
+link_deps = [
+    'optics:flux', 'optics:flux-text', 'optics:flux-scene-graph',
+    'optics:lens', 'optics:iris',
+    'wayland', 'libdrm', 'libxkbcommon', 'libinput', 'seatd',
+    'systemd', 'pipewire', 'vulkan-loader',
+]
 
+# Single source: aegis only. Since 0.0.5 the workspace Cargo.toml resolves the
+# Optics Rust bindings from the locked v0.0.3 git tag (commit 8fa0a0c5) and
+# links the C libraries via pkg-config against the installed optics parts
+# above — so the build no longer needs a sibling ../optics source checkout, no
+# FLUX_BUILD_DIR probe, and no *_USE_INSTALLED override. The -sys build scripts
+# fall straight through to system pkg-config.
 [[sources]]
 type = "git"
 url = "https://github.com/ming2k/aegis.git"
-ref = "e4b830dbcd287de00a95419a0669bae8cd13d657"
+ref = "refs/tags/v${VERSION}"
+depth = 1
 extract_to = "source"
-
-# optics source tree → ${WORKDIR}/optics, a sibling of `source`.
-# aegis's Cargo.toml path-deps read ../optics/bindings/* relative to
-# ${WORKDIR}/source. Pin to the SAME v0.0.1 tag the optics plan builds.
-[[sources]]
-type = "git"
-url = "https://github.com/ming2k/optics.git"
-ref = "refs/tags/v0.0.1"
-extract_to = "optics"
 
 [pipeline.compile]
 isolation = "relaxed"
-# NOTE: no --locked. aegis path-depends on ../optics/bindings/* (Rust binding
-# crates that live in the optics repo); resolving those path deps mutates
-# Cargo.lock, so --locked aborts with "cannot update the lock file". This plan
-# builds the whole workspace so all five binaries are produced.
-env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target', FLUX_USE_INSTALLED = '1', LENS_USE_INSTALLED = '1', IRIS_USE_INSTALLED = '1' }
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
 cd source
-cargo build --release --workspace'''
+# --locked: Cargo.lock pins every binding to optics tag v0.0.3 and is committed.
+# No sibling ../optics path-deps remain, so the lockfile resolves unchanged.
+# Build the whole workspace so all six binaries are produced.
+cargo build --locked --release --workspace'''
 
 [pipeline.staging]
 script = '''
@@ -49,26 +57,58 @@ src="${WORKDIR}/source"
 bin="${WORKDIR}/target/release"
 out="${STAGING_DIR}/usr"
 
-for b in aegis aegis-settings aegis-ctl aegis-fuji-mcp aegis-portal; do
+# Six workspace binaries → /usr/bin.
+for b in aegis aegis-settings aegis-ctl aegis-portal aegis-fuji-mcp fuji; do
     install -Dm755 "$bin/$b" "$out/bin/$b"
 done
 
+# Desktop entry + icon.
 install -Dm644 "$src/contrib/io.github.ming2k.aegis.Settings.desktop" \
     "$out/share/applications/io.github.ming2k.aegis.Settings.desktop"
 install -Dm644 "$src/contrib/icons/hicolor/scalable/apps/io.github.ming2k.aegis.Settings.svg" \
     "$out/share/icons/hicolor/scalable/apps/io.github.ming2k.aegis.Settings.svg"
+
+# systemd user unit (ExecStart=/usr/bin/aegis ...). Keep its Delegate=cpu
+# memory pids — Realm sandboxing depends on the delegated controllers.
 install -Dm644 "$src/contrib/systemd/user/aegis.service" \
     "$out/lib/systemd/user/aegis.service"
+
+# D-Bus activation for the portal backend (Exec=/usr/bin/aegis-portal).
 install -Dm644 "$src/contrib/dbus-1/services/org.freedesktop.impl.portal.desktop.aegis.service" \
     "$out/share/dbus-1/services/org.freedesktop.impl.portal.desktop.aegis.service"
+
+# xdg-desktop-portal integration.
 install -Dm644 "$src/contrib/xdg-desktop-portal/portals/aegis.portal" \
     "$out/share/xdg-desktop-portal/portals/aegis.portal"
 install -Dm644 "$src/contrib/xdg-desktop-portal/aegis-portals.conf" \
-    "$out/share/xdg-desktop-portal/aegis-portals.conf"'''
+    "$out/share/xdg-desktop-portal/aegis-portals.conf"
+
+# Bundled Bibata-Modern-Ice (GPL-3.0) license disclosure. The theme is embedded
+# into the aegis binary via include_dir, so its LICENSE/NOTICE must ship too.
+install -Dm644 "$src/assets/cursors/Bibata-Modern-Ice/LICENSE" \
+    "$out/share/licenses/aegis/Bibata-Modern-Ice/LICENSE"
+install -Dm644 "$src/assets/cursors/Bibata-Modern-Ice/NOTICE" \
+    "$out/share/licenses/aegis/Bibata-Modern-Ice/NOTICE"'''
 
 [[output]]
-runtime_deps = ['flux', 'flux-text', 'flux-scene-graph', 'lens', 'iris', 'seatd', 'pipewire', 'libinput', 'systemd', 'wayland', 'libxkbcommon', 'vulkan-loader']
+runtime_deps = [
+    'optics:flux', 'optics:flux-text', 'optics:flux-scene-graph',
+    'optics:lens', 'optics:iris',
+    'seatd', 'pipewire', 'libinput', 'systemd',
+    'wayland', 'libxkbcommon', 'vulkan-loader',
+]
 
 [output.hooks]
-post_install = 'systemctl --user daemon-reload 2>/dev/null || true'
-post_upgrade = 'systemctl --user daemon-reload 2>/dev/null || true'
+# Reload the user-unit catalog so the new aegis.service is picked up. Desktop
+# and icon caches are refreshed as a courtesy; they are advisory (|| true)
+# because these tools may be absent on a minimal wright-managed system.
+post_install = '''
+systemctl --user daemon-reload 2>/dev/null || true
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true
+'''
+post_upgrade = '''
+systemctl --user daemon-reload 2>/dev/null || true
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true
+'''

@@ -1,0 +1,92 @@
+name = "wavora"
+version = "0.0.9"
+release = 1
+description = "A local, visually immersive music player built with the Optics graphics stack"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/ming2k/wavora"
+
+# Optics is a separate multi-output plan. Depend on the concrete outputs it
+# ships, NOT the deprecated `optics` meta-part (see the optics plan's own
+# note). The native .so/.pc/headers from these parts are what the wavora -sys
+# build scripts link via pkg-config at build time, and what the player
+# dlopen/loaders at runtime.
+build_deps = [
+    'rust',
+    'pkgconf',
+    'vulkan-headers',
+    'wayland', 'wayland-protocols',
+    'libxkbcommon',
+    # Optics C libraries (iris pulls lens pulls flux; flux-text is a sibling
+    # the -sys bindings still discover through pkg-config).
+    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    # GStreamer audio output backend. wavora decodes with pure-Rust symphonia,
+    # so it needs the core + gst-plugins-base (libgstapp) for the appsrc
+    # pipeline, not codec-element plugins.
+    'gstreamer', 'gst-plugins-base',
+]
+link_deps = [
+    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    'vulkan-loader', 'wayland', 'libxkbcommon',
+    'gstreamer', 'gst-plugins-base',
+    'glibc',
+]
+
+# Single source: wavora. The workspace Cargo.toml resolves the Optics Rust
+# bindings from the locked commit 8fa0a0c5 (Optics v0.0.3) and links the C libraries via
+# pkg-config against the installed optics parts above — so the build needs no
+# sibling ../optics source checkout and no *_BUILD_DIR override. The -sys
+# build scripts fall straight through to system pkg-config.
+[[sources]]
+type = "git"
+url = "https://github.com/ming2k/wavora.git"
+ref = "refs/tags/v${VERSION}"
+depth = 1
+extract_to = "source"
+
+[pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
+script = '''
+cd source
+# --locked: Cargo.lock pins the Optics Rust bindings to commit 8fa0a0c5
+# (Optics v0.0.3, matching the installed optics parts) and is committed, so
+# the git deps resolve unchanged. No sibling ../optics path-deps remain.
+cargo build --locked --release'''
+
+[pipeline.staging]
+script = '''
+src="${WORKDIR}/source"
+bin="${WORKDIR}/target/release"
+out="${STAGING_DIR}/usr"
+pkg="${src}/packaging"
+
+install -Dm755 "$bin/wavora" "$out/bin/wavora"
+install -Dm644 "$pkg/io.github.ming2k.Wavora.desktop" \
+    "$out/share/applications/io.github.ming2k.Wavora.desktop"
+install -Dm644 "$pkg/io.github.ming2k.Wavora.svg" \
+    "$out/share/icons/hicolor/scalable/apps/io.github.ming2k.Wavora.svg"
+install -Dm644 "$pkg/io.github.ming2k.Wavora.metainfo.xml" \
+    "$out/share/metainfo/io.github.ming2k.Wavora.metainfo.xml"
+install -Dm644 "$src/LICENSE" "$out/share/licenses/wavora/LICENSE"
+install -Dm644 "$src/README.md" "$out/share/doc/wavora/README.md"'''
+
+[[output]]
+runtime_deps = [
+    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    'vulkan-loader', 'wayland', 'libxkbcommon',
+    'gstreamer', 'gst-plugins-base',
+    'glibc',
+]
+
+[output.hooks]
+# Refresh desktop/icon/metainfo caches. Advisory (|| true): these tools may be
+# absent on a minimal wright-managed system.
+post_install = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true
+'''
+post_upgrade = '''
+update-desktop-database -q /usr/share/applications 2>/dev/null || true
+gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true
+'''
