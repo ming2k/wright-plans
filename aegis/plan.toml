@@ -1,5 +1,5 @@
 name = "aegis"
-version = "0.0.11"
+version = "0.0.13"
 release = 1
 description = "Aegis Wayland compositor and desktop shell"
 license = "MIT AND GPL-3.0-only"
@@ -24,7 +24,7 @@ link_deps = [
 [[sources]]
 type = "http"
 url = "https://github.com/aegis-shell/aegis/archive/refs/tags/v${VERSION}.tar.gz"
-sha256 = "8a4c98626337d1c0102a3c87a6b840759c422f27e92126b3fca0b5a5c6ac7e50"
+sha256 = "c7a7b0c3116e3cb2abcc0fb2e794bffd12605170b7af3152f11856882883c27b"
 extract_to = "source"
 
 [pipeline.configure]

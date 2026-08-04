@@ -1,6 +1,6 @@
 name = "xdg-desktop-portal-aegis"
 version = "0.0.4"
-release = 1
+release = 2
 description = "XDG Desktop Portal backend for the Aegis compositor"
 license = "MIT AND GPL-3.0-only"
 arch = "x86_64"
@@ -49,9 +49,9 @@ install -Dm644 LICENSE \
 [[output]]
 # Aegis is a runtime provider for compositor-owned protocol-24 resources,
 # not a source or build dependency. Portal v0.0.4's protocol-24 client is
-# wire-compatible with the Aegis v0.0.12 runtime.
+# wire-compatible with the Aegis v0.0.13 runtime.
 runtime_deps = [
-    'aegis = 0.0.12',
+    'aegis = 0.0.13',
     'gtk4 >= 4.10', 'linux-pam', 'pipewire >= 0.3', 'wireplumber',
     'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'xdg-utils',
     'gcc:gcc-libs', 'glibc',
