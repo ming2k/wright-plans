@@ -1,5 +1,5 @@
 name = "xdg-desktop-portal-aegis"
-version = "0.0.3"
+version = "0.0.4"
 release = 1
 description = "XDG Desktop Portal backend for the Aegis compositor"
 license = "MIT AND GPL-3.0-only"
@@ -15,14 +15,14 @@ link_deps = [
 [[sources]]
 type = "http"
 url = "https://github.com/aegis-shell/xdg-desktop-portal-aegis/archive/refs/tags/v${VERSION}.tar.gz"
-sha256 = "963451c7223ce242b56d639f7e01b672859dcc991baf325d43d6a3a8bf947fe1"
+sha256 = "66e840a2db0097b4ed4fec612ac7af1d1fb655b3bc21f429787a8a8c0258ce03"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
 cd source/xdg-desktop-portal-aegis-${VERSION}
-# Local Aegis path overrides are worktree state and must not enter a package
-# build. The release lockfile pins the exact Aegis v0.0.11 IPC crates.
+# Portal v0.0.4 owns its narrow protocol-24 wire projection. The release
+# lockfile contains no Aegis source packages or sibling-checkout overrides.
 test ! -e .cargo/config.toml
 meson setup build \
     --prefix=/usr \
@@ -32,7 +32,7 @@ meson setup build \
 
 [pipeline.compile]
 isolation = "relaxed"
-env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_NET_GIT_FETCH_WITH_CLI = 'true' }
+env = { CARGO_HOME = '${WORKDIR}/.cargo' }
 script = '''
 cd source/xdg-desktop-portal-aegis-${VERSION}
 meson compile -C build
@@ -47,8 +47,11 @@ install -Dm644 LICENSE \
 '''
 
 [[output]]
+# Aegis is a runtime provider for compositor-owned protocol-24 resources,
+# not a source or build dependency. Portal v0.0.4's protocol-24 client is
+# wire-compatible with the Aegis v0.0.12 runtime.
 runtime_deps = [
-    'aegis = 0.0.11',
+    'aegis = 0.0.12',
     'gtk4 >= 4.10', 'linux-pam', 'pipewire >= 0.3', 'wireplumber',
     'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'xdg-utils',
     'gcc:gcc-libs', 'glibc',
