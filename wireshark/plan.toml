@@ -37,9 +37,9 @@ script = '''
 cd source/wireshark-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[hooks]
-post_install = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
-post_upgrade = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
-
 [[output]]
 runtime_deps = ['c-ares', 'glib', 'libcap', 'libgcrypt', 'libpcap', 'libxml2', 'pcre2', 'qt6-5compat', 'qt6-base', 'qt6-svg', 'speexdsp', 'zlib']
+
+[output.hooks]
+post_install = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"
+post_upgrade = "setcap 'cap_net_admin,cap_net_raw=+ep' /usr/bin/dumpcap 2>/dev/null || true"

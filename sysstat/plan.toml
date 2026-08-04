@@ -48,7 +48,7 @@ fi'''
 runtime_deps = ['systemd']
 backup = ["/etc/default/sysstat"]
 
-[hooks]
+[output.hooks]
 post_install = "systemctl enable --now sysstat 2>/dev/null || true"
 post_upgrade = "systemctl try-restart sysstat 2>/dev/null || true"
 pre_remove = "systemctl disable --now sysstat 2>/dev/null || true"

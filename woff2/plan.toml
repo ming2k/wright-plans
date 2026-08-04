@@ -11,17 +11,17 @@ build_deps = ['cmake', 'pkgconf']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://github.com/google/woff2/archive/v1.0.2.tar.gz"
+url = "https://github.com/google/woff2/archive/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.prepare]
 script = '''
 cd source/woff2-${VERSION}
 
-# 修复 1: 提升 CMake 最低版本要求以兼容 CMake 4.x
+# Raise the declared minimum to remain compatible with CMake 4.x.
 sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/cmake_minimum_required(VERSION 3.5)/' CMakeLists.txt
 
-# 修复 2: 添加缺失的头文件 <cstdint> 以修复 GCC 13+ 上的 'uint8_t does not name a type' 错误
+# GCC 13+ requires <cstdint> for uint8_t in this header.
 sed -i '/#include <string>/a #include <cstdint>' include/woff2/output.h'''
 
 [pipeline.configure]
@@ -40,7 +40,7 @@ script = '''
 cd source/woff2-${VERSION}/build
 make DESTDIR=${STAGING_DIR} install
 
-# 手动生成 WebKitGTK 所需的 pkg-config 文件
+# Generate the pkg-config metadata required by WebKitGTK.
 mkdir -p ${STAGING_DIR}/usr/lib/pkgconfig
 
 cat > ${STAGING_DIR}/usr/lib/pkgconfig/libwoff2common.pc << 'PC'

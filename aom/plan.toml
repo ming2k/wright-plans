@@ -18,11 +18,10 @@ extract_to = "source"
 script = '''
 cd source/libaom-${VERSION}
 
-# 修复: GCC 15 需要显式包含 <cstdint> 才能使用 uint32_t/uint64_t
-# 问题出在捆绑的第三方库 libwebm 中
+# GCC 15 requires <cstdint> for uint32_t and uint64_t in the bundled libwebm.
 sed -i '/#include <cassert>/a #include <cstdint>' third_party/libwebm/mkvparser/mkvparser.cc
 
-# 可选: 消除 CMake 版本过低的警告 (虽然不是致命错误，但修一下更好)
+# Raise the minimum CMake version to silence compatibility warnings under CMake 4.x.
 find . -name "*.cmake" -exec sed -i 's/cmake_minimum_required(VERSION [0-9.]*)/cmake_minimum_required(VERSION 3.10)/' {} +'''
 
 [pipeline.configure]

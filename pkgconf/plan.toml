@@ -30,5 +30,4 @@ make DESTDIR=${STAGING_DIR} install
 ln -sf pkgconf ${STAGING_DIR}/usr/bin/pkg-config'''
 
 [[output]]
-provides = ["pkg-config"]
 conflicts = ["pkg-config"]

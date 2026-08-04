@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <rewriteSystem systemIdStartString="http://cdn.docbook.org/release/xsl-nons/1.79.2/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+  <rewriteSystem systemIdStartString="https://cdn.docbook.org/release/xsl-nons/1.79.2/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+  <rewriteSystem systemIdStartString="http://cdn.docbook.org/release/xsl-nons/current/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+  <rewriteSystem systemIdStartString="https://cdn.docbook.org/release/xsl-nons/current/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+  <rewriteSystem systemIdStartString="http://docbook.sourceforge.net/release/xsl/current/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+
+  <rewriteURI uriStartString="http://cdn.docbook.org/release/xsl-nons/1.79.2/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+  <rewriteURI uriStartString="https://cdn.docbook.org/release/xsl-nons/1.79.2/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+  <rewriteURI uriStartString="http://cdn.docbook.org/release/xsl-nons/current/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+  <rewriteURI uriStartString="https://cdn.docbook.org/release/xsl-nons/current/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+  <rewriteURI uriStartString="http://docbook.sourceforge.net/release/xsl/current/"
+    rewritePrefix="file:///usr/share/xml/docbook/xsl-stylesheets/"/>
+</catalog>

@@ -37,7 +37,6 @@ cp -a unpack-firmware/lib/firmware/updates/intel/vpu/. \
 
 [[output]]
 runtime_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++', 'level-zero']
-provides = ['level-zero-npu-driver']
 
 [output.hooks]
 post_install = "ldconfig"

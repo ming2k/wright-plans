@@ -12,7 +12,7 @@ build_deps = ['autoconf', 'automake', 'libtool']
 [[sources]]
 type = "http"
 sha256 = "be8248a17dedd6ccbaab2fcc45835bb0502d062e40fbded3bc56028ce5eb7acc"
-url = "https://potrace.sourceforge.net/download/1.16/potrace-1.16.tar.gz"
+url = "https://potrace.sourceforge.net/download/${VERSION}/potrace-${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]

@@ -10,7 +10,7 @@ link_deps = ['libogg', 'libvorbis']
 [[sources]]
 type = "http"
 sha256 = "279327339903b544c28a92aeada7d0dcfd0397b59c2f368cc698ac56f515906e"
-url = "https://downloads.xiph.org/releases/theora/libtheora-1.2.0.tar.gz"
+url = "https://downloads.xiph.org/releases/theora/libtheora-${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]

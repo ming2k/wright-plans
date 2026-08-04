@@ -17,7 +17,7 @@ extract_to = "source"
 
 [pipeline.compile]
 isolation = "relaxed"
-env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
 cd source/eza-${VERSION}
 cargo build --release --locked'''
@@ -26,4 +26,3 @@ cargo build --release --locked'''
 script = '''
 cd source/eza-${VERSION}
 install -Dm755 target/release/eza ${STAGING_DIR}/usr/bin/eza'''
-

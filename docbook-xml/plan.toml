@@ -1,0 +1,27 @@
+name = "docbook-xml"
+version = "4.5"
+release = 1
+description = "DocBook XML document type definitions"
+license = "LicenseRef-OASIS"
+arch = "any"
+url = "https://docbook.org/"
+
+
+[[sources]]
+type = "http"
+sha256 = "4e4e037a2b83c98c6c94818390d4bdd3f6e10f6ec62dd79188594e26190dc7b4"
+url = "https://archive.docbook.org/xml/${VERSION}/docbook-xml-${VERSION}.zip"
+extract_to = "source"
+
+[[sources]]
+type = "local"
+path = "catalog.xml"
+
+[pipeline.staging]
+script = '''
+install -dm755 ${STAGING_DIR}/usr/share/xml/docbook/xml-dtd-${VERSION}
+cp -a source/. ${STAGING_DIR}/usr/share/xml/docbook/xml-dtd-${VERSION}/
+install -Dm644 ${WORKDIR}/catalog.xml ${STAGING_DIR}/etc/xml/catalog'''
+
+[[output]]
+backup = ["/etc/xml/catalog"]

@@ -19,10 +19,8 @@ script = '''
 cd source/gst-plugins-bad-${VERSION}
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
 
-# 最终配置：
-# -Dsctp=disabled: 修复 GCC 15 编译错误
-# -Dintrospection=disabled: 修复缺少依赖 GIR 的错误
-# -Dgpl=enabled: 启用必要的 GPL 插件
+# Disable SCTP for GCC 15 compatibility and introspection when GIR dependencies
+# are unavailable; keep the required GPL plugins enabled.
 meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Ddoc=disabled -Dgpl=enabled -Dsctp=disabled -Dintrospection=disabled'''
 
 [pipeline.compile]

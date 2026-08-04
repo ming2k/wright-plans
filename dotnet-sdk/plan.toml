@@ -31,7 +31,6 @@ PROF'''
 [[output]]
 name = "dotnet-sdk"
 description = ".NET SDK and runtime"
-provides = ["dotnet"]
 conflicts = ["dotnet-sdk-bin"]
 replaces = ["dotnet-sdk-bin"]
 runtime_deps = ['glibc', 'icu', 'libunwind', 'openssl']

@@ -17,7 +17,7 @@ extract_to = "source"
 
 [pipeline.compile]
 isolation = "relaxed"
-env = { CARGO_HOME = '${BUILD_DIR}/.cargo', CARGO_TARGET_DIR = '${BUILD_DIR}/target' }
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
 cd source/bottom-${VERSION}
 cargo build --release --locked'''
@@ -26,4 +26,3 @@ cargo build --release --locked'''
 script = '''
 cd source/bottom-${VERSION}
 install -Dm755 target/release/btm ${STAGING_DIR}/usr/bin/btm'''
-

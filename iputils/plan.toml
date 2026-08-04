@@ -39,13 +39,13 @@ script = '''
 cd source/iputils-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install'''
 
-[hooks]
+[[output]]
+runtime_deps = ['libcap', 'libidn2']
+
+[output.hooks]
 post_install = '''
 setcap cap_net_raw+ep /usr/bin/ping 2>/dev/null || true
 '''
 post_upgrade = '''
 setcap cap_net_raw+ep /usr/bin/ping 2>/dev/null || true
 '''
-
-[[output]]
-runtime_deps = ['libcap', 'libidn2']

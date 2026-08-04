@@ -2,7 +2,7 @@ name = "termus"
 version = "1.0.4"
 release = 1
 description = "Small, fast terminal music player inspired by cmus"
-license = "UNKNOWN"
+license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/ming2k/termus"
 

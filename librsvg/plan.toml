@@ -22,7 +22,7 @@ meson setup build --prefix=/usr --libdir=lib --buildtype=release -Dintrospection
 
 [pipeline.compile]
 isolation = "relaxed"
-env = { LD_LIBRARY_PATH = '${BUILD_DIR}/build/librsvg' }
+env = { LD_LIBRARY_PATH = '${WORKDIR}/source/librsvg-${VERSION}/build/librsvg' }
 script = '''
 cd source/librsvg-${VERSION}
 meson compile -C build -j$(nproc)'''

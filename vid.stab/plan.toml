@@ -11,7 +11,7 @@ build_deps = ['cmake']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://github.com/georgmartius/vid.stab/archive/refs/tags/v1.1.1.tar.gz"
+url = "https://github.com/georgmartius/vid.stab/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]
@@ -31,4 +31,3 @@ cmake --build build -j$(nproc)'''
 script = '''
 cd source/vidstab-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build'''
-

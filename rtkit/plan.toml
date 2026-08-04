@@ -38,7 +38,10 @@ if [ -d ${STAGING_DIR}/usr/sbin ]; then
   rm -rf ${STAGING_DIR}/usr/sbin
 fi'''
 
-[hooks]
+[[output]]
+runtime_deps = ['dbus', 'libcap', 'polkit', 'systemd']
+
+[output.hooks]
 post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/rtkit.conf
 systemctl daemon-reload
@@ -51,6 +54,3 @@ systemctl daemon-reload
 systemctl restart rtkit-daemon.service
 
 '''
-
-[[output]]
-runtime_deps = ['dbus', 'libcap', 'polkit', 'systemd']

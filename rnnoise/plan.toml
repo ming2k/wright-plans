@@ -17,31 +17,26 @@ extract_to = "source"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "4ac81c5c0884ec4bd5907026aaae16209b7b76cd9d7f71af582094a2f98f4b43"
 url = "https://media.xiph.org/rnnoise/models/rnnoise_data-0b50c45.tar.gz"
 
 [pipeline.prepare]
 script = '''
 cd source/rnnoise-${VERSION}
-cd ${SRC_DIR}/rnnoise-${VERSION}
-cp ${SRC_DIR}/src/rnnoise_data* src/
+cp ${WORKDIR}/src/rnnoise_data* src/
 autoreconf -fi'''
 
 [pipeline.configure]
 script = '''
 cd source/rnnoise-${VERSION}
-cd ${SRC_DIR}/rnnoise-${VERSION}
 ./configure --prefix=/usr --disable-static'''
 
 [pipeline.compile]
 script = '''
 cd source/rnnoise-${VERSION}
-cd ${SRC_DIR}/rnnoise-${VERSION}
 make -j$(nproc)'''
 
 [pipeline.staging]
 script = '''
 cd source/rnnoise-${VERSION}
-cd ${SRC_DIR}/rnnoise-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
-

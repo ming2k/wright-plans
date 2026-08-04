@@ -1,6 +1,6 @@
 name = "libpaper"
 version = "2.2.7"
-release = 2
+release = 3
 description = "Library for handling paper size information"
 license = "LGPL-2.1-or-later AND GPL-3.0-or-later AND FSFAP"
 arch = "x86_64"
@@ -10,7 +10,7 @@ url = "https://github.com/rrthomas/libpaper"
 [[sources]]
 type = "http"
 sha256 = "3925401edf1eda596277bc2485e050b704fd7f364f257c874b0c40ac5aa627c0"
-url = "https://github.com/rrthomas/libpaper/releases/download/v2.2.7/libpaper-2.2.7.tar.gz"
+url = "https://github.com/rrthomas/libpaper/releases/download/v${VERSION}/libpaper-${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
@@ -21,7 +21,7 @@ path = "localepaper.c"
 [pipeline.prepare]
 script = '''
 cd source/libpaper-${VERSION}
-cp ${WORKDIR}/localepaper.c ${WORKDIR}/src/'''
+cp ${WORKDIR}/localepaper.c src/'''
 
 [pipeline.configure]
 script = '''
@@ -46,4 +46,3 @@ install -dm755 ${STAGING_DIR}/etc/libpaper.d'''
 
 [[output]]
 backup = ["/etc/papersize"]
-

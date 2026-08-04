@@ -75,7 +75,7 @@ EOF'''
 runtime_deps = ['aardvark-dns', 'glibc', 'nftables']
 backup = ["/etc/containers/netavark.conf"]
 
-[hooks]
+[output.hooks]
 post_install = '''
 systemctl daemon-reload 2>/dev/null || true
 '''

@@ -30,9 +30,9 @@ script = '''
 cd source/libzip-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[hooks]
-post_install = "ldconfig"
-post_upgrade = "ldconfig"
-
 [[output]]
 runtime_deps = ['zlib', 'openssl', 'bzip2', 'xz', 'zstd']
+
+[output.hooks]
+post_install = "ldconfig"
+post_upgrade = "ldconfig"

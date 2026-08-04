@@ -17,7 +17,7 @@ extract_to = "source"
 [pipeline.compile]
 script = '''
 cd source/gstreamer-${VERSION}
-# 移除 --libdir=lib，让 meson 自动决定是 lib 还是 lib64
+# Let Meson select the platform-appropriate library directory.
 meson setup build --prefix=/usr -Dtests=disabled -Dbenchmarks=disabled -Dintrospection=enabled
 ninja -C build -j$(nproc)'''
 

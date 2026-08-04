@@ -14,6 +14,7 @@ build_deps = ['cmake', 'ninja']
 type = "http"
 url = "https://github.com/intel/intel-graphics-compiler/archive/v${VERSION}/intel-graphics-compiler-${VERSION}.tar.gz"
 sha256 = "4e5f46b20ec5c055f3cbfed16cfa9739b67f0d05786d736f3d10b09b11b171a3"
+extract_to = "source"
 
 [[sources]]
 type = "git"
@@ -57,33 +58,34 @@ path = "patches/010-intel-graphics-compiler-disable-werror.patch"
 
 [options]
 ccache = true
-# 必须提供 Git 身份，否则 IGC 内部脚本在应用 LLVM 补丁时会失败
+# IGC's internal LLVM patching script requires a Git identity.
 env = { GIT_COMMITTER_NAME = "builduser", GIT_COMMITTER_EMAIL = "builduser@archlinux.org", GIT_AUTHOR_NAME = "builduser", GIT_AUTHOR_EMAIL = "builduser@archlinux.org" }
 
 [pipeline.prepare]
 script = '''
-# 建立 LLVM 组件链接（模仿 Arch 的 prepare）
+# Wire the LLVM components using the same layout as Arch's prepare step.
 ln -sf ${WORKDIR}/SPIRV-LLVM-Translator-IGC-LLVM ${WORKDIR}/llvm-project/llvm/projects/llvm-spirv
 ln -sf ${WORKDIR}/opencl-clang ${WORKDIR}/llvm-project/llvm/projects/opencl-clang
 
-# 应用 werror 补丁
-patch -d "intel-graphics-compiler-${VERSION}" -Np1 -i ${WORKDIR}/${MAIN_PART_NAME}-010-intel-graphics-compiler-disable-werror.patch
+# Apply the patch that disables warnings as errors.
+patch -d "${WORKDIR}/source/intel-graphics-compiler-${VERSION}" -Np1 \
+    -i ${WORKDIR}/010-intel-graphics-compiler-disable-werror.patch
 '''
 
 [pipeline.configure]
 isolation = "relaxed"
 script = '''
-# 限制符号可见性，防止符号重叠冲突（Arch 核心参数）
+# Restrict symbol visibility to prevent collisions between IGC components.
 export CFLAGS="${CFLAGS} -fno-semantic-interposition"
 export CXXFLAGS="${CXXFLAGS} -fno-semantic-interposition"
 export LDFLAGS="${LDFLAGS} -Wl,-Bsymbolic"
 
-# 修正 _FORTIFY_SOURCE 重定义警告
+# Remove the inherited _FORTIFY_SOURCE definition to avoid redefinition warnings.
 export CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=?/}"
 export CXXFLAGS="${CXXFLAGS/-Wp,-D_FORTIFY_SOURCE=?/}"
 
-# 注意：S 指向解压出的目录，这确保了 CMake 能在 ../llvm-project 找到依赖
-cmake -B build -S "intel-graphics-compiler-${VERSION}" \
+# Point -S at the extracted tree so CMake can resolve ../llvm-project.
+cmake -B build -S "${WORKDIR}/source/intel-graphics-compiler-${VERSION}" \
     -GNinja \
     -DCCLANG_FROM_SYSTEM=OFF \
     -DCMAKE_BUILD_TYPE=Release \
@@ -115,24 +117,26 @@ script = "cmake --build build -j$(nproc)"
 [pipeline.staging]
 script = '''
 DESTDIR=${STAGING_DIR} cmake --install build
-install -D -m644 "intel-graphics-compiler-${VERSION}/LICENSE.md" -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
+install -D -m644 "${WORKDIR}/source/intel-graphics-compiler-${VERSION}/LICENSE.md" \
+    -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
 
-# 按照 Arch 规范移动头文件
+# Move OpenCL headers into the IGC-specific include directory.
 mkdir -p ${STAGING_DIR}/usr/include/igc
 mv ${STAGING_DIR}/usr/include/opencl-c.h ${STAGING_DIR}/usr/include/igc/
 mv ${STAGING_DIR}/usr/include/opencl-c-base.h ${STAGING_DIR}/usr/include/igc/
 
-# 移动 NOTICES.txt 到许可证目录（igc* 可能包含主版本号，如 igc2）
+# Move versioned igc*/NOTICES.txt files into the package license directory.
 mv ${STAGING_DIR}/usr/lib/igc*/NOTICES.txt ${STAGING_DIR}/usr/share/licenses/${NAME}/ || true
 
-# opencl-clang 兼容性文件
-install -D -m644 opencl-clang/opencl_clang.h -t "${STAGING_DIR}/usr/include/cclang"
-install -D -m644 opencl-clang/LICENSE "${STAGING_DIR}/usr/share/licenses/${NAME}/LICENSE-opencl-clang"
+# Install opencl-clang compatibility headers and license metadata.
+install -D -m644 ${WORKDIR}/opencl-clang/opencl_clang.h \
+    -t "${STAGING_DIR}/usr/include/cclang"
+install -D -m644 ${WORKDIR}/opencl-clang/LICENSE \
+    "${STAGING_DIR}/usr/share/licenses/${NAME}/LICENSE-opencl-clang"
 ln -sf libopencl-clang.so.16 "${STAGING_DIR}/usr/lib/libopencl-clang.so"
 '''
 
 [[output]]
 runtime_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++', 'zlib', 'zstd']
-provides = ["intel-opencl-clang=16"]
 conflicts = ["intel-opencl-clang"]
 replaces = ["intel-opencl-clang"]

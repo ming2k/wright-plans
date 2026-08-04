@@ -91,7 +91,7 @@ SYSUSERS'''
 runtime_deps = ['seatd', 'systemd', 'glibc', 'linux-pam']
 backup = ["/etc/greetd/config.toml", "/etc/pam.d/greetd"]
 
-[hooks]
+[output.hooks]
 post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/greetd.conf 2>/dev/null || true
 chown greeter:greeter /var/lib/greetd 2>/dev/null || true

@@ -1,7 +1,7 @@
 name = "rime-luna-pinyin"
 version = "0.0.20250101"
 release = 1
-description = "Rime Lunar Pinyin input schema (朙月拼音)"
+description = "Rime Luna Pinyin input schema"
 license = "LGPL-3.0-or-later"
 arch = "any"
 url = "https://github.com/rime/rime-luna-pinyin"

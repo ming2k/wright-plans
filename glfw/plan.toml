@@ -40,4 +40,3 @@ DESTDIR=${STAGING_DIR} cmake --install build'''
 
 [[output]]
 runtime_deps = ['wayland', 'libxkbcommon']
-provides = ["libglfw"]

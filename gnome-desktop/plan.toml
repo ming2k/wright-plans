@@ -30,9 +30,9 @@ script = '''
 cd source/gnome-desktop-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
-[hooks]
-post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
-post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
-
 [[output]]
 runtime_deps = ['gsettings-desktop-schemas', 'iso-codes', 'glib', 'gtk4', 'libseccomp', 'libxkbcommon']
+
+[output.hooks]
+post_install = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"
+post_upgrade = "glib-compile-schemas /usr/share/glib-2.0/schemas 2>/dev/null || true"

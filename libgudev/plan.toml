@@ -11,15 +11,15 @@ build_deps = ['meson', 'ninja']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://download.gnome.org/sources/libgudev/238/libgudev-238.tar.xz"
+url = "https://download.gnome.org/sources/libgudev/${VERSION}/libgudev-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-# 修复：必须先进入源码目录
+# Configure from the extracted source tree.
 cd source/libgudev-${VERSION}
 
-# 修正 meson 调用方式：指定构建目录为 'build'
+# Use an explicit Meson build directory.
 meson setup build --prefix=/usr --libdir=lib -Dtests=disabled -Dintrospection=enabled -Dvapi=disabled'''
 
 [pipeline.compile]

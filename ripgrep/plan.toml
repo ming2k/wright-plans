@@ -39,4 +39,3 @@ fi'''
 runtime_deps = ['pcre2', 'gcc:gcc-libs', 'glibc']
 replaces = ["rg"]
 conflicts = ["rg"]
-provides = ["rg"]

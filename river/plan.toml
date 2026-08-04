@@ -119,6 +119,4 @@ zig build -Doptimize=ReleaseSafe --prefix ${STAGING_DIR}/usr install
 '''
 
 [[output]]
-provides = ["river"]
 conflicts = ["river"]
-

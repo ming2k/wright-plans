@@ -12,7 +12,7 @@ build_deps = ['python']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://github.com/tianocore/edk2/archive/refs/tags/edk2-stable202602.tar.gz"
+url = "https://github.com/tianocore/edk2/archive/refs/tags/edk2-stable${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
@@ -117,4 +117,3 @@ install -Dm644 OVMF_CODE.fd ${STAGING_DIR}/usr/share/edk2/x64/OVMF_CODE.fd
 install -Dm644 OVMF_VARS.fd ${STAGING_DIR}/usr/share/edk2/x64/OVMF_VARS.fd
 install -Dm644 OVMF_CODE.secboot.4m.fd ${STAGING_DIR}/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd
 install -Dm644 OVMF_VARS.4m.fd ${STAGING_DIR}/usr/share/edk2/x64/OVMF_VARS.4m.fd'''
-

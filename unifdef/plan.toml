@@ -9,14 +9,13 @@ arch = "x86_64"
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://dotat.at/prog/unifdef/unifdef-2.12.tar.xz"
+url = "https://dotat.at/prog/unifdef/unifdef-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.prepare]
 script = '''
 cd source/unifdef-${VERSION}
-# 修复 GCC 15 (C23) 编译错误：
-# 将变量名 'constexpr' 重命名为 'const_expr'，避免与 C23 关键字冲突
+# GCC 15 treats 'constexpr' as a C23 keyword; rename the legacy variable.
 sed -i 's/constexpr/const_expr/g' unifdef.c'''
 
 [pipeline.compile]
@@ -27,6 +26,5 @@ make -j$(nproc)'''
 [pipeline.staging]
 script = '''
 cd source/unifdef-${VERSION}
-# prefix 定义安装路径
+# Install under the staged /usr prefix.
 make prefix=${STAGING_DIR}/usr install'''
-

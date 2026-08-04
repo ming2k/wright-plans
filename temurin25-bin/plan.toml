@@ -30,7 +30,6 @@ export JAVA_HOME=/usr/lib/jvm/java-25-temurin
 PROF'''
 
 [[output]]
-provides = ["java", "jdk"]
 conflicts = ["openjdk"]
 replaces = ["openjdk"]
 backup = ["/etc/profile.d/jdk.sh"]

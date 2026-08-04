@@ -1,0 +1,51 @@
+name = "docbook-xsl"
+version = "1.79.2"
+release = 1
+description = "XSLT 1.0 stylesheets for non-namespaced DocBook"
+license = "MIT"
+arch = "any"
+url = "https://github.com/docbook/xslt10-stylesheets"
+
+
+[[sources]]
+type = "http"
+sha256 = "ee8b9eca0b7a8f89075832a2da7534bce8c5478fc8fc2676f512d5d87d832102"
+url = "https://github.com/docbook/xslt10-stylesheets/releases/download/release/${VERSION}/docbook-xsl-nons-${VERSION}.tar.bz2"
+extract_to = "source"
+
+[[sources]]
+type = "http"
+sha256 = "a92c39715c54949ba9369add1809527b8f155b7e2a2b2e30cb4b39ee715f2e30"
+url = "https://www.linuxfromscratch.org/patches/blfs/svn/docbook-xsl-nons-${VERSION}-stack_fix-1.patch"
+
+[[sources]]
+type = "local"
+path = "catalog.xml"
+
+[pipeline.prepare]
+script = '''
+cd source/docbook-xsl-nons-${VERSION}
+patch -Np1 < ${WORKDIR}/docbook-xsl-nons-${VERSION}-stack_fix-1.patch'''
+
+[pipeline.staging]
+script = '''
+cd source/docbook-xsl-nons-${VERSION}
+dest=${STAGING_DIR}/usr/share/xml/docbook/xsl-stylesheets-${VERSION}
+install -dm755 ${dest}
+cp -a VERSION assembly common eclipse epub epub3 extensions fo \
+  highlighting html htmlhelp images javahelp lib manpages params \
+  profiling roundtrip slides template tests tools webhelp website \
+  xhtml xhtml-1_1 xhtml5 ${dest}/
+ln -s VERSION ${dest}/VERSION.xsl
+install -Dm644 ${WORKDIR}/catalog.xml ${dest}/catalog.xml
+
+root=${STAGING_DIR}/usr/share/xml/docbook
+ln -s xsl-stylesheets-${VERSION} ${root}/xsl-stylesheets
+ln -s xsl-stylesheets-${VERSION} ${root}/xsl-stylesheets-nons
+
+install -Dm644 COPYING ${STAGING_DIR}/usr/share/licenses/docbook-xsl/COPYING
+install -Dm644 README ${STAGING_DIR}/usr/share/doc/docbook-xsl-${VERSION}/README
+install -m644 RELEASE-NOTES* NEWS* ${STAGING_DIR}/usr/share/doc/docbook-xsl-${VERSION}/'''
+
+[[output]]
+runtime_deps = ["docbook-xml", "libxml2", "libxslt"]

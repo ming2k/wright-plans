@@ -1,6 +1,6 @@
 name = "lynx"
 version = "2.9.2"
-release = 2
+release = 4
 description = "Text-mode web browser"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
@@ -16,7 +16,7 @@ extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/lynx-${VERSION}
+cd source/lynx${VERSION}
 sed -i configure \
   -e '/LDFLAGS="-L$cf_add_libdir $LDFLAGS"/d' \
   -e 's;,$BUILD_CC;,$CC_FOR_BUILD;' \
@@ -24,6 +24,7 @@ sed -i configure \
   -e 's;,$BUILD_LDFLAGS;,$LDFLAGS_FOR_BUILD;'
 ./configure \
   --prefix=/usr \
+  --sysconfdir=/etc \
   --with-screen=ncurses \
   --with-build-cc=gcc \
   --enable-widec \
@@ -35,19 +36,15 @@ sed -i configure \
 
 [pipeline.compile]
 script = '''
-cd source/lynx-${VERSION}
+cd source/lynx${VERSION}
 make -j$(nproc) BUILD_CC=gcc BUILD_CPP='gcc -E''''
 
 [pipeline.staging]
 script = '''
-cd source/lynx-${VERSION}
+cd source/lynx${VERSION}
 make DESTDIR=${STAGING_DIR} install
-
-if [ -d ${STAGING_DIR}/usr/etc ]; then
-  mkdir -p ${STAGING_DIR}/etc
-  cp -a ${STAGING_DIR}/usr/etc/. ${STAGING_DIR}/etc/
-  rm -rf ${STAGING_DIR}/usr/etc
-fi'''
+install -Dm644 lynx.cfg ${STAGING_DIR}/usr/share/lynx/lynx.cfg'''
 
 [[output]]
+backup = ['/etc/lynx.cfg', '/etc/lynx.lss']
 runtime_deps = ['bzip2', 'ncurses', 'openssl', 'zlib']

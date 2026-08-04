@@ -12,7 +12,7 @@ build_deps = ['ninja', 'cmake']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://github.com/gdraheim/zziplib/archive/v0.13.80.tar.gz"
+url = "https://github.com/gdraheim/zziplib/archive/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]

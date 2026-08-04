@@ -17,7 +17,7 @@ extract_to = "source"
 [pipeline.configure]
 script = '''
 cd source/gst-plugins-base-${VERSION}
-# 确保能找到 gstreamer-1.0.pc
+# Make the installed GStreamer pkg-config metadata discoverable.
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/share/pkgconfig
 
 meson setup build --prefix=/usr -Dtests=disabled -Ddoc=disabled -Dintrospection=disabled -Dgl=enabled'''

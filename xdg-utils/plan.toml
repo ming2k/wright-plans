@@ -1,13 +1,13 @@
 name = "xdg-utils"
 version = "1.2.1"
-release = 1
+release = 6
 description = "Tools to assist applications with desktop integration tasks"
 license = "MIT"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/xdg-utils/"
 
 
-build_deps = []
+build_deps = ["docbook-xml", "docbook-xsl", "libpaper", "libxslt", "lynx", "xmlto"]
 
 [[sources]]
 type = "http"
@@ -15,20 +15,25 @@ sha256 = "93d510dccf328378f012fe195b4574c2fac1cd65a74d0852d6eaa72e5a2065a7"
 url = "https://gitlab.freedesktop.org/xdg/xdg-utils/-/archive/v${VERSION}/xdg-utils-v${VERSION}.tar.bz2"
 extract_to = "source"
 
+[pipeline.prepare]
+script = '''
+cd source/xdg-utils-v${VERSION}
+sed -Ei \
+  's|https?://www\.oasis-open\.org/docbook/xml/[0-9.]+/docbookx\.dtd|file:///usr/share/xml/docbook/xml-dtd-4.5/docbookx.dtd|g' \
+  scripts/desc/*.xml'''
+
 [pipeline.configure]
 script = '''
-cd source/xdg-utils-${VERSION}
+cd source/xdg-utils-v${VERSION}
 ./configure --prefix=/usr'''
 
 [pipeline.compile]
 script = '''
-cd source/xdg-utils-${VERSION}
-sed -i 's#^XMLTO[[:space:]]*=.*#XMLTO           = /bin/true#' scripts/Makefile
-export LYNX_CFG=/etc/lynx.cfg
-make -j$(nproc)'''
+cd source/xdg-utils-v${VERSION}
+export LYNX_CFG=/usr/share/lynx/lynx.cfg
+make -j$(nproc) XMLTO='/usr/bin/xmlto --noautosize''''
 
 [pipeline.staging]
 script = '''
-cd source/xdg-utils-${VERSION}
+cd source/xdg-utils-v${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
-

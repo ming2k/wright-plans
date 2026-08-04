@@ -56,7 +56,6 @@ install -Dm644 LICENSE-MIT ${STAGING_DIR}/usr/share/licenses/sudo-rs/LICENSE-MIT
 [[output]]
 name = ""
 description = "Memory safe implementation of sudo and su"
-provides = ["sudo"]
 conflicts = ["sudo"]
 runtime_deps = ["linux-pam"]
 backup = ["/etc/sudoers", "/etc/sudoers-rs"]

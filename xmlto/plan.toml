@@ -1,0 +1,52 @@
+name = "xmlto"
+version = "0.0.29"
+release = 2
+description = "Front-end to an XSL toolchain"
+license = "GPL-2.0-or-later"
+arch = "x86_64"
+url = "https://pagure.io/xmlto"
+
+
+build_deps = [
+    "autoconf", "automake", "docbook-xml", "docbook-xsl", "flex",
+    "libpaper", "libxslt", "lynx",
+]
+
+[[sources]]
+type = "http"
+sha256 = "40504db68718385a4eaa9154a28f59e51e59d006d1aa14f5bc9d6fded1d6017a"
+url = "https://pagure.io/xmlto/archive/${VERSION}/xmlto-${VERSION}.tar.gz"
+extract_to = "source"
+
+[pipeline.prepare]
+script = '''
+cd source/xmlto-${VERSION}
+sed -i \
+  's|http://docbook.sourceforge.net/release/xsl/current|file:///usr/share/xml/docbook/xsl-stylesheets|g' \
+  xmlto.in format/docbook/*'''
+
+[pipeline.configure]
+script = '''
+cd source/xmlto-${VERSION}
+autoreconf -fiv
+LYNX=/usr/bin/lynx ./configure --prefix=/usr --with-webbrowser=lynx'''
+
+[pipeline.compile]
+script = '''
+cd source/xmlto-${VERSION}
+PAPERSIZE=a4 make -j$(nproc)'''
+
+[pipeline.check]
+script = '''
+cd source/xmlto-${VERSION}
+PAPERSIZE=a4 make check'''
+
+[pipeline.staging]
+script = '''
+cd source/xmlto-${VERSION}
+make DESTDIR=${STAGING_DIR} install'''
+
+[[output]]
+runtime_deps = [
+    "bash", "docbook-xml", "docbook-xsl", "libpaper", "libxslt", "lynx",
+]

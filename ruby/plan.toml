@@ -16,8 +16,7 @@ extract_to = "source"
 [pipeline.configure]
 script = '''
 cd source/ruby-${VERSION}
-# --enable-shared: 构建 libruby.so
-# --disable-install-doc: 跳过文档安装以节省时间和空间
+# Build libruby.so and omit generated documentation to reduce build time and size.
 ./configure --prefix=/usr --enable-shared --disable-install-doc --with-openssl-dir=/usr'''
 
 [pipeline.compile]

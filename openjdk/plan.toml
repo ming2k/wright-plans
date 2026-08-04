@@ -83,5 +83,4 @@ PROF'''
 
 [[output]]
 runtime_deps = ['alsa-lib', 'freetype', 'giflib', 'lcms2', 'libjpeg-turbo', 'libpng', 'zlib']
-provides = ["java", "jdk"]
 backup = ["/etc/profile.d/jdk.sh"]

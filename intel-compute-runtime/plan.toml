@@ -13,30 +13,31 @@ build_deps = ['cmake', 'ninja']
 type = "http"
 url = "https://github.com/intel/compute-runtime/archive/${VERSION}/intel-compute-runtime-${VERSION}.tar.gz"
 sha256 = "8c51e99af2971f5e6e662b7dd47b786e50da0252323ce4abaa8d135fe3f3f294"
+extract_to = "source"
 
 [options]
 ccache = true
 
 [pipeline.configure]
 script = '''
-# 修复 Blender 等应用中的运行时错误
+# Avoid runtime failures in applications such as Blender.
 export CFLAGS="${CFLAGS} -DSANITIZER_BUILD=1"
 export CXXFLAGS="${CXXFLAGS} -DSANITIZER_BUILD=1"
 
-# 修正 _FORTIFY_SOURCE 重定义警告
+# Remove the inherited _FORTIFY_SOURCE definition to avoid redefinition warnings.
 export CFLAGS="${CFLAGS/-Wp,-D_FORTIFY_SOURCE=?/}"
 export CXXFLAGS="${CXXFLAGS/-Wp,-D_FORTIFY_SOURCE=?/}"
 
-# 使用源码树自带的 OpenCL 头文件
-_opencl_headers_dir="${WORKDIR}/compute-runtime-${VERSION}/third_party/opencl_headers"
+# Use the OpenCL headers bundled in the source tree.
+_opencl_headers_dir="${WORKDIR}/source/compute-runtime-${VERSION}/third_party/opencl_headers"
 export CXXFLAGS="${CXXFLAGS} -isystem ${_opencl_headers_dir}"
 
-# 解析版本号组件
+# Split the release version into the components expected by CMake.
 MAJOR="${VERSION%%.*}"
 MINOR="$(echo $VERSION | cut -d . -f2)"
 BUILD="$(echo $VERSION | cut -d . -f3)"
 
-cmake -B build -S "compute-runtime-${VERSION}" \
+cmake -B build -S "${WORKDIR}/source/compute-runtime-${VERSION}" \
     -GNinja \
     -DCMAKE_BUILD_TYPE='Release' \
     -DCMAKE_INSTALL_LIBDIR='lib' \
@@ -58,9 +59,10 @@ script = "cmake --build build -j$(nproc)"
 [pipeline.staging]
 script = '''
 DESTDIR=${STAGING_DIR} cmake --install build
-install -D -m644 "compute-runtime-${VERSION}/LICENSE.md" -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
+install -D -m644 "${WORKDIR}/source/compute-runtime-${VERSION}/LICENSE.md" \
+    -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
 
-# 补全 Level Zero 驱动的软链接
+# Add the unversioned Level Zero driver symlink when needed.
 cd ${STAGING_DIR}/usr/lib
 target_so=$(find . -regex '.*libze_intel_gpu.so.[0-9]*' -exec basename {} \;)
 if [ -n "$target_so" ]; then
@@ -70,4 +72,3 @@ fi
 
 [[output]]
 runtime_deps = ['glibc', 'intel-gmmlib', 'intel-graphics-compiler', 'gcc:gcc-libs', 'gcc:libstdc++']
-provides = ["level-zero-driver", "opencl-driver"]

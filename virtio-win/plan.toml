@@ -9,7 +9,7 @@ url = "https://fedorapeople.org/groups/virt/virtio-win/"
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.285-1/virtio-win.iso"
+url = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-${VERSION}/virtio-win.iso"
 
 [pipeline.staging]
 script = "install -Dm644 ${WORKDIR}/virtio-win.iso ${STAGING_DIR}/usr/share/virtio-win/virtio-win.iso"

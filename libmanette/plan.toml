@@ -11,15 +11,13 @@ build_deps = ['meson', 'ninja']
 [[sources]]
 type = "http"
 sha256 = "SKIP"
-url = "https://download.gnome.org/sources/libmanette/0.2/libmanette-0.2.7.tar.xz"
+url = "https://download.gnome.org/sources/libmanette/0.2/libmanette-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
 cd source/libmanette-${VERSION}
-# 修复：
-# 1. 将 -Dexamples=false 改为 -Ddemos=false (这是 libmanette 正确的选项名)
-# 2. 确保 introspection 和 vapi 选项格式正确
+# libmanette calls its example option "demos"; enable introspection and disable Vala bindings.
 meson setup build --prefix=/usr --libdir=lib -Dintrospection=true -Dvapi=false -Ddemos=false'''
 
 [pipeline.compile]

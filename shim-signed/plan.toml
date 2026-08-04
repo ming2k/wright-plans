@@ -10,7 +10,7 @@ build_deps = ["binutils"]
 
 [[sources]]
 type = "http"
-url = "https://kojipkgs.fedoraproject.org/packages/shim/16.1/8/x86_64/shim-x64-16.1-8.x86_64.rpm"
+url = "https://kojipkgs.fedoraproject.org/packages/shim/${VERSION}/8/x86_64/shim-x64-${VERSION}-8.x86_64.rpm"
 sha256 = "ee8787bb9fbd13fcce73de0501938075c24efd78bc1a590826f0c01c7a10986b"
 
 [pipeline.prepare]

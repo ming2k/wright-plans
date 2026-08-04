@@ -32,8 +32,7 @@ DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
 runtime_deps = ['glibc']
-provides = ["libOpenCL", "opencl-loader"]
 
-[hooks]
+[output.hooks]
 post_install = "ldconfig"
 post_upgrade = "ldconfig"

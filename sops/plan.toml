@@ -17,7 +17,7 @@ extract_to = "source"
 
 [pipeline.compile]
 isolation = "relaxed"
-env = { GOPATH = '${BUILD_DIR}/.go', GOCACHE = '${BUILD_DIR}/.cache/go-build', CGO_ENABLED = '0' }
+env = { GOPATH = '${WORKDIR}/.go', GOCACHE = '${WORKDIR}/.cache/go-build', CGO_ENABLED = '0' }
 script = '''
 cd source/sops-${VERSION}
 go build -trimpath -ldflags="-s -w -buildid=" -o sops ./cmd/sops'''
@@ -26,4 +26,3 @@ go build -trimpath -ldflags="-s -w -buildid=" -o sops ./cmd/sops'''
 script = '''
 cd source/sops-${VERSION}
 install -Dm755 sops ${STAGING_DIR}/usr/bin/sops'''
-

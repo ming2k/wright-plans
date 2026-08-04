@@ -60,4 +60,3 @@ rm -f ${STAGING_DIR}/usr/lib/pkgconfig/shaderc_static.pc'''
 
 [[output]]
 runtime_deps = ['glslang', 'spirv-tools']
-provides = ["glslc"]

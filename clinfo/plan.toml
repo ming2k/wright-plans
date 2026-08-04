@@ -12,15 +12,16 @@ link_deps = ['glibc', 'ocl-icd']
 type = "http"
 url = "https://github.com/Oblomov/clinfo/archive/refs/tags/${VERSION}.tar.gz"
 sha256 = "48b77dc33315e6f760791a2984f98ea4bff28504ff37d460d8291585f49fcd3a"
+extract_to = "source"
 
 [pipeline.compile]
 script = '''
-cd clinfo-${VERSION}
+cd source/clinfo-${VERSION}
 make'''
 
 [pipeline.staging]
 script = '''
-cd clinfo-${VERSION}
+cd source/clinfo-${VERSION}
 make DESTDIR=${STAGING_DIR} PREFIX=/usr MANDIR=/usr/share/man install'''
 
 [[output]]
