@@ -1,0 +1,55 @@
+name = "xdg-desktop-portal-aegis"
+version = "0.0.3"
+release = 1
+description = "XDG Desktop Portal backend for the Aegis compositor"
+license = "MIT AND GPL-3.0-only"
+arch = "x86_64"
+url = "https://github.com/aegis-shell/xdg-desktop-portal-aegis"
+
+build_deps = ['rust', 'meson', 'ninja', 'pkgconf', 'llvm:clang']
+link_deps = [
+    'gtk4 >= 4.10', 'pipewire >= 0.3', 'linux-pam',
+    'gcc:gcc-libs', 'glibc',
+]
+
+[[sources]]
+type = "http"
+url = "https://github.com/aegis-shell/xdg-desktop-portal-aegis/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "963451c7223ce242b56d639f7e01b672859dcc991baf325d43d6a3a8bf947fe1"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/xdg-desktop-portal-aegis-${VERSION}
+# Local Aegis path overrides are worktree state and must not enter a package
+# build. The release lockfile pins the exact Aegis v0.0.11 IPC crates.
+test ! -e .cargo/config.toml
+meson setup build \
+    --prefix=/usr \
+    --buildtype=release \
+    -Dpam=true
+'''
+
+[pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_NET_GIT_FETCH_WITH_CLI = 'true' }
+script = '''
+cd source/xdg-desktop-portal-aegis-${VERSION}
+meson compile -C build
+'''
+
+[pipeline.staging]
+script = '''
+cd source/xdg-desktop-portal-aegis-${VERSION}
+DESTDIR="$STAGING_DIR" meson install -C build
+install -Dm644 LICENSE \
+    "$STAGING_DIR/usr/share/licenses/xdg-desktop-portal-aegis/LICENSE"
+'''
+
+[[output]]
+runtime_deps = [
+    'aegis = 0.0.11',
+    'gtk4 >= 4.10', 'linux-pam', 'pipewire >= 0.3', 'wireplumber',
+    'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'xdg-utils',
+    'gcc:gcc-libs', 'glibc',
+]

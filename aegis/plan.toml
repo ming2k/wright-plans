@@ -1,64 +1,62 @@
 name = "aegis"
-version = "0.0.8"
+version = "0.0.11"
 release = 1
 description = "Aegis Wayland compositor and desktop shell"
 license = "MIT AND GPL-3.0-only"
 arch = "x86_64"
-url = "https://github.com/ming2k/aegis"
+url = "https://github.com/aegis-shell/aegis"
 
-# Optics is a separate multi-output plan. Depend on the concrete outputs it
-# ships, NOT the deprecated `optics` meta-part (see the optics plan's own
-# note). The native .so/.pc/headers from these parts are what the aegis -sys
-# build scripts link via pkg-config at build time, and what the built
-# compositor dlopen/loaders at runtime.
 build_deps = [
-    'rust',
-    'wayland', 'wayland-protocols',
-    'libdrm', 'libxkbcommon', 'libinput', 'seatd',
-    'systemd', 'pipewire',
-    'vulkan-loader', 'vulkan-headers',
-    'pkgconf',
-    'optics:flux', 'optics:flux-text', 'optics:flux-scene-graph',
-    'optics:lens', 'optics:iris',
+    'rust', 'pkgconf', 'llvm:clang',
+    'wayland-protocols', 'vulkan-headers',
 ]
 link_deps = [
-    'optics:flux', 'optics:flux-text', 'optics:flux-scene-graph',
-    'optics:lens', 'optics:iris',
-    'wayland', 'libdrm', 'libxkbcommon', 'libinput', 'seatd',
-    'systemd', 'pipewire', 'vulkan-loader',
+    'optics:flux = 0.0.10',
+    'optics:flux-text = 0.0.10',
+    'optics:flux-scene-graph = 0.0.10',
+    'optics:lens = 0.0.10',
+    'optics:iris = 0.0.10',
+    'wayland', 'libxkbcommon', 'libinput', 'seatd',
+    'systemd', 'linux-pam', 'vulkan-loader',
+    'gcc:gcc-libs', 'glibc',
 ]
 
-# Single source: aegis only. Since 0.0.5 the workspace Cargo.toml resolves the
-# Optics Rust bindings from the locked v0.0.3 git tag (commit 8fa0a0c5) and
-# links the C libraries via pkg-config against the installed optics parts
-# above — so the build no longer needs a sibling ../optics source checkout, no
-# FLUX_BUILD_DIR probe, and no *_USE_INSTALLED override. The -sys build scripts
-# fall straight through to system pkg-config.
 [[sources]]
-type = "git"
-url = "https://github.com/ming2k/aegis.git"
-ref = "refs/tags/v${VERSION}"
-depth = 1
+type = "http"
+url = "https://github.com/aegis-shell/aegis/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "8a4c98626337d1c0102a3c87a6b840759c422f27e92126b3fca0b5a5c6ac7e50"
 extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/aegis-${VERSION}
+# The canonical package build uses the locked Optics v0.0.10 Git bindings and
+# the matching native Wright outputs. A local .cargo/config.toml must never be
+# present in the release source.
+test ! -e .cargo/config.toml
+for pc in flux flux-text flux-scene-graph lens iris; do
+    test "$(pkg-config --modversion "$pc")" = "0.0.10"
+done
+'''
 
 [pipeline.compile]
 isolation = "relaxed"
-env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target', CARGO_NET_GIT_FETCH_WITH_CLI = 'true' }
 script = '''
-cd source
-# --locked: Cargo.lock pins every binding to optics tag v0.0.3 and is committed.
-# No sibling ../optics path-deps remain, so the lockfile resolves unchanged.
-# Build the whole workspace so all six binaries are produced.
+cd source/aegis-${VERSION}
 cargo build --locked --release --workspace'''
 
 [pipeline.staging]
 script = '''
-src="${WORKDIR}/source"
+src="${WORKDIR}/source/aegis-${VERSION}"
 bin="${WORKDIR}/target/release"
 out="${STAGING_DIR}/usr"
 
-# Six workspace binaries → /usr/bin.
-for b in aegis aegis-settings aegis-ctl aegis-portal aegis-fuji-mcp fuji; do
+# Install the explicit distribution artifacts. aegis-lock-preview is a
+# feature-gated contributor tool and must not be packaged.
+for b in \
+    aegis aegis-idle aegis-atspi aegis-lock aegis-settings \
+    aegis-mcp aegis-agent; do
     install -Dm755 "$bin/$b" "$out/bin/$b"
 done
 
@@ -73,15 +71,13 @@ install -Dm644 "$src/contrib/icons/hicolor/scalable/apps/io.github.ming2k.aegis.
 install -Dm644 "$src/contrib/systemd/user/aegis.service" \
     "$out/lib/systemd/user/aegis.service"
 
-# D-Bus activation for the portal backend (Exec=/usr/bin/aegis-portal).
-install -Dm644 "$src/contrib/dbus-1/services/org.freedesktop.impl.portal.desktop.aegis.service" \
-    "$out/share/dbus-1/services/org.freedesktop.impl.portal.desktop.aegis.service"
+# Authentication policy for the first-party session locker.
+install -Dm644 "$src/contrib/pam/aegis-lock" \
+    "${STAGING_DIR}/etc/pam.d/aegis-lock"
 
-# xdg-desktop-portal integration.
-install -Dm644 "$src/contrib/xdg-desktop-portal/portals/aegis.portal" \
-    "$out/share/xdg-desktop-portal/portals/aegis.portal"
-install -Dm644 "$src/contrib/xdg-desktop-portal/aegis-portals.conf" \
-    "$out/share/xdg-desktop-portal/aegis-portals.conf"
+# Project and bundled-cursor license disclosures.
+install -Dm644 "$src/LICENSE" \
+    "$out/share/licenses/aegis/LICENSE"
 
 # Bundled Bibata-Modern-Ice (GPL-3.0) license disclosure. The theme is embedded
 # into the aegis binary via include_dir, so its LICENSE/NOTICE must ship too.
@@ -92,23 +88,27 @@ install -Dm644 "$src/assets/cursors/Bibata-Modern-Ice/NOTICE" \
 
 [[output]]
 runtime_deps = [
-    'optics:flux', 'optics:flux-text', 'optics:flux-scene-graph',
-    'optics:lens', 'optics:iris',
-    'seatd', 'pipewire', 'libinput', 'systemd',
+    'optics:flux = 0.0.10',
+    'optics:flux-text = 0.0.10',
+    'optics:flux-scene-graph = 0.0.10',
+    'optics:lens = 0.0.10',
+    'optics:iris = 0.0.10',
+    'brightnessctl', 'dbus', 'hicolor-icon-theme',
+    'seatd', 'libinput', 'systemd', 'linux-pam',
     'wayland', 'libxkbcommon', 'vulkan-loader',
+    'gcc:gcc-libs', 'glibc',
 ]
+backup = ["/etc/pam.d/aegis-lock"]
 
 [output.hooks]
-# Reload the user-unit catalog so the new aegis.service is picked up. Desktop
-# and icon caches are refreshed as a courtesy; they are advisory (|| true)
-# because these tools may be absent on a minimal wright-managed system.
+# Desktop and icon cache refreshes are advisory because their tools may be
+# absent on a minimal Wright-managed system. Do not call systemctl --user from
+# a package transaction; it cannot address every affected user session.
 post_install = '''
-systemctl --user daemon-reload 2>/dev/null || true
 update-desktop-database -q /usr/share/applications 2>/dev/null || true
 gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true
 '''
 post_upgrade = '''
-systemctl --user daemon-reload 2>/dev/null || true
 update-desktop-database -q /usr/share/applications 2>/dev/null || true
 gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true
 '''

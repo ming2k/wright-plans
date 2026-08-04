@@ -1,5 +1,5 @@
 name = "neenee"
-version = "0.22.0"
+version = "0.22.1"
 release = 1
 description = "A Rust-based AI coding agent with a semantic TUI, tool use, and bounded autonomous goals"
 license = "MIT"
@@ -16,7 +16,7 @@ url = "https://github.com/ming2k/neenee/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.compile]
-isolation = "relaxed"
+isolation = "none"
 script = '''
 cd source/neenee-${VERSION}
 cargo build --release --locked -p neenee-cli'''

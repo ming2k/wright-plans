@@ -1,18 +1,24 @@
 name = "optics"
-version = "0.0.7"
+version = "0.0.10"
 release = 1
-description = "Optics rendering libraries: flux (Vulkan), lens (UI), iris"
+description = "Optics rendering libraries: flux, flux-text, flux-scene-graph, lens, and iris"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ming2k/optics"
 
-build_deps = ['meson', 'ninja', 'glslang', 'pkgconf', 'vulkan-headers']
-link_deps = ['vulkan-loader', 'glibc', 'fontconfig', 'harfbuzz', 'freetype', 'fribidi']
+build_deps = [
+    'meson', 'ninja', 'glslang', 'pkgconf',
+    'vulkan-headers', 'wayland-protocols',
+]
+link_deps = [
+    'vulkan-loader', 'wayland', 'libxkbcommon', 'systemd',
+    'fontconfig', 'harfbuzz', 'freetype', 'fribidi', 'glibc',
+]
 
 [[sources]]
 type = "http"
 url = "https://github.com/ming2k/optics/archive/refs/tags/v${VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "53e310ed57998c8180b40a0c8a441df67935c238772a7e147e9e94ca51c09d5f"
 extract_to = "source"
 
 [pipeline.configure]
@@ -20,6 +26,7 @@ script = '''
 cd source/optics-${VERSION}
 meson setup build --prefix=/usr --buildtype=release \
     -Dcanvas=true \
+    -Dscene=true \
     -Dtext=true \
     -Dscene-graph=true \
     -Dcompute=true \
@@ -31,7 +38,7 @@ meson setup build --prefix=/usr --buildtype=release \
 [pipeline.compile]
 script = '''
 cd source/optics-${VERSION}
-ninja -C build
+meson compile -C build
 '''
 
 [pipeline.staging]
@@ -50,6 +57,9 @@ include = [
     "/usr/lib/pkgconfig/flux.pc",
 ]
 runtime_deps = ['glibc', 'vulkan-loader']
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.post_remove = "ldconfig 2>/dev/null || true"
 
 [[output]]
 name = "flux-text"
@@ -59,7 +69,13 @@ include = [
     "/usr/lib/libflux_text.so",
     "/usr/lib/pkgconfig/flux-text.pc",
 ]
-runtime_deps = ['flux', 'glibc', 'freetype', 'harfbuzz', 'fontconfig', 'fribidi']
+runtime_deps = [
+    'optics:flux = 0.0.10',
+    'freetype', 'harfbuzz', 'fontconfig', 'fribidi', 'glibc',
+]
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.post_remove = "ldconfig 2>/dev/null || true"
 
 [[output]]
 name = "flux-scene-graph"
@@ -69,7 +85,10 @@ include = [
     "/usr/lib/libflux_scene_graph.so",
     "/usr/lib/pkgconfig/flux-scene-graph.pc",
 ]
-runtime_deps = ['flux', 'glibc']
+runtime_deps = ['optics:flux = 0.0.10', 'glibc']
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.post_remove = "ldconfig 2>/dev/null || true"
 
 [[output]]
 name = "lens"
@@ -80,7 +99,14 @@ include = [
     "/usr/lib/liblens.so.*",
     "/usr/lib/pkgconfig/lens.pc",
 ]
-runtime_deps = ['flux', 'flux-text', 'glibc']
+runtime_deps = [
+    'optics:flux = 0.0.10',
+    'optics:flux-text = 0.0.10',
+    'glibc',
+]
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.post_remove = "ldconfig 2>/dev/null || true"
 
 [[output]]
 name = "iris"
@@ -91,14 +117,14 @@ include = [
     "/usr/lib/libiris.so.*",
     "/usr/lib/pkgconfig/iris.pc",
 ]
-runtime_deps = ['lens', 'glibc', 'wayland', 'libxkbcommon', 'vulkan-loader']
+runtime_deps = [
+    'optics:lens = 0.0.10',
+    'systemd', 'wayland', 'libxkbcommon', 'vulkan-loader', 'glibc',
+]
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.post_remove = "ldconfig 2>/dev/null || true"
 
-# NOTE: an earlier plan revision built the v0.0.1 tag, which had a self-
-# inconsistent pkg-config version requirement (lens.pc required flux >= 0.1.0
-# while shipping flux 0.0.1, etc.), so consumers like aegis's lens-sys failed at
-# link-discovery time. That was fixed upstream in commit 34135ce and released as
-# v0.0.2, which this plan builds — no patch needed. A stale single-output
-# "optics" meta-part from an even older design still sits in
-# parts/optics-0.0.1-1-*.wright.tar.zst as a historical artifact; the current
-# design is granular — depend on the concrete part(s) you need
-# (flux, flux-text, flux-scene-graph, lens, iris) rather than the meta.
+# This plan intentionally has no catch-all "optics" output. Consumers depend
+# on the concrete outputs they link: optics:flux, optics:flux-text,
+# optics:flux-scene-graph, optics:lens, and optics:iris.
