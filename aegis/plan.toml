@@ -1,5 +1,5 @@
 name = "aegis"
-version = "0.0.13"
+version = "0.0.20"
 release = 1
 description = "Aegis Wayland compositor and desktop shell"
 license = "MIT AND GPL-3.0-only"
@@ -11,11 +11,12 @@ build_deps = [
     'wayland-protocols', 'vulkan-headers',
 ]
 link_deps = [
-    'optics:flux = 0.0.10',
-    'optics:flux-text = 0.0.10',
-    'optics:flux-scene-graph = 0.0.10',
-    'optics:lens = 0.0.10',
-    'optics:iris = 0.0.10',
+    'optics:flux >= 0.0.11',
+    'optics:flux-text >= 0.0.11',
+    'optics:flux-scene-graph >= 0.0.11',
+    'optics:prism >= 0.0.14',
+    'optics:lens >= 0.0.11',
+    'optics:iris >= 0.0.11',
     'wayland', 'libxkbcommon', 'libinput', 'seatd',
     'systemd', 'linux-pam', 'vulkan-loader',
     'gcc:gcc-libs', 'glibc',
@@ -24,19 +25,17 @@ link_deps = [
 [[sources]]
 type = "http"
 url = "https://github.com/aegis-shell/aegis/archive/refs/tags/v${VERSION}.tar.gz"
-sha256 = "c7a7b0c3116e3cb2abcc0fb2e794bffd12605170b7af3152f11856882883c27b"
+sha256 = "SKIP"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
 cd source/aegis-${VERSION}
-# The canonical package build uses the locked Optics v0.0.10 Git bindings and
-# the matching native Wright outputs. A local .cargo/config.toml must never be
-# present in the release source.
+# The canonical package build uses the locked Optics Git bindings and the
+# native Wright outputs declared in link_deps; Wright enforces their versions
+# at plan time. A local .cargo/config.toml must never be present in the
+# release source.
 test ! -e .cargo/config.toml
-for pc in flux flux-text flux-scene-graph lens iris; do
-    test "$(pkg-config --modversion "$pc")" = "0.0.10"
-done
 '''
 
 [pipeline.compile]
@@ -53,18 +52,13 @@ bin="${WORKDIR}/target/release"
 out="${STAGING_DIR}/usr"
 
 # Install the explicit distribution artifacts. aegis-lock-preview is a
-# feature-gated contributor tool and must not be packaged.
+# feature-gated contributor tool and must not be packaged. Since v0.0.14 the
+# settings UI is hosted in-process by the command panel (aegis-settings is a
+# library) and the in-tree agent was removed, so neither ships a binary.
 for b in \
-    aegis aegis-idle aegis-atspi aegis-lock aegis-settings \
-    aegis-mcp aegis-agent; do
+    aegis aegis-idle aegis-atspi aegis-lock aegis-mcp; do
     install -Dm755 "$bin/$b" "$out/bin/$b"
 done
-
-# Desktop entry + icon.
-install -Dm644 "$src/contrib/io.github.ming2k.aegis.Settings.desktop" \
-    "$out/share/applications/io.github.ming2k.aegis.Settings.desktop"
-install -Dm644 "$src/contrib/icons/hicolor/scalable/apps/io.github.ming2k.aegis.Settings.svg" \
-    "$out/share/icons/hicolor/scalable/apps/io.github.ming2k.aegis.Settings.svg"
 
 # systemd user unit (ExecStart=/usr/bin/aegis ...). Keep its Delegate=cpu
 # memory pids — Realm sandboxing depends on the delegated controllers.
@@ -88,27 +82,15 @@ install -Dm644 "$src/assets/cursors/Bibata-Modern-Ice/NOTICE" \
 
 [[output]]
 runtime_deps = [
-    'optics:flux = 0.0.10',
-    'optics:flux-text = 0.0.10',
-    'optics:flux-scene-graph = 0.0.10',
-    'optics:lens = 0.0.10',
-    'optics:iris = 0.0.10',
-    'brightnessctl', 'dbus', 'hicolor-icon-theme',
+    'optics:flux >= 0.0.11',
+    'optics:flux-text >= 0.0.11',
+    'optics:flux-scene-graph >= 0.0.11',
+    'optics:prism >= 0.0.14',
+    'optics:lens >= 0.0.11',
+    'optics:iris >= 0.0.11',
+    'brightnessctl', 'dbus',
     'seatd', 'libinput', 'systemd', 'linux-pam',
     'wayland', 'libxkbcommon', 'vulkan-loader',
     'gcc:gcc-libs', 'glibc',
 ]
 backup = ["/etc/pam.d/aegis-lock"]
-
-[output.hooks]
-# Desktop and icon cache refreshes are advisory because their tools may be
-# absent on a minimal Wright-managed system. Do not call systemctl --user from
-# a package transaction; it cannot address every affected user session.
-post_install = '''
-update-desktop-database -q /usr/share/applications 2>/dev/null || true
-gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true
-'''
-post_upgrade = '''
-update-desktop-database -q /usr/share/applications 2>/dev/null || true
-gtk-update-icon-cache -q -t -f /usr/share/icons/hicolor 2>/dev/null || true
-'''

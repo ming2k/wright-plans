@@ -1,7 +1,7 @@
 name = "optics"
-version = "0.0.10"
-release = 1
-description = "Optics rendering libraries: flux, flux-text, flux-scene-graph, lens, and iris"
+version = "0.0.14"
+release = 2
+description = "Optics rendering libraries: flux, flux-text, flux-scene-graph, prism, lens, and iris"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ming2k/optics"
@@ -18,7 +18,7 @@ link_deps = [
 [[sources]]
 type = "http"
 url = "https://github.com/ming2k/optics/archive/refs/tags/v${VERSION}.tar.gz"
-sha256 = "53e310ed57998c8180b40a0c8a441df67935c238772a7e147e9e94ca51c09d5f"
+sha256 = "SKIP"
 extract_to = "source"
 
 [pipeline.configure]
@@ -31,6 +31,7 @@ meson setup build --prefix=/usr --buildtype=release \
     -Dscene-graph=true \
     -Dcompute=true \
     -Deffect=true \
+    -Dprism=true \
     -Dexamples=false \
     -Dtests=false
 '''
@@ -70,7 +71,7 @@ include = [
     "/usr/lib/pkgconfig/flux-text.pc",
 ]
 runtime_deps = [
-    'optics:flux = 0.0.10',
+    'optics:flux = ${VERSION}',
     'freetype', 'harfbuzz', 'fontconfig', 'fribidi', 'glibc',
 ]
 hooks.post_install = "ldconfig 2>/dev/null || true"
@@ -85,7 +86,21 @@ include = [
     "/usr/lib/libflux_scene_graph.so",
     "/usr/lib/pkgconfig/flux-scene-graph.pc",
 ]
-runtime_deps = ['optics:flux = 0.0.10', 'glibc']
+runtime_deps = ['optics:flux = ${VERSION}', 'glibc']
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.post_remove = "ldconfig 2>/dev/null || true"
+
+[[output]]
+name = "prism"
+description = "libprism material library (liquid glass) over the flux effect runtime"
+include = [
+    "/usr/include/prism/**",
+    "/usr/lib/libprism.so",
+    "/usr/lib/libprism.so.*",
+    "/usr/lib/pkgconfig/prism.pc",
+]
+runtime_deps = ['optics:flux = ${VERSION}', 'glibc']
 hooks.post_install = "ldconfig 2>/dev/null || true"
 hooks.post_upgrade = "ldconfig 2>/dev/null || true"
 hooks.post_remove = "ldconfig 2>/dev/null || true"
@@ -100,8 +115,8 @@ include = [
     "/usr/lib/pkgconfig/lens.pc",
 ]
 runtime_deps = [
-    'optics:flux = 0.0.10',
-    'optics:flux-text = 0.0.10',
+    'optics:flux = ${VERSION}',
+    'optics:flux-text = ${VERSION}',
     'glibc',
 ]
 hooks.post_install = "ldconfig 2>/dev/null || true"
@@ -118,7 +133,7 @@ include = [
     "/usr/lib/pkgconfig/iris.pc",
 ]
 runtime_deps = [
-    'optics:lens = 0.0.10',
+    'optics:lens = ${VERSION}',
     'systemd', 'wayland', 'libxkbcommon', 'vulkan-loader', 'glibc',
 ]
 hooks.post_install = "ldconfig 2>/dev/null || true"
@@ -127,4 +142,4 @@ hooks.post_remove = "ldconfig 2>/dev/null || true"
 
 # This plan intentionally has no catch-all "optics" output. Consumers depend
 # on the concrete outputs they link: optics:flux, optics:flux-text,
-# optics:flux-scene-graph, optics:lens, and optics:iris.
+# optics:flux-scene-graph, optics:prism, optics:lens, and optics:iris.
