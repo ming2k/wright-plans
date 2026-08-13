@@ -1,5 +1,5 @@
 name = "marisa"
-version = "0.2.7"
+version = "0.3.1"
 release = 1
 description = "Matching Algorithm with Recursively Implemented StorAge"
 license = "BSD-2-Clause"

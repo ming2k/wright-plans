@@ -1,5 +1,5 @@
 name = "libpsl"
-version = "0.21.5"
+version = "0.23.2"
 release = 1
 description = "Library for accessing the Public Suffix List"
 license = "MIT"

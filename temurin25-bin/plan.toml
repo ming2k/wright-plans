@@ -1,5 +1,5 @@
 name = "temurin25-bin"
-version = "25.0.2+10"
+version = "25.0.4"
 release = 1
 description = "Eclipse Temurin 25 binary JDK"
 license = "GPL-2.0-with-classpath-exception"

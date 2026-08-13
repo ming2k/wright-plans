@@ -1,5 +1,5 @@
 name = "harfbuzz"
-version = "14.1.0"
+version = "14.3.1"
 release = 1
 description = "OpenType text shaping engine"
 license = "MIT"
@@ -10,7 +10,7 @@ build_deps = ['meson', 'ninja', 'pkgconf']
 
 [[sources]]
 type = "http"
-sha256 = "ee0eb3a1da2c5a28147f12dff55f6c7d60aeeeb29ac7ef334eabe84c8476c105"
+sha256 = "9dae9538aae2ffdf70cec31f2c27bf68e2aaeeae3112688467697d5faf6194f7"
 url = "https://github.com/harfbuzz/harfbuzz/releases/download/${VERSION}/harfbuzz-${VERSION}.tar.xz"
 extract_to = "source"
 

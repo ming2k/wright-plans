@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/trifectatechfoundation/sudo-rs"
 maintainer = ""
 
-build_deps = ["rust", "linux-pam"]
+build_deps = ["rust-bin", "linux-pam"]
 link_deps = ["linux-pam"]
 
 [[sources]]

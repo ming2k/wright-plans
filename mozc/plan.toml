@@ -1,5 +1,5 @@
 name = "mozc"
-version = "3.33.6089"
+version = "3.34.6239"
 release = 1
 description = "The Open Source edition of Google Japanese Input"
 license = "BSD-3-Clause"

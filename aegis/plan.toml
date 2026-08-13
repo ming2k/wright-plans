@@ -1,5 +1,5 @@
 name = "aegis"
-version = "0.0.20"
+version = "0.0.21"
 release = 1
 description = "Aegis Wayland compositor and desktop shell"
 license = "MIT AND GPL-3.0-only"
@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/aegis-shell/aegis"
 
 build_deps = [
-    'rust', 'pkgconf', 'llvm:clang',
+    'rust-bin', 'pkgconf', 'llvm:clang',
     'wayland-protocols', 'vulkan-headers',
 ]
 link_deps = [

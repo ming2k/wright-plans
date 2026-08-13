@@ -1,5 +1,5 @@
 name = "hwy"
-version = "1.2.0"
+version = "1.4.0"
 release = 1
 description = "Performance-portable, length-agnostic SIMD with runtime dispatch"
 license = "Apache-2.0"

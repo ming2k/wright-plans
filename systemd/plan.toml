@@ -1,5 +1,5 @@
 name = "systemd"
-version = "260.2"
+version = "261.2"
 release = 1
 description = "System and Service Manager"
 license = "LGPL-2.1-or-later"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "71a9ed11cf773478b0d7a16cd96e39ca3c3939ab37ed9a8ee814c31ea9b4f2b5"
+sha256 = "ed1059ff964f5df35b6056434cc17cc83f86dc913f10489948a0b19b6081c5ec"
 url = "https://github.com/systemd/systemd/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

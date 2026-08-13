@@ -6,7 +6,7 @@ license = "MIT AND GPL-3.0-only"
 arch = "x86_64"
 url = "https://github.com/aegis-shell/xdg-desktop-portal-aegis"
 
-build_deps = ['rust', 'meson', 'ninja', 'pkgconf', 'llvm:clang']
+build_deps = ['rust-bin', 'meson', 'ninja', 'pkgconf', 'llvm:clang']
 link_deps = [
     'gtk4 >= 4.10', 'pipewire >= 0.3', 'linux-pam',
     'gcc:gcc-libs', 'glibc',

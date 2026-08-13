@@ -1,5 +1,5 @@
 name = "cli11"
-version = "2.4.2"
+version = "2.7.2"
 release = 1
 description = "Command line parser for C++11 and beyond"
 license = "BSD-3-Clause"

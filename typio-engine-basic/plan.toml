@@ -6,7 +6,7 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/typio-ime/typio-engine-basic"
 
-build_deps = ['rust']
+build_deps = ['rust-bin']
 
 [[sources]]
 type = "git"

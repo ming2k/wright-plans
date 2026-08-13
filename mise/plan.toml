@@ -1,5 +1,5 @@
 name = "mise"
-version = "2026.7.5"
+version = "2026.8.5"
 release = 1
 description = "Polyglot runtime version manager (asdf-compatible, written in Rust)"
 license = "MIT"
@@ -11,7 +11,7 @@ url = "https://mise.jdx.dev"
 # `mise self-update` refuses to run — upgrades must go through wright.
 [[sources]]
 type = "http"
-sha256 = "be92da3afb180dc71b3ce6fcaaaf2f393812c9c50e9a64c9cb6706cf28edb486"
+sha256 = "f0de92940835ce6af5d0e1496daead7c4464c478046967341fab7d671d0a316b"
 url = "https://github.com/jdx/mise/releases/download/v${VERSION}/mise-v${VERSION}-linux-x64.tar.gz"
 extract_to = "source"
 

@@ -1,5 +1,5 @@
 name = "fzf"
-version = "0.74.1"
+version = "0.74.2"
 release = 1
 description = "Command-line fuzzy finder"
 license = "MIT"

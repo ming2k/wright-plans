@@ -1,5 +1,5 @@
 name = "dracut-ng"
-version = "111"
+version = "112"
 release = 1
 description = "Event-driven initramfs infrastructure with UKI support"
 license = "GPL-2.0-or-later"
@@ -9,7 +9,7 @@ url = "https://github.com/dracut-ng/dracut-ng"
 
 [[sources]]
 type = "http"
-sha256 = "a6bdbd55e2c40a6dd760f59626a6b70e7c8ee0ea46436b340dcedb6f4e54481b"
+sha256 = "839d21eb4bd27bb0ee40d74c9da46df088c2e1425fcd8c3ea62b7e3a3dd28a91"
 url = "https://github.com/dracut-ng/dracut-ng/archive/${VERSION}/dracut-ng-${VERSION}.tar.gz"
 extract_to = "source"
 

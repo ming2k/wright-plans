@@ -1,5 +1,5 @@
 name = "uthash"
-version = "2.3.0"
+version = "2.4.0"
 release = 1
 description = "Hash table macros for C structures"
 license = "BSD-1-Clause"

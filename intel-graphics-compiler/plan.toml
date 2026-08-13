@@ -1,5 +1,5 @@
 name = "intel-graphics-compiler"
-version = "2.30.1"
+version = "2.38.2"
 release = 1
 epoch = 1
 description = "Intel Graphics Compiler for OpenCL"
@@ -13,7 +13,7 @@ build_deps = ['cmake', 'ninja']
 [[sources]]
 type = "http"
 url = "https://github.com/intel/intel-graphics-compiler/archive/v${VERSION}/intel-graphics-compiler-${VERSION}.tar.gz"
-sha256 = "4e5f46b20ec5c055f3cbfed16cfa9739b67f0d05786d736f3d10b09b11b171a3"
+sha256 = "24f707f08d9b87e7e6857f8a83d9944990189c051ce9b3c91c291bdc1563246f"
 extract_to = "source"
 
 [[sources]]

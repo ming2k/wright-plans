@@ -1,5 +1,5 @@
 name = "flatpak-builder"
-version = "1.4.7"
+version = "1.4.10"
 release = 1
 description = "Tool to build Flatpaks from source"
 license = "LGPL-2.1-or-later"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "fd5bc36fe3b974395f782e6c920d8955cee168f513370c32cc800b69acd980d0"
+sha256 = "b1721078c0697c8ca1d7db965232b509d1aa87f68b4dae378eb500bddddb9cc1"
 url = "https://github.com/flatpak/flatpak-builder/releases/download/${VERSION}/flatpak-builder-${VERSION}.tar.xz"
 extract_to = "source"
 

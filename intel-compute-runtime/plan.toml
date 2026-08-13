@@ -1,5 +1,5 @@
 name = "intel-compute-runtime"
-version = "26.09.37435.1"
+version = "26.27.39122.11"
 release = 1
 description = "Intel(R) Graphics Compute Runtime for oneAPI Level Zero and OpenCL(TM) Driver"
 license = "MIT"
@@ -12,7 +12,7 @@ build_deps = ['cmake', 'ninja']
 [[sources]]
 type = "http"
 url = "https://github.com/intel/compute-runtime/archive/${VERSION}/intel-compute-runtime-${VERSION}.tar.gz"
-sha256 = "8c51e99af2971f5e6e662b7dd47b786e50da0252323ce4abaa8d135fe3f3f294"
+sha256 = "914f5626d0067881f0a390d9f05a165230f47e36126728e3d6f4ce2b7fef946c"
 extract_to = "source"
 
 [options]

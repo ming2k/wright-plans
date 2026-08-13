@@ -1,5 +1,5 @@
 name = "xdg-dbus-proxy"
-version = "0.1.7"
+version = "0.1.8"
 release = 1
 description = "D-Bus proxy for Flatpak sandboxed apps"
 license = "LGPL-2.1-or-later"

@@ -1,5 +1,5 @@
 name = "uv"
-version = "0.11.6"
+version = "0.12.3"
 release = 1
 description = "Extremely fast Python package and project manager, written in Rust"
 license = "MIT OR Apache-2.0"
@@ -11,7 +11,7 @@ url = "https://github.com/astral-sh/uv"
 # kicks in and `uv self update` refuses to run — upgrades must go through wright.
 [[sources]]
 type = "http"
-sha256 = "0c6bab77a67a445dc849ed5e8ee8d3cb333b6e2eba863643ce1e228075f27943"
+sha256 = "600cf9a742aca00d292673b16b5acffaa7b8c269a364ad0c2e79498dcb1fe101"
 url = "https://github.com/astral-sh/uv/releases/download/${VERSION}/uv-x86_64-unknown-linux-gnu.tar.gz"
 extract_to = "source"
 

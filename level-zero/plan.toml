@@ -1,5 +1,5 @@
 name = "level-zero"
-version = "1.28.0"
+version = "1.32.0"
 release = 1
 description = "oneAPI Level Zero Specification Headers and Loader"
 license = "MIT"

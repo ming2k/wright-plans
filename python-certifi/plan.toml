@@ -1,5 +1,5 @@
 name = "python-certifi"
-version = "2026.6.17"
+version = "2026.7.22"
 release = 1
 description = "Python package for providing Mozilla's CA Bundle"
 license = "MPL-2.0"
@@ -11,7 +11,7 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "024c88eeec92ca068db80f02b8b07c9cef7b9fe261d1d535abfd5abd6f6af432"
+sha256 = "741e2c3b351ddf169a738da9f2c048608ff7f2c5cc02f1ebc6b118bb090d5d55"
 url = "https://pypi.org/packages/source/c/certifi/certifi-${VERSION}.tar.gz"
 extract_to = "source"
 

@@ -1,5 +1,5 @@
 name = "podman"
-version = "5.8.2"
+version = "6.1.0"
 release = 1
 description = "Daemonless OCI container engine"
 license = "Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND MIT AND MPL-2.0"
@@ -10,7 +10,7 @@ link_deps = ['glib', 'glibc', 'gpgme', 'libseccomp', 'sqlite', 'systemd']
 
 [[sources]]
 type = "http"
-sha256 = "b20ea65afc5a58ea1cea019bd51a5d84eb9042d25d3eb82c55010c8815732d84"
+sha256 = "e086183db2f852476a7fa2580d0276cef32086b4cf17ae7020948f06eb613e0d"
 url = "https://github.com/containers/podman/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

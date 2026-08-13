@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/sxyazi/yazi"
 
 link_deps = ['gcc:gcc-libs', 'glibc']
-build_deps = ['rust']
+build_deps = ['rust-bin']
 
 [[sources]]
 type = "http"

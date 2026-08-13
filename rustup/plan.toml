@@ -1,0 +1,35 @@
+name = "rustup"
+version = "1.28.1"
+release = 1
+description = "The Rust toolchain installer"
+license = "Apache-2.0 OR MIT"
+arch = "x86_64"
+url = "https://rustup.rs"
+
+[[sources]]
+type = "http"
+sha256 = "a3339fb004c3d0bb9862ba0bce001861fe5cbde9c10d16591eb3f39ee6cd3e7f"
+url = "https://static.rust-lang.org/rustup/archive/${VERSION}/x86_64-unknown-linux-gnu/rustup-init"
+as = "rustup-init"
+
+[pipeline.staging]
+script = '''
+install -Dm755 rustup-init ${STAGING_DIR}/usr/bin/rustup-init
+install -Dm755 rustup-init ${STAGING_DIR}/usr/bin/rustup
+
+# Create command symlinks pointing to rustup so cargo/rustc are directly available
+for tool in cargo rustc rustdoc rustfmt cargo-clippy cargo-fmt clippy-driver rust-analyzer; do
+    ln -sf rustup ${STAGING_DIR}/usr/bin/$tool
+done
+
+# Generate shell completions from rustup binary
+mkdir -p ${STAGING_DIR}/usr/share/bash-completion/completions
+mkdir -p ${STAGING_DIR}/usr/share/zsh/site-functions
+mkdir -p ${STAGING_DIR}/usr/share/fish/vendor_completions.d
+${STAGING_DIR}/usr/bin/rustup completions bash > ${STAGING_DIR}/usr/share/bash-completion/completions/rustup
+${STAGING_DIR}/usr/bin/rustup completions zsh  > ${STAGING_DIR}/usr/share/zsh/site-functions/_rustup
+${STAGING_DIR}/usr/bin/rustup completions fish > ${STAGING_DIR}/usr/share/fish/vendor_completions.d/rustup.fish
+'''
+
+[[output]]
+runtime_deps = ['glibc']

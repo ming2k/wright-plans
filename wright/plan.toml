@@ -1,12 +1,12 @@
 name = "wright"
-version = "5.3.19"
+version = "5.4.2"
 release = 1
 description = "Declarative, extensible, sandboxed Linux package manager"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ming2k/wright"
 
-build_deps = ['rust']
+build_deps = ['rust-bin']
 
 [[sources]]
 type = "http"

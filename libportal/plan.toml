@@ -1,24 +1,24 @@
 name = "libportal"
-version = "0.7.1"
-release = 2
+version = "0.10.0"
+release = 1
 description = "GIO-style async APIs for Flatpak Portals"
 license = "LGPL-3.0-or-later"
 arch = "x86_64"
 url = "https://github.com/flatpak/libportal"
 
-link_deps = ['glib', 'gtk4', 'gtk3']
+link_deps = ['glib', 'gtk4']
 build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "297b90b263fad22190a26b8c7e8ea938fe6b18fb936265e588927179920d3805"
+sha256 = "1c74a3f7becbd4ff745d7f565afd06e97e50eb080a0e268cb14bb55289a745bf"
 url = "https://github.com/flatpak/libportal/releases/download/${VERSION}/libportal-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
 cd source/libportal-${VERSION}
-meson setup build --prefix=/usr --buildtype=release -Dbackend-gtk3=enabled -Dbackend-gtk4=enabled -Dintrospection=true -Dvapi=false -Ddocs=false -Dtests=false'''
+meson setup build --prefix=/usr --buildtype=release -Dbackend-gtk3=disabled -Dbackend-gtk4=enabled -Dintrospection=true -Dvapi=false -Ddocs=false -Dtests=false'''
 
 [pipeline.compile]
 script = '''
@@ -31,4 +31,4 @@ cd source/libportal-${VERSION}
 meson install -C build --destdir ${STAGING_DIR}'''
 
 [[output]]
-runtime_deps = ['glib', 'gtk4', 'gtk3']
+runtime_deps = ['glib', 'gtk4']

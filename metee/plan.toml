@@ -1,5 +1,5 @@
 name = "metee"
-version = "4.3.1"
+version = "6.2.5"
 release = 1
 description = "Intel Management Engine Interface (MEI) Library"
 license = "Apache-2.0"

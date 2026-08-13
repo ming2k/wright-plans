@@ -1,6 +1,6 @@
 name = "libclc"
-version = "22.1.4"
-release = 2
+version = "22.1.8"
+release = 1
 description = "OpenCL C library implementation for LLVM"
 license = "Apache-2.0"
 arch = "x86_64"
@@ -11,7 +11,7 @@ build_deps = ['cmake', 'llvm:clang']
 
 [[sources]]
 type = "http"
-sha256 = "3e68c90dda630c27d41d201e37b8bbf5222e39b273dec5ca880709c69e0a07d4"
+sha256 = "922f1817a0df7b1489272d18134ee0087a8b068828f87ac63b9861b1a9965888"
 url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-${VERSION}/llvm-project-${VERSION}.src.tar.xz"
 extract_to = "source"
 

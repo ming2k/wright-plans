@@ -1,5 +1,5 @@
 name = "cmark"
-version = "0.31.1"
+version = "0.31.2"
 release = 1
 description = "CommonMark parsing and rendering library"
 license = "BSD-2-Clause"
@@ -11,7 +11,7 @@ build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
-sha256 = "3da93db5469c30588cfeb283d9d62edfc6ded9eb0edc10a4f5bbfb7d722ea802"
+sha256 = "f9bc5ca38bcb0b727f0056100fac4d743e768872e3bacec7746de28f5700d697"
 url = "https://github.com/commonmark/cmark/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

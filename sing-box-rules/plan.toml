@@ -1,5 +1,5 @@
 name = "sing-box-rules"
-version = "20260221"
+version = "20260812"
 release = 1
 description = "GeoIP and GeoSite rule-set files for sing-box"
 license = "GPL-3.0-only"

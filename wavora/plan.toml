@@ -12,7 +12,7 @@ url = "https://github.com/ming2k/wavora"
 # build scripts link via pkg-config at build time, and what the player
 # dlopen/loaders at runtime.
 build_deps = [
-    'rust',
+    'rust-bin',
     'pkgconf',
     'vulkan-headers',
     'wayland', 'wayland-protocols',

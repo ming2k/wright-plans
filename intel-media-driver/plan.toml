@@ -1,5 +1,5 @@
 name = "intel-media-driver"
-version = "25.4.6"
+version = "26.2.4"
 release = 1
 description = "Intel Media Driver for VAAPI — Broadwell+ iGPUs"
 license = "BSD-3-Clause AND MIT"
@@ -11,7 +11,7 @@ build_deps = ['cmake']
 
 [[sources]]
 type = "http"
-sha256 = "e5cf57c66e22359d1ec07d766b04e5da43677b9330999ce0dbf686aac60cf6bb"
+sha256 = "a23185fca05c8fa8bdec09ea9ee8a20361163c87035ec978de4e2bb048a55534"
 url = "https://github.com/intel/media-driver/archive/intel-media-${VERSION}/intel-media-driver-${VERSION}.tar.gz"
 extract_to = "source"
 

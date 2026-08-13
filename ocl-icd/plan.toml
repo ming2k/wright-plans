@@ -1,6 +1,6 @@
 name = "ocl-icd"
-version = "2025.07.22"
-release = 2
+version = "2026.05.29"
+release = 1
 description = "OpenCL ICD Loader (official Khronos implementation)"
 license = "Apache-2.0"
 arch = "x86_64"

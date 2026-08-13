@@ -1,5 +1,5 @@
 name = "udisks2"
-version = "2.10.1"
+version = "2.11.2"
 release = 1
 description = "Disk management service"
 license = "GPL-2.0-or-later"
@@ -10,7 +10,7 @@ link_deps = ['acl', 'libatasmart', 'libblockdev', 'libgudev', 'polkit', 'systemd
 
 [[sources]]
 type = "http"
-sha256 = "b75734ccf602540dedb4068bec206adcb508a4c003725e117ae8f994d92d8ece"
+sha256 = "18630a8aad806bea0bc626ce97e71e50ec82c742956ac1c834a4275f8f22207b"
 url = "https://github.com/storaged-project/udisks/releases/download/udisks-${VERSION}/udisks-${VERSION}.tar.bz2"
 extract_to = "source"
 

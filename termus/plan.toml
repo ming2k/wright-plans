@@ -1,5 +1,5 @@
 name = "termus"
-version = "1.0.4"
+version = "1.2.0"
 release = 1
 description = "Small, fast terminal music player inspired by cmus"
 license = "GPL-2.0-or-later"

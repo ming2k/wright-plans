@@ -1,6 +1,6 @@
 name = "librime"
-version = "1.16.1"
-release = 2
+version = "1.17.0"
+release = 1
 description = "Rime input method engine"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -11,7 +11,7 @@ build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
-sha256 = "944909b5d9fb81171b044b7f2ea89922bd73457fcc5105798a259173288cd2d9"
+sha256 = "a60274da5d8b8a7187e6c7e9ba5023334ed7bdd182535e93c4e96de8cf188377"
 url = "https://github.com/rime/librime/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

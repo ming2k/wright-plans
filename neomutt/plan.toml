@@ -1,5 +1,5 @@
 name = "neomutt"
-version = "20260105"
+version = "20260616"
 release = 1
 description = "Feature-rich command-line email client"
 license = "GPL-2.0-only"
@@ -10,7 +10,7 @@ link_deps = ['cyrus-sasl', 'gdbm', 'gnutls', 'gpgme', 'krb5', 'libidn2', 'lua', 
 
 [[sources]]
 type = "http"
-sha256 = "a78e55a0df62b7f98566676d0ab9041aad89b2384bb5c6f3a96302a5cf49968d"
+sha256 = "2c34fdd2166d5765e6bfdc21d1248bc4e92ddc0a33537b9418c17cd90e2dda80"
 url = "https://github.com/neomutt/neomutt/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

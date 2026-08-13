@@ -1,5 +1,5 @@
 name = "mbedtls"
-version = "3.6.4"
+version = "4.2.0"
 release = 1
 description = "Portable cryptographic and TLS library"
 license = "Apache-2.0"

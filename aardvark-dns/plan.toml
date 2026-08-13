@@ -1,5 +1,5 @@
 name = "aardvark-dns"
-version = "1.17.1"
+version = "2.1.0"
 release = 1
 description = "Authoritative DNS server for container A and AAAA records"
 license = "Apache-2.0 AND MIT AND Zlib"
@@ -10,13 +10,13 @@ link_deps = ['glibc']
 
 [[sources]]
 type = "http"
-sha256 = "25b39bfad079a03862825b2f9db8b71b82fc80aad5552a9c76ea912edc9b889e"
+sha256 = "daf871488603e659b0501224cf0731ac317809b1d1701fc061cb4f6ae39a894f"
 url = "https://github.com/containers/aardvark-dns/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
 type = "http"
-sha256 = "009198f042f150d42025c8a0456bb7a98293c9deeb012d37b2d364f44e52288f"
+sha256 = "6e6366828d4cd2ccf3cfe07657d8aba083045605696b4f74967c2c8340f51500"
 url = "https://github.com/containers/aardvark-dns/releases/download/v${VERSION}/aardvark-dns-v${VERSION}-vendor.tar.gz"
 
 [pipeline.prepare]

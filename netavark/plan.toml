@@ -1,5 +1,5 @@
 name = "netavark"
-version = "1.17.2"
+version = "2.1.0"
 release = 1
 description = "OCI container network stack"
 license = "Apache-2.0 AND BSD-3-Clause AND MIT"
@@ -10,13 +10,13 @@ link_deps = ['glibc']
 
 [[sources]]
 type = "http"
-sha256 = "284faa7cc525b869cbac4053e0a4127ac743ca7da1457c49fffb35558ea9c78d"
+sha256 = "96677048168ddd1abe313e4c2e17f1cace72b60ee1bac8ca12a4bd7dfcadfbbb"
 url = "https://github.com/containers/netavark/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
 [[sources]]
 type = "http"
-sha256 = "afa8e99a9691ef6ea485d6cb6b1897684d9f8a26719deaa3cbf37b5f17198e6f"
+sha256 = "532779573b7f4c2606e43f8471132bb9072417feed9ee06a4e309cf3fa066ab8"
 url = "https://github.com/containers/netavark/releases/download/v${VERSION}/netavark-v${VERSION}-vendor.tar.gz"
 
 [pipeline.prepare]

@@ -1,5 +1,5 @@
 name = "alacritty"
-version = "0.16.1"
+version = "0.17.0"
 release = 1
 description = "A fast, cross-platform, OpenGL terminal emulator"
 license = "Apache-2.0"
@@ -7,11 +7,11 @@ arch = "x86_64"
 url = "https://alacritty.org"
 
 link_deps = ['fontconfig', 'freetype', 'libglvnd', 'libxkbcommon', 'mesa', 'wayland']
-build_deps = ['scdoc', 'rust']
+build_deps = ['scdoc', 'rust-bin']
 
 [[sources]]
 type = "http"
-sha256 = "b7240df4a52c004470977237a276185fc97395d59319480d67cad3c4347f395e"
+sha256 = "38d6527d346cda5c6049332a1f3338a89ea66cd7981b54d4c3ce801b392496f8"
 url = "https://github.com/alacritty/alacritty/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

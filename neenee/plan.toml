@@ -1,5 +1,5 @@
 name = "neenee"
-version = "0.22.2"
+version = "0.22.4"
 release = 1
 description = "A Rust-based AI coding agent with a semantic TUI, tool use, and bounded autonomous goals"
 license = "MIT"
@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://github.com/ming2k/neenee"
 
 link_deps = ['gcc:gcc-libs', 'glibc']
-build_deps = ['rust', 'pkgconf', 'cmake', 'perl']
+build_deps = ['rust-bin', 'pkgconf', 'cmake', 'perl']
 
 [[sources]]
 type = "http"

@@ -1,5 +1,5 @@
 name = "acpica"
-version = "20251212"
+version = "20260408"
 release = 1
 description = "ACPICA tools and reference implementation, including iasl"
 license = "BSD-3-Clause"

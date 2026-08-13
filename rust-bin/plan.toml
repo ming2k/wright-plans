@@ -1,0 +1,31 @@
+name = "rust-bin"
+version = "1.97.1"
+release = 1
+description = "Prebuilt Rust programming language compiler and standard library"
+license = "Apache-2.0 AND MIT"
+arch = "x86_64"
+url = "https://www.rust-lang.org"
+
+link_deps = ['glibc']
+
+[[sources]]
+type = "http"
+sha256 = "88f28fa9af20594179f85d6df67078dfd6fa93e2f6da5e1e9b0ac4997988ca4f"
+url = "https://static.rust-lang.org/dist/rust-${VERSION}-x86_64-unknown-linux-gnu.tar.xz"
+extract_to = "source"
+
+[pipeline.compile]
+script = '''
+cd source/rust-${VERSION}-x86_64-unknown-linux-gnu
+./install.sh --destdir=${STAGING_DIR} --prefix=/usr --without=rust-docs
+
+# Move non-FHS usr/etc/* to etc/ if present
+if [ -d "${STAGING_DIR}/usr/etc" ]; then
+    mkdir -p "${STAGING_DIR}/etc"
+    cp -r "${STAGING_DIR}/usr/etc/"* "${STAGING_DIR}/etc/"
+    rm -rf "${STAGING_DIR}/usr/etc"
+fi
+'''
+
+[[output]]
+runtime_deps = ['glibc']

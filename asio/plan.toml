@@ -1,5 +1,5 @@
 name = "asio"
-version = "1.38.0"
+version = "1.38.2"
 release = 1
 description = "Cross-platform C++ library for network programming"
 license = "BSL-1.0"

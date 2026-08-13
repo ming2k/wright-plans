@@ -1,5 +1,5 @@
 name = "opencl-headers"
-version = "2025.07.22"
+version = "2026.05.29"
 release = 1
 description = "OpenCL header files and API registry"
 license = "Apache-2.0"

@@ -1,11 +1,10 @@
 name = "hwdata"
-version = "0.393"
+version = "0.410"
 release = 1
 description = "Hardware identification and configuration data"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://github.com/vcrhonek/hwdata"
-
 
 [[sources]]
 type = "http"
@@ -15,16 +14,15 @@ extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/hwdata-${VERSION}
-./configure --prefix=/usr --datarootdir=/usr/share'''
+cd source/*
+./configure --prefix=/usr --datadir=/usr/share --libdir=/usr/lib'''
 
 [pipeline.compile]
 script = '''
-cd source/hwdata-${VERSION}
+cd source/*
 make -j$(nproc)'''
 
 [pipeline.staging]
 script = '''
-cd source/hwdata-${VERSION}
+cd source/*
 make DESTDIR=${STAGING_DIR} install'''
-

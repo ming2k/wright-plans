@@ -1,5 +1,5 @@
 name = "libical"
-version = "3.0.20"
+version = "4.0.4"
 release = 1
 description = "Implementation of the iCalendar protocols and data formats"
 license = "LGPL-2.1-only OR MPL-2.0"
@@ -17,19 +17,27 @@ extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/libical-${VERSION}
-mkdir -p build && cd build
-cmake .. -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBEXECDIR=lib -DSHARED_ONLY=true -DCMAKE_DISABLE_FIND_PACKAGE_BerkeleyDB=true -DGOBJECT_INTROSPECTION=false -DICAL_GLIB_VAPI=false -DENABLE_GTK_DOC=OFF'''
+cd source/*
+cmake -B build -G Ninja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBEXECDIR=lib \
+    -DBUILD_SHARED_LIBS=ON \
+    -DCMAKE_DISABLE_FIND_PACKAGE_BerkeleyDB=true \
+    -DLIBICAL_GOBJECT_INTROSPECTION=false \
+    -DLIBICAL_GLIB_VAPI=false \
+    -DLIBICAL_GLIB_BUILD_DOCS=OFF \
+    -DLIBICAL_JAVA_BINDINGS=OFF'''
 
 [pipeline.compile]
 script = '''
-cd source/libical-${VERSION}
-ninja -j$(nproc) -C build'''
+cd source/*
+cmake --build build -j$(nproc)'''
 
 [pipeline.staging]
 script = '''
-cd source/libical-${VERSION}
-DESTDIR=${STAGING_DIR} ninja install -C build'''
+cd source/*
+DESTDIR=${STAGING_DIR} cmake --install build'''
 
 [[output]]
 runtime_deps = ['glibc', 'glib', 'icu', 'libxml2']

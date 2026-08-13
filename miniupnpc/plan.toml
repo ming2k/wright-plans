@@ -1,5 +1,5 @@
 name = "miniupnpc"
-version = "2.3.3"
+version = "2.3.11"
 release = 1
 description = "UPnP IGD client lightweight library"
 license = "BSD-3-Clause"

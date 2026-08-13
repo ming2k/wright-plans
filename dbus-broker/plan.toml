@@ -1,5 +1,5 @@
 name = "dbus-broker"
-version = "36"
+version = "37"
 release = 1
 description = "Linux D-Bus Message Broker - drop-in replacement for dbus-daemon"
 license = "Apache-2.0"

@@ -1,5 +1,5 @@
 name = "sherpa-onnx"
-version = "1.12.29"
+version = "1.13.5"
 release = 1
 description = "Speech-to-text, text-to-speech, speaker diarization, and VAD using next-gen Kaldi with onnxruntime"
 license = "Apache-2.0"

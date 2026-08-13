@@ -1,6 +1,6 @@
 name = "pcsc-lite"
-version = "2.4.1"
-release = 4
+version = "2.5.1"
+release = 1
 description = "PC/SC Lite smart card middleware and library"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -11,7 +11,7 @@ build_deps = ["meson", "ninja", "flex"]
 [[sources]]
 type = "http"
 url = "https://github.com/LudovicRousseau/PCSC/archive/refs/tags/${VERSION}.tar.gz"
-sha256 = "e7b6737f68c3b9a763fb0b0370d899cea091cced9d762ca8a6032c959576d5be"
+sha256 = "78cd514e1b549292696a5c549d42d69a44fd084aa06ccd1af2ff6c2208282581"
 extract_to = "source"
 
 [pipeline.configure]

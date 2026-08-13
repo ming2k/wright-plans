@@ -1,5 +1,5 @@
 name = "v2fly-geoip"
-version = "202604050243"
+version = "202608050239"
 release = 1
 description = "V2Fly GeoIP data for Xray"
 license = "CC-BY-SA-4.0"
@@ -8,7 +8,7 @@ url = "https://github.com/v2fly/geoip"
 
 [[sources]]
 type = "http"
-sha256 = "16dbd19ff8dddb69960f313a3b0c0623cae82dc9725687110c28740226d3b285"
+sha256 = "c67bd077eb102cec74fab759b73d17f99275f56af10a87c14d9fd983508f5ce1"
 url = "https://github.com/v2fly/geoip/releases/download/${VERSION}/geoip.dat"
 
 [pipeline.staging]

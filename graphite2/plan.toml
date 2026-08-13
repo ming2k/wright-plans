@@ -1,6 +1,6 @@
 name = "graphite2"
-version = "1.3.14"
-release = 2
+version = "1.3.15"
+release = 1
 description = "Rendering engine for complex non-Roman writing systems"
 license = "LGPL-2.1-or-later OR GPL-2.0-or-later OR MPL-2.0"
 arch = "x86_64"
@@ -11,31 +11,21 @@ build_deps = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "f99d1c13aa5fa296898a181dff9b82fb25f6cc0933dbaa7a475d8109bd54209d"
+sha256 = "c6bc8b4252724665297f7cad0c55897285c673f9b8e6db3522ace833593fe0b1"
 url = "https://github.com/silnrsi/graphite/releases/download/${VERSION}/graphite2-${VERSION}.tgz"
 extract_to = "source"
 
-[[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "gcc15.patch"
-
-[pipeline.prepare]
-script = '''
-cd source/graphite2-${VERSION}
-patch -Np1 < ../../graphite2-gcc15.patch'''
-
 [pipeline.configure]
 script = '''
-cd source/graphite2-${VERSION}
-cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=None -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_SKIP_INSTALL_RPATH=ON -DGRAPHITE2_COMPARE_RENDERER=OFF -DGRAPHITE2_VM_TYPE=direct'''
+cd source/*
+cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=None -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -DCMAKE_SKIP_INSTALL_RPATH=ON -DGRAPHITE2_COMPARE_RENDERER=OFF -DGRAPHITE2_VM_TYPE=direct -DGRAPHITE2_TESTS=OFF'''
 
 [pipeline.compile]
 script = '''
-cd source/graphite2-${VERSION}
+cd source/*
 cmake --build build -j$(nproc)'''
 
 [pipeline.staging]
 script = '''
-cd source/graphite2-${VERSION}
+cd source/*
 DESTDIR=${STAGING_DIR} cmake --install build'''

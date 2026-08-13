@@ -1,5 +1,5 @@
 name = "swig"
-version = "4.4.1"
+version = "4.5.0"
 release = 1
 description = "Simplified Wrapper and Interface Generator"
 license = "GPL-3.0-or-later"

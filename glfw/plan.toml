@@ -1,5 +1,5 @@
 name = "glfw"
-version = "3.4"
+version = "3.5.1"
 release = 1
 description = "Multi-platform library for OpenGL, OpenGL ES, Vulkan, window and input"
 license = "Zlib"
@@ -11,7 +11,7 @@ build_deps = ['cmake']
 
 [[sources]]
 type = "http"
-sha256 = "c038d34200234d071fae9345bc455e4a8f2f544ab60150765d7704e08f3dac01"
+sha256 = "5234f4f29473e9a06bc7847d8371858dd135d38466eeeaa652fdc9f8f9ff0c20"
 url = "https://github.com/glfw/glfw/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

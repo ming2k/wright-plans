@@ -7,7 +7,7 @@ arch = "x86_64"
 url = "https://codeberg.org/LGFae/awww"
 
 link_deps = ['lz4', 'wayland']
-build_deps = ['wayland-protocols', 'rust']
+build_deps = ['wayland-protocols', 'rust-bin']
 
 [[sources]]
 type = "http"

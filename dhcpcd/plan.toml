@@ -1,5 +1,5 @@
 name = "dhcpcd"
-version = "10.3.2"
+version = "10.5.0"
 release = 1
 description = "DHCP/DHCPv6 client with IPv4LL support"
 license = "BSD-2-Clause"

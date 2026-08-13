@@ -1,5 +1,5 @@
 name = "cava"
-version = "0.10.7"
+version = "1.0.0"
 release = 1
 description = "Console-based audio visualizer for ALSA, PipeWire, PulseAudio and more"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['autoconf', 'automake', 'libtool']
 
 [[sources]]
 type = "http"
-sha256 = "43f994f7e609fab843af868d8a7bc21471ac62c5a4724ef97693201eac42e70a"
+sha256 = "2866cea11d0bd38406924ab2b47d5577f14909a7321ee928b6836391f375af7e"
 url = "https://github.com/karlstav/cava/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

@@ -1,5 +1,5 @@
 name = "xdg-desktop-portal-wlr"
-version = "0.7.1"
+version = "0.8.4"
 release = 1
 description = "XDG Desktop Portal backend for wlroots-based Wayland compositors (including niri)"
 license = "MIT"

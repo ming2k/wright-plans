@@ -16,7 +16,7 @@ arch = "x86_64"
 url = "https://github.com/typio-ime/typio-linux"
 
 # bindgen links libclang at build time; pkg-config resolves libflux/libflux-text.
-build_deps = ['rust', 'pkgconf', 'llvm:clang']
+build_deps = ['rust-bin', 'pkgconf', 'llvm:clang']
 link_deps = [
     'libtypio', 'flux', 'wayland', 'libxkbcommon', 'vulkan-loader',
 ]

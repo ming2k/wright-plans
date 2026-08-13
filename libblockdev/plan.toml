@@ -1,5 +1,5 @@
 name = "libblockdev"
-version = "3.4.0"
+version = "3.5.0"
 release = 1
 description = "Library for manipulating block devices"
 license = "LGPL-2.1-or-later"
@@ -11,7 +11,7 @@ build_deps = ['autoconf', 'automake', 'libtool']
 
 [[sources]]
 type = "http"
-sha256 = "65ef9a37babd44b85b8ff9b273f90f9f7d5f8ff7b0c76a8edb69240325fd83f4"
+sha256 = "bccd30e6b5d11504de60d9889ff6a2a25b07a4ec8f04070f2387e168301b3e3a"
 url = "https://github.com/storaged-project/libblockdev/releases/download/${VERSION}/libblockdev-${VERSION}.tar.gz"
 extract_to = "source"
 

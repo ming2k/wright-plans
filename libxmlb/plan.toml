@@ -1,5 +1,5 @@
 name = "libxmlb"
-version = "0.3.21"
+version = "0.3.29"
 release = 1
 description = "Library to help create and query binary XML blobs"
 license = "LGPL-2.1-or-later"
