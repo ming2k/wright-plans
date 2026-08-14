@@ -1,5 +1,5 @@
 name = "xdg-desktop-portal-aegis"
-version = "0.0.9"
+version = "0.0.10"
 release = 1
 description = "XDG Desktop Portal backend for the Aegis compositor"
 license = "MIT AND GPL-3.0-only"

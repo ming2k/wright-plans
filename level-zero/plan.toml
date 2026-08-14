@@ -12,23 +12,28 @@ build_deps = ['ninja', 'cmake']
 [[sources]]
 type = "http"
 url = "https://github.com/oneapi-src/level-zero/archive/refs/tags/v${VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "b658d3be89b2ea3c5e6b3214592acb58a4875e738184b1a4cc7e9cf878b5f7b9"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/level-zero-${VERSION}
-cmake -B build -S level-zero-${VERSION} -GNinja -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_INSTALL_LIBDIR=lib -DCMAKE_BUILD_TYPE=Release'''
+cmake -B build -S "${WORKDIR}/source/level-zero-${VERSION}" \
+    -GNinja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DCMAKE_BUILD_TYPE=Release
+'''
 
 [pipeline.compile]
-script = '''
-cd source/level-zero-${VERSION}
-ninja -C build'''
+script = "cmake --build build -j$(nproc)"
 
 [pipeline.staging]
 script = '''
-cd source/level-zero-${VERSION}
-DESTDIR=${STAGING_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} cmake --install build
+install -D -m644 "${WORKDIR}/source/level-zero-${VERSION}/LICENSE" \
+    -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
+'''
 
 [[output]]
 runtime_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++']
+

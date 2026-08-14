@@ -24,7 +24,6 @@ build_deps = ['cmake', 'llvm:clang']
 type = "git"
 url = "https://github.com/rui314/mold.git"
 ref = "v${VERSION}"
-depth = 1
 extract_to = "source"
 
 [options]

@@ -41,7 +41,6 @@ link_deps = [
 type = "git"
 url = "https://github.com/ming2k/wavora.git"
 ref = "refs/tags/v${VERSION}"
-depth = 1
 extract_to = "source"
 
 [pipeline.compile]

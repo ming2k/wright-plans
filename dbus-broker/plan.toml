@@ -21,14 +21,12 @@ extract_to = "source"
 type = "git"
 url = "https://github.com/c-util/c-list.git"
 ref = "v3"
-depth = 1
 extract_to = "source/dbus-broker-${VERSION}/subprojects/libclist-3"
 
 [[sources]]
 type = "git"
 url = "https://github.com/c-util/c-stdaux.git"
 ref = "v1"
-depth = 1
 extract_to = "source/dbus-broker-${VERSION}/subprojects/libcstdaux-1"
 
 [pipeline.configure]

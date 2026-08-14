@@ -12,7 +12,9 @@ link_deps = ['openssl', 'curl', 'miniupnpc', 'libdrm', 'libcap', 'libva', 'wayla
 [[sources]]
 type = "git"
 url = "https://github.com/LizardByte/Sunshine.git"
-tag = "v2025.924.154138"
+ref = "v2025.924.154138"
+# The prepare stage runs `git submodule update --init --recursive`; keep the repository.
+git_metadata = true
 extract_to = "source"
 
 [pipeline.prepare]

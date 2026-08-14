@@ -6,8 +6,8 @@ license = "MIT"
 arch = "x86_64"
 url = "https://github.com/intel/compute-runtime"
 
-
-build_deps = ['cmake', 'ninja']
+link_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++', 'intel-gmmlib', 'intel-graphics-compiler', 'level-zero']
+build_deps = ['cmake', 'ninja', 'level-zero']
 
 [[sources]]
 type = "http"
@@ -15,8 +15,19 @@ url = "https://github.com/intel/compute-runtime/archive/${VERSION}/intel-compute
 sha256 = "914f5626d0067881f0a390d9f05a165230f47e36126728e3d6f4ce2b7fef946c"
 extract_to = "source"
 
+[[sources]]
+type = "http"
+url = "https://github.com/oneapi-src/level-zero/archive/refs/tags/v1.32.0.tar.gz"
+sha256 = "b658d3be89b2ea3c5e6b3214592acb58a4875e738184b1a4cc7e9cf878b5f7b9"
+
 [options]
 ccache = true
+
+[pipeline.prepare]
+script = '''
+# Wire in-tree Level Zero headers next to compute-runtime source
+mv ${WORKDIR}/level-zero-1.32.0 ${WORKDIR}/source/level_zero
+'''
 
 [pipeline.configure]
 script = '''
@@ -42,6 +53,7 @@ cmake -B build -S "${WORKDIR}/source/compute-runtime-${VERSION}" \
     -DCMAKE_BUILD_TYPE='Release' \
     -DCMAKE_INSTALL_LIBDIR='lib' \
     -DCMAKE_INSTALL_PREFIX='/usr' \
+    -DLEVEL_ZERO_ROOT="${WORKDIR}/source/level_zero" \
     -DNEO_BUILD_UNVERSIONED_OCLOC='ON' \
     -DNEO_DISABLE_LD_GOLD:BOOL='ON' \
     -DNEO_DISABLE_WERROR:BOOL='ON' \
@@ -71,4 +83,6 @@ fi
 '''
 
 [[output]]
-runtime_deps = ['glibc', 'intel-gmmlib', 'intel-graphics-compiler', 'gcc:gcc-libs', 'gcc:libstdc++']
+runtime_deps = ['glibc', 'intel-gmmlib', 'intel-graphics-compiler', 'gcc:gcc-libs', 'gcc:libstdc++', 'level-zero']
+provides = ['level-zero-driver', 'opencl-driver']
+

@@ -1,5 +1,5 @@
 name = "aegis"
-version = "0.0.21"
+version = "0.0.22"
 release = 1
 description = "Aegis Wayland compositor and desktop shell"
 license = "MIT AND GPL-3.0-only"

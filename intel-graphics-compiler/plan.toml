@@ -17,40 +17,34 @@ sha256 = "24f707f08d9b87e7e6857f8a83d9944990189c051ce9b3c91c291bdc1563246f"
 extract_to = "source"
 
 [[sources]]
-type = "git"
-url = "https://github.com/intel/vc-intrinsics.git"
-ref = "v0.25.0"
-extract_to = "vc-intrinsics"
+type = "http"
+url = "https://github.com/intel/vc-intrinsics/archive/refs/tags/v0.25.0.tar.gz"
+sha256 = "83d6e0528feb6a47f7818e7c1dd3305dd8a48fb1103d279571dad517a93a8d39"
 
 [[sources]]
-type = "git"
-url = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator.git"
-ref = "de396f26ade6b0ac1f0f367b741dd5c78a76a2d9"
-extract_to = "SPIRV-LLVM-Translator-IGC-LLVM"
+type = "http"
+url = "https://github.com/KhronosGroup/SPIRV-LLVM-Translator/archive/6798e15796e21339af79e248c067cfb746c60d0c.tar.gz"
+sha256 = "497674fa7322c1eec68ef164401767c72378d27e26a74cac3f88ba39fd408500"
 
 [[sources]]
-type = "git"
-url = "https://github.com/KhronosGroup/SPIRV-Tools.git"
-ref = "28a883ba4c67f58a9540fb0651c647bb02883622"
-extract_to = "SPIRV-Tools"
+type = "http"
+url = "https://github.com/KhronosGroup/SPIRV-Tools/archive/28a883ba4c67f58a9540fb0651c647bb02883622.tar.gz"
+sha256 = "27c81a2f90dffdb18026bb62f455284c364ab25431df117816d55b9d944f880b"
 
 [[sources]]
-type = "git"
-url = "https://github.com/KhronosGroup/SPIRV-Headers.git"
-ref = "9268f3057354a2cb65991ba5f38b16d81e803692"
-extract_to = "SPIRV-Headers"
+type = "http"
+url = "https://github.com/KhronosGroup/SPIRV-Headers/archive/b8a32968473ce852a809b9de5f04f02a5a9dfa78.tar.gz"
+sha256 = "ac53436ab612fbc6e294c775a5031f5a6710ec10bb536dea333fb10c30ea24c3"
 
 [[sources]]
-type = "git"
-url = "https://github.com/intel/opencl-clang.git"
-ref = "7161d7c6d97da80f12739cebad9bf508555bbfd9"
-extract_to = "opencl-clang"
+type = "http"
+url = "https://github.com/intel/opencl-clang/archive/059ad9df664d9cdf54632e12b0011130dcadb46d.tar.gz"
+sha256 = "0e424eac26093fff421242a6ca7c55b5222742e0a645513915aaa6a044df7c98"
 
 [[sources]]
-type = "git"
-url = "https://github.com/llvm/llvm-project.git"
-ref = "llvmorg-16.0.6"
-extract_to = "llvm-project"
+type = "http"
+url = "https://github.com/llvm/llvm-project/releases/download/llvmorg-17.0.6/llvm-project-17.0.6.src.tar.xz"
+sha256 = "58a8818c60e6627064f312dbf46c02d9949956558340938b71cf731ad8bc0813"
 
 [[sources]]
 type = "local"
@@ -63,13 +57,38 @@ env = { GIT_COMMITTER_NAME = "builduser", GIT_COMMITTER_EMAIL = "builduser@archl
 
 [pipeline.prepare]
 script = '''
+# Normalize extracted HTTP source directory names to match expected layout.
+mv ${WORKDIR}/vc-intrinsics-0.25.0 ${WORKDIR}/vc-intrinsics
+mv ${WORKDIR}/SPIRV-LLVM-Translator-* ${WORKDIR}/SPIRV-LLVM-Translator-IGC-LLVM
+mv ${WORKDIR}/SPIRV-Tools-* ${WORKDIR}/SPIRV-Tools
+mv ${WORKDIR}/SPIRV-Headers-* ${WORKDIR}/SPIRV-Headers
+mv ${WORKDIR}/opencl-clang-* ${WORKDIR}/opencl-clang
+mv ${WORKDIR}/llvm-project-17.0.6.src ${WORKDIR}/llvm-project
+
+# Wire component symlinks into ${WORKDIR}/source where IGC CMake resolves them relative to IGC source dir.
+mkdir -p ${WORKDIR}/source
+ln -sf ${WORKDIR}/vc-intrinsics ${WORKDIR}/source/vc-intrinsics
+ln -sf ${WORKDIR}/SPIRV-Tools ${WORKDIR}/source/SPIRV-Tools
+ln -sf ${WORKDIR}/SPIRV-Headers ${WORKDIR}/source/SPIRV-Headers
+ln -sf ${WORKDIR}/SPIRV-LLVM-Translator-IGC-LLVM ${WORKDIR}/source/SPIRV-LLVM-Translator-IGC-LLVM
+ln -sf ${WORKDIR}/opencl-clang ${WORKDIR}/source/opencl-clang
+ln -sf ${WORKDIR}/llvm-project ${WORKDIR}/source/llvm-project
+
 # Wire the LLVM components using the same layout as Arch's prepare step.
+mkdir -p ${WORKDIR}/llvm-project/llvm/projects
 ln -sf ${WORKDIR}/SPIRV-LLVM-Translator-IGC-LLVM ${WORKDIR}/llvm-project/llvm/projects/llvm-spirv
 ln -sf ${WORKDIR}/opencl-clang ${WORKDIR}/llvm-project/llvm/projects/opencl-clang
 
 # Apply the patch that disables warnings as errors.
 patch -d "${WORKDIR}/source/intel-graphics-compiler-${VERSION}" -Np1 \
     -i ${WORKDIR}/010-intel-graphics-compiler-disable-werror.patch
+
+# Fix GCC 15/16 missing <cstdint> header inclusion in LLVM X86MCTargetDesc.h
+sed -i '1i #include <cstdint>' ${WORKDIR}/llvm-project/llvm/lib/Target/X86/MCTargetDesc/X86MCTargetDesc.h
+
+# Fix IGC CMakeLists.txt bug where uninitialized IGC_OPTION__SPIRV_TRANSLATOR_SOURCE_DIR expands to /include
+sed -i 's|${IGC_OPTION__SPIRV_TRANSLATOR_SOURCE_DIR}|'"${WORKDIR}"'/SPIRV-LLVM-Translator-IGC-LLVM|g' \
+    "${WORKDIR}/source/intel-graphics-compiler-${VERSION}/IGC/CMakeLists.txt"
 '''
 
 [pipeline.configure]
@@ -77,7 +96,7 @@ isolation = "relaxed"
 script = '''
 # Restrict symbol visibility to prevent collisions between IGC components.
 export CFLAGS="${CFLAGS} -fno-semantic-interposition"
-export CXXFLAGS="${CXXFLAGS} -fno-semantic-interposition"
+export CXXFLAGS="${CXXFLAGS} -fno-semantic-interposition -include cstdint"
 export LDFLAGS="${LDFLAGS} -Wl,-Bsymbolic"
 
 # Remove the inherited _FORTIFY_SOURCE definition to avoid redefinition warnings.
@@ -95,14 +114,19 @@ cmake -B build -S "${WORKDIR}/source/intel-graphics-compiler-${VERSION}" \
     -DCMAKE_SKIP_RPATH=YES \
     -DIGC_OPTION__CLANG_MODE=Source \
     -DIGC_OPTION__LINK_KHRONOS_SPIRV_TRANSLATOR=ON \
+    -DIGC_OPTION__SPIRV_TRANSLATOR_SOURCE_DIR="${WORKDIR}/llvm-project/llvm/projects/llvm-spirv" \
     -DIGC_OPTION__LLD_MODE=Source \
     -DIGC_OPTION__LLVM_MODE=Source \
-    -DIGC_OPTION__LLVM_PREFERRED_VERSION="16.0.6" \
+    -DIGC_OPTION__LLVM_PREFERRED_VERSION="17.0.6" \
+    -DIGC_OPTION__LLVM_SOURCES_DIR="${WORKDIR}/llvm-project" \
     -DLLVM_TARGETS_TO_BUILD="X86" \
     -DLLVM_ENABLE_PROJECTS="clang" \
     -DLLVM_ENABLE_ASSERTIONS=OFF \
     -DLLVM_ENABLE_OCAMLDOC=OFF \
     -DLLVM_ENABLE_BINDINGS=OFF \
+    -DLLVM_ENABLE_LIBEDIT=OFF \
+    -DLLVM_ENABLE_LIBXML2=OFF \
+    -DLLVM_ENABLE_TERMINFO=OFF \
     -DLLVM_INCLUDE_TESTS=OFF \
     -DLLVM_INCLUDE_EXAMPLES=OFF \
     -DIGC_OPTION__SPIRV_TOOLS_MODE=Source \
@@ -133,7 +157,7 @@ install -D -m644 ${WORKDIR}/opencl-clang/opencl_clang.h \
     -t "${STAGING_DIR}/usr/include/cclang"
 install -D -m644 ${WORKDIR}/opencl-clang/LICENSE \
     "${STAGING_DIR}/usr/share/licenses/${NAME}/LICENSE-opencl-clang"
-ln -sf libopencl-clang.so.16 "${STAGING_DIR}/usr/lib/libopencl-clang.so"
+ln -sf libopencl-clang.so.17 "${STAGING_DIR}/usr/lib/libopencl-clang.so"
 '''
 
 [[output]]

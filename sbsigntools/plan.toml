@@ -13,7 +13,8 @@ link_deps = ["openssl", "util-linux"]
 type = "git"
 url = "https://git.kernel.org/pub/scm/linux/kernel/git/jejb/sbsigntools.git"
 ref = "v${VERSION}"
-depth = 1
+# The prepare stage runs `git submodule update --init`; keep the repository.
+git_metadata = true
 extract_to = "source/sbsigntools"
 
 [[sources]]
