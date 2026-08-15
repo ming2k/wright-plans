@@ -10,8 +10,8 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://download.gnome.org/sources/libsecret/0.21/libsecret-${VERSION}.tar.xz"
+sha256 = "944d8a6072b6f285db40b8e9927dbe4dde81dcc7d177f84271fb167ccc297f65"
+url = "https://github.com/GNOME/libsecret/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
 [pipeline.configure]
@@ -31,3 +31,4 @@ DESTDIR=${STAGING_DIR} meson install -C build'''
 
 [[output]]
 runtime_deps = ['glib', 'libgcrypt']
+

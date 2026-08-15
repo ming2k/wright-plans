@@ -6,35 +6,37 @@ license = "BSD-2-Clause"
 arch = "x86_64"
 url = "https://github.com/s-yata/marisa-trie"
 
-
-build_deps = ['autoconf', 'automake', 'libtool']
+link_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++']
+build_deps = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "986ed5e2967435e3a3932a8c95980993ae5a196111e377721f0849cad4e807f3"
 url = "https://github.com/s-yata/marisa-trie/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
-[pipeline.prepare]
-script = '''
-cd source/marisa-trie-${VERSION}
-autoreconf -fi'''
-
 [pipeline.configure]
 script = '''
-cd source/marisa-trie-${VERSION}
-./configure \
-    --prefix=/usr \
-    --disable-static \
-    --enable-sse2'''
+cmake -B build -S "${WORKDIR}/source/marisa-trie-${VERSION}" \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
+    -DBUILD_SHARED_LIBS=ON \
+    -DENABLE_TOOLS=ON
+'''
 
 [pipeline.compile]
-script = '''
-cd source/marisa-trie-${VERSION}
-make -j$(nproc)'''
+script = "cmake --build build -j$(nproc)"
 
 [pipeline.staging]
 script = '''
-cd source/marisa-trie-${VERSION}
-make DESTDIR=${STAGING_DIR} install'''
+DESTDIR=${STAGING_DIR} cmake --install build
+install -D -m644 "${WORKDIR}/source/marisa-trie-${VERSION}/COPYING.md" \
+    -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
+'''
+
+[[output]]
+runtime_deps = ['glibc', 'gcc:gcc-libs', 'gcc:libstdc++']
+
 

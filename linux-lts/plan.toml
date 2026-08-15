@@ -242,4 +242,37 @@ cp -v System.map ${STAGING_DIR}/boot/System.map-theseus-lts
 cp -v .config ${STAGING_DIR}/boot/config-theseus-lts'''
 
 [[output]]
-runtime_deps = ['kmod', 'dracut-ng']
+runtime_deps = ['kmod', 'dracut-ng', 'systemd']
+backup = ['/boot/config-theseus-lts']
+
+hooks.post_install = '''
+if command -v kernel-install >/dev/null 2>&1; then
+    echo ":: Registering LTS kernel and generating UKI via kernel-install..."
+    kernel-install -v add "${VERSION}-theseus-lts" "/boot/vmlinuz-theseus-lts" || true
+fi
+'''
+
+hooks.post_upgrade = '''
+if command -v kernel-install >/dev/null 2>&1; then
+    echo ":: Registering new LTS kernel and generating UKI via kernel-install..."
+    kernel-install -v add "${VERSION}-theseus-lts" "/boot/vmlinuz-theseus-lts" || true
+
+    echo ":: Checking for orphaned LTS kernel images to prune..."
+    for uki in /boot/EFI/Linux/*-theseus-lts*.efi /efi/EFI/Linux/*-theseus-lts*.efi /boot/loader/entries/*-theseus-lts*.conf; do
+        [ -e "$uki" ] || continue
+        kver=$(basename "$uki" | sed -E 's/^[^-]+-//; s/\.(efi|conf)$//')
+        if [ -n "$kver" ] && [ ! -d "/usr/lib/modules/${kver}" ]; then
+            echo ":: Pruning orphaned LTS kernel installation [${kver}]..."
+            kernel-install -v remove "${kver}" || true
+        fi
+    done
+fi
+'''
+
+hooks.pre_remove = '''
+if command -v kernel-install >/dev/null 2>&1; then
+    echo ":: Removing LTS kernel from bootloader via kernel-install..."
+    kernel-install -v remove "${VERSION}-theseus-lts" || true
+fi
+'''
+

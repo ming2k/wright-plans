@@ -15,7 +15,7 @@ extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/dracut-ng-${VERSION}
+cd source/dracut-${VERSION}
 ./configure \
   --prefix=/usr \
   --libdir=/usr/lib \
@@ -26,13 +26,14 @@ cd source/dracut-ng-${VERSION}
 
 [pipeline.compile]
 script = '''
-cd source/dracut-ng-${VERSION}
+cd source/dracut-${VERSION}
 make -j$(nproc)'''
 
 [pipeline.staging]
 script = '''
-cd source/dracut-ng-${VERSION}
+cd source/dracut-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]
 runtime_deps = ['bash', 'coreutils', 'cpio', 'kmod', 'systemd', 'util-linux']
+

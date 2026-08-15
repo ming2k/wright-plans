@@ -1,102 +1,119 @@
 name = "openvino"
-version = "2026.2.0.21903.52ddc073857"
-release = 1
-description = "Intel OpenVINO Runtime with CPU, GPU, and NPU plugins"
+version = "2026.2.0"
+release = 4
+description = "Intel OpenVINO Toolkit for deep learning inference"
 license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/openvinotoolkit/openvino"
 
-build_deps = ['binutils', 'tar']
 link_deps = [
   'glibc',
   'gcc:gcc-libs',
   'gcc:libstdc++',
   'intel-compute-runtime',
-  'intel-npu-driver',
   'level-zero',
   'ocl-icd',
   'zlib',
   'zstd',
 ]
+build_deps = [
+  'cmake',
+  'ninja',
+  'pkgconf',
+  'python',
+  'git',
+]
 
 [[sources]]
-type = "http"
-url = "https://storage.openvinotoolkit.org/repositories/openvino/packages/2026.2/linux/openvino_toolkit_ubuntu24_${VERSION}_x86_64.tgz"
-sha256 = "7ab44e505154459c374990f73e6732c6937b1cd98e25feedc9591ad09459cd87"
+type = "git"
+url = "https://github.com/openvinotoolkit/openvino.git"
+ref = "${VERSION}"
+submodules = true
 extract_to = "source"
 
 [[sources]]
 type = "http"
-url = "https://github.com/intel/linux-npu-driver/releases/download/v1.33.0/linux-npu-driver-v1.33.0.20260529-26625960453-ubuntu2404.tar.gz"
-sha256 = "48cc219a5bd882a7cadaef523d9bb0c1e03c1b9b5b8562a29ad5ee4b9bfbb3bc"
-extract_to = "source"
+url = "https://storage.openvinotoolkit.org/dependencies/thirdparty/linux/oneapi-tbb-2021.13.1-lin-release.tgz"
+sha256 = "93cf8ada4793044697f76179247c6a35ca0e47ee2a3a228fc9ed91703aa79730"
+extract_to = "source/temp"
 
 [[sources]]
 type = "local"
 path = "query-device.cpp"
 
+[pipeline.prepare]
+script = '''
+sed -i 's/NOT ENABLE_SYSTEM_TBB/FALSE/g' source/src/cmake/install_tbb.cmake
+sed -i 's|runtime/3rdparty/tbb|share/openvino/tbb|g' source/src/cmake/install_tbb.cmake
+'''
+
+[pipeline.configure]
+script = '''
+cd source
+cmake -B build -G Ninja \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DCMAKE_INSTALL_PREFIX=/usr \
+  -DCMAKE_INSTALL_LIBDIR=lib \
+  -DCMAKE_INSTALL_INCLUDEDIR=include \
+  -DCPACK_GENERATOR=BREW \
+  -DENABLE_PYTHON=OFF \
+  -DENABLE_JS=OFF \
+  -DENABLE_TESTS=OFF \
+  -DENABLE_SAMPLES=OFF \
+  -DTBBROOT=${WORKDIR}/source/temp/tbb \
+  -DTBB_DIR=${WORKDIR}/source/temp/tbb/lib/cmake/TBB \
+  -DENABLE_TBBBIND_2_5=OFF \
+  -DENABLE_SYSTEM_PROTOBUF=OFF \
+  -DENABLE_SYSTEM_SNAPPY=OFF \
+  -DENABLE_SYSTEM_FLATBUFFERS=OFF \
+  -DENABLE_SYSTEM_PUGIXML=OFF \
+  -DENABLE_SYSTEM_TBB=OFF \
+  -DENABLE_SYSTEM_OPENCL=OFF \
+  -DENABLE_SYSTEM_LEVEL_ZERO=OFF \
+  -DENABLE_NCC_STYLE=OFF \
+  -DENABLE_CLANG_FORMAT=OFF \
+  -DENABLE_INTEL_CPU=ON \
+  -DENABLE_INTEL_GPU=ON \
+  -DENABLE_INTEL_NPU=ON \
+  -DENABLE_OV_ONNX_FRONTEND=ON \
+  -DENABLE_OV_PADDLE_FRONTEND=OFF \
+  -DENABLE_OV_PYTORCH_FRONTEND=OFF \
+  -DENABLE_OV_TF_FRONTEND=OFF \
+  -DENABLE_OV_TF_LITE_FRONTEND=OFF
+'''
+
 [pipeline.compile]
 script = '''
-openvino_root=$(find source -mindepth 1 -maxdepth 1 -type d \
-  -name 'openvino_toolkit_*' -print -quit)
-test -n "${openvino_root}"
-
+cd source
+cmake --build build -j$(nproc)
 c++ -std=c++17 -O2 \
-  -I"${openvino_root}/runtime/include" \
+  -Isrc/core/include -Isrc/inference/include -Iinclude \
   "${WORKDIR}/query-device.cpp" \
-  -L"${openvino_root}/runtime/lib/intel64" \
-  -L"${openvino_root}/runtime/3rdparty/tbb/lib" \
-  -Wl,-rpath,/opt/intel/openvino/runtime/lib/intel64 \
-  -Wl,-rpath,/opt/intel/openvino/runtime/3rdparty/tbb/lib \
-  -lopenvino \
-  -ltbb \
-  -o openvino-query-device'''
+  -Lbin/intel64/Release -Ltemp/tbb/lib \
+  -lopenvino -ltbb -Wl,-rpath-link,temp/tbb/lib \
+  -o openvino-query-device
+'''
 
 [pipeline.check]
 script = '''
-openvino_root=$(find source -mindepth 1 -maxdepth 1 -type d \
-  -name 'openvino_toolkit_*' -print -quit)
-
-LD_LIBRARY_PATH="${openvino_root}/runtime/lib/intel64:${openvino_root}/runtime/3rdparty/tbb/lib" \
-  ./openvino-query-device | grep -q '^CPU$' '''
+cd source
+LD_LIBRARY_PATH=bin/intel64/Release:temp/tbb/lib \
+  ./openvino-query-device | grep -q '^CPU$'
+'''
 
 [pipeline.staging]
 script = '''
-openvino_root=$(find source -mindepth 1 -maxdepth 1 -type d \
-  -name 'openvino_toolkit_*' -print -quit)
-install_root="${STAGING_DIR}/opt/intel/openvino_${VERSION}"
+cd source
+DESTDIR=${STAGING_DIR} cmake --install build
 
-install -dm755 "${install_root}"
-cp -a "${openvino_root}/runtime" "${install_root}/"
-cp -a "${openvino_root}/setupvars.sh" "${install_root}/"
-cp -a "${openvino_root}/docs/licensing" "${install_root}/"
+mkdir -p "${STAGING_DIR}/usr/share/openvino/tbb"
+cp -a temp/tbb/* "${STAGING_DIR}/usr/share/openvino/tbb/"
 
-# Use the compiler from the Intel NPU v1.33.0 verified configuration instead
-# of the generic compiler bundled in the OpenVINO archive.
-compiler_deb=$(find source -name 'intel-driver-compiler-npu_*.deb' -print -quit)
-test -n "${compiler_deb}"
-mkdir -p unpack-compiler
-ar p "${compiler_deb}" data.tar.gz | tar -xz -C unpack-compiler
-cp -a unpack-compiler/usr/lib/x86_64-linux-gnu/libopenvino_intel_npu_compiler*.so \
-  "${install_root}/runtime/lib/intel64/"
+mkdir -p "${STAGING_DIR}/usr/lib"
+cp -a temp/tbb/lib/lib*.so* "${STAGING_DIR}/usr/lib/"
 
-install -dm755 "${STAGING_DIR}/opt/intel"
-ln -s "openvino_${VERSION}" "${STAGING_DIR}/opt/intel/openvino"
-
-install -Dm755 openvino-query-device \
-  "${STAGING_DIR}/usr/bin/openvino-query-device"
-
-install -Dm644 /dev/stdin \
-  "${STAGING_DIR}/etc/ld.so.conf.d/openvino.conf" << 'LDCONF'
-/opt/intel/openvino/runtime/lib/intel64
-/opt/intel/openvino/runtime/3rdparty/tbb/lib
-LDCONF
-
-install -Dm644 /dev/stdin \
-  "${STAGING_DIR}/etc/profile.d/openvino.sh" << 'PROFILE'
-export INTEL_OPENVINO_DIR=/opt/intel/openvino
-export OpenVINO_DIR=/opt/intel/openvino/runtime/cmake
-PROFILE'''
+install -Dm755 openvino-query-device "${STAGING_DIR}/usr/bin/openvino-query-device"
+'''
 
 [[output]]
 runtime_deps = [
@@ -104,14 +121,14 @@ runtime_deps = [
   'gcc:gcc-libs',
   'gcc:libstdc++',
   'intel-compute-runtime',
-  'intel-npu-driver',
   'level-zero',
   'ocl-icd',
   'zlib',
   'zstd',
 ]
-backup = ['/etc/profile.d/openvino.sh']
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
 
-[output.hooks]
-post_install = "ldconfig"
-post_upgrade = "ldconfig"
+
+
+

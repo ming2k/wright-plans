@@ -16,15 +16,24 @@ extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/OpenCL-CLHPP-${VERSION}
-cmake -B build -G Ninja \
-  -DCMAKE_BUILD_TYPE=Release \
-  -DCMAKE_INSTALL_PREFIX=/usr \
-  -DBUILD_DOCS=OFF \
-  -DBUILD_EXAMPLES=OFF \
-  -DBUILD_TESTING=OFF'''
+cmake -B build -S "${WORKDIR}/source/OpenCL-CLHPP-${VERSION}" \
+    -GNinja \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DOPENCL_CLHPP_HEADERS_DIR=OFF \
+    -DOPENCL_DIST_DIR=OFF \
+    -DBUILD_DOCS=OFF \
+    -DBUILD_EXAMPLES=OFF \
+    -DBUILD_TESTING=OFF
+'''
 
 [pipeline.staging]
 script = '''
-cd source/OpenCL-CLHPP-${VERSION}
-DESTDIR=${STAGING_DIR} cmake --install build'''
+DESTDIR=${STAGING_DIR} cmake --install build
+install -D -m644 "${WORKDIR}/source/OpenCL-CLHPP-${VERSION}/LICENSE.txt" \
+    -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
+'''
+
+[[output]]
+runtime_deps = ['opencl-headers']
+

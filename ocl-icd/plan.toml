@@ -7,32 +7,33 @@ arch = "x86_64"
 url = "https://github.com/KhronosGroup/OpenCL-ICD-Loader"
 
 link_deps = ['glibc']
-build_deps = ['ninja', 'cmake']
+build_deps = ['ninja', 'cmake', 'opencl-headers']
 
 [[sources]]
 type = "http"
-url = "https://github.com/KhronosGroup/OpenCL-ICD-Loader/archive/refs/tags/v${VERSION}/OpenCL-ICD-Loader-${VERSION}.tar.gz"
-sha256 = "SKIP"
+url = "https://github.com/KhronosGroup/OpenCL-ICD-Loader/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "48fd0c5181db7cd046f4f731d5955694892e10998d49d09ee0d997e7e04fd939"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/ocl-icd-${VERSION}
-cmake -B build -G Ninja -S OpenCL-ICD-Loader-* -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -DOPENCL_ICD_LOADER_HEADERS_DIR=/usr/include'''
+cmake -B build -S "${WORKDIR}/source/OpenCL-ICD-Loader-${VERSION}" \
+    -GNinja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DOPENCL_ICD_LOADER_HEADERS_DIR=/usr/include
+'''
 
 [pipeline.compile]
-script = '''
-cd source/ocl-icd-${VERSION}
-ninja -C build'''
+script = "cmake --build build -j$(nproc)"
 
 [pipeline.staging]
 script = '''
-cd source/ocl-icd-${VERSION}
-DESTDIR=${STAGING_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} cmake --install build
+install -D -m644 "${WORKDIR}/source/OpenCL-ICD-Loader-${VERSION}/LICENSE" \
+    -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
+'''
 
 [[output]]
 runtime_deps = ['glibc']
 
-[output.hooks]
-post_install = "ldconfig"
-post_upgrade = "ldconfig"

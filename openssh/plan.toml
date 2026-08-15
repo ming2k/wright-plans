@@ -7,44 +7,18 @@ arch = "x86_64"
 url = "https://www.openssh.com/portable.html"
 
 link_deps = ['glibc', 'libedit', 'linux-pam', 'openssl', 'zlib', 'libxcrypt']
+build_deps = ['autoconf', 'automake']
 
 [[sources]]
-type = "http"
-sha256 = "SKIP"
-url = "https://cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${VERSION}.tar.gz"
+type = "git"
+url = "https://github.com/openssh/openssh-portable.git"
+ref = "V_10_3_P1"
 extract_to = "source"
-
-[[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "sshd.service"
-
-[[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "ssh-agent.service"
-
-[[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "ssh-agent.socket"
-
-[[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "sshd.pam"
-
-[[sources]]
-sha256 = "SKIP"
-type = "local"
-path = "openssh.tmpfiles"
 
 [pipeline.configure]
 script = '''
-cd source/openssh-${VERSION}
-# --with-privsep-user=nobody: no dedicated sshd user needed
-# --with-security-key-builtin omitted: requires libfido2 (not yet packaged)
-# --with-xauth omitted: pure Wayland system, no X11
+cd source
+autoreconf -fi
 ./configure \
   --prefix=/usr \
   --sysconfdir=/etc/ssh \
@@ -56,40 +30,99 @@ cd source/openssh-${VERSION}
   --with-libedit \
   --with-ssl-engine \
   --disable-lastlog \
-  --with-default-path=/usr/bin'''
+  --with-default-path=/usr/bin
+'''
 
 [pipeline.compile]
 script = '''
-cd source/openssh-${VERSION}
-make -j$(nproc)'''
+cd source
+make -j$(nproc)
+'''
 
 [pipeline.staging]
 script = '''
-cd source/openssh-${VERSION}
+cd source
 make DESTDIR=${STAGING_DIR} install
 
-# ── Systemd system units ──────────────────────────────────────────────────────
-install -Dm644 ${WORKDIR}/sshd.service         ${STAGING_DIR}/usr/lib/systemd/system/sshd.service
+# ── Systemd service units ───────────────────────────────────────────────────
+install -dm755 "${STAGING_DIR}/usr/lib/systemd/system"
+cat << 'EOF' > "${STAGING_DIR}/usr/lib/systemd/system/sshd.service"
+[Unit]
+Description=OpenSSH Daemon
+Documentation=man:sshd(8) man:sshd_config(5)
+After=network.target
 
-# ── Systemd user units (ssh-agent) ────────────────────────────────────────────
-install -Dm644 ${WORKDIR}/ssh-agent.service    ${STAGING_DIR}/usr/lib/systemd/user/ssh-agent.service
-install -Dm644 ${WORKDIR}/ssh-agent.socket     ${STAGING_DIR}/usr/lib/systemd/user/ssh-agent.socket
+[Service]
+Type=notify
+ExecStartPre=/usr/bin/ssh-keygen -A
+ExecStart=/usr/bin/sshd -D
+KillMode=process
+Restart=on-failure
+RestartSec=2s
 
-# ── tmpfiles (privilege separation chroot) ────────────────────────────────────
-install -Dm644 ${WORKDIR}/openssh.tmpfiles     ${STAGING_DIR}/usr/lib/tmpfiles.d/openssh.conf
+[Install]
+WantedBy=multi-user.target
+EOF
 
-# ── Factory defaults (pristine upstream configs for reference) ────────────────
+# ── Systemd user units (ssh-agent) ──────────────────────────────────────────
+install -dm755 "${STAGING_DIR}/usr/lib/systemd/user"
+cat << 'EOF' > "${STAGING_DIR}/usr/lib/systemd/user/ssh-agent.service"
+[Unit]
+Description=OpenSSH Authentication Agent
+Documentation=man:ssh-agent(1)
+Requires=ssh-agent.socket
+
+[Service]
+ExecStart=/usr/bin/ssh-agent -D -a %t/ssh-agent.socket
+PassEnvironment=SSH_AGENT_PID
+
+[Install]
+WantedBy=default.target
+Also=ssh-agent.socket
+EOF
+
+cat << 'EOF' > "${STAGING_DIR}/usr/lib/systemd/user/ssh-agent.socket"
+[Unit]
+Description=OpenSSH Authentication Agent Socket
+
+[Socket]
+ListenStream=%t/ssh-agent.socket
+SocketMode=0600
+DirectoryMode=0700
+
+[Install]
+WantedBy=sockets.target
+EOF
+
+# ── tmpfiles (privilege separation chroot) ──────────────────────────────────
+install -dm755 "${STAGING_DIR}/usr/lib/tmpfiles.d"
+cat << 'EOF' > "${STAGING_DIR}/usr/lib/tmpfiles.d/openssh.conf"
+# /usr/lib/tmpfiles.d/openssh.conf
+# Privilege separation chroot directory
+d /usr/share/empty.sshd 0755 root root -
+EOF
+
+# ── Factory defaults ────────────────────────────────────────────────────────
 install -Dm644 ${STAGING_DIR}/etc/ssh/ssh_config     ${STAGING_DIR}/usr/share/factory/etc/ssh/ssh_config
 install -Dm644 ${STAGING_DIR}/etc/ssh/sshd_config    ${STAGING_DIR}/usr/share/factory/etc/ssh/sshd_config
 
-# ── PAM configuration ─────────────────────────────────────────────────────────
-install -Dm644 ${WORKDIR}/sshd.pam             ${STAGING_DIR}/etc/pam.d/sshd
+# ── PAM configuration ───────────────────────────────────────────────────────
+install -dm755 "${STAGING_DIR}/etc/pam.d"
+cat << 'EOF' > "${STAGING_DIR}/etc/pam.d/sshd"
+# /etc/pam.d/sshd
+auth      include   system-auth
+account   required  pam_nologin.so
+account   include   system-account
+session   required  pam_loginuid.so
+session   include   system-session
+password  include   system-password
+EOF
 
-# ── Permissions ───────────────────────────────────────────────────────────────
-# ssh-keysign needs setuid for host-based authentication
+# ── Permissions ─────────────────────────────────────────────────────────────
 if [ -e ${STAGING_DIR}/usr/lib/ssh/ssh-keysign ]; then
   chmod 4755 ${STAGING_DIR}/usr/lib/ssh/ssh-keysign
-fi'''
+fi
+'''
 
 [[output]]
 runtime_deps = ['shadow', 'glibc', 'libedit', 'linux-pam', 'openssl', 'zlib', 'libxcrypt']
@@ -98,10 +131,9 @@ backup = ["/etc/ssh/ssh_config", "/etc/ssh/sshd_config", "/etc/pam.d/sshd"]
 hooks.post_install = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
-
 '''
 hooks.post_upgrade = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/openssh.conf 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
-
 '''
+

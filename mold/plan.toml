@@ -14,7 +14,7 @@ url = "https://github.com/rui314/mold"
 #
 # mold needs a C++20 compiler; we use clang/clang++ from the llvm plan (gcc is
 # fine too, but clang is what upstream dist.sh ships and is the safer default).
-build_deps = ['cmake', 'llvm:clang']
+build_deps = ['cmake', 'ninja', 'llvm:clang']
 
 # mold's releases ship only prebuilt binaries (via dist.sh); the authoritative
 # source is the git repo. third-party/ lives in-tree via git subtree (no
@@ -41,6 +41,7 @@ test -d third-party/zlib
 test -d third-party/zstd
 
 cmake -S . -B build \
+    -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DCMAKE_C_COMPILER=clang \
@@ -66,3 +67,4 @@ test -f ${STAGING_DIR}/usr/share/man/man1/mold.1'''
 
 [[output]]
 runtime_deps = ['glibc', 'gcc:libstdc++']
+

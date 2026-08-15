@@ -42,12 +42,10 @@ cd source/llama.cpp-${VERSION}
 cmake -B build -G Ninja \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr/lib/llama.cpp \
-  -DCMAKE_INSTALL_RPATH='/opt/intel/openvino/runtime/lib/intel64;/opt/intel/openvino/runtime/3rdparty/tbb/lib' \
   -DBUILD_SHARED_LIBS=OFF \
   -DGGML_NATIVE=OFF \
   -DGGML_OPENVINO=ON \
   -DGGML_VULKAN=ON \
-  -DOpenVINO_DIR=/opt/intel/openvino/runtime/cmake \
   -DLLAMA_OPENSSL=ON \
   -DLLAMA_USE_PREBUILT_UI=OFF'''
 
@@ -61,16 +59,23 @@ script = '''
 cd source/llama.cpp-${VERSION}
 test -f build/ggml/src/ggml-openvino/libggml-openvino.a
 
-LD_LIBRARY_PATH='/opt/intel/openvino/runtime/lib/intel64:/opt/intel/openvino/runtime/3rdparty/tbb/lib' \
 GGML_OPENVINO_DEVICE=CPU \
   build/bin/llama-cli --list-devices > openvino-devices.txt
 
-grep -q 'OPENVINO' openvino-devices.txt'''
+grep -q 'OPENVINO' openvino-devices.txt
+'''
 
 [pipeline.staging]
 script = '''
 cd source/llama.cpp-${VERSION}
-DESTDIR=${STAGING_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install
+mkdir -p "${STAGING_DIR}/usr/bin"
+for bin in llama-cli llama-server llama-bench llama-quantize llama-perplexity llama-embedding llama-run; do
+  if [ -f "${STAGING_DIR}/usr/lib/llama.cpp/bin/${bin}" ]; then
+    ln -sf "/usr/lib/llama.cpp/bin/${bin}" "${STAGING_DIR}/usr/bin/${bin}"
+  fi
+done
+'''
 
 [[output]]
 runtime_deps = [
@@ -81,3 +86,4 @@ runtime_deps = [
   'openssl',
   'vulkan-loader',
 ]
+

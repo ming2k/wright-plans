@@ -6,22 +6,31 @@ license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/KhronosGroup/OpenCL-Headers"
 
-
 build_deps = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
-url = "https://github.com/KhronosGroup/OpenCL-Headers/archive/refs/tags/v${VERSION}/OpenCL-Headers-${VERSION}.tar.gz"
-sha256 = "SKIP"
+url = "https://github.com/KhronosGroup/OpenCL-Headers/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "d9e6c48357de5002da11ce45de600e0c3ffe6ab4f628a3b9fe2b38603161658a"
 extract_to = "source"
 
 [pipeline.configure]
 script = '''
-cd source/opencl-headers-${VERSION}
-cmake -B build -S ${WORKDIR} -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release -GNinja -DOPENCL_HEADERS_BUILD_TESTING=OFF'''
+cmake -B build -S "${WORKDIR}/source/OpenCL-Headers-${VERSION}" \
+    -GNinja \
+    -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DOPENCL_HEADERS_BUILD_TESTING=OFF
+'''
 
 [pipeline.staging]
 script = '''
-cd source/opencl-headers-${VERSION}
-DESTDIR=${STAGING_DIR} cmake --install build'''
+DESTDIR=${STAGING_DIR} cmake --install build
+install -D -m644 "${WORKDIR}/source/OpenCL-Headers-${VERSION}/LICENSE" \
+    -t "${STAGING_DIR}/usr/share/licenses/${NAME}"
+'''
+
+[[output]]
+runtime_deps = []
+
 

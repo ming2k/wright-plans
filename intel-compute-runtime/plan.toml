@@ -84,5 +84,3 @@ fi
 
 [[output]]
 runtime_deps = ['glibc', 'intel-gmmlib', 'intel-graphics-compiler', 'gcc:gcc-libs', 'gcc:libstdc++', 'level-zero']
-provides = ['level-zero-driver', 'opencl-driver']
-
