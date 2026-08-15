@@ -1,6 +1,6 @@
 name = "linux"
-version = "7.1.2"
-release = 2
+version = "7.1.8"
+release = 1
 description = "The Linux kernel"
 license = "GPL-2.0-only"
 arch = "x86_64"
@@ -249,23 +249,27 @@ backup = ['/boot/config-theseus']
 
 hooks.post_install = '''
 if command -v kernel-install >/dev/null 2>&1; then
-    echo ":: Registering kernel and generating UKI via kernel-install..."
-    kernel-install -v add "${VERSION}-theseus" "/boot/vmlinuz-theseus" || true
+    kver=$(basename $(ls -d /usr/lib/modules/*-theseus 2>/dev/null | tail -n1))
+    [ -n "$kver" ] || kver="${VERSION}-theseus"
+    echo ":: Registering kernel [${kver}] and generating UKI via kernel-install..."
+    kernel-install -v add "${kver}" "/boot/vmlinuz-theseus" || true
 fi
 '''
 
 hooks.post_upgrade = '''
 if command -v kernel-install >/dev/null 2>&1; then
-    echo ":: Registering new kernel and generating UKI via kernel-install..."
-    kernel-install -v add "${VERSION}-theseus" "/boot/vmlinuz-theseus" || true
+    kver=$(basename $(ls -d /usr/lib/modules/*-theseus 2>/dev/null | tail -n1))
+    [ -n "$kver" ] || kver="${VERSION}-theseus"
+    echo ":: Registering new kernel [${kver}] and generating UKI via kernel-install..."
+    kernel-install -v add "${kver}" "/boot/vmlinuz-theseus" || true
 
     echo ":: Checking for orphaned kernel images to prune..."
     for uki in /boot/EFI/Linux/*-theseus*.efi /efi/EFI/Linux/*-theseus*.efi /boot/loader/entries/*-theseus*.conf; do
         [ -e "$uki" ] || continue
-        kver=$(basename "$uki" | sed -E 's/^[^-]+-//; s/\.(efi|conf)$//')
-        if [ -n "$kver" ] && [ ! -d "/usr/lib/modules/${kver}" ]; then
-            echo ":: Pruning orphaned kernel installation [${kver}]..."
-            kernel-install -v remove "${kver}" || true
+        old_kver=$(basename "$uki" | sed -E 's/^[^-]+-//; s/\.(efi|conf)$//')
+        if [ -n "$old_kver" ] && [ ! -d "/usr/lib/modules/${old_kver}" ]; then
+            echo ":: Pruning orphaned kernel installation [${old_kver}]..."
+            kernel-install -v remove "${old_kver}" || true
         fi
     done
 fi
@@ -273,8 +277,10 @@ fi
 
 hooks.pre_remove = '''
 if command -v kernel-install >/dev/null 2>&1; then
-    echo ":: Removing kernel from bootloader via kernel-install..."
-    kernel-install -v remove "${VERSION}-theseus" || true
+    kver=$(basename $(ls -d /usr/lib/modules/*-theseus 2>/dev/null | tail -n1))
+    [ -n "$kver" ] || kver="${VERSION}-theseus"
+    echo ":: Removing kernel [${kver}] from bootloader via kernel-install..."
+    kernel-install -v remove "${kver}" || true
 fi
 '''
 

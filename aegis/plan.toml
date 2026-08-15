@@ -1,8 +1,8 @@
 name = "aegis"
-version = "0.0.22"
+version = "0.0.24"
 release = 1
 description = "Aegis Wayland compositor and desktop shell"
-license = "MIT AND GPL-3.0-only"
+license = "MIT"
 arch = "x86_64"
 url = "https://github.com/aegis-shell/aegis"
 
@@ -60,25 +60,30 @@ for b in \
     install -Dm755 "$bin/$b" "$out/bin/$b"
 done
 
-# systemd user unit (ExecStart=/usr/bin/aegis ...). Keep its Delegate=cpu
+# systemd user units (ExecStart=/usr/bin/aegis ...). Keep its Delegate=cpu
 # memory pids — Realm sandboxing depends on the delegated controllers.
+# aegis.service is Type=notify: the compositor reports READY=1 once the
+# session environment is exported and the Wayland socket listens.
+# aegis-shutdown.target tears down graphical-session.target at session end.
 install -Dm644 "$src/contrib/systemd/user/aegis.service" \
     "$out/lib/systemd/user/aegis.service"
+install -Dm644 "$src/contrib/systemd/user/aegis-shutdown.target" \
+    "$out/lib/systemd/user/aegis-shutdown.target"
+
+# Session entry point for greeters and TTY logins: imports the login
+# environment into the user manager, starts aegis.service with --wait, and
+# stops the graphical session on exit (niri-session model).
+install -Dm755 "$src/contrib/systemd/aegis-session" \
+    "$out/bin/aegis-session"
 
 # Authentication policy for the first-party session locker.
 install -Dm644 "$src/contrib/pam/aegis-lock" \
     "${STAGING_DIR}/etc/pam.d/aegis-lock"
 
-# Project and bundled-cursor license disclosures.
+# Project license disclosure. The bundled Aegis cursor theme is original
+# MIT-licensed art, so no third-party license staging is needed.
 install -Dm644 "$src/LICENSE" \
-    "$out/share/licenses/aegis/LICENSE"
-
-# Bundled Bibata-Modern-Ice (GPL-3.0) license disclosure. The theme is embedded
-# into the aegis binary via include_dir, so its LICENSE/NOTICE must ship too.
-install -Dm644 "$src/assets/cursors/Bibata-Modern-Ice/LICENSE" \
-    "$out/share/licenses/aegis/Bibata-Modern-Ice/LICENSE"
-install -Dm644 "$src/assets/cursors/Bibata-Modern-Ice/NOTICE" \
-    "$out/share/licenses/aegis/Bibata-Modern-Ice/NOTICE"'''
+    "$out/share/licenses/aegis/LICENSE"'''
 
 [[output]]
 runtime_deps = [
@@ -92,5 +97,7 @@ runtime_deps = [
     'seatd', 'libinput', 'systemd', 'linux-pam',
     'wayland', 'libxkbcommon', 'vulkan-loader',
     'gcc:gcc-libs', 'glibc',
+    # aegis-session: login-shell re-exec and service-state detection.
+    'bash', 'procps-ng',
 ]
 backup = ["/etc/pam.d/aegis-lock"]
