@@ -1,7 +1,7 @@
 name = "optics"
-version = "0.0.14"
-release = 2
-description = "Optics rendering libraries: flux, flux-text, flux-scene-graph, prism, lens, and iris"
+version = "0.0.28"
+release = 1
+description = "Optics rendering libraries: flux, flux-text, flux-scene-graph, prism, lens, iris, and anim"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/ming2k/optics"
@@ -32,6 +32,7 @@ meson setup build --prefix=/usr --buildtype=release \
     -Dcompute=true \
     -Deffect=true \
     -Dprism=true \
+    -Danim=true \
     -Dexamples=false \
     -Dtests=false
 '''
@@ -68,6 +69,7 @@ description = "libflux_text HarfBuzz shaping sibling of flux"
 include = [
     "/usr/include/flux-text/**",
     "/usr/lib/libflux_text.so",
+    "/usr/lib/libflux_text.so.*",
     "/usr/lib/pkgconfig/flux-text.pc",
 ]
 runtime_deps = [
@@ -84,6 +86,7 @@ description = "libflux_scene_graph glTF/scene-graph sibling of flux"
 include = [
     "/usr/include/flux-scene-graph/**",
     "/usr/lib/libflux_scene_graph.so",
+    "/usr/lib/libflux_scene_graph.so.*",
     "/usr/lib/pkgconfig/flux-scene-graph.pc",
 ]
 runtime_deps = ['optics:flux = ${VERSION}', 'glibc']
@@ -140,6 +143,20 @@ hooks.post_install = "ldconfig 2>/dev/null || true"
 hooks.post_upgrade = "ldconfig 2>/dev/null || true"
 hooks.post_remove = "ldconfig 2>/dev/null || true"
 
+[[output]]
+name = "anim"
+description = "libanim shared motion vocabulary library (springs, easing, hysteresis, adaptive smoothing)"
+include = [
+    "/usr/include/anim/**",
+    "/usr/lib/libanim.so",
+    "/usr/lib/libanim.so.*",
+    "/usr/lib/pkgconfig/anim.pc",
+]
+runtime_deps = ['glibc']
+hooks.post_install = "ldconfig 2>/dev/null || true"
+hooks.post_upgrade = "ldconfig 2>/dev/null || true"
+hooks.post_remove = "ldconfig 2>/dev/null || true"
+
 # This plan intentionally has no catch-all "optics" output. Consumers depend
 # on the concrete outputs they link: optics:flux, optics:flux-text,
-# optics:flux-scene-graph, optics:prism, optics:lens, and optics:iris.
+# optics:flux-scene-graph, optics:prism, optics:lens, optics:iris, and optics:anim.

@@ -1,5 +1,5 @@
 name = "aegis"
-version = "0.0.24"
+version = "0.0.49"
 release = 1
 description = "Aegis Wayland compositor and desktop shell"
 license = "MIT"
@@ -11,12 +11,12 @@ build_deps = [
     'wayland-protocols', 'vulkan-headers',
 ]
 link_deps = [
-    'optics:flux >= 0.0.11',
-    'optics:flux-text >= 0.0.11',
-    'optics:flux-scene-graph >= 0.0.11',
-    'optics:prism >= 0.0.14',
-    'optics:lens >= 0.0.11',
-    'optics:iris >= 0.0.11',
+    'optics:flux >= 0.0.27',
+    'optics:flux-text >= 0.0.27',
+    'optics:flux-scene-graph >= 0.0.27',
+    'optics:prism >= 0.0.27',
+    'optics:lens >= 0.0.27',
+    'optics:iris >= 0.0.27',
     'wayland', 'libxkbcommon', 'libinput', 'seatd',
     'systemd', 'linux-pam', 'vulkan-loader',
     'gcc:gcc-libs', 'glibc',
@@ -87,12 +87,12 @@ install -Dm644 "$src/LICENSE" \
 
 [[output]]
 runtime_deps = [
-    'optics:flux >= 0.0.11',
-    'optics:flux-text >= 0.0.11',
-    'optics:flux-scene-graph >= 0.0.11',
-    'optics:prism >= 0.0.14',
-    'optics:lens >= 0.0.11',
-    'optics:iris >= 0.0.11',
+    'optics:flux >= 0.0.27',
+    'optics:flux-text >= 0.0.27',
+    'optics:flux-scene-graph >= 0.0.27',
+    'optics:prism >= 0.0.27',
+    'optics:lens >= 0.0.27',
+    'optics:iris >= 0.0.27',
     'brightnessctl', 'dbus',
     'seatd', 'libinput', 'systemd', 'linux-pam',
     'wayland', 'libxkbcommon', 'vulkan-loader',

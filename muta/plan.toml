@@ -1,0 +1,32 @@
+name = "muta"
+version = "0.34.5"
+release = 1
+description = "A Rust-based AI coding agent with a semantic TUI, tool use, on-demand skills, and scheduled prompts"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/ming2k/muta"
+
+link_deps = ['gcc:gcc-libs', 'glibc']
+build_deps = ['rust-bin', 'pkgconf', 'cmake', 'perl']
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/ming2k/muta/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
+
+[pipeline.compile]
+isolation = "none"
+script = '''
+cd source/muta-${VERSION}
+cargo build --release --locked -p muta -p mutx'''
+
+[pipeline.staging]
+script = '''
+cd source/muta-${VERSION}
+install -Dm755 target/release/muta ${STAGING_DIR}/usr/bin/muta
+install -Dm755 target/release/mutx ${STAGING_DIR}/usr/bin/mutx'''
+
+[[output]]
+runtime_deps = ['gcc:gcc-libs', 'glibc']
+replaces = ['neenee']

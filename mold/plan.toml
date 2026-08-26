@@ -37,6 +37,7 @@ test -d third-party/tbb
 test -d third-party/blake3
 test -d third-party/mimalloc
 test -d third-party/rust-demangle
+test -d third-party/xxhash
 test -d third-party/zlib
 test -d third-party/zstd
 
@@ -44,6 +45,7 @@ cmake -S . -B build \
     -GNinja \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
+    -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_C_COMPILER=clang \
     -DCMAKE_CXX_COMPILER=clang++ \
     -DMOLD_USE_MOLD=OFF \
@@ -59,11 +61,14 @@ script = '''
 cd source
 DESTDIR=${STAGING_DIR} cmake --install build --prefix /usr
 
-# Verify the artifacts dist.sh ships actually landed.
+# Verify the artifacts and symlinks dist.sh / upstream ship actually landed.
 test -x ${STAGING_DIR}/usr/bin/mold
 test -L ${STAGING_DIR}/usr/bin/ld.mold
 test -x ${STAGING_DIR}/usr/libexec/mold/ld
-test -f ${STAGING_DIR}/usr/share/man/man1/mold.1'''
+test -f ${STAGING_DIR}/usr/lib/mold/mold-wrapper.so
+test -f ${STAGING_DIR}/usr/share/man/man1/mold.1
+test -L ${STAGING_DIR}/usr/share/man/man1/ld.mold.1
+test -f ${STAGING_DIR}/usr/share/doc/mold/LICENSE'''
 
 [[output]]
 runtime_deps = ['glibc', 'gcc:libstdc++']

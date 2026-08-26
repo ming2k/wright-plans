@@ -1,5 +1,5 @@
 name = "xdg-desktop-portal-aegis"
-version = "0.0.10"
+version = "0.0.25"
 release = 1
 description = "XDG Desktop Portal backend for the Aegis compositor"
 license = "MIT"
@@ -8,7 +8,10 @@ url = "https://github.com/aegis-shell/xdg-desktop-portal-aegis"
 
 build_deps = ['rust-bin', 'meson', 'ninja', 'pkgconf', 'llvm:clang']
 link_deps = [
-    'gtk4 >= 4.10', 'pipewire >= 0.3', 'linux-pam',
+    'optics:flux >= 0.0.27',
+    'optics:lens >= 0.0.27',
+    'optics:iris >= 0.0.27',
+    'pipewire >= 0.3', 'linux-pam',
     'gcc:gcc-libs', 'glibc',
 ]
 
@@ -21,8 +24,9 @@ extract_to = "source"
 [pipeline.configure]
 script = '''
 cd source/xdg-desktop-portal-aegis-${VERSION}
-# Portal v0.0.4 owns its narrow protocol-24 wire projection. The release
-# lockfile contains no Aegis source packages or sibling-checkout overrides.
+# The canonical package build uses the locked Optics Git bindings and the
+# native Wright outputs declared in link_deps. A local .cargo/config.toml
+# must never be present in the release source.
 test ! -e .cargo/config.toml
 meson setup build \
     --prefix=/usr \
@@ -32,7 +36,7 @@ meson setup build \
 
 [pipeline.compile]
 isolation = "relaxed"
-env = { CARGO_HOME = '${WORKDIR}/.cargo' }
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_NET_GIT_FETCH_WITH_CLI = 'true' }
 script = '''
 cd source/xdg-desktop-portal-aegis-${VERSION}
 meson compile -C build
@@ -47,12 +51,10 @@ install -Dm644 LICENSE \
 '''
 
 [[output]]
-# Aegis is a runtime provider for compositor-owned protocol-24 resources,
-# not a source or build dependency. Portal v0.0.4's protocol-24 client is
-# wire-compatible with the Aegis v0.0.13 runtime.
 runtime_deps = [
-    'aegis >= 0.0.13',
-    'gtk4 >= 4.10', 'linux-pam', 'pipewire >= 0.3', 'wireplumber',
-    'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'xdg-utils',
+    'aegis >= 0.0.48',
+    'optics:flux >= 0.0.27', 'optics:lens >= 0.0.27', 'optics:iris >= 0.0.27',
+    'pipewire >= 0.3', 'wireplumber', 'linux-pam',
+    'xdg-desktop-portal', 'xdg-utils',
     'gcc:gcc-libs', 'glibc',
 ]
