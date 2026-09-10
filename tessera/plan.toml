@@ -1,0 +1,102 @@
+name = "tessera"
+version = "0.0.58"
+release = 1
+description = "Tessera Wayland compositor and desktop shell"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/atrium-desktop/tessera"
+
+build_deps = [
+    'rust-bin', 'pkgconf', 'llvm:clang',
+    'wayland-protocols', 'vulkan-headers',
+]
+link_deps = [
+    'optics:flux >= 0.0.34',
+    'optics:flux-text >= 0.0.34',
+    'optics:flux-scene-graph >= 0.0.34',
+    'optics:prism >= 0.0.34',
+    'optics:lens >= 0.0.34',
+    'optics:iris >= 0.0.34',
+    'wayland', 'libxkbcommon', 'libinput', 'seatd',
+    'systemd', 'linux-pam', 'vulkan-loader',
+    'gcc:gcc-libs', 'glibc',
+]
+
+[[sources]]
+type = "http"
+url = "https://github.com/atrium-desktop/tessera/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/tessera-${VERSION}
+# The canonical package build uses the locked Optics Git bindings and the
+# native Wright outputs declared in link_deps; Wright enforces their versions
+# at plan time. A local .cargo/config.toml must never be present in the
+# release source.
+test ! -e .cargo/config.toml
+'''
+
+[pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target', CARGO_NET_GIT_FETCH_WITH_CLI = 'true' }
+script = '''
+cd source/tessera-${VERSION}
+cargo build --locked --release --workspace
+'''
+
+[pipeline.staging]
+script = '''
+src="${WORKDIR}/source/tessera-${VERSION}"
+bin="${WORKDIR}/target/release"
+out="${STAGING_DIR}/usr"
+
+# Install the explicit distribution artifacts. tessera-lock-preview is a
+# feature-gated contributor tool and must not be packaged.
+for b in \
+    tessera tessera-idle tessera-atspi tessera-lock tessera-mcp; do
+    install -Dm755 "$bin/$b" "$out/bin/$b"
+done
+
+# systemd user units (ExecStart=/usr/bin/tessera ...). Keep its Delegate=cpu
+# memory pids — Realm sandboxing depends on the delegated controllers.
+# tessera.service is Type=notify: the compositor reports READY=1 once the
+# session environment is exported and the Wayland socket listens.
+# tessera-shutdown.target tears down graphical-session.target at session end.
+install -Dm644 "$src/contrib/systemd/user/tessera.service" \
+    "$out/lib/systemd/user/tessera.service"
+install -Dm644 "$src/contrib/systemd/user/tessera-shutdown.target" \
+    "$out/lib/systemd/user/tessera-shutdown.target"
+
+# Session entry point for greeters and TTY logins: imports the login
+# environment into the user manager, starts tessera.service with --wait, and
+# stops the graphical session on exit (niri-session model).
+install -Dm755 "$src/contrib/systemd/tessera-session" \
+    "$out/bin/tessera-session"
+
+# Authentication policy for the first-party session locker.
+install -Dm644 "$src/contrib/pam/tessera-lock" \
+    "${STAGING_DIR}/etc/pam.d/tessera-lock"
+
+# Project license disclosure.
+install -Dm644 "$src/LICENSE" \
+    "$out/share/licenses/tessera/LICENSE"
+'''
+
+[[output]]
+runtime_deps = [
+    'optics:flux >= 0.0.34',
+    'optics:flux-text >= 0.0.34',
+    'optics:flux-scene-graph >= 0.0.34',
+    'optics:prism >= 0.0.34',
+    'optics:lens >= 0.0.34',
+    'optics:iris >= 0.0.34',
+    'brightnessctl', 'dbus',
+    'seatd', 'libinput', 'systemd', 'linux-pam',
+    'wayland', 'libxkbcommon', 'vulkan-loader',
+    'gcc:gcc-libs', 'glibc',
+    # tessera-session: login-shell re-exec and service-state detection.
+    'bash', 'procps-ng',
+]
+backup = ["/etc/pam.d/tessera-lock"]

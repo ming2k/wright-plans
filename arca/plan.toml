@@ -1,0 +1,71 @@
+name = "arca"
+version = "0.2.4"
+release = 1
+description = "Fast file manager and desktop file chooser for Wayland"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/atrium-desktop/arca"
+
+build_deps = ['rust-bin', 'pkgconf', 'llvm:clang']
+link_deps = [
+    'optics:flux >= 0.0.34',
+    'optics:lens >= 0.0.34',
+    'optics:iris >= 0.0.34',
+    'gcc:gcc-libs', 'glibc',
+]
+
+[[sources]]
+type = "http"
+url = "https://github.com/atrium-desktop/arca/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/arca-${VERSION}
+# A local .cargo/config.toml must never be present in the release source.
+test ! -e .cargo/config.toml
+'''
+
+[pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target', CARGO_NET_GIT_FETCH_WITH_CLI = 'true' }
+script = '''
+cd source/arca-${VERSION}
+cargo build --locked --release --workspace
+'''
+
+[pipeline.staging]
+script = '''
+src="${WORKDIR}/source/arca-${VERSION}"
+bin="${WORKDIR}/target/release"
+out="${STAGING_DIR}/usr"
+
+install -Dm755 "$bin/arca" "$out/bin/arca"
+
+install -Dm644 "$src/assets/org.tessera.Arca.desktop" \
+    "$out/share/applications/org.tessera.Arca.desktop"
+install -Dm644 "$src/assets/arca.desktop" \
+    "$out/share/applications/arca.desktop"
+install -Dm644 "$src/assets/org.tessera.Arca.metainfo.xml" \
+    "$out/share/metainfo/org.tessera.Arca.metainfo.xml"
+
+install -Dm644 "$src/assets/icons/folder.svg" \
+    "$out/share/icons/hicolor/scalable/apps/arca.svg"
+
+for icon in "$src/assets/icons/"*.svg; do
+    install -Dm644 "$icon" "$out/share/arca/icons/$(basename "$icon")"
+done
+
+install -Dm644 "$src/assets/icons/LICENSE-material-rounded.txt" \
+    "$out/share/licenses/arca/LICENSE-material-rounded.txt"
+'''
+
+[[output]]
+runtime_deps = [
+    'optics:flux >= 0.0.34',
+    'optics:lens >= 0.0.34',
+    'optics:iris >= 0.0.34',
+    'shared-mime-info',
+    'gcc:gcc-libs', 'glibc',
+]

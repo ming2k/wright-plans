@@ -1,0 +1,79 @@
+name = "sigil"
+version = "1.3.9"
+release = 1
+description = "Industrial-grade zero-friction Secret Service daemon and PAM unlock module"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/atrium-desktop/sigil"
+
+build_deps = ['rust-bin', 'pkgconf', 'llvm:clang']
+link_deps = [
+    'optics:flux >= 0.0.34',
+    'optics:lens >= 0.0.34',
+    'optics:iris >= 0.0.34',
+    'linux-pam',
+    'gcc:gcc-libs', 'glibc',
+]
+
+[[sources]]
+type = "http"
+url = "https://github.com/atrium-desktop/sigil/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "bc736178375883e502a26dd32f4fac475c7dde459931d4c30944adc6d2430983"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/sigil-${VERSION}
+# A local .cargo/config.toml must never be present in the release source.
+test ! -e .cargo/config.toml
+'''
+
+[pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target', CARGO_NET_GIT_FETCH_WITH_CLI = 'true' }
+script = '''
+cd source/sigil-${VERSION}
+cargo build --locked --release --workspace
+'''
+
+[pipeline.staging]
+script = '''
+src="${WORKDIR}/source/sigil-${VERSION}"
+bin="${WORKDIR}/target/release"
+out="${STAGING_DIR}/usr"
+
+# Install binaries
+install -Dm755 "$bin/sigil" "$out/bin/sigil"
+install -Dm755 "$bin/sigil-prompter" "$out/bin/sigil-prompter"
+
+# Install PAM module
+install -Dm755 "$bin/libpam_sigil.so" "$out/lib/security/pam_sigil.so"
+
+# Install systemd units (user)
+install -Dm644 "$src/systemd/user/sigil.service" \
+    "$out/lib/systemd/user/sigil.service"
+install -Dm644 "$src/systemd/user/sigil.socket" \
+    "$out/lib/systemd/user/sigil.socket"
+
+# Install D-Bus service
+install -Dm644 "$src/dbus/org.freedesktop.secrets.service" \
+    "$out/share/dbus-1/services/org.freedesktop.secrets.service"
+
+# Project license
+install -Dm644 "$src/LICENSE" \
+    "$out/share/licenses/sigil/LICENSE"
+
+# Documentation
+install -Dm644 "$src/README.md" "$out/share/doc/sigil/README.md"
+install -Dm644 "$src/SECURITY.md" "$out/share/doc/sigil/SECURITY.md"
+'''
+
+[[output]]
+runtime_deps = [
+    'optics:flux >= 0.0.34',
+    'optics:lens >= 0.0.34',
+    'optics:iris >= 0.0.34',
+    'linux-pam',
+    'systemd', 'dbus',
+    'gcc:gcc-libs', 'glibc',
+]

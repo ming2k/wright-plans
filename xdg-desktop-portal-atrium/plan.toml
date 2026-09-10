@@ -1,0 +1,70 @@
+name = "xdg-desktop-portal-atrium"
+version = "0.0.32"
+release = 1
+description = "XDG Desktop Portal backend for the Atrium / Tessera desktop"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/atrium-desktop/xdg-desktop-portal-atrium"
+
+build_deps = ['rust-bin', 'pkgconf', 'llvm:clang']
+link_deps = [
+    'pipewire >= 0.3',
+    'gcc:gcc-libs', 'glibc',
+]
+
+[[sources]]
+type = "http"
+url = "https://github.com/atrium-desktop/xdg-desktop-portal-atrium/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "5fb6bbbdc8789ca4b398f749efb785de2bb9431ad036b667c63f1d309acaf858"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/xdg-desktop-portal-atrium-${VERSION}
+# A local .cargo/config.toml must never be present in the release source.
+test ! -e .cargo/config.toml
+'''
+
+[pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target', CARGO_NET_GIT_FETCH_WITH_CLI = 'true' }
+script = '''
+cd source/xdg-desktop-portal-atrium-${VERSION}
+cargo build --locked --release -p xdg-desktop-portal-atrium
+'''
+
+[pipeline.staging]
+script = '''
+src="${WORKDIR}/source/xdg-desktop-portal-atrium-${VERSION}"
+bin="${WORKDIR}/target/release"
+out="${STAGING_DIR}/usr"
+
+install -Dm755 "$bin/xdg-desktop-portal-atrium" \
+    "$out/libexec/xdg-desktop-portal-atrium"
+
+sed "s|@libexecdir@|/usr/libexec|" \
+    "$src/contrib/dbus-1/services/org.freedesktop.impl.portal.desktop.atrium.service.in" \
+    > "${WORKDIR}/org.freedesktop.impl.portal.desktop.atrium.service"
+install -Dm644 "${WORKDIR}/org.freedesktop.impl.portal.desktop.atrium.service" \
+    "$out/share/dbus-1/services/org.freedesktop.impl.portal.desktop.atrium.service"
+
+install -Dm644 "$src/contrib/xdg-desktop-portal/portals/atrium.portal" \
+    "$out/share/xdg-desktop-portal/portals/atrium.portal"
+install -Dm644 "$src/contrib/xdg-desktop-portal/tessera-portals.conf" \
+    "$out/share/xdg-desktop-portal/tessera-portals.conf"
+install -Dm644 "$src/contrib/xdg-desktop-portal/atrium-portals.conf" \
+    "$out/share/xdg-desktop-portal/atrium-portals.conf"
+
+install -Dm644 "$src/LICENSE" \
+    "$out/share/licenses/xdg-desktop-portal-atrium/LICENSE"
+'''
+
+[[output]]
+runtime_deps = [
+    'tessera >= 0.0.57',
+    'arca >= 0.2.3',
+    'sigil >= 1.3.7',
+    'pipewire >= 0.3',
+    'xdg-desktop-portal', 'xdg-utils',
+    'gcc:gcc-libs', 'glibc',
+]
