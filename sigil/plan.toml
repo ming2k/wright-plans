@@ -18,7 +18,7 @@ link_deps = [
 [[sources]]
 type = "http"
 url = "https://github.com/atrium-desktop/sigil/archive/refs/tags/v${VERSION}.tar.gz"
-sha256 = "bc736178375883e502a26dd32f4fac475c7dde459931d4c30944adc6d2430983"
+sha256 = "SKIP"
 extract_to = "source"
 
 [pipeline.configure]

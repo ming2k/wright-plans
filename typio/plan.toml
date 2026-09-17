@@ -1,0 +1,72 @@
+name = "typio"
+version = "0.6.1"
+release = 2
+description = "Wayland-native input method host for the Typio framework"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/typio-ime/typio"
+
+build_deps = ['rust-bin', 'pkgconf', 'llvm:clang', 'git']
+link_deps = [
+    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    'wayland', 'libxkbcommon', 'vulkan-loader', 'glibc',
+]
+
+[[sources]]
+type = "git"
+url = "https://github.com/typio-ime/typio.git"
+ref = "v${VERSION}"
+extract_to = "source"
+
+[pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', TYPIO_INSTALL_PREFIX = '/usr', CARGO_NET_GIT_FETCH_WITH_CLI = 'true' }
+script = '''
+cd source
+cargo build --release'''
+
+[pipeline.staging]
+script = '''
+: "${STAGING_DIR:?STAGING_DIR is required}"
+cd source
+if [ -x ./target/release/xtask ]; then
+    ./target/release/xtask install --prefix /usr --destdir "$STAGING_DIR"
+else
+    cargo run --release --bin xtask --offline -- install --prefix /usr --destdir "$STAGING_DIR"
+fi
+mkdir -p "$STAGING_DIR/usr/share/typio/engines"
+
+# Install standalone typio-engine-protocol crate for downstream engine packages
+install -d "$STAGING_DIR/usr/share/typio/crates/typio-engine-protocol/src"
+install -Dm644 crates/typio-engine-protocol/src/*.rs \
+    "$STAGING_DIR/usr/share/typio/crates/typio-engine-protocol/src/"
+install -Dm644 crates/typio-engine-protocol/Cargo.toml \
+    "$STAGING_DIR/usr/share/typio/crates/typio-engine-protocol/Cargo.toml"
+sed -i 's/edition\.workspace = true/edition = "2024"/' \
+    "$STAGING_DIR/usr/share/typio/crates/typio-engine-protocol/Cargo.toml"
+sed -i 's/license\.workspace = true/license = "MIT"/' \
+    "$STAGING_DIR/usr/share/typio/crates/typio-engine-protocol/Cargo.toml"
+sed -i 's/repository\.workspace = true/repository = "https:\/\/github.com\/typio-ime\/typio"/' \
+    "$STAGING_DIR/usr/share/typio/crates/typio-engine-protocol/Cargo.toml"
+sed -i 's/rust-version\.workspace = true/rust-version = "1.85"/' \
+    "$STAGING_DIR/usr/share/typio/crates/typio-engine-protocol/Cargo.toml"
+
+# Normalize permissions so non-root users can read systemd units and data files
+chmod -R u=rwX,go=rX "$STAGING_DIR/usr"
+chmod 755 "$STAGING_DIR/usr/bin/typio" "$STAGING_DIR/usr/bin/typioctl" "$STAGING_DIR/usr/bin/typio-settings"
+
+test -x "$STAGING_DIR/usr/bin/typio"
+test -x "$STAGING_DIR/usr/bin/typioctl"
+test -x "$STAGING_DIR/usr/bin/typio-settings"
+test -f "$STAGING_DIR/usr/lib/systemd/user/typio.service"
+test -f "$STAGING_DIR/usr/share/typio/core.toml.example"
+test -f "$STAGING_DIR/usr/share/applications/io.typio.Settings.desktop"
+test -f "$STAGING_DIR/usr/share/metainfo/io.typio.Settings.metainfo.xml"
+test -f "$STAGING_DIR/usr/share/typio/crates/typio-engine-protocol/Cargo.toml"'''
+
+[[output]]
+name = "typio"
+runtime_deps = [
+    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    'wayland', 'libxkbcommon', 'vulkan-loader', 'glibc', 'pipewire',
+]

@@ -1,5 +1,5 @@
 name = "arca"
-version = "0.2.4"
+version = "0.2.6"
 release = 1
 description = "Fast file manager and desktop file chooser for Wayland"
 license = "MIT"

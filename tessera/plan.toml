@@ -1,5 +1,5 @@
 name = "tessera"
-version = "0.0.58"
+version = "0.0.60"
 release = 1
 description = "Tessera Wayland compositor and desktop shell"
 license = "MIT"

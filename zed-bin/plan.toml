@@ -1,5 +1,5 @@
 name = "zed-bin"
-version = "1.12.0"
+version = "1.19.2"
 release = 1
 description = "Prebuilt upstream Zed code editor binary distribution"
 license = "GPL-3.0-or-later AND Apache-2.0"
@@ -16,7 +16,7 @@ maintainer = "wright plans <plans@wright.local>"
 [[sources]]
 type = "http"
 url = "https://github.com/zed-industries/zed/releases/download/v${VERSION}/zed-linux-${ARCH}.tar.gz"
-sha256 = "SKIP"
+sha256 = "c5acff2e52ac3c64890cce85250734cf7279c1de56d5926e4f4e1d4cf676359c"
 extract_to = "source"
 
 [pipeline.staging]
@@ -42,9 +42,11 @@ install -Dm644 source/zed.app/licenses.md \
 [[output]]
 runtime_deps = [
     "alsa-lib",
+    "bubblewrap",
     "desktop-file-utils",
     "fontconfig",
     "gcc:gcc-libs",
+    "glib",
     "glibc",
     "libva",
     "mesa",

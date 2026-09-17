@@ -1,5 +1,5 @@
 name = "optics"
-version = "0.0.37"
+version = "0.0.42"
 release = 1
 description = "Optics rendering libraries: flux, flux-text, flux-scene-graph, prism, lens, iris, and anim"
 license = "MIT"

@@ -1,13 +1,13 @@
 name = "typio-engine-rime"
-version = "0.3.2"
-release = 1
+version = "0.3.3"
+release = 2
 description = "Rime input engine for the Typio input method framework"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/typio-ime/typio-engine-rime"
 
-build_deps = ['meson', 'ninja', 'pkgconf']
-link_deps = ['libtypio', 'librime', 'curl']
+build_deps = ['rust-bin', 'pkgconf', 'typio']
+link_deps = ['librime', 'glibc']
 
 [[sources]]
 type = "git"
@@ -15,28 +15,50 @@ url = "https://github.com/typio-ime/typio-engine-rime.git"
 ref = "v${VERSION}"
 extract_to = "source"
 
-[pipeline.configure]
+[pipeline.prepare]
 script = '''
 cd source
-meson setup build --prefix=/usr --buildtype=release'''
+# Rewire typio-engine-protocol to the crate provided by the typio package
+sed -i 's|path = "[^"]*typio-engine-protocol"|path = "/usr/share/typio/crates/typio-engine-protocol"|' Cargo.toml'''
 
 [pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
 cd source
-ninja -C build'''
+cargo build --release'''
 
 [pipeline.staging]
 script = '''
 : "${STAGING_DIR:?STAGING_DIR is required}"
 cd source
-meson install -C build --destdir "$STAGING_DIR"
-# v0.2.0+ ships a private worker executable + runtime manifest (the
-# engine-process model), not a cdylib plugin.
-test -x "$STAGING_DIR/usr/libexec/typio/engines/typio-engine-rime"
-test -f "$STAGING_DIR/usr/share/typio/engines/typio-engine-rime.toml"
-test -f "$STAGING_DIR/usr/share/icons/hicolor/scalable/apps/typio-rime-symbolic.svg"
-test -f "$STAGING_DIR/usr/share/icons/hicolor/scalable/apps/typio-rime-latin-symbolic.svg"'''
+
+# Private worker executable + runtime manifest (engine-process model, ADR-0046)
+install -Dm755 "${WORKDIR}/target/release/typio-engine-rime" \
+  "${STAGING_DIR}/usr/libexec/typio/engines/typio-engine-rime"
+
+# Ship the repository manifest with the absolute worker command path
+install -Dm644 typio-engine-rime.toml \
+  "${STAGING_DIR}/usr/share/typio/engines/typio-engine-rime.toml"
+sed -i 's|^command = .*|command = "/usr/libexec/typio/engines/typio-engine-rime"|' \
+  "${STAGING_DIR}/usr/share/typio/engines/typio-engine-rime.toml"
+
+# Icons (freedesktop/XDG icon-theme layout)
+install -Dm644 data/icons/hicolor/scalable/apps/typio-rime-symbolic.svg \
+  "${STAGING_DIR}/usr/share/icons/hicolor/scalable/apps/typio-rime-symbolic.svg"
+install -Dm644 data/icons/hicolor/scalable/apps/typio-rime-latin-symbolic.svg \
+  "${STAGING_DIR}/usr/share/icons/hicolor/scalable/apps/typio-rime-latin-symbolic.svg"
+
+# Normalize permissions
+chmod -R u=rwX,go=rX "$STAGING_DIR/usr"
+chmod 755 "${STAGING_DIR}/usr/libexec/typio/engines/typio-engine-rime"
+
+# Verify staged files
+test -x "${STAGING_DIR}/usr/libexec/typio/engines/typio-engine-rime"
+test -f "${STAGING_DIR}/usr/share/typio/engines/typio-engine-rime.toml"
+test -f "${STAGING_DIR}/usr/share/icons/hicolor/scalable/apps/typio-rime-symbolic.svg"
+test -f "${STAGING_DIR}/usr/share/icons/hicolor/scalable/apps/typio-rime-latin-symbolic.svg"'''
 
 [[output]]
 name = "typio-engine-rime"
-runtime_deps = ['librime', 'libtypio', 'curl', 'rime-prelude']
+runtime_deps = ['typio', 'librime', 'rime-prelude', 'glibc']
