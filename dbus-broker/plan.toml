@@ -1,7 +1,7 @@
 name = "dbus-broker"
 version = "37"
-release = 1
-description = "Linux D-Bus Message Broker - drop-in replacement for dbus-daemon"
+release = 2
+description = "Linux D-Bus Message Broker - high-performance, sandboxed message router"
 license = "Apache-2.0"
 arch = "x86_64"
 url = "https://github.com/bus1/dbus-broker"
@@ -56,9 +56,15 @@ ninja'''
 [pipeline.staging]
 script = '''
 cd source/dbus-broker-${VERSION}/build
-DESTDIR=${STAGING_DIR} ninja install'''
+DESTDIR=${STAGING_DIR} ninja install
+
+# Standard systemd service alias: dbus.service -> dbus-broker.service
+ln -sfv dbus-broker.service ${STAGING_DIR}/usr/lib/systemd/system/dbus.service
+ln -sfv dbus-broker.service ${STAGING_DIR}/usr/lib/systemd/user/dbus.service
+'''
 
 [[output]]
+name = "dbus-broker"
 runtime_deps = ['dbus', 'expat', 'systemd', 'glibc']
 
 [output.hooks]

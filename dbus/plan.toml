@@ -1,7 +1,7 @@
 name = "dbus"
 version = "1.16.2"
-release = 4
-description = "D-Bus message bus system"
+release = 5
+description = "D-Bus protocol configuration, systemd socket definitions, and low-level client library"
 license = "AFL-2.1 OR GPL-2.0-or-later"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Software/dbus/"
@@ -32,6 +32,8 @@ meson setup --prefix=/usr \
     -Dselinux=disabled \
     -Dsystemd=enabled \
     -Dx11_autolaunch=disabled \
+    -Dtraditional_activation=false \
+    -Ddoxygen_docs=disabled \
     -Druntime_dir=/run \
     -Dmodular_tests=disabled \
     ..'''
@@ -47,13 +49,18 @@ cd source/dbus-${VERSION}/build
 DESTDIR=${STAGING_DIR} ninja install
 
 # Symlink so D-Bus and systemd share machine-id
-ln -sfv /etc/machine-id ${STAGING_DIR}/var/lib/dbus
+ln -sfv /etc/machine-id ${STAGING_DIR}/var/lib/dbus'''
 
-# Set dbus-daemon-launch-helper setuid root:messagebus in the package.
-# Use GID 18 directly so this works even when the messagebus group
-# doesn't exist in the build environment.
-chown 0:18 ${STAGING_DIR}/usr/libexec/dbus-daemon-launch-helper
-chmod 4750 ${STAGING_DIR}/usr/libexec/dbus-daemon-launch-helper'''
+[[discard]]
+include = [
+    "/usr/bin/dbus-daemon",
+    "/usr/bin/dbus-cleanup-sockets",
+    "/usr/libexec/dbus-daemon-launch-helper",
+    "/usr/lib/systemd/system/dbus.service",
+    "/usr/lib/systemd/user/dbus.service",
+    "/usr/lib/systemd/system/multi-user.target.wants/dbus.service",
+]
+reason = "Legacy dbus-daemon and setuid helper discarded in favor of modern dbus-broker"
 
 # D-Bus outputs: libdbus library split out; rest stays in dbus catch-all
 [[output]]
@@ -65,24 +72,11 @@ include = [
     "/usr/lib/libdbus-1.a",
     "/usr/lib/pkgconfig/dbus-1.pc",
     "/usr/include/dbus-1.0/**",
+    "/usr/lib/dbus-1.0/**",
     "/usr/lib/cmake/dbus-1/**",
 ]
 
 [[output]]
 name = "dbus"
+description = "D-Bus configuration assets, socket endpoints, and user tools"
 runtime_deps = ['dbus:libdbus', 'systemd', 'glibc']
-# catch-all — daemon, configs, tools, etc.
-hooks.post_install = '''
-if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
-    chown root:messagebus /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
-    chmod 4750 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
-fi
-
-'''
-hooks.post_upgrade = '''
-if [ -f /usr/libexec/dbus-daemon-launch-helper ]; then
-    chown root:messagebus /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
-    chmod 4750 /usr/libexec/dbus-daemon-launch-helper 2>/dev/null || true
-fi
-
-'''
