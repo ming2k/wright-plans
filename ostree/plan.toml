@@ -1,5 +1,5 @@
 name = "ostree"
-version = "2026.3"
+version = "2026.4"
 release = 1
 description = "Operating system and container binary deployment and upgrades"
 license = "LGPL-2.0-or-later"
@@ -10,7 +10,7 @@ link_deps = ['glib', 'libarchive', 'curl', 'gpgme']
 
 [[sources]]
 type = "http"
-sha256 = "e560e47631d1f703e9ed3425e8909ccd87fa2992422c07348ca88ec98943c8fb"
+sha256 = "b26c9016eb03bb4ee52cc00c642d56e00fc79ae7faac6bf4aa317d7451339ef7"
 url = "https://github.com/ostreedev/ostree/releases/download/v${VERSION}/libostree-${VERSION}.tar.xz"
 extract_to = "source"
 

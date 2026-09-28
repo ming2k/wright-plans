@@ -1,10 +1,12 @@
 name = "duktape"
 version = "2.7.0"
-release = 1
+release = 2
 description = "Embeddable Javascript engine"
 license = "MIT"
 arch = "x86_64"
 url = "https://duktape.org"
+
+link_deps = ['glibc']
 
 [[sources]]
 type = "http"
@@ -30,7 +32,7 @@ mkdir -p ${STAGING_DIR}/usr/lib ${STAGING_DIR}/usr/include ${STAGING_DIR}/usr/li
 install -m755 libduktape.so.207.20700 ${STAGING_DIR}/usr/lib/
 ln -sf libduktape.so.207.20700 ${STAGING_DIR}/usr/lib/libduktape.so.207
 ln -sf libduktape.so.207 ${STAGING_DIR}/usr/lib/libduktape.so
-cp src/duktape.h src/duk_config.h ${STAGING_DIR}/usr/include/
+install -m644 src/duktape.h src/duk_config.h ${STAGING_DIR}/usr/include/
 cat > ${STAGING_DIR}/usr/lib/pkgconfig/duktape.pc << PCEOF
 prefix=/usr
 exec_prefix=\${prefix}
@@ -42,4 +44,5 @@ Description: Embeddable Javascript engine
 Version: ${VERSION}
 Libs: -L\${libdir} -lduktape -lm
 Cflags: -I\${includedir}
-PCEOF'''
+PCEOF
+chmod -R a+rX ${STAGING_DIR}'''

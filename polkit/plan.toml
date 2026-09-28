@@ -1,6 +1,6 @@
 name = "polkit"
 version = "127"
-release = 2
+release = 3
 description = "Application-level toolkit for defining and handling authorization"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
@@ -15,19 +15,32 @@ sha256 = "SKIP"
 url = "https://github.com/polkit-org/polkit/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 
+[pipeline.prepare]
+script = '''
+cd source/polkit-${VERSION}
+# Neutralize meson_post_install.py during isolated sandbox build.
+# True permissions and user setup are performed in output.hooks.
+cat << 'EOF' > meson_post_install.py
+#!/usr/bin/env python3
+import sys
+sys.exit(0)
+EOF'''
+
 [pipeline.configure]
 script = '''
 cd source/polkit-${VERSION}
 meson setup build \
-    --prefix=/usr               \
-    --buildtype=release         \
-    -D authfw=pam               \
-    -D session_tracking=logind  \
-    -D man=false                \
-    -D tests=false              \
-    -D introspection=false      \
-    -D gtk_doc=false            \
-    -D os_type=lfs              \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --buildtype=release \
+    -D authfw=pam \
+    -D session_tracking=logind \
+    -D man=false \
+    -D tests=false \
+    -D introspection=false \
+    -D gtk_doc=false \
+    -D os_type=lfs \
     -D examples=false'''
 
 [pipeline.compile]
@@ -38,12 +51,27 @@ ninja -C build -j$(nproc)'''
 [pipeline.staging]
 script = '''
 cd source/polkit-${VERSION}
-DESTDIR=${STAGING_DIR} ninja -C build install'''
+DESTDIR=${STAGING_DIR} ninja -C build install
+chmod -R a+rX ${STAGING_DIR}
+chmod 4755 ${STAGING_DIR}/usr/bin/pkexec ${STAGING_DIR}/usr/lib/polkit-1/polkit-agent-helper-1'''
 
 [[output]]
+name = "polkit"
 runtime_deps = ['dbus', 'systemd', 'glib', 'duktape', 'linux-pam']
-hooks.post_install = '''
+
+[output.hooks]
+post_install = '''
 groupadd -fg 27 polkitd 2>/dev/null || true
 useradd -r -u 27 -g polkitd -d /var/lib/polkit-1 -s /usr/bin/false \
     -c "PolicyKit Daemon Owner" polkitd 2>/dev/null || true
+chown -R root:polkitd /etc/polkit-1/rules.d /usr/share/polkit-1/rules.d 2>/dev/null || true
+chmod 750 /etc/polkit-1/rules.d /usr/share/polkit-1/rules.d 2>/dev/null || true
+chown root:root /usr/bin/pkexec /usr/lib/polkit-1/polkit-agent-helper-1 2>/dev/null || true
+chmod 4755 /usr/bin/pkexec /usr/lib/polkit-1/polkit-agent-helper-1 2>/dev/null || true
+'''
+post_upgrade = '''
+chown -R root:polkitd /etc/polkit-1/rules.d /usr/share/polkit-1/rules.d 2>/dev/null || true
+chmod 750 /etc/polkit-1/rules.d /usr/share/polkit-1/rules.d 2>/dev/null || true
+chown root:root /usr/bin/pkexec /usr/lib/polkit-1/polkit-agent-helper-1 2>/dev/null || true
+chmod 4755 /usr/bin/pkexec /usr/lib/polkit-1/polkit-agent-helper-1 2>/dev/null || true
 '''

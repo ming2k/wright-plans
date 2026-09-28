@@ -17,16 +17,16 @@ build_deps = [
     'vulkan-headers',
     'wayland', 'wayland-protocols',
     'libxkbcommon',
-    # Optics C libraries (iris pulls lens pulls flux; flux-text is a sibling
+    # Optics C libraries (iris pulls lens pulls flux; glyph is a sibling
     # the -sys bindings still discover through pkg-config).
-    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    'optics:flux', 'optics:glyph', 'optics:lens', 'optics:iris',
     # GStreamer audio output backend. wavora decodes with pure-Rust symphonia,
     # so it needs the core + gst-plugins-base (libgstapp) for the appsrc
     # pipeline, not codec-element plugins.
     'gstreamer', 'gst-plugins-base',
 ]
 link_deps = [
-    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    'optics:flux', 'optics:glyph', 'optics:lens', 'optics:iris',
     'vulkan-loader', 'wayland', 'libxkbcommon',
     'gstreamer', 'gst-plugins-base',
     'glibc',
@@ -72,7 +72,7 @@ install -Dm644 "$src/README.md" "$out/share/doc/wavora/README.md"'''
 
 [[output]]
 runtime_deps = [
-    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    'optics:flux', 'optics:glyph', 'optics:lens', 'optics:iris',
     'vulkan-loader', 'wayland', 'libxkbcommon',
     'gstreamer', 'gst-plugins-base',
     'glibc',

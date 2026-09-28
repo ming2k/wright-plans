@@ -1,5 +1,5 @@
 name = "flatpak"
-version = "1.18.1"
+version = "1.18.2"
 release = 1
 description = "Universal app distribution framework (Pure Wayland)"
 license = "LGPL-2.1-or-later"
@@ -11,7 +11,7 @@ link_deps = ['glib', 'libarchive', 'libxml2', 'ostree', 'polkit', 'json-glib', '
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "800ff8cb14c369a3c19984932ae2cbea1b0d38363daa57cfb8ef04b8d7f08e10"
 url = "https://github.com/flatpak/flatpak/releases/download/${VERSION}/flatpak-${VERSION}.tar.xz"
 extract_to = "source"
 
@@ -46,19 +46,42 @@ meson install -C build --destdir ${STAGING_DIR}
 mkdir -p ${STAGING_DIR}/var/lib/flatpak'''
 
 [[output]]
-runtime_deps = ['ca-certificates', 'dbus', 'systemd', 'xdg-desktop-portal', 'xdg-desktop-portal-gtk', 'shared-mime-info', 'desktop-file-utils', 'glib', 'libarchive', 'libxml2', 'ostree', 'polkit', 'json-glib', 'curl', 'appstream', 'gdk-pixbuf', 'libjpeg-turbo', 'libfuse3', 'gpgme', 'libseccomp']
-hooks.post_install = '''
+name = "flatpak"
+runtime_deps = [
+    'bubblewrap',
+    'xdg-dbus-proxy',
+    'ca-certificates',
+    'dbus',
+    'systemd',
+    'xdg-desktop-portal',
+    'shared-mime-info',
+    'desktop-file-utils',
+    'glib',
+    'libarchive',
+    'libxml2',
+    'ostree',
+    'polkit',
+    'json-glib',
+    'curl',
+    'appstream',
+    'gdk-pixbuf',
+    'libjpeg-turbo',
+    'libfuse3',
+    'gpgme',
+    'libseccomp',
+]
+
+[output.hooks]
+post_install = '''
 systemd-sysusers /usr/lib/sysusers.d/flatpak.conf 2>/dev/null || true
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true
 [ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
 update-mime-database /usr/share/mime 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
-
 '''
-hooks.post_upgrade = '''
+post_upgrade = '''
 systemd-tmpfiles --create /usr/lib/tmpfiles.d/flatpak.conf 2>/dev/null || true
 [ -d /var/lib/flatpak/exports/share/applications ] && update-desktop-database -q /var/lib/flatpak/exports/share/applications 2>/dev/null || true
 update-mime-database /usr/share/mime 2>/dev/null || true
 systemctl daemon-reload 2>/dev/null || true
-
 '''

@@ -1,5 +1,5 @@
 name = "sigil"
-version = "1.3.9"
+version = "1.3.10"
 release = 1
 description = "Industrial-grade zero-friction Secret Service daemon and PAM unlock module"
 license = "MIT"

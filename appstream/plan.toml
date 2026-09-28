@@ -1,17 +1,17 @@
 name = "appstream"
-version = "1.1.6"
-release = 1
+version = "1.2.0"
+release = 2
 description = "Tools and libraries to work with AppStream metadata"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
 url = "https://www.freedesktop.org/wiki/Distributions/AppStream/"
 
 link_deps = ['glib', 'libxml2', 'libxmlb', 'curl', 'libfyaml', 'zstd', 'cairo', 'gdk-pixbuf', 'freetype', 'pango', 'fontconfig', 'librsvg']
-build_deps = ['meson', 'ninja']
+build_deps = ['meson', 'ninja', 'gperf', 'gettext', 'pkgconf', 'itstool']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "02f723cb1afa372d434896e138503163a44ad49e4a813d0d30713fc38ccb8d0c"
 url = "https://github.com/ximion/appstream/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
@@ -24,18 +24,21 @@ sanitize_flags() {
 export CPPFLAGS="$(sanitize_flags "${CPPFLAGS:-}")"
 export CFLAGS="$(sanitize_flags "${CFLAGS:-}")"
 export CXXFLAGS="$(sanitize_flags "${CXXFLAGS:-}")"
-meson setup build              \
-    --prefix=/usr              \
-    --buildtype=release        \
-    -Ddocs=false               \
-    -Dapidocs=false            \
-    -Dstemming=false           \
-    -Dsystemd=true             \
-    -Dcompose=true             \
-    -Dgir=true                 \
-    -Dinstall-docs=false       \
-    -Dman=false                \
-    -Dbash-completion=false'''
+meson setup build \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --buildtype=release \
+    -Ddocs=false \
+    -Dapidocs=false \
+    -Dstemming=false \
+    -Dsystemd=true \
+    -Dcompose=false \
+    -Dgir=false \
+    -Dinstall-docs=false \
+    -Dman=false \
+    -Dbash-completion=false \
+    -Ddisplay-detection=none'''
 
 [pipeline.compile]
 script = '''
@@ -51,7 +54,8 @@ meson compile -C build'''
 [pipeline.staging]
 script = '''
 cd source/appstream-${VERSION}
-meson install -C build --destdir ${STAGING_DIR}'''
+meson install -C build --destdir ${STAGING_DIR}
+chmod -R a+rX ${STAGING_DIR}'''
 
 [[output]]
 runtime_deps = ['systemd', 'glib', 'libxml2', 'libxmlb', 'curl', 'libfyaml', 'zstd', 'cairo', 'gdk-pixbuf', 'freetype', 'pango', 'fontconfig', 'librsvg']

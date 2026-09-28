@@ -1,5 +1,5 @@
 name = "tessera"
-version = "0.0.64"
+version = "0.0.68"
 release = 1
 description = "Tessera Wayland compositor and desktop shell"
 license = "MIT"
@@ -11,12 +11,11 @@ build_deps = [
     'wayland-protocols', 'vulkan-headers',
 ]
 link_deps = [
-    'optics:flux >= 0.0.34',
-    'optics:flux-text >= 0.0.34',
-    'optics:flux-scene-graph >= 0.0.34',
-    'optics:prism >= 0.0.34',
-    'optics:lens >= 0.0.34',
-    'optics:iris >= 0.0.34',
+    'optics:flux >= 0.0.52',
+    'optics:glyph >= 0.0.52',
+    'optics:vista >= 0.0.52',
+    'optics:prism >= 0.0.52',
+    'optics:lens >= 0.0.52',
     'wayland', 'libxkbcommon', 'libinput', 'seatd',
     'systemd', 'linux-pam', 'vulkan-loader',
     'gcc:gcc-libs', 'glibc',
@@ -55,7 +54,7 @@ out="${STAGING_DIR}/usr"
 # Install the explicit distribution artifacts. tessera-lock-preview is a
 # feature-gated contributor tool and must not be packaged.
 for b in \
-    tessera tessera-idle tessera-atspi tessera-lock tessera-mcp; do
+    tessera tessera-idle tessera-lock tessera-mcp; do
     install -Dm755 "$bin/$b" "$out/bin/$b"
 done
 
@@ -86,12 +85,11 @@ install -Dm644 "$src/LICENSE" \
 
 [[output]]
 runtime_deps = [
-    'optics:flux >= 0.0.34',
-    'optics:flux-text >= 0.0.34',
-    'optics:flux-scene-graph >= 0.0.34',
-    'optics:prism >= 0.0.34',
-    'optics:lens >= 0.0.34',
-    'optics:iris >= 0.0.34',
+    'optics:flux >= 0.0.52',
+    'optics:glyph >= 0.0.52',
+    'optics:vista >= 0.0.52',
+    'optics:prism >= 0.0.52',
+    'optics:lens >= 0.0.52',
     'brightnessctl', 'dbus',
     'seatd', 'libinput', 'systemd', 'linux-pam',
     'wayland', 'libxkbcommon', 'vulkan-loader',

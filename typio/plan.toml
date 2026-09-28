@@ -1,5 +1,5 @@
 name = "typio"
-version = "0.6.2"
+version = "0.6.3"
 release = 1
 description = "Wayland-native input method host for the Typio framework"
 license = "MIT"
@@ -8,7 +8,7 @@ url = "https://github.com/typio-ime/typio"
 
 build_deps = ['rust-bin', 'pkgconf', 'llvm:clang', 'git']
 link_deps = [
-    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    'optics:flux', 'optics:glyph', 'optics:lens', 'optics:iris',
     'wayland', 'libxkbcommon', 'vulkan-loader', 'glibc',
 ]
 
@@ -67,6 +67,6 @@ test -f "$STAGING_DIR/usr/share/typio/crates/typio-engine-protocol/Cargo.toml"''
 [[output]]
 name = "typio"
 runtime_deps = [
-    'optics:flux', 'optics:flux-text', 'optics:lens', 'optics:iris',
+    'optics:flux', 'optics:glyph', 'optics:lens', 'optics:iris',
     'wayland', 'libxkbcommon', 'vulkan-loader', 'glibc', 'pipewire',
 ]

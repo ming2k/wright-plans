@@ -1,17 +1,17 @@
 name = "libfyaml"
 version = "0.9.6"
-release = 1
+release = 2
 description = "Fully feature complete YAML parser and emitter"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/pantoniou/libfyaml"
 
-
+link_deps = ['glibc']
 build_deps = ['cmake', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "2d016379a69f6cf6beaf06d12bcefe1ad1784bab28fbb41a6fa8d49d25f1bc0a"
 url = "https://github.com/pantoniou/libfyaml/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
@@ -23,8 +23,10 @@ cmake -S . -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DCMAKE_INSTALL_PREFIX=/usr \
     -DBUILD_SHARED_LIBS=ON \
-    -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-    -DENABLE_ASAN=OFF'''
+    -DBUILD_TESTING=OFF \
+    -DENABLE_NETWORK=OFF \
+    -DENABLE_ASAN=OFF \
+    -DSPHINX_EXECUTABLE=""'''
 
 [pipeline.compile]
 script = '''
@@ -35,17 +37,5 @@ cmake --build build -j$(nproc)'''
 script = '''
 cd source/libfyaml-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build
-install -d ${STAGING_DIR}/usr/lib/pkgconfig
-cat > ${STAGING_DIR}/usr/lib/pkgconfig/libfyaml.pc << 'PCEOF'
-prefix=/usr
-exec_prefix=${prefix}
-libdir=${exec_prefix}/lib
-includedir=${prefix}/include
-
-Name: libfyaml
-Description: Fully feature complete YAML parser and emitter library
-Version: ${VERSION}
-Libs: -L${libdir} -lfyaml
-Cflags: -I${includedir}
-PCEOF'''
+chmod -R a+rX ${STAGING_DIR}'''
 
