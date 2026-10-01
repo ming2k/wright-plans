@@ -1,55 +1,73 @@
 name = "emacs"
-version = "30.2"
+version = "31.1"
 release = 1
-description = "The extensible, customizable, self-documenting real-time display editor"
+description = "The extensible, customizable, self-documenting real-time display editor (Terminal/CLI)"
 license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/emacs/"
 
-link_deps = ['giflib', 'glib', 'glibc', 'gnutls', 'gtk3', 'harfbuzz', 'gcc:libgccjit', 'libjpeg-turbo', 'libpng', 'librsvg', 'libtiff', 'libwebp', 'ncurses', 'pango', 'sqlite', 'tree-sitter', 'zlib']
+build_deps = ['make', 'pkgconf', 'gcc:libgccjit']
+link_deps = [
+    'glibc',
+    'gmp',
+    'gnutls',
+    'gcc:libgccjit',
+    'libxml2',
+    'ncurses',
+    'sqlite',
+    'tree-sitter',
+    'zlib',
+]
 
 [[sources]]
-type = "git"
-url = "https://git.savannah.gnu.org/git/emacs.git"
-ref = "emacs-${VERSION}"
+type = "http"
+sha256 = "1da5790d9580c81932b5bf700633114468da7b3412d69faa767daebf974f4586"
+url = "https://ftp.gnu.org/gnu/emacs/emacs-${VERSION}.tar.xz"
 extract_to = "source"
-
-[pipeline.prepare]
-script = '''
-cd source
-./autogen.sh'''
 
 [pipeline.configure]
 script = '''
-cd source
-./configure --prefix=/usr           \
-  --with-tree-sitter                \
-  --with-native-compilation         \
-  --with-pgtk                       \
-  --with-jpeg                       \
-  --with-tiff                       \
-  --with-gif                        \
-  --with-png                        \
-  --with-rsvg                       \
-  --with-webp                       \
-  --with-sqlite3                    \
-  --with-cairo                      \
-  --with-zlib                       \
-  --without-imagemagick             \
-  --without-gconf                   \
-  --without-gsettings               \
-  --with-gnutls                     \
+cd source/emacs-${VERSION}
+./configure --prefix=/usr               \
+  --sysconfdir=/etc                     \
+  --localstatedir=/var                  \
+  --without-x                           \
+  --without-pgtk                        \
+  --without-sound                       \
+  --without-gconf                       \
+  --without-gsettings                   \
+  --without-imagemagick                 \
+  --without-cairo                       \
+  --with-native-compilation=aot         \
+  --with-tree-sitter                    \
+  --with-sqlite3                        \
+  --with-gnutls                         \
+  --with-xml2                           \
+  --with-modules                        \
+  --with-zlib                           \
+  --with-threads                        \
+  --with-systemduserunitdir=/usr/lib/systemd/user \
   --disable-silent-rules'''
 
 [pipeline.compile]
 script = '''
-cd source
+cd source/emacs-${VERSION}
 make -j$(nproc)'''
 
 [pipeline.staging]
 script = '''
-cd source
+cd source/emacs-${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]
-runtime_deps = ['giflib', 'glib', 'gnutls', 'gtk3', 'harfbuzz', 'gcc:libgccjit', 'libjpeg-turbo', 'libpng', 'librsvg', 'libtiff', 'libwebp', 'ncurses', 'pango', 'sqlite', 'tree-sitter', 'zlib', 'glibc']
+runtime_deps = [
+    'glibc',
+    'gmp',
+    'gnutls',
+    'gcc:libgccjit',
+    'libxml2',
+    'ncurses',
+    'sqlite',
+    'tree-sitter',
+    'zlib',
+]
