@@ -1,5 +1,5 @@
 name = "python-urllib3"
-version = "2.7.0"
+version = "2.8.0"
 release = 1
 description = "HTTP library with thread-safe connection pooling and file post support"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['python']
 
 [[sources]]
 type = "http"
-sha256 = "231e0ec3b63ceb14667c67be60f2f2c40a518cb38b03af60abc813da26505f4c"
+sha256 = "8a6c610573d257dcb8959e5e6448a5b2574ae8e2d4a9c2a9b40bde0f63a61e34"
 url = "https://github.com/urllib3/urllib3/archive/${VERSION}.tar.gz"
 extract_to = "source"
 

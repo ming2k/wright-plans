@@ -1,5 +1,5 @@
 name = "v2ray-rules-dat"
-version = "202608122233"
+version = "202609280014"
 release = 1
 description = "Enhanced GeoIP and GeoSite data files from Loyalsoldier"
 license = "GPL-3.0-only"
@@ -8,12 +8,12 @@ url = "https://github.com/Loyalsoldier/v2ray-rules-dat"
 
 [[sources]]
 type = "http"
-sha256 = "53dc90b50877d2ed974ea81fb0fbdcbac84e189c0ac7fdcab7a966bb5e36b6e6"
+sha256 = "3cf2236c19063c1c80803368cca5ff589c5033129fdf9ba154230c689b81fc2a"
 url = "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/${VERSION}/geoip.dat"
 
 [[sources]]
 type = "http"
-sha256 = "034f0bbbe3bf030c603a2b61cefb7d72c95eaa0aa3b1705edd71c9ef25f56847"
+sha256 = "f49b374f424693ea38745aa6175acb6cc303c5ecf7b09980101b21ed8eebfce3"
 url = "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/${VERSION}/geosite.dat"
 
 [pipeline.staging]

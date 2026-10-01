@@ -35,4 +35,4 @@ cd source/node-v${VERSION}
 make DESTDIR=${STAGING_DIR} install'''
 
 [[output]]
-runtime_deps = ['openssl', 'zlib']
+runtime_deps = ['icu', 'openssl', 'zlib']

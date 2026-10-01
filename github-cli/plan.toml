@@ -1,5 +1,5 @@
 name = "github-cli"
-version = "2.97.0"
+version = "2.101.0"
 release = 1
 description = "GitHub CLI"
 license = "MIT"
@@ -9,7 +9,7 @@ url = "https://github.com/cli/cli"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "a266fe8575c0e061b987920c1831a15f71bf0036a8729a5ebb93c2fb0164899c"
 url = "https://github.com/cli/cli/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

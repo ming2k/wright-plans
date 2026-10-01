@@ -1,5 +1,5 @@
 name = "prudence"
-version = "0.0.1"
+version = "0.0.2"
 release = 1
 description = "Rust CLI for moving files and directories into the XDG trash"
 license = "NOASSERTION"
@@ -11,7 +11,7 @@ build_deps = ['rust-bin']
 
 [[sources]]
 type = "http"
-sha256 = "eb16564fda7542cbc10a007f842a6ac4f4097210155a629d1757f9e1f31d58ea"
+sha256 = "637cee2124943703a91758ff82e0a6c97f96bfc9122db9e5f3983c103b726d53"
 url = "https://github.com/ming2k/prudence/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
@@ -25,5 +25,21 @@ cargo build --release --locked'''
 [pipeline.staging]
 script = '''
 cd source/prudence-${VERSION}
-install -Dm755 target/release/prudence ${STAGING_DIR}/usr/bin/prudence
-install -Dm644 man/man1/prudence.1 ${STAGING_DIR}/usr/share/man/man1/prudence.1'''
+
+if [ -f target/release/prudence ]; then
+    install -Dm755 target/release/prudence ${STAGING_DIR}/usr/bin/prudence
+else
+    install -Dm755 ${WORKDIR}/target/release/prudence ${STAGING_DIR}/usr/bin/prudence
+fi
+ln -sfn prudence ${STAGING_DIR}/usr/bin/trash
+
+install -Dm644 man/man1/prudence.1 ${STAGING_DIR}/usr/share/man/man1/prudence.1
+
+install -Dm644 completions/prudence.bash ${STAGING_DIR}/usr/share/bash-completion/completions/prudence
+ln -sfn prudence ${STAGING_DIR}/usr/share/bash-completion/completions/trash
+
+install -Dm644 completions/_prudence ${STAGING_DIR}/usr/share/zsh/site-functions/_prudence
+ln -sfn _prudence ${STAGING_DIR}/usr/share/zsh/site-functions/_trash
+
+install -Dm644 completions/prudence.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/prudence.fish
+ln -sfn prudence.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/trash.fish'''

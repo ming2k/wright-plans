@@ -1,5 +1,5 @@
 name = "optics"
-version = "0.0.52"
+version = "0.0.53"
 release = 1
 description = "Optics rendering libraries: flux, glyph, vista, prism, lens, iris, and transit"
 license = "MIT"
@@ -18,7 +18,7 @@ link_deps = [
 [[sources]]
 type = "http"
 url = "https://github.com/ming2k/optics/archive/refs/tags/v${VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "56a50f7a344196ac3f85bafe72d36c52111a59c57274ac2730df4d62f527f2e5"
 extract_to = "source"
 
 [pipeline.configure]

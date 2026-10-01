@@ -4,6 +4,7 @@ release = 1
 description = "An interpreted object-oriented programming language"
 license = "BSD-2-Clause"
 arch = "x86_64"
+url = "https://www.ruby-lang.org/"
 
 link_deps = ['gmp', 'libffi', 'libyaml', 'openssl', 'readline', 'zlib']
 

@@ -5,6 +5,7 @@ release = 1
 description = "API and commands for processing SPIR-V modules"
 license = "Apache-2.0"
 arch = "x86_64"
+url = "https://github.com/KhronosGroup/SPIRV-Tools"
 
 
 build_deps = ['cmake', 'ninja', 'spirv-headers']

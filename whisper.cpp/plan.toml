@@ -1,5 +1,5 @@
 name = "whisper.cpp"
-version = "1.9.1"
+version = "1.9.4"
 release = 1
 description = "Automatic speech recognition in C/C++"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "57e280cee375ab02425b806ad5146b99f6eb9357e3c2b31357c8a6af2e2e44ae"
 url = "https://github.com/ggml-org/whisper.cpp/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

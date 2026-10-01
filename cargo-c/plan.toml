@@ -1,5 +1,5 @@
 name = "cargo-c"
-version = "0.10.24"
+version = "0.10.25"
 release = 1
 description = "Helper to build and install C-ABI compatible dynamic and static libraries from Rust"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['rust-bin']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "8054b12ae8b64259e7b63e40368406dd6b6510d5d92b658152b361c5d816a5de"
 url = "https://github.com/lu-zero/cargo-c/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

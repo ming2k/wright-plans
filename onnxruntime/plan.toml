@@ -1,17 +1,16 @@
 name = "onnxruntime"
-version = "1.29.0"
+version = "1.30.0"
 release = 1
 description = "Cross-platform ML inference and training accelerator"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/microsoft/onnxruntime"
 
-link_deps = ['abseil-cpp', 'protobuf']
-build_deps = ['ninja', 'cmake']
+build_deps = ['ninja', 'cmake', 'patch']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "f6681ecbddf53898adf0cc9e8e9e84657485b84d2eca3c8aa353de6d7dd417ef"
 url = "https://github.com/microsoft/onnxruntime/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 
@@ -27,6 +26,7 @@ cmake --compile-no-warning-as-error \
   -Wno-dev \
   -DCMAKE_BUILD_TYPE=Release \
   -DCMAKE_INSTALL_PREFIX=/usr \
+  -DFETCHCONTENT_TRY_FIND_PACKAGE_MODE=NEVER \
   -Donnxruntime_BUILD_SHARED_LIB=ON \
   -Donnxruntime_BUILD_UNIT_TESTS=OFF \
   -Donnxruntime_ENABLE_PYTHON=OFF \
@@ -49,4 +49,4 @@ cd source/onnxruntime-${VERSION}
 DESTDIR=${STAGING_DIR} ninja -C build install'''
 
 [[output]]
-runtime_deps = ['abseil-cpp', 'protobuf']
+name = "onnxruntime"

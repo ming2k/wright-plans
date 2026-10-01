@@ -1,5 +1,5 @@
 name = "fd"
-version = "10.4.2"
+version = "10.5.0"
 release = 1
 description = "Simple, fast and user-friendly alternative to find"
 license = "Apache-2.0 OR MIT"
@@ -11,7 +11,7 @@ build_deps = ['rust-bin']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "e6d9e90730bf316101691e49d59cc02565278dc3779d33a77423801569484851"
 url = "https://github.com/sharkdp/fd/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

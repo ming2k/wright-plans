@@ -1,5 +1,5 @@
 name = "chafa"
-version = "1.18.2"
+version = "1.18.3"
 release = 1
 description = "Image-to-text converter for terminal graphics"
 license = "LGPL-3.0-or-later"
@@ -10,7 +10,7 @@ link_deps = ['glib', 'freetype', 'libjpeg-turbo', 'librsvg', 'libtiff', 'libwebp
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "fb995ef21dce6c73dd0dd454ba3e0f7fac08e053ea16060a2e5ce69a3746ee27"
 url = "https://github.com/hpjansson/chafa/releases/download/${VERSION}/chafa-${VERSION}.tar.xz"
 extract_to = "source"
 

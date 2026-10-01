@@ -4,6 +4,7 @@ release = 2
 description = "Specifications of extended Wayland protocols"
 license = "MIT"
 arch = "any"
+url = "https://gitlab.freedesktop.org/wayland/wayland-protocols"
 
 # wayland-protocols is pure XML protocol description files at runtime.
 # At build time it needs wayland-scanner (from the wayland package) to

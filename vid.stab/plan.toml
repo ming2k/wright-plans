@@ -1,5 +1,5 @@
 name = "vid.stab"
-version = "1.1.1"
+version = "1.1.2"
 release = 1
 description = "Video stabilization library"
 license = "GPL-2.0-or-later"
@@ -10,7 +10,7 @@ build_deps = ['cmake']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "96db34d48a9e3aa13736a48744b56dfb76731ac9bb5193c716de8534c9fd709d"
 url = "https://github.com/georgmartius/vid.stab/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

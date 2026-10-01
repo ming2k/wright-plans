@@ -4,6 +4,7 @@ release = 1
 description = "Vulkan Loader (Wayland Only)"
 license = "Apache-2.0"
 arch = "x86_64"
+url = "https://github.com/KhronosGroup/Vulkan-Loader"
 
 link_deps = ['glibc', 'wayland']
 build_deps = ['ninja', 'cmake', 'vulkan-headers', 'wayland-protocols']

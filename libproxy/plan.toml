@@ -4,6 +4,7 @@ release = 1
 description = "Library that provides automatic proxy configuration management"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+url = "https://github.com/libproxy/libproxy"
 
 link_deps = ['glib']
 build_deps = ['meson', 'ninja']

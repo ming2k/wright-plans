@@ -4,6 +4,7 @@ release = 1
 description = "High quality MP3 encoder"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
+url = "https://lame.sourceforge.io/"
 
 link_deps = ['ncurses']
 build_deps = ['nasm']

@@ -4,6 +4,7 @@ release = 1
 description = "Generic-purpose lossless compression algorithm"
 license = "MIT"
 arch = "x86_64"
+url = "https://github.com/google/brotli"
 
 
 build_deps = ['cmake']

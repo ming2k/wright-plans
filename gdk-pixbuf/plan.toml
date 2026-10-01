@@ -4,6 +4,7 @@ release = 5
 description = "GNOME image loading library (Modern Glycin Enabled)"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/gdk-pixbuf"
 
 link_deps = ['glycin', 'glib', 'libjpeg-turbo', 'libpng', 'libtiff', 'shared-mime-info']
 build_deps = ['meson', 'ninja']

@@ -4,6 +4,7 @@ release = 1
 description = "Self-contained, serverless, zero-configuration, transactional SQL database engine"
 license = "Blessing"
 arch = "x86_64"
+url = "https://www.sqlite.org/"
 
 link_deps = ['readline', 'zlib']
 build_deps = ['autoconf']

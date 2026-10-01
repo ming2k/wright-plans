@@ -4,6 +4,7 @@ release = 1
 description = "Xvid is an open-source MPEG-4 video codec"
 license = "GPL-2.0-or-later"
 arch = "x86_64"
+url = "https://www.xvid.com/"
 
 
 [[sources]]

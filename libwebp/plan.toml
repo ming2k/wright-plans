@@ -4,6 +4,7 @@ release = 1
 description = "Library for the WebP graphics format"
 license = "BSD-3-Clause"
 arch = "x86_64"
+url = "https://chromium.googlesource.com/webm/libwebp"
 
 link_deps = ['libpng']
 

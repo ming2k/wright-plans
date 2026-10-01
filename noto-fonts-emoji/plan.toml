@@ -1,5 +1,5 @@
 name = "noto-fonts-emoji"
-version = "2.051"
+version = "2026-09-24-unicode18_0"
 release = 1
 description = "Google Noto Color Emoji font"
 license = "OFL-1.1"
@@ -8,8 +8,8 @@ url = "https://github.com/googlefonts/noto-emoji"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
-url = "https://github.com/googlefonts/noto-emoji/raw/v${VERSION}/fonts/NotoColorEmoji.ttf"
+sha256 = "15671215ab769fdc7162a045d56fd7d7e477c51b04e6b3c761d914d8fdd6cc44"
+url = "https://github.com/googlefonts/noto-emoji/raw/v${VERSION}/2D/fonts/NotoColorEmoji.ttf"
 
 [pipeline.staging]
 script = '''

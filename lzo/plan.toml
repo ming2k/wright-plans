@@ -4,6 +4,7 @@ release = 1
 description = "Portable lossless data compression library"
 license = "GPL-2.0"
 arch = "x86_64"
+url = "https://www.oberhumer.com/opensource/lzo/"
 
 
 [[sources]]

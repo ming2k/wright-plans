@@ -1,5 +1,5 @@
 name = "neovim"
-version = "0.12.4"
+version = "0.12.5"
 release = 1
 description = "Hyperextensible Vim-based text editor"
 license = "Apache-2.0"
@@ -11,7 +11,7 @@ link_deps = ['glibc']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "a810c95332317bd0017e1ca07e376a8472c79075cbed00fa3737d190a8a0a45a"
 url = "https://github.com/neovim/neovim/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

@@ -4,6 +4,7 @@ release = 1
 description = "BSD-style command line editing library"
 license = "BSD-3-Clause"
 arch = "x86_64"
+url = "https://thrysoee.dk/editline/"
 
 link_deps = ['ncurses']
 

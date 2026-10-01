@@ -1,5 +1,5 @@
 name = "hwdata"
-version = "0.410"
+version = "0.411"
 release = 1
 description = "Hardware identification and configuration data"
 license = "GPL-2.0-or-later"
@@ -8,7 +8,7 @@ url = "https://github.com/vcrhonek/hwdata"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "d75462181fbd307228e0a48b8d1449f1773ea4b1f17e8a1d56346907f999ce33"
 url = "https://github.com/vcrhonek/hwdata/archive/v${VERSION}/hwdata-${VERSION}.tar.gz"
 extract_to = "source"
 

@@ -6,7 +6,7 @@ license = "GPL-3.0-or-later"
 arch = "x86_64"
 url = "https://www.gnu.org/software/grep/"
 
-depends.build = ["pcre2"]
+build_deps = ["pcre2"]
 
 [[sources]]
 type = "http"

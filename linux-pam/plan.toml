@@ -1,6 +1,6 @@
 name = "linux-pam"
-version = "1.7.2"
-release = 5
+version = "1.7.3"
+release = 1
 description = "Pluggable Authentication Modules for Linux"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "2ce4765fd49df6693771ef2941f81e33d8ee14b94a81a5c7b369aa3b137b85a5"
 url = "https://github.com/linux-pam/linux-pam/releases/download/v${VERSION}/Linux-PAM-${VERSION}.tar.xz"
 extract_to = "source"
 

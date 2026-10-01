@@ -4,6 +4,7 @@ release = 1
 description = "Performance-portable, length-agnostic SIMD with runtime dispatch"
 license = "Apache-2.0"
 arch = "x86_64"
+url = "https://github.com/google/highway"
 
 
 build_deps = ['cmake', 'ninja']

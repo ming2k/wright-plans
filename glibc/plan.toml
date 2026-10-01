@@ -107,7 +107,6 @@ NSEOF
 # ld.so.conf
 cat > ${STAGING_DIR}/etc/ld.so.conf << "LDEOF"
 # Begin /etc/ld.so.conf
-/usr/local/lib
 /opt/lib
 
 include /etc/ld.so.conf.d/*.conf

@@ -1,5 +1,5 @@
 name = "srt"
-version = "1.5.6"
+version = "1.5.7"
 release = 1
 description = "Secure Reliable Transport protocol library"
 license = "MPL-2.0"
@@ -11,7 +11,7 @@ build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "017cd1e437ef2073a4dd10ddf7b55e86bc3d6ebac0393d13bd22f6a57055d32b"
 url = "https://github.com/Haivision/srt/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

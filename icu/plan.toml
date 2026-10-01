@@ -4,6 +4,7 @@ release = 1
 description = "International Components for Unicode"
 license = "ICU"
 arch = "x86_64"
+url = "https://github.com/unicode-org/icu"
 
 
 [[sources]]

@@ -1,0 +1,40 @@
+name = "just"
+version = "1.58.0"
+release = 1
+description = "A handy way to save and run project-specific commands"
+license = "CC0-1.0"
+arch = "x86_64"
+url = "https://github.com/casey/just"
+
+build_deps = ['rust-bin']
+link_deps = ['gcc:gcc-libs', 'glibc']
+
+[[sources]]
+type = "http"
+sha256 = "c8a36e6e9397f2fdfcb0cc246fcdb790b52a784f3c8cabc0d8baeb031852a148"
+url = "https://github.com/casey/just/archive/refs/tags/${VERSION}.tar.gz"
+extract_to = "source"
+
+[pipeline.compile]
+isolation = "relaxed"
+script = '''
+cd source/just-${VERSION}
+cargo build --release --locked'''
+
+[pipeline.staging]
+script = '''
+cd source/just-${VERSION}
+install -Dm755 target/release/just ${STAGING_DIR}/usr/bin/just
+
+# Shell completions
+install -Dm644 completions/just.bash ${STAGING_DIR}/usr/share/bash-completion/completions/just
+install -Dm644 completions/just.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/just.fish
+install -Dm644 completions/just.zsh ${STAGING_DIR}/usr/share/zsh/site-functions/_just
+
+# Manual page
+install -dm755 ${STAGING_DIR}/usr/share/man/man1
+target/release/just --man > ${STAGING_DIR}/usr/share/man/man1/just.1'''
+
+[[output]]
+name = "just"
+runtime_deps = ['gcc:gcc-libs', 'glibc']

@@ -4,6 +4,7 @@ release = 1
 description = "Portable and efficient C programming interface (API) to determine the call-chain of a program"
 license = "MIT"
 arch = "x86_64"
+url = "https://github.com/libunwind/libunwind"
 
 
 [[sources]]

@@ -1,6 +1,6 @@
 name = "openssh"
-version = "10.3p1"
-release = 8
+version = "10.5p1"
+release = 1
 description = "Free implementation of the SSH protocol suite"
 license = "BSD-2-Clause"
 arch = "x86_64"
@@ -12,7 +12,7 @@ build_deps = ['autoconf', 'automake']
 [[sources]]
 type = "git"
 url = "https://github.com/openssh/openssh-portable.git"
-ref = "V_10_3_P1"
+ref = "V_10_5_P1"
 extract_to = "source"
 
 [pipeline.configure]

@@ -4,6 +4,7 @@ release = 1
 description = "Open-source JPEG 2000 codec"
 license = "BSD-2-Clause"
 arch = "x86_64"
+url = "https://github.com/uclouvain/openjpeg"
 
 
 build_deps = ['cmake']

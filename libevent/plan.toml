@@ -1,6 +1,6 @@
 name = "libevent"
-version = "2.1.12-stable"
-release = 2
+version = "2.1.13-stable"
+release = 1
 description = "An event notification library for developing asynchronous applications"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -10,7 +10,7 @@ link_deps = ['openssl']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "f7e9383b8c0baa81b687e5b5eecc01beefaf1b19b64151d95ed61647fe7a315c"
 url = "https://github.com/libevent/libevent/releases/download/release-${VERSION}/libevent-${VERSION}.tar.gz"
 extract_to = "source"
 

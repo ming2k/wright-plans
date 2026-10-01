@@ -1,5 +1,5 @@
 name = "sof-firmware"
-version = "2025.12.2"
+version = "2026.09.1"
 release = 1
 description = "Sound Open Firmware"
 license = "BSD-3-Clause"
@@ -8,7 +8,7 @@ url = "https://github.com/thesofproject/sof-bin"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "42ce40ec98f366365eab8e046d779b416d80b6ff2513b8f6be2a61a88e679b73"
 url = "https://github.com/thesofproject/sof-bin/releases/download/v${VERSION}/sof-bin-${VERSION}.tar.gz"
 extract_to = "source"
 

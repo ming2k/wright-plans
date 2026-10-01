@@ -1,5 +1,5 @@
 name = "tree-sitter-cli"
-version = "0.26.12"
+version = "0.27.0"
 release = 1
 description = "CLI tool for developing, testing, and using Tree-sitter parsers"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['rust-bin']
 
 [[sources]]
 type = "http"
-sha256 = "428e2b182fe38eddc100d8bd851e47c96921a69281b66abafc25ba4b0aaeeeab"
+sha256 = "d35c96e68736bd9569d2757c3cc71052485f33082c3825f1aed9d0e86013a159"
 url = "https://github.com/tree-sitter/tree-sitter/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

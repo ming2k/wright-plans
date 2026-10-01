@@ -1,5 +1,5 @@
 name = "yaml-cpp"
-version = "0.8.0"
+version = "yaml-cpp-0.9.0"
 release = 1
 description = "YAML parser and emitter in C++"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "25cb043240f828a8c51beb830569634bc7ac603978e0f69d6b63558dadefd49a"
 url = "https://github.com/jbeder/yaml-cpp/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

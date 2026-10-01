@@ -1,5 +1,5 @@
 name = "libvpx"
-version = "1.16.0"
+version = "1.17.0"
 release = 1
 description = "WebM VP8/VP9 codec SDK"
 license = "BSD-3-Clause"
@@ -9,7 +9,7 @@ url = "https://github.com/webmproject/libvpx"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "1020f184046187baa2985dbde38e0691f49c44088bca7a1842b0236c6081dc0a"
 url = "https://github.com/webmproject/libvpx/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

@@ -1,5 +1,5 @@
 name = "zellij"
-version = "0.44.3"
+version = "0.45.1"
 release = 1
 description = "A terminal workspace with batteries included"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['rust-bin']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "5cbe711437d2a61afd9287165f6aca0bcccb9ab1473633665a5b11ed55467852"
 url = "https://github.com/zellij-org/zellij/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

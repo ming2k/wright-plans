@@ -1,5 +1,5 @@
 name = "ccache"
-version = "4.13.6"
+version = "4.14.1"
 release = 1
 description = "Fast C/C++ compiler cache"
 license = "GPL-3.0-or-later"
@@ -11,13 +11,13 @@ link_deps = ['zstd']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "29f10de481ac2c41c91bfabead63d803bd2fe823e09752aade5b0b8704cc4f30"
 url = "https://github.com/ccache/ccache/releases/download/v${VERSION}/ccache-${VERSION}.tar.xz"
 extract_to = "source"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "aae608dfe8213dfd05d909a57718ef82f30722c392344583d3f39050c7f29a80"
 url = "https://github.com/Cyan4973/xxhash/archive/refs/tags/v0.8.3.tar.gz"
 extract_to = "source/xxhash-src"
 

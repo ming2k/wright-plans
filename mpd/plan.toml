@@ -1,5 +1,5 @@
 name = "mpd"
-version = "0.24.13"
+version = "0.24.15"
 release = 1
 description = "Flexible, powerful, server-side application for playing music"
 license = "GPL-2.0-or-later"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "448172fcd26aa6eb8bfe95c998cf7bd612ae6beaf5ba54f2cbf984d0249d3de4"
 url = "https://github.com/MusicPlayerDaemon/MPD/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

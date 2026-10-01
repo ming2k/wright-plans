@@ -4,6 +4,7 @@ release = 1
 description = "Theora video compression reference implementation"
 license = "BSD-3-Clause"
 arch = "x86_64"
+url = "https://www.theora.org/"
 
 link_deps = ['libogg', 'libvorbis']
 

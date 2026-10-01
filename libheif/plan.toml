@@ -1,16 +1,17 @@
 name = "libheif"
-version = "1.23.1"
+version = "1.23.5"
 release = 1
 description = "HEIF and AVIF file format decoder and encoder"
 license = "LGPL-3.0-or-later"
 arch = "x86_64"
+url = "https://github.com/strukturag/libheif"
 
 link_deps = ['libde265', 'dav1d', 'aom', 'libjpeg-turbo', 'libpng']
 build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
-sha256 = "0de0327f60fcd47de90d5654c6fe152232738d60d84fe084ec3e0f35e03b166a"
+sha256 = "fd9036064c4432f0550d15072ddf34956a248279ee9aeaff0fba3fa0f77d8f1a"
 url = "https://github.com/strukturag/libheif/releases/download/v${VERSION}/libheif-${VERSION}.tar.gz"
 extract_to = "source"
 

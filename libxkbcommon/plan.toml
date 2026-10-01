@@ -4,6 +4,7 @@ release = 2
 description = "Keymap handling library (Wayland Only)"
 license = "MIT"
 arch = "x86_64"
+url = "https://github.com/xkbcommon/libxkbcommon"
 
 link_deps = ['libxml2', 'wayland', 'xkeyboard-config']
 build_deps = ['bison', 'meson', 'ninja', 'pkgconf', 'wayland-protocols']

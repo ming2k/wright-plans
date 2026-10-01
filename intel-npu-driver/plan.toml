@@ -1,5 +1,5 @@
 name = "intel-npu-driver"
-version = "1.33.0"
+version = "1.38.0"
 release = 1
 description = "Intel NPU Level Zero user-mode driver and firmware"
 license = "MIT"
@@ -11,8 +11,8 @@ build_deps = ['binutils', 'tar']
 
 [[sources]]
 type = "http"
-url = "https://github.com/intel/linux-npu-driver/releases/download/v${VERSION}/linux-npu-driver-v${VERSION}.20260529-26625960453-ubuntu2404.tar.gz"
-sha256 = "48cc219a5bd882a7cadaef523d9bb0c1e03c1b9b5b8562a29ad5ee4b9bfbb3bc"
+url = "https://github.com/intel/linux-npu-driver/releases/download/v${VERSION}/linux-npu-driver-v${VERSION}.20260910-34487311128-ubuntu2404.tar.gz"
+sha256 = "1efcd4b60c22abee751d8f2705962cbcc2a569de45c7e0e670cf08afbfcdc1d2"
 extract_to = "source"
 
 [pipeline.staging]

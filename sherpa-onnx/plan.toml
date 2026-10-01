@@ -1,6 +1,6 @@
 name = "sherpa-onnx"
-version = "1.13.5"
-release = 2
+version = "1.13.8"
+release = 1
 description = "Speech-to-text, text-to-speech, speaker diarization, and VAD using next-gen Kaldi with onnxruntime"
 license = "Apache-2.0"
 arch = "x86_64"
@@ -11,7 +11,7 @@ build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
-sha256 = "99f520db7364a06be0c174a385d03f9ccdbfe08f61146055229e4a990e285262"
+sha256 = "b0374cc56dbc186d442ae73d5de743bb092470b640c4c50ce7b029044c0c4fa8"
 url = "https://github.com/k2-fsa/sherpa-onnx/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

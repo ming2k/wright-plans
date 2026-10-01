@@ -1,5 +1,5 @@
 name = "libpsl"
-version = "0.23.2"
+version = "0.23.3"
 release = 1
 description = "Library for accessing the Public Suffix List"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "93941f85a1e7bd593fa94f299233cb5dfc91cd144fd9a78a6ceb75001c5b03be"
 url = "https://github.com/rockdaboot/libpsl/releases/download/${VERSION}/libpsl-${VERSION}.tar.gz"
 extract_to = "source"
 

@@ -4,6 +4,7 @@ release = 1
 description = "PNG reference library (Latest Stable)"
 license = "Libpng"
 arch = "x86_64"
+url = "https://github.com/pnggroup/libpng"
 
 link_deps = ['zlib']
 

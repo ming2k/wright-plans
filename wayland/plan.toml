@@ -4,6 +4,7 @@ release = 1
 description = "Core Wayland window system code and protocol"
 license = "MIT"
 arch = "x86_64"
+url = "https://gitlab.freedesktop.org/wayland/wayland"
 
 link_deps = ['expat', 'libffi', 'libxml2']
 build_deps = ['meson', 'ninja', 'wayland-protocols']

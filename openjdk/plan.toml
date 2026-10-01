@@ -1,6 +1,6 @@
 name = "openjdk"
 version = "26"
-release = 2
+release = 1
 description = "OpenJDK 26 (source build)"
 license = "GPL-2.0-with-classpath-exception"
 arch = "x86_64"

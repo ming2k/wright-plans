@@ -1,5 +1,5 @@
 name = "sdl3"
-version = "3.4.14"
+version = "3.4.16"
 release = 1
 description = "Simple DirectMedia Layer 3"
 license = "Zlib"
@@ -12,7 +12,7 @@ build_deps = ['ninja', 'cmake']
 [[sources]]
 type = "http"
 url = "https://github.com/libsdl-org/SDL/releases/download/release-${VERSION}/SDL3-${VERSION}.tar.gz"
-sha256 = "SKIP"
+sha256 = "7322236cd12090c3eb40b9728be4d49c76f66ad17d04369584d4ecad5cf77c68"
 extract_to = "source"
 
 [pipeline.configure]

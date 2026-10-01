@@ -39,3 +39,6 @@ cd source/libfyaml-${VERSION}
 DESTDIR=${STAGING_DIR} cmake --install build
 chmod -R a+rX ${STAGING_DIR}'''
 
+[[output]]
+runtime_deps = ['glibc']
+

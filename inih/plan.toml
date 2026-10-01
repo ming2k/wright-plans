@@ -1,5 +1,5 @@
 name = "inih"
-version = "r58"
+version = "r62"
 release = 1
 description = "Simple INI file parser library in C"
 license = "BSD-3-Clause"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "9c15fa751bb8093d042dae1b9f125eb45198c32c6704cd5481ccde460d4f8151"
 url = "https://github.com/benhoyt/inih/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

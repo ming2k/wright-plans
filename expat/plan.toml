@@ -1,5 +1,5 @@
 name = "expat"
-version = "2.8.0"
+version = "2.8.5"
 release = 1
 description = "Stream oriented C library for parsing XML"
 license = "MIT"
@@ -9,8 +9,8 @@ url = "https://libexpat.github.io/"
 
 [[sources]]
 type = "http"
-sha256 = "a37bfae0aa9775bd8521ebd85dc456d486f0ff31138f6c91fd902ea732624542"
-url = "https://github.com/libexpat/libexpat/releases/download/R_2_8_0/expat-${VERSION}.tar.xz"
+sha256 = "1e727b8933ec51a77a9a9d9afcf8e688bce45d907c13e36ab7393fe36e703182"
+url = "https://github.com/libexpat/libexpat/releases/download/R_2_8_5/expat-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.configure]

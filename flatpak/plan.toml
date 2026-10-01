@@ -1,5 +1,5 @@
 name = "flatpak"
-version = "1.18.2"
+version = "1.18.4"
 release = 1
 description = "Universal app distribution framework (Pure Wayland)"
 license = "LGPL-2.1-or-later"
@@ -11,7 +11,7 @@ link_deps = ['glib', 'libarchive', 'libxml2', 'ostree', 'polkit', 'json-glib', '
 
 [[sources]]
 type = "http"
-sha256 = "800ff8cb14c369a3c19984932ae2cbea1b0d38363daa57cfb8ef04b8d7f08e10"
+sha256 = "b899a7a00c48d2c626cb8ec33fe556720b376c25805d7222430c0fdca4c6ac8d"
 url = "https://github.com/flatpak/flatpak/releases/download/${VERSION}/flatpak-${VERSION}.tar.xz"
 extract_to = "source"
 

@@ -4,6 +4,7 @@ release = 1
 description = "Library with common API for Wayland GNOME applications"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/libadwaita"
 
 link_deps = ['glib', 'gtk4']
 build_deps = ['meson', 'ninja']

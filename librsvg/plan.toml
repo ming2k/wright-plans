@@ -4,6 +4,7 @@ release = 2
 description = "SVG rendering library using Rust"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/librsvg"
 
 link_deps = ['cairo', 'gdk-pixbuf', 'pango', 'glib', 'libxml2', 'harfbuzz', 'freetype', 'fribidi']
 build_deps = ['meson', 'ninja']

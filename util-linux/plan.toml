@@ -35,7 +35,7 @@ meson setup build \
     --prefix=/usr \
     --buildtype=release \
     -D sbindir=/usr/bin \
-    -D fs-search-path=/usr/bin:/usr/local/bin \
+    -D fs-search-path=/usr/bin \
     -D libuser=disabled \
     -D libutempter=disabled \
     -D ncurses=disabled \

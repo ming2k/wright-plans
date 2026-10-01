@@ -46,3 +46,6 @@ Libs: -L\${libdir} -lduktape -lm
 Cflags: -I\${includedir}
 PCEOF
 chmod -R a+rX ${STAGING_DIR}'''
+
+[[output]]
+runtime_deps = ['glibc']

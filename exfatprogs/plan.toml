@@ -1,5 +1,5 @@
 name = "exfatprogs"
-version = "1.4.2"
+version = "1.4.3"
 release = 1
 description = "exFAT filesystem utilities: mkfs.exfat, fsck.exfat"
 license = "GPL-2.0-or-later"
@@ -9,7 +9,7 @@ url = "https://github.com/exfatprogs/exfatprogs"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "4b5052cba6ff9f6dcb1c63eeeac328620472c5b0b3caf3d38e4ada50e75469d3"
 url = "https://github.com/exfatprogs/exfatprogs/releases/download/${VERSION}/exfatprogs-${VERSION}.tar.gz"
 extract_to = "source"
 

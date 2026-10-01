@@ -1,6 +1,6 @@
 name = "openvino"
-version = "2026.2.0"
-release = 4
+version = "2026.4.0"
+release = 1
 description = "Intel OpenVINO Toolkit for deep learning inference"
 license = "Apache-2.0"
 arch = "x86_64"

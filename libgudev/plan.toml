@@ -4,6 +4,7 @@ release = 1
 description = "GObject bindings for libudev"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/libgudev"
 
 link_deps = ['glib']
 build_deps = ['meson', 'ninja']

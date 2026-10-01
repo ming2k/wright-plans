@@ -1,6 +1,6 @@
 name = "swtpm"
-version = "0.10.1"
-release = 2
+version = "0.10.2"
+release = 1
 description = "Libtpms-based TPM emulator for QEMU and other hypervisors"
 license = "BSD-3-Clause"
 arch = "x86_64"
@@ -10,7 +10,7 @@ link_deps = ['glib', 'gmp', 'json-glib', 'libtpms', 'openssl']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "f61cf6f1e9bbcb4cefb30b70cafaf1c4df54c6961e65cfa63830e8ad0e220134"
 url = "https://github.com/stefanberger/swtpm/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

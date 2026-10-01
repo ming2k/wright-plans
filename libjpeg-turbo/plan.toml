@@ -4,6 +4,7 @@ release = 1
 description = "SIMD-accelerated JPEG codec (libjpeg v8 compatible)"
 license = "IJG"
 arch = "x86_64"
+url = "https://github.com/libjpeg-turbo/libjpeg-turbo"
 
 
 build_deps = ['cmake', 'nasm', 'ninja', 'pkgconf']

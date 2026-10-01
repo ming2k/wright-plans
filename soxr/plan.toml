@@ -4,6 +4,7 @@ release = 1
 description = "High quality SoX-based resampler library"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+url = "https://sourceforge.net/projects/soxr/"
 
 
 build_deps = ['cmake']

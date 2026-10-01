@@ -1,5 +1,5 @@
 name = "xdg-dbus-proxy"
-version = "0.1.8"
+version = "0.1.9"
 release = 1
 description = "D-Bus proxy for Flatpak sandboxed apps"
 license = "LGPL-2.1-or-later"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "5450dda586ec3bb3ca709d311e845487883faa3b09cf562608d7e84f4311dced"
 url = "https://github.com/flatpak/xdg-dbus-proxy/releases/download/${VERSION}/xdg-dbus-proxy-${VERSION}.tar.xz"
 extract_to = "source"
 

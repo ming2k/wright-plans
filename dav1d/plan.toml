@@ -4,6 +4,7 @@ release = 1
 description = "Fastest AV1 decoder on all platforms"
 license = "BSD-2-Clause"
 arch = "x86_64"
+url = "https://code.videolan.org/videolan/dav1d"
 
 
 build_deps = ['meson', 'ninja']

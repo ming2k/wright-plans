@@ -4,6 +4,7 @@ release = 1
 description = "Alliance for Open Media AV1 Codec SDK"
 license = "BSD-2-Clause"
 arch = "x86_64"
+url = "https://aomedia.googlesource.com/aom"
 
 
 build_deps = ['cmake']

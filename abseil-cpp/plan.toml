@@ -1,5 +1,5 @@
 name = "abseil-cpp"
-version = "20260526.0"
+version = "20260817.0"
 release = 1
 description = "Abseil C++ library (Google's common C++ utilities)"
 license = "Apache-2.0"
@@ -11,7 +11,7 @@ build_deps = ['ninja', 'cmake']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "f7e05179df39c45434cad433f5783840bb3788ef322976f9138bc6b72b3a107d"
 url = "https://github.com/abseil/abseil-cpp/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

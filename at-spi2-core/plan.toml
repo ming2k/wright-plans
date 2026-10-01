@@ -1,0 +1,36 @@
+name = "at-spi2-core"
+version = "2.60.0"
+release = 1
+description = "Assistive Technology Service Provider Interface (includes ATK)"
+license = "LGPL-2.1-or-later"
+arch = "x86_64"
+url = "https://wiki.gnome.org/Accessibility"
+
+link_deps = ['glib']
+build_deps = ['meson', 'ninja']
+
+[[sources]]
+type = "http"
+sha256 = "80e50c1a97d8fd660a3fadb02ca35876df881c266d3d6108fc5b4c113614cb99"
+url = "https://download.gnome.org/sources/at-spi2-core/2.60/at-spi2-core-${VERSION}.tar.xz"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/at-spi2-core-${VERSION}
+meson setup build \
+--prefix=/usr               \
+--buildtype=release'''
+
+[pipeline.compile]
+script = '''
+cd source/at-spi2-core-${VERSION}
+ninja -C build -j$(nproc)'''
+
+[pipeline.staging]
+script = '''
+cd source/at-spi2-core-${VERSION}
+DESTDIR=${STAGING_DIR} ninja -C build install'''
+
+[[output]]
+runtime_deps = ['dbus', 'systemd', 'glib']

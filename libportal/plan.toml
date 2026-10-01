@@ -1,5 +1,5 @@
 name = "libportal"
-version = "0.10.0"
+version = "0.11.0"
 release = 1
 description = "GIO-style async APIs for Flatpak Portals"
 license = "LGPL-3.0-or-later"
@@ -11,7 +11,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "1c74a3f7becbd4ff745d7f565afd06e97e50eb080a0e268cb14bb55289a745bf"
+sha256 = "abb9e452a1c372133bd3eb8f0bb30d07b2d0a8fb02001c4155cf287555db4040"
 url = "https://github.com/flatpak/libportal/releases/download/${VERSION}/libportal-${VERSION}.tar.xz"
 extract_to = "source"
 

@@ -4,6 +4,7 @@ release = 1
 description = "Streaming media framework"
 license = "LGPL-2.0-or-later"
 arch = "x86_64"
+url = "https://gstreamer.freedesktop.org/"
 
 link_deps = ['glib']
 build_deps = ['meson', 'ninja']

@@ -1,5 +1,5 @@
 name = "shadow"
-version = "4.20.2"
+version = "4.20.3"
 release = 1
 description = "Shadow password utilities (rebuilt with PAM support)"
 license = "BSD-3-Clause"
@@ -10,7 +10,7 @@ link_deps = ['glibc', 'linux-pam']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "623be9429f64fa2165bfc5957c6a642ec309c5cf23c0d53855c99f7591922297"
 url = "https://github.com/shadow-maint/shadow/releases/download/${VERSION}/shadow-${VERSION}.tar.xz"
 extract_to = "source"
 

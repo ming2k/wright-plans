@@ -1,5 +1,5 @@
 name = "vim"
-version = "9.2.0461"
+version = "9.2.1135"
 release = 1
 description = "Vi Improved, a highly configurable text editor"
 license = "custom:vim"
@@ -11,7 +11,7 @@ build_deps = ['autoconf']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "4bfc16a87e871696214df63473bf40470754a5341b4f9f608b02c92f81466b85"
 url = "https://github.com/vim/vim/archive/v${VERSION}/vim-${VERSION}.tar.gz"
 extract_to = "source"
 

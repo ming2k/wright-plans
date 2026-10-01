@@ -4,6 +4,7 @@ release = 1
 description = "Speex is an Open Source/Free Software patent-free audio compression format designed for speech"
 license = "BSD-3-Clause"
 arch = "x86_64"
+url = "https://www.speex.org/"
 
 link_deps = ['libogg']
 

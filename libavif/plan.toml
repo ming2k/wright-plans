@@ -4,6 +4,7 @@ release = 1
 description = "Library for encoding and decoding .avif files"
 license = "BSD-2-Clause"
 arch = "x86_64"
+url = "https://github.com/AOMediaCodec/libavif"
 
 link_deps = ['aom', 'dav1d', 'libpng', 'libjpeg-turbo', 'libyuv']
 build_deps = ['ninja', 'cmake']

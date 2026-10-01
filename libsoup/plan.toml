@@ -4,6 +4,7 @@ release = 1
 description = "HTTP client/server library for GNOME"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/libsoup"
 
 link_deps = ['glib', 'libpsl', 'libxml2', 'nghttp2', 'sqlite']
 build_deps = ['meson', 'ninja']

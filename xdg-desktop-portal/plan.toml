@@ -4,6 +4,7 @@ release = 1
 description = "Portal frontend service for Flatpak and other desktop-neutral applications"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+url = "https://github.com/flatpak/xdg-desktop-portal"
 
 link_deps = ['glib', 'gstreamer', 'gst-plugins-base', 'json-glib', 'gdk-pixbuf', 'libfuse3', 'pipewire']
 build_deps = ['meson', 'ninja']

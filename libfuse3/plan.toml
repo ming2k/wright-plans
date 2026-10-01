@@ -1,5 +1,5 @@
 name = "libfuse3"
-version = "3.18.2"
+version = "3.18.3"
 release = 1
 description = "Filesystem in Userspace"
 license = "GPL-2.0-only AND LGPL-2.1-only"
@@ -10,7 +10,7 @@ build_deps = ['meson', 'ninja']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "bcd19582c5e30f7fe45dd86a5540e998590aa01903afc7ebcbeea6c8ac5421ee"
 url = "https://github.com/libfuse/libfuse/releases/download/fuse-${VERSION}/fuse-${VERSION}.tar.gz"
 extract_to = "source"
 

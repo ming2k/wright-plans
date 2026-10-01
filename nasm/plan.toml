@@ -4,6 +4,7 @@ release = 1
 description = "The Netwide Assembler"
 license = "BSD-2-Clause"
 arch = "x86_64"
+url = "https://www.nasm.us/"
 
 [[sources]]
 type = "http"

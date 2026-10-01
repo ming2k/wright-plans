@@ -4,6 +4,7 @@ release = 2
 description = "Network extensions for GLib"
 license = "LGPL-2.1-or-later"
 arch = "x86_64"
+url = "https://gitlab.gnome.org/GNOME/glib-networking"
 
 link_deps = ['glib']
 build_deps = ['meson', 'ninja']

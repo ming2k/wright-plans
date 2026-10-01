@@ -11,7 +11,7 @@ link_deps = ['giflib', 'glib', 'glibc', 'gnutls', 'gtk3', 'harfbuzz', 'gcc:libgc
 [[sources]]
 type = "git"
 url = "https://git.savannah.gnu.org/git/emacs.git"
-tag = "emacs-30.2"
+ref = "emacs-${VERSION}"
 extract_to = "source"
 
 [pipeline.prepare]

@@ -1,5 +1,5 @@
 name = "inotify-tools"
-version = "4.25.9.0"
+version = "4.26.262"
 release = 1
 description = "Command-line utilities for Linux inotify"
 license = "GPL-2.0-or-later"
@@ -12,7 +12,7 @@ build_deps = ['autoconf', 'automake', 'libtool', 'doxygen']
 [[sources]]
 type = "http"
 url = "https://github.com/inotify-tools/inotify-tools/archive/refs/tags/${VERSION}.tar.gz"
-sha256 = "d33a4fd24c72c2d08893f129d724adf725b93dae96c359e4f4e9f32573cc853b"
+sha256 = "989895241148580c820872ecd4f2b06f3dd8c5d72f61c4852dbf936beb2b067f"
 extract_to = "source"
 
 [pipeline.prepare]

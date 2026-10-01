@@ -1,5 +1,5 @@
 name = "fzf"
-version = "0.74.2"
+version = "0.74.4"
 release = 1
 description = "Command-line fuzzy finder"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['go']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "1046857c337f5bd05f6fa482446b5a42a011615105743efbe4efee0970b24bb7"
 url = "https://github.com/junegunn/fzf/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

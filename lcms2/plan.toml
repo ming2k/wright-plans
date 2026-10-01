@@ -1,15 +1,16 @@
 name = "lcms2"
-version = "2.16"
+version = "2.19.1"
 release = 1
 description = "Small-footprint color management engine"
 license = "MIT"
 arch = "x86_64"
+url = "https://github.com/mm2/Little-CMS"
 
 link_deps = ['libjpeg-turbo']
 
 [[sources]]
 type = "http"
-sha256 = "d873d34ad8b9b4cea010631f1a6228d2087475e4dc5e763eb81acc23d9d45a51"
+sha256 = "bfc54f7bab59fbc921012014a8032e4cba4abd46db47d46b76416a8c0b2815c8"
 url = "https://github.com/mm2/Little-CMS/releases/download/lcms${VERSION}/lcms2-${VERSION}.tar.gz"
 extract_to = "source"
 

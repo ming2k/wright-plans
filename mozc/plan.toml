@@ -10,7 +10,7 @@ link_deps = ['qt6-base']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "3a1e3fe856e8d683579fbe8ebec3c1b16cfd3d52d54cf531ae2700f03b5868b6"
 url = "https://github.com/google/mozc/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

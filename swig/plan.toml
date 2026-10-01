@@ -1,5 +1,5 @@
 name = "swig"
-version = "4.5.0"
+version = "4.5.1"
 release = 1
 description = "Simplified Wrapper and Interface Generator"
 license = "GPL-3.0-or-later"
@@ -10,7 +10,7 @@ link_deps = ['pcre2', 'zlib']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "dd219a0c8947afe63b818892304390427c2ee7f6edfa1a37853d4efd891982be"
 url = "https://github.com/swig/swig/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

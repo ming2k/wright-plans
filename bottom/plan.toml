@@ -1,5 +1,5 @@
 name = "bottom"
-version = "0.14.7"
+version = "0.14.9"
 release = 1
 description = "Yet another cross-platform graphical process/system monitor"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['rust-bin']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "1dbb940c763fb583b7e1c7dfa165b73ed9a0ba712e72cc97311c5b1c098d5b72"
 url = "https://github.com/ClementTsang/bottom/archive/refs/tags/${VERSION}.tar.gz"
 extract_to = "source"
 

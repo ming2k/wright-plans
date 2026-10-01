@@ -1,5 +1,5 @@
 name = "sunshine"
-version = "2026.516.143833"
+version = "2026.914.233613"
 release = 1
 description = "Self-hosted game stream host for Moonlight"
 license = "GPL-3.0-only"
@@ -12,7 +12,7 @@ link_deps = ['openssl', 'curl', 'miniupnpc', 'libdrm', 'libcap', 'libva', 'wayla
 [[sources]]
 type = "git"
 url = "https://github.com/LizardByte/Sunshine.git"
-ref = "v2025.924.154138"
+ref = "v${VERSION}"
 # The prepare stage runs `git submodule update --init --recursive`; keep the repository.
 git_metadata = true
 extract_to = "source"

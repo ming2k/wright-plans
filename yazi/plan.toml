@@ -1,5 +1,5 @@
 name = "yazi"
-version = "26.5.6"
+version = "26.9.1"
 release = 1
 description = "Blazing fast terminal file manager written in Rust, based on async I/O"
 license = "MIT"
@@ -11,7 +11,7 @@ build_deps = ['rust-bin']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "66857f1b670469daf258edd0bb2ea51d9ad3e2cab4eea9684028c80059fd6862"
 url = "https://github.com/sxyazi/yazi/archive/refs/tags/v${VERSION}.tar.gz"
 extract_to = "source"
 

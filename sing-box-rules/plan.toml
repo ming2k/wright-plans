@@ -1,5 +1,5 @@
 name = "sing-box-rules"
-version = "20260812"
+version = "20260912"
 release = 1
 description = "GeoIP and GeoSite rule-set files for sing-box"
 license = "GPL-3.0-only"
@@ -8,17 +8,17 @@ url = "https://github.com/SagerNet/sing-geoip"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "ebee603fdf402314b44b9f653cdcf6d9cc9c41e84e2b3515e3123c5c920a93bc"
 url = "https://github.com/SagerNet/sing-geoip/raw/rule-set/geoip-cn.srs"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "081255eadc553fcd2450a9b2020c6d3389b9e051a6b768802eb8cccd6f17a4ed"
 url = "https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-cn.srs"
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "952d89c656fdb147d4f5d04541dd942b33dcce0dae906a8416e24cbc1161402a"
 url = "https://github.com/SagerNet/sing-geosite/raw/rule-set/geosite-google.srs"
 
 [pipeline.staging]

@@ -1,5 +1,5 @@
 name = "faad2"
-version = "2.11.2"
+version = "2.11.3"
 release = 1
 description = "ISO AAC audio decoder"
 license = "GPL-2.0-or-later"
@@ -12,7 +12,7 @@ build_deps = ['cmake']
 [[sources]]
 type = "http"
 url = "https://github.com/knik0/faad2/archive/refs/tags/${VERSION}.tar.gz"
-sha256 = "3fcbd305e4abd34768c62050e18ca0986f7d9c5eca343fb98275418013065c0e"
+sha256 = "860ab62087e336c1844a70e33196c1790b525fb9a9e7b6ac4fab1a1a4e4d5ce8"
 extract_to = "source"
 
 [pipeline.configure]
