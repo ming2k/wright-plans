@@ -1,0 +1,39 @@
+name = "nuo"
+version = "0.0.40"
+release = 1
+description = "High-performance modular AI session daemon and semantic terminal system"
+license = "MIT"
+arch = "x86_64"
+url = "https://github.com/ming2k/nuo"
+
+build_deps = ["rust-bin", "pkgconf", "cmake", "perl"]
+link_deps = ["gcc:gcc-libs", "glibc"]
+
+[[sources]]
+type = "http"
+url = "https://github.com/ming2k/nuo/archive/refs/tags/v${VERSION}.tar.gz"
+sha256 = "SKIP"
+extract_to = "source"
+
+# The upstream tarball's Cargo.lock records nuotc without a registry source (a
+# local path checkout not shipped in the tarball), so cargo re-resolves it from
+# crates.io. For 0.0.6 that is nuotc 0.0.2, which already exposes
+# TerminalProfile::supports_color / ::supports_truecolor /
+# ::supports_color_themes and ColorStandard::Indexed256 — no prepare patch.
+
+[pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = "${WORKDIR}/.cargo" }
+script = '''
+cd source/nuo-${VERSION}
+cargo build --release -p nuo
+'''
+
+[pipeline.staging]
+script = '''
+cd source/nuo-${VERSION}
+install -Dm755 target/release/nuo ${STAGING_DIR}/usr/bin/nuo
+'''
+
+[[output]]
+runtime_deps = ["gcc:gcc-libs", "glibc", "ca-certificates"]
