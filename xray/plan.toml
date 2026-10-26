@@ -1,6 +1,6 @@
 name = "xray"
-version = "26.3.27"
-release = 1
+version = "26.10.17"
+release = 3
 description = "Platform for building proxies to bypass network restrictions"
 license = "MPL-2.0"
 arch = "x86_64"
@@ -11,13 +11,9 @@ build_deps = ['go']
 
 [[sources]]
 type = "http"
-sha256 = "992a4997e6bb846d11469435d687f99ef812fcde1e0a009bb8e95189ea20331d"
+sha256 = "62fb186017bc29c3d10950d7a1a61fd40aff0cb92ba2b77363e9004455f6bf89"
 url = "https://github.com/XTLS/Xray-core/archive/v${VERSION}.tar.gz"
 extract_to = "source"
-
-[[sources]]
-type = "local"
-path = "xray-tproxy.service"
 
 [pipeline.prepare]
 isolation = "none"
@@ -44,18 +40,9 @@ go build -ldflags "-X github.com/xtls/xray-core.codename=xray -X github.com/xtls
 [pipeline.staging]
 script = '''
 cd source/Xray-core-${VERSION}
-install -Dm755 xray ${STAGING_DIR}/usr/bin/xray
-install -dm755 ${STAGING_DIR}/etc/xray
-install -Dm644 ${WORKDIR}/xray-tproxy.service ${STAGING_DIR}/usr/lib/systemd/system/xray-tproxy.service'''
+install -Dm755 xray ${STAGING_DIR}/usr/bin/xray'''
 
+# Upstream only. The unit, the ruleset, the service account and anything
+# else that turns Xray into a transparent proxy belong to xray-tproxy.
 [[output]]
-runtime_deps = ['glibc', 'v2ray-rules-dat']
-backup = ["/etc/xray/config.json"]
-
-[output.hooks]
-post_install = '''
-echo ":: Create /etc/xray/config.json before starting xray"
-echo ":: Install /etc/nftables/xray-tproxy.nft with your tproxy nftables rules"
-echo ":: If /etc/systemd/system/xray-tproxy.service exists from a previous manual install, remove it"
-echo ":: Then: systemctl daemon-reload && systemctl enable --now xray-tproxy"
-'''
+runtime_deps = ['glibc']

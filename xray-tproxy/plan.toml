@@ -1,0 +1,53 @@
+name = "xray-tproxy"
+version = "1.0.0"
+release = 1
+description = "Transparent-proxy integration for Xray: systemd unit, nftables ruleset, networkd policy template, service account"
+license = "MPL-2.0"
+arch = "x86_64"
+url = "https://github.com/XTLS/Xray-core"
+
+# The solution as one unit of deployment, on top of the unmodified upstream
+# package. Rule of thumb for what belongs here: no value in this package may
+# differ per host. Per-host values — the client config (credentials), the
+# uplink profile name a networkd drop-in must be installed under, the asset
+# path — stay operator steps documented in the guidebook.
+[[sources]]
+type = "local"
+path = "xray-tproxy.service"
+
+[[sources]]
+type = "local"
+path = "xray-tproxy.nft"
+
+[[sources]]
+type = "local"
+path = "xray-policy.conf"
+
+[[sources]]
+type = "local"
+path = "xray-tproxy.sysusers.conf"
+
+[pipeline.staging]
+script = '''
+install -dm755 ${STAGING_DIR}/etc/xray
+install -Dm644 ${WORKDIR}/xray-tproxy.service        ${STAGING_DIR}/usr/lib/systemd/system/xray-tproxy.service
+install -Dm644 ${WORKDIR}/xray-tproxy.nft            ${STAGING_DIR}/etc/nftables/xray-tproxy.nft
+install -Dm644 ${WORKDIR}/xray-policy.conf           ${STAGING_DIR}/usr/share/xray-tproxy/xray-policy.conf
+install -Dm644 ${WORKDIR}/xray-tproxy.sysusers.conf  ${STAGING_DIR}/usr/lib/sysusers.d/xray.conf'''
+
+[[output]]
+runtime_deps = ['xray', 'v2ray-rules-dat']
+# Installed by this plan, so upgrade must preserve operator edits. The
+# ruleset is the one /etc file the solution owns: it contains no host
+# values, and keeping it in the package is what stops the deployed copy
+# from drifting away from the repository.
+backup = ["/etc/nftables/xray-tproxy.nft"]
+
+[output.hooks]
+post_install = '''
+systemd-sysusers >/dev/null 2>&1 || true
+systemctl daemon-reload 2>/dev/null || true
+echo ":: Copy the networkd template into each uplink profile:"
+echo "::   install -Dm644 /usr/share/xray-tproxy/xray-policy.conf \\"
+echo "::     /etc/systemd/network/<uplink>.network.d/xray-policy.conf"
+echo ":: Enable with: systemctl enable --now xray-tproxy.service"'''
