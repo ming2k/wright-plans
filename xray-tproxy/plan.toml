@@ -5,17 +5,27 @@ version = "1.0.0"
 # while Xray still has to load geoip.dat/geosite.dat before it binds 12345;
 # the single check therefore raced the start and every start became a
 # restart loop ("no TProxy listener on 12345").
-release = 2
-description = "Transparent-proxy integration for Xray: systemd unit, nftables ruleset, networkd policy template, service account"
+#
+# release 3: two more start-path defects that the polling check exposed.
+# (a) The preflight `xray run -test` dropped its `+`, so it runs as User=xray
+#     and can no longer read a config or write a log the main process cannot.
+# (b) /var/log/xray/{access,error}.log are re-owned by the unit before start:
+#     LogsDirectory= owns the directory only, and a root-run xray leaves
+#     root:root 0600 files behind, which killed the start with status=23
+#     ("open /var/log/xray/access.log: permission denied").
+#
+# release 4: self-contained datapath lifecycle in the systemd unit.
+# (a) Drop legacy xray-policy.conf / networkd coupling. The service unit directly
+#     owns table 110, policy rules, and nftables.
+# (b) ExecStop and ExecStopPost unconditionally restore all network states
+#     (deleting nftables tables, flushing table 110, removing fwmark rules).
+# (c) Self-cleaning nftables ruleset prevents duplicate rule accumulation.
+release = 4
+description = "Transparent-proxy integration for Xray: systemd unit, nftables ruleset, service account"
 license = "MPL-2.0"
 arch = "x86_64"
 url = "https://github.com/XTLS/Xray-core"
 
-# The solution as one unit of deployment, on top of the unmodified upstream
-# package. Rule of thumb for what belongs here: no value in this package may
-# differ per host. Per-host values — the client config (credentials), the
-# uplink profile name a networkd drop-in must be installed under, the asset
-# path — stay operator steps documented in the guidebook.
 [[sources]]
 type = "local"
 path = "xray-tproxy.service"
@@ -26,10 +36,6 @@ path = "xray-tproxy.nft"
 
 [[sources]]
 type = "local"
-path = "xray-policy.conf"
-
-[[sources]]
-type = "local"
 path = "xray-tproxy.sysusers.conf"
 
 [pipeline.staging]
@@ -37,22 +43,18 @@ script = '''
 install -dm755 ${STAGING_DIR}/etc/xray
 install -Dm644 ${WORKDIR}/xray-tproxy.service        ${STAGING_DIR}/usr/lib/systemd/system/xray-tproxy.service
 install -Dm644 ${WORKDIR}/xray-tproxy.nft            ${STAGING_DIR}/etc/nftables/xray-tproxy.nft
-install -Dm644 ${WORKDIR}/xray-policy.conf           ${STAGING_DIR}/usr/share/xray-tproxy/xray-policy.conf
 install -Dm644 ${WORKDIR}/xray-tproxy.sysusers.conf  ${STAGING_DIR}/usr/lib/sysusers.d/xray.conf'''
 
 [[output]]
 runtime_deps = ['xray', 'v2ray-rules-dat']
-# Installed by this plan, so upgrade must preserve operator edits. The
-# ruleset is the one /etc file the solution owns: it contains no host
-# values, and keeping it in the package is what stops the deployed copy
-# from drifting away from the repository.
 backup = ["/etc/nftables/xray-tproxy.nft"]
 
 [output.hooks]
 post_install = '''
 systemd-sysusers >/dev/null 2>&1 || true
 systemctl daemon-reload 2>/dev/null || true
-echo ":: Copy the networkd template into each uplink profile:"
-echo "::   install -Dm644 /usr/share/xray-tproxy/xray-policy.conf \\"
-echo "::     /etc/systemd/network/<uplink>.network.d/xray-policy.conf"
 echo ":: Enable with: systemctl enable --now xray-tproxy.service"'''
+pre_remove = '''
+systemctl disable --now xray-tproxy.service 2>/dev/null || true'''
+post_remove = '''
+systemctl daemon-reload 2>/dev/null || true'''
