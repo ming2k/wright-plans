@@ -1,6 +1,11 @@
 name = "xray-tproxy"
 version = "1.0.0"
-release = 1
+# release 2: ExecStartPost polls for the TProxy listener instead of checking
+# it once. Type=simple runs ExecStartPost the moment the process is forked,
+# while Xray still has to load geoip.dat/geosite.dat before it binds 12345;
+# the single check therefore raced the start and every start became a
+# restart loop ("no TProxy listener on 12345").
+release = 2
 description = "Transparent-proxy integration for Xray: systemd unit, nftables ruleset, networkd policy template, service account"
 license = "MPL-2.0"
 arch = "x86_64"

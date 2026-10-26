@@ -1,6 +1,9 @@
 name = "xray"
-version = "26.10.17"
-release = 3
+# 26.10.21 is the emergency security release: 26.10.10/26.10.17 shipped three
+# bundled root certificates that were withdrawn after an intermediate CA key
+# was compromised upstream. Both were pulled from the release page.
+version = "26.10.21"
+release = 1
 description = "Platform for building proxies to bypass network restrictions"
 license = "MPL-2.0"
 arch = "x86_64"
@@ -11,7 +14,7 @@ build_deps = ['go']
 
 [[sources]]
 type = "http"
-sha256 = "62fb186017bc29c3d10950d7a1a61fd40aff0cb92ba2b77363e9004455f6bf89"
+sha256 = "44ef4874529a03848c90f1fdcfb763350fbc5f1de741ec90e0024d651df25650"
 url = "https://github.com/XTLS/Xray-core/archive/v${VERSION}.tar.gz"
 extract_to = "source"
 
