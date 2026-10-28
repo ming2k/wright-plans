@@ -1,11 +1,18 @@
 name = "linux-lts"
-version = "6.18.44"
+version = "6.18.59"
 release = 1
 description = "The Linux kernel (LTS)"
 license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://www.kernel.org/"
 
+# `dwarves` supplies pahole, which Kbuild invokes to convert vmlinux DWARF into
+# the .BTF section. Kconfig additionally gates CONFIG_DEBUG_INFO_BTF on
+# PAHOLE_VERSION, probed from `pahole --version` in PATH, so a missing pahole
+# makes `make olddefconfig` drop BTF without any diagnostic. Declaring it here
+# guarantees ordering when no isolation is used and the host PATH supplies the
+# tool.
+build_deps = ['dwarves']
 
 [[sources]]
 type = "http"
@@ -19,6 +26,11 @@ type = "local"
 path = "config"
 
 [pipeline.prepare]
+# The kernel source tree and its toolchain are trusted build inputs, so all three
+# stages run without a sandbox. This also keeps `pahole` visible to Kconfig: the
+# PAHOLE_VERSION probe happens in this stage, and an isolated root that cannot
+# see /usr/bin/pahole would silently drop CONFIG_DEBUG_INFO_BTF.
+isolation = "none"
 script = '''
 cd source/linux-${VERSION}
 
@@ -73,7 +85,11 @@ scripts/config --disable COMPAT
 scripts/config --disable COMPAT_32
 scripts/config --disable COMPAT_BINFMT_ELF
 scripts/config --disable COMPAT_32BIT_TIME
-scripts/config --disable MODIFY_LDT_SYSCALL
+# MODIFY_LDT_SYSCALL is deliberately NOT disabled here: it is declared
+# `bool ... if EXPERT`, so while EXPERT is off the prompt is hidden and Kconfig
+# keeps its `default y`. A `--disable` at this point is silently ignored. The
+# real fix lives in the "Expert-gated hardening" block near the end of this
+# script, which enables EXPERT first.
 
 # --- Boot-critical support (no initramfs, must be built-in) ---
 # Commands: enable supported root filesystems, EFI System Partition filesystem,
@@ -132,9 +148,15 @@ scripts/config --enable SECCOMP_FILTER
 # Kconfig already provides strong security defaults around this feature.
 # Scenario: any desktop or developer workflow that uses sandboxed apps or
 # containers.
+#
+# Do not add `--enable USER_NS_UNPRIVILEGED` here. That symbol belongs to the
+# Arch/ZEN patch set and does not exist in upstream 6.18 (verified against
+# init/Kconfig). `scripts/config` would still append a CONFIG_USER_NS_UNPRIVILEGED
+# line to .config, and `make olddefconfig` would silently delete it again, so the
+# line had no effect on any shipped kernel. Upstream gates unprivileged userns
+# creation through the kernel.unprivileged_userns_clone sysctl instead.
 scripts/config --enable NAMESPACES
 scripts/config --enable USER_NS
-scripts/config --enable USER_NS_UNPRIVILEGED
 
 # --- systemd integration expectations ---
 # Commands: enable DMIID, NET, SYSFS, PROC_FS, FHANDLE, BPF_SYSCALL,
@@ -221,7 +243,116 @@ scripts/config --module SPI_INTEL_PCI
 scripts/config --enable DRM_ACCEL
 scripts/config --module DRM_ACCEL_IVPU
 
+# --- eBPF CO-RE support (BTF) ---
+# Commands: enable DEBUG_KERNEL so the "Debug information" choice is reachable,
+# select DWARF5 and BTF (for vmlinux and for modules), and turn SCHED_CLASS_EXT
+# back on.
+# Principle: eBPF CO-RE programs need /sys/kernel/btf/vmlinux, which is backed by
+# the vmlinux .BTF section (kernel/bpf/sysfs_btf.c reads __start_BTF..__stop_BTF).
+# Without it, tools that rely on CO-RE fail to start; dae aborts with
+# "no BTF found for kernel version ... you should re-compile linux kernel with
+# BTF configurations". SCHED_CLASS_EXT declares
+# "depends on BPF_SYSCALL && BPF_JIT && DEBUG_INFO_BTF", so it can only be
+# enabled while BTF is on.
+# Scenario: dae, bpftrace, and sched_ext (scx) schedulers on any install.
+#
+# The DEBUG_INFO_BTF symbols are also carried by the config baseline. They are
+# repeated here because Kconfig silently drops them whenever pahole is absent
+# from PATH (PAHOLE_VERSION becomes 0), so the assertion block below is the only
+# thing that turns that silent downgrade into a build failure.
+scripts/config --enable DEBUG_KERNEL
+scripts/config --disable DEBUG_INFO_NONE
+scripts/config --enable DEBUG_INFO_DWARF5
+scripts/config --disable DEBUG_INFO_REDUCED
+scripts/config --disable DEBUG_INFO_SPLIT
+scripts/config --enable DEBUG_INFO_BTF
+scripts/config --enable DEBUG_INFO_BTF_MODULES
+scripts/config --enable SCHED_CLASS_EXT
+
+# --- Expert-gated hardening ---
+# Commands: expose the expert-only knob set, then actually disable
+# MODIFY_LDT_SYSCALL, while explicitly turning off the debug options that
+# EXPERT drags in.
+# Principle: MODIFY_LDT_SYSCALL is declared with `bool ... if EXPERT`. While
+# EXPERT is off the prompt is hidden and Kconfig keeps its `default y`, which is
+# why the earlier `--disable` never took effect and the shipped 6.18.44 kernel
+# still exposed modify_ldt(2). Enabling EXPERT makes that hardening real.
+#
+# EXPERT carries `select DEBUG_KERNEL` ("Unhide debug options"), and DEBUG_KERNEL
+# has several `default y` children with real runtime cost, so they are disabled
+# explicitly here. Measured on 6.18.59 with `make olddefconfig`: EXPERT alone
+# turns on X86_DEBUG_FPU ("adds some small amount of runtime overhead"), RCU_TRACE
+# and DEBUG_MISC. All three stay off once named on the command line, and the
+# DEBUG_KERNEL they depend on is required for the BTF choice above anyway.
+#
+# Side effect worth recording: MEDIA_HIDE_ANCILLARY_SUBDRV is
+# `default y if MEDIA_SUBDRV_AUTOSELECT && !EXPERT`, so with EXPERT on that
+# auto-hide disappears and a block of media I2C tuner/demod options becomes
+# visible again, each falling back to its own default. Those defaults are
+# unchanged from 6.18.44, but the diff is larger than "only X86_16BIT and
+# X86_ESPFIX64 disappear", so re-check the resulting .config after an upgrade.
+#
+# X86_16BIT and X86_ESPFIX64 disappear as a consequence: both are
+# `default y ... depends on MODIFY_LDT_SYSCALL`, so dropping the LDT drops them.
+# Scenario: every build; reduces the x86 syscall attack surface.
+scripts/config --enable EXPERT
+scripts/config --disable MODIFY_LDT_SYSCALL
+scripts/config --disable X86_DEBUG_FPU
+scripts/config --disable RCU_TRACE
+scripts/config --disable DEBUG_MISC
+
 make olddefconfig
+
+# ---------------------------------------------------------------------------
+# Guardrails for kernel BTF: fail the build instead of silently shipping a
+# kernel without BTF. `make olddefconfig` above will already have dropped
+# DEBUG_INFO_BTF if pahole was missing or too old, and nothing else in the
+# pipeline would notice.
+#
+# Threshold note: 6.18 gates BTF on PAHOLE_VERSION >= 116 plus
+# (DEBUG_INFO_DWARF4 || PAHOLE_VERSION >= 121). The check below uses the stricter
+# 122 that 7.3 requires. That is deliberate: the shipped `dwarves` plan provides
+# 1.32 (PAHOLE_VERSION 132), so the stricter bound never rejects a valid build,
+# and it keeps this plan and the `linux` plan asserting the same invariant.
+# ---------------------------------------------------------------------------
+pahole_ver=$(scripts/pahole-version.sh pahole 2>/dev/null || true)
+pahole_ver=${pahole_ver:-0}
+case "${pahole_ver}" in
+    ''|*[!0-9]*) pahole_ver=0 ;;
+esac
+if [ "${pahole_ver}" -lt 122 ]; then
+    echo "ERROR: pahole >= 1.22 is required for CONFIG_DEBUG_INFO_BTF," >&2
+    echo "       detected version code: '${pahole_ver}' (0 means not found in PATH)." >&2
+    echo "       Install the 'dwarves' plan and re-run the build." >&2
+    exit 1
+fi
+
+for sym in DEBUG_INFO DEBUG_INFO_BTF DEBUG_INFO_BTF_MODULES SCHED_CLASS_EXT; do
+    if ! grep -qx "CONFIG_${sym}=y" .config; then
+        echo "ERROR: CONFIG_${sym} did not survive 'make olddefconfig'." >&2
+        echo "       A kernel built from this .config has no /sys/kernel/btf," >&2
+        echo "       so eBPF CO-RE programs such as dae would refuse to start." >&2
+        exit 1
+    fi
+done
+if grep -qx "CONFIG_DEBUG_INFO_REDUCED=y" .config; then
+    echo "ERROR: CONFIG_DEBUG_INFO_REDUCED is set; it is incompatible with BTF." >&2
+    exit 1
+fi
+if grep -qx "CONFIG_DEBUG_INFO_SPLIT=y" .config; then
+    echo "ERROR: CONFIG_DEBUG_INFO_SPLIT is set; it is incompatible with BTF." >&2
+    exit 1
+fi
+
+# Guardrail for the expert-gated hardening: MODIFY_LDT_SYSCALL must actually be
+# gone. Without this, a future Kconfig reshuffle could silently restore the
+# syscall and nothing in the build would notice, which is exactly how the
+# previous `--disable` rotted.
+if grep -qx "CONFIG_MODIFY_LDT_SYSCALL=y" .config; then
+    echo "ERROR: CONFIG_MODIFY_LDT_SYSCALL is set; modify_ldt(2) is exposed." >&2
+    echo "       EXPERT must be enabled before disabling MODIFY_LDT_SYSCALL." >&2
+    exit 1
+fi
 '''
 
 [pipeline.compile]
@@ -234,7 +365,12 @@ make -j$(nproc)'''
 isolation = "none"
 script = '''
 cd source/linux-${VERSION}
-make INSTALL_MOD_PATH=${STAGING_DIR}/usr modules_install
+
+# INSTALL_MOD_STRIP=1 maps to `strip --strip-debug`, which removes .debug_* but
+# keeps .BTF, so modules stay loadable by CO-RE tooling instead of landing as a
+# ~900M tree. Module signatures survive because modules_install signs after
+# stripping.
+make INSTALL_MOD_PATH=${STAGING_DIR}/usr INSTALL_MOD_STRIP=1 modules_install
 rm -f ${STAGING_DIR}/usr/lib/modules/*/build
 install -d ${STAGING_DIR}/boot
 cp -v arch/x86/boot/bzImage ${STAGING_DIR}/boot/vmlinuz-theseus-lts
@@ -247,38 +383,58 @@ backup = ['/boot/config-theseus-lts']
 
 hooks.post_install = '''
 if command -v kernel-install >/dev/null 2>&1; then
-    kver=$(basename $(ls -d /usr/lib/modules/*-theseus-lts 2>/dev/null | tail -n1))
-    [ -n "$kver" ] || kver="${VERSION}-theseus-lts"
+    # sort -V, not plain sort: lexicographic order ranks 6.18.9 below 6.18.10 and
+    # would register the wrong module directory after an upgrade.
+    kver=$(ls -d /usr/lib/modules/*-theseus-lts 2>/dev/null | sort -V | tail -n1)
+    kver=$(basename "${kver:-${VERSION}-theseus-lts}")
     echo ":: Registering LTS kernel [${kver}] and generating UKI via kernel-install..."
-    kernel-install -v add "${kver}" "/boot/vmlinuz-theseus-lts" || true
+    # No `|| true`: a failed registration means the machine has no boot entry for
+    # this kernel, and swallowing the error hides that until the next reboot.
+    kernel-install -v add "${kver}" "/boot/vmlinuz-theseus-lts"
+else
+    echo ":: ERROR: kernel-install not found; cannot register the LTS kernel" >&2
+    exit 1
 fi
 '''
 
 hooks.post_upgrade = '''
 if command -v kernel-install >/dev/null 2>&1; then
-    kver=$(basename $(ls -d /usr/lib/modules/*-theseus-lts 2>/dev/null | tail -n1))
-    [ -n "$kver" ] || kver="${VERSION}-theseus-lts"
+    kver=$(ls -d /usr/lib/modules/*-theseus-lts 2>/dev/null | sort -V | tail -n1)
+    kver=$(basename "${kver:-${VERSION}-theseus-lts}")
     echo ":: Registering new LTS kernel [${kver}] and generating UKI via kernel-install..."
-    kernel-install -v add "${kver}" "/boot/vmlinuz-theseus-lts" || true
+    kernel-install -v add "${kver}" "/boot/vmlinuz-theseus-lts"
 
     echo ":: Checking for orphaned LTS kernel images to prune..."
     for uki in /boot/EFI/Linux/*-theseus-lts*.efi /efi/EFI/Linux/*-theseus-lts*.efi /boot/loader/entries/*-theseus-lts*.conf; do
         [ -e "$uki" ] || continue
         old_kver=$(basename "$uki" | sed -E 's/^[^-]+-//; s/\.(efi|conf)$//')
+        # Never prune the kernel this hook just registered, or the one the
+        # machine is running right now.
+        [ "$old_kver" = "$kver" ] && continue
+        [ "$old_kver" = "$(uname -r)" ] && continue
         if [ -n "$old_kver" ] && [ ! -d "/usr/lib/modules/${old_kver}" ]; then
             echo ":: Pruning orphaned LTS kernel installation [${old_kver}]..."
-            kernel-install -v remove "${old_kver}" || true
+            kernel-install -v remove "${old_kver}"
         fi
     done
+else
+    echo ":: ERROR: kernel-install not found; cannot register the LTS kernel" >&2
+    exit 1
 fi
 '''
 
 hooks.pre_remove = '''
 if command -v kernel-install >/dev/null 2>&1; then
-    kver=$(basename $(ls -d /usr/lib/modules/*-theseus-lts 2>/dev/null | tail -n1))
-    [ -n "$kver" ] || kver="${VERSION}-theseus-lts"
+    kver=$(ls -d /usr/lib/modules/*-theseus-lts 2>/dev/null | sort -V | tail -n1)
+    kver=$(basename "${kver:-${VERSION}-theseus-lts}")
+    # Never remove the boot entry of the kernel the machine is running right now:
+    # doing so leaves no way to boot what it is currently executing.
+    if [ "${kver}" = "$(uname -r)" ]; then
+        echo ":: Keeping boot entry [${kver}]: it is the running kernel"
+        exit 0
+    fi
     echo ":: Removing LTS kernel [${kver}] from bootloader via kernel-install..."
-    kernel-install -v remove "${kver}" || true
+    kernel-install -v remove "${kver}"
 fi
 '''
 
