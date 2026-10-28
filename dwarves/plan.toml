@@ -1,0 +1,57 @@
+name = "dwarves"
+version = "1.32"
+release = 1
+description = "DWARF utilities, including pahole for BTF type information generation"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://github.com/acmel/dwarves"
+
+# pahole is required by the kernel build when CONFIG_DEBUG_INFO_BTF is enabled:
+# Kbuild converts the DWARF debug info of vmlinux into the .BTF ELF section that
+# the running kernel exposes at /sys/kernel/btf/vmlinux. eBPF CO-RE programs
+# (dae, bpftrace, sched_ext schedulers) cannot start without that section.
+#
+# Kconfig gates CONFIG_DEBUG_INFO_BTF on PAHOLE_VERSION >= 122, where the
+# version is probed from the `pahole` found in PATH. If pahole is missing,
+# `make olddefconfig` silently drops DEBUG_INFO_BTF and the resulting kernel has
+# no BTF at all: no .BTF in vmlinux and no /sys/kernel/btf. That is why this is
+# a hard build dependency of the kernel plan rather than an optional extra.
+link_deps = ['elfutils', 'zlib']
+
+# Source note: the GitHub "archive/refs/tags" auto-tarball does NOT contain the
+# bundled libbpf submodule, so CMake aborts with "The submodules were not
+# downloaded!". The tarball republished verbatim from the maintainer's release
+# (as carried by the Debian archive) is complete and byte-for-byte stable, so
+# it is preferred over a `git` source; pahole's own git.kernel.org host is not
+# reliably reachable from this builder.
+[[sources]]
+type = "http"
+sha256 = "319cbf319e9fc92065a5407ce47eb868d73566f3d4840a56832734e4579df947"
+url = "http://ftp.debian.org/debian/pool/main/d/dwarves/dwarves_${VERSION}.orig.tar.xz"
+extract_to = "source"
+
+[pipeline.configure]
+script = '''
+cd source/dwarves-${VERSION}
+cmake -B build -G "Unix Makefiles"       \
+      -DCMAKE_BUILD_TYPE=Release         \
+      -DCMAKE_INSTALL_PREFIX=/usr        \
+      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+      -DBUILD_SHARED_LIBS=OFF'''
+
+[pipeline.compile]
+script = '''
+cd source/dwarves-${VERSION}
+cmake --build build -j$(nproc)'''
+
+[pipeline.staging]
+script = '''
+cd source/dwarves-${VERSION}
+DESTDIR=${STAGING_DIR} cmake --install build
+
+# libdwarves is only consumed through the shipped binaries; nothing in the
+# dependency graph links against it, so drop the static archives.
+rm -f ${STAGING_DIR}/usr/lib/libdwarves*.a'''
+
+[[output]]
+runtime_deps = ['elfutils', 'zlib']

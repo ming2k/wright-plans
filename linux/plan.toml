@@ -1,10 +1,18 @@
 name = "linux"
-version = "7.1.8"
+version = "7.3"
 release = 1
 description = "The Linux kernel"
 license = "GPL-2.0-only"
 arch = "x86_64"
 url = "https://www.kernel.org/"
+
+# `dwarves` supplies pahole, which Kbuild invokes from scripts/gen-btf.sh to
+# convert vmlinux DWARF into the .BTF section. Kconfig additionally gates
+# CONFIG_DEBUG_INFO_BTF on PAHOLE_VERSION >= 122, probed from `pahole --version`
+# in PATH, so a missing pahole makes `make olddefconfig` drop BTF without any
+# diagnostic. Declaring it here guarantees ordering when no isolation is used
+# and the host PATH supplies the tool.
+build_deps = ['dwarves']
 
 # See README.md for hardware support policy, Arch/CachyOS comparison, and PGO usage
 
@@ -20,7 +28,21 @@ sha256 = "SKIP"
 type = "local"
 path = "config"
 
+# Shared shell helpers sourced by every transaction hook below. Shipping them as
+# a plain local source keeps the hook bodies free of duplicated logic; the file
+# lands in ${WORKDIR} during prepare and is staged next to the kernel so the
+# hooks can source it from a stable installed path.
+[[sources]]
+sha256 = "SKIP"
+type = "local"
+path = "kernel-hooks.sh"
+
 [pipeline.prepare]
+# The kernel source tree and its toolchain are trusted build inputs, so all three
+# stages run without a sandbox. This also keeps `pahole` visible to Kconfig: the
+# PAHOLE_VERSION probe happens in this stage, and an isolated root that cannot
+# see /usr/bin/pahole would silently drop CONFIG_DEBUG_INFO_BTF.
+isolation = "none"
 script = '''
 cd source/linux-${VERSION}
 
@@ -136,7 +158,6 @@ scripts/config --enable SECCOMP_FILTER
 # containers.
 scripts/config --enable NAMESPACES
 scripts/config --enable USER_NS
-scripts/config --enable USER_NS_UNPRIVILEGED
 
 # --- systemd integration expectations ---
 # Commands: enable DMIID, NET, SYSFS, PROC_FS, FHANDLE, BPF_SYSCALL,
@@ -223,7 +244,77 @@ scripts/config --module SPI_INTEL_PCI
 scripts/config --enable DRM_ACCEL
 scripts/config --module DRM_ACCEL_IVPU
 
+# --- eBPF CO-RE support (BTF) ---
+# Commands: enable DEBUG_KERNEL so the "Debug information" choice is reachable,
+# select DWARF5 and BTF (for vmlinux and for modules), and turn SCHED_CLASS_EXT
+# back on.
+# Principle: eBPF CO-RE programs need /sys/kernel/btf/vmlinux, which is backed by
+# the vmlinux .BTF section (kernel/bpf/sysfs_btf.c reads __start_BTF..__stop_BTF).
+# Without it, tools that rely on CO-RE fail to start; dae aborts with
+# "no BTF found for kernel version ... you should re-compile linux kernel with
+# BTF configurations". SCHED_CLASS_EXT additionally declares
+# "depends on BPF_SYSCALL && BPF_JIT && DEBUG_INFO_BTF", so it could never be
+# enabled while BTF was off, despite being an advertised feature.
+# Scenario: dae, bpftrace, and sched_ext (scx) schedulers on any install.
+#
+# The DEBUG_INFO_BTF symbols are also carried by the config baseline. They are
+# repeated here because Kconfig silently drops them whenever pahole is absent
+# from PATH (PAHOLE_VERSION becomes 0), so the assertion block below is the only
+# thing that turns that silent downgrade into a build failure.
+scripts/config --enable DEBUG_KERNEL
+scripts/config --disable DEBUG_INFO_NONE
+scripts/config --enable DEBUG_INFO_DWARF5
+scripts/config --disable DEBUG_INFO_REDUCED
+scripts/config --disable DEBUG_INFO_SPLIT
+scripts/config --enable DEBUG_INFO_BTF
+scripts/config --enable DEBUG_INFO_BTF_MODULES
+scripts/config --enable SCHED_CLASS_EXT
+
+# --- Expert-gated hardening ---
+# Commands: expose the expert-only knob set, then actually disable
+# MODIFY_LDT_SYSCALL.
+# Principle: MODIFY_LDT_SYSCALL is declared with `bool ... if EXPERT`. While
+# EXPERT is off the prompt is hidden and Kconfig keeps its `default y`, so the
+# earlier `--disable MODIFY_LDT_SYSCALL` never took effect and every shipped
+# kernel still exposed modify_ldt(2). Enabling EXPERT makes that hardening real;
+# the only other semantic change it causes is the related X86_16BIT and
+# X86_ESPFIX64 removal, which matches the no-32-bit-userspace policy above.
+# Scenario: every build; reduces the x86 syscall attack surface.
+scripts/config --enable EXPERT
+scripts/config --disable MODIFY_LDT_SYSCALL
+
 make olddefconfig
+
+# ---------------------------------------------------------------------------
+# Guardrails for kernel BTF: fail the build instead of silently shipping a
+# kernel without BTF. `make olddefconfig` above will already have dropped
+# DEBUG_INFO_BTF if pahole was missing or too old, and nothing else in the
+# pipeline would notice.
+# ---------------------------------------------------------------------------
+pahole_ver=$(scripts/pahole-version.sh pahole 2>/dev/null || true)
+pahole_ver=${pahole_ver:-0}
+case "${pahole_ver}" in
+    ''|*[!0-9]*) pahole_ver=0 ;;
+esac
+if [ "${pahole_ver}" -lt 122 ]; then
+    echo "ERROR: pahole >= 1.22 is required for CONFIG_DEBUG_INFO_BTF," >&2
+    echo "       detected version code: '${pahole_ver}' (0 means not found in PATH)." >&2
+    echo "       Install the 'dwarves' plan and re-run the build." >&2
+    exit 1
+fi
+
+for sym in DEBUG_INFO_BTF DEBUG_INFO_BTF_MODULES SCHED_CLASS_EXT; do
+    if ! grep -qx "CONFIG_${sym}=y" .config; then
+        echo "ERROR: CONFIG_${sym} did not survive 'make olddefconfig'." >&2
+        echo "       A kernel built from this .config has no /sys/kernel/btf," >&2
+        echo "       so eBPF CO-RE programs such as dae would refuse to start." >&2
+        exit 1
+    fi
+done
+if grep -qx "CONFIG_DEBUG_INFO_REDUCED=y" .config; then
+    echo "ERROR: CONFIG_DEBUG_INFO_REDUCED is set; it is incompatible with BTF." >&2
+    exit 1
+fi
 '''
 
 [pipeline.compile]
@@ -236,51 +327,57 @@ make -j$(nproc)'''
 isolation = "none"
 script = '''
 cd source/linux-${VERSION}
-make INSTALL_MOD_PATH=${STAGING_DIR}/usr modules_install
+
+# INSTALL_MOD_STRIP=1 maps to `strip --strip-debug`, which removes .debug_* but
+# keeps .BTF, so modules stay loadable by CO-RE tooling at 77M instead of 934M.
+# Module signatures survive because `make modules_install` signs after stripping.
+make INSTALL_MOD_PATH=${STAGING_DIR}/usr INSTALL_MOD_STRIP=1 modules_install
 rm -f ${STAGING_DIR}/usr/lib/modules/*/build
 install -d ${STAGING_DIR}/boot
 cp -v arch/x86/boot/bzImage ${STAGING_DIR}/boot/vmlinuz-theseus
 cp -v System.map ${STAGING_DIR}/boot/System.map-theseus
-cp -v .config ${STAGING_DIR}/boot/config-theseus'''
+cp -v .config ${STAGING_DIR}/boot/config-theseus
+
+# Installed once, at a version-independent path, because the hooks are stored in
+# the part archive rather than in the build tree and cannot reach ${WORKDIR}.
+install -Dm644 ${WORKDIR}/kernel-hooks.sh ${STAGING_DIR}/usr/share/linux/kernel-hooks.sh'''
 
 [[output]]
 runtime_deps = ['kmod', 'dracut-ng', 'systemd']
 backup = ['/boot/config-theseus']
 
 hooks.post_install = '''
-if command -v kernel-install >/dev/null 2>&1; then
-    kver=$(basename $(ls -d /usr/lib/modules/*-theseus 2>/dev/null | tail -n1))
-    [ -n "$kver" ] || kver="${VERSION}-theseus"
-    echo ":: Registering kernel [${kver}] and generating UKI via kernel-install..."
-    kernel-install -v add "${kver}" "/boot/vmlinuz-theseus" || true
-fi
+# '.' returns non-zero when the library is missing, and the hook runs under
+# /bin/sh -e, so a broken install aborts here instead of silently skipping
+# kernel registration.
+. /usr/share/linux/kernel-hooks.sh
+command -v kernel-install >/dev/null 2>&1 || {
+    echo ":: ERROR: kernel-install not found; cannot register the kernel" >&2
+    exit 1
+}
+register_kernel
 '''
 
 hooks.post_upgrade = '''
-if command -v kernel-install >/dev/null 2>&1; then
-    kver=$(basename $(ls -d /usr/lib/modules/*-theseus 2>/dev/null | tail -n1))
-    [ -n "$kver" ] || kver="${VERSION}-theseus"
-    echo ":: Registering new kernel [${kver}] and generating UKI via kernel-install..."
-    kernel-install -v add "${kver}" "/boot/vmlinuz-theseus" || true
-
-    echo ":: Checking for orphaned kernel images to prune..."
-    for uki in /boot/EFI/Linux/*-theseus*.efi /efi/EFI/Linux/*-theseus*.efi /boot/loader/entries/*-theseus*.conf; do
-        [ -e "$uki" ] || continue
-        old_kver=$(basename "$uki" | sed -E 's/^[^-]+-//; s/\.(efi|conf)$//')
-        if [ -n "$old_kver" ] && [ ! -d "/usr/lib/modules/${old_kver}" ]; then
-            echo ":: Pruning orphaned kernel installation [${old_kver}]..."
-            kernel-install -v remove "${old_kver}" || true
-        fi
-    done
-fi
+. /usr/share/linux/kernel-hooks.sh
+command -v kernel-install >/dev/null 2>&1 || {
+    echo ":: ERROR: kernel-install not found; cannot register the kernel" >&2
+    exit 1
+}
+register_kernel
+prune_orphans
 '''
 
 hooks.pre_remove = '''
-if command -v kernel-install >/dev/null 2>&1; then
-    kver=$(basename $(ls -d /usr/lib/modules/*-theseus 2>/dev/null | tail -n1))
-    [ -n "$kver" ] || kver="${VERSION}-theseus"
-    echo ":: Removing kernel [${kver}] from bootloader via kernel-install..."
-    kernel-install -v remove "${kver}" || true
-fi
-'''
+. /usr/share/linux/kernel-hooks.sh
+command -v kernel-install >/dev/null 2>&1 || exit 0
 
+kver=$(kver_installed) || exit 0
+# Never remove the boot entry of the kernel the machine is running right now.
+if [ "${kver}" = "$(uname -r)" ]; then
+    echo ":: Keeping boot entry [${kver}]: it is the running kernel"
+    exit 0
+fi
+echo ":: Removing boot entry [${kver}]"
+kernel-install remove "${kver}"
+'''

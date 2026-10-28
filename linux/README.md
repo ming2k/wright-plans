@@ -70,6 +70,43 @@ A modern, streamlined Linux kernel configuration targeting contemporary x86-64 h
   - Reduces binary size and improves performance via cross-module optimization
   - Build time increase: ~20-40% (much faster than Full LTO)
 
+## eBPF Type Information (BTF)
+
+BTF is enabled so that eBPF CO-RE programs — `dae`, `bpftrace`, and sched_ext
+(`scx`) schedulers — can resolve kernel structure layouts at load time instead
+of being rebuilt per kernel. The kernel exposes the data at
+`/sys/kernel/btf/vmlinux`, backed by the vmlinux `.BTF` section
+(`kernel/bpf/sysfs_btf.c` reads `__start_BTF`..`__stop_BTF`).
+
+This requires three settings that depend on each other:
+
+| Symbol | Why it is required |
+| --- | --- |
+| `CONFIG_DEBUG_KERNEL=y` | Un-hides the "Debug information" choice; BTF is nested under it |
+| `CONFIG_DEBUG_INFO_BTF=y` | Generates the `.BTF` section from DWARF |
+| `CONFIG_DEBUG_INFO_BTF_MODULES=y` | Per-module BTF, needed for module-side CO-RE |
+
+`CONFIG_SCHED_CLASS_EXT` is enabled alongside them because Kconfig declares
+`depends on BPF_SYSCALL && BPF_JIT && DEBUG_INFO_BTF`; it was documented as a
+feature but could never actually be selected while BTF was off.
+
+### pahole is a hard build dependency
+
+Kbuild shells out to `pahole` (from the `dwarves` package) to convert DWARF into
+BTF, and Kconfig gates BTF on `PAHOLE_VERSION >= 122`, probed at configure time
+from `pahole --version`. **When `pahole` is absent, `make olddefconfig` silently
+drops `DEBUG_INFO_BTF` and no diagnostic is printed** — the resulting kernel
+simply has no `/sys/kernel/btf`. `plan.toml` therefore declares
+`build_deps = ['dwarves']` and asserts the pahole version in `prepare`, so that
+failure is loud rather than a silent downgrade.
+
+### Modules are stripped, BTF is kept
+
+`DEBUG_INFO=y` makes the installed module tree ~934M. Staging passes
+`INSTALL_MOD_STRIP=1`, which maps to `strip --strip-debug`: `.debug_*` sections
+are removed while `.BTF` is retained, bringing the tree to ~77M. Module signing
+still succeeds because `modules_install` signs after stripping.
+
 ## Security Features
 
 - `CONFIG_STACKPROTECTOR_STRONG=y`

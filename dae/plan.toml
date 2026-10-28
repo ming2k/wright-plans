@@ -1,0 +1,77 @@
+name = "dae"
+version = "2.1.1"
+release = 1
+description = "eBPF-based Linux high-performance transparent proxy solution"
+license = "AGPL-3.0-only"
+arch = "x86_64"
+url = "https://github.com/daeuniverse/dae"
+
+build_deps = [
+    "go",
+    "llvm:clang",
+    "llvm",
+    "make",
+]
+
+[[sources]]
+type = "http"
+sha256 = "7c91494a999a24e91869e8e20e26ed8171dd4eedbcb847d1b04d15a6aeb54f44"
+url = "https://github.com/daeuniverse/dae/releases/download/v${VERSION}/dae-full-src.tar.xz"
+extract_to = "source"
+
+[pipeline.prepare]
+isolation = "relaxed"
+script = '''
+[ -d source/dae-${VERSION} ] && cd source/dae-${VERSION} || cd source
+export PATH=/usr/lib/go/bin:$PATH
+export GOROOT=/usr/lib/go
+export GODEBUG=netdns=cgo
+go mod download
+go mod vendor'''
+
+[pipeline.compile]
+isolation = "relaxed"
+script = '''
+[ -d source/dae-${VERSION} ] && cd source/dae-${VERSION} || cd source
+export PATH=/usr/lib/go/bin:$PATH
+export GOROOT=/usr/lib/go
+export GOPROXY=off
+export GOSUMDB=off
+make CLANG=clang STRIP=llvm-strip VERSION="v${VERSION}" dae'''
+
+[pipeline.staging]
+script = '''
+[ -d source/dae-${VERSION} ] && cd source/dae-${VERSION} || cd source
+install -Dm755 dae ${STAGING_DIR}/usr/bin/dae
+
+# Systemd service unit
+install -Dm644 install/dae.service ${STAGING_DIR}/usr/lib/systemd/system/dae.service
+
+# Configuration files
+install -dm755 ${STAGING_DIR}/etc/dae
+install -Dm640 install/empty.dae ${STAGING_DIR}/etc/dae/config.dae
+install -Dm644 example.dae ${STAGING_DIR}/etc/dae/example.dae
+
+# Shell completions
+install -Dm644 install/shell-completion/dae.bash ${STAGING_DIR}/usr/share/bash-completion/completions/dae
+install -Dm644 install/shell-completion/dae.zsh ${STAGING_DIR}/usr/share/zsh/site-functions/_dae
+install -Dm644 install/shell-completion/dae.fish ${STAGING_DIR}/usr/share/fish/vendor_completions.d/dae.fish
+
+# Routing assets (symlinked from v2ray-rules-dat)
+install -dm755 ${STAGING_DIR}/usr/share/dae
+ln -sf /usr/share/v2ray-rules-dat/geoip.dat ${STAGING_DIR}/usr/share/dae/geoip.dat
+ln -sf /usr/share/v2ray-rules-dat/geosite.dat ${STAGING_DIR}/usr/share/dae/geosite.dat'''
+
+[[output]]
+runtime_deps = ["v2ray-rules-dat"]
+backup = ["/etc/dae/config.dae"]
+
+[output.hooks]
+post_install = '''
+systemctl daemon-reload 2>/dev/null || true
+echo ":: Configure dae in /etc/dae/config.dae"
+echo ":: Ensure permissions are restricted: chmod 0640 /etc/dae/config.dae"
+echo ":: Enable service with: systemctl enable --now dae.service"'''
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+pre_remove = "systemctl disable --now dae.service 2>/dev/null || true"
+post_remove = "systemctl daemon-reload 2>/dev/null || true"
