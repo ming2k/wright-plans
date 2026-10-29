@@ -12,7 +12,7 @@ url = "https://www.kernel.org/"
 # makes `make olddefconfig` drop BTF without any diagnostic. Declaring it here
 # guarantees ordering when no isolation is used and the host PATH supplies the
 # tool.
-build_deps = ['dwarves', 'linux-hooks']
+build_deps = ['dwarves']
 
 [[sources]]
 type = "http"
@@ -24,6 +24,20 @@ extract_to = "source"
 sha256 = "SKIP"
 type = "local"
 path = "config"
+
+# Build-time only assertion library. Used during pipeline.prepare to verify
+# that the baseline config is preserved, but NOT staged into the runtime package.
+[[sources]]
+sha256 = "SKIP"
+type = "local"
+path = "kconfig-assert.sh"
+
+# Shared boot-entry helpers for transaction hooks. Staged to /usr/share/linux-lts/
+# so post_install, post_upgrade and pre_remove can source them.
+[[sources]]
+sha256 = "SKIP"
+type = "local"
+path = "kernel-hooks.sh"
 
 [pipeline.prepare]
 # The kernel source tree and its toolchain are trusted build inputs, so all three
@@ -71,19 +85,7 @@ make olddefconfig
 # which meant 105 of 109 entries merely restated `config` and any edit to
 # `config` was silently vetoed by the plan.
 # ---------------------------------------------------------------------------
-# kconfig-assert.sh is provided by build_deps = ['linux-hooks'] at
-# /usr/share/linux/kconfig-assert.sh. Fall back to ${WORKDIR} or repo-relative path
-# only for standalone test runs before the package is installed.
-if [ -f /usr/share/linux/kconfig-assert.sh ]; then
-    . /usr/share/linux/kconfig-assert.sh
-elif [ -f "${WORKDIR}/kconfig-assert.sh" ]; then
-    . "${WORKDIR}/kconfig-assert.sh"
-elif [ -f "$(dirname "$0")/../linux-hooks/kconfig-assert.sh" ]; then
-    . "$(dirname "$0")/../linux-hooks/kconfig-assert.sh"
-else
-    echo ":: ERROR: kconfig-assert.sh not found. Ensure linux-hooks is installed." >&2
-    exit 1
-fi
+. ${WORKDIR}/kconfig-assert.sh
 
 # ---------------------------------------------------------------------------
 # Guardrails: build-time assertions that run every build to prevent silent
@@ -417,10 +419,14 @@ rm -f ${STAGING_DIR}/usr/lib/modules/*/build
 install -d ${STAGING_DIR}/boot
 cp -v arch/x86/boot/bzImage ${STAGING_DIR}/boot/vmlinuz-theseus-lts
 cp -v System.map ${STAGING_DIR}/boot/System.map-theseus-lts
-cp -v .config ${STAGING_DIR}/boot/config-theseus-lts'''
+cp -v .config ${STAGING_DIR}/boot/config-theseus-lts
+
+# Installed once, at a version-independent path, because the hooks are stored in
+# the part archive rather than in the build tree and cannot reach ${WORKDIR}.
+install -Dm644 ${WORKDIR}/kernel-hooks.sh ${STAGING_DIR}/usr/share/linux-lts/kernel-hooks.sh'''
 
 [[output]]
-runtime_deps = ['kmod', 'dracut-ng', 'linux-hooks', 'systemd']
+runtime_deps = ['kmod', 'dracut-ng', 'systemd']
 backup = ['/boot/config-theseus-lts']
 
 # All three hooks set LINUX_LOCALVERSION before sourcing the shared library: the
@@ -439,7 +445,7 @@ LINUX_IMAGE="/boot/vmlinuz-theseus-lts"
 # '.' returns non-zero when the library is missing, and the hook runs under
 # /bin/sh -e, so a broken install aborts here instead of silently skipping
 # kernel registration.
-. /usr/share/linux/kernel-hooks.sh
+. /usr/share/linux-lts/kernel-hooks.sh
 require_kernel_install
 register_kernel
 '''
@@ -447,7 +453,7 @@ register_kernel
 hooks.post_upgrade = '''
 LINUX_LOCALVERSION="-theseus-lts"
 LINUX_IMAGE="/boot/vmlinuz-theseus-lts"
-. /usr/share/linux/kernel-hooks.sh
+. /usr/share/linux-lts/kernel-hooks.sh
 require_kernel_install
 register_kernel
 prune_retired_kernels
@@ -455,7 +461,7 @@ prune_retired_kernels
 
 hooks.pre_remove = '''
 LINUX_LOCALVERSION="-theseus-lts"
-. /usr/share/linux/kernel-hooks.sh
+. /usr/share/linux-lts/kernel-hooks.sh
 # A machine without kernel-install has no managed boot entry to remove, so
 # returning success here is correct rather than a silent skip.
 require_kernel_install || exit 0

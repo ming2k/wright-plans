@@ -124,15 +124,15 @@ Practical workflow after a kernel upgrade:
 ```bash
 # Inside the kernel build directory, after the final olddefconfig has run:
 cp .config /var/lib/wright/plans/linux-lts/config
-sh /var/lib/wright/plans/linux-hooks/check-readme-config.sh /var/lib/wright/plans/linux-lts
+sh check.sh
 ```
 
 ## Boot entry management
 
-The hooks contain no boot-entry logic themselves. They source
-`/usr/share/linux/kernel-hooks.sh`, shipped by the **`linux-hooks`** plan, which
-both kernel plans depend on through `runtime_deps`. Neither kernel depends on the
-other, so removing one never breaks the other's upgrades.
+The hooks source `/usr/share/linux-lts/kernel-hooks.sh`, shipped directly by this
+package in its own `/usr/share/linux-lts/` namespace. Neither kernel package
+depends on the other, and their installed files are completely disjoint (zero
+file conflicts, zero diversions).
 
 Each hook sets two variables before sourcing:
 
@@ -147,12 +147,16 @@ of `-theseus-lts`, so a prefix-based match in either direction would let one
 kernel claim, register or prune the other's boot entry. Both directions are
 covered by tests.
 
+`post_upgrade` runs `prune_retired_kernels`, enforcing the active Keep-1 policy:
+the newly registered kernel and the currently running kernel (`uname -r`) are
+protected; all older versions of this series are pruned from ESP and `/usr/lib/modules/`.
+
 No hook reads `${VERSION}`. The plan version is not the kernel release — plan
 `6.18.59` is release `6.18.59-theseus-lts` — and for a plan whose version omits
 the sublevel they diverge outright, so only the installed module directory can
 name a kernel.
 
-Behaviour inherited from the shared library, all previously wrong here:
+Behaviour inherited from the helper, all previously wrong here:
 
 - a failed `kernel-install` now aborts instead of being swallowed by `|| true`
 - `pre_remove` refuses to delete the **running** kernel's boot entry
@@ -160,11 +164,16 @@ Behaviour inherited from the shared library, all previously wrong here:
 
 ## Testing
 
+Run the self-contained offline test suite:
+
 ```bash
-sh /var/lib/wright/plans/linux-hooks/test-kernel-hooks.sh        # 24 cases
-sh /var/lib/wright/plans/linux-hooks/test-kconfig-assert.sh      # 15 cases
-sh /var/lib/wright/plans/linux-hooks/check-readme-config.sh .    # this file
+sh check.sh
 ```
+
+It verifies pipeline shell syntax (`sh -n`), exercises the `kernel-hooks.sh`
+Keep-1 decision table (20+ cases), verifies the `kconfig-assert.sh` helpers (12
+cases), and validates this document's `CONFIG_` claims against `config`.
+
 
 The hook and assertion suites run fully offline: no root, no real `/boot`, no
 kernel build. Every path is redirectable through a `${VAR:-default}` knob and

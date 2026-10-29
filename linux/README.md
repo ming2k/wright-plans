@@ -118,10 +118,9 @@ sibling LTS plan: ~74M with `.BTF` intact and PKCS#7 signatures present.
 
 ## Boot entry management
 
-The hooks do not contain the boot-entry logic themselves; they source
-`/usr/share/linux/kernel-hooks.sh` from the **`linux-hooks`** plan, which both
-`linux` and `linux-lts` depend on via `runtime_deps`. That package owns the file,
-so the two kernels share one implementation and neither depends on the other.
+The hooks source `/usr/share/linux/kernel-hooks.sh`, shipped directly by this
+package. Neither kernel package depends on the other, and their installed files
+are completely disjoint (zero file conflicts, zero diversions).
 
 Each hook sets two variables before sourcing:
 
@@ -133,8 +132,23 @@ LINUX_IMAGE="/boot/vmlinuz-theseus"
 The library anchors its module glob and its boot-entry regex on
 `LINUX_LOCALVERSION`, which is what keeps `linux` and `linux-lts` from
 registering or pruning each other's entries. `-theseus` is a prefix of
-`-theseus-lts`, so the distinction has to be explicit. The helper is testable
-offline — see `linux-hooks/README.md` and `linux-hooks/test-kernel-hooks.sh`.
+`-theseus-lts`, so the distinction has to be explicit.
+
+`post_upgrade` runs `prune_retired_kernels`, enforcing the active Keep-1 policy:
+the newly registered kernel and the currently running kernel (`uname -r`) are
+protected; all older versions of this series are pruned from ESP and `/usr/lib/modules/`.
+
+## Testing
+
+Run the self-contained offline test suite:
+
+```bash
+sh check.sh
+```
+
+It verifies pipeline shell syntax (`sh -n`), exercises the `kernel-hooks.sh`
+Keep-1 decision table (20+ cases), verifies the `kconfig-assert.sh` helpers (12
+cases), and validates this document's `CONFIG_` claims against `config`.
 
 ## Security Features
 
