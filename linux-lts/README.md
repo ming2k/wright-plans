@@ -124,7 +124,6 @@ Practical workflow after a kernel upgrade:
 ```bash
 # Inside the kernel build directory, after the final olddefconfig has run:
 cp .config /var/lib/wright/plans/linux-lts/config
-sh check.sh
 ```
 
 ## Boot entry management
@@ -161,23 +160,6 @@ Behaviour inherited from the helper, all previously wrong here:
 - a failed `kernel-install` now aborts instead of being swallowed by `|| true`
 - `pre_remove` refuses to delete the **running** kernel's boot entry
 - version ordering uses `sort -V`, so `6.18.10` is correctly newer than `6.18.9`
-
-## Testing
-
-Run the self-contained offline test suite:
-
-```bash
-sh check.sh
-```
-
-It verifies pipeline shell syntax (`sh -n`), exercises the `kernel-hooks.sh`
-Keep-1 decision table (20+ cases), verifies the `kconfig-assert.sh` helpers (12
-cases), and validates this document's `CONFIG_` claims against `config`.
-
-
-The hook and assertion suites run fully offline: no root, no real `/boot`, no
-kernel build. Every path is redirectable through a `${VAR:-default}` knob and
-`kernel-install` is stubbed.
 
 ## License
 

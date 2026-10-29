@@ -138,18 +138,6 @@ registering or pruning each other's entries. `-theseus` is a prefix of
 the newly registered kernel and the currently running kernel (`uname -r`) are
 protected; all older versions of this series are pruned from ESP and `/usr/lib/modules/`.
 
-## Testing
-
-Run the self-contained offline test suite:
-
-```bash
-sh check.sh
-```
-
-It verifies pipeline shell syntax (`sh -n`), exercises the `kernel-hooks.sh`
-Keep-1 decision table (20+ cases), verifies the `kconfig-assert.sh` helpers (12
-cases), and validates this document's `CONFIG_` claims against `config`.
-
 ## Security Features
 
 - `CONFIG_STACKPROTECTOR_STRONG=y`
