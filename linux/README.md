@@ -41,10 +41,15 @@ A modern, streamlined Linux kernel configuration targeting contemporary x86-64 h
 ## Optimizations Borrowed from CachyOS
 
 - `CONFIG_SCHED_CLASS_EXT=y` — eBPF scheduler extensibility (scx-scheds)
-- `CONFIG_MIN_BASE_SLICE_NS=1600000` — Reduced CFS scheduling overhead
 - `CONFIG_MODULE_COMPRESS_ALL=y` — Compressed modules reduce `/lib/modules` size
 - `CONFIG_HZ=1000` — Low latency timer ticks (CachyOS uses 300, we keep 1000 for responsiveness)
-- Debug minimization — Disabled DEBUG_KERNEL, DEBUG_WX, DEBUG_SHIRQ, etc.
+- Debug minimization — `DEBUG_MISC`, `RCU_TRACE` and `X86_DEBUG_FPU` are
+  explicitly disabled even though `DEBUG_KERNEL` is on, because `DEBUG_KERNEL` is
+  required to reach the BTF choice. `DEBUG_KERNEL` itself is *not* disabled: doing
+  so would also remove BTF, which the eBPF CO-RE section below depends on. Those
+  three carry real runtime cost — upstream's own help text for `X86_DEBUG_FPU`
+  says it "adds some small amount of runtime overhead" — and `DEBUG_KERNEL`
+  enables them by default, so naming them explicitly is what keeps them off.
 
 ## Gaming & Creative Input
 
@@ -66,9 +71,12 @@ A modern, streamlined Linux kernel configuration targeting contemporary x86-64 h
 
 ## Compiler Optimizations
 
-- `CONFIG_LTO_CLANG_THIN=y` — Link Time Optimization (Clang ThinLTO)
-  - Reduces binary size and improves performance via cross-module optimization
-  - Build time increase: ~20-40% (much faster than Full LTO)
+- `CONFIG_LTO_NONE=y` — no Link Time Optimization.
+  - ThinLTO was evaluated for a smaller image and cross-module optimisation, but
+    is not enabled in the maintained baseline; the Clang ThinLTO symbols are not
+    present in `config` at all.
+  - If it is ever turned on, note that LTO roughly doubles build time and needs a
+    Clang/LLVM toolchain, whereas this plan builds with GCC.
 
 ## eBPF Type Information (BTF)
 
@@ -102,21 +110,49 @@ failure is loud rather than a silent downgrade.
 
 ### Modules are stripped, BTF is kept
 
-`DEBUG_INFO=y` makes the installed module tree ~934M. Staging passes
-`INSTALL_MOD_STRIP=1`, which maps to `strip --strip-debug`: `.debug_*` sections
-are removed while `.BTF` is retained, bringing the tree to ~77M. Module signing
-still succeeds because `modules_install` signs after stripping.
+`DEBUG_INFO=y` makes the installed module tree grow to roughly 900M. Staging
+passes `INSTALL_MOD_STRIP=1`, which maps to `strip --strip-debug`: `.debug_*`
+sections are removed while `.BTF` is retained. Module signing still succeeds
+because `modules_install` signs after stripping. Measured on 6.18.59 for the
+sibling LTS plan: ~74M with `.BTF` intact and PKCS#7 signatures present.
+
+## Boot entry management
+
+The hooks do not contain the boot-entry logic themselves; they source
+`/usr/share/linux/kernel-hooks.sh` from the **`linux-hooks`** plan, which both
+`linux` and `linux-lts` depend on via `runtime_deps`. That package owns the file,
+so the two kernels share one implementation and neither depends on the other.
+
+Each hook sets two variables before sourcing:
+
+```sh
+LINUX_LOCALVERSION="-theseus"           # must match this plan's LOCALVERSION
+LINUX_IMAGE="/boot/vmlinuz-theseus"
+```
+
+The library anchors its module glob and its boot-entry regex on
+`LINUX_LOCALVERSION`, which is what keeps `linux` and `linux-lts` from
+registering or pruning each other's entries. `-theseus` is a prefix of
+`-theseus-lts`, so the distinction has to be explicit. The helper is testable
+offline — see `linux-hooks/README.md` and `linux-hooks/test-kernel-hooks.sh`.
 
 ## Security Features
 
 - `CONFIG_STACKPROTECTOR_STRONG=y`
-- `CONFIG_RETPOLINE=y` + all Spectre/Meltdown mitigations
-- `CONFIG_CET=y` + `CONFIG_X86_KERNEL_IBT=y`
+- `CONFIG_X86_CET=y` + `CONFIG_X86_KERNEL_IBT=y`
 - `CONFIG_RANDOMIZE_BASE=y` + `CONFIG_RANDOMIZE_MEMORY=y`
 - `CONFIG_MODULE_SIG=y` + `CONFIG_MODULE_SIG_ALL=y` (SHA-512)
-- `CONFIG_RUST=y` — Foundation for memory-safe driver development
 - `CONFIG_SECCOMP=y` + `CONFIG_SECCOMP_FILTER=y`
-- AppArmor support enabled
+- `CONFIG_MODIFY_LDT_SYSCALL` is not set — requires `CONFIG_EXPERT=y` to be
+  reachable at all, see the "Expert-gated hardening" block in `plan.toml`
+
+Deliberately **not** enabled, despite being common distro defaults:
+
+- **`CONFIG_RUST`** — the toolchain symbols (`CONFIG_RUSTC_VERSION` etc.) appear
+  in `config` because Kconfig probes the compiler, but Rust support itself is not
+  selected, so no in-tree Rust driver is built.
+- **`CONFIG_SECURITY_APPARMOR`** — AppArmor is not the LSM in use here.
+- **ThinLTO** — disabled; see the Compiler Optimizations section above.
 
 ## How to Customize
 
@@ -126,7 +162,15 @@ The canonical configuration lives in `config`. Edit it directly for feature chan
 make menuconfig
 ```
 
-The `plan.toml` prepare script starts from `config`, runs `make olddefconfig`, applies a small set of `scripts/config` assertions, and runs `make olddefconfig` again. The final build `.config` is what gets installed as `/boot/config-theseus`.
+The `plan.toml` prepare script starts from `config`, runs `make olddefconfig`, applies its `scripts/config` entries, and runs `make olddefconfig` again. The final build `.config` is what gets installed as `/boot/config-theseus`.
+
+Note that `plan.toml` currently carries 109 `scripts/config` entries. Per the
+policy below, most of them are **guardrails**, not preferences: upstream Kconfig
+symbols around SOF, SPI and the Intel NPU are renamed or re-gated often enough
+that `olddefconfig` can drop them silently, so they are re-asserted on every
+build on purpose. The count is high by design; it is not a leftover to prune
+wholesale. What matters is that each block names the symbol, the reason, and the
+runtime scenario it protects.
 
 ## Config Maintenance Policy
 
