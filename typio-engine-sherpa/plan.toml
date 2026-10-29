@@ -1,13 +1,13 @@
 name = "typio-engine-sherpa"
-version = "0.2.2"
+version = "0.5.0"
 release = 1
 description = "Speech-to-text voice engine for the Typio input method framework, powered by sherpa-onnx"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/typio-ime/typio-engine-sherpa"
 
-build_deps = ['meson', 'ninja', 'pkgconf']
-link_deps = ['libtypio', 'sherpa-onnx', 'curl']
+build_deps = ['rust-bin', 'pkgconf', 'llvm:clang', 'typio']
+link_deps = ['sherpa-onnx', 'protobuf', 'glibc']
 
 [[sources]]
 type = "git"
@@ -15,27 +15,47 @@ url = "https://github.com/typio-ime/typio-engine-sherpa.git"
 ref = "v${VERSION}"
 extract_to = "source"
 
-[pipeline.configure]
+[pipeline.prepare]
 script = '''
 cd source
-meson setup build --prefix=/usr --buildtype=release'''
+# Rewire typio-engine-protocol to the crate provided by the typio package
+sed -i 's|path = "[^"]*typio-engine-protocol"|path = "/usr/share/typio/crates/typio-engine-protocol"|' Cargo.toml'''
 
 [pipeline.compile]
+isolation = "relaxed"
+env = { CARGO_HOME = '${WORKDIR}/.cargo', CARGO_TARGET_DIR = '${WORKDIR}/target' }
 script = '''
 cd source
-ninja -C build'''
+cargo build --release'''
 
 [pipeline.staging]
 script = '''
 : "${STAGING_DIR:?STAGING_DIR is required}"
 cd source
-meson install -C build --destdir "$STAGING_DIR"
-# v0.2.0+ ships a private worker executable + runtime manifest (the
-# engine-process model), not a cdylib plugin.
-test -x "$STAGING_DIR/usr/libexec/typio/engines/typio-engine-sherpa"
-test -f "$STAGING_DIR/usr/share/typio/engines/typio-engine-sherpa.toml"
-test -f "$STAGING_DIR/usr/share/icons/hicolor/scalable/apps/typio-sherpa-symbolic.svg"'''
+
+# Private worker executable + runtime manifest (engine-process model)
+install -Dm755 "${WORKDIR}/target/release/typio-engine-sherpa" \
+  "${STAGING_DIR}/usr/libexec/typio/engines/typio-engine-sherpa"
+
+# Ship the repository manifest with the absolute worker command path
+install -Dm644 typio-engine-sherpa.toml \
+  "${STAGING_DIR}/usr/share/typio/engines/typio-engine-sherpa.toml"
+sed -i 's|^command = .*|command = "/usr/libexec/typio/engines/typio-engine-sherpa"|' \
+  "${STAGING_DIR}/usr/share/typio/engines/typio-engine-sherpa.toml"
+
+# Icons (freedesktop/XDG icon-theme layout)
+install -Dm644 data/icons/hicolor/scalable/apps/typio-sherpa-symbolic.svg \
+  "${STAGING_DIR}/usr/share/icons/hicolor/scalable/apps/typio-sherpa-symbolic.svg"
+
+# Normalize permissions
+chmod -R u=rwX,go=rX "$STAGING_DIR/usr"
+chmod 755 "${STAGING_DIR}/usr/libexec/typio/engines/typio-engine-sherpa"
+
+# Verify staged files
+test -x "${STAGING_DIR}/usr/libexec/typio/engines/typio-engine-sherpa"
+test -f "${STAGING_DIR}/usr/share/typio/engines/typio-engine-sherpa.toml"
+test -f "${STAGING_DIR}/usr/share/icons/hicolor/scalable/apps/typio-sherpa-symbolic.svg"'''
 
 [[output]]
 name = "typio-engine-sherpa"
-runtime_deps = ['libtypio', 'sherpa-onnx', 'curl']
+runtime_deps = ['typio', 'sherpa-onnx', 'protobuf', 'glibc']

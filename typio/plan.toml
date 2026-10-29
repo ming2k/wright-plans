@@ -1,12 +1,12 @@
 name = "typio"
-version = "0.6.3"
+version = "0.6.4"
 release = 1
 description = "Wayland-native input method host for the Typio framework"
 license = "MIT"
 arch = "x86_64"
 url = "https://github.com/typio-ime/typio"
 
-build_deps = ['rust-bin', 'pkgconf', 'llvm:clang', 'git']
+build_deps = ['rust-bin', 'pkgconf', 'llvm:clang', 'git', 'vulkan-headers']
 link_deps = [
     'optics:flux', 'optics:glyph', 'optics:lens', 'optics:iris',
     'wayland', 'libxkbcommon', 'vulkan-loader', 'glibc',
