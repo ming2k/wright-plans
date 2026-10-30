@@ -1,5 +1,5 @@
 name = "xdg-desktop-portal-atrium"
-version = "0.0.32"
+version = "0.0.33"
 release = 1
 description = "XDG Desktop Portal backend for the Atrium / Tessera desktop"
 license = "MIT"
@@ -15,7 +15,7 @@ link_deps = [
 [[sources]]
 type = "http"
 url = "https://github.com/atrium-desktop/xdg-desktop-portal-atrium/archive/refs/tags/v${VERSION}.tar.gz"
-sha256 = "5fb6bbbdc8789ca4b398f749efb785de2bb9431ad036b667c63f1d309acaf858"
+sha256 = "SKIP"
 extract_to = "source"
 
 [pipeline.configure]

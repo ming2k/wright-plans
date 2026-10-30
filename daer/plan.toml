@@ -1,0 +1,90 @@
+name = "daer"
+version = "0.0.3"
+release = 1
+description = "eBPF transparent proxy for Linux with a Rust userspace"
+license = "AGPL-3.0-only"
+arch = "x86_64"
+url = "https://github.com/ming2k/daer"
+
+build_deps = [
+    "rust-bin",
+    "llvm:clang",
+    "cmake",
+    "git",
+]
+link_deps = [
+    "gcc:gcc-libs",
+    "glibc",
+]
+
+[[sources]]
+type = "http"
+sha256 = "SKIP"
+url = "https://github.com/ming2k/daer/archive/refs/tags/v${VERSION}.tar.gz"
+extract_to = "source"
+
+[pipeline.prepare]
+script = '''
+cd source/daer-${VERSION}
+sed -i 's|/bin/kill|/usr/bin/kill|g' install/daer.service'''
+
+[pipeline.compile]
+isolation = "relaxed"
+script = '''
+cd source/daer-${VERSION}
+export CARGO_HOME="${WORKDIR}/.cargo"
+
+# Compile eBPF C datapath into target/ebpf/datapath.o
+DAER_BPF_HEADERS="${PWD}/ebpf/kern/headers" cargo run --package xtask -- ebpf
+
+# Compile daer userspace binary
+cargo build --release --locked'''
+
+[pipeline.staging]
+script = '''
+cd source/daer-${VERSION}
+
+# Binary
+install -Dm755 target/release/daer ${STAGING_DIR}/usr/bin/daer
+
+# eBPF datapath object
+install -Dm644 target/ebpf/datapath.o ${STAGING_DIR}/usr/lib/daer/datapath.o
+
+# Systemd service unit
+install -Dm644 install/daer.service ${STAGING_DIR}/usr/lib/systemd/system/daer.service
+
+# Configuration files
+install -dm755 ${STAGING_DIR}/etc/daer
+install -Dm644 daer.example.toml ${STAGING_DIR}/etc/daer/example.toml
+cat << 'EOF' > ${STAGING_DIR}/etc/daer/config.toml
+# daer transparent proxy configuration
+# See /etc/daer/example.toml for reference documentation.
+
+schema = 1
+
+[global]
+wan-interface = ["auto"]
+EOF
+chmod 0640 ${STAGING_DIR}/etc/daer/config.toml
+
+# JSON schema definition
+install -Dm644 daer.schema.json ${STAGING_DIR}/usr/share/daer/daer.schema.json
+
+# Routing assets (symlinked from v2ray-rules-dat)
+install -dm755 ${STAGING_DIR}/usr/share/daer
+ln -sf /usr/share/v2ray-rules-dat/geoip.dat ${STAGING_DIR}/usr/share/daer/geoip.dat
+ln -sf /usr/share/v2ray-rules-dat/geosite.dat ${STAGING_DIR}/usr/share/daer/geosite.dat'''
+
+[[output]]
+runtime_deps = ["v2ray-rules-dat"]
+backup = ["/etc/daer/config.toml"]
+
+[output.hooks]
+post_install = '''
+systemctl daemon-reload 2>/dev/null || true
+echo ":: Configure daer in /etc/daer/config.toml"
+echo ":: Ensure permissions are restricted: chmod 0640 /etc/daer/config.toml"
+echo ":: Enable service with: systemctl enable --now daer.service"'''
+post_upgrade = "systemctl daemon-reload 2>/dev/null || true"
+pre_remove = "systemctl disable --now daer.service 2>/dev/null || true"
+post_remove = "systemctl daemon-reload 2>/dev/null || true"

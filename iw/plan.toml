@@ -1,27 +1,32 @@
 name = "iw"
-version = "6.9"
+version = "6.17"
 release = 1
 description = "nl80211 based CLI configuration utility for wireless devices"
 license = "ISC"
 arch = "x86_64"
 url = "https://wireless.wiki.kernel.org/en/users/documentation/iw"
 
+build_deps = ['pkgconf']
+link_deps = ['libnl']
 
 [[sources]]
 type = "http"
-sha256 = "SKIP"
+sha256 = "7d182e498289ab39b257da6780d562e415377107f50358ee5b55b8cfe40b1e33"
 url = "https://www.kernel.org/pub/software/network/iw/iw-${VERSION}.tar.xz"
 extract_to = "source"
 
 [pipeline.compile]
 script = '''
 cd source/iw-${VERSION}
-make PREFIX=/usr -j$(nproc)'''
+make PREFIX=/usr SBINDIR=/usr/bin -j$(nproc)
+'''
 
 [pipeline.staging]
 script = '''
 cd source/iw-${VERSION}
-make PREFIX=/usr DESTDIR=${STAGING_DIR} install'''
+make PREFIX=/usr SBINDIR=/usr/bin DESTDIR=${STAGING_DIR} install
+'''
 
 [[output]]
+name = "iw"
 runtime_deps = ['libnl']

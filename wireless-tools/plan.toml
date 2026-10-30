@@ -1,0 +1,33 @@
+name = "wireless-tools"
+version = "29"
+release = 1
+description = "Wireless tools for Linux (iwconfig, iwlist, etc.)"
+license = "GPL-2.0-only"
+arch = "x86_64"
+url = "https://hewlettpackard.github.io/wireless-tools/"
+
+[[sources]]
+type = "http"
+sha256 = "6fb80935fe208538131ce2c4178221bab1078a1656306bce8909c19887e2e5a1"
+url = "https://hewlettpackard.github.io/wireless-tools/wireless_tools.${VERSION}.tar.gz"
+extract_to = "source"
+
+[pipeline.compile]
+script = '''
+cd source/wireless_tools.${VERSION}
+make -j$(nproc)
+'''
+
+[pipeline.staging]
+script = '''
+cd source/wireless_tools.${VERSION}
+make PREFIX=${STAGING_DIR}/usr \
+  INSTALL_DIR=${STAGING_DIR}/usr/bin \
+  INSTALL_LIB=${STAGING_DIR}/usr/lib \
+  INSTALL_INC=${STAGING_DIR}/usr/include \
+  INSTALL_MAN=${STAGING_DIR}/usr/share/man \
+  install
+'''
+
+[[output]]
+name = "wireless-tools"
