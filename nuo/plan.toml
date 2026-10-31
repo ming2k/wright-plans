@@ -1,5 +1,5 @@
 name = "nuo"
-version = "0.0.60"
+version = "0.0.61"
 release = 1
 description = "High-performance modular AI session daemon and semantic terminal system"
 license = "MIT"

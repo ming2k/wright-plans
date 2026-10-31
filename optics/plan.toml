@@ -1,5 +1,5 @@
 name = "optics"
-version = "0.0.62"
+version = "0.0.64"
 release = 1
 description = "Optics rendering libraries: flux, glyph, vista, prism, lens, iris, and transit"
 license = "MIT"
